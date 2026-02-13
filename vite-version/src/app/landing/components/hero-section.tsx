@@ -142,16 +142,16 @@ export function HeroSection() {
           </div>
 
           <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
-            Your All-in-One
+            Your
             <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
               {" "}
               East Africa Forest{" "}
             </span>
-            Platform
+            Marketplace
           </h1>
 
           <p className="mx-auto mb-10 max-w-2xl text-lg text-muted-foreground sm:text-xl">
-            Everything you need to know about investing in high performance forests in East Africa
+            From nurseries to building with timber, get everything you need to know about forestry in East Africa
           </p>
 
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">

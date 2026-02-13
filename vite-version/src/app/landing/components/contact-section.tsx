@@ -64,7 +64,7 @@ export function ContactSection() {
             Need help or have questions?
           </h2>
           <p className="text-lg text-muted-foreground">
-            Our team is here to help you get the most out of ShadcnStore. Choose the best way to reach out to us.
+            Our team is here to help you get the most out of EA Forests. Choose the best way to reach out to us.
           </p>
         </div>
 
@@ -80,7 +80,7 @@ export function ContactSection() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-3">
-                  Join our active community for quick help and discussions with other developers.
+                  Join our active community for quick help and discussions with others.
                 </p>
                 <Button variant="outline" size="sm" className="cursor-pointer" asChild>
                   <a href="https://discord.com/invite/XEQhPc9a6p" target="_blank" rel="noopener noreferrer">
@@ -118,7 +118,7 @@ export function ContactSection() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground mb-3">
-                  Browse our comprehensive guides, tutorials, and component documentation.
+                  Browse our comprehensive market guides, forestry tutorials, and investment documentation.
                 </p>
                 <Button variant="outline" size="sm" className="cursor-pointer" asChild>
                   <a href="#">

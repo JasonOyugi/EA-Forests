@@ -1,181 +1,186 @@
 "use client"
 
-import {
-  BarChart3,
-  Zap,
-  Users,
-  ArrowRight,
-  Database,
-  Package,
-  Crown,
-  Layout,
-  Palette
-} from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Image3D } from '@/components/image-3d'
+import { useRef, useState } from "react"
+import { Badge } from "@/components/ui/badge"
+import { TiLocationArrow } from "react-icons/ti"
 
-const mainFeatures = [
-  {
-    icon: Package,
-    title: 'Curated Component Library',
-    description: 'Hand-picked blocks and templates for quality and reliability.'
-  },
-  {
-    icon: Crown,
-    title: 'Free & Premium Options',
-    description: 'Start free, upgrade to premium collections when you need more.'
-  },
-  {
-    icon: Layout,
-    title: 'Ready-to-Use Templates',
-    description: 'Copy-paste components that just work out of the box.'
-  },
-  {
-    icon: Zap,
-    title: 'Regular Updates',
-    description: 'New blocks and templates added weekly to keep you current.'
-  }
-]
+type BentoTiltProps = {
+  children: React.ReactNode
+  className?: string
+}
 
-const secondaryFeatures = [
-  {
-    icon: BarChart3,
-    title: 'Multiple Frameworks',
-    description: 'React, Next.js, and Vite compatibility for flexible development.'
-  },
-  {
-    icon: Palette,
-    title: 'Modern Tech Stack',
-    description: 'Built with shadcn/ui, Tailwind CSS, and TypeScript.'
-  },
-  {
-    icon: Users,
-    title: 'Responsive Design',
-    description: 'Mobile-first components for all screen sizes and devices.'
-  },
-  {
-    icon: Database,
-    title: 'Developer-Friendly',
-    description: 'Clean code, well-documented, easy integration and customization.'
+function BentoTilt({ children, className = "" }: BentoTiltProps) {
+  const [transformStyle, setTransformStyle] = useState<string>("")
+  const itemRef = useRef<HTMLDivElement | null>(null)
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const el = itemRef.current
+    if (!el) return
+
+    const { left, top, width, height } = el.getBoundingClientRect()
+    const relativeX = (event.clientX - left) / width
+    const relativeY = (event.clientY - top) / height
+
+    const tiltX = (relativeY - 0.5) * 6
+    const tiltY = (relativeX - 0.5) * -6
+
+    setTransformStyle(
+      `perspective(700px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(.97, .97, .97)`
+    )
   }
-]
+
+  const handleMouseLeave = () => setTransformStyle("")
+
+  return (
+    <div
+      ref={itemRef}
+      className={className}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ transform: transformStyle, transition: "transform 200ms ease" }}
+    >
+      {children}
+    </div>
+  )
+}
+
+type BentoCardProps = {
+  src: string
+  title: React.ReactNode
+  description?: string
+  isComingSoon?: boolean
+  href?: string
+}
+
+function BentoCard({ src, title, description, isComingSoon, href }: BentoCardProps) {
+  const content = (
+    <div className="relative size-full overflow-hidden">
+      <video
+        src={src}
+        loop
+        muted
+        autoPlay
+        playsInline
+        preload="metadata"
+        className="absolute left-0 top-0 size-full object-cover object-center"
+      />
+
+      {/* overlay for readability */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
+
+      <div className="relative z-10 flex size-full flex-col justify-between p-5 text-white">
+        <div>
+          <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight leading-tight">
+            {title}
+          </h3>
+          {description ? (
+            <p className="mt-3 text-sm sm:text-base text-white/80 max-w-[48ch]">
+              {description}
+            </p>
+          ) : null}
+        </div>
+
+        {isComingSoon ? (
+          <div className="w-fit rounded-full bg-white/10 px-4 py-2 text-xs uppercase text-white/70 backdrop-blur">
+            <TiLocationArrow className="inline mr-1" />
+            coming soon
+          </div>
+        ) : null}
+      </div>
+    </div>
+  )
+
+  return href ? (
+    <a href={href} target="_blank" rel="noopener noreferrer" className="block size-full">
+      {content}
+    </a>
+  ) : (
+    content
+  )
+}
 
 export function FeaturesSection() {
   return (
     <section id="features" className="py-24 sm:py-32 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+        {/* Keep the first page header */}
         <div className="mx-auto max-w-2xl text-center mb-16">
-          <Badge variant="outline" className="mb-4">Marketplace Features</Badge>
+          <Badge variant="outline" className="mb-4">
+            Our Features
+          </Badge>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
-            Everything you need to build amazing web applications
+            Everything you need to know about East Africa forests in one place
           </h2>
-          <p className="text-lg text-muted-foreground">
-            Our marketplace provides curated blocks, templates, landing pages, and admin dashboards to help you build professional applications faster than ever.
-          </p>
         </div>
 
-        {/* First Feature Section */}
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-8 xl:gap-16 mb-24">
-          {/* Left Image */}
-          <Image3D
-            lightSrc="feature-1-light.png"
-            darkSrc="feature-1-dark.png"
-            alt="Analytics dashboard"
-            direction="left"
+        {/* Big hero bento */}
+        <BentoTilt className="relative mb-7 h-96 w-full overflow-hidden rounded-xl border bg-card shadow-sm md:h-[60vh]">
+          <BentoCard
+            src="/feature-1.mp4"
+            title={
+              <>
+                Trade Forestry Assets
+              </>
+            }
+            description="Have a forest? Looking to source roundwood or carbon? Click here to find credible partners asap."
+            href="https://github.com/JasonOyugi/EA-Forestry-Investment-Economics.git"
           />
-          {/* Right Content */}
-          <div className="space-y-6">
-            <div className="space-y-4">
-              <h3 className="text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
-                Components that accelerate development
-              </h3>
-              <p className="text-muted-foreground text-base text-pretty">
-                Our curated marketplace offers premium blocks and templates designed to save time and ensure consistency across your admin projects.
-              </p>
-            </div>
+        </BentoTilt>
 
-            <ul className="grid gap-4 sm:grid-cols-2">
-              {mainFeatures.map((feature, index) => (
-                <li key={index} className="group hover:bg-accent/5 flex items-start gap-3 p-2 rounded-lg transition-colors">
-                  <div className="mt-0.5 flex shrink-0 items-center justify-center">
-                    <feature.icon className="size-5 text-primary" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <h3 className="text-foreground font-medium">{feature.title}</h3>
-                    <p className="text-muted-foreground mt-1 text-sm">{feature.description}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
+        {/* Grid */}
+        <div className="grid w-full grid-cols-1 gap-7 md:grid-cols-2 md:auto-rows-[260px]">
+          <BentoTilt className="md:row-span-2 overflow-hidden rounded-xl border bg-card shadow-sm">
+            <BentoCard
+              src="/feature-2.mp4"
+              title={
+                <>
+                  The Nursery Shop
+                </>
+              }
+              description="Want to start a forest? Wether you already have land or not, you can find and plant the latest generation of tree species, hybrids and clones"
+              href="https://github.com/JasonOyugi/EA-Forestry-Genetics-Analysis.git"
+            />
+          </BentoTilt>
 
-            <div className="flex flex-col sm:flex-row gap-4 pe-4 pt-2">
-              <Button size="lg" className="cursor-pointer">
-                <a href="https://shadcnstore.com/templates" className='flex items-center'>
-                  Browse Templates
-                  <ArrowRight className="ms-2 size-4" aria-hidden="true" />
-                </a>
-              </Button>
-              <Button size="lg" variant="outline" className="cursor-pointer">
-                <a href="https://shadcnstore.com/blocks">
-                  View Components
-                </a>
-              </Button>
-            </div>
-          </div>
-        </div>
+          <BentoTilt className="overflow-hidden rounded-xl border bg-card shadow-sm">
+            <BentoCard
+              src="/feature-3.mp4"
+              title={
+                <>
+                  Market Insight Tools
+                </>
+              }
+              description="Forestry on steroids - introduce cutting edge, on-the-ground analysis to calculate the most profitable trades and deals in real-time"
+              href="https://github.com/JasonOyugi/EA-Forestry-Geospatial-Analysis.git"
+            />
+          </BentoTilt>
 
-        {/* Second Feature Section - Flipped Layout */}
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-8 xl:gap-16">
-          {/* Left Content */}
-          <div className="space-y-6 order-2 lg:order-1">
-            <div className="space-y-4">
-              <h3 className="text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
-                Built for modern development workflows
-              </h3>
-              <p className="text-muted-foreground text-base text-pretty">
-                Every component follows best practices with TypeScript, responsive design, and clean code architecture that integrates seamlessly into your projects.
-              </p>
-            </div>
+          <BentoTilt className="overflow-hidden rounded-xl border bg-card shadow-sm">
+            <BentoCard
+              src="/feature-4.mp4"
+              title={
+                <>
+                  Project Development
+                </>
+              }
+              description="Create, develop, execute and monitor a forestry-based project with AI"
+              isComingSoon
+            />
+          </BentoTilt>
 
-            <ul className="grid gap-4 sm:grid-cols-2">
-              {secondaryFeatures.map((feature, index) => (
-                <li key={index} className="group hover:bg-accent/5 flex items-start gap-3 p-2 rounded-lg transition-colors">
-                  <div className="mt-0.5 flex shrink-0 items-center justify-center">
-                    <feature.icon className="size-5 text-primary" aria-hidden="true" />
-                  </div>
-                  <div>
-                    <h3 className="text-foreground font-medium">{feature.title}</h3>
-                    <p className="text-muted-foreground mt-1 text-sm">{feature.description}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-
-            <div className="flex flex-col sm:flex-row gap-4 pe-4 pt-2">
-              <Button size="lg" className="cursor-pointer">
-                <a href="#" className='flex items-center'>
-                  View Documentation
-                  <ArrowRight className="ms-2 size-4" aria-hidden="true" />
-                </a>
-              </Button>
-              <Button size="lg" variant="outline" className="cursor-pointer">
-                <a href="https://github.com/silicondeck/shadcn-dashboard-landing-template" target="_blank" rel="noopener noreferrer">
-                  GitHub Repository
-                </a>
-              </Button>
-            </div>
-          </div>
-
-          {/* Right Image */}
-          <Image3D
-            lightSrc="feature-2-light.png"
-            darkSrc="feature-2-dark.png"
-            alt="Performance dashboard"
-            direction="right"
-            className="order-1 lg:order-2"
-          />
+          {/* “More coming soon” tile */}
+          <BentoTilt className="overflow-hidden rounded-xl border bg-card shadow-sm">
+            <BentoCard
+              src="/feature-5.mp4"
+              title={
+                <>
+                  More coming soon!!
+                </>
+              }
+              description="!!!"
+              isComingSoon
+            />
+          </BentoTilt>
         </div>
       </div>
     </section>

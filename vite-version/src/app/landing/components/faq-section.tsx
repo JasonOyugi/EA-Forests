@@ -14,39 +14,33 @@ type FaqItem = {
 const faqItems: FaqItem[] = [
   {
     value: 'item-1',
-    question: 'How do I integrate ShadcnStore components into my project?',
+    question: 'Who is this platform for?',
     answer:
-      'Integration is simple! All our components are built with shadcn/ui and work with React, Next.js, and Vite. Just copy the component code, install any required dependencies, and paste it into your project. Each component comes with detailed installation instructions and examples.',
+      'Mainly people looking to make money from forestry in East Africa—investors deploying capital, landowners structuring projects, nurseries supplying genetics, contractors executing harvest and haulage, and buyers securing timber or carbon. If you want to operate in the value chain, this is built for you.',
   },
   {
     value: 'item-2',
-    question: 'What\'s the difference between free and premium components?',
+    question: 'Can I actually transact here, or is this just information?',
     answer:
-      'Free components include essential UI elements like buttons, forms, and basic layouts. Premium components offer advanced features like complex data tables, analytics dashboards, authentication flows, and complete admin templates. Premium also includes Figma files, priority support, and commercial licenses.',
+      'You can transact. The platform connects capital to verified operators and market participants. Information supports the process, but the core is brokerage, coordination, and execution.',
   },
   {
     value: 'item-3',
-    question: 'Can I use these components in commercial projects?',
+    question: 'How are actors verified?',
     answer:
-      'Yes! Free components come with an MIT license for unlimited use. Premium components include a commercial license that allows usage in client projects, SaaS applications, and commercial products without attribution requirements.',
+      'We assess documentation, operational history, references, and performance where available. While no marketplace eliminates risk entirely, we prioritize transparency and structured engagement over informal introductions.',
   },
   {
     value: 'item-4',
-    question: 'Do you provide support and updates?',
+    question: 'How does the investment process work?',
     answer:
-      'Absolutely! We provide community support for free components through our Discord server and GitHub issues. Premium subscribers get priority email support, regular component updates, and early access to new releases. We also maintain compatibility with the latest shadcn/ui versions.',
+      'Investors review structured opportunities with defined assumptions, timelines, and counterparties. Once aligned, parties move into formal agreements and project execution with visibility across the value chain.',
   },
   {
     value: 'item-5',
-    question: 'What frameworks and tools do you support?',
+    question: 'How does the platform generate revenue?',
     answer:
-      'Our components work with React 18+, Next.js 13+, and Vite. We use TypeScript, Tailwind CSS, and follow shadcn/ui conventions. Components are tested with popular tools like React Hook Form, TanStack Query, and Zustand for state management.',
-  },
-  {
-    value: 'item-6',
-    question: 'How often do you release new components?',
-    answer:
-      'We release new components and templates weekly. Premium subscribers get early access to new releases, while free components are updated regularly based on community feedback. You can track our roadmap and request specific components through our GitHub repository.',
+      'We earn through marketplace and investment-related fees tied to successful coordination and structured services. Our incentives are aligned with completed transactions and long-term performance.',
   },
 ]
 
@@ -61,7 +55,7 @@ const FaqSection = () => {
             Frequently Asked Questions
           </h2>
           <p className="text-lg text-muted-foreground">
-            Everything you need to know about ShadcnStore components, licensing, and integration. Still have questions? We're here to help!
+            What people are asking about EA Forests' features and purpose:
           </p>
         </div>
 

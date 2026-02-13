@@ -8,56 +8,65 @@ import { useState } from 'react'
 
 const plans = [
   {
-    name: 'Free',
-    description: 'Perfect for getting started with essential components',
-    monthlyPrice: 0,
-    yearlyPrice: 0,
+    name: 'Core Forests',
+    description: 'A low-risk entry point into professionally designed forestry investments',
+    monthlyPrice: 300,
+    yearlyPrice: 3000,
+    image: {
+      src: '/forest.webp',
+      alt: 'Core forests plan',
+    },
     features: [
-      'Access to 50+ free components',
-      'Basic dashboard templates',
-      'Community support',
-      'GitHub repository access',
-      'Documentation and guides'
+      'Conventional, proven species and silviculture',
+      'Conservative yield and return assumptions',
+      'Standard genetics widely adopted in the region',
+      'Clear rotation timelines, performance variance and cashflow expectations',
+      'Ideal for first-time forestry investors'
     ],
-    cta: 'Get Started',
+    cta: 'Explore Core Forests',
     popular: false
   },
   {
-    name: 'Pro',
-    description: 'For developers who need premium templates and components',
-    monthlyPrice: 19,
-    yearlyPrice: 15,
+    name: 'High-Performance Forests',
+    description: 'World-class genetics and optimized systems targeting superior returns',
+    monthlyPrice: 800,
+    yearlyPrice: 8000,
+    image: {
+      src: '/about.webp',
+      alt: 'Core forests plan',
+    },
     features: [
-      'Premium template collection',
-      'Advanced dashboard layouts',
-      'Priority support',
-      'Commercial use license',
-      'Early access to new releases',
-      'Figma design files',
-      'Custom component requests',
-      'Direct developer access',
-      'Exclusive design resources'
+      'Improved, hybrid and clonal genetics with superior growth traits',
+      'Higher yield and shorter rotation potential',
+      'Premium seedling quality optimised for survival',
+      'Technical silviculture matched to the genetics',
+      'Site–genotype matching using performance data',
+      'Advanced growth and yield forecasting',
+      'Active performance monitoring and adaptive management',
+      'Live data and insights into high-value markets',
+      'Designed for return-focused investors'
     ],
-    cta: 'Get Started',
+    cta: 'View High-Performance Plans',
     popular: true,
-    includesPrevious: 'All Free features, plus'
   },
   {
-    name: 'Lifetime',
-    description: 'One-time payment for lifetime access to everything',
-    monthlyPrice: 299,
-    yearlyPrice: 299,
+    name: 'Dryland & Frontier Forests',
+    description: 'Cutting edge forestry systems engineered for dry and marginal environments',
+    monthlyPrice: 0,
+    yearlyPrice: 8000,
+    image: {
+      src: '/drylands.webp',
+      alt: 'Core forests plan',
+    },
     features: [
-      'Lifetime updates and support',
-      'Private Discord channel',
-      'No recurring fees ever',
-      'Future template access',
-      'VIP support priority',
-      'Exclusive beta features'
+      'Elite, stress-tolerant genetics and advanced clones/hybrids',
+      'Dryland and water-limited silvicultural systems',
+      'Higher biological and execution risk with asymmetric upside',
+      'Deep site analytics and climate-resilience modelling',
+      'Built for sophisticated, innovation driven capital'
     ],
-    cta: 'Get Started',
+    cta: 'Access Dryland Strategies',
     popular: false,
-    includesPrevious: 'All Pro features, plus'
   }
 ]
 
@@ -69,12 +78,12 @@ export function PricingSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mx-auto max-w-2xl text-center mb-12">
-          <Badge variant="outline" className="mb-4">Pricing Plans</Badge>
+          <Badge variant="outline" className="mb-4">Invest Now!</Badge>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
-            Choose your plan
+            Choose your investment
           </h2>
           <p className="text-lg text-muted-foreground mb-8">
-            Start building with our free components or upgrade to Pro for access to premium templates and advanced features.
+            It all starts with planting a tree
           </p>
 
           {/* Billing Toggle */}
@@ -119,10 +128,40 @@ export function PricingSection() {
                   }`}
                 >
                   {/* Plan Header */}
-                  <div>
-                    <div className="text-lg font-medium tracking-tight mb-2">{plan.name}</div>
-                    <div className="text-muted-foreground text-balance text-sm">{plan.description}</div>
+                  <div className="space-y-4">
+                    {plan.image && (
+                      <div
+                        className={[
+                          "relative w-full overflow-hidden rounded-lg ring-1",
+                          plan.popular ? "ring-primary/25" : "ring-foreground/10",
+                        ].join(" ")}
+                      >
+                        {/* shallow banner */}
+                        <div className="h-24 w-full">
+                          <img
+                            src={plan.image.src}
+                            alt={plan.image.alt}
+                            className="h-full w-full object-cover"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </div>
+
+                        {/* subtle overlay for cohesion */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-background/35 via-transparent to-transparent" />
+                      </div>
+                    )}
+
+                    <div>
+                      <div className="text-lg font-medium tracking-tight mb-2">
+                        {plan.name}
+                      </div>
+                      <div className="text-muted-foreground text-balance text-sm">
+                        {plan.description}
+                      </div>
+                    </div>
                   </div>
+
 
                   {/* Pricing */}
                   <div>
@@ -157,11 +196,6 @@ export function PricingSection() {
                   {/* Features */}
                   <div>
                     <ul role="list" className="space-y-3 text-sm">
-                      {plan.includesPrevious && (
-                        <li className="flex items-center gap-3 font-medium">
-                          {plan.includesPrevious}:
-                        </li>
-                      )}
                       {plan.features.map((feature, featureIndex) => (
                         <li key={featureIndex} className="flex items-center gap-3">
                           <Check className="text-muted-foreground size-4 flex-shrink-0" strokeWidth={2.5} />

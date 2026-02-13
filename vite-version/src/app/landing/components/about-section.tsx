@@ -4,40 +4,32 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { CardDecorator } from "@/components/ui/card-decorator"
-import { Github, TreePine, Sigma, PiggyBank, TrendingUp } from "lucide-react"
+import { Github, TreePine, Handshake, PiggyBank, House } from "lucide-react"
 
 const values = [
   {
-    icon: TreePine,
-    title: "Forestry First",
+    icon: House,
+    title: "Find a nursery",
     description:
-      "Every forest investment is built with real time, auditable and precise forestry data, ensuring trackable investments.",
-    imageSrc: "/forest.webp",
-    imageAlt: "Forestry data and field verification",
+      "Access the right genetics and the right nurseries, backed by performance data you can interrogate and trust.",
   },
   {
-    icon: Sigma,
-    title: "Modelling Excellence",
+    icon: TreePine,
+    title: "Plant a forest",
     description:
-      "We maintain the highest, most analytic modelling standards, merging modern tree allometry with statistical inference.",
-    imageSrc: "/about.webp",
-    imageAlt: "Allometry and statistical modeling",
+      "From site prep to establishment, we connect projects to experienced contractors and proven systems—while modelling outcomes before the first tree goes in.",
+  },
+  {
+    icon: Handshake,
+    title: "Take your trees to market",
+    description:
+      "Battle-tested cashflow and geospatial analysis used in real forestry trade applications for you to source and sell with confidence.",
   },
   {
     icon: PiggyBank,
-    title: "Investment Ready",
+    title: "Profit and start again!",
     description:
-      "Battle-tested cashflow analysis used in real applications with proven performance and reliability across different environments.",
-    imageSrc: "/drylands.webp",
-    imageAlt: "Cashflow and investment analysis",
-  },
-  {
-    icon: TrendingUp,
-    title: "Quality Market Insights",
-    description:
-      "Hand-collected live market data from analysts on the ground committed to investment performance optimization.",
-    imageSrc: "/greenbuilding.webp",
-    imageAlt: "Market insights and performance tracking",
+      "Hand-collected live market data from analysts on the ground committed to value chain performance optimization.",
   },
 ] as const
 
@@ -54,9 +46,9 @@ export function AboutSection() {
             Who said money doesn&apos;t grow on trees!
           </h2>
           <p className="text-lg text-muted-foreground mb-8">
-            Forestry has been analog for too long. We bring science, data, and financial intelligence
-            into a single platform that lets anyone build, manage, and invest in high-performance forests.
-            The future of forestry, engineered.
+          Serious profits are already being generated from natural capital. The question is, are you a part of it?
+          Wether you - supply seedlings, operate planting crews, run a mill, trade roundwood and carbon or are just looking to make bank from land,
+          we ensure you speak and connect with the right people in the most informed way you can ever be. 
           </p>
         </div>
 
@@ -64,19 +56,6 @@ export function AboutSection() {
         <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 xl:grid-cols-4 mb-12">
           {values.map((value, index) => (
             <Card key={index} className="group shadow-xs py-2 overflow-hidden">
-              {/* Card image */}
-              <div className="relative h-40 w-full overflow-hidden">
-                <img
-                  src={value.imageSrc}
-                  alt={value.imageAlt}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                  loading="lazy"
-                  decoding="async"
-                />
-                {/* subtle overlay so icon/text feels integrated */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
-              </div>
-
               <CardContent className="p-8">
                 <div className="flex flex-col items-center text-center">
                   <CardDecorator>

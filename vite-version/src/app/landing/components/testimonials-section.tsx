@@ -13,83 +13,76 @@ type Testimonial = {
 
 const testimonials: Testimonial[] = [
   {
-    name: 'Alexandra Mitchell',
-    role: 'Senior Frontend Developer',
+    name: 'Grace Wanjiku',
+    role: 'Nursery Operator, Kenya',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=female-1',
-    quote:
-      'This platform has completely transformed our development workflow. The component system is so well-architected that even complex applications feel simple to build.',
+    quote: 'For the first time, serious buyers and investors are reaching out with well planned planting projects. It is much easier to plan my business.',
   },
   {
-    name: 'James Thompson',
-    role: 'Technical Lead',
+    name: 'Michael Harrington',
+    role: 'Investment Manager, UK',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=male-1',
-    quote: 'After trying countless frameworks, this is the one that finally clicked. The documentation is exceptional.',
+    quote: 'We were actively looking for exposure to East African forestry but lacked trusted execution partners. This platform didn’t just give us data—it gave us counterparties we could work with.',
   },
   {
-    name: 'Priya Sharma',
-    role: 'Product Designer',
+    name: 'Neema Mtei',
+    role: 'Climate-Focused Investor, Tanzania',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=female-2',
-    quote:
-      'The design system is beautiful and consistent. I can prototype ideas quickly and hand them off to developers with confidence that the implementation will match perfectly.',
+    quote: 'This isn’t a directory or an information tool, it’s a functioning marketplace with projects you cant track.',
   },
   {
-    name: 'Robert Kim',
-    role: 'Engineering Manager',
+    name: 'Daniel Mwangi',
+    role: 'Private Investor, Kenya',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=male-2',
-    quote:
-      'We migrated our entire application to this platform in just two weeks. The performance improvements were immediate.',
+    quote: 'Instead of chasing credible contacts and piecing things together manually, everything I needed—nurseries, contractors, projections—was in one place. That changes the speed of decisions.',
   },
   {
-    name: 'Maria Santos',
-    role: 'Full Stack Engineer',
+    name: 'Sarah Namusoke',
+    role: 'Plywood Factory Manager, Uganda',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=female-3',
-    quote:
-      'The accessibility features are top-notch. Building inclusive applications has never been easier. Every component follows best practices out of the box, and the automated testing suite ensures we maintain high accessibility standards throughout our development process.',
+    quote: 'Access to quality supply has always been unpredictable. This gives us earlier visibility into what’s being planted—and when it’s coming to market.',
   },
   {
-    name: 'Thomas Anderson',
-    role: 'Solutions Architect',
+    name: 'Tesfaye Bekele',
+    role: 'Planting Contractor, Uganda',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=male-3',
-    quote: 'Scalability was our biggest concern, but this platform handles enterprise-level complexity with ease.',
+    quote: 'We used to rely on referrals and chance. Now projects come with defined scope, capital clarity, and timelines. It’s professional forestry at last.',
   },
   {
-    name: 'Lisa Chang',
-    role: 'UX Researcher',
+    name: 'Asha Mohamed',
+    role: 'Smallholder Forestry Grower, Tanzania',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=female-4',
-    quote:
-      'User testing results have been consistently positive since we adopted this platform. The user experience is intuitive and the performance is stellar. Our user satisfaction scores have increased by 40% since the migration.',
+    quote: 'I used to plant trees for firewood and decoration. Now I understand the market, the timelines, and who I can plant for.',
   },
   {
-    name: 'Michael Foster',
-    role: 'DevOps Engineer',
+    name: 'Peter Kariuki',
+    role: 'Landowner, Kenya',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=male-4',
-    quote: 'Deployment and maintenance are a breeze. The platform integrates seamlessly with our CI/CD pipeline.',
+    quote: 'I had land sitting idle for years. The platform showed me what was possible—and connected me to the people who could actually make it happen.',
   },
   {
     name: 'Sophie Laurent',
-    role: 'Creative Director',
+    role: 'Carbon Project Developer, Tanzania',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=female-5',
-    quote:
-      'The creative possibilities are endless. We can bring any design concept to life without compromising on technical quality or user experience.',
+    quote: 'Carbon conversations in East Africa are finally grounded in actual forestry systems and data. That credibility matters when speaking to buyers and regulator.',
   },
   {
-    name: 'Daniel Wilson',
-    role: 'Backend Developer',
+    name: 'Oliver Ahlm',
+    role: 'Impact Fund Partner, Sweeden',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=male-5',
-    quote: 'The API design is exceptional. Clean, intuitive, and well-documented.',
+    quote: 'Instead of months of desktop research, fragmented sourcing and due dilligence, we’re reviewing coordinated forestry opportunities in weeks.',
   },
   {
-    name: 'Natasha Petrov',
-    role: 'Mobile App Developer',
+    name: 'Natasha Nkurunziza',
+    role: 'Institutional Investment Advisor, Rwanda',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=female-6',
-    quote:
-      'Cross-platform development has never been this efficient. One codebase, multiple platforms, consistent user experience. This is the future. The responsive design system ensures our apps look perfect on every device.',
+    quote: 'Forestry in the region has always had promise. The missing piece was coordination. This platform feels like that missing infrastructure.',
   },
   {
-    name: 'Carlos Rivera',
-    role: 'Startup Founder',
+    name: 'Doan Dai',
+    role: 'Export Timber Trader, Vietnam',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=male-6',
-    quote: 'As a non-technical founder, this platform gave me the confidence to build our MVP quickly.',
+    quote: 'Access to structured, forward-looking supply changes how we negotiate and contract in East Africa. It brings confidence in the region.',
   },
 ]
 
@@ -101,10 +94,10 @@ export function TestimonialsSection() {
         <div className="mx-auto max-w-2xl text-center mb-16">
           <Badge variant="outline" className="mb-4">Testimonials</Badge>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
-            Empowering Innovation Worldwide
+            Accelerating Forestry In East Africa
           </h2>
           <p className="text-lg text-muted-foreground">
-            Join thousands of developers and teams who trust our platform to build exceptional digital experiences.
+            Join thousands of entrepreneurs and investors who trust our platform to build exceptional forestry investments.
           </p>
         </div>
 

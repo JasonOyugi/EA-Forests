@@ -7,27 +7,27 @@ import { Badge } from '@/components/ui/badge'
 const blogs = [
     {
       id: 1,
-      image: 'https://ui.shadcn.com/placeholder.svg',
-      category: 'Technology',
-      title: 'AI Development Catalysts',
+      image: '/greenbuilding.webp',
+      category: 'Markets',
+      title: 'Building green in East Africa',
       description:
-        'Exploring how AI-driven tools are transforming software development workflows and accelerating innovation.',
+        'Exploring how forests, engineering and green architecture are transforming building development and accelerating innovation.',
     },
     {
       id: 2,
       image: 'https://ui.shadcn.com/placeholder.svg',
-      category: 'Lifestyle',
-      title: 'Minimalist Living Guide',
+      category: 'Genetics',
+      title: 'Planting clonal forests',
       description:
-        'Minimalist living approaches that can help reduce stress and create more meaningful daily experiences.',
+        'One individual tree to make an entire forest? Learn how!',
     },
     {
       id: 3,
       image: 'https://ui.shadcn.com/placeholder.svg',
-      category: 'Design',
-      title: 'Accessible UI Trends',
+      category: 'Climate',
+      title: 'How to tap into the carbon markets with forestry',
       description:
-        'How modern UI trends are embracing accessibility while maintaining sleek, intuitive user experiences.',
+        'Step-by-step practical guide on navigating the carbon landscape.',
     },
   ]
 
