@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { ScrollTrigger } from "gsap/all"
@@ -21,21 +21,16 @@ export function HeroSection() {
   const [currentIndex, setCurrentIndex] = useState(1)
   const [hasClicked, setHasClicked] = useState(false)
 
-  // ✅ only gate initial UI on background readiness
   const [bgReady, setBgReady] = useState(false)
   const [forceHideLoader, setForceHideLoader] = useState(false)
 
   const rootRef = useRef<HTMLDivElement | null>(null)
+  const bgVdRef = useRef<HTMLVideoElement | null>(null)
   const nextVdRef = useRef<HTMLVideoElement | null>(null)
   const previewVideoRef = useRef<HTMLVideoElement | null>(null)
 
-  const getVideoSrc = (index: number) => `/hero-${index}.mp4`
+  const getVideoSrc = (index: number) => `/home/JasonOyugi/shadcn-dashboard-landing-template/vite-version/public/hero-${index}.mp4`
 
-  // Optional posters (recommended). Put these in /public/posters/
-  // If you don’t have posters yet, you can remove poster props below.
-  const getPosterSrc = (index: number) => `/posters/hero-${index}.jpg`
-
-  // Safety: never block forever (e.g. if a video 404s)
   useEffect(() => {
     const t = window.setTimeout(() => setForceHideLoader(true), 3500)
     return () => window.clearTimeout(t)
@@ -43,63 +38,98 @@ export function HeroSection() {
 
   const loading = !bgReady && !forceHideLoader
 
+  const bgIndex = currentIndex
+  const previewIndex = (currentIndex % totalVideos) + 1
+
+  // reset loader + reload bg when src changes
+  useEffect(() => {
+    setBgReady(false)
+    const v = bgVdRef.current
+    if (!v) return
+    void v.play().catch(() => {})
+  }, [bgIndex])
+
+  // keep preview synced
+  useEffect(() => {
+    const v = previewVideoRef.current
+    if (!v) return
+  }, [previewIndex])
+
+  // keep next synced
+  useEffect(() => {
+    const v = nextVdRef.current
+    if (!v) return
+  }, [currentIndex])
+
   const handleMiniVdClick = () => {
     setHasClicked(true)
-    setCurrentIndex((prevIndex) => (prevIndex % totalVideos) + 1)
+    setCurrentIndex((prev) => (prev % totalVideos) + 1)
   }
 
   const handleHoverStart = () => {
-    if (previewVideoRef.current) {
-      previewVideoRef.current.currentTime = 0
-      previewVideoRef.current.play().catch(() => {})
-    }
+    const v = previewVideoRef.current
+    if (!v) return
+    v.currentTime = 0
+    void v.play().catch(() => {})
   }
 
   const handleHoverEnd = () => {
     previewVideoRef.current?.pause()
   }
 
-  // ✅ CLICK EXPAND TRANSITION — scoped to this component (no global ID collisions)
   useGSAP(
     () => {
       if (!hasClicked) return
       const root = rootRef.current
       if (!root) return
 
-      const nextEl = root.querySelector<HTMLVideoElement>('[data-next-video="true"]')
-      const currentEl = root.querySelector<HTMLVideoElement>('[data-current-video="true"]')
-
-      if (!nextEl || !currentEl) return
+      const nextEl = root.querySelector('[data-next-video="true"]') as HTMLVideoElement | null
+      const previewWrap = root.querySelector('[data-preview-wrap="true"]') as HTMLDivElement | null
+      if (!nextEl || !previewWrap) return
 
       gsap.set(nextEl, { visibility: "visible" })
 
+      const startPlay = () => {
+        const v = nextVdRef.current
+        if (!v) return
+      
+        const ready = () => {
+          v.play().catch(() => {})
+        }
+      
+        if (v.readyState >= 2) ready()
+        else v.addEventListener("canplay", ready, { once: true })
+      }
+
       gsap.to(nextEl, {
         transformOrigin: "center center",
-        scale: 1,
+        left: 0,
+        top: 0,
+        xPercent: 0,
+        yPercent: 0,
         width: "100%",
         height: "100%",
+        scale: 1,
         duration: 1,
         ease: "power1.inOut",
-        onStart: () => nextVdRef.current?.play().catch(() => {}),
+        onStart: startPlay,
       })
 
-      gsap.from(currentEl, {
-        transformOrigin: "center center",
-        scale: 0,
-        duration: 1.5,
-        ease: "power1.inOut",
+      gsap.to(previewWrap, {
+        opacity: 0,
+        scale: 0.9,
+        duration: 0.6,
+        ease: "power1.out",
       })
     },
     { dependencies: [currentIndex], revertOnUpdate: true, scope: rootRef }
   )
 
-  // ✅ SCROLL MORPH — scoped and safe
   useGSAP(
     () => {
       const root = rootRef.current
       if (!root) return
-
-      const frame = root.querySelector<HTMLElement>('[data-video-frame="true"]')
+      const frame = root.querySelector('[data-video-frame="true"]') as HTMLElement | null
       if (!frame) return
 
       gsap.set(frame, {
@@ -142,11 +172,10 @@ export function HeroSection() {
           </div>
 
           <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
-            Your
+            Your{" "}
             <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-              {" "}
-              East Africa Forest{" "}
-            </span>
+              East Africa Forest
+            </span>{" "}
             Marketplace
           </h1>
 
@@ -171,7 +200,6 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* HERO VISUAL */}
         <div className="mx-auto mt-20 max-w-6xl">
           <div ref={rootRef} className="relative group">
             <div className="absolute top-2 lg:-top-8 left-1/2 -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-80 bg-primary/50 rounded-full blur-3xl" />
@@ -187,8 +215,8 @@ export function HeroSection() {
                 data-video-frame="true"
                 className="relative z-10 w-full overflow-hidden rounded-xl aspect-[16/9]"
               >
-                {/* Mini preview */}
                 <div
+                  data-preview-wrap="true"
                   className="absolute left-1/2 top-1/2 z-50 h-48 w-64 -translate-x-1/2 -translate-y-1/2 cursor-pointer overflow-hidden transition-all duration-700 ease-in-out"
                   onMouseEnter={handleHoverStart}
                   onMouseLeave={handleHoverEnd}
@@ -196,47 +224,46 @@ export function HeroSection() {
                   <VideoPreview>
                     <div
                       onClick={handleMiniVdClick}
-                      className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
+                      className="origin-center scale-90 opacity-100 transition-all duration-300 ease-out hover:scale-100"
                     >
                       <video
                         ref={previewVideoRef}
-                        data-current-video="true"
-                        src={getVideoSrc((currentIndex % totalVideos) + 1)}
-                        poster={getPosterSrc((currentIndex % totalVideos) + 1)}
+                        src={getVideoSrc(previewIndex)}
+                        autoPlay
                         loop
                         muted
                         playsInline
-                        preload="none"
+                        preload="metadata"
                         className="h-full w-full origin-center scale-150 object-cover object-center"
                       />
                     </div>
                   </VideoPreview>
                 </div>
-                {/* Next video (expands on click) */}
+
                 <video
                   ref={nextVdRef}
                   data-next-video="true"
                   src={getVideoSrc(currentIndex)}
-                  poster={getPosterSrc(currentIndex)}
-                  loop
-                  muted
-                  playsInline
-                  preload="none"          // ✅ only needed when clicked
-                  className="absolute left-1/2 top-1/2 invisible z-20 h-48 w-64 -translate-x-1/2 -translate-y-1/2 object-cover object-center"
-                />
-
-                {/* Background video (only one that loads immediately) */}
-                <video
-                  src={getVideoSrc(currentIndex === totalVideos - 1 ? 1 : currentIndex)}
-                  poster={getPosterSrc(currentIndex === totalVideos - 1 ? 1 : currentIndex)}
                   autoPlay
                   loop
                   muted
                   playsInline
-                  preload="metadata"      // ✅ fast start
+                  preload="metadata"
+                  className="absolute left-1/2 top-1/2 invisible z-20 h-48 w-64 -translate-x-1/2 -translate-y-1/2 object-cover object-center"
+                />
+
+                <video
+                  ref={bgVdRef}
+                  src={getVideoSrc(bgIndex)}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
                   className="absolute left-0 top-0 size-full object-cover object-center"
-                  onCanPlayThrough={() => setBgReady(true)} // ✅ loader ends ASAP
-                  onError={() => setForceHideLoader(true)}  // ✅ never get stuck
+                  onLoadedData={() => setBgReady(true)}
+                  onCanPlay={() => setBgReady(true)}
+                  onError={() => setForceHideLoader(true)}
                 />
 
                 <div className="absolute bottom-5 right-5 z-40 rounded-lg bg-black/50 px-4 py-2 backdrop-blur-sm">
