@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { ScrollTrigger } from "gsap/all"
@@ -80,7 +80,12 @@ export function HeroSection() {
         height: "100%",
         duration: 1,
         ease: "power1.inOut",
-        onStart: () => nextVdRef.current?.play().catch(() => {}),
+        onStart: () => {
+          if (nextVdRef.current) {
+            nextVdRef.current.play().catch(() => {});
+          }
+        },
+        
       })
 
       gsap.from(currentEl, {

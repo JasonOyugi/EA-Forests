@@ -272,7 +272,7 @@ In `index.html`:
       rel="stylesheet"
     />
     
-    <title>Shadcn Dashboard + Landing Page Template</title>
+    <title>EA Forests</title>
   </head>
   <body class="font-sans antialiased">
     <div id="root"></div>
