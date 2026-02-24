@@ -6,7 +6,7 @@
     "avatar": "SJ",
     "role": "Admin",
     "plan": "Enterprise",
-    "billing": "UPI",
+    "billing": "MPESA",
     "status": "Active",
     "joinedDate": "2024-01-15",
     "lastLogin": "2024-08-12"
@@ -54,7 +54,7 @@
     "avatar": "JP",
     "role": "Subscriber",
     "plan": "Basic",
-    "billing": "UPI",
+    "billing": "MPESA",
     "status": "Inactive",
     "joinedDate": "2024-04-05",
     "lastLogin": "2024-07-20"
@@ -102,7 +102,7 @@
     "avatar": "LM",
     "role": "Maintainer",
     "plan": "Basic",
-    "billing": "UPI",
+    "billing": "MPESA",
     "status": "Pending",
     "joinedDate": "2024-04-18",
     "lastLogin": "2024-08-11"

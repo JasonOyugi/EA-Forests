@@ -5,6 +5,7 @@ import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Logo } from "./logo"
+import { getAppUrl } from "@/lib/utils"
 
 export function SidebarNotification() {
   const [isVisible, setIsVisible] = React.useState(true)
@@ -30,24 +31,24 @@ export function SidebarNotification() {
             <div>
               Welcome to{" "}
               <a 
-                href="https://shadcnstore.com" 
+                href={getAppUrl("/landing")} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-primary hover:underline"
               >
-                ShadcnStore
+                EA Forests
               </a>
             </div>
           </h3>
           <p className="text-sm text-muted-foreground dark:text-neutral-400 leading-relaxed">
-            Explore our premium Shadcn UI{" "}
+            Explore our premium {" "}
             <a 
               href="https://shadcnstore.com/blocks" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-primary underline"
             >
-              blocks
+              Models
             </a>{" "}
             to build your next project faster.
           </p>

@@ -9,27 +9,27 @@ import { Github, TreePine, Handshake, PiggyBank, House } from "lucide-react"
 const values = [
   {
     icon: House,
-    title: "Find a nursery",
+    title: "Find the right planting material",
     description:
-      "Access the right genetics and the right nurseries, backed by performance data you can interrogate and trust.",
+      "Access the right genetics, the right suppliers and the right nurseries, backed by performance data you can interrogate and trust.",
   },
   {
     icon: TreePine,
-    title: "Plant a forest",
+    title: "Start a forestry investment",
     description:
-      "From site prep to establishment, we connect projects to experienced contractors and proven systems—while modelling outcomes before the first tree goes in.",
+      "From battle-tested cashflow and geospatial analysis to site establishment, we connect projects to experienced contractors and proven systems while modelling outcomes before the first shilling goes in.",
   },
   {
     icon: Handshake,
-    title: "Take your trees to market",
+    title: "Take your forestry product to market",
     description:
-      "Battle-tested cashflow and geospatial analysis used in real forestry trade applications for you to source and sell with confidence.",
+      "Hand-collected live market data from analysts on the ground committed to value chain performance optimization.",
   },
   {
     icon: PiggyBank,
     title: "Profit and start again!",
     description:
-      "Hand-collected live market data from analysts on the ground committed to value chain performance optimization.",
+      "Access strategies, models and analysis used in real forestry trade applications for you to source and sell again with confidence.",
   },
 ] as const
 
@@ -46,8 +46,8 @@ export function AboutSection() {
             Who said money doesn&apos;t grow on trees!
           </h2>
           <p className="text-lg text-muted-foreground mb-8">
-          Serious profits are already being generated from natural capital. The question is, are you a part of it?
-          Wether you - supply seedlings, operate planting crews, run a mill, trade roundwood and carbon or are just looking to make bank from land,
+          Serious profits are already being generated from forestry. The question is, are you a part of it?
+          Wether you supply seedlings, operate planting crews, run a mill, trade roundwood and carbon or are just looking to make bank from land,
           we ensure you speak and connect with the right people in the most informed way you can ever be. 
           </p>
         </div>

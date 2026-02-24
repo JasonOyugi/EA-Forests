@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight, TrendingUp, Package, Github } from 'lucide-react'
+import { ArrowRight, TrendingUp, Package, Handshake } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
@@ -16,7 +16,7 @@ export function CTASection() {
               <div className='flex flex-col items-center gap-4'>
                 <Badge variant='outline' className='flex items-center gap-2'>
                   <TrendingUp className='size-3' />
-                  Partner Suite
+                  Become a trusted member
                 </Badge>
 
                 <div className='text-muted-foreground flex items-center gap-4 text-sm'>
@@ -34,21 +34,21 @@ export function CTASection() {
               {/* Main Content */}
               <div className='space-y-6'>
                 <h1 className='text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl'>
-                  Supercharge your business and investment
+                  Join the community of 
                   <span className='flex sm:inline-flex justify-center'>
                     <span className='relative mx-2'>
                       <span className='bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent'>
-                        performance
+                      forestry
                       </span>
                       <div className='absolute start-0 -bottom-2 h-1 w-full bg-gradient-to-r from-primary/30 to-secondary/30' />
                     </span>
-                    today
+                    businesses today
                   </span>
                 </h1>
 
                 <p className='text-muted-foreground mx-auto max-w-2xl text-balance lg:text-xl'>
-                  Stop wasting time gathering information and looking for credible partners. Get ready contacts, information, prices and opportunities
-                  that turbo-charge your investment journey in forestry.
+                  From seed suppliers to timber processers, we bring the clients and dealers to you - partner with us, increase your visibility,
+                  find customers and suppliers, start trading and earn profits!
                 </p>
               </div>
 
@@ -56,14 +56,14 @@ export function CTASection() {
               <div className='flex flex-col justify-center gap-4 sm:flex-row sm:gap-6'>
                 <Button size='lg' className='cursor-pointer px-8 py-6 text-lg font-medium' asChild>
                   <a href='https://shadcnstore.com/blocks' target='_blank' rel='noopener noreferrer'>
-                    <Package className='me-2 size-5' />
-                    Browse Forestry Businesses
+                    <Handshake className='me-2 size-5' />
+                    Become a member
                   </a>
                 </Button>
                 <Button variant='outline' size='lg' className='cursor-pointer px-8 py-6 text-lg font-medium group' asChild>
                   <a href='https://github.com/silicondeck/shadcn-dashboard-landing-template' target='_blank' rel='noopener noreferrer'>
-                    <Github className='me-2 size-5' />
-                    View on GitHub
+                    <Package className='me-2 size-5' />
+                    Browse services
                     <ArrowRight className='ms-2 size-4 transition-transform group-hover:translate-x-1' />
                   </a>
                 </Button>

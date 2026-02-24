@@ -1,5 +1,6 @@
 import { Heart } from "lucide-react"
 import { Link } from "react-router-dom"
+import { getAppUrl } from "@/lib/utils"
 
 export function SiteFooter() {
   return (
@@ -11,16 +12,16 @@ export function SiteFooter() {
             <Heart className="h-4 w-4 fill-red-500 text-red-500" />
             <span>by</span>
             <Link
-              to="https://shadcnstore.com"
+              to={getAppUrl("/landing")}
               target="_blank"
               rel="noopener noreferrer"
               className="font-medium text-foreground hover:text-primary transition-colors"
             >
-              ShadcnStore Team
+              EA Forests Team
             </Link>
           </div>
           <p className="text-xs text-muted-foreground">
-            Building beautiful, accessible blocks, templates and dashboards for modern web applications.
+            Building the future of East African Forestry.
           </p>
         </div>
       </div>

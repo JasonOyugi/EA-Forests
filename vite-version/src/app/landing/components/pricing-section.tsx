@@ -78,9 +78,9 @@ export function PricingSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mx-auto max-w-2xl text-center mb-12">
-          <Badge variant="outline" className="mb-4">Invest Now!</Badge>
+          <Badge variant="outline" className="mb-4">Plant Now!</Badge>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
-            Choose your investment
+            Choose your forest
           </h2>
           <p className="text-lg text-muted-foreground mb-8">
             It all starts with planting a tree

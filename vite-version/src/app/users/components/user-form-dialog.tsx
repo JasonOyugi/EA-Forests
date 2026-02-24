@@ -186,7 +186,7 @@ export function UserFormDialog({ onAddUser }: UserFormDialogProps) {
                       </FormControl>
                       <SelectContent>
                         <SelectItem value="Auto Debit">Auto Debit</SelectItem>
-                        <SelectItem value="UPI">UPI</SelectItem>
+                        <SelectItem value="UPI">MPESA</SelectItem>
                         <SelectItem value="Paypal">Paypal</SelectItem>
                       </SelectContent>
                     </Select>

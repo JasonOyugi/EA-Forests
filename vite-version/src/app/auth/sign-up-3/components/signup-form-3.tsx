@@ -20,10 +20,10 @@ export function SignupForm3({
             <div className="flex flex-col gap-6">
               <div className="flex justify-center mb-2">
                 <a href="/" className="flex items-center gap-2 font-medium">
-                  <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-md">
+                  <div className="text-primary-foreground flex size-8 items-center justify-center rounded-md">
                     <Logo size={24} />
                   </div>
-                  <span className="text-xl">ShadcnStore</span>
+                  <span className="text-xl">EA Forests</span>
                 </a>
               </div>
               <div className="flex flex-col items-center text-center">
@@ -127,7 +127,7 @@ export function SignupForm3({
           </form>
           <div className="bg-muted relative hidden md:block">
             <img
-              src="https://ui.shadcn.com/placeholder.svg"
+              src="https://static.vecteezy.com/system/resources/previews/068/738/358/non_2x/simple-line-style-happy-emoticon-circle-outline-shape-graphic-icon-vector.jpg"
               alt="Image"
               className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.95] dark:invert"
             />

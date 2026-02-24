@@ -19,16 +19,16 @@ export function LoginForm3({
             <div className="flex flex-col gap-6">
               <div className="flex justify-center mb-2">
                 <a href="/" className="flex items-center gap-2 font-medium">
-                  <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-md">
+                  <div className="text-primary-foreground flex size-8 items-center justify-center rounded-md">
                     <Logo size={24} />
                   </div>
-                  <span className="text-xl">ShadcnStore</span>
+                  <span className="text-xl">EA Forests</span>
                 </a>
               </div>
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl font-bold">Welcome back</h1>
                 <p className="text-muted-foreground text-balance">
-                  Login to your ShadcnStore account
+                  Login to your EA Forests account
                 </p>
               </div>
               <div className="grid gap-3">
@@ -100,7 +100,7 @@ export function LoginForm3({
           </form>
           <div className="bg-muted relative hidden md:block">
             <img
-              src="https://ui.shadcn.com/placeholder.svg"
+              src="https://static.vecteezy.com/system/resources/previews/074/725/887/non_2x/simple-line-drawing-squinting-happy-face-emoticon-shape-icon-symbol-vector.jpg"
               alt="Image"
               className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.95] dark:invert"
             />
@@ -108,7 +108,8 @@ export function LoginForm3({
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
+        By clicking continue, you 
+        agree to our <a href="#">Terms of Service</a>{" "}
         and <a href="#">Privacy Policy</a>.
       </div>
     </div>

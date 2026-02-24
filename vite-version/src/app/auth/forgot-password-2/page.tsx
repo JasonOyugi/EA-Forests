@@ -7,10 +7,10 @@ export default function ForgotPassword2Page() {
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-center gap-2 md:justify-start">
           <a href="/" className="flex items-center gap-2 font-medium">
-            <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-md">
+            <div className="text-primary-foreground flex size-8 items-center justify-center rounded-md">
               <Logo size={24} />
             </div>
-            ShadcnStore
+            EA Forests
           </a>
         </div>
         <div className="flex flex-1 items-center justify-center">
@@ -21,7 +21,7 @@ export default function ForgotPassword2Page() {
       </div>
       <div className="bg-muted relative hidden lg:block">
         <img
-          src="https://ui.shadcn.com/placeholder.svg"
+          src="https://static.vecteezy.com/system/resources/previews/068/738/395/non_2x/line-art-dead-face-circle-with-x-eyes-emoji-illustration-vector.jpg"
           alt="Image"
           className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.95] dark:invert"
         />
