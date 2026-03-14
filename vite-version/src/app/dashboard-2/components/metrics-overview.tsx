@@ -13,18 +13,18 @@ import { Badge } from "@/components/ui/badge"
 
 const metrics = [
   {
-    title: "Total Revenue",
-    value: "$54,230",
+    title: "Projected Cash",
+    value: "$2.4M",
     description: "Monthly revenue",
     change: "+12%",
     trend: "up",
     icon: DollarSign,
-    footer: "Trending up this month",
-    subfooter: "Revenue for the last 6 months"
+    footer: "Roundwood prices up this month",
+    subfooter: "NPV at harvest from all forestry assets"
   },
   {
-    title: "Active Customers",
-    value: "2,350",
+    title: "Capital Deployed",
+    value: "$420,000",
     description: "Total active users",
     change: "+5.2%", 
     trend: "up",

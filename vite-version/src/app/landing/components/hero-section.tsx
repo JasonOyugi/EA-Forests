@@ -133,7 +133,7 @@ export function HeroSection() {
       className="relative overflow-hidden bg-gradient-to-b from-background to-background/80 pt-16 sm:pt-20 pb-16"
     >
       <div className="absolute inset-0">
-        <DotPattern className="opacity-100" size="md" fadeStyle="ellipse" />
+        <DotPattern className="opacity-100" size="lg" fadeStyle="none" />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -167,7 +167,7 @@ export function HeroSection() {
             </Button>
 
             <Button variant="outline" size="lg" className="text-base cursor-pointer" asChild>
-              <a href="#demo">
+              <a href="#pricing">
                 <Play className="mr-2 h-4 w-4" />
                 Plant a forest
               </a>
