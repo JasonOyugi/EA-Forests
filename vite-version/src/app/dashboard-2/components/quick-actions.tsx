@@ -9,7 +9,7 @@ export function QuickActions() {
     <div className="flex items-center space-x-2">
       <Button className="cursor-pointer">
         <Plus className="h-4 w-4 mr-2" />
-        New Sale
+        New Investment
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

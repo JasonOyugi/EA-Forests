@@ -1,47 +1,56 @@
 [
   {
     "id": 1,
-    "header": "Federal Communications Commission - Network Infrastructure Modernization",
-    "type": "Government Contract",
-    "status": "Completed",
-    "target": "95%",
-    "limit": "100%",
-    "reviewer": "Eddie Lake"
+    "header": "Round 1 weeding - Moiben Compartment 12",
+    "type": "Silviculture",
+    "status": "In Progress",
+    "target": "44ha",
+    "limit": "31ha",
+    "reviewer": "Grace Njeri"
   },
   {
     "id": 2,
-    "header": "Department of Defense - Cybersecurity Enhancement Program",
-    "type": "Defense Contract",
-    "status": "Completed",
-    "target": "98%",
-    "limit": "100%",
-    "reviewer": "Jamik Tashpulatov"
+    "header": "Pruning cycle - Kericho South Block D",
+    "type": "Silviculture",
+    "status": "Scheduled",
+    "target": "58ha",
+    "limit": "0ha",
+    "reviewer": "Daniel Kiptoo"
   },
   {
     "id": 3,
-    "header": "NASA - Satellite Communication System Upgrade",
-    "type": "Space Technology",
-    "status": "Completed",
-    "target": "92%",
-    "limit": "95%",
-    "reviewer": "Emily Whalen"
+    "header": "Formative pruning QA - Njoro Valley",
+    "type": "Field audit",
+    "status": "Done",
+    "target": "18ha",
+    "limit": "18ha",
+    "reviewer": "Amina Wekesa"
   },
   {
     "id": 4,
-    "header": "Department of Homeland Security - Border Security Tech",
-    "type": "Security Contract",
-    "status": "In Progress",
-    "target": "85%",
-    "limit": "90%",
-    "reviewer": "Eddie Lake"
+    "header": "Beating up after germination gap - Eldama Ravine",
+    "type": "Silviculture",
+    "status": "At Risk",
+    "target": "36ha",
+    "limit": "9ha",
+    "reviewer": "Grace Njeri"
   },
   {
     "id": 5,
-    "header": "GSA - Cloud Infrastructure Migration",
-    "type": "IT Services",
-    "status": "Completed",
-    "target": "96%",
-    "limit": "98%",
-    "reviewer": "Jamik Tashpulatov"
+    "header": "Chemical release application - Lessos Block B",
+    "type": "Silviculture",
+    "status": "In Progress",
+    "target": "25ha",
+    "limit": "14ha",
+    "reviewer": "Daniel Kiptoo"
+  },
+  {
+    "id": 6,
+    "header": "Mulching trial - Kitale demo plot",
+    "type": "Silviculture",
+    "status": "Scheduled",
+    "target": "12ha",
+    "limit": "0ha",
+    "reviewer": "Amina Wekesa"
   }
 ]

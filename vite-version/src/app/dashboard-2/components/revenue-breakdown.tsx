@@ -9,40 +9,37 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button"
 
 const revenueData = [
-  { category: "subscriptions", value: 45, amount: 24500, fill: "var(--color-subscriptions)" },
-  { category: "sales", value: 30, amount: 16300, fill: "var(--color-sales)" },
-  { category: "services", value: 15, amount: 8150, fill: "var(--color-services)" },
-  { category: "partnerships", value: 10, amount: 5430, fill: "var(--color-partnerships)" },
+  { category: "eucalyptus-gu", value: 48, amount: 150, fill: "var(--color-eucalyptus-gu)" },
+  { category: "eucalyptus-gc", value: 30, amount: 94, fill: "var(--color-eucalyptus-gc)" },
+  { category: "pine", value: 14, amount: 44, fill: "var(--color-pine)" },
+  { category: "mixed-hardwoods", value: 8, amount: 24, fill: "var(--color-mixed-hardwoods)" },
 ]
 
 const chartConfig = {
-  revenue: {
-    label: "Revenue",
-  },
   amount: {
-    label: "Amount",
+    label: "Hectares",
   },
-  subscriptions: {
-    label: "Subscriptions",
+  "eucalyptus-gu": {
+    label: "Eucalyptus GU",
     color: "var(--chart-1)",
   },
-  sales: {
-    label: "One-time Sales",
+  "eucalyptus-gc": {
+    label: "Eucalyptus GC",
     color: "var(--chart-2)",
   },
-  services: {
-    label: "Services",
+  pine: {
+    label: "Pine",
     color: "var(--chart-3)",
   },
-  partnerships: {
-    label: "Partnerships",
+  "mixed-hardwoods": {
+    label: "Mixed Hardwoods",
     color: "var(--chart-4)",
   },
 }
 
 export function RevenueBreakdown() {
-  const id = "revenue-breakdown"
-  const [activeCategory, setActiveCategory] = React.useState("sales")
+  const id = "species-allocation"
+  const [activeCategory, setActiveCategory] = React.useState("eucalyptus-gu")
 
   const activeIndex = React.useMemo(
     () => revenueData.findIndex((item) => item.category === activeCategory),
@@ -50,45 +47,30 @@ export function RevenueBreakdown() {
   )
 
   const categories = React.useMemo(() => revenueData.map((item) => item.category), [])
+  const activeItem = revenueData[activeIndex]
 
   return (
     <Card data-chart={id} className="flex flex-col cursor-pointer">
       <ChartStyle id={id} config={chartConfig} />
       <CardHeader className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0 pb-2">
         <div>
-          <CardTitle>Revenue Breakdown</CardTitle>
-          <CardDescription>Revenue distribution by source</CardDescription>
+          <CardTitle>Species Allocation</CardTitle>
+          <CardDescription>Distribution of financed hectares by variety mix</CardDescription>
         </div>
         <div className="flex items-center space-x-2">
           <Select value={activeCategory} onValueChange={setActiveCategory}>
-            <SelectTrigger
-              className="w-[175px] rounded-lg cursor-pointer"
-              aria-label="Select a category"
-            >
+            <SelectTrigger className="w-[175px] rounded-lg cursor-pointer" aria-label="Select a category">
               <SelectValue placeholder="Select category" />
             </SelectTrigger>
             <SelectContent align="end" className="rounded-lg">
               {categories.map((key) => {
                 const config = chartConfig[key as keyof typeof chartConfig]
-
-                if (!config) {
-                  return null
-                }
-
+                if (!config) return null
                 return (
-                  <SelectItem
-                    key={key}
-                    value={key}
-                    className="rounded-md [&_span]:flex cursor-pointer"
-                  >
+                  <SelectItem key={key} value={key} className="rounded-md [&_span]:flex cursor-pointer">
                     <div className="flex items-center gap-2">
-                      <span
-                        className="flex h-3 w-3 shrink-0 "
-                        style={{
-                          backgroundColor: `var(--color-${key})`,
-                        }}
-                      />
-                      {config?.label}
+                      <span className="flex h-3 w-3 shrink-0" style={{ backgroundColor: `var(--color-${key})` }} />
+                      {config.label}
                     </div>
                   </SelectItem>
                 )
@@ -96,70 +78,45 @@ export function RevenueBreakdown() {
             </SelectContent>
           </Select>
           <Button variant="outline" className="cursor-pointer">
-            Export
+            View report
           </Button>
         </div>
       </CardHeader>
       <CardContent className="flex flex-1 justify-center">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
           <div className="flex justify-center">
-            <ChartContainer
-              id={id}
-              config={chartConfig}
-              className="mx-auto aspect-square w-full max-w-[300px]"
-            >
+            <ChartContainer id={id} config={chartConfig} className="mx-auto aspect-square w-full max-w-[300px]">
               <PieChart>
-                <ChartTooltip
-                  cursor={false}
-                  content={<ChartTooltipContent hideLabel />}
-                />
+                <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
                 <Pie
                   data={revenueData}
                   dataKey="amount"
                   nameKey="category"
                   innerRadius={60}
                   strokeWidth={5}
-                  activeShape={({
-                    outerRadius = 0,
-                    ...props
-                  }: PieSectorDataItem) => (
+                  activeShape={({ outerRadius = 0, ...props }: PieSectorDataItem) => (
                     <g>
                       <Sector {...props} outerRadius={outerRadius + 10} />
-                      <Sector
-                        {...props}
-                        outerRadius={outerRadius + 25}
-                        innerRadius={outerRadius + 12}
-                      />
+                      <Sector {...props} outerRadius={outerRadius + 25} innerRadius={outerRadius + 12} />
                     </g>
                   )}
+                  onClick={(_, index) => setActiveCategory(revenueData[index].category)}
                 >
                   <Label
                     content={({ viewBox }) => {
                       if (viewBox && "cx" in viewBox && "cy" in viewBox) {
                         return (
-                          <text
-                            x={viewBox.cx}
-                            y={viewBox.cy}
-                            textAnchor="middle"
-                            dominantBaseline="middle"
-                          >
-                            <tspan
-                              x={viewBox.cx}
-                              y={viewBox.cy}
-                              className="fill-foreground text-3xl font-bold"
-                            >
-                              ${(revenueData[activeIndex].amount / 1000).toFixed(0)}K
+                          <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
+                            <tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground text-3xl font-bold">
+                              {activeItem.amount} ha
                             </tspan>
-                            <tspan
-                              x={viewBox.cx}
-                              y={(viewBox.cy || 0) + 24}
-                              className="fill-muted-foreground"
-                            >
-                              Revenue
+                            <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className="fill-muted-foreground">
+                              Allocated
                             </tspan>
                           </text>
                         )
                       }
+                      return null
                     }}
                   />
                 </Pie>
@@ -176,21 +133,18 @@ export function RevenueBreakdown() {
                 <div
                   key={item.category}
                   className={`flex items-center justify-between p-3 rounded-lg transition-colors cursor-pointer ${
-                    isActive ? 'bg-muted' : 'hover:bg-muted/50'
+                    isActive ? "bg-muted" : "hover:bg-muted/50"
                   }`}
                   onClick={() => setActiveCategory(item.category)}
                 >
                   <div className="flex items-center gap-3">
-                    <span
-                      className="flex h-3 w-3 shrink-0 rounded-full"
-                      style={{
-                        backgroundColor: `var(--color-${item.category})`,
-                      }}
-                    />
-                    <span className="font-medium">{config?.label}</span>
+                    <span className="flex h-3 w-3 shrink-0 rounded-full" style={{ backgroundColor: `var(--color-${item.category})` }} />
+                    <div>
+                      <span className="font-medium">{config?.label}</span> 
+                    </div>
                   </div>
                   <div className="text-right">
-                    <div className="font-bold">${(item.amount / 1000).toFixed(1)}K</div>
+                    <div className="font-bold">{item.amount} ha</div>
                     <div className="text-sm text-muted-foreground">{item.value}%</div>
                   </div>
                 </div>
