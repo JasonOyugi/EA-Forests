@@ -48,13 +48,13 @@ const chartConfig = {
   hectares: {
     label: "Hectares",
   },
-  silviculture: {
-    label: "Silviculture",
-    color: "#86efac",
-  },
   planting: {
     label: "Planting",
     color: "#16a34a",
+  },
+  silviculture: {
+    label: "Silviculture",
+    color: "#86efac",
   },
 } satisfies ChartConfig
 
@@ -78,9 +78,9 @@ export function ChartAreaInteractive() {
     <Card className="@container/card">
       <CardHeader>
         <div>
-          <CardTitle>This Seasons Field Delivery Trend</CardTitle>
+          <CardTitle>Field Trend</CardTitle>
           <CardDescription>
-            Weekly hectares completed/managed across planting and silviculture workstreams this planting season.
+            Hectares currently planted and managed
           </CardDescription>
         </div>
         <CardAction>
