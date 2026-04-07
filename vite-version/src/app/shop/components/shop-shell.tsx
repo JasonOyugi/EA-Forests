@@ -1,6 +1,8 @@
-import { useEffect, useMemo, useState } from "react"
+import { useMemo } from "react"
 import { useSearchParams } from "react-router-dom"
+import { useShallow } from "zustand/react/shallow"
 import { Badge } from "@/components/ui/badge"
+import { FloatingCart } from "./floating-cart"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { CheckoutPlaceholder } from "./checkout-placeholder"
@@ -17,14 +19,13 @@ interface ShopShellProps {
 
 export function ShopShell({ categories, inventory }: ShopShellProps) {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [search, setSearch] = useState(searchParams.get("q") ?? "")
+  const search = searchParams.get("q") ?? ""
 
   const requestedDomain = searchParams.get("domain") as ShopDomain | null
   const activeDomain: ShopDomain | "all" =
     requestedDomain && categories.some((category) => category.id === requestedDomain)
       ? requestedDomain
       : "all"
-
   const {
     cart,
     checkoutState,
@@ -35,28 +36,21 @@ export function ShopShell({ categories, inventory }: ShopShellProps) {
     beginFakeCheckout,
     completeFakeCheckout,
     getCartSubtotal,
-  } = useShopStore((state) => ({
-    cart: state.cart,
-    checkoutState: state.checkoutState,
-    addItem: state.addItem,
-    decrementItem: state.decrementItem,
-    removeItem: state.removeItem,
-    clearCart: state.clearCart,
-    beginFakeCheckout: state.beginFakeCheckout,
-    completeFakeCheckout: state.completeFakeCheckout,
-    getCartSubtotal: state.getCartSubtotal,
-  }))
-
-  useEffect(() => {
-    const next = new URLSearchParams(searchParams)
-    if (search) {
-      next.set("q", search)
-    } else {
-      next.delete("q")
-    }
-    setSearchParams(next, { replace: true })
-  }, [search, searchParams, setSearchParams])
-
+    getCartCount,
+  } = useShopStore(
+    useShallow((state) => ({
+      cart: state.cart,
+      checkoutState: state.checkoutState,
+      addItem: state.addItem,
+      decrementItem: state.decrementItem,
+      removeItem: state.removeItem,
+      clearCart: state.clearCart,
+      beginFakeCheckout: state.beginFakeCheckout,
+      completeFakeCheckout: state.completeFakeCheckout,
+      getCartSubtotal: state.getCartSubtotal,
+      getCartCount: state.getCartCount,
+    }))
+  )
   const filteredItems = useMemo(() => {
     const normalized = search.trim().toLowerCase()
 
@@ -81,6 +75,7 @@ export function ShopShell({ categories, inventory }: ShopShellProps) {
   }, [activeDomain, inventory, search])
 
   const subtotal = getCartSubtotal(inventory)
+  const cartCount = getCartCount()
 
   const activeCategory =
     activeDomain === "all"
@@ -88,88 +83,98 @@ export function ShopShell({ categories, inventory }: ShopShellProps) {
       : categories.find((category) => category.id === activeDomain) ?? null
 
   return (
-    <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
-      <div className="space-y-6">
-        <div className="rounded-xl border bg-card p-6">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Badge variant="secondary">Commerce v1</Badge>
-                <Badge variant="outline">Local JSON backed</Badge>
-              </div>
-              <h2 className="text-2xl font-semibold tracking-tight">
-                Forestry commerce
-              </h2>
-              <p className="text-sm text-muted-foreground">
-                A first-pass shop surface for seedlings, forests, and forestry
-                services. The UI is modular so the data layer and checkout can be
-                swapped later.
-              </p>
+    <>
+    <div className="space-y-6">
+      <div className="rounded-xl border bg-card p-6">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <Badge variant="secondary">Commerce v1</Badge>
             </div>
-
-            <div className="w-full max-w-sm">
-              <Input
-                value={search}
-                onChange={(event) => setSearch(event.target.value)}
-                placeholder="Search products or services"
-              />
-            </div>
+            <h2 className="text-2xl font-semibold tracking-tight">
+              Forestry commerce
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              A first-pass shop surface for seedlings, forests, and forestry
+              services. The UI is modular so the data layer and checkout can be
+              swapped later.
+            </p>
           </div>
 
-          <Separator className="my-6" />
+          <div className="w-full max-w-sm">
+            <Input
+              value={search}
+              onChange={(event) => {
+                const next = new URLSearchParams(searchParams)
+                const value = event.target.value
 
-          <CategoryNav
-            categories={categories}
-            activeDomain={activeDomain}
-            onChange={(domain) => {
-              const next = new URLSearchParams(searchParams)
-              if (domain === "all") {
-                next.delete("domain")
-              } else {
-                next.set("domain", domain)
-              }
-              setSearchParams(next)
-            }}
-          />
+                if (value) {
+                  next.set("q", value)
+                } else {
+                  next.delete("q")
+                }
 
-          {activeCategory && (
-            <div className="mt-4 rounded-lg bg-muted/40 p-4">
-              <div className="font-medium">{activeCategory.name}</div>
-              <div className="text-sm text-muted-foreground">
-                {activeCategory.description} · {activeCategory.blurb}
-              </div>
-            </div>
-          )}
+                setSearchParams(next, { replace: true })
+              }}
+              placeholder="Search products or services"
+            />
+          </div>
         </div>
 
-        {checkoutState === "submitted" ? (
-          <CheckoutPlaceholder
-            onBack={() => clearCart()}
-            onConfirm={() => completeFakeCheckout()}
-          />
-        ) : (
-          <ProductGrid
-            items={filteredItems}
-            quantities={cart}
-            onAdd={addItem}
-            onDecrement={decrementItem}
-          />
+        <Separator className="my-6" />
+
+        <CategoryNav
+          categories={categories}
+          activeDomain={activeDomain}
+          onChange={(domain) => {
+            const next = new URLSearchParams(searchParams)
+            if (domain === "all") {
+              next.delete("domain")
+            } else {
+              next.set("domain", domain)
+            }
+            setSearchParams(next, { replace: true })
+          }}
+        />
+
+        {activeCategory && (
+          <div className="mt-4 rounded-lg bg-muted/40 p-4">
+            <div className="font-medium">{activeCategory.name}</div>
+            <div className="text-sm text-muted-foreground">
+              {activeCategory.description} · {activeCategory.blurb}
+            </div>
+          </div>
         )}
       </div>
 
-      <div className="space-y-4">
-        <CartPanel
-          items={inventory}
-          cart={cart}
-          subtotal={subtotal}
-          checkoutActive={checkoutState === "submitted"}
+      {checkoutState === "submitted" ? (
+        <CheckoutPlaceholder
+          onBack={() => clearCart()}
+          onConfirm={() => completeFakeCheckout()}
+        />
+      ) : (
+        <ProductGrid
+          items={filteredItems}
+          quantities={cart}
           onAdd={addItem}
           onDecrement={decrementItem}
-          onRemove={removeItem}
-          onCheckout={beginFakeCheckout}
-          onClear={clearCart}
         />
-      </div>
+      )}
     </div>
+
+    <FloatingCart
+    items={inventory}
+    cart={cart}
+    subtotal={subtotal}
+    cartCount={cartCount}
+    checkoutActive={checkoutState === "submitted"}
+    onAdd={addItem}
+    onDecrement={decrementItem}
+    onRemove={removeItem}
+    onCheckout={beginFakeCheckout}
+    onClear={clearCart}
+    />
+  </>
+
   )
 }
