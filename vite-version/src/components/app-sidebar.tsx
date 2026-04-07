@@ -15,6 +15,7 @@ import {
   CreditCard,
   LayoutTemplate,
   Users,
+  ShoppingCart
 } from "lucide-react"
 import { Link } from "react-router-dom"
 import { Logo } from "@/components/logo"
@@ -57,6 +58,11 @@ const data = {
     {
       label: "Apps",
       items: [
+        {
+          title: "Shop",
+          url: "/shop",
+          icon: ShoppingCart,
+        },
         {
           title: "Mail",
           url: "/mail",
