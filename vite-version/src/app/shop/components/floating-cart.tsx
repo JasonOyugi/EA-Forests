@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react"
+import { createPortal } from "react-dom"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -34,8 +36,16 @@ export function FloatingCart({
   onCheckout,
   onClear,
 }: FloatingCartProps) {
-  return (
-    <div className="fixed z-[60] bottom-28 right-4 md:right-6 lg:right-8 flex flex-col items-end gap-2">
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
+
+  return createPortal(
+    <div className="fixed z-[80] bottom-24 right-4 md:right-6 lg:right-8 flex flex-col items-end gap-2">
       <HoverCard openDelay={100} closeDelay={100}>
         <HoverCardTrigger asChild>
           <Button
@@ -66,6 +76,7 @@ export function FloatingCart({
           />
         </HoverCardContent>
       </HoverCard>
-    </div>
+    </div>,
+    document.body
   )
 }

@@ -59,9 +59,27 @@ const data = {
       label: "Apps",
       items: [
         {
-          title: "Shop",
-          url: "/shop",
+          title: "Shops",
+          url: "#",
           icon: ShoppingCart,
+          items: [
+            {
+              title: "Seedlings",
+              url: "/shop/seedlings",
+            },
+            {
+              title: "Forests & Land",
+              url: "/shop/forests-land",
+            },
+            {
+              title: "Forestry Services",
+              url: "/shop/forestry-services",
+            },
+            {
+              title: "Roundwood",
+              url: "/shop/roundwood",
+            },
+          ],
         },
         {
           title: "Mail",

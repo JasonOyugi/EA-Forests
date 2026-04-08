@@ -1,29 +1,42 @@
-export type ShopDomain = "seedlings" | "forests" | "forestry-services"
+export type ShopSlug =
+  | "seedlings"
+  | "forests-land"
+  | "forestry-services"
+  | "roundwood"
 
-export interface ShopCategory {
-  id: ShopDomain
+export type ShopItemKind = "product" | "service" | "asset"
+
+export type StockStatus = "in-stock" | "limited" | "quote"
+
+export interface ShopMetric {
+  label: string
+  value: string
+}
+
+export interface ShopDefinition {
+  slug: ShopSlug
   name: string
+  shortName: string
   description: string
-  blurb: string
+  heroTitle: string
+  heroDescription: string
+  heroBadge?: string
+  metrics?: ShopMetric[]
+  emptyState: string
 }
 
 export interface ShopItem {
   id: string
   slug: string
+  shop: ShopSlug
   name: string
-  domain: ShopDomain
-  kind: "product" | "service"
+  kind: ShopItemKind
   unitLabel: string
   price: number
   currency: string
   description: string
   image: string
   tags: string[]
-  stockStatus: "in-stock" | "limited" | "quote"
+  stockStatus: StockStatus
   featured?: boolean
-}
-
-export interface CartItem {
-  itemId: string
-  quantity: number
 }

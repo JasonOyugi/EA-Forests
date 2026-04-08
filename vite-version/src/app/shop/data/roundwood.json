@@ -1,0 +1,31 @@
+[
+    {
+      "id": "roundwood-pole-class-a-001",
+      "slug": "treated-pole-class-a",
+      "shop": "roundwood",
+      "name": "Pole Class A",
+      "kind": "product",
+      "unitLabel": "per lot",
+      "price": 680,
+      "currency": "USD",
+      "description": "Roundwood poles grouped by class and suitable for utility and structural demand channels.",
+      "image": "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1200&q=80",
+      "tags": ["poles", "utility", "lot"],
+      "stockStatus": "quote",
+      "featured": true
+    },
+    {
+      "id": "roundwood-small-sawlog-002",
+      "slug": "small-sawlog-lot",
+      "shop": "roundwood",
+      "name": "Small Sawlog Lot",
+      "kind": "product",
+      "unitLabel": "per lot",
+      "price": 540,
+      "currency": "USD",
+      "description": "Harvest-linked roundwood lot aligned to small sawlog offtake demand.",
+      "image": "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1200&q=80",
+      "tags": ["sawlog", "harvest", "timber"],
+      "stockStatus": "quote"
+    }
+  ]
