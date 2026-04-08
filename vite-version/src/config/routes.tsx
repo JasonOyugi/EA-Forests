@@ -7,6 +7,7 @@ const Dashboard = lazy(() => import('@/app/dashboard/page'))
 const Dashboard2 = lazy(() => import('@/app/dashboard-2/page'))
 const ShopIndex = lazy(() => import("@/app/shop/page"))
 const ShopPage = lazy(() => import("@/app/shop/shop-page"))
+const ShopProductPage = lazy(() => import("@/app/shop/product-page"))
 const Mail = lazy(() => import('@/app/mail/page'))
 const Tasks = lazy(() => import('@/app/tasks/page'))
 const Chat = lazy(() => import('@/app/chat/page'))
@@ -75,8 +76,8 @@ export const routes: RouteConfig[] = [
     element: <ShopIndex />
   },
   {
-    path: "/shop/:shopSlug",
-    element: <ShopPage />
+    path: "/shop/:shopSlug/:productSlug",
+    element: <ShopProductPage />
   },
 
   // Application Routes

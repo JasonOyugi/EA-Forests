@@ -1,11 +1,14 @@
 import type { ShopItem } from "@/app/shop/types"
 import { ProductCard } from "./product-card"
+import { EnhancedProductCard } from "@/components/commerce-ui/enhanced-product-card"
 
 interface ProductGridProps {
   items: ShopItem[]
   quantities: Record<string, number>
-  onAdd: (itemId: string) => void
+  onAdd: (itemId: string, variant?: string) => void
   onDecrement: (itemId: string) => void
+  useEnhancedCards?: boolean
+  onClick?: (item: ShopItem) => void
 }
 
 export function ProductGrid({
@@ -13,6 +16,8 @@ export function ProductGrid({
   quantities,
   onAdd,
   onDecrement,
+  useEnhancedCards = false,
+  onClick,
 }: ProductGridProps) {
   if (items.length === 0) {
     return (
@@ -23,15 +28,27 @@ export function ProductGrid({
   }
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
       {items.map((item) => (
-        <ProductCard
-          key={item.id}
-          item={item}
-          quantity={quantities[item.id] ?? 0}
-          onAdd={onAdd}
-          onDecrement={onDecrement}
-        />
+        useEnhancedCards ? (
+          <EnhancedProductCard
+            key={item.id}
+            item={item}
+            quantity={quantities[item.id] ?? 0}
+            onAdd={onAdd}
+            onDecrement={onDecrement}
+            showVariants={true}
+            onClick={onClick}
+          />
+        ) : (
+          <ProductCard
+            key={item.id}
+            item={item}
+            quantity={quantities[item.id] ?? 0}
+            onAdd={onAdd}
+            onDecrement={onDecrement}
+          />
+        )
       ))}
     </div>
   )

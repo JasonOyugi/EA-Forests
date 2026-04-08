@@ -28,7 +28,7 @@ export function SectionCards() {
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            9 planting sites and 5 silviculture sites <Handshake className="size-10" />
+            9 planting sites and 5 silviculture sites <Handshake className="size-5" />
           </div>
           <div className="text-muted-foreground">
             Highest concentration in Rift Valley and Western Kenya
@@ -51,7 +51,7 @@ export function SectionCards() {
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Down 20% this season's target <TriangleAlert className="size-10" />
+            Down 20% this season's target <TriangleAlert className="size-5" />
           </div>
           <div className="text-muted-foreground">
             Less silviculture activities
@@ -74,7 +74,7 @@ export function SectionCards() {
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Seedling availability increased <Sprout className="size-10" />
+            Seedling availability increased <Sprout className="size-5" />
           </div>
           <div className="text-muted-foreground">Engagement exceed targets</div>
         </CardFooter>
@@ -95,7 +95,7 @@ export function SectionCards() {
         </CardHeader>
         <CardFooter className="flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-1 flex gap-2 font-medium">
-            Next payment run is due Friday <Wallet className="size-10" />
+            Next payment run is due Friday <Wallet className="size-5" />
           </div>
           <div className="text-muted-foreground">
             2 invoices are awaiting field verification before release
