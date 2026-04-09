@@ -24,7 +24,6 @@ import { useTheme } from "@/hooks/use-theme"
 const navigationItems = [
   { name: "Home", href: "#hero" },
   { name: "Features", href: "#features" },
-  { name: "Team", href: "#team" },
   { name: "Pricing", href: "#pricing" },
   { name: "FAQ", href: "#faq" },
   { name: "Contact", href: "#contact" },
@@ -47,7 +46,7 @@ export function LandingNavbar() {
         {/* Logo */}
         <div className="flex items-center space-x-2">
           <a
-            href="https://shadcnstore.com"
+            href="#hero"
             className="flex items-center space-x-2 cursor-pointer"
             target="_blank"
             rel="noopener noreferrer"

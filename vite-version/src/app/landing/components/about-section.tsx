@@ -10,24 +10,28 @@ const values = [
   {
     icon: House,
     title: "Find the right planting material",
+    href: "/shop/seedlings",
     description:
       "Access the right genetics, the right suppliers and the right nurseries, backed by performance data you can interrogate and trust.",
   },
   {
     icon: TreePine,
     title: "Start a forestry investment",
+    href: "#pricing",
     description:
       "From battle-tested cashflow and geospatial analysis to site establishment, we connect projects to experienced contractors and proven systems while modelling outcomes before the first shilling goes in.",
   },
   {
     icon: Handshake,
     title: "Take your forestry product to market",
+    href: "/shop/roundwood",
     description:
       "Hand-collected live market data from analysts on the ground committed to value chain performance optimization.",
   },
   {
     icon: PiggyBank,
     title: "Profit and start again!",
+    href: "#features",
     description:
       "Access strategies, models and analysis used in real forestry trade applications for you to source and sell again with confidence.",
   },
@@ -47,26 +51,28 @@ export function AboutSection() {
           </h2>
           <p className="text-lg text-muted-foreground mb-8">
           Serious profits are already being generated from forestry. The question is, are you a part of it?
-          Wether you supply seedlings, operate planting crews, run a mill, trade roundwood and carbon or are just looking to make bank from land,
-          we ensure you speak and connect with the right people in the most informed way you can ever be. 
+          Wether you supply seedlings, operate planting crews, run a mill, trade assets or are just looking to make bank from land,
+          we ensure you connect with the right people in the most informed way possible. 
           </p>
         </div>
 
         {/* Values Grid */}
         <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 xl:grid-cols-4 mb-12">
           {values.map((value, index) => (
-            <Card key={index} className="group shadow-xs py-2 overflow-hidden">
-              <CardContent className="p-8">
-                <div className="flex flex-col items-center text-center">
-                  <CardDecorator>
-                    <value.icon className="h-6 w-6" aria-hidden />
-                  </CardDecorator>
+            <a key={index} href={value.href} className="block h-full">
+              <Card className="group h-full overflow-hidden py-2 shadow-xs transition-all hover:-translate-y-1 hover:shadow-md">
+                <CardContent className="p-8">
+                  <div className="flex flex-col items-center text-center">
+                    <CardDecorator>
+                      <value.icon className="h-6 w-6" aria-hidden />
+                    </CardDecorator>
 
-                  <h3 className="mt-6 font-medium text-balance">{value.title}</h3>
-                  <p className="text-muted-foreground mt-3 text-sm">{value.description}</p>
-                </div>
-              </CardContent>
-            </Card>
+                    <h3 className="mt-6 font-medium text-balance group-hover:underline">{value.title}</h3>
+                    <p className="text-muted-foreground mt-3 text-sm">{value.description}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </a>
           ))}
         </div>
 
@@ -79,7 +85,7 @@ export function AboutSection() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="cursor-pointer" asChild>
               <a
-                href="https://github.com/silicondeck/shadcn-dashboard-landing-template"
+                href="https://github.com/JasonOyugi/EA-Forests.git"
                 target="_blank"
                 rel="noopener noreferrer"
               >

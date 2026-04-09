@@ -55,13 +55,13 @@ export function CTASection() {
               {/* CTA Buttons */}
               <div className='flex flex-col justify-center gap-4 sm:flex-row sm:gap-6'>
                 <Button size='lg' className='cursor-pointer px-8 py-6 text-lg font-medium' asChild>
-                  <a href='https://shadcnstore.com/blocks' target='_blank' rel='noopener noreferrer'>
+                  <a href='/auth/sign-up-2' target='_blank' rel='noopener noreferrer'>
                     <Handshake className='me-2 size-5' />
                     Become a member
                   </a>
                 </Button>
                 <Button variant='outline' size='lg' className='cursor-pointer px-8 py-6 text-lg font-medium group' asChild>
-                  <a href='https://github.com/silicondeck/shadcn-dashboard-landing-template' target='_blank' rel='noopener noreferrer'>
+                  <a href='/shop' target='_blank' rel='noopener noreferrer'>
                     <Package className='me-2 size-5' />
                     Browse services
                     <ArrowRight className='ms-2 size-4 transition-transform group-hover:translate-x-1' />

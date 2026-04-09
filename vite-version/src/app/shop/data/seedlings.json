@@ -1,31 +1,109 @@
 [
-    {
-      "id": "seedlings-eucalyptus-grandis-001",
-      "slug": "eucalyptus-grandis-seedlings",
-      "shop": "seedlings",
-      "name": "Eucalyptus Grandis Seedlings",
-      "kind": "product",
-      "unitLabel": "per tray",
-      "price": 24,
-      "currency": "USD",
-      "description": "Nursery-raised seedlings for plantation establishment and grower distribution.",
-      "image": "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=1200&q=80",
-      "tags": ["timber", "nursery", "fast-growth", "featured", "popular"],
-      "stockStatus": "in-stock",
-      "featured": true
-    },
-    {
-      "id": "seedlings-grevillea-002",
-      "slug": "grevillea-seedlings",
-      "shop": "seedlings",
-      "name": "Grevillea Seedlings",
-      "kind": "product",
-      "unitLabel": "per tray",
-      "price": 18,
-      "currency": "USD",
-      "description": "Agroforestry-friendly seedlings suitable for shade and boundary planting.",
-      "image": "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1200&q=80",
-      "tags": ["agroforestry", "shade", "boundary", "new"],
-      "stockStatus": "limited"
-    }
-  ]
+  {
+    "id": "seedlings-eucalyptus-gn04",
+    "slug": "eucalyptus-gn04-seedlings",
+    "shop": "seedlings",
+    "name": "Eucalyptus GN04 Seedlings",
+    "species": "eucalyptus",
+    "kind": "product",
+    "unitLabel": "per package",
+    "price": 39.99,
+    "currency": "USD",
+    "description": "High-yield hybrid eucalyptus seedlings designed for fast establishment and timber performance.",
+    "image": "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80",
+    "tags": ["timber", "featured", "popular"],
+    "stockStatus": "in-stock",
+    "domain": "timber",
+    "featured": true,
+    "variants": [
+      { "id": "small", "label": "Small", "count": 50, "price": 39.99, "unitLabel": "per 50 seedlings" },
+      { "id": "medium", "label": "Medium", "count": 100, "price": 74.99, "unitLabel": "per 100 seedlings" },
+      { "id": "large", "label": "Large", "count": 200, "price": 139.99, "unitLabel": "per 200 seedlings" }
+    ]
+  },
+  {
+    "id": "seedlings-pine-patxtec",
+    "slug": "pine-patxtec-seedlings",
+    "shop": "seedlings",
+    "name": "Pine PATXTEC Seedlings",
+    "species": "pine",
+    "kind": "product",
+    "unitLabel": "per package",
+    "price": 34.99,
+    "currency": "USD",
+    "description": "Resilient hybrid pine seedlings for rapid establishment and strong growth in cooler climates.",
+    "image": "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80",
+    "tags": ["timber", "featured", "popular"],
+    "stockStatus": "in-stock",
+    "domain": "timber",
+    "featured": true,
+    "variants": [
+      { "id": "small", "label": "Small", "count": 75, "price": 34.99, "unitLabel": "per 75 seedlings" },
+      { "id": "medium", "label": "Medium", "count": 150, "price": 64.99, "unitLabel": "per 150 seedlings" },
+      { "id": "large", "label": "Large", "count": 300, "price": 119.99, "unitLabel": "per 300 seedlings" }
+    ]
+  },
+  {
+    "id": "seedlings-melia-volkensii",
+    "slug": "melia-volkensii-seedlings",
+    "shop": "seedlings",
+    "name": "Eucalyptus GN05 Seedlings",
+    "species": "eucalyptus",
+    "kind": "product",
+    "unitLabel": "per package",
+    "price": 29.99,
+    "currency": "USD",
+    "description": "Premium agroforestry seedlings with rapid growth and high value for soil restoration projects.",
+    "image": "https://images.unsplash.com/photo-1495085605035-7f7fb65c46f2?auto=format&fit=crop&w=1200&q=80",
+    "tags": ["new", "agroforestry", "restoration"],
+    "stockStatus": "limited",
+    "domain": "agroforestry",
+    "variants": [
+      { "id": "small", "label": "Small", "count": 50, "price": 29.99, "unitLabel": "per 50 seedlings" },
+      { "id": "medium", "label": "Medium", "count": 100, "price": 54.99, "unitLabel": "per 100 seedlings" },
+      { "id": "large", "label": "Large", "count": 200, "price": 99.99, "unitLabel": "per 200 seedlings" }
+    ]
+  },
+  {
+    "id": "seedlings-cypress",
+    "slug": "cypress-seedlings",
+    "shop": "seedlings",
+    "name": "Cypress Seedlings",
+    "species": "cypress",
+    "kind": "product",
+    "unitLabel": "per package",
+    "price": 24.99,
+    "currency": "USD",
+    "description": "Hardy cypress seedlings for windbreaks, screen planting, and long-term forestry production.",
+    "image": "https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?auto=format&fit=crop&w=1200&q=80",
+    "tags": ["reforestation", "conservation"],
+    "stockStatus": "in-stock",
+    "domain": "timber",
+    "variants": [
+      { "id": "small", "label": "Small", "count": 40, "price": 24.99, "unitLabel": "per 40 seedlings" },
+      { "id": "medium", "label": "Medium", "count": 100, "price": 44.99, "unitLabel": "per 100 seedlings" },
+      { "id": "large", "label": "Large", "count": 200, "price": 84.99, "unitLabel": "per 200 seedlings" }
+    ]
+  },
+  {
+    "id": "seedlings-acacia",
+    "slug": "acacia-seedlings",
+    "shop": "seedlings",
+    "name": "Acacia Seedlings",
+    "species": "acacia",
+    "kind": "product",
+    "unitLabel": "per package",
+    "price": 19.99,
+    "currency": "USD",
+    "description": "Nitrogen-fixing acacia seedlings that support soil health and rapid canopy closure.",
+    "image": "https://images.unsplash.com/photo-1483794344563-d27a8d38c7f4?auto=format&fit=crop&w=1200&q=80",
+    "tags": ["restoration", "soil-health"],
+    "stockStatus": "in-stock",
+    "domain": "restoration",
+    "variants": [
+      { "id": "small", "label": "Small", "count": 60, "price": 19.99, "unitLabel": "per 60 seedlings" },
+      { "id": "medium", "label": "Medium", "count": 120, "price": 38.99, "unitLabel": "per 120 seedlings" },
+      { "id": "large", "label": "Large", "count": 240, "price": 74.99, "unitLabel": "per 240 seedlings" }
+    ]
+  }
+]

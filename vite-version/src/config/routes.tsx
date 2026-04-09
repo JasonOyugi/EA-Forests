@@ -76,6 +76,10 @@ export const routes: RouteConfig[] = [
     element: <ShopIndex />
   },
   {
+    path: "/shop/:shopSlug",
+    element: <ShopPage />
+  },
+  {
     path: "/shop/:shopSlug/:productSlug",
     element: <ShopProductPage />
   },

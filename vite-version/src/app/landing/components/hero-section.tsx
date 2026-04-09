@@ -16,7 +16,12 @@ gsap.registerPlugin(ScrollTrigger)
 
 export function HeroSection() {
   const totalVideos = 4
-  const videoLabels = ["Welcome", "Genetics", "Markets", "Analysis"]
+  const videoLabels = [
+    { label: "Welcome", url: "https://www.youtube.com/watch?v=VIDEO_ID_1" },
+    { label: "Genetics", url: "https://www.youtube.com/watch?v=VIDEO_ID_2" },
+    { label: "Markets", url: "https://www.youtube.com/watch?v=VIDEO_ID_3" },
+    { label: "Analysis", url: "https://www.youtube.com/watch?v=VIDEO_ID_4" },
+  ]
 
   const [currentIndex, setCurrentIndex] = useState(1)
   const [hasClicked, setHasClicked] = useState(false)
@@ -139,23 +144,25 @@ export function HeroSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="mx-auto max-w-4xl text-center">
           <div className="mb-8 flex justify-center">
-            <Badge variant="outline" className="px-4 py-2 border-foreground">
-              <Star className="w-3 h-3 mr-2 fill-current" />
-              New: Pine Hybrids in stock!!
-              <ArrowRight className="w-3 h-3 ml-2" />
-            </Badge>
+            <a href="/shop/seedlings#featured-products" className="inline-flex">
+              <Badge variant="outline" className="px-4 py-2 border-foreground ">
+                <Star className="w-3 h-3 mr-2 fill-current" />
+                New: Pine Hybrids in stock!!
+                <ArrowRight className="w-3 h-3 ml-2" />
+              </Badge>
+            </a>
           </div>
 
           <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
-            Your{" "}
+            Profit From Forestry in{" "}
             <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-              East Africa Forest
+              East Africa
             </span>{" "}
-            Marketplace
+            Today
           </h1>
 
           <p className="mx-auto mb-10 max-w-2xl text-lg text-muted-foreground sm:text-xl">
-            From nurseries to building with timber, get everything you need to know about forestry in East Africa
+            From nurseries to building with timber, start generating cash from East African forestry now!
           </p>
 
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
@@ -169,7 +176,7 @@ export function HeroSection() {
             <Button variant="outline" size="lg" className="text-base cursor-pointer" asChild>
               <a href="#pricing">
                 <Play className="mr-2 h-4 w-4" />
-                Plant a forest
+                Plant Commercial Forest
               </a>
             </Button>
           </div>
@@ -246,9 +253,14 @@ export function HeroSection() {
                 />
 
                 <div className="absolute bottom-5 right-5 z-40 rounded-lg bg-black/50 px-4 py-2 backdrop-blur-sm">
-                  <p className="text-sm sm:text-base text-white font-medium">
-                    {videoLabels[currentIndex - 1]}
-                  </p>
+                  <a
+                    href={videoLabels[currentIndex - 1].url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm sm:text-base font-medium text-white underline-offset-4 transition hover:underline"
+                  >
+                    {videoLabels[currentIndex - 1].label}
+                  </a>
                 </div>
 
                 <div className="absolute bottom-0 left-0 w-full h-32 md:h-40 lg:h-48 bg-gradient-to-b from-background/0 via-background/70 to-background" />

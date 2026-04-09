@@ -1,7 +1,7 @@
 import { useParams, Navigate } from "react-router-dom"
 import { BaseLayout } from "@/components/layouts/base-layout"
 import { ProductPage } from "@/components/commerce-ui/product-page"
-import { shopInventoryMap } from "../config/shops"
+import { shopInventoryMap } from "./config/shops"
 import { useShopStore } from "@/stores/shop-store"
 
 export default function ShopProductPage() {

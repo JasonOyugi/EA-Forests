@@ -1,6 +1,6 @@
 import { Navigate, useParams } from "react-router-dom"
 import { BaseLayout } from "@/components/layouts/base-layout"
-import { CommerceShell } from "./components/commerce-shell"
+import { shopPageComponents } from "./components/shops"
 import { isValidShopSlug, shopDefinitions, shopInventoryMap } from "./config/shops"
 
 export default function ShopPage() {
@@ -16,11 +16,12 @@ export default function ShopPage() {
 
   const shop = shopDefinitions[shopSlug]
   const inventory = shopInventoryMap[shopSlug]
+  const ShopPageComponent = shopPageComponents[shopSlug]
 
   return (
     <BaseLayout title={shop.name} description={shop.description}>
       <div className="px-4 lg:px-6">
-        <CommerceShell shop={shop} inventory={inventory} />
+        <ShopPageComponent shop={shop} inventory={inventory} />
       </div>
     </BaseLayout>
   )

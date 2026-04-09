@@ -67,7 +67,7 @@ export function ProductPage({
           <ImageCarouselBasic
             images={images}
             aspectRatio="square"
-            showThumbnails
+            showThumbs={true}
             className="w-full"
           />
         </div>

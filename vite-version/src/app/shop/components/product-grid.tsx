@@ -8,6 +8,7 @@ interface ProductGridProps {
   onAdd: (itemId: string, variant?: string) => void
   onDecrement: (itemId: string) => void
   useEnhancedCards?: boolean
+  theme?: "seedlings" | "forests-land" | "forestry-services" | "roundwood"
   onClick?: (item: ShopItem) => void
 }
 
@@ -17,6 +18,7 @@ export function ProductGrid({
   onAdd,
   onDecrement,
   useEnhancedCards = false,
+  theme,
   onClick,
 }: ProductGridProps) {
   if (items.length === 0) {
@@ -38,6 +40,7 @@ export function ProductGrid({
             onAdd={onAdd}
             onDecrement={onDecrement}
             showVariants={true}
+            theme={theme}
             onClick={onClick}
           />
         ) : (

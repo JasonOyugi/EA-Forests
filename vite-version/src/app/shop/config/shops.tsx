@@ -9,7 +9,7 @@ export const shopDefinitions: Record<ShopSlug, ShopDefinition> = {
     slug: "seedlings",
     name: "Seedlings",
     shortName: "Seedlings",
-    description: "Nursery stock and planting material for forestry and agroforestry establishment.",
+    description: "The best planting material at the right price for forestry and agroforestry establishment.",
     heroTitle: "Seedling marketplace",
     heroDescription:
       "Source nursery-raised planting material for commercial forestry, grower outreach, and field establishment programs.",

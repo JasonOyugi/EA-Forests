@@ -123,7 +123,7 @@ export function FeaturesSection() {
               </>
             }
             description="Have a forest? Looking to source roundwood or carbon? Click here to find credible partners asap."
-            href="https://github.com/JasonOyugi/EA-Forestry-Investment-Economics.git"
+            href="/shop/roundwood"
           />
         </BentoTilt>
 
@@ -138,7 +138,7 @@ export function FeaturesSection() {
                 </>
               }
               description="Want to start a forest? Wether you already have land or not, you can find and plant the latest generation of tree species, hybrids and clones"
-              href="https://github.com/JasonOyugi/EA-Forestry-Genetics-Analysis.git"
+              href="/shop/seedlings"
             />
           </BentoTilt>
 

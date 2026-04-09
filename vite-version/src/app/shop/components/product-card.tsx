@@ -25,12 +25,12 @@ export function ProductCard({
   onDecrement,
 }: ProductCardProps) {
   return (
-    <Card className="overflow-hidden gap-0">
-      <div className="aspect-[16/10] overflow-hidden bg-muted">
+    <Card className="overflow-hidden gap-0 py-0">
+      <div className="aspect-[16/10] overflow-hidden bg-transparent">
         <img
           src={item.image}
           alt={item.name}
-          className="h-full w-full object-cover"
+          className="block h-full w-full object-cover object-top"
         />
       </div>
 
@@ -64,7 +64,7 @@ export function ProductCard({
         </div>
       </CardContent>
 
-      <CardFooter className="flex items-center justify-between gap-3 border-t pt-6">
+      <CardFooter className="flex items-center justify-between gap-3 border-t pt-2 pb-3">
         <div className="text-sm text-muted-foreground">
           {quantity > 0 ? `${quantity} in cart` : "Not in cart"}
         </div>

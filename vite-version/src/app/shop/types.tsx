@@ -4,13 +4,30 @@ export type ShopSlug =
   | "forestry-services"
   | "roundwood"
 
+export type ShopDomain = "all" | "timber" | "agroforestry" | "restoration" | "services"
+
 export type ShopItemKind = "product" | "service" | "asset"
 
 export type StockStatus = "in-stock" | "limited" | "quote"
 
+export interface ShopCategory {
+  id: ShopDomain
+  name: string
+  description: string
+  blurb: string
+}
+
 export interface ShopMetric {
   label: string
   value: string
+}
+
+export interface ShopItemVariant {
+  id: string
+  label: string
+  count: number
+  price: number
+  unitLabel?: string
 }
 
 export interface ShopDefinition {
@@ -30,6 +47,7 @@ export interface ShopItem {
   slug: string
   shop: ShopSlug
   name: string
+  species?: string
   kind: ShopItemKind
   unitLabel: string
   price: number
@@ -38,5 +56,7 @@ export interface ShopItem {
   image: string
   tags: string[]
   stockStatus: StockStatus
+  domain: ShopDomain
   featured?: boolean
+  variants?: ShopItemVariant[]
 }
