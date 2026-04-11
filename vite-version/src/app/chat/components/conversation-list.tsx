@@ -132,6 +132,7 @@ export function ConversationList({
           {sortedConversations.map((conversation) => (
             <div
               key={conversation.id}
+              data-conversation-item="true"
               className={cn(
                 "flex items-center gap-3 p-3 rounded-lg cursor-pointer relative overflow-hidden hover:bg-accent/50 transition-colors",
                 selectedConversation === conversation.id

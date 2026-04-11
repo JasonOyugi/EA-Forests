@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/app/shop/lib/format";
-import { ArrowLeft, Heart, Share2, ShoppingCart, Star, Truck } from "lucide-react";
+import { ArrowLeft, Heart, ShoppingCart, Star, Truck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import VariantSelectorMultiple from "./variant-selector-multiple";
 import ImageCarouselBasic from "./image-carousel-basic";
@@ -35,12 +35,10 @@ export function ProductPage({
 }: ProductPageProps) {
   const [selectedVariants, setSelectedVariants] = React.useState<string[]>([]);
 
-  // Mock additional images for carousel
-  const images = [
-    { url: item.image, title: item.name },
-    { url: item.image, title: `${item.name} - View 2` },
-    { url: item.image, title: `${item.name} - View 3` },
-  ];
+  const images =
+    item.imageGallery && item.imageGallery.length > 0
+      ? item.imageGallery
+      : [{ url: item.image, title: item.name }];
 
   // Mock variants
   const mockVariants = [
@@ -108,9 +106,6 @@ export function ProductPage({
                     />
                   </Button>
                 )}
-                <Button variant="outline" size="icon">
-                  <Share2 className="h-4 w-4" />
-                </Button>
               </div>
             </div>
 
@@ -119,7 +114,7 @@ export function ProductPage({
                 {item.stockStatus === "quote" ? "Quote required" : item.stockStatus}
               </Badge>
               {item.tags.includes("featured") && (
-                <Badge variant="secondary">Featured</Badge>
+                <Badge variant="secondary" className="bg-emerald-400 animate-pulse opacity-100">Featured</Badge>
               )}
             </div>
 

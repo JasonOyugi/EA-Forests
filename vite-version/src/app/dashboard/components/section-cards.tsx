@@ -1,5 +1,6 @@
-import { TrendingDown, TrendingUp, Sprout, Handshake, TriangleAlert, Wallet } from "lucide-react"
+import { TrendingDown, TrendingUp, Sprout, Rocket, TriangleAlert, Wallet } from "lucide-react"
 
+import { BentoTilt } from "@/components/ui/bento-tilt"
 import { Badge } from "@/components/ui/badge"
 import {
   Card,
@@ -12,96 +13,94 @@ import {
 
 export function SectionCards() {
   return (
-    <div className="*:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      <Card className="@container/card from-green-500/10">
-        <CardHeader>
-          <CardDescription>Live Projects</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            14
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">
-              <TrendingUp />
-              +3
-            </Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            9 planting sites and 5 silviculture sites <Handshake className="size-5" />
-          </div>
-          <div className="text-muted-foreground">
-            Highest concentration in Rift Valley and Western Kenya
-          </div>
-        </CardFooter>
-      </Card>
+    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <BentoTilt className="h-full">
+        <Card className="@container/card h-full bg-emerald-400 to-card shadow-xs investor-card investor-card-emerald">
+          <CardHeader>
+            <CardDescription className="text-foreground font-bold">Projected Portfolio Value</CardDescription>
+            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+              $ 14,560,134.21
+            </CardTitle>
+            <CardAction>
+              <Badge variant="outline" className="bg-gray animate-pulse">
+                <TrendingUp />
+                +30%
+              </Badge>
+            </CardAction>
+          </CardHeader>
+          <CardFooter className="flex-col items-start gap-1.5 text-sm">
+            <div className="line-clamp-1 flex gap-2 font-medium">
+              Estimated valuation of 912 ha planted and 1,310 ha acquired<Rocket className="size-5" />
+            </div>
+          </CardFooter>
+        </Card>
+      </BentoTilt>
 
-      <Card className="@container/card from-red-500/10">
-        <CardHeader>
-          <CardDescription>Land Managed</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            1,234ha
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">
-              <TrendingDown />
-              -20%
-            </Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Down 20% this season's target <TriangleAlert className="size-5" />
-          </div>
-          <div className="text-muted-foreground">
-            Less silviculture activities
-          </div>
-        </CardFooter>
-      </Card>
+      <BentoTilt className="h-full">
+        <Card className="@container/card h-full bg-rose-400 to-card shadow-xs investor-card investor-card-rose">
+          <CardHeader>
+            <CardDescription className="text-foreground font-bold">Land Managed</CardDescription>
+            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+              2,222 ha
+            </CardTitle>
+            <CardAction>
+              <Badge variant="outline" className="bg-gray animate-pulse">
+                <TrendingDown />
+                -20%
+              </Badge>
+            </CardAction>
+          </CardHeader>
+          <CardFooter className="flex-col items-start gap-1.5 text-sm">
+            <div className="line-clamp-1 flex gap-2 font-medium">
+              Sold 500 ha managed block <TriangleAlert className="size-5" />
+            </div>
+          </CardFooter>
+        </Card>
+      </BentoTilt>
 
-      <Card className="@container/card from-green-500/10">
-        <CardHeader>
-          <CardDescription>Trees Planted</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            14.5M
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">
-              <TrendingUp />
-              +20.5%
-            </Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Seedling availability increased <Sprout className="size-5" />
-          </div>
-          <div className="text-muted-foreground">Engagement exceed targets</div>
-        </CardFooter>
-      </Card>
+      <BentoTilt className="h-full">
+        <Card className="@container/card h-full bg-emerald-400 to-card shadow-xs investor-card investor-card-emerald">
+          <CardHeader>
+            <CardDescription className="text-foreground font-bold">Estimated Volume</CardDescription>
+            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+              44,440 m³
+            </CardTitle>
+            <CardAction>
+              <Badge variant="outline" className="bg-gray animate-pulse">
+                <TrendingUp />
+                +20.5%
+              </Badge>
+            </CardAction>
+          </CardHeader>
+          <CardFooter className="flex-col items-start gap-1.5 text-sm">
+            <div className="line-clamp-1 flex gap-2 font-medium">
+              60% from fast growing Eucalyptus blocks <Sprout className="size-5" />
+            </div>
+          </CardFooter>
+        </Card>
+      </BentoTilt>
 
-      <Card className="@container/card from-yellow-500/15">
-        <CardHeader>
-          <CardDescription>Payments Pending</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            $5,500.00
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">
-              <Wallet />
-              5 invoices
-            </Badge>
-          </CardAction>
-        </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-          <div className="line-clamp-1 flex gap-2 font-medium">
-            Next payment run is due Friday <Wallet className="size-5" />
-          </div>
-          <div className="text-muted-foreground">
-            2 invoices are awaiting field verification before release
-          </div>
-        </CardFooter>
-      </Card>
+      <BentoTilt className="h-full">
+        <Card className="@container/card h-full bg-lime-200 to-card shadow-xs dark:bg-yellow-300 investor-card investor-card-lime">
+          <CardHeader>
+            <CardDescription className="text-foreground font-bold">Payments Pending</CardDescription>
+            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+              $500,600.00
+            </CardTitle>
+            <CardAction>
+              <Badge variant="outline" className="bg-gray animate-pulse">
+                <Wallet />
+                5 invoices
+              </Badge>
+            </CardAction>
+          </CardHeader>
+          <CardFooter className="flex-col items-start gap-1.5 text-sm">
+            <div className="line-clamp-1 flex gap-2 font-medium">
+              Harvest of 191 ha and selling of 32 ha <Wallet className="size-5" />
+            </div>
+          </CardFooter>
+        </Card>
+      </BentoTilt>
     </div>
   )
 }

@@ -1,90 +1,116 @@
-"use client"
+import { TrendingDown, TrendingUp, Sprout, Handshake, TriangleAlert, Wallet } from "lucide-react"
 
-import { 
-  TrendingUp, 
-  TrendingDown, 
-  DollarSign, 
-  Users, 
-  ShoppingCart, 
-  BarChart3 
-} from "lucide-react"
-import { Card, CardAction, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { BentoTilt } from "@/components/ui/bento-tilt"
 import { Badge } from "@/components/ui/badge"
-
-const metrics = [
-  {
-    title: "Projected Cash",
-    value: "$2.4M",
-    description: "Monthly revenue",
-    change: "+12%",
-    trend: "up",
-    icon: DollarSign,
-    footer: "Roundwood prices up this month",
-    subfooter: "NPV at harvest from all forestry assets"
-  },
-  {
-    title: "Capital Deployed",
-    value: "$420,000",
-    description: "Total active users",
-    change: "+5.2%", 
-    trend: "up",
-    icon: Users,
-    footer: "Strong user retention",
-    subfooter: "Engagement exceeds targets"
-  },
-  {
-    title: "Total Orders",
-    value: "1,247",
-    description: "Orders this month",
-    change: "-2.1%",
-    trend: "down", 
-    icon: ShoppingCart,
-    footer: "Down 2% this period",
-    subfooter: "Order volume needs attention"
-  },
-  {
-    title: "Conversion Rate",
-    value: "3.24%",
-    description: "Average conversion",
-    change: "+8.3%",
-    trend: "up",
-    icon: BarChart3,
-    footer: "Steady performance increase",
-    subfooter: "Meets conversion projections"
-  },
-]
+import {
+  Card,
+  CardAction,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
 export function MetricsOverview() {
   return (
-    <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs grid gap-4 sm:grid-cols-2 @5xl:grid-cols-4">
-      {metrics.map((metric) => {
-        const TrendIcon = metric.trend === "up" ? TrendingUp : TrendingDown
-        
-        return (
-          <Card key={metric.title} className=" cursor-pointer">
-            <CardHeader>
-              <CardDescription>{metric.title}</CardDescription>
-              <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-                {metric.value}
-              </CardTitle>
-              <CardAction>
-                <Badge variant="outline">
-                  <TrendIcon className="h-4 w-4" />
-                  {metric.change}
-                </Badge>
-              </CardAction>
-            </CardHeader>
-            <CardFooter className="flex-col items-start gap-1.5 text-sm">
-              <div className="line-clamp-1 flex gap-2 font-medium">
-                {metric.footer} <TrendIcon className="size-4" />
-              </div>
-              <div className="text-muted-foreground">
-                {metric.subfooter}
-              </div>
-            </CardFooter>
-          </Card>
-        )
-      })}
+    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <BentoTilt className="h-full">
+        <Card className="@container/card h-full bg-gradient-to-t from-emerald-100 to-card shadow-xs dark:bg-card">
+          <CardHeader>
+            <CardDescription>Live Projects</CardDescription>
+            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+              14
+            </CardTitle>
+            <CardAction>
+              <Badge variant="outline" className="bg-emerald-100 animate-pulse">
+                <TrendingUp />
+                +3
+              </Badge>
+            </CardAction>
+          </CardHeader>
+          <CardFooter className="flex-col items-start gap-1.5 text-sm">
+            <div className="line-clamp-1 flex gap-2 font-medium">
+              9 planting sites and 5 silviculture sites <Handshake className="size-5" />
+            </div>
+            <div className="text-muted-foreground">
+              Highest concentration in Rift Valley and Western Kenya
+            </div>
+          </CardFooter>
+        </Card>
+      </BentoTilt>
+
+      <BentoTilt className="h-full">
+        <Card className="@container/card h-full bg-gradient-to-t from-rose-100 to-card shadow-xs dark:bg-card">
+          <CardHeader>
+            <CardDescription>Land Managed</CardDescription>
+            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+              1,234ha
+            </CardTitle>
+            <CardAction>
+              <Badge variant="outline" className="bg-rose-100 animate-pulse">
+                <TrendingDown />
+                -20%
+              </Badge>
+            </CardAction>
+          </CardHeader>
+          <CardFooter className="flex-col items-start gap-1.5 text-sm">
+            <div className="line-clamp-1 flex gap-2 font-medium">
+              Down 20% this season's target <TriangleAlert className="size-5" />
+            </div>
+            <div className="text-muted-foreground">
+              Less silviculture activities
+            </div>
+          </CardFooter>
+        </Card>
+      </BentoTilt>
+
+      <BentoTilt className="h-full">
+        <Card className="@container/card h-full bg-gradient-to-t from-emerald-100 to-card shadow-xs dark:bg-card">
+          <CardHeader>
+            <CardDescription>Trees Planted</CardDescription>
+            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+              14.5M
+            </CardTitle>
+            <CardAction>
+              <Badge variant="outline" className="bg-emerald-100 animate-pulse">
+                <TrendingUp />
+                +20.5%
+              </Badge>
+            </CardAction>
+          </CardHeader>
+          <CardFooter className="flex-col items-start gap-1.5 text-sm">
+            <div className="line-clamp-1 flex gap-2 font-medium">
+              Seedling availability increased <Sprout className="size-5" />
+            </div>
+            <div className="text-muted-foreground">Engagement exceed targets</div>
+          </CardFooter>
+        </Card>
+      </BentoTilt>
+
+      <BentoTilt className="h-full">
+        <Card className="@container/card h-full bg-gradient-to-t from-lime-100 to-card shadow-xs dark:bg-card">
+          <CardHeader>
+            <CardDescription>Payments Pending</CardDescription>
+            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+              $5,500.00
+            </CardTitle>
+            <CardAction>
+              <Badge variant="outline" className="bg-lime-100 animate-pulse">
+                <Wallet />
+                5 invoices
+              </Badge>
+            </CardAction>
+          </CardHeader>
+          <CardFooter className="flex-col items-start gap-1.5 text-sm">
+            <div className="line-clamp-1 flex gap-2 font-medium">
+              Next payment run is due Friday <Wallet className="size-5" />
+            </div>
+            <div className="text-muted-foreground">
+              2 invoices are awaiting field verification before release
+            </div>
+          </CardFooter>
+        </Card>
+      </BentoTilt>
     </div>
   )
 }

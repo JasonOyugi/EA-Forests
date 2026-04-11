@@ -9,7 +9,7 @@ export function ForbiddenError() {
   return (
     <div className='mx-auto flex min-h-dvh flex-col items-center justify-center gap-8 p-8 md:gap-12 md:p-16'>
       <img
-        src='https://static.vecteezy.com/system/resources/previews/076/632/230/non_2x/minimalist-outline-style-skeleton-playing-guitar-with-sombrero-illustration-vector.jpg'
+        src='https://www.pngplay.com/wp-content/uploads/8/Pacman-Vector-No-Background.png'
         alt='placeholder image'
         className='aspect-video w-240 rounded-xl object-cover dark:brightness-[0.95] dark:invert'
       />

@@ -9,7 +9,7 @@ export function UnauthorizedError() {
   return (
     <div className='mx-auto flex min-h-dvh flex-col items-center justify-center gap-8 p-8 md:gap-12 md:p-16'>
       <img
-        src='https://static.vecteezy.com/system/resources/previews/067/513/912/non_2x/bold-line-simple-policeman-avatar-with-hat-and-uniform-icon-vector.jpg'
+        src='https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/5111f863-8c28-48c0-b838-f6d4bb424848/d76w0hn-2942d2bf-f488-4aad-9176-38e16fa3c965.png/v1/fill/w_1024,h_576,q_80,strp/eggman_vector_logo_by_abcice_d76w0hn-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTc2IiwicGF0aCI6IlwvZlwvNTExMWY4NjMtOGMyOC00OGMwLWI4MzgtZjZkNGJiNDI0ODQ4XC9kNzZ3MGhuLTI5NDJkMmJmLWY0ODgtNGFhZC05MTc2LTM4ZTE2ZmEzYzk2NS5wbmciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.cm-B1zUvPsFSBpB4EyJO8zacYUbY7X7d_jHk2bVINIU'
         alt='placeholder image'
         className='aspect-video w-240 rounded-xl object-cover dark:brightness-[0.95] dark:invert'
       />

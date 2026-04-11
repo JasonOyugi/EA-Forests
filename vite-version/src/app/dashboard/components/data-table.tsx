@@ -1,94 +1,56 @@
 "use client"
 
 import * as React from "react"
+import { useNavigate } from "react-router-dom"
 import {
-  closestCenter,
   DndContext,
   KeyboardSensor,
-  MouseSensor,
-  TouchSensor,
+  PointerSensor,
+  closestCenter,
   useSensor,
   useSensors,
   type DragEndEvent,
-  type UniqueIdentifier,
 } from "@dnd-kit/core"
-import { restrictToVerticalAxis } from "@dnd-kit/modifiers"
 import {
-  arrayMove,
   SortableContext,
+  arrayMove,
+  sortableKeyboardCoordinates,
   useSortable,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import {
+  Calendar,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
-  CircleCheckBig,
-  CheckCheck,
-  EllipsisVertical,
+  ExternalLink,
+  Leaf,
+  ShieldCheck,
   GripVertical,
-  Columns2,
-  Loader,
-  PlayCircle,
-  Calendar,
-  AlertTriangle,
+  MessageCircle,
+  Trees,
   Plus,
-  TrendingUp,
-  Users,
 } from "lucide-react"
-import {
-  type ColumnDef,
-  type ColumnFiltersState,
-  flexRender,
-  getCoreRowModel,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  type Row,
-  type SortingState,
-  useReactTable,
-  type VisibilityState,
-} from "@tanstack/react-table"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
-import { toast } from "sonner"
-import { z } from "zod"
 
-import { schema } from "../schemas/task-schema"
-import { useIsMobile } from "@/hooks/use-mobile"
+import { events as calendarEvents, eventDates } from "@/app/calendar/data"
+import { Chat } from "@/app/chat/components/chat"
+import SeedlingsBanner from "@/components/commerce-ui/seedlings-banner"
+import { ForestryServicesCountdownBanner } from "@/components/commerce-ui/forestry-services-countdown-banner"
+import { useChat, type Conversation, type Message, type User } from "@/app/chat/use-chat"
+import conversationsData from "@/app/chat/data/conversations.json"
+import messagesData from "@/app/chat/data/messages.json"
+import usersData from "@/app/chat/data/users.json"
+
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
-  type ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-import { Checkbox } from "@/components/ui/checkbox"
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import {
   Select,
   SelectContent,
@@ -96,7 +58,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Separator } from "@/components/ui/separator"
 import {
   Table,
   TableBody,
@@ -111,585 +72,583 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
-type TaskRow = z.infer<typeof schema>
-type TableView = "live-projects" | "growers" | "crew-leads" | "field-documents"
+type TableView = "assets" | "transactions" | "activity-logs" | "documents"
 
-type ColumnConfig = {
-  titleLabel: string
-  typeLabel: string
-  typeBadge?: boolean
-  reviewerLabel: string
-  addGrowerColumn?: boolean
-  allActivities: TaskRow[]
+type TreeVariety = "eucalyptus" | "pine" | "cypress" | "teak" | "corymbia"
+type Activity = "silviculture" | "planting" | "none"
+type Country = "Uganda" | "Kenya" | "Tanzania"
+
+type SubBlock = {
+  id: string
+  subBlock: string
+  variety: TreeVariety
+  size: number
+  plantedSize: number
+  age: number
+  activity: Activity
+  contractor: string
 }
 
-function DragHandle({ id }: { id: number }) {
-  const { attributes, listeners } = useSortable({ id })
+type AssetGroup = {
+  id: string
+  block: string
+  location: string
+  country: Country
+  subBlocks: SubBlock[]
+}
 
+type PaymentRow = {
+  invoice: string
+  description: string
+  dueDate: string
+  amount: number
+  status: "paid" | "pending" | "overdue" | "received" | "cancelled" | "scheduled"
+}
+
+type ActivityLogRow = {
+  activity: string
+  activityName: string
+  operation: string
+  status: "completed" | "in progress" | "scheduled"
+  contractor: string
+}
+
+type DocumentRow = {
+  date: string
+  document: string
+  status: "verified" | "pending review" | "action required"
+  lastModified: string
+}
+
+function groupVarieties(g: AssetGroup) {
+  return [...new Set(g.subBlocks.map((s) => s.variety))].join(", ")
+}
+
+function groupSize(g: AssetGroup) {
+  return g.subBlocks.reduce((sum, s) => sum + s.size, 0)
+}
+
+function groupPlantedSize(g: AssetGroup) {
+  return g.subBlocks.reduce((sum, s) => sum + s.plantedSize, 0)
+}
+
+function groupAge(g: AssetGroup) {
+  return Math.max(...g.subBlocks.map((s) => s.age))
+}
+
+const initialAssetGroups: AssetGroup[] = [
+  {
+    id: "group-1",
+    block: "North Ridge A1",
+    location: "Northern Region",
+    country: "Uganda",
+    subBlocks: [
+      { id: "sub-1a", subBlock: "A1a", variety: "eucalyptus", size: 32, plantedSize: 29, age: 6, activity: "silviculture", contractor: "GreenCanopy Ltd" },
+      { id: "sub-1b", subBlock: "A1b", variety: "corymbia", size: 28, plantedSize: 26, age: 4, activity: "none", contractor: "-" },
+      { id: "sub-1c", subBlock: "A1c", variety: "pine", size: 24, plantedSize: 24, age: 3, activity: "planting", contractor: "Timberline Services" },
+    ],
+  },
+  {
+    id: "group-2",
+    block: "River Bend C2",
+    location: "Central Valley",
+    country: "Kenya",
+    subBlocks: [
+      { id: "sub-2a", subBlock: "C2a", variety: "pine", size: 30, plantedSize: 30, age: 3, activity: "planting", contractor: "Timberline Services" },
+      { id: "sub-2b", subBlock: "C2b", variety: "teak", size: 26, plantedSize: 26, age: 3, activity: "planting", contractor: "Timberline Services" },
+    ],
+  },
+  {
+    id: "group-3",
+    block: "Pine Hollow D7",
+    location: "Highland Zone",
+    country: "Tanzania",
+    subBlocks: [
+      { id: "sub-3a", subBlock: "D7a", variety: "cypress", size: 60, plantedSize: 50, age: 11, activity: "none", contractor: "-" },
+      { id: "sub-3b", subBlock: "D7b", variety: "eucalyptus", size: 52, plantedSize: 44, age: 9, activity: "silviculture", contractor: "GreenCanopy Ltd" },
+    ],
+  },
+  {
+    id: "group-4",
+    block: "East Valley B4",
+    location: "Eastern Plateau",
+    country: "Uganda",
+    subBlocks: [
+      { id: "sub-4a", subBlock: "B4a", variety: "teak", size: 38, plantedSize: 34, age: 4, activity: "silviculture", contractor: "SylvaOps" },
+      { id: "sub-4b", subBlock: "B4b", variety: "eucalyptus", size: 30, plantedSize: 27, age: 3, activity: "planting", contractor: "Timberline Services" },
+    ],
+  },
+]
+
+const latestPayments: PaymentRow[] = [
+  { invoice: "INV-2026-143", description: "Silviculture crew - North Ridge A1", dueDate: "2026-04-04", amount: 28450, status: "paid" },
+  { invoice: "INV-2026-138", description: "Planting materials - River Bend C2", dueDate: "2026-03-27", amount: 19780, status: "received" },
+  { invoice: "INV-2026-131", description: "Road maintenance - East Valley B4", dueDate: "2026-02-18", amount: 8920, status: "overdue" },
+]
+
+const upcomingPayments: PaymentRow[] = [
+  { invoice: "INV-2026-151", description: "Thinning operation - Pine Hollow D7", dueDate: "2026-04-18", amount: 41300, status: "scheduled" },
+  { invoice: "INV-2026-154", description: "Seedling replenishment - East Valley B4", dueDate: "2026-04-29", amount: 12700, status: "scheduled" },
+  { invoice: "INV-2026-162", description: "Site inspection package", dueDate: "2026-05-12", amount: 6400, status: "scheduled" },
+]
+
+const activityLogs: ActivityLogRow[] = [
+  { activity: "2026-04-08", activityName: "Form pruning pass", operation: "Silviculture", status: "completed", contractor: "GreenCanopy Ltd" },
+  { activity: "2026-04-10", activityName: "Density assessment", operation: "Survey", status: "in progress", contractor: "SylvaOps" },
+  { activity: "2026-04-16", activityName: "Replanting preparation", operation: "Planting", status: "scheduled", contractor: "Timberline Services" },
+  { activity: "2026-04-21", activityName: "Access trail grading", operation: "Infrastructure", status: "scheduled", contractor: "TerrainWorks" },
+]
+
+const documents: DocumentRow[] = [
+  { date: "2026-04-01", document: "Independent valuation report Q1", status: "verified", lastModified: "2026-04-03 14:18" },
+  { date: "2026-03-26", document: "Harvest readiness audit - Pine Hollow D7", status: "pending review", lastModified: "2026-04-07 09:42" },
+  { date: "2026-03-19", document: "Contract amendment - GreenCanopy", status: "action required", lastModified: "2026-04-09 11:05" },
+]
+
+const countryFlag: Record<Country, string> = {
+  Uganda: "UG",
+  Kenya: "KE",
+  Tanzania: "TZ",
+}
+
+const countryBoundaryStyle: Record<Country, React.CSSProperties> = {
+  Uganda: {
+    border: "1px solid transparent",
+    background: "linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box, linear-gradient(90deg, #111111 0%, #facc15 50%, #dc2626 100%) border-box",
+  },
+  Kenya: {
+    border: "1px solid transparent",
+    background: "linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box, linear-gradient(90deg, #111111 0%, #dc2626 50%, #15803d 100%) border-box",
+  },
+  Tanzania: {
+    border: "1px solid transparent",
+    background: "linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box, linear-gradient(90deg, #16a34a 0%, #111111 50%, #2563eb 100%) border-box",
+  },
+}
+
+const countryPulseClass: Record<Country, string> = {
+  Uganda: "country-pulse-ug",
+  Kenya: "country-pulse-ke",
+  Tanzania: "country-pulse-tz",
+}
+
+const countryRowClass: Record<Country, string> = {
+  Uganda: "flag-row-ug",
+  Kenya: "flag-row-ke",
+  Tanzania: "flag-row-tz",
+}
+
+const countryStrips: Record<Country, string[]> = {
+  Uganda: ["#111111", "#facc15", "#dc2626"],
+  Kenya: ["#111111", "#dc2626", "#15803d"],
+  Tanzania: ["#16a34a", "#111111", "#2563eb"],
+}
+
+function CountryStripeBadge({ country }: { country: Country }) {
   return (
-    <Button
-      {...attributes}
-      {...listeners}
-      variant="ghost"
-      size="icon"
-      className="text-muted-foreground size-7 hover:bg-transparent cursor-move"
+    <span
+      className="inline-flex items-center gap-1 rounded-md border border-border/70 bg-background/90 px-2 py-1"
+      title={country}
+      aria-label={country}
     >
-      <GripVertical className="text-muted-foreground size-3" />
-      <span className="sr-only">Drag to reorder</span>
-    </Button>
+      {countryStrips[country].map((color, index) => (
+        <span
+          key={`${country}-${index}`}
+          className="h-2.5 w-4 rounded-[2px]"
+          style={{ backgroundColor: color }}
+        />
+      ))}
+    </span>
   )
 }
 
-function getStatusBadge(status: string) {
-  const statusConfig = {
-    Done: {
-      icon: CircleCheckBig,
-      className: "text-green-500 dark:text-green-400",
-    },
-    Completed: {
-      icon: CheckCheck,
-      className: "text-emerald-600 dark:text-emerald-400",
-    },
-    "In Progress": {
-      icon: Loader,
-      className: "text-blue-500 dark:text-blue-400 animate-spin",
-    },
-    Scheduled: {
-      icon: Calendar,
-      className: "text-slate-500 dark:text-slate-400",
-    },
-    Active: {
-      icon: PlayCircle,
-      className: "text-amber-500 dark:text-amber-400",
-    },
-    "At Risk": {
-      icon: AlertTriangle,
-      className: "text-red-500 dark:text-red-400",
-    },
-    Current: {
-      icon: CircleCheckBig,
-      className: "text-green-500 dark:text-green-400",
-    },
-    Past: {
-      icon: CheckCheck,
-      className: "text-slate-500 dark:text-slate-400",
-    },
-    Pending: {
-      icon: Calendar,
-      className: "text-amber-500 dark:text-amber-400",
-    },
-  } as const
-
-  const config = statusConfig[status as keyof typeof statusConfig]
-  const Icon = config?.icon ?? Loader
+function statusBadge(status: string) {
+  const styles: Record<string, string> = {
+    paid: "bg-emerald-100 text-emerald-800 border-emerald-300",
+    received: "bg-emerald-100 text-emerald-800 border-emerald-300",
+    pending: "bg-amber-100 text-amber-800 border-amber-300",
+    overdue: "bg-rose-100 text-rose-800 border-rose-300",
+    cancelled: "bg-slate-100 text-slate-800 border-slate-300",
+    scheduled: "bg-blue-100 text-blue-800 border-blue-300",
+    completed: "bg-emerald-100 text-emerald-800 border-emerald-300",
+    "in progress": "bg-sky-100 text-sky-800 border-sky-300",
+    verified: "bg-emerald-100 text-emerald-800 border-emerald-300",
+    "pending review": "bg-amber-100 text-amber-800 border-amber-300",
+    "action required": "bg-rose-100 text-rose-800 border-rose-300",
+  }
 
   return (
-    <Badge variant="outline" className="text-muted-foreground px-1.5 gap-1.5">
-      <Icon className={`size-4 ${config?.className ?? ""}`} />
+    <Badge variant="outline" className={styles[status] ?? ""}>
       {status}
     </Badge>
   )
 }
 
-function createColumns(config: ColumnConfig): ColumnDef<TaskRow>[] {
-  const columns: ColumnDef<TaskRow>[] = [
-    {
-      id: "drag",
-      header: () => null,
-      cell: ({ row }) => <DragHandle id={row.original.id} />,
-    },
-    {
-      id: "select",
-      header: ({ table }) => (
-        <div className="flex items-center justify-center">
-          <Checkbox
-            checked={
-              table.getIsAllPageRowsSelected() ||
-              (table.getIsSomePageRowsSelected() && "indeterminate")
-            }
-            onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-            aria-label="Select all"
-          />
-        </div>
-      ),
-      cell: ({ row }) => (
-        <div className="flex items-center justify-center">
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => row.toggleSelected(!!value)}
-            aria-label="Select row"
-          />
-        </div>
-      ),
-      enableSorting: false,
-      enableHiding: false,
-    },
-    {
-      accessorKey: "header",
-      header: config.titleLabel,
-      cell: ({ row }) => (
-        <TableCellViewer item={row.original} allActivities={config.allActivities} />
-      ),
-      enableHiding: false,
-    },
-  ]
+function PaymentList({ title, payments }: { title: string; payments: PaymentRow[] }) {
+  const navigate = useNavigate()
 
-  if (config.addGrowerColumn) {
-    columns.push({
-      accessorKey: "grower",
-      header: "Grower",
-      cell: ({ row }) => (
-        <div className="w-28">
-          <Badge variant="secondary" className="gap-1">
-            <Users className="size-3.5" />
-            {row.original.grower ?? "Unlinked"}
-          </Badge>
-        </div>
+  return (
+    <Card>
+      <CardHeader className="pb-3">
+        <CardTitle className="text-base">{title}</CardTitle>
+        <CardDescription>Invoice list</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        {payments.map((payment) => (
+          <div
+            key={payment.invoice}
+            onClick={() => navigate(`/invoice/${payment.invoice}`)}
+            className="flex cursor-pointer items-center justify-between gap-4 rounded-md border p-3 transition-colors hover:bg-muted/50"
+          >
+            <div className="min-w-0 space-y-1">
+              <p className="text-sm font-medium">{payment.invoice}</p>
+              <p className="truncate text-xs text-muted-foreground">{payment.description}</p>
+              <p className="text-xs text-muted-foreground">Due {payment.dueDate}</p>
+            </div>
+            <div className="shrink-0 space-y-1 text-right">
+              <p className="text-sm font-semibold">
+                {new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                  maximumFractionDigits: 0,
+                }).format(payment.amount)}
+              </p>
+              {statusBadge(payment.status)}
+            </div>
+          </div>
+        ))}
+      </CardContent>
+    </Card>
+  )
+}
+
+type SortColumn = "block" | "size" | "age" | "variety" | "country"
+type SortOrder = "asc" | "desc"
+
+type SortableAssetRowProps = {
+  group: AssetGroup
+  isExpanded: boolean
+  onToggle: () => void
+}
+
+function SortableAssetRow({ group, isExpanded, onToggle }: SortableAssetRowProps) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: group.id })
+
+  const style: React.CSSProperties = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    ...countryBoundaryStyle[group.country],
+    opacity: isDragging ? 0.65 : 1,
+  }
+
+  return (
+    <>
+      <TableRow
+        ref={setNodeRef}
+        style={style}
+        className={`cursor-pointer flag-row ${countryRowClass[group.country]} ${isExpanded ? "flag-row-active" : ""}`}
+        onClick={onToggle}
+      >
+        <TableCell
+          className="w-8 cursor-grab px-2 text-muted-foreground active:cursor-grabbing"
+          onClick={(e) => e.stopPropagation()}
+          {...attributes}
+          {...listeners}
+        >
+          <GripVertical className="h-4 w-4" />
+        </TableCell>
+
+        <TableCell className="w-6 px-1 text-muted-foreground">
+          {isExpanded ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+        </TableCell>
+
+        <TableCell className="font-medium">{group.block}</TableCell>
+        <TableCell className="text-xs text-muted-foreground">{groupVarieties(group)}</TableCell>
+        <TableCell>{group.location}</TableCell>
+        <TableCell>
+          <span className={`font-semibold tracking-wide ${countryPulseClass[group.country]}`}>
+            <CountryStripeBadge country={group.country} />
+          </span>
+        </TableCell>
+        <TableCell>{groupSize(group)}</TableCell>
+        <TableCell>{groupPlantedSize(group)}</TableCell>
+        <TableCell>{groupAge(group)}</TableCell>
+      </TableRow>
+
+      {isExpanded &&
+        group.subBlocks.map((sub) => (
+          <TableRow key={sub.id}>
+            <TableCell className="w-8 px-2" />
+            <TableCell className="w-6 px-1" />
+            <TableCell className="pl-6 text-sm text-muted-foreground">{`${group.block} — ${sub.subBlock}`}</TableCell>
+            <TableCell className="text-sm capitalize">{sub.variety}</TableCell>
+            <TableCell className="text-sm text-muted-foreground">—</TableCell>
+            <TableCell className="text-sm text-muted-foreground">—</TableCell>
+            <TableCell className="text-sm">{sub.size}</TableCell>
+            <TableCell className="text-sm">{sub.plantedSize}</TableCell>
+            <TableCell className="text-sm">{sub.age}</TableCell>
+          </TableRow>
+        ))}
+    </>
+  )
+}
+
+function dateKey(d: Date) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`
+}
+
+function MiniCalendarPreview() {
+  const [month, setMonth] = React.useState(() => new Date(new Date().getFullYear(), new Date().getMonth(), 1))
+  const [selectedDate, setSelectedDate] = React.useState(() => new Date())
+
+  const counts = React.useMemo(
+    () => new Map(eventDates.map((item) => [dateKey(item.date), item.count])),
+    []
+  )
+
+  const monthLabel = month.toLocaleString("en-US", { month: "long", year: "numeric" })
+
+  const firstWeekday = new Date(month.getFullYear(), month.getMonth(), 1).getDay()
+  const daysInMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate()
+
+  const cells: Array<number | null> = []
+  for (let i = 0; i < firstWeekday; i += 1) cells.push(null)
+  for (let d = 1; d <= daysInMonth; d += 1) cells.push(d)
+
+  const selectedEvents = React.useMemo(() => {
+    const selectedKey = dateKey(selectedDate)
+    return calendarEvents
+      .filter((e) => dateKey(e.date) === selectedKey)
+      .sort((a, b) => a.date.getTime() - b.date.getTime())
+      .slice(0, 3)
+  }, [selectedDate])
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center justify-between">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-7 w-7"
+          onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() - 1, 1))}
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </Button>
+        <p className="text-sm font-medium">{monthLabel}</p>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-7 w-7"
+          onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() + 1, 1))}
+        >
+          <ChevronRight className="h-4 w-4" />
+        </Button>
+      </div>
+
+      <div className="grid grid-cols-7 gap-1 text-center text-[11px] text-muted-foreground">
+        {"SMTWTFS".split("").map((w) => (
+          <span key={w}>{w}</span>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-7 gap-1">
+        {cells.map((day, idx) => {
+          if (day === null) {
+            return <div key={`blank-${idx}`} className="h-8" />
+          }
+
+          const current = new Date(month.getFullYear(), month.getMonth(), day)
+          const key = dateKey(current)
+          const count = counts.get(key) ?? 0
+          const isSelected = dateKey(selectedDate) === key
+
+          return (
+            <button
+              key={key}
+              type="button"
+              onClick={() => setSelectedDate(current)}
+              className={`relative h-8 rounded-md text-xs transition-colors ${
+                isSelected ? "bg-primary text-primary-foreground" : "hover:bg-muted"
+              }`}
+            >
+              {day}
+              {count > 0 && !isSelected && (
+                <span className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-emerald-500" />
+              )}
+            </button>
+          )
+        })}
+      </div>
+
+      <div className="rounded-md border p-2">
+        <p className="mb-1 text-xs font-medium">Events on {selectedDate.toLocaleDateString()}</p>
+        {selectedEvents.length === 0 ? (
+          <p className="text-xs text-muted-foreground">No events scheduled.</p>
+        ) : (
+          <ul className="space-y-1">
+            {selectedEvents.map((event) => (
+              <li key={event.id} className="text-xs text-muted-foreground">
+                <span className="font-medium text-foreground">{event.date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>{" "}
+                {event.title}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function MiniChatPreview() {
+  const { setSelectedConversation } = useChat()
+
+  const previewConversations = React.useMemo(
+    () =>
+      [...(conversationsData as Conversation[])]
+        .sort(
+          (a, b) =>
+            new Date(b.lastMessage.timestamp).getTime() -
+            new Date(a.lastMessage.timestamp).getTime()
+        )
+        .slice(0, 5),
+    []
+  )
+
+  const previewConversationIds = React.useMemo(
+    () => new Set(previewConversations.map((conv) => conv.id)),
+    [previewConversations]
+  )
+
+  const previewMessages = React.useMemo(
+    () =>
+      Object.fromEntries(
+        Object.entries(messagesData as Record<string, Message[]>).filter(([conversationId]) =>
+          previewConversationIds.has(conversationId)
+        )
       ),
+    [previewConversationIds]
+  )
+
+  const previewUsers = usersData as User[]
+
+  React.useEffect(() => {
+    setSelectedConversation(previewConversations[0]?.id ?? null)
+  }, [previewConversations, setSelectedConversation])
+
+  return (
+    <div className="max-h-[430px] min-h-[430px] overflow-hidden rounded-md [&>div]:max-h-[430px] [&>div]:min-h-[430px]">
+      <Chat
+        conversations={previewConversations}
+        messages={previewMessages}
+        users={previewUsers}
+      />
+    </div>
+  )
+}
+
+export function DataTable() {
+  const navigate = useNavigate()
+  const [activeTab, setActiveTab] = React.useState<TableView>("assets")
+
+  const assetGroups = initialAssetGroups
+  const [rowOrder, setRowOrder] = React.useState<string[]>(() => initialAssetGroups.map((g) => g.id))
+  const [expandedRows, setExpandedRows] = React.useState<Set<string>>(new Set())
+  const [sortConfig, setSortConfig] = React.useState<{ col: SortColumn | null; order: SortOrder }>({
+    col: null,
+    order: "asc",
+  })
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  )
+
+  const displayedGroups = React.useMemo(() => {
+    const ordered = rowOrder
+      .map((id) => assetGroups.find((g) => g.id === id))
+      .filter(Boolean) as AssetGroup[]
+
+    if (!sortConfig.col) return ordered
+
+    return [...ordered].sort((a, b) => {
+      let aVal: string | number
+      let bVal: string | number
+
+      if (sortConfig.col === "block") {
+        aVal = a.block
+        bVal = b.block
+      } else if (sortConfig.col === "country") {
+        aVal = a.country
+        bVal = b.country
+      } else if (sortConfig.col === "variety") {
+        aVal = groupVarieties(a)
+        bVal = groupVarieties(b)
+      } else if (sortConfig.col === "size") {
+        aVal = groupSize(a)
+        bVal = groupSize(b)
+      } else {
+        aVal = groupAge(a)
+        bVal = groupAge(b)
+      }
+
+      if (typeof aVal === "string") {
+        const cmp = aVal.toLowerCase().localeCompare((bVal as string).toLowerCase())
+        return sortConfig.order === "asc" ? cmp : -cmp
+      }
+
+      return sortConfig.order === "asc" ? aVal - (bVal as number) : (bVal as number) - aVal
+    })
+  }, [assetGroups, rowOrder, sortConfig])
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event
+    if (over && active.id !== over.id) {
+      setRowOrder((prev) => {
+        const oldIndex = prev.indexOf(active.id as string)
+        const newIndex = prev.indexOf(over.id as string)
+        return arrayMove(prev, oldIndex, newIndex)
+      })
+      setSortConfig({ col: null, order: "asc" })
+    }
+  }
+
+  function toggleExpand(id: string) {
+    setExpandedRows((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) {
+        next.delete(id)
+      } else {
+        next.add(id)
+      }
+      return next
     })
   }
 
-  columns.push(
-    {
-      accessorKey: "type",
-      header: config.typeLabel,
-      cell: ({ row }) =>
-        config.typeBadge ? (
-          <div className="w-32">
-            <Badge variant="outline" className="text-muted-foreground px-1.5">
-              {row.original.type}
-            </Badge>
-          </div>
-        ) : (
-          <div className="w-24">{row.original.type}</div>
-        ),
-    },
-    {
-      accessorKey: "status",
-      header: "Status",
-      cell: ({ row }) => getStatusBadge(row.original.status),
-    },
-    {
-      accessorKey: "target",
-      header: () => <div className="w-full">Target</div>,
-      cell: ({ row }) => (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault()
-            toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
-              loading: `Saving ${row.original.header}`,
-              success: "Done",
-              error: "Error",
-            })
-          }}
-        >
-          <Label htmlFor={`${row.original.id}-target`} className="sr-only">
-            Target
-          </Label>
-          <Input
-            className="hover:bg-input/30 focus-visible:bg-background dark:hover:bg-input/30 dark:focus-visible:bg-input/30 h-8 w-16 border-transparent bg-transparent shadow-none focus-visible:border dark:bg-transparent"
-            defaultValue={row.original.target}
-            id={`${row.original.id}-target`}
-          />
-        </form>
-      ),
-    },
-    {
-      accessorKey: "limit",
-      header: () => <div className="w-full">Actual</div>,
-      cell: ({ row }) => (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault()
-            toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
-              loading: `Saving ${row.original.header}`,
-              success: "Done",
-              error: "Error",
-            })
-          }}
-        >
-          <Label htmlFor={`${row.original.id}-limit`} className="sr-only">
-            Actual
-          </Label>
-          <Input
-            className="hover:bg-input/30 focus-visible:bg-background dark:hover:bg-input/30 dark:focus-visible:bg-input/30 h-8 w-16 border-transparent bg-transparent shadow-none focus-visible:border dark:bg-transparent"
-            defaultValue={row.original.limit}
-            id={`${row.original.id}-limit`}
-          />
-        </form>
-      ),
-    },
-    {
-      accessorKey: "reviewer",
-      header: config.reviewerLabel,
-      cell: ({ row }) => row.original.reviewer,
-    },
-    {
-      id: "actions",
-      cell: () => (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              className="data-[state=open]:bg-muted text-muted-foreground flex size-8 cursor-pointer"
-              size="icon"
-            >
-              <EllipsisVertical />
-              <span className="sr-only">Open menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-32">
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Make a copy</DropdownMenuItem>
-            <DropdownMenuItem>Favorite</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      ),
-    }
-  )
-
-  return columns
-}
-
-function DraggableRow({ row }: { row: Row<TaskRow> }) {
-  const { transform, transition, setNodeRef, isDragging } = useSortable({
-    id: row.original.id,
-  })
-
-  return (
-    <TableRow
-      data-state={row.getIsSelected() && "selected"}
-      data-dragging={isDragging}
-      ref={setNodeRef}
-      className="relative z-0 data-[dragging=true]:z-10 data-[dragging=true]:opacity-80"
-      style={{
-        transform: CSS.Transform.toString(transform),
-        transition,
-      }}
-    >
-      {row.getVisibleCells().map((cell) => (
-        <TableCell key={cell.id}>
-          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-        </TableCell>
-      ))}
-    </TableRow>
-  )
-}
-
-function buildTable(
-  data: TaskRow[],
-  columns: ColumnDef<TaskRow>[],
-  state: {
-    sorting: SortingState
-    columnVisibility: VisibilityState
-    rowSelection: Record<string, boolean>
-    columnFilters: ColumnFiltersState
-    pagination: { pageIndex: number; pageSize: number }
-  },
-  handlers: {
-    setRowSelection: React.Dispatch<React.SetStateAction<Record<string, boolean>>>
-    setSorting: React.Dispatch<React.SetStateAction<SortingState>>
-    setColumnFilters: React.Dispatch<React.SetStateAction<ColumnFiltersState>>
-    setColumnVisibility: React.Dispatch<React.SetStateAction<VisibilityState>>
-    setPagination: React.Dispatch<
-      React.SetStateAction<{ pageIndex: number; pageSize: number }>
-    >
-  }
-) {
-  return useReactTable({
-    data,
-    columns,
-    state,
-    getRowId: (row) => row.id.toString(),
-    enableRowSelection: true,
-    onRowSelectionChange: handlers.setRowSelection,
-    onSortingChange: handlers.setSorting,
-    onColumnFiltersChange: handlers.setColumnFilters,
-    onColumnVisibilityChange: handlers.setColumnVisibility,
-    onPaginationChange: handlers.setPagination,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
-  })
-}
-
-export function DataTable({
-  data: initialData,
-  pastPerformanceData = [],
-  keyPersonnelData = [],
-  focusDocumentsData = [],
-}: {
-  data: TaskRow[]
-  pastPerformanceData?: TaskRow[]
-  keyPersonnelData?: TaskRow[]
-  focusDocumentsData?: TaskRow[]
-}) {
-  const [activeTab, setActiveTab] = React.useState<TableView>("live-projects")
-  const [data, setData] = React.useState(() => initialData)
-  const [growers, setGrowers] = React.useState(() => pastPerformanceData)
-  const [keyPersonnel, setKeyPersonnel] = React.useState(() => keyPersonnelData)
-  const [focusDocuments, setFocusDocuments] = React.useState(() => focusDocumentsData)
-  const [rowSelection, setRowSelection] = React.useState<Record<string, boolean>>({})
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [pagination, setPagination] = React.useState({ pageIndex: 0, pageSize: 10 })
-
-  const sortableId = React.useId()
-  const sensors = useSensors(
-    useSensor(MouseSensor, {}),
-    useSensor(TouchSensor, {}),
-    useSensor(KeyboardSensor, {})
-  )
-
-  const sharedState = {
-    sorting,
-    columnVisibility,
-    rowSelection,
-    columnFilters,
-    pagination,
+  function handleColumnSort(col: SortColumn) {
+    setSortConfig((prev) =>
+      prev.col === col
+        ? { col, order: prev.order === "asc" ? "desc" : "asc" }
+        : { col, order: "asc" }
+    )
   }
 
-  const sharedHandlers = {
-    setRowSelection,
-    setSorting,
-    setColumnFilters,
-    setColumnVisibility,
-    setPagination,
+  function sortIndicator(col: SortColumn) {
+    if (sortConfig.col !== col) return <span className="ml-1 opacity-30">↕</span>
+    return <span className="ml-1">{sortConfig.order === "asc" ? "↑" : "↓"}</span>
   }
-
-  const liveProjectColumns = React.useMemo(
-    () =>
-      createColumns({
-        titleLabel: "Activity",
-        typeLabel: "Operation",
-        typeBadge: true,
-        reviewerLabel: "Supervisor",
-        addGrowerColumn: false,
-        allActivities: data,
-      }),
-    [data]
-  )
-
-  const growerColumns = React.useMemo(
-    () =>
-      createColumns({
-        titleLabel: "Grower",
-        typeLabel: "Region",
-        reviewerLabel: "Lead",
-        allActivities: data,
-      }),
-    [data]
-  )
-
-  const keyPersonnelColumns = React.useMemo(
-    () =>
-      createColumns({
-        titleLabel: "Crew lead",
-        typeLabel: "Role",
-        reviewerLabel: "Reports to",
-        allActivities: data,
-      }),
-    [data]
-  )
-
-  const fieldDocumentColumns = React.useMemo(
-    () =>
-      createColumns({
-        titleLabel: "Document",
-        typeLabel: "Type",
-        typeBadge: true,
-        reviewerLabel: "Owner",
-        allActivities: data,
-      }),
-    [data]
-  )
-
-  const table = buildTable(data, liveProjectColumns, sharedState, sharedHandlers)
-  const growersTable = buildTable(growers, growerColumns, sharedState, sharedHandlers)
-  const keyPersonnelTable = buildTable(
-    keyPersonnel,
-    keyPersonnelColumns,
-    sharedState,
-    sharedHandlers
-  )
-  const focusDocumentsTable = buildTable(
-    focusDocuments,
-    fieldDocumentColumns,
-    sharedState,
-    sharedHandlers
-  )
-
-  const dataIds = React.useMemo<UniqueIdentifier[]>(() => data.map(({ id }) => id), [data])
-  const growerIds = React.useMemo<UniqueIdentifier[]>(() => growers.map(({ id }) => id), [growers])
-  const keyPersonnelIds = React.useMemo<UniqueIdentifier[]>(
-    () => keyPersonnel.map(({ id }) => id),
-    [keyPersonnel]
-  )
-  const focusDocumentIds = React.useMemo<UniqueIdentifier[]>(
-    () => focusDocuments.map(({ id }) => id),
-    [focusDocuments]
-  )
-
-  function handleDragEndFactory(setter: React.Dispatch<React.SetStateAction<TaskRow[]>>, ids: UniqueIdentifier[]) {
-    return (event: DragEndEvent) => {
-      const { active, over } = event
-      if (active && over && active.id !== over.id) {
-        setter((currentData) => {
-          const oldIndex = ids.indexOf(active.id)
-          const newIndex = ids.indexOf(over.id)
-          return arrayMove(currentData, oldIndex, newIndex)
-        })
-      }
-    }
-  }
-
-  const handleDragEnd = handleDragEndFactory(setData, dataIds)
-  const handleGrowerDragEnd = handleDragEndFactory(setGrowers, growerIds)
-  const handleKeyPersonnelDragEnd = handleDragEndFactory(setKeyPersonnel, keyPersonnelIds)
-  const handleFocusDocumentsDragEnd = handleDragEndFactory(setFocusDocuments, focusDocumentIds)
-
-  const tableByView = {
-    "live-projects": { instance: table, ids: dataIds, onDragEnd: handleDragEnd, columns: liveProjectColumns },
-    growers: { instance: growersTable, ids: growerIds, onDragEnd: handleGrowerDragEnd, columns: growerColumns },
-    "crew-leads": { instance: keyPersonnelTable, ids: keyPersonnelIds, onDragEnd: handleKeyPersonnelDragEnd, columns: keyPersonnelColumns },
-    "field-documents": { instance: focusDocumentsTable, ids: focusDocumentIds, onDragEnd: handleFocusDocumentsDragEnd, columns: fieldDocumentColumns },
-  } as const
-
-  const currentConfig = tableByView[activeTab]
-
-  const TableContent = ({
-    currentTable,
-    currentDataIds,
-    handleCurrentDragEnd,
-    columnCount,
-  }: {
-    currentTable: typeof table
-    currentDataIds: UniqueIdentifier[]
-    handleCurrentDragEnd: (event: DragEndEvent) => void
-    columnCount: number
-  }) => (
-    <>
-      <div className="overflow-hidden rounded-lg border">
-        <DndContext
-          collisionDetection={closestCenter}
-          modifiers={[restrictToVerticalAxis]}
-          onDragEnd={handleCurrentDragEnd}
-          sensors={sensors}
-          id={sortableId}
-        >
-          <Table>
-            <TableHeader className="bg-muted sticky top-0 z-10">
-              {currentTable.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id} colSpan={header.colSpan}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
-                    </TableHead>
-                  ))}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody className="**:data-[slot=table-cell]:first:w-8">
-              {currentTable.getRowModel().rows?.length ? (
-                <SortableContext items={currentDataIds} strategy={verticalListSortingStrategy}>
-                  {currentTable.getRowModel().rows.map((row) => (
-                    <DraggableRow key={row.id} row={row} />
-                  ))}
-                </SortableContext>
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={columnCount} className="h-24 text-center">
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </DndContext>
-      </div>
-      <div className="flex items-center justify-between px-4">
-        <div className="text-muted-foreground hidden flex-1 text-sm lg:flex">
-          {currentTable.getFilteredSelectedRowModel().rows.length} of {" "}
-          {currentTable.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="flex w-full items-center gap-8 lg:w-fit">
-          <div className="hidden items-center gap-2 lg:flex">
-            <Label htmlFor="rows-per-page" className="text-sm font-medium">
-              Rows per page
-            </Label>
-            <Select
-              value={`${currentTable.getState().pagination.pageSize}`}
-              onValueChange={(value) => currentTable.setPageSize(Number(value))}
-            >
-              <SelectTrigger size="sm" className="w-20 cursor-pointer" id="rows-per-page">
-                <SelectValue placeholder={currentTable.getState().pagination.pageSize} />
-              </SelectTrigger>
-              <SelectContent side="top">
-                {[10, 20, 30, 40, 50].map((pageSize) => (
-                  <SelectItem key={pageSize} value={`${pageSize}`}>
-                    {pageSize}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="flex w-fit items-center justify-center text-sm font-medium">
-            Page {currentTable.getState().pagination.pageIndex + 1} of {currentTable.getPageCount()}
-          </div>
-          <div className="ml-auto flex items-center gap-2 lg:ml-0">
-            <Button
-              variant="outline"
-              className="hidden h-8 w-8 p-0 lg:flex cursor-pointer"
-              onClick={() => currentTable.setPageIndex(0)}
-              disabled={!currentTable.getCanPreviousPage()}
-            >
-              <span className="sr-only">Go to first page</span>
-              <ChevronsLeft />
-            </Button>
-            <Button
-              variant="outline"
-              className="size-8 cursor-pointer"
-              size="icon"
-              onClick={() => currentTable.previousPage()}
-              disabled={!currentTable.getCanPreviousPage()}
-            >
-              <span className="sr-only">Go to previous page</span>
-              <ChevronLeft />
-            </Button>
-            <Button
-              variant="outline"
-              className="size-8 cursor-pointer"
-              size="icon"
-              onClick={() => currentTable.nextPage()}
-              disabled={!currentTable.getCanNextPage()}
-            >
-              <span className="sr-only">Go to next page</span>
-              <ChevronRight />
-            </Button>
-            <Button
-              variant="outline"
-              className="hidden size-8 lg:flex cursor-pointer"
-              size="icon"
-              onClick={() => currentTable.setPageIndex(currentTable.getPageCount() - 1)}
-              disabled={!currentTable.getCanNextPage()}
-            >
-              <span className="sr-only">Go to last page</span>
-              <ChevronsRight />
-            </Button>
-          </div>
-        </div>
-      </div>
-    </>
-  )
 
   return (
     <Tabs
@@ -697,289 +656,283 @@ export function DataTable({
       onValueChange={(value) => setActiveTab(value as TableView)}
       className="w-full flex-col justify-start gap-6"
     >
-      <div className="flex items-center justify-between px-4 lg:px-6 flex-wrap gap-3">
-        <Label htmlFor="view-selector" className="sr-only">
-          View
-        </Label>
+      <div className="flex flex-wrap items-center justify-between gap-3 px-4 lg:px-6">
         <Select value={activeTab} onValueChange={(value) => setActiveTab(value as TableView)}>
-          <SelectTrigger className="flex w-fit sm:hidden cursor-pointer" size="sm" id="view-selector">
+          <SelectTrigger className="flex w-fit cursor-pointer sm:hidden" size="sm" id="view-selector">
             <SelectValue placeholder="Select a view" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="live-projects">Activities</SelectItem>
-            <SelectItem value="growers">Growers</SelectItem>
-            <SelectItem value="crew-leads">Crew leads</SelectItem>
-            <SelectItem value="field-documents">Field documents</SelectItem>
+            <SelectItem value="assets">Assets</SelectItem>
+            <SelectItem value="transactions">Transactions</SelectItem>
+            <SelectItem value="activity-logs">Activity logs</SelectItem>
+            <SelectItem value="documents">Documents</SelectItem>
           </SelectContent>
         </Select>
-        <TabsList className="**:data-[slot=badge]:bg-muted-foreground/30 hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:px-1 sm:flex">
-          <TabsTrigger value="live-projects" className="cursor-pointer">Activities</TabsTrigger>
-          <TabsTrigger value="growers" className="cursor-pointer">
-            Growers <Badge variant="secondary">{growers.length}</Badge>
-          </TabsTrigger>
-          <TabsTrigger value="crew-leads" className="cursor-pointer">
-            Crew leads <Badge variant="secondary">{keyPersonnel.length}</Badge>
-          </TabsTrigger>
-          <TabsTrigger value="field-documents" className="cursor-pointer">Field documents</TabsTrigger>
+
+        <TabsList className="hidden sm:flex">
+          <TabsTrigger value="assets" className="cursor-pointer">Assets</TabsTrigger>
+          <TabsTrigger value="transactions" className="cursor-pointer">Transactions</TabsTrigger>
+          <TabsTrigger value="activity-logs" className="cursor-pointer">Activity logs</TabsTrigger>
+          <TabsTrigger value="documents" className="cursor-pointer">Documents</TabsTrigger>
         </TabsList>
-        <div className="flex items-center gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="cursor-pointer">
-                <Columns2 />
-                <span className="hidden lg:inline">Customize Columns</span>
-                <span className="lg:hidden">Columns</span>
-                <ChevronDown />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              {currentConfig.instance
-                .getAllColumns()
-                .filter(
-                  (column) => typeof column.accessorFn !== "undefined" && column.getCanHide()
-                )
-                .map((column) => (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <Button variant="outline" size="sm" className="cursor-pointer">
-            <Plus />
-            <span className="hidden lg:inline">
-              {activeTab === "growers" ? "Add grower" : "Add work item"}
-            </span>
-          </Button>
-        </div>
       </div>
 
-      <TabsContent value="live-projects" className="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6">
-        <TableContent
-          currentTable={table}
-          currentDataIds={dataIds}
-          handleCurrentDragEnd={handleDragEnd}
-          columnCount={liveProjectColumns.length}
-        />
-      </TabsContent>
-      <TabsContent value="growers" className="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6">
-        <TableContent
-          currentTable={growersTable}
-          currentDataIds={growerIds}
-          handleCurrentDragEnd={handleGrowerDragEnd}
-          columnCount={growerColumns.length}
-        />
-      </TabsContent>
-      <TabsContent value="crew-leads" className="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6">
-        <TableContent
-          currentTable={keyPersonnelTable}
-          currentDataIds={keyPersonnelIds}
-          handleCurrentDragEnd={handleKeyPersonnelDragEnd}
-          columnCount={keyPersonnelColumns.length}
-        />
-      </TabsContent>
-      <TabsContent value="field-documents" className="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6">
-        <TableContent
-          currentTable={focusDocumentsTable}
-          currentDataIds={focusDocumentIds}
-          handleCurrentDragEnd={handleFocusDocumentsDragEnd}
-          columnCount={fieldDocumentColumns.length}
-        />
-      </TabsContent>
-    </Tabs>
-  )
-}
-
-const chartConfig = {
-  target: {
-    label: "Target",
-    color: "var(--primary)",
-  },
-  actual: {
-    label: "Actual",
-    color: "var(--primary)",
-  },
-} satisfies ChartConfig
-
-function TableCellViewer({ item, allActivities }: { item: TaskRow; allActivities: TaskRow[] }) {
-  const isMobile = useIsMobile()
-  const relatedActivities = React.useMemo(
-    () =>
-      item.grower
-        ? allActivities.filter((activity) => activity.grower === item.grower)
-        : allActivities.filter((activity) => activity.grower === item.header),
-    [allActivities, item.grower, item.header]
-  )
-
-  const trendData = item.trend ?? [
-    { month: "Jan", target: 14, actual: 10 },
-    { month: "Feb", target: 18, actual: 13 },
-    { month: "Mar", target: 20, actual: 16 },
-    { month: "Apr", target: 24, actual: 18 },
-    { month: "May", target: 28, actual: 22 },
-    { month: "Jun", target: 30, actual: 24 },
-  ]
-
-  const isGrowerRow = !item.grower && ["Current", "Past", "Pending", "At Risk"].includes(item.status)
-  const drawerDescription = isGrowerRow
-    ? `Target ha vs actual ha for ${item.header}, with linked grower activities below.`
-    : item.grower
-      ? `Target vs actual progress for this activity under ${item.grower}.`
-      : "Target vs actual progress for the selected row."
-
-  return (
-    <Drawer direction={isMobile ? "bottom" : "right"}>
-      <DrawerTrigger asChild>
-        <Button variant="link" className="text-foreground h-auto w-fit px-0 text-left cursor-pointer">
-          <div className="flex flex-col items-start gap-1">
-            <span>{item.header}</span>
-            {item.grower ? (
-              <Badge variant="secondary" className="gap-1 text-[11px]">
-                <Users className="size-3" />
-                {item.grower}
-              </Badge>
-            ) : item.context ? (
-              <span className="text-muted-foreground text-xs">{item.context}</span>
-            ) : null}
-          </div>
-        </Button>
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader className="gap-1">
-          <DrawerTitle>{item.header}</DrawerTitle>
-          <DrawerDescription>{drawerDescription}</DrawerDescription>
-        </DrawerHeader>
-        <div className="flex flex-col gap-4 overflow-y-auto px-4 pb-2 text-sm">
-          {!isMobile && (
-            <>
-              <ChartContainer config={chartConfig} className="h-[220px] w-full">
-                <AreaChart accessibilityLayer data={trendData} margin={{ left: 0, right: 10 }}>
-                  <CartesianGrid vertical={false} />
-                  <XAxis
-                    dataKey="month"
-                    tickLine={false}
-                    axisLine={false}
-                    tickMargin={8}
-                    tickFormatter={(value) => value.slice(0, 3)}
-                  />
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent indicator="dot" />}
-                  />
-                  <Area
-                    dataKey="actual"
-                    type="natural"
-                    fill="var(--color-actual)"
-                    fillOpacity={0.5}
-                    stroke="var(--color-actual)"
-                    stackId="a"
-                  />
-                  <Area
-                    dataKey="target"
-                    type="natural"
-                    fill="var(--color-target)"
-                    fillOpacity={0.2}
-                    stroke="var(--color-target)"
-                    stackId="b"
-                  />
-                </AreaChart>
-              </ChartContainer>
-              <Separator />
-              <div className="grid gap-2">
-                <div className="flex gap-2 leading-none font-medium">
-                  {isGrowerRow ? "Grower delivery is tracking against plan" : "Activity progress is tracking against plan"}
-                  <TrendingUp className="size-4" />
-                </div>
-                <div className="text-muted-foreground">{item.context ?? "Use this panel for concise operational context and notes."}</div>
-              </div>
-              {relatedActivities.length > 0 && (
-                <>
-                  <Separator />
-                  <div className="grid gap-2">
-                    <div className="font-medium">
-                      {isGrowerRow ? "Linked live activities" : "Other activities for this grower"}
-                    </div>
-                    <div className="grid gap-2">
-                      {relatedActivities.slice(0, 4).map((activity) => (
-                        <div key={activity.id} className="flex items-center justify-between rounded-md border px-3 py-2">
-                          <div>
-                            <div className="font-medium">{activity.header}</div>
-                            <div className="text-muted-foreground text-xs">{activity.type}</div>
-                          </div>
-                          {getStatusBadge(activity.status)}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              )}
-              <Separator />
-            </>
-          )}
-          <form className="flex flex-col gap-4">
-            <div className="flex flex-col gap-3">
-              <Label htmlFor={`header-${item.id}`}>{isGrowerRow ? "Grower" : "Activity"}</Label>
-              <Input id={`header-${item.id}`} defaultValue={item.header} />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col gap-3">
-                <Label htmlFor={`type-${item.id}`}>{isGrowerRow ? "Region" : "Operation"}</Label>
-                <Input id={`type-${item.id}`} defaultValue={item.type} />
-              </div>
-              <div className="flex flex-col gap-3">
-                <Label htmlFor={`status-${item.id}`}>Status</Label>
-                <Select defaultValue={item.status}>
-                  <SelectTrigger id={`status-${item.id}`} className="w-full cursor-pointer">
-                    <SelectValue placeholder="Select a status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Done">Done</SelectItem>
-                    <SelectItem value="Completed">Completed</SelectItem>
-                    <SelectItem value="In Progress">In Progress</SelectItem>
-                    <SelectItem value="Scheduled">Scheduled</SelectItem>
-                    <SelectItem value="At Risk">At Risk</SelectItem>
-                    <SelectItem value="Active">Active</SelectItem>
-                    <SelectItem value="Current">Current</SelectItem>
-                    <SelectItem value="Past">Past</SelectItem>
-                    <SelectItem value="Pending">Pending</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            {item.grower && (
-              <div className="flex flex-col gap-3">
-                <Label htmlFor={`grower-${item.id}`}>Grower</Label>
-                <Input id={`grower-${item.id}`} defaultValue={item.grower} />
-              </div>
-            )}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col gap-3">
-                <Label htmlFor={`target-${item.id}`}>Target</Label>
-                <Input id={`target-${item.id}`} defaultValue={item.target} />
-              </div>
-              <div className="flex flex-col gap-3">
-                <Label htmlFor={`limit-${item.id}`}>Actual</Label>
-                <Input id={`limit-${item.id}`} defaultValue={item.limit} />
-              </div>
-            </div>
-            <div className="flex flex-col gap-3">
-              <Label htmlFor={`reviewer-${item.id}`}>{isGrowerRow ? "Lead" : "Supervisor"}</Label>
-              <Input id={`reviewer-${item.id}`} defaultValue={item.reviewer} />
-            </div>
-          </form>
+      <TabsContent value="assets" className="px-4 lg:px-6">
+        <div className="overflow-hidden rounded-lg border">
+          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+            <Table>
+              <TableHeader className="bg-muted/50">
+                <TableRow>
+                  <TableHead className="w-8 px-2" />
+                  <TableHead className="w-6 px-1" />
+                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("block")}>Block{sortIndicator("block")}</TableHead>
+                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("variety")}>Variety{sortIndicator("variety")}</TableHead>
+                  <TableHead>Location</TableHead>
+                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("country")}>Country{sortIndicator("country")}</TableHead>
+                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("size")}>Size (ha){sortIndicator("size")}</TableHead>
+                  <TableHead>Planted (ha)</TableHead>
+                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("age")}>Age (yr){sortIndicator("age")}</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <SortableContext
+                  items={displayedGroups.map((g) => g.id)}
+                  strategy={verticalListSortingStrategy}
+                >
+                  {displayedGroups.map((group) => (
+                    <SortableAssetRow
+                      key={group.id}
+                      group={group}
+                      isExpanded={expandedRows.has(group.id)}
+                      onToggle={() => toggleExpand(group.id)}
+                    />
+                  ))}
+                </SortableContext>
+              </TableBody>
+            </Table>
+          </DndContext>
         </div>
-        <DrawerFooter>
-          <Button className="cursor-pointer">Submit</Button>
-          <DrawerClose asChild>
-            <Button variant="outline" className="cursor-pointer">Done</Button>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+
+        <div className="mt-3">
+          <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/assets/add")}>
+            <Plus className="h-4 w-4" />
+            Add asset block
+          </Button>
+        </div>
+      </TabsContent>
+
+      <TabsContent value="transactions" className="px-4 lg:px-6">
+        <div className="grid gap-4 lg:grid-cols-2">
+          <PaymentList title="Latest payments" payments={latestPayments} />
+          <PaymentList title="Upcoming payments" payments={upcomingPayments} />
+        </div>
+      </TabsContent>
+
+      <TabsContent value="activity-logs" className="px-4 lg:px-6">
+        <div className="overflow-hidden rounded-lg border">
+          <Table>
+            <TableHeader className="bg-muted/50">
+              <TableRow>
+                <TableHead>Date</TableHead>
+                <TableHead>Activity</TableHead>
+                <TableHead>Operation</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Contractor</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {activityLogs.map((log) => (
+                <TableRow key={`${log.activity}-${log.activityName}`}>
+                  <TableCell>{log.activity}</TableCell>
+                  <TableCell className="font-medium">{log.activityName}</TableCell>
+                  <TableCell>{log.operation}</TableCell>
+                  <TableCell>{statusBadge(log.status)}</TableCell>
+                  <TableCell>{log.contractor}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </TabsContent>
+
+      <TabsContent value="documents" className="px-4 lg:px-6">
+        <div className="overflow-hidden rounded-lg border">
+          <Table>
+            <TableHeader className="bg-muted/50">
+              <TableRow>
+                <TableHead>Date</TableHead>
+                <TableHead>Document</TableHead>
+                <TableHead>Status</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {documents.map((doc) => (
+                <TableRow key={doc.document}>
+                  <TableCell>{doc.date}</TableCell>
+                  <TableCell>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <span className="cursor-help font-medium underline decoration-dotted underline-offset-2">
+                          {doc.document}
+                        </span>
+                      </TooltipTrigger>
+                      <TooltipContent side="top" sideOffset={6}>
+                        Last modified: {doc.lastModified}
+                      </TooltipContent>
+                    </Tooltip>
+                  </TableCell>
+                  <TableCell>{statusBadge(doc.status)}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </TabsContent>
+
+      <div className="mt-6 grid gap-4 px-4 lg:grid-cols-2 lg:px-6">
+        <Card className="h-full">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Calendar className="h-5 w-5" />
+              <CardTitle>
+                <button
+                  type="button"
+                  onClick={() => navigate("/calendar")}
+                  className="cursor-pointer underline-offset-4 transition hover:underline"
+                >
+                  Calendar
+                </button>
+              </CardTitle>
+            </div>
+            <CardDescription>Mini planner preview. Open full calendar to edit.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <MiniCalendarPreview />
+          </CardContent>
+        </Card>
+
+        <Card className="h-full">
+          <CardHeader>
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <MessageCircle className="h-5 w-5" />
+                <CardTitle>Chat</CardTitle>
+              </div>
+              <button
+                type="button"
+                onClick={() => navigate("/chat")}
+                className="text-sm font-medium text-primary underline-offset-4 transition hover:underline"
+              >
+                + see more
+              </button>
+            </div>
+            <CardDescription>Latest five chats in compact full-feature mode.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <MiniChatPreview />
+          </CardContent>
+        </Card>
+      </div>
+      <div className="grid gap-4 px-4 pb-2 lg:grid-cols-2 xl:grid-cols-4 lg:px-6">
+        <Card className="overflow-hidden">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center justify-between gap-2 text-base">
+              <span className="inline-flex items-center gap-2">
+                <Leaf className="h-4 w-4 text-emerald-600" />
+                Seedlings Shop
+              </span>
+              <button
+                type="button"
+                onClick={() => navigate("/shop/seedlings")}
+                className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+              >
+                Open <ExternalLink className="h-3.5 w-3.5" />
+              </button>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="max-h-44 overflow-hidden rounded-lg">
+              <SeedlingsBanner />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="overflow-hidden">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center justify-between gap-2 text-base">
+              <span className="inline-flex items-center gap-2">
+                <ShieldCheck className="h-4 w-4 text-amber-600" />
+                Forestry Services
+              </span>
+              <button
+                type="button"
+                onClick={() => navigate("/shop/forestry-services")}
+                className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+              >
+                Open <ExternalLink className="h-3.5 w-3.5" />
+              </button>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="max-h-44 overflow-hidden rounded-lg">
+              <ForestryServicesCountdownBanner />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="group border-cyan-500/20 bg-gradient-to-br from-cyan-500/10 via-card to-blue-500/10 transition-all hover:border-cyan-500/50 hover:shadow-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between text-base">
+              <span className="inline-flex items-center gap-2">
+                <Trees className="h-4 w-4 text-cyan-600" />
+                Roundwood Market
+              </span>
+              <button
+                type="button"
+                onClick={() => navigate("/shop/roundwood")}
+                className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+              >
+                Open <ExternalLink className="h-3.5 w-3.5" />
+              </button>
+            </CardTitle>
+            <CardDescription>
+              Curated lots, pole classes, and log categories for timber buyers.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="rounded-lg border border-cyan-500/20 bg-background/70 p-4 text-sm text-muted-foreground">
+              Elegant quick access to the roundwood catalogue with market-ready listings.
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="group border-emerald-500/20 bg-gradient-to-br from-emerald-500/10 via-card to-lime-500/10 transition-all hover:border-emerald-500/50 hover:shadow-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between text-base">
+              <span className="inline-flex items-center gap-2">
+                <Trees className="h-4 w-4 text-emerald-600" />
+                Forests & Land
+              </span>
+              <button
+                type="button"
+                onClick={() => navigate("/shop/forests-land")}
+                className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+              >
+                Open <ExternalLink className="h-3.5 w-3.5" />
+              </button>
+            </CardTitle>
+            <CardDescription>
+              Explore managed forest blocks and investment-ready land-linked assets.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="rounded-lg border border-emerald-500/20 bg-background/70 p-4 text-sm text-muted-foreground">
+              Designed for investor scouting: opportunities, due diligence context, and quick navigation.
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+      
+    </Tabs>
   )
 }

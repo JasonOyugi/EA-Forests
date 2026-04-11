@@ -28,7 +28,7 @@ export default function ShopProductPage() {
   } = useShopStore()
 
   return (
-    <BaseLayout title={product.name} description={product.description}>
+    <BaseLayout>
       <div className="px-4 lg:px-6">
         <ProductPage
           item={product}

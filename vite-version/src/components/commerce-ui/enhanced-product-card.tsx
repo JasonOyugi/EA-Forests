@@ -127,10 +127,11 @@ export function EnhancedProductCard({
             <Badge className={stockBadgeClass}>In Stock</Badge>
           )}
           {item.tags.includes("featured") && (
-            <Badge variant="secondary">Featured</Badge>
+            <Badge variant="secondary" className="bg-white animate-pulse opacity-100">Featured</Badge>
           )}
           {item.tags.includes("new") && (
-            <Badge variant="destructive">New</Badge>
+            <Badge variant="destructive" className="bg-red-400
+             animate-pulse opacity-100">New</Badge>
           )}
         </div>
 

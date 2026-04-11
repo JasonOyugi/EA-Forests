@@ -30,6 +30,11 @@ export interface ShopItemVariant {
   unitLabel?: string
 }
 
+export interface ShopItemImage {
+  url: string
+  title?: string
+}
+
 export interface ShopDefinition {
   slug: ShopSlug
   name: string
@@ -54,6 +59,7 @@ export interface ShopItem {
   currency: string
   description: string
   image: string
+  imageGallery?: ShopItemImage[]
   tags: string[]
   stockStatus: StockStatus
   domain: ShopDomain

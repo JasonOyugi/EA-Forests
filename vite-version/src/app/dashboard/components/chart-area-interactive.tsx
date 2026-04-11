@@ -1,9 +1,8 @@
 "use client"
 
 import * as React from "react"
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
 
-import { useIsMobile } from "@/hooks/use-mobile"
 import {
   Card,
   CardAction,
@@ -25,94 +24,209 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
-export const description = "A planting and silviculture progress chart"
+export const description = "Investor portfolio trends at trimester intervals"
 
-const chartData = [
-  { date: "2026-01-05", planting: 48, silviculture: 35 },
-  { date: "2026-01-12", planting: 62, silviculture: 41 },
-  { date: "2026-01-19", planting: 74, silviculture: 46 },
-  { date: "2026-01-26", planting: 88, silviculture: 54 },
-  { date: "2026-02-02", planting: 95, silviculture: 60 },
-  { date: "2026-02-09", planting: 108, silviculture: 67 },
-  { date: "2026-02-16", planting: 116, silviculture: 71 },
-  { date: "2026-02-23", planting: 124, silviculture: 79 },
-  { date: "2026-03-02", planting: 132, silviculture: 86 },
-  { date: "2026-03-09", planting: 145, silviculture: 92 },
-  { date: "2026-03-16", planting: 152, silviculture: 98 },
-  { date: "2026-03-23", planting: 164, silviculture: 105 },
+type MetricKey =
+  | "expectedPrice"
+  | "expectedVolume"
+  | "portfolioValue"
+  | "landManaged"
+  | "cash"
+  | "capitalDeployed"
+
+type PortfolioPoint = {
+  date: string
+  label: string
+  isProjected: boolean
+} & Record<MetricKey, number>
+
+type MetricMeta = {
+  label: string
+  shortLabel: string
+  unit: string
+  color: string
+  format: (value: number) => string
+  axisTick: (value: number) => string
+}
+
+const metricMeta: Record<MetricKey, MetricMeta> = {
+  expectedPrice: {
+    label: "Expected price",
+    shortLabel: "Price",
+    unit: "$ per m3",
+    color: "#e1d229",
+    format: (value) => `$${value.toFixed(2)} / m3`,
+    axisTick: (value) => `$${Math.round(value)}`,
+  },
+  expectedVolume: {
+    label: "Expected volume",
+    shortLabel: "Volume",
+    unit: "m3",
+    color: "#2042b3",
+    format: (value) => `${Math.round(value).toLocaleString()} m3`,
+    axisTick: (value) => compactNumber(value),
+  },
+  portfolioValue: {
+    label: "Portfolio value",
+    shortLabel: "Portfolio",
+    unit: "$",
+    color: "#2f8913",
+    format: (value) => compactCurrency(value),
+    axisTick: (value) => compactCurrency(value),
+  },
+  landManaged: {
+    label: "Land managed",
+    shortLabel: "Land",
+    unit: "hectares",
+    color: "#ac690a",
+    format: (value) => `${Math.round(value).toLocaleString()} ha`,
+    axisTick: (value) => compactNumber(value),
+  },
+  cash: {
+    label: "Cash",
+    shortLabel: "Cash",
+    unit: "$",
+    color: "#0369a1",
+    format: (value) => compactCurrency(value),
+    axisTick: (value) => compactCurrency(value),
+  },
+  capitalDeployed: {
+    label: "Capital deployed",
+    shortLabel: "Deployed",
+    unit: "$",
+    color: "#dc2626",
+    format: (value) => compactCurrency(value),
+    axisTick: (value) => compactCurrency(value),
+  },
+}
+
+const metricOptions: MetricKey[] = [
+  "expectedPrice",
+  "expectedVolume",
+  "portfolioValue",
+  "landManaged",
+  "cash",
+  "capitalDeployed",
 ]
 
-const chartConfig = {
-  hectares: {
-    label: "Hectares",
-  },
-  planting: {
-    label: "Planting",
-    color: "#16a34a",
-  },
-  silviculture: {
-    label: "Silviculture",
-    color: "#86efac",
-  },
-} satisfies ChartConfig
+const chartConfig = Object.fromEntries(
+  metricOptions.map((key) => [
+    key,
+    {
+      label: metricMeta[key].label,
+      color: metricMeta[key].color,
+    },
+  ])
+) satisfies ChartConfig
+
+function startOfTrimester(value: Date) {
+  const trimesterStartMonth = Math.floor(value.getMonth() / 4) * 4
+  return new Date(value.getFullYear(), trimesterStartMonth, 1)
+}
+
+function addMonths(value: Date, months: number) {
+  const next = new Date(value)
+  next.setMonth(next.getMonth() + months)
+  return next
+}
+
+function getTrimesterLabel(value: Date) {
+  const trimester = Math.floor(value.getMonth() / 4) + 1
+  return `T${trimester} ${value.getFullYear()}`
+}
+
+function compactNumber(value: number) {
+  return new Intl.NumberFormat("en-US", {
+    notation: "compact",
+    maximumFractionDigits: 1,
+  }).format(value)
+}
+
+function compactCurrency(value: number) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    notation: "compact",
+    maximumFractionDigits: 1,
+  }).format(value)
+}
+
+function generatePortfolioSeries(now: Date): PortfolioPoint[] {
+  const nowTrimester = startOfTrimester(now)
+  const start = new Date(nowTrimester)
+  start.setFullYear(start.getFullYear() - 2)
+
+  const end = new Date(nowTrimester)
+  end.setFullYear(end.getFullYear() + 3)
+
+  const points: PortfolioPoint[] = []
+  let cursor = new Date(start)
+  let index = 0
+
+  while (cursor <= end) {
+    const seasonalFactor = Math.sin(index / 2)
+
+    const expectedPrice = 78 + index * 2.3 + seasonalFactor * 3.4
+    const expectedVolume = 1320 + index * 92 + seasonalFactor * 72
+    const landManaged = 290 + index * 16 + seasonalFactor * 5
+    const capitalDeployed = 1_600_000 + index * 132_000 + seasonalFactor * 22_000
+    const cash = 610_000 - index * 16_000 + seasonalFactor * 58_000
+    const portfolioValue =
+      expectedPrice * expectedVolume * 0.64 + landManaged * 2_350 + cash - capitalDeployed * 0.16
+
+    points.push({
+      date: cursor.toISOString().slice(0, 10),
+      label: getTrimesterLabel(cursor),
+      isProjected: cursor > nowTrimester,
+      expectedPrice: Math.round(expectedPrice * 100) / 100,
+      expectedVolume: Math.round(expectedVolume),
+      portfolioValue: Math.round(portfolioValue),
+      landManaged: Math.round(landManaged),
+      cash: Math.round(cash),
+      capitalDeployed: Math.round(capitalDeployed),
+    })
+
+    cursor = addMonths(cursor, 4)
+    index += 1
+  }
+
+  return points
+}
 
 export function ChartAreaInteractive() {
-  const isMobile = useIsMobile()
-  const [timeRange, setTimeRange] = React.useState("12w")
-
-  React.useEffect(() => {
-    if (isMobile) {
-      setTimeRange("4w")
-    }
-  }, [isMobile])
-
-  const filteredData = React.useMemo(() => {
-    if (timeRange === "12w") return chartData
-    if (timeRange === "6w") return chartData.slice(-6)
-    return chartData.slice(-4)
-  }, [timeRange])
+  const [metric, setMetric] = React.useState<MetricKey>("portfolioValue")
+  const chartData = React.useMemo(() => generatePortfolioSeries(new Date()), [])
+  const activeMeta = metricMeta[metric]
 
   return (
     <Card className="@container/card">
       <CardHeader>
         <div>
-          <CardTitle>Field Trend</CardTitle>
+          <CardTitle>Portfolio Summary</CardTitle>
           <CardDescription>
-            Hectares currently planted and managed
+            Past and predicted performance over 4-month intervals.
+            <span className={`ml-2 inline-block rounded-md border border-border/60 px-2 py-0.5 text-xs text-foreground`} style={{ backgroundColor: `${activeMeta.color}`, opacity: 0.9 }}>
+              {activeMeta.label}: {activeMeta.unit}
+            </span>
           </CardDescription>
         </div>
         <CardAction>
-          <ToggleGroup
-            type="single"
-            value={timeRange}
-            onValueChange={(value) => value && setTimeRange(value)}
-            variant="outline"
-            className="hidden *:data-[slot=toggle-group-item]:!px-4 @[767px]/card:flex"
-          >
-            <ToggleGroupItem value="12w">Last 12 weeks</ToggleGroupItem>
-            <ToggleGroupItem value="6w">Last 6 weeks</ToggleGroupItem>
-            <ToggleGroupItem value="4w">Last 4 weeks</ToggleGroupItem>
-          </ToggleGroup>
-          <Select value={timeRange} onValueChange={setTimeRange}>
+          <Select value={metric} onValueChange={(value) => setMetric(value as MetricKey)}>
             <SelectTrigger
-              className="flex w-40 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate @[767px]/card:hidden"
+              className="flex w-40 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate"
+              style={{ backgroundColor: `${activeMeta.color}`, opacity: 0.4 }}
               size="sm"
-              aria-label="Select a value"
+              aria-label="Select chart metric"
             >
-              <SelectValue placeholder="Last 12 weeks" />
+              <SelectValue placeholder="Select metric" />
             </SelectTrigger>
             <SelectContent className="rounded-xl">
-              <SelectItem value="12w" className="rounded-lg">
-                Last 12 weeks
-              </SelectItem>
-              <SelectItem value="6w" className="rounded-lg">
-                Last 6 weeks
-              </SelectItem>
-              <SelectItem value="4w" className="rounded-lg">
-                Last 4 weeks
-              </SelectItem>
+              {metricOptions.map((option) => (
+                <SelectItem key={option} value={option} className="rounded-lg">
+                  {metricMeta[option].label}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </CardAction>
@@ -122,73 +236,58 @@ export function ChartAreaInteractive() {
           config={chartConfig}
           className="aspect-auto h-[250px] w-full"
         >
-          <AreaChart data={filteredData}>
-            <defs>
-              <linearGradient id="fillPlanting" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="var(--color-planting)" stopOpacity={0.9} />
-                <stop offset="95%" stopColor="var(--color-planting)" stopOpacity={0.12} />
-              </linearGradient>
-              <linearGradient id="fillSilviculture" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="var(--color-silviculture)" stopOpacity={0.75} />
-                <stop offset="95%" stopColor="var(--color-silviculture)" stopOpacity={0.08} />
-              </linearGradient>
-            </defs>
+          <BarChart data={chartData} margin={{ left: -20 }}>
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="date"
+              dataKey="label"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              minTickGap={24}
-              tickFormatter={(value) => {
-                const date = new Date(value)
-                return date.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                })
-              }}
+              interval={0}
+              angle={-45}
+              textAnchor="end"
+              height={80}
+              tick={{ fill: "hsl(var(--foreground))", fontSize: 11 }}
             />
             <YAxis
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              width={70}
+              width={94}
+              tickFormatter={activeMeta.axisTick}
               label={{
-                value: "Hectares",
+                value: `${activeMeta.label} (${activeMeta.unit})`,
                 angle: -90,
                 position: "insideLeft",
-                style: { textAnchor: "middle" },
+                style: { textAnchor: "middle", fill: "hsl(var(--foreground))" },
               }}
+              tick={{ fill: "hsl(var(--foreground))", fontSize: 11 }}
             />
             <ChartTooltip
-              cursor={false}
+              cursor={{ fill: "rgba(0, 0, 0, 0.1)" }}
               content={
                 <ChartTooltipContent
-                  indicator="dot"
+                  indicator="line"
+                  formatter={(value) => (
+                    <div className="flex w-full items-center justify-between gap-2">
+                      <span>{activeMeta.label}</span>
+                      <span className="font-mono tabular-nums">
+                        {activeMeta.format(Number(value))}
+                      </span>
+                    </div>
+                  )}
                   labelFormatter={(value) => {
-                    return new Date(value as string | number | Date).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                    })
+                    return String(value)
                   }}
                 />
               }
             />
-            <Area
-              dataKey="silviculture"
-              type="natural"
-              fill="url(#fillSilviculture)"
-              stroke="var(--color-silviculture)"
-              stackId="a"
+            <Bar
+              dataKey={metric}
+              fill={`var(--color-${metric})`}
+              radius={[8, 8, 0, 0]}
             />
-            <Area
-              dataKey="planting"
-              type="natural"
-              fill="url(#fillPlanting)"
-              stroke="var(--color-planting)"
-              stackId="a"
-            />
-          </AreaChart>
+          </BarChart>
         </ChartContainer>
       </CardContent>
     </Card>

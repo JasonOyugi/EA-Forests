@@ -205,7 +205,6 @@ export function FeaturedSection({
               <div>
                 <CardTitle className="flex items-center gap-2">
                   {title}
-                  <Badge variant="secondary">{config.badge}</Badge>
                 </CardTitle>
                 {subtitle && (
                   <p className="text-sm text-muted-foreground mt-1">{subtitle}</p>

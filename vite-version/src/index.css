@@ -122,6 +122,54 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  .leaflet-container {
+    @apply !bg-card !font-[inherit];
+  }
+  .leaflet-container a {
+    @apply !text-inherit;
+  }
+  .leaflet-div-icon {
+    @apply !bg-transparent !border-none;
+  }
+  .leaflet-popup-content-wrapper, .leaflet-popup-content, .leaflet-popup-content p {
+    @apply ![all:unset];
+  }
+  .leaflet-popup {
+    @apply !animate-none;
+  }
+  .leaflet-popup-close-button {
+    @apply ring-offset-background focus:ring-ring bg-secondary rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:outline-hidden;
+  }
+  .leaflet-tooltip, .leaflet-draw-tooltip {
+    @apply !bg-foreground !text-background !animate-none !rounded-md !border-none !p-0 !px-3 !py-1.5 !shadow-none;
+  }
+  .leaflet-draw-tooltip:before {
+    @apply bg-foreground !top-1/2 !right-0.5 size-2.5 translate-x-1/2 -translate-y-1/2 rotate-45 rounded-[2px] !border-none;
+  }
+  .leaflet-error-draw-tooltip {
+    @apply !bg-destructive !text-white;
+  }
+  .leaflet-error-draw-tooltip:before {
+    @apply bg-destructive;
+  }
+  .leaflet-draw-tooltip-subtext {
+    @apply !text-background;
+  }
+  .leaflet-popup-tip-container, .leaflet-tooltip-top:before, .leaflet-tooltip-bottom:before, .leaflet-tooltip-left:before, .leaflet-tooltip-right:before {
+    @apply hidden;
+  }
+  .leaflet-control-attribution {
+    @apply !bg-muted rounded-md !px-[4px] !py-[2px] text-[10px] !leading-none !text-inherit;
+  }
+  .leaflet-draw-guide-dash {
+    @apply rounded-full;
+  }
+  .leaflet-edit-marker-selected {
+    @apply !border-transparent !bg-transparent;
+  }
+  .marker-cluster div {
+    @apply font-[inherit];
+  }
 }
 
 /* Ensure consistent font rendering across different DPI levels */
@@ -171,4 +219,146 @@ html {
 
 .animate-logo-scroll:hover {
   animation-play-state: paused;
+}
+
+@keyframes countryPulseUg {
+  0% { color: #111111; }
+  33% { color: #facc15; }
+  66% { color: #dc2626; }
+  100% { color: #111111; }
+}
+
+@keyframes countryPulseKe {
+  0% { color: #111111; }
+  50% { color: #dc2626; }
+  100% { color: #15803d; }
+}
+
+@keyframes countryPulseTz {
+  0% { color: #16a34a; }
+  50% { color: #111111; }
+  100% { color: #2563eb; }
+}
+
+.country-pulse-ug {
+  animation: countryPulseUg 2.2s ease-in-out infinite;
+}
+
+.country-pulse-ke {
+  animation: countryPulseKe 2.2s ease-in-out infinite;
+}
+
+.country-pulse-tz {
+  animation: countryPulseTz 2.2s ease-in-out infinite;
+}
+
+@keyframes flagRowPulseUg {
+  0%, 100% {
+    box-shadow: inset 0 0 0 1px #111111, 0 0 0 0 rgba(17, 17, 17, 0.18);
+  }
+  33% {
+    box-shadow: inset 0 0 0 1px #facc15, 0 0 0 4px rgba(250, 204, 21, 0.2);
+  }
+  66% {
+    box-shadow: inset 0 0 0 1px #dc2626, 0 0 0 4px rgba(220, 38, 38, 0.2);
+  }
+}
+
+@keyframes flagRowPulseKe {
+  0%, 100% {
+    box-shadow: inset 0 0 0 1px #111111, 0 0 0 0 rgba(17, 17, 17, 0.18);
+  }
+  50% {
+    box-shadow: inset 0 0 0 1px #dc2626, 0 0 0 4px rgba(220, 38, 38, 0.2);
+  }
+  100% {
+    box-shadow: inset 0 0 0 1px #15803d, 0 0 0 4px rgba(21, 128, 61, 0.2);
+  }
+}
+
+@keyframes flagRowPulseTz {
+  0%, 100% {
+    box-shadow: inset 0 0 0 1px #16a34a, 0 0 0 0 rgba(22, 163, 74, 0.18);
+  }
+  50% {
+    box-shadow: inset 0 0 0 1px #111111, 0 0 0 4px rgba(17, 17, 17, 0.2);
+  }
+  100% {
+    box-shadow: inset 0 0 0 1px #2563eb, 0 0 0 4px rgba(37, 99, 235, 0.2);
+  }
+}
+
+.flag-row {
+  transition: filter 180ms ease;
+}
+
+.flag-row:hover,
+.flag-row.flag-row-active {
+  filter: brightness(1.06);
+}
+
+.flag-row-ug:hover,
+.flag-row-ug.flag-row-active {
+  animation: flagRowPulseUg 1.2s linear infinite;
+}
+
+.flag-row-ke:hover,
+.flag-row-ke.flag-row-active {
+  animation: flagRowPulseKe 1.2s linear infinite;
+}
+
+.flag-row-tz:hover,
+.flag-row-tz.flag-row-active {
+  animation: flagRowPulseTz 1.2s linear infinite;
+}
+
+.investor-card {
+  border-width: 1px;
+  border-style: solid;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.investor-card-emerald {
+  border-color: rgba(16, 185, 129, 0.45);
+}
+
+.investor-card-rose {
+  border-color: rgba(244, 63, 94, 0.45);
+}
+
+.investor-card-lime {
+  border-color: rgba(132, 204, 22, 0.45);
+}
+
+@keyframes pulseEmeraldBorder {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.18); border-color: rgba(5, 150, 105, 0.55); }
+  50% { box-shadow: 0 0 0 5px rgba(5, 150, 105, 0.25); border-color: rgba(4, 120, 87, 0.8); }
+}
+
+@keyframes pulseRoseBorder {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.16); border-color: rgba(225, 29, 72, 0.5); }
+  50% { box-shadow: 0 0 0 5px rgba(225, 29, 72, 0.24); border-color: rgba(190, 18, 60, 0.78); }
+}
+
+@keyframes pulseLimeBorder {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(132, 204, 22, 0.16); border-color: rgba(132, 204, 22, 0.5); }
+  50% { box-shadow: 0 0 0 5px rgba(132, 204, 22, 0.22); border-color: rgba(101, 163, 13, 0.78); }
+}
+
+.investor-card-emerald:hover,
+.investor-card-emerald:focus-within,
+.investor-card-emerald:active {
+  animation: pulseEmeraldBorder 1.35s ease-in-out infinite;
+}
+
+.investor-card-rose:hover,
+.investor-card-rose:focus-within,
+.investor-card-rose:active {
+  animation: pulseRoseBorder 1.35s ease-in-out infinite;
+}
+
+.investor-card-lime:hover,
+.investor-card-lime:focus-within,
+.investor-card-lime:active {
+  animation: pulseLimeBorder 1.35s ease-in-out infinite;
 }
