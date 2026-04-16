@@ -215,7 +215,6 @@ export function ChartAreaInteractive() {
           <Select value={metric} onValueChange={(value) => setMetric(value as MetricKey)}>
             <SelectTrigger
               className="flex w-40 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate"
-              style={{ backgroundColor: `${activeMeta.color}`, opacity: 0.4 }}
               size="sm"
               aria-label="Select chart metric"
             >

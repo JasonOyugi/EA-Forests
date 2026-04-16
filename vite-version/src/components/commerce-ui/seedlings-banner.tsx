@@ -35,7 +35,7 @@ function SeedlingsBanner() {
               JUST RELEASED
             </p>
             <h1 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-              New Varieties <span className="text-emerald-700">Launch</span>
+              New Seedling <span className="text-emerald-700"> Varieties Launch</span>
             </h1>
             <p className="mt-3 text-sm text-slate-700 md:text-base">
               High-performance planting stock from South Africa now available for different sites.

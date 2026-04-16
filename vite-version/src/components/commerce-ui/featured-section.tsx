@@ -232,6 +232,8 @@ export function FeaturedSection({
                 compact={compact}
                 showDescription={type !== "featured"}
                 theme={theme}
+                pricePulseOnHover={theme === "seedlings" && (type === "featured" || type === "new")}
+                runningBorderOnHover={theme === "seedlings" && type === "new"}
                 onClick={onClick}
               />
             ))}

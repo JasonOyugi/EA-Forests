@@ -41,7 +41,7 @@ export function ForestsLandTopBanner() {
                 NEW
               </span>
               <span>
-                <span className="font-bold">Fresh opportunities</span> are now available in forests and land.
+                <span className="font-bold">Ugandan Concessions</span> are now available for review and acquisition.
                 <a
                   href="#featured-products"
                   className="ml-1.5 whitespace-nowrap underline hover:text-teal-100"

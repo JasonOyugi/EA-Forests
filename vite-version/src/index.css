@@ -362,3 +362,23 @@ html {
 .investor-card-lime:active {
   animation: pulseLimeBorder 1.35s ease-in-out infinite;
 }
+
+/* ─── Running emerald light border for "new" seedlings cards ─── */
+@keyframes emerald-spin-border {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Amber pulsating border for forestry services banners ─── */
+@keyframes amber-pulse-border {
+  0%, 100% {
+    box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 5px rgba(245, 158, 11, 0.0), 0 0 0 3px rgba(245, 158, 11, 0.85);
+  }
+}
+
+.amber-pulse-on-hover:hover {
+  animation: amber-pulse-border 1.4s ease-in-out infinite;
+  border-radius: 0.75rem;
+}

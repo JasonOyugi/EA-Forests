@@ -12,9 +12,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { formatCurrency } from "@/app/shop/lib/format";
-import { Heart, ShoppingCart, Star } from "lucide-react";
+import { Heart, ShoppingCart } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { ShopItem, ShopItemVariant } from "@/app/shop/types";
+import StarRatingFractions from "@/components/commerce-ui/star-rating-fractions";
+import type { ShopItem } from "@/app/shop/types";
 
 interface EnhancedProductCardProps {
   item: ShopItem;
@@ -28,7 +29,17 @@ interface EnhancedProductCardProps {
   showDescription?: boolean;
   theme?: "seedlings" | "forests-land" | "forestry-services" | "roundwood";
   onClick?: (item: ShopItem) => void;
+  pricePulseOnHover?: boolean;
+  runningBorderOnHover?: boolean;
   className?: string;
+}
+
+function deriveRatingFromId(id: string) {
+  const hash = Array.from(id).reduce((acc, char) => acc + char.charCodeAt(0), 0)
+  const rating = 4 + (hash % 5) * 0.25
+  const reviewCount = 18 + (hash % 73)
+
+  return { rating, reviewCount }
 }
 
 export function EnhancedProductCard({
@@ -43,12 +54,25 @@ export function EnhancedProductCard({
   showDescription = true,
   theme,
   onClick,
+  pricePulseOnHover = false,
+  runningBorderOnHover = false,
   className,
 }: EnhancedProductCardProps) {
   const defaultVariant = item.variants?.[0]
   const [selectedVariant, setSelectedVariant] = React.useState<string>(defaultVariant?.id ?? "")
 
   const activeVariant = item.variants?.find((variant) => variant.id === selectedVariant) ?? defaultVariant
+  const { rating, reviewCount } = React.useMemo(() => deriveRatingFromId(item.id), [item.id])
+
+  const startingVariant = item.variants?.[0]
+
+  const activeUnitLabel =
+    activeVariant?.unitLabel ??
+    (activeVariant?.count ? `per ${activeVariant.count} seedlings` : item.unitLabel)
+
+  const startingUnitLabel =
+    startingVariant?.unitLabel ??
+    (startingVariant?.count ? `per ${startingVariant.count} seedlings` : item.unitLabel)
 
   const handleAddToCart = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation()
@@ -110,8 +134,12 @@ export function EnhancedProductCard({
   const footerBadgeTags = item.tags.filter((tag) => footerTagPriority.includes(tag)).slice(0, 2)
   const footerFallbackText = item.domain ? item.domain.replace(/(^|\s)\S/g, (match) => match.toUpperCase()) : item.kind === "service" ? "Service" : "Product"
 
-  return (
-    <Card className={cn("group cursor-pointer overflow-hidden py-0 transition-all hover:shadow-lg", themeCardClass, className)} onClick={() => onClick?.(item)}>
+  const cardEl = (
+    <Card
+      className={cn("group cursor-pointer overflow-hidden py-0 transition-all hover:shadow-lg", themeCardClass, className)}
+      style={runningBorderOnHover ? { border: "none", background: "white" } : undefined}
+      onClick={() => onClick?.(item)}
+    >
       <div className="relative">
         <div className={cn("overflow-hidden bg-transparent", compact ? "aspect-[5/4]" : "aspect-[4/3]")}>
           <img
@@ -130,7 +158,7 @@ export function EnhancedProductCard({
             <Badge variant="secondary" className="bg-white animate-pulse opacity-100">Featured</Badge>
           )}
           {item.tags.includes("new") && (
-            <Badge variant="destructive" className="bg-red-400
+            <Badge variant="destructive" className="bg-emerald-400
              animate-pulse opacity-100">New</Badge>
           )}
         </div>
@@ -176,22 +204,22 @@ export function EnhancedProductCard({
       </CardHeader>
 
       <CardContent className={cn("space-y-4", compact ? "py-0" : "py-4")}> 
-        {!compact && (
-          <div className="flex items-center gap-1">
-            <div className="flex">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className={cn(
-                    "h-4 w-4",
-                    i < 4 ? starActiveClass : "text-gray-300"
-                  )}
-                />
-              ))}
-            </div>
-            <span className="text-sm text-muted-foreground">(4.2)</span>
-          </div>
-        )}
+        <div className="flex items-center gap-2">
+          <StarRatingFractions
+            value={rating}
+            readOnly
+            iconSize={compact ? 12 : 14}
+            className={cn("gap-x-0.5", starActiveClass)}
+          />
+          <span className={cn("text-muted-foreground", compact ? "text-xs" : "text-sm")}>{rating.toFixed(2)}/5</span>
+          {!compact ? (
+            <span className="text-xs text-muted-foreground">({reviewCount} reviews)</span>
+          ) : null}
+        </div>
+
+        {compact && item.variants?.length ? (
+          <div className="text-xs font-medium text-emerald-700">Starting from:</div>
+        ) : null}
 
         {showVariants && !compact && item.variants?.length ? (
           <div className="space-y-2">
@@ -208,7 +236,7 @@ export function EnhancedProductCard({
                   className={cn(
                     "rounded-full border px-3 py-2 text-sm transition",
                     selectedVariant === variant.id
-                      ? "border-emerald-700 bg-emerald-100 text-emerald-900"
+                      ? variantButtonSelected
                       : "border-slate-300 bg-white text-slate-700 hover:border-slate-500"
                   )}
                 >
@@ -221,18 +249,22 @@ export function EnhancedProductCard({
 
         <div className="flex items-center justify-between">
           <div>
-            <div className={cn("font-bold", compact ? "text-lg" : "text-2xl")}> 
+            <div
+              className={cn(
+                "font-bold transition-colors",
+                compact ? "text-lg" : "text-2xl",
+                pricePulseOnHover && "group-hover:text-green-600 group-hover:animate-pulse"
+              )}
+            > 
               {formatCurrency(activeVariant?.price ?? item.price, item.currency)}
             </div>
             {activeVariant?.label && !compact ? (
-              <div className="text-xs text-muted-foreground">{activeVariant.label} size</div>
+              <div className="text-xs text-muted-foreground">{activeUnitLabel}</div>
             ) : null}
           </div>
-          {!compact && (
-            <div className="text-sm text-muted-foreground">
-              {item.kind === "service" ? "Service" : "Product"} · {item.unitLabel}
-            </div>
-          )}
+          <div className="text-xs text-muted-foreground">
+            {startingUnitLabel}
+          </div>
         </div>
       </CardContent>
 
@@ -271,5 +303,25 @@ export function EnhancedProductCard({
         </div>
       </CardFooter>
     </Card>
-  );
+  )
+
+  if (runningBorderOnHover) {
+    return (
+      <div className="group/ring relative overflow-hidden rounded-lg bg-emerald-300/70 p-[1.5px]">
+        <div className="pointer-events-none absolute inset-0 rounded-lg opacity-0 transition-opacity duration-300 group-hover/ring:opacity-100">
+          <div
+            className="h-full w-full"
+            style={{
+              background:
+                "conic-gradient(from 0deg, transparent 0deg, #059669 38deg, #34d399 78deg, transparent 136deg, transparent 216deg, #10b981 276deg, #6ee7b7 322deg, transparent 360deg)",
+              animation: "emerald-spin-border 1.8s linear infinite",
+            }}
+          />
+        </div>
+        <div className="relative z-10">{cardEl}</div>
+      </div>
+    )
+  }
+
+  return cardEl
 }

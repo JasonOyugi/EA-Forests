@@ -1,82 +1,98 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { ArrowRight, BadgePercent } from "lucide-react"
 
 import { BentoTilt } from "@/components/ui/bento-tilt"
 
 export function ForestryServicesCountdownBanner() {
-  const [timeLeft, setTimeLeft] = useState({ hours: 24, minutes: 0, seconds: 0 })
+  const [timeLeft, setTimeLeft] = useState({ days: 44, hours: 0, minutes: 0, seconds: 0 })
 
   useEffect(() => {
     const expiry = new Date()
-    expiry.setHours(expiry.getHours() + 24)
+    expiry.setDate(expiry.getDate() + 44)
 
     const timer = setInterval(() => {
       const difference = expiry.getTime() - Date.now()
 
       if (difference <= 0) {
         clearInterval(timer)
-        setTimeLeft({ hours: 0, minutes: 0, seconds: 0 })
+        setTimeLeft({ days: 44, hours: 0, minutes: 0, seconds: 0 })
         return
       }
 
-      const hours = Math.floor(difference / (1000 * 60 * 60))
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24))
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
       const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
       const seconds = Math.floor((difference % (1000 * 60)) / 1000)
-      setTimeLeft({ hours, minutes, seconds })
+      setTimeLeft({ days, hours, minutes, seconds })
     }, 1000)
 
     return () => clearInterval(timer)
   }, [])
 
+  const dd = String(timeLeft.days).padStart(2, "0")
   const hh = String(timeLeft.hours).padStart(2, "0")
   const mm = String(timeLeft.minutes).padStart(2, "0")
   const ss = String(timeLeft.seconds).padStart(2, "0")
 
   return (
-    <BentoTilt>
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-amber-900 via-yellow-700 to-orange-700 p-8">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-yellow-300 blur-3xl" />
-          <div className="absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-orange-400 blur-3xl" />
-        </div>
+    <BentoTilt className="rounded-xl">
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-amber-700 via-orange-600 to-emerald-600 p-[2px]">
+        <div className="relative overflow-hidden rounded-[calc(theme(borderRadius.xl)-2px)] bg-white p-6 dark:bg-gray-900">
+          <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-orange-400 opacity-10" />
+          <div className="absolute -bottom-8 -left-8 h-32 w-32 rounded-full bg-emerald-500 opacity-10" />
+          <div className="absolute right-8 top-8 h-4 w-4 rotate-45 bg-amber-500/20" />
+          <div className="absolute bottom-10 right-1/4 h-6 w-6 rounded-full bg-orange-500/15" />
 
-        <div className="relative z-10 mx-auto text-center">
-          <div className="inline-block rounded-lg bg-white/10 px-4 py-1 text-sm font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
-            Flash Sale
-          </div>
-
-          <h2 className="mt-4 text-3xl font-bold text-white md:text-4xl">Don&apos;t miss your chance to save!</h2>
-
-          <p className="mx-auto mt-2 max-w-2xl text-amber-100">
-            Discount pricing on premium forestry services expires when the timer reaches zero.
-          </p>
-
-          <div className="mt-8 flex flex-col items-center justify-center">
-            <p className="mb-2 text-sm font-medium text-amber-200">OFFER EXPIRES IN</p>
-            <div
-              style={{ fontFamily: "monospace", fontVariantNumeric: "tabular-nums" }}
-              className="flex items-baseline text-4xl font-semibold text-white md:text-6xl"
-            >
-              {hh}:{mm}:{ss}
+          <div className="relative flex flex-col items-center justify-between gap-6 md:flex-row">
+            <div className="flex-shrink-0">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg">
+                <BadgePercent className="h-8 w-8" />
+              </div>
             </div>
-          </div>
 
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <button
-              type="button"
-              className="w-full rounded-lg bg-gradient-to-r from-yellow-400 to-orange-500 px-8 py-3 font-medium text-white shadow-lg transition-all hover:shadow-xl sm:w-auto"
-              onClick={() => document.getElementById("products-section")?.scrollIntoView({ behavior: "smooth" })}
-            >
-              Shop Now
-            </button>
-            <button
-              type="button"
-              className="w-full rounded-lg border border-white/30 bg-white/5 px-8 py-3 font-medium text-white backdrop-blur-sm transition-all hover:bg-white/10 sm:w-auto"
-              onClick={() => document.getElementById("featured-products")?.scrollIntoView({ behavior: "smooth" })}
-            >
-              View Details
-            </button>
+            <div className="flex-1 text-center md:text-left">
+              <div className="mb-1 inline-flex rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:bg-amber-900/40 dark:text-amber-200">
+                Forestry Membership Offer
+              </div>
+              <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                Join Our Forestry Rewards Program
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300">
+                Unlock service bundle discounts, priority scheduling, early access to planting windows, and enterprise support perks.
+              </p>
+
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-2 md:justify-start">
+                <span className="rounded-md bg-amber-50 px-3 py-1 text-xs font-semibold tracking-wide text-amber-800 dark:bg-amber-950/40 dark:text-amber-200">
+                  44 days remaining
+                </span>
+                <span
+                  style={{ fontFamily: "monospace", fontVariantNumeric: "tabular-nums" }}
+                  className="rounded-md bg-gray-100 px-3 py-1 text-sm font-semibold text-gray-900 dark:bg-gray-800 dark:text-white"
+                >
+                  {dd}:{hh}:{mm}:{ss}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex flex-shrink-0 flex-col gap-3 sm:flex-row md:flex-col">
+              <button
+                type="button"
+                className="rounded-md bg-gradient-to-r from-amber-600 to-orange-600 px-5 py-2.5 font-medium text-white shadow-md transition-all hover:from-amber-700 hover:to-orange-700"
+                onClick={() => document.getElementById("products-section")?.scrollIntoView({ behavior: "smooth" })}
+              >
+                Join Now
+              </button>
+              <button
+                type="button"
+                className="inline-flex items-center justify-center rounded-md border border-amber-200 px-5 py-2.5 font-medium text-amber-800 transition-all hover:bg-amber-50 dark:border-amber-800 dark:text-amber-200 dark:hover:bg-amber-950/30"
+                onClick={() => document.getElementById("featured-products")?.scrollIntoView({ behavior: "smooth" })}
+              >
+                View Benefits
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </button>
+            </div>
           </div>
         </div>
       </div>

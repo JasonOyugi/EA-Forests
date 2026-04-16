@@ -24,7 +24,7 @@ export const shopDefinitions: Record<ShopSlug, ShopDefinition> = {
     slug: "forests-land",
     name: "Forests & Land",
     shortName: "Forests & Land",
-    description: "Forest block, land-linked forestry opportunities, and managed site offerings.",
+    description: "Browse fresh new land, forest blocks, land-linked forestry opportunities, and managed site offerings in one place.",
     heroTitle: "Forests and land opportunities",
     heroDescription:
       "Review managed forest blocks, land-linked opportunities, and forestry assets suitable for pipeline development.",

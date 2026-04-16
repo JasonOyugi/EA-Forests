@@ -3,10 +3,10 @@
     "id": "forests-managed-block-001",
     "slug": "managed-forest-block-1",
     "shop": "forests-land",
-    "name": "Managed Forest Block 1",
+    "name": "Managed Forest Blocks",
     "kind": "asset",
-    "unitLabel": "per block",
-    "price": 12500,
+    "unitLabel": "per ha per year",
+    "price": 1250,
     "currency": "USD",
     "description": "Packaged forestry block opportunity with establishment history and management summary.",
     "image": "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80",
@@ -19,7 +19,7 @@
     "id": "forests-managed-block-002",
     "slug": "managed-forest-block-2",
     "shop": "forests-land",
-    "name": "Managed Forest Block 2",
+    "name": "Managed Forest Block",
     "kind": "asset",
     "unitLabel": "per block",
     "price": 11900,
@@ -45,7 +45,7 @@
     "tags": ["land", "offering", "nfa"],
     "stockStatus": "quote",
     "domain": "timber",
-    "featured": false
+    "featured": true
   },
   {
     "id": "forests-land-parcel-004",

@@ -833,52 +833,14 @@ export function DataTable() {
           </CardContent>
         </Card>
       </div>
-      <div className="grid gap-4 px-4 pb-2 lg:grid-cols-2 xl:grid-cols-4 lg:px-6">
-        <Card className="overflow-hidden">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center justify-between gap-2 text-base">
-              <span className="inline-flex items-center gap-2">
-                <Leaf className="h-4 w-4 text-emerald-600" />
-                Seedlings Shop
-              </span>
-              <button
-                type="button"
-                onClick={() => navigate("/shop/seedlings")}
-                className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-              >
-                Open <ExternalLink className="h-3.5 w-3.5" />
-              </button>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <div className="max-h-44 overflow-hidden rounded-lg">
-              <SeedlingsBanner />
-            </div>
-          </CardContent>
-        </Card>
+      <div className="grid gap-4 px-4 pb-2 lg:px-6">
+        <div className=" overflow-hidden rounded-lg">
+          <SeedlingsBanner />
+        </div>
 
-        <Card className="overflow-hidden">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center justify-between gap-2 text-base">
-              <span className="inline-flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 text-amber-600" />
-                Forestry Services
-              </span>
-              <button
-                type="button"
-                onClick={() => navigate("/shop/forestry-services")}
-                className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-              >
-                Open <ExternalLink className="h-3.5 w-3.5" />
-              </button>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pt-0">
-            <div className="max-h-44 overflow-hidden rounded-lg">
-              <ForestryServicesCountdownBanner />
-            </div>
-          </CardContent>
-        </Card>
+        <div className="overflow-hidden rounded-lg">
+          <ForestryServicesCountdownBanner />
+        </div>
 
         <Card className="group border-cyan-500/20 bg-gradient-to-br from-cyan-500/10 via-card to-blue-500/10 transition-all hover:border-cyan-500/50 hover:shadow-lg">
           <CardHeader>
