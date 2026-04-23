@@ -1,81 +1,507 @@
 [
   {
-    "id": "forests-managed-block-001",
-    "slug": "managed-forest-block-1",
+    "id": "forests-core-001",
+    "slug": "core-forests",
     "shop": "forests-land",
-    "name": "Managed Forest Blocks",
+    "name": "Core Forests",
+    "subtitle": "A low-risk entry point into professionally designed forestry investments",
     "kind": "asset",
-    "unitLabel": "per ha per year",
-    "price": 1250,
+    "unitLabel": "establishment per hectare",
+    "price": 2000,
     "currency": "USD",
-    "description": "Packaged forestry block opportunity with establishment history and management summary.",
-    "image": "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80",
-    "tags": ["timber", "managed", "block"],
+    "description": "Conventional, professionally structured forestry investments with proven species, clear rotation planning, and conservative underwriting for first-time investors.",
+    "image": "/forest.webp",
+    "imageGallery": [
+      { "url": "/forest.webp", "title": "Core forests overview" },
+      { "url": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80", "title": "Managed plantation block" },
+      { "url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80", "title": "Field access and management lanes" }
+    ],
+    "tags": ["featured", "timber", "new"],
     "stockStatus": "quote",
     "domain": "timber",
-    "featured": false
+    "featured": true,
+    "ctaLabel": "Explore Core Forests",
+    "featuredLabel": "Low-risk entry",
+    "minimumPriceLabel": "Establishment from $2,000/ha",
+    "variants": [
+      {
+        "id": "core-1-10",
+        "label": "1-10 ha",
+        "count": 1,
+        "price": 2000,
+        "secondaryPrice": 1500,
+        "unitLabel": "establishment per hectare",
+        "secondaryUnitLabel": "maintenance per hectare / year",
+        "description": "Base pricing for early-stage or pilot forestry allocations."
+      },
+      {
+        "id": "core-10-50",
+        "label": "10-50 ha",
+        "count": 10,
+        "price": 1900,
+        "secondaryPrice": 1425,
+        "unitLabel": "establishment per hectare",
+        "secondaryUnitLabel": "maintenance per hectare / year",
+        "badge": "5% stage discount",
+        "description": "Includes a 5% reduction on establishment and annual maintenance."
+      },
+      {
+        "id": "core-50-100",
+        "label": "50-100 ha",
+        "count": 50,
+        "price": 1805,
+        "secondaryPrice": 1354,
+        "unitLabel": "establishment per hectare",
+        "secondaryUnitLabel": "maintenance per hectare / year",
+        "badge": "10% stage discount",
+        "description": "Portfolio build tier for institutional and family-office planting."
+      },
+      {
+        "id": "core-100-500",
+        "label": "100-500 ha",
+        "count": 100,
+        "price": 1715,
+        "secondaryPrice": 1286,
+        "unitLabel": "establishment per hectare",
+        "secondaryUnitLabel": "maintenance per hectare / year",
+        "badge": "15% stage discount",
+        "description": "Scaled operating tier with larger procurement and management efficiencies."
+      },
+      {
+        "id": "core-500-plus",
+        "label": "500+ ha",
+        "count": 500,
+        "price": 1629,
+        "secondaryPrice": 1222,
+        "unitLabel": "establishment per hectare",
+        "secondaryUnitLabel": "maintenance per hectare / year",
+        "badge": "20% stage discount",
+        "description": "Largest acreage pricing with cumulative stage-based discounting applied."
+      }
+    ],
+    "highlights": [
+      "Conventional, proven species and silviculture",
+      "Conservative yield and return assumptions",
+      "Standard genetics widely adopted in the region",
+      "Clear rotation timelines, performance variance and cashflow expectations",
+      "Ideal for first-time forestry investors"
+    ],
+    "detailSections": [
+      {
+        "title": "Investment fit",
+        "items": [
+          "Designed for investors prioritising execution reliability over frontier upside.",
+          "Clear establishment and maintenance cost structure for simple underwriting.",
+          "Suitable for phased expansion once the first planted hectares are performing."
+        ]
+      }
+    ]
   },
   {
-    "id": "forests-managed-block-002",
-    "slug": "managed-forest-block-2",
+    "id": "forests-high-performance-002",
+    "slug": "high-performance-forests",
     "shop": "forests-land",
-    "name": "Managed Forest Block",
+    "name": "High-Performance Forests",
+    "subtitle": "World-class genetics and optimized systems targeting superior returns",
     "kind": "asset",
-    "unitLabel": "per block",
-    "price": 11900,
+    "unitLabel": "establishment per hectare",
+    "price": 2500,
     "currency": "USD",
-    "description": "Commercial forest block with mature stand profile and verified access route.",
-    "image": "https://images.unsplash.com/photo-1425913397330-cf8af2ff40a1?auto=format&fit=crop&w=1200&q=80",
-    "tags": ["timber", "managed", "block"],
+    "description": "Advanced forest investment structures built around elite genetics, active monitoring, and technical silviculture for return-focused capital.",
+    "image": "/about.webp",
+    "imageGallery": [
+      { "url": "/about.webp", "title": "High-performance forests overview" },
+      { "url": "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=1200&q=80", "title": "High-vigour planting stock" },
+      { "url": "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1200&q=80", "title": "Field growth monitoring" }
+    ],
+    "tags": ["featured", "popular", "timber"],
     "stockStatus": "quote",
     "domain": "timber",
-    "featured": false
+    "featured": true,
+    "ctaLabel": "View High-Performance Plans",
+    "featuredLabel": "Return-focused",
+    "minimumPriceLabel": "Establishment from $2,500/ha",
+    "variants": [
+      {
+        "id": "hp-1-10",
+        "label": "1-10 ha",
+        "count": 1,
+        "price": 2500,
+        "secondaryPrice": 2000,
+        "unitLabel": "establishment per hectare",
+        "secondaryUnitLabel": "maintenance per hectare / year",
+        "description": "Base pricing for intensive, high-performance forestry deployment."
+      },
+      {
+        "id": "hp-10-50",
+        "label": "10-50 ha",
+        "count": 10,
+        "price": 2375,
+        "secondaryPrice": 1900,
+        "unitLabel": "establishment per hectare",
+        "secondaryUnitLabel": "maintenance per hectare / year",
+        "badge": "5% stage discount",
+        "description": "Reduced pricing on both establishment and annual maintenance."
+      },
+      {
+        "id": "hp-50-100",
+        "label": "50-100 ha",
+        "count": 50,
+        "price": 2256,
+        "secondaryPrice": 1805,
+        "unitLabel": "establishment per hectare",
+        "secondaryUnitLabel": "maintenance per hectare / year",
+        "badge": "10% stage discount",
+        "description": "For multi-block allocations with enhanced monitoring and reporting."
+      },
+      {
+        "id": "hp-100-500",
+        "label": "100-500 ha",
+        "count": 100,
+        "price": 2143,
+        "secondaryPrice": 1715,
+        "unitLabel": "establishment per hectare",
+        "secondaryUnitLabel": "maintenance per hectare / year",
+        "badge": "15% stage discount",
+        "description": "Scaled high-yield platform pricing for serious timber portfolios."
+      },
+      {
+        "id": "hp-500-plus",
+        "label": "500+ ha",
+        "count": 500,
+        "price": 2036,
+        "secondaryPrice": 1629,
+        "unitLabel": "establishment per hectare",
+        "secondaryUnitLabel": "maintenance per hectare / year",
+        "badge": "20% stage discount",
+        "description": "Cumulative stage discount applied for the largest mandates."
+      }
+    ],
+    "highlights": [
+      "Improved, hybrid and clonal genetics with superior growth traits",
+      "Higher yield and shorter rotation potential",
+      "Premium seedling quality optimised for survival",
+      "Technical silviculture matched to the genetics",
+      "Site-genotype matching using performance data",
+      "Advanced growth and yield forecasting",
+      "Active performance monitoring and adaptive management",
+      "Live data and insights into high-value markets",
+      "Designed for return-focused investors"
+    ],
+    "detailSections": [
+      {
+        "title": "Execution model",
+        "items": [
+          "Designed for investors who want better growth curves, tighter management, and richer data feedback loops.",
+          "Best fit where site conditions and capital pacing support premium genetics and technical field execution."
+        ]
+      }
+    ]
   },
   {
-    "id": "forests-nfa-land-offering-003",
-    "slug": "nfa-land-offering",
+    "id": "forests-dryland-frontier-003",
+    "slug": "dryland-frontier-forests",
     "shop": "forests-land",
-    "name": "NFA Land Offering",
+    "name": "Dryland & Frontier Forests",
+    "subtitle": "Cutting edge forestry systems engineered for dry and marginal environments",
     "kind": "asset",
-    "unitLabel": "per offering",
-    "price": 14250,
+    "unitLabel": "establishment per hectare",
+    "price": 2500,
     "currency": "USD",
-    "description": "NFA-aligned land opportunity prepared for forestry establishment and phased implementation.",
-    "image": "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1200&q=80",
-    "tags": ["land", "offering", "nfa"],
-    "stockStatus": "quote",
-    "domain": "timber",
-    "featured": true
-  },
-  {
-    "id": "forests-land-parcel-004",
-    "slug": "land-parcel",
-    "shop": "forests-land",
-    "name": "Land Parcel",
-    "kind": "asset",
-    "unitLabel": "per parcel",
-    "price": 9400,
-    "currency": "USD",
-    "description": "Land-linked forestry opportunity suitable for establishment planning and diligence.",
-    "image": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
-    "tags": ["land", "parcel", "pipeline"],
-    "stockStatus": "quote",
-    "domain": "timber"
-  },
-  {
-    "id": "forests-dryland-offering-005",
-    "slug": "dryland-offering",
-    "shop": "forests-land",
-    "name": "Dryland Offering",
-    "kind": "asset",
-    "unitLabel": "per offering",
-    "price": 10100,
-    "currency": "USD",
-    "description": "Dryland parcel suited for resilient forestry programs and staged restoration objectives.",
-    "image": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
-    "tags": ["featured", "restoration"],
+    "description": "Featured frontier forestry systems for water-limited and marginal sites, combining resilient genetics, site analytics, and asymmetric upside.",
+    "image": "/drylands.webp",
+    "imageGallery": [
+      { "url": "/drylands.webp", "title": "Dryland and frontier forests" },
+      { "url": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80", "title": "Frontier site conditions" },
+      { "url": "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=1200&q=80", "title": "Resilience field operations" }
+    ],
+    "tags": ["featured", "new", "restoration"],
     "stockStatus": "quote",
     "domain": "restoration",
-    "featured": true
+    "featured": true,
+    "ctaLabel": "Access Dryland Strategies",
+    "featuredLabel": "Featured frontier strategy",
+    "minimumPriceLabel": "Establishment from $2,500/ha",
+    "variants": [
+      {
+        "id": "df-1-10",
+        "label": "1-10 ha",
+        "count": 1,
+        "price": 2500,
+        "secondaryPrice": 2000,
+        "unitLabel": "establishment per hectare",
+        "secondaryUnitLabel": "maintenance per hectare / year",
+        "description": "Base pricing for frontier and dryland establishment."
+      },
+      {
+        "id": "df-10-50",
+        "label": "10-50 ha",
+        "count": 10,
+        "price": 2375,
+        "secondaryPrice": 1900,
+        "unitLabel": "establishment per hectare",
+        "secondaryUnitLabel": "maintenance per hectare / year",
+        "badge": "5% stage discount",
+        "description": "Stage discount applied at this acreage band."
+      },
+      {
+        "id": "df-50-100",
+        "label": "50-100 ha",
+        "count": 50,
+        "price": 2256,
+        "secondaryPrice": 1805,
+        "unitLabel": "establishment per hectare",
+        "secondaryUnitLabel": "maintenance per hectare / year",
+        "badge": "10% stage discount",
+        "description": "Designed for frontier programmes spanning multiple dryland blocks."
+      },
+      {
+        "id": "df-100-500",
+        "label": "100-500 ha",
+        "count": 100,
+        "price": 2143,
+        "secondaryPrice": 1715,
+        "unitLabel": "establishment per hectare",
+        "secondaryUnitLabel": "maintenance per hectare / year",
+        "badge": "15% stage discount",
+        "description": "Scaled pricing for resilient forestry deployments across larger landscapes."
+      },
+      {
+        "id": "df-500-plus",
+        "label": "500+ ha",
+        "count": 500,
+        "price": 2036,
+        "secondaryPrice": 1629,
+        "unitLabel": "establishment per hectare",
+        "secondaryUnitLabel": "maintenance per hectare / year",
+        "badge": "20% stage discount",
+        "description": "Largest acreage tier with cumulative discounting."
+      }
+    ],
+    "highlights": [
+      "Elite, stress-tolerant genetics and advanced clones/hybrids",
+      "Dryland and water-limited silvicultural systems",
+      "Higher biological and execution risk with asymmetric upside",
+      "Deep site analytics and climate-resilience modelling",
+      "Built for sophisticated, innovation driven capital"
+    ],
+    "detailSections": [
+      {
+        "title": "Risk profile",
+        "items": [
+          "Higher biological and execution risk than conventional forestry, with correspondingly higher upside when matched to the right sites.",
+          "Best suited to sophisticated capital comfortable with innovation, adaptive management, and climate analytics."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "uganda-concessions-004",
+    "slug": "uganda-concessions",
+    "shop": "forests-land",
+    "name": "Uganda Concessions",
+    "subtitle": "Government-linked concession opportunities with map-based site review",
+    "kind": "asset",
+    "unitLabel": "starting diligence package",
+    "price": 18000,
+    "currency": "USD",
+    "description": "A featured map-driven page of concession opportunities where investors can explore available Uganda land offerings, compare site context, and open each concession for a focused diligence view.",
+    "image": "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80",
+    "imageGallery": [
+      { "url": "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80", "title": "Uganda concessions overview" },
+      { "url": "https://images.unsplash.com/photo-1473773508845-188df298d2d1?auto=format&fit=crop&w=1200&q=80", "title": "Regional landscape" },
+      { "url": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80", "title": "Access and terrain context" }
+    ],
+    "tags": ["featured", "new", "timber"],
+    "stockStatus": "quote",
+    "domain": "timber",
+    "featured": true,
+    "ctaLabel": "Review Uganda concessions",
+    "featuredLabel": "Featured",
+    "minimumPriceLabel": "Starting diligence package from $18,000",
+    "highlights": [
+      "Map-first review of available concession points",
+      "Rich marker popups with quick diligence context",
+      "Detailed site descriptions when a marker is selected",
+      "Built for investors comparing multiple concession pathways"
+    ],
+    "mapTitle": "Current concession offerings",
+    "mapDescription": "Select a marker to turn the page into a focused description of that concession site.",
+    "mapPoints": [
+      {
+        "id": "ug-concession-westnile",
+        "name": "West Nile Commercial Concession",
+        "label": "Concession",
+        "category": "Government concession",
+        "summary": "A large-format concession corridor with strong access potential and staged establishment sequencing.",
+        "image": "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=600&q=80",
+        "latitude": 2.778,
+        "longitude": 31.467,
+        "details": [
+          "Targeted for phased commercial planting with room for processing-linked expansion.",
+          "Road access and labour draw radius are attractive relative to comparable frontier blocks.",
+          "Best suited to investors wanting a flagship Uganda concession platform."
+        ],
+        "metrics": [
+          { "label": "Indicative area", "value": "12,400 ha" },
+          { "label": "Access status", "value": "Primary road within 18 km" },
+          { "label": "Starting diligence", "value": "$18,000" }
+        ],
+        "ctaLabel": "Open concession profile"
+      },
+      {
+        "id": "ug-concession-bunyoro",
+        "name": "Bunyoro Mixed-Terrain Concession",
+        "label": "Concession",
+        "category": "Government concession",
+        "summary": "Mixed-terrain opportunity with corridor planting potential and strong optionality across conventional and high-performance programmes.",
+        "image": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80",
+        "latitude": 1.495,
+        "longitude": 31.355,
+        "details": [
+          "Well suited to a blended strategy that starts conventional and upgrades select blocks into higher-yield genetics.",
+          "Landscape diversity supports differentiated land-use planning and resilience modelling."
+        ],
+        "metrics": [
+          { "label": "Indicative area", "value": "8,900 ha" },
+          { "label": "Priority use", "value": "Mixed timber platform" },
+          { "label": "Starting diligence", "value": "$21,500" }
+        ],
+        "ctaLabel": "View site diligence"
+      },
+      {
+        "id": "ug-concession-busoga",
+        "name": "Busoga Growth Corridor Concession",
+        "label": "Concession",
+        "category": "Government concession",
+        "summary": "A more market-connected concession profile aimed at investors prioritising logistics and ramp speed.",
+        "image": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=80",
+        "latitude": 0.533,
+        "longitude": 33.211,
+        "details": [
+          "Closer to consumption corridors and easier to stage around transport planning.",
+          "Useful for investors wanting faster diligence-to-deployment transitions."
+        ],
+        "metrics": [
+          { "label": "Indicative area", "value": "6,300 ha" },
+          { "label": "Logistics", "value": "High-connectivity corridor" },
+          { "label": "Starting diligence", "value": "$24,000" }
+        ],
+        "ctaLabel": "Assess corridor fit"
+      }
+    ],
+    "detailSections": [
+      {
+        "title": "How to use this page",
+        "items": [
+          "Start with the map to compare concession geography and site labels.",
+          "Click a marker or popup action to swap the right-hand panel into a full site description.",
+          "Use the metrics to shortlist the concessions that fit your mandate before moving into diligence."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "land-listings-005",
+    "slug": "land-listings",
+    "shop": "forests-land",
+    "name": "Land Listings",
+    "subtitle": "Current land offerings with map-linked site descriptions and minimum starting prices",
+    "kind": "asset",
+    "unitLabel": "minimum starting price",
+    "price": 9400,
+    "currency": "USD",
+    "description": "Browse current land offerings on a live map, compare minimum starting prices, and click each site to turn the product page into a detailed land-offering description.",
+    "image": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
+    "imageGallery": [
+      { "url": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80", "title": "Land listing overview" },
+      { "url": "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1200&q=80", "title": "Open planting landscape" },
+      { "url": "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80", "title": "Field preparation context" }
+    ],
+    "tags": ["land", "featured", "pipeline"],
+    "stockStatus": "quote",
+    "domain": "timber",
+    "featured": true,
+    "ctaLabel": "Explore land listings",
+    "featuredLabel": "Map-based listings",
+    "minimumPriceLabel": "Minimum starting prices from $9,400",
+    "highlights": [
+      "Shows minimum starting price before diligence",
+      "Marker selection updates the page into the chosen site description",
+      "Useful for investors comparing current entry points across several listings"
+    ],
+    "mapTitle": "Current land offerings",
+    "mapDescription": "Click any site marker to switch the page focus to that land offering.",
+    "mapPoints": [
+      {
+        "id": "land-masindi",
+        "name": "Masindi Expansion Parcel",
+        "label": "Land",
+        "category": "Commercial parcel",
+        "summary": "Entry parcel with strong expansion potential and straightforward initial site preparation.",
+        "image": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80",
+        "latitude": 1.674,
+        "longitude": 31.724,
+        "details": [
+          "Open terrain with room for phased block design and internal access planning.",
+          "Suited to core forestry or mixed-strategy establishment."
+        ],
+        "metrics": [
+          { "label": "Listing size", "value": "420 ha" },
+          { "label": "Minimum start", "value": "$9,400" },
+          { "label": "Use case", "value": "Core forests" }
+        ],
+        "ctaLabel": "Open parcel description"
+      },
+      {
+        "id": "land-mubende",
+        "name": "Mubende Ridge Site",
+        "label": "Land",
+        "category": "Managed entry site",
+        "summary": "A ridgeline site with good visibility, suitable for performance-oriented planting and disciplined water planning.",
+        "image": "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=600&q=80",
+        "latitude": 0.559,
+        "longitude": 31.394,
+        "details": [
+          "Requires tighter establishment sequencing but offers stronger positioning for premium forestry programmes.",
+          "Good candidate for high-performance forest structures."
+        ],
+        "metrics": [
+          { "label": "Listing size", "value": "610 ha" },
+          { "label": "Minimum start", "value": "$13,800" },
+          { "label": "Use case", "value": "High-performance" }
+        ],
+        "ctaLabel": "Review ridge site"
+      },
+      {
+        "id": "land-moroto",
+        "name": "Moroto Frontier Plot",
+        "label": "Land",
+        "category": "Dryland opportunity",
+        "summary": "A frontier dryland plot positioned for resilient forestry experiments and climate-focused investment theses.",
+        "image": "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=600&q=80",
+        "latitude": 2.539,
+        "longitude": 34.651,
+        "details": [
+          "Higher execution complexity with strong relevance for frontier and dryland systems.",
+          "Appeals to capital looking for innovation exposure rather than pure convention."
+        ],
+        "metrics": [
+          { "label": "Listing size", "value": "1,150 ha" },
+          { "label": "Minimum start", "value": "$17,250" },
+          { "label": "Use case", "value": "Dryland & frontier" }
+        ],
+        "ctaLabel": "Inspect frontier plot"
+      }
+    ],
+    "detailSections": [
+      {
+        "title": "Listing workflow",
+        "items": [
+          "Use minimum starting price as the first screen, then click through each marker for site-specific detail.",
+          "The selected site panel is the main product description state for the active land offering."
+        ]
+      }
+    ]
   }
 ]

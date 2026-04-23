@@ -25,8 +25,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ExternalLink,
-  Leaf,
-  ShieldCheck,
+  MapPinned,
   GripVertical,
   MessageCircle,
   Trees,
@@ -51,6 +50,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Map, MapPolygon, MapTileLayer } from "@/components/ui/map"
 import {
   Select,
   SelectContent,
@@ -77,6 +85,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { compactCurrency, compactNumber } from "./chart-area-interactive"
 
 type TableView = "assets" | "transactions" | "activity-logs" | "documents"
 
@@ -84,7 +93,7 @@ type TreeVariety = "eucalyptus" | "pine" | "cypress" | "teak" | "corymbia"
 type Activity = "silviculture" | "planting" | "none"
 type Country = "Uganda" | "Kenya" | "Tanzania"
 
-type SubBlock = {
+export type SubBlock = {
   id: string
   subBlock: string
   variety: TreeVariety
@@ -95,15 +104,16 @@ type SubBlock = {
   contractor: string
 }
 
-type AssetGroup = {
+export type AssetGroup = {
   id: string
   block: string
   location: string
   country: Country
+  mapCenter: [number, number]
   subBlocks: SubBlock[]
 }
 
-type PaymentRow = {
+export type PaymentRow = {
   invoice: string
   description: string
   dueDate: string
@@ -126,15 +136,15 @@ type DocumentRow = {
   lastModified: string
 }
 
-function groupVarieties(g: AssetGroup) {
+export function groupVarieties(g: AssetGroup) {
   return [...new Set(g.subBlocks.map((s) => s.variety))].join(", ")
 }
 
-function groupSize(g: AssetGroup) {
+export function groupSize(g: AssetGroup) {
   return g.subBlocks.reduce((sum, s) => sum + s.size, 0)
 }
 
-function groupPlantedSize(g: AssetGroup) {
+export function groupPlantedSize(g: AssetGroup) {
   return g.subBlocks.reduce((sum, s) => sum + s.plantedSize, 0)
 }
 
@@ -142,12 +152,144 @@ function groupAge(g: AssetGroup) {
   return Math.max(...g.subBlocks.map((s) => s.age))
 }
 
-const initialAssetGroups: AssetGroup[] = [
+const speciesProfile: Record<TreeVariety, { volumePerHa: number; pricePerM3: number; investmentPerHa: number; color: string }> = {
+  eucalyptus: { volumePerHa: 31, pricePerM3: 84, investmentPerHa: 1880, color: "#15803d" },
+  pine: { volumePerHa: 24, pricePerM3: 92, investmentPerHa: 1720, color: "#1d4ed8" },
+  cypress: { volumePerHa: 27, pricePerM3: 88, investmentPerHa: 1790, color: "#0f766e" },
+  teak: { volumePerHa: 22, pricePerM3: 114, investmentPerHa: 2140, color: "#b45309" },
+  corymbia: { volumePerHa: 29, pricePerM3: 96, investmentPerHa: 1950, color: "#7c3aed" },
+}
+
+export function getGroupEstimatedMetrics(group: AssetGroup) {
+  const estimatedVolume = Math.round(
+    group.subBlocks.reduce((sum, block) => {
+      const profile = speciesProfile[block.variety]
+      const maturityFactor = 0.48 + block.age * 0.09
+      return sum + block.size * profile.volumePerHa * maturityFactor
+    }, 0)
+  )
+
+  const estimatedValuation = Math.round(
+    group.subBlocks.reduce((sum, block) => {
+      const profile = speciesProfile[block.variety]
+      const maturityFactor = 0.48 + block.age * 0.09
+      return sum + block.size * profile.volumePerHa * maturityFactor * profile.pricePerM3
+    }, 0)
+  )
+
+  const investmentPlaced = Math.round(
+    group.subBlocks.reduce((sum, block) => {
+      const profile = speciesProfile[block.variety]
+      return sum + block.plantedSize * profile.investmentPerHa
+    }, 0)
+  )
+
+  return { estimatedVolume, estimatedValuation, investmentPlaced }
+}
+
+function createPolygon(center: [number, number], index: number, totalArea: number, plantedArea: number) {
+  const latOffset = 0.08 + index * 0.035
+  const lngOffset = 0.12 + index * 0.04
+  const scale = Math.sqrt(totalArea) / 140
+  const plantedScale = Math.sqrt(Math.max(plantedArea, 1)) / 160
+
+  const outer = [
+    [center[0] + latOffset, center[1] - lngOffset],
+    [center[0] + latOffset + scale, center[1] - lngOffset + scale * 0.55],
+    [center[0] + latOffset - scale * 0.15, center[1] - lngOffset + scale * 1.1],
+    [center[0] + latOffset - scale * 0.45, center[1] - lngOffset + scale * 0.35],
+  ] as [number, number][]
+
+  const inner = [
+    [center[0] + latOffset + plantedScale * 0.12, center[1] - lngOffset + plantedScale * 0.08],
+    [center[0] + latOffset + plantedScale * 0.62, center[1] - lngOffset + plantedScale * 0.34],
+    [center[0] + latOffset + plantedScale * 0.02, center[1] - lngOffset + plantedScale * 0.78],
+    [center[0] + latOffset - plantedScale * 0.26, center[1] - lngOffset + plantedScale * 0.3],
+  ] as [number, number][]
+
+  return { outer, inner }
+}
+
+function GroupMapDialog({ group }: { group: AssetGroup }) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline" size="sm" className="h-8 gap-2">
+          <MapPinned className="h-3.5 w-3.5" />
+          Map
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-w-4xl">
+        <DialogHeader>
+          <DialogTitle>{group.block} map view</DialogTitle>
+          <DialogDescription>
+            Species polygons show total allocated hectares, with the planted area shaded inside each block.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_260px]">
+          <div className="h-[460px] overflow-hidden rounded-xl border">
+            <Map center={group.mapCenter} zoom={9}>
+              <MapTileLayer />
+              {group.subBlocks.map((subBlock, index) => {
+                const polygons = createPolygon(group.mapCenter, index, subBlock.size, subBlock.plantedSize)
+                const speciesColor = speciesProfile[subBlock.variety].color
+
+                return (
+                  <React.Fragment key={subBlock.id}>
+                    <MapPolygon
+                      positions={polygons.outer}
+                      pathOptions={{
+                        color: speciesColor,
+                        weight: 3,
+                        fillColor: speciesColor,
+                        fillOpacity: 0.18,
+                      }}
+                    />
+                    <MapPolygon
+                      positions={polygons.inner}
+                      pathOptions={{
+                        color: speciesColor,
+                        weight: 2,
+                        dashArray: "6 4",
+                        fillColor: speciesColor,
+                        fillOpacity: 0.38,
+                      }}
+                    />
+                  </React.Fragment>
+                )
+              })}
+            </Map>
+          </div>
+          <div className="space-y-3">
+            {group.subBlocks.map((subBlock) => (
+              <div key={subBlock.id} className="rounded-lg border p-3 text-sm">
+                <div className="flex items-center gap-2">
+                  <span
+                    className="h-3 w-3 rounded-full"
+                    style={{ backgroundColor: speciesProfile[subBlock.variety].color }}
+                  />
+                  <span className="font-medium capitalize">{subBlock.variety}</span>
+                  <span className="text-muted-foreground">{subBlock.subBlock}</span>
+                </div>
+                <div className="mt-2 text-xs text-muted-foreground">
+                  {subBlock.size} ha outline with {subBlock.plantedSize} ha planted inside
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+export const initialAssetGroups: AssetGroup[] = [
   {
     id: "group-1",
     block: "North Ridge A1",
     location: "Northern Region",
     country: "Uganda",
+    mapCenter: [2.78, 31.47],
     subBlocks: [
       { id: "sub-1a", subBlock: "A1a", variety: "eucalyptus", size: 32, plantedSize: 29, age: 6, activity: "silviculture", contractor: "GreenCanopy Ltd" },
       { id: "sub-1b", subBlock: "A1b", variety: "corymbia", size: 28, plantedSize: 26, age: 4, activity: "none", contractor: "-" },
@@ -159,6 +301,7 @@ const initialAssetGroups: AssetGroup[] = [
     block: "River Bend C2",
     location: "Central Valley",
     country: "Kenya",
+    mapCenter: [0.42, 35.02],
     subBlocks: [
       { id: "sub-2a", subBlock: "C2a", variety: "pine", size: 30, plantedSize: 30, age: 3, activity: "planting", contractor: "Timberline Services" },
       { id: "sub-2b", subBlock: "C2b", variety: "teak", size: 26, plantedSize: 26, age: 3, activity: "planting", contractor: "Timberline Services" },
@@ -169,6 +312,7 @@ const initialAssetGroups: AssetGroup[] = [
     block: "Pine Hollow D7",
     location: "Highland Zone",
     country: "Tanzania",
+    mapCenter: [-8.73, 35.04],
     subBlocks: [
       { id: "sub-3a", subBlock: "D7a", variety: "cypress", size: 60, plantedSize: 50, age: 11, activity: "none", contractor: "-" },
       { id: "sub-3b", subBlock: "D7b", variety: "eucalyptus", size: 52, plantedSize: 44, age: 9, activity: "silviculture", contractor: "GreenCanopy Ltd" },
@@ -179,6 +323,7 @@ const initialAssetGroups: AssetGroup[] = [
     block: "East Valley B4",
     location: "Eastern Plateau",
     country: "Uganda",
+    mapCenter: [1.08, 33.64],
     subBlocks: [
       { id: "sub-4a", subBlock: "B4a", variety: "teak", size: 38, plantedSize: 34, age: 4, activity: "silviculture", contractor: "SylvaOps" },
       { id: "sub-4b", subBlock: "B4b", variety: "eucalyptus", size: 30, plantedSize: 27, age: 3, activity: "planting", contractor: "Timberline Services" },
@@ -186,13 +331,13 @@ const initialAssetGroups: AssetGroup[] = [
   },
 ]
 
-const latestPayments: PaymentRow[] = [
+export const latestPayments: PaymentRow[] = [
   { invoice: "INV-2026-143", description: "Silviculture crew - North Ridge A1", dueDate: "2026-04-04", amount: 28450, status: "paid" },
   { invoice: "INV-2026-138", description: "Planting materials - River Bend C2", dueDate: "2026-03-27", amount: 19780, status: "received" },
   { invoice: "INV-2026-131", description: "Road maintenance - East Valley B4", dueDate: "2026-02-18", amount: 8920, status: "overdue" },
 ]
 
-const upcomingPayments: PaymentRow[] = [
+export const upcomingPayments: PaymentRow[] = [
   { invoice: "INV-2026-151", description: "Thinning operation - Pine Hollow D7", dueDate: "2026-04-18", amount: 41300, status: "scheduled" },
   { invoice: "INV-2026-154", description: "Seedling replenishment - East Valley B4", dueDate: "2026-04-29", amount: 12700, status: "scheduled" },
   { invoice: "INV-2026-162", description: "Site inspection package", dueDate: "2026-05-12", amount: 6400, status: "scheduled" },
@@ -210,12 +355,6 @@ const documents: DocumentRow[] = [
   { date: "2026-03-26", document: "Harvest readiness audit - Pine Hollow D7", status: "pending review", lastModified: "2026-04-07 09:42" },
   { date: "2026-03-19", document: "Contract amendment - GreenCanopy", status: "action required", lastModified: "2026-04-09 11:05" },
 ]
-
-const countryFlag: Record<Country, string> = {
-  Uganda: "UG",
-  Kenya: "KE",
-  Tanzania: "TZ",
-}
 
 const countryBoundaryStyle: Record<Country, React.CSSProperties> = {
   Uganda: {
@@ -290,11 +429,32 @@ function statusBadge(status: string) {
   )
 }
 
-function PaymentList({ title, payments }: { title: string; payments: PaymentRow[] }) {
+function paymentStatusHoverClass(status: PaymentRow["status"]) {
+  const styles: Record<PaymentRow["status"], string> = {
+    paid: "invoice-run-emerald",
+    received: "invoice-run-emerald",
+    pending: "invoice-run-amber",
+    overdue: "invoice-run-rose",
+    cancelled: "invoice-run-slate",
+    scheduled: "invoice-run-blue",
+  }
+
+  return styles[status]
+}
+
+function PaymentList({
+  title,
+  payments,
+  className,
+}: {
+  title: string
+  payments: PaymentRow[]
+  className?: string
+}) {
   const navigate = useNavigate()
 
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader className="pb-3">
         <CardTitle className="text-base">{title}</CardTitle>
         <CardDescription>Invoice list</CardDescription>
@@ -304,7 +464,7 @@ function PaymentList({ title, payments }: { title: string; payments: PaymentRow[
           <div
             key={payment.invoice}
             onClick={() => navigate(`/invoice/${payment.invoice}`)}
-            className="flex cursor-pointer items-center justify-between gap-4 rounded-md border p-3 transition-colors hover:bg-muted/50"
+            className={`invoice-run-card ${paymentStatusHoverClass(payment.status)} flex cursor-pointer items-center justify-between gap-4 rounded-md border p-3 transition-colors hover:bg-muted/50`}
           >
             <div className="min-w-0 space-y-1">
               <p className="text-sm font-medium">{payment.invoice}</p>
@@ -353,6 +513,7 @@ function SortableAssetRow({ group, isExpanded, onToggle }: SortableAssetRowProps
     ...countryBoundaryStyle[group.country],
     opacity: isDragging ? 0.65 : 1,
   }
+  const metrics = getGroupEstimatedMetrics(group)
 
   return (
     <>
@@ -386,6 +547,12 @@ function SortableAssetRow({ group, isExpanded, onToggle }: SortableAssetRowProps
         <TableCell>{groupSize(group)}</TableCell>
         <TableCell>{groupPlantedSize(group)}</TableCell>
         <TableCell>{groupAge(group)}</TableCell>
+        <TableCell>{compactNumber(metrics.estimatedVolume)}</TableCell>
+        <TableCell>{compactCurrency(metrics.estimatedValuation)}</TableCell>
+        <TableCell>{compactCurrency(metrics.investmentPlaced)}</TableCell>
+        <TableCell onClick={(event) => event.stopPropagation()}>
+          <GroupMapDialog group={group} />
+        </TableCell>
       </TableRow>
 
       {isExpanded &&
@@ -393,13 +560,17 @@ function SortableAssetRow({ group, isExpanded, onToggle }: SortableAssetRowProps
           <TableRow key={sub.id}>
             <TableCell className="w-8 px-2" />
             <TableCell className="w-6 px-1" />
-            <TableCell className="pl-6 text-sm text-muted-foreground">{`${group.block} — ${sub.subBlock}`}</TableCell>
+            <TableCell className="pl-6 text-sm text-muted-foreground">{`${group.block} - ${sub.subBlock}`}</TableCell>
             <TableCell className="text-sm capitalize">{sub.variety}</TableCell>
-            <TableCell className="text-sm text-muted-foreground">—</TableCell>
-            <TableCell className="text-sm text-muted-foreground">—</TableCell>
+            <TableCell className="text-sm text-muted-foreground">-</TableCell>
+            <TableCell className="text-sm text-muted-foreground">-</TableCell>
             <TableCell className="text-sm">{sub.size}</TableCell>
             <TableCell className="text-sm">{sub.plantedSize}</TableCell>
             <TableCell className="text-sm">{sub.age}</TableCell>
+            <TableCell className="text-sm text-muted-foreground">-</TableCell>
+            <TableCell className="text-sm text-muted-foreground">-</TableCell>
+            <TableCell className="text-sm text-muted-foreground">-</TableCell>
+            <TableCell className="text-sm text-muted-foreground">-</TableCell>
           </TableRow>
         ))}
     </>
@@ -415,7 +586,7 @@ function MiniCalendarPreview() {
   const [selectedDate, setSelectedDate] = React.useState(() => new Date())
 
   const counts = React.useMemo(
-    () => new Map(eventDates.map((item) => [dateKey(item.date), item.count])),
+    () => new globalThis.Map(eventDates.map((item) => [dateKey(item.date), item.count])),
     []
   )
 
@@ -559,9 +730,15 @@ function MiniChatPreview() {
   )
 }
 
-export function DataTable() {
+interface DataTableProps {
+  activeTab: TableView
+  onActiveTabChange: (tab: TableView) => void
+  transactionsHighlightKey: number
+}
+
+export function DataTable({ activeTab, onActiveTabChange, transactionsHighlightKey }: DataTableProps) {
   const navigate = useNavigate()
-  const [activeTab, setActiveTab] = React.useState<TableView>("assets")
+  const [highlightUpcomingPayments, setHighlightUpcomingPayments] = React.useState(false)
 
   const assetGroups = initialAssetGroups
   const [rowOrder, setRowOrder] = React.useState<string[]>(() => initialAssetGroups.map((g) => g.id))
@@ -646,18 +823,26 @@ export function DataTable() {
   }
 
   function sortIndicator(col: SortColumn) {
-    if (sortConfig.col !== col) return <span className="ml-1 opacity-30">↕</span>
-    return <span className="ml-1">{sortConfig.order === "asc" ? "↑" : "↓"}</span>
+    if (sortConfig.col !== col) return <span className="ml-1 opacity-30">+-</span>
+    return <span className="ml-1">{sortConfig.order === "asc" ? "^" : "v"}</span>
   }
+
+  React.useEffect(() => {
+    if (activeTab !== "transactions" || transactionsHighlightKey === 0) return
+
+    setHighlightUpcomingPayments(true)
+    const timeout = window.setTimeout(() => setHighlightUpcomingPayments(false), 2200)
+    return () => window.clearTimeout(timeout)
+  }, [activeTab, transactionsHighlightKey])
 
   return (
     <Tabs
       value={activeTab}
-      onValueChange={(value) => setActiveTab(value as TableView)}
+      onValueChange={(value) => onActiveTabChange(value as TableView)}
       className="w-full flex-col justify-start gap-6"
     >
       <div className="flex flex-wrap items-center justify-between gap-3 px-4 lg:px-6">
-        <Select value={activeTab} onValueChange={(value) => setActiveTab(value as TableView)}>
+        <Select value={activeTab} onValueChange={(value) => onActiveTabChange(value as TableView)}>
           <SelectTrigger className="flex w-fit cursor-pointer sm:hidden" size="sm" id="view-selector">
             <SelectValue placeholder="Select a view" />
           </SelectTrigger>
@@ -692,6 +877,10 @@ export function DataTable() {
                   <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("size")}>Size (ha){sortIndicator("size")}</TableHead>
                   <TableHead>Planted (ha)</TableHead>
                   <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("age")}>Age (yr){sortIndicator("age")}</TableHead>
+                  <TableHead>Estimated Volume</TableHead>
+                  <TableHead>Estimated Valuation</TableHead>
+                  <TableHead>Investment Placed</TableHead>
+                  <TableHead>Map</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -724,7 +913,11 @@ export function DataTable() {
       <TabsContent value="transactions" className="px-4 lg:px-6">
         <div className="grid gap-4 lg:grid-cols-2">
           <PaymentList title="Latest payments" payments={latestPayments} />
-          <PaymentList title="Upcoming payments" payments={upcomingPayments} />
+          <PaymentList
+            title="Upcoming payments"
+            payments={upcomingPayments}
+            className={highlightUpcomingPayments ? "upcoming-payments-flicker" : undefined}
+          />
         </div>
       </TabsContent>
 

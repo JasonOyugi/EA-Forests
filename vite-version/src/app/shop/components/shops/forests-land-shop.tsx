@@ -10,8 +10,12 @@ interface ForestsLandShopProps {
 }
 
 export function ForestsLandShop({ shop, inventory }: ForestsLandShopProps) {
-  const featuredItems = inventory.filter((item) => item.tags.includes("featured") || item.tags.includes("popular"))
-  const newItems = inventory.filter((item) => item.tags.includes("new"))
+  const featuredSlugs = new Set([
+    "core-forests",
+    "high-performance-forests",
+    "dryland-frontier-forests",
+  ])
+  const featuredItems = inventory.filter((item) => featuredSlugs.has(item.slug))
 
   return (
     <ShopCommonLayout
@@ -19,16 +23,11 @@ export function ForestsLandShop({ shop, inventory }: ForestsLandShopProps) {
       inventory={inventory}
       banner={<ForestsLandTopBanner />}
       featuredItems={featuredItems}
-      featuredTitle="Featured Opportunities"
-      featuredSubtitle="Managed forests and land assets ready for review"
+      featuredTitle="Featured Forest Strategies"
+      featuredSubtitle="Compare the three main forestry entry points before exploring concessions or land listings."
       featuredTheme="forests-land"
-      featuredSectionClassName="rounded-2xl border border-slate-300 bg-slate-50/80"
-      newItems={newItems}
-      newTitle="New Arrivals"
-      newSubtitle="Latest forestry opportunities"
-      newTheme="forests-land"
-      newSectionClassName="rounded-2xl border border-slate-300 bg-slate-100/75"
-      showNewArrivals={true}
+      featuredSectionClassName="border border-emerald-200 bg-emerald-50/75 rounded-xl"
+      showNewArrivals={false}
     />
   )
 }

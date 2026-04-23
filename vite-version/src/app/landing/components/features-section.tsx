@@ -105,7 +105,7 @@ export function FeaturesSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Keep the first page header */}
         <div className="mx-auto max-w-2xl text-center mb-16">
-          <Badge variant="outline" className="mb-4">
+          <Badge variant="outline" className="mb-4 border-emerald-500/40">
             Our Features
           </Badge>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">

@@ -28,11 +28,39 @@ export interface ShopItemVariant {
   count: number
   price: number
   unitLabel?: string
+  secondaryPrice?: number
+  secondaryUnitLabel?: string
+  description?: string
+  badge?: string
 }
 
 export interface ShopItemImage {
   url: string
   title?: string
+}
+
+export interface ShopItemMetric {
+  label: string
+  value: string
+}
+
+export interface ShopItemDetailSection {
+  title: string
+  items: string[]
+}
+
+export interface ShopItemMapPoint {
+  id: string
+  name: string
+  label: string
+  category: string
+  summary: string
+  image: string
+  latitude: number
+  longitude: number
+  details?: string[]
+  metrics?: ShopItemMetric[]
+  ctaLabel?: string
 }
 
 export interface ShopDefinition {
@@ -60,9 +88,18 @@ export interface ShopItem {
   description: string
   image: string
   imageGallery?: ShopItemImage[]
+  subtitle?: string
   tags: string[]
   stockStatus: StockStatus
   domain: ShopDomain
   featured?: boolean
   variants?: ShopItemVariant[]
+  ctaLabel?: string
+  featuredLabel?: string
+  minimumPriceLabel?: string
+  highlights?: string[]
+  detailSections?: ShopItemDetailSection[]
+  mapTitle?: string
+  mapDescription?: string
+  mapPoints?: ShopItemMapPoint[]
 }

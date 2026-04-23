@@ -43,7 +43,7 @@ export function AboutSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mx-auto max-w-4xl text-center mb-16">
-          <Badge variant="outline" className="mb-4">
+          <Badge variant="outline" className="mb-4 border border-emerald-500/40" >
             About EA Forests
           </Badge>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-6">
@@ -60,10 +60,15 @@ export function AboutSection() {
         <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 xl:grid-cols-4 mb-12">
           {values.map((value, index) => (
             <a key={index} href={value.href} className="block h-full">
-              <Card className="group h-full overflow-hidden py-2 shadow-xs transition-all hover:-translate-y-1 hover:shadow-md">
+              <Card
+                className="about-value-card group h-full overflow-hidden py-2 shadow-xs transition-all hover:-translate-y-1 hover:shadow-[0_6px_12px_rgba(16,185,129,0.28)]"
+              >
                 <CardContent className="p-8">
                   <div className="flex flex-col items-center text-center">
-                    <CardDecorator>
+                    <CardDecorator
+                      className="about-icon-decorator"
+                      iconClassName="about-icon-shell"
+                    >
                       <value.icon className="h-6 w-6" aria-hidden />
                     </CardDecorator>
 

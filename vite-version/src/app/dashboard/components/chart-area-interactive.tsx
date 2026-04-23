@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import { Bar, BarChart, CartesianGrid, ReferenceArea, XAxis, YAxis } from "recharts"
 
 import {
   Card,
@@ -27,7 +27,7 @@ import {
 
 export const description = "Investor portfolio trends at trimester intervals"
 
-type MetricKey =
+export type MetricKey =
   | "expectedPrice"
   | "expectedVolume"
   | "portfolioValue"
@@ -35,43 +35,48 @@ type MetricKey =
   | "cash"
   | "capitalDeployed"
 
-type PortfolioPoint = {
+export type PortfolioPoint = {
   date: string
   label: string
   isProjected: boolean
+  futureValue: number | null
+  pastValue: number | null
 } & Record<MetricKey, number>
 
 type MetricMeta = {
   label: string
   shortLabel: string
   unit: string
-  color: string
   format: (value: number) => string
   axisTick: (value: number) => string
 }
 
-const metricMeta: Record<MetricKey, MetricMeta> = {
+function formatDecimal(value: number) {
+  return new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value)
+}
+
+export const metricMeta: Record<MetricKey, MetricMeta> = {
   expectedPrice: {
     label: "Expected price",
     shortLabel: "Price",
     unit: "$ per m3",
-    color: "#e1d229",
-    format: (value) => `$${value.toFixed(2)} / m3`,
-    axisTick: (value) => `$${Math.round(value)}`,
+    format: (value) => `$${formatDecimal(value)} / m3`,
+    axisTick: (value) => `$${formatDecimal(value)}`,
   },
   expectedVolume: {
     label: "Expected volume",
     shortLabel: "Volume",
     unit: "m3",
-    color: "#2042b3",
-    format: (value) => `${Math.round(value).toLocaleString()} m3`,
+    format: (value) => `${formatDecimal(value)} m3`,
     axisTick: (value) => compactNumber(value),
   },
   portfolioValue: {
     label: "Portfolio value",
     shortLabel: "Portfolio",
     unit: "$",
-    color: "#2f8913",
     format: (value) => compactCurrency(value),
     axisTick: (value) => compactCurrency(value),
   },
@@ -79,15 +84,13 @@ const metricMeta: Record<MetricKey, MetricMeta> = {
     label: "Land managed",
     shortLabel: "Land",
     unit: "hectares",
-    color: "#ac690a",
-    format: (value) => `${Math.round(value).toLocaleString()} ha`,
+    format: (value) => `${formatDecimal(value)} ha`,
     axisTick: (value) => compactNumber(value),
   },
   cash: {
     label: "Cash",
     shortLabel: "Cash",
     unit: "$",
-    color: "#0369a1",
     format: (value) => compactCurrency(value),
     axisTick: (value) => compactCurrency(value),
   },
@@ -95,7 +98,6 @@ const metricMeta: Record<MetricKey, MetricMeta> = {
     label: "Capital deployed",
     shortLabel: "Deployed",
     unit: "$",
-    color: "#dc2626",
     format: (value) => compactCurrency(value),
     axisTick: (value) => compactCurrency(value),
   },
@@ -115,10 +117,12 @@ const chartConfig = Object.fromEntries(
     key,
     {
       label: metricMeta[key].label,
-      color: metricMeta[key].color,
+      color: "var(--chart-accent)",
     },
   ])
 ) satisfies ChartConfig
+
+export const portfolioSeriesReferenceDate = new Date("2026-04-23T00:00:00")
 
 function startOfTrimester(value: Date) {
   const trimesterStartMonth = Math.floor(value.getMonth() / 4) * 4
@@ -136,23 +140,25 @@ function getTrimesterLabel(value: Date) {
   return `T${trimester} ${value.getFullYear()}`
 }
 
-function compactNumber(value: number) {
+export function compactNumber(value: number) {
   return new Intl.NumberFormat("en-US", {
     notation: "compact",
-    maximumFractionDigits: 1,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(value)
 }
 
-function compactCurrency(value: number) {
+export function compactCurrency(value: number) {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
     notation: "compact",
-    maximumFractionDigits: 1,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(value)
 }
 
-function generatePortfolioSeries(now: Date): PortfolioPoint[] {
+export function generatePortfolioSeries(now: Date): PortfolioPoint[] {
   const nowTrimester = startOfTrimester(now)
   const start = new Date(nowTrimester)
   start.setFullYear(start.getFullYear() - 2)
@@ -185,6 +191,8 @@ function generatePortfolioSeries(now: Date): PortfolioPoint[] {
       landManaged: Math.round(landManaged),
       cash: Math.round(cash),
       capitalDeployed: Math.round(capitalDeployed),
+      futureValue: null,
+      pastValue: null,
     })
 
     cursor = addMonths(cursor, 4)
@@ -194,25 +202,70 @@ function generatePortfolioSeries(now: Date): PortfolioPoint[] {
   return points
 }
 
-export function ChartAreaInteractive() {
-  const [metric, setMetric] = React.useState<MetricKey>("portfolioValue")
-  const chartData = React.useMemo(() => generatePortfolioSeries(new Date()), [])
+interface ChartAreaInteractiveProps {
+  metric: MetricKey
+  onMetricChange: (metric: MetricKey) => void
+}
+
+function hexToRgba(hex: string, alpha: number) {
+  const sanitized = hex.replace("#", "")
+  const normalized = sanitized.length === 3
+    ? sanitized.split("").map((char) => char + char).join("")
+    : sanitized
+  const numeric = Number.parseInt(normalized, 16)
+  const r = (numeric >> 16) & 255
+  const g = (numeric >> 8) & 255
+  const b = numeric & 255
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+}
+
+export function ChartAreaInteractive({ metric, onMetricChange }: ChartAreaInteractiveProps) {
+  const chartData = React.useMemo(
+    () => generatePortfolioSeries(portfolioSeriesReferenceDate),
+    []
+  )
   const activeMeta = metricMeta[metric]
+  const transitionLabel = "T3 2026"
+  const baselineLabel = "T2 2026"
+  const transitionIndex = chartData.findIndex((item) => item.label === transitionLabel)
+  const baselinePoint = chartData.find((item) => item.label === baselineLabel)
+  const transitionPoint = chartData.find((item) => item.label === transitionLabel)
+  const futureStartLabel = transitionIndex >= 0 && transitionIndex < chartData.length - 1
+    ? chartData[transitionIndex + 1].label
+    : undefined
+  const hasDroppedFromT2ToT3 = (transitionPoint?.[metric] ?? 0) < (baselinePoint?.[metric] ?? 0)
+  const tintedChartData = React.useMemo(
+    () =>
+      chartData.map((point, index) => ({
+        ...point,
+        pastValue: index <= transitionIndex || transitionIndex === -1 ? point[metric] : null,
+        futureValue: index > transitionIndex && transitionIndex !== -1 ? point[metric] : null,
+      })),
+    [chartData, metric, transitionIndex]
+  )
+  const activeFill = hasDroppedFromT2ToT3 ? "#fb7185" : "#34d399"
+  const futureFill = hexToRgba(activeFill, 0.45)
+  const chartSurface = hexToRgba(activeFill, 0.08)
+  const projectedLabelBackground = hexToRgba(activeFill, 0.12)
 
   return (
-    <Card className="@container/card">
+    <div
+      className="chart-card-running-boundary rounded-xl p-[1.5px]"
+      style={{ ["--chart-accent" as string]: activeFill }}
+    >
+      <Card className="@container/card rounded-[calc(var(--radius-xl)+2px)]">
       <CardHeader>
         <div>
           <CardTitle>Portfolio Summary</CardTitle>
           <CardDescription>
             Past and predicted performance over 4-month intervals.
-            <span className={`ml-2 inline-block rounded-md border border-border/60 px-2 py-0.5 text-xs text-foreground`} style={{ backgroundColor: `${activeMeta.color}`, opacity: 0.9 }}>
+            <span className={`ml-2 inline-block rounded-md border border-border/60 px-2 py-0.5 text-xs text-foreground`} style={{ backgroundColor: activeFill, opacity: 0.9 }}>
               {activeMeta.label}: {activeMeta.unit}
             </span>
           </CardDescription>
         </div>
         <CardAction>
-          <Select value={metric} onValueChange={(value) => setMetric(value as MetricKey)}>
+          <Select value={metric} onValueChange={(value) => onMetricChange(value as MetricKey)}>
             <SelectTrigger
               className="flex w-40 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate"
               size="sm"
@@ -231,12 +284,30 @@ export function ChartAreaInteractive() {
         </CardAction>
       </CardHeader>
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
+        <div className="relative">
+          {futureStartLabel ? (
+            <div
+              className="pointer-events-none absolute right-4 top-1 z-10 rounded-full px-2 py-0.5 text-[11px] font-medium"
+              style={{ color: activeFill, backgroundColor: projectedLabelBackground }}
+            >
+              Projected value
+            </div>
+          ) : null}
         <ChartContainer
           config={chartConfig}
           className="aspect-auto h-[250px] w-full"
         >
-          <BarChart data={chartData} margin={{ left: -20 }}>
+          <BarChart data={tintedChartData} margin={{ left: -20, right: 12 }}>
             <CartesianGrid vertical={false} />
+            {futureStartLabel ? (
+              <ReferenceArea
+                x1={futureStartLabel}
+                x2={tintedChartData[tintedChartData.length - 1]?.label}
+                fill={chartSurface}
+                fillOpacity={1}
+                ifOverflow="extendDomain"
+              />
+            ) : null}
             <XAxis
               dataKey="label"
               tickLine={false}
@@ -282,13 +353,22 @@ export function ChartAreaInteractive() {
               }
             />
             <Bar
-              dataKey={metric}
-              fill={`var(--color-${metric})`}
-              radius={[8, 8, 0, 0]}
+              dataKey="pastValue"
+              fill={activeFill}
+              radius={[4, 4, 0, 0]}
+              barSize={32}
+            />
+            <Bar
+              dataKey="futureValue"
+              fill={futureFill}
+              radius={[4, 4, 0, 0]}
+              barSize={32}
             />
           </BarChart>
         </ChartContainer>
+        </div>
       </CardContent>
     </Card>
+    </div>
   )
 }

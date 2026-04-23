@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { ScrollTrigger } from "gsap/all"
-
+import { AiFillYoutube } from "react-icons/ai";
 import { ArrowRight, Play, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -17,10 +17,10 @@ gsap.registerPlugin(ScrollTrigger)
 export function HeroSection() {
   const totalVideos = 4
   const videoLabels = [
-    { label: "Welcome", url: "https://www.youtube.com/watch?v=VIDEO_ID_1" },
-    { label: "Genetics", url: "https://www.youtube.com/watch?v=VIDEO_ID_2" },
-    { label: "Markets", url: "https://www.youtube.com/watch?v=VIDEO_ID_3" },
-    { label: "Analysis", url: "https://www.youtube.com/watch?v=VIDEO_ID_4" },
+    { url: "https://www.youtube.com/watch?v=VIDEO_ID_1" },
+    { url: "https://www.youtube.com/watch?v=VIDEO_ID_2" },
+    { url: "https://www.youtube.com/watch?v=VIDEO_ID_3" },
+    { url: "https://www.youtube.com/watch?v=VIDEO_ID_4" },
   ]
 
   const [currentIndex, setCurrentIndex] = useState(1)
@@ -131,12 +131,13 @@ export function HeroSection() {
     },
     { scope: rootRef }
   )
-
   return (
     <section
       id="hero"
-      className="relative overflow-hidden bg-gradient-to-b from-background to-background/80 pt-16 sm:pt-20 pb-16"
+      className="landing-hero-shell relative overflow-hidden bg-gradient-to-b from-background to-background/80 pt-16 sm:pt-20 pb-16"
     >
+      <div aria-hidden className="hero-map-bg absolute inset-0" />
+      <div aria-hidden className="hero-map-tint absolute inset-0" />
       <div className="absolute inset-0">
         <DotPattern className="opacity-100" size="lg" fadeStyle="none" />
       </div>
@@ -145,7 +146,13 @@ export function HeroSection() {
         <div className="mx-auto max-w-4xl text-center">
           <div className="mb-8 flex justify-center">
             <a href="/shop/seedlings#featured-products" className="inline-flex">
-              <Badge variant="outline" className="px-4 py-2 border-foreground ">
+              <Badge
+                variant="outline"
+                className="badge-emerald-run rounded-lg px-4 py-2 border border-emerald-500/40
+                          bg-transparent hover:bg-emerald-400/5
+                          transition-shadow duration-300
+                          hover:shadow-[0_0_22px_rgba(16,185,129,0.35)]"
+              >
                 <Star className="w-3 h-3 mr-2 fill-current" />
                 New: Pine Hybrids in stock!!
                 <ArrowRight className="w-3 h-3 ml-2" />
@@ -167,13 +174,27 @@ export function HeroSection() {
 
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
             <Button size="lg" className="text-base cursor-pointer" asChild>
-              <a href={getAppUrl("/auth/sign-up")}>
-                Get Started Free
-                <ArrowRight className="ml-2 h-4 w-4" />
+              <a
+                href={getAppUrl("/auth/sign-up")}
+                className="group relative overflow-hidden"
+              >
+                <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
+                <span className="relative z-10 inline-flex items-center group-hover:text-emerald-300">
+                  Get Started Free
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </span>
               </a>
             </Button>
 
-            <Button variant="outline" size="lg" className="text-base cursor-pointer" asChild>
+            <Button
+              variant="outline"
+              size="lg"
+              asChild
+              className="emerald-border-hover text-base cursor-pointer
+                        transition-all duration-300
+                        hover:text-emerald-400
+                        hover:shadow-[0_0_24px_rgba(16,185,129,0.35)]"
+            >
               <a href="#pricing">
                 <Play className="mr-2 h-4 w-4" />
                 Plant Commercial Forest
@@ -252,14 +273,14 @@ export function HeroSection() {
                   onError={() => setForceHideLoader(true)}
                 />
 
-                <div className="absolute bottom-5 right-5 z-40 rounded-lg bg-black/50 px-4 py-2 backdrop-blur-sm">
+                <div className="absolute bottom-5 right-5 z-40 rounded-lg bg-red-500/50 px-2 py-1 backdrop-blur-sm">
                   <a
                     href={videoLabels[currentIndex - 1].url}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-sm sm:text-base font-medium text-white underline-offset-4 transition hover:underline"
+                    className="text-lg font-bold text-white"
                   >
-                    {videoLabels[currentIndex - 1].label}
+                   <AiFillYoutube />
                   </a>
                 </div>
 

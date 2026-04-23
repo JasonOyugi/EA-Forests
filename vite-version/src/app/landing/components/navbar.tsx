@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Menu, Github, LayoutDashboard, X, Moon, Sun } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -38,11 +38,47 @@ const smoothScrollTo = (targetId: string) => {
 
 export function LandingNavbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const [heroProgress, setHeroProgress] = useState(0)
   const { setTheme, theme } = useTheme()
 
+  useEffect(() => {
+    const updateHeroProgress = () => {
+      const hero = document.getElementById("hero")
+      if (!hero) {
+        setHeroProgress(0)
+        return
+      }
+
+      const rect = hero.getBoundingClientRect()
+      const scrollableDistance = Math.max(rect.height - 96, 1)
+      const rawProgress = -rect.top / scrollableDistance
+      const clamped = Math.min(Math.max(rawProgress, 0), 1)
+      setHeroProgress(clamped)
+    }
+
+    updateHeroProgress()
+    window.addEventListener("scroll", updateHeroProgress, { passive: true })
+    window.addEventListener("resize", updateHeroProgress)
+
+    return () => {
+      window.removeEventListener("scroll", updateHeroProgress)
+      window.removeEventListener("resize", updateHeroProgress)
+    }
+  }, [])
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between">
+    <header className="landing-navbar sticky top-0 z-50 w-full overflow-hidden border-b border-border/70 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
+      <div
+        aria-hidden
+        className="navbar-map-bg absolute inset-0 transition-opacity duration-300"
+        style={{ opacity: heroProgress * 0.5 }}
+      />
+      <div
+        aria-hidden
+        className="navbar-map-tint absolute inset-0 transition-opacity duration-300"
+        style={{ opacity: 0.45 + heroProgress * 0.3 }}
+      />
+      <div className="container relative z-10 mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <div className="flex items-center space-x-2">
           <a

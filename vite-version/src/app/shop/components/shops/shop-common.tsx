@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactNode, useMemo, useState } from "react"
+import { useMemo, useState, type ReactNode } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom"
 import { useShallow } from "zustand/react/shallow"
 import { Input } from "@/components/ui/input"
@@ -12,7 +12,7 @@ import { ProductGrid } from "../product-grid"
 import { ShopSectionHeader } from "../shop-section-header"
 import { FeaturedSection } from "@/components/commerce-ui/featured-section"
 import { useShopStore } from "@/stores/shop-store"
-import type { ShopDefinition, ShopDomain, ShopItem } from "@/app/shop/types"
+import type { ShopDefinition, ShopItem } from "@/app/shop/types"
 
 export type FeaturedTheme = "seedlings" | "forests-land" | "forestry-services" | "roundwood"
 
