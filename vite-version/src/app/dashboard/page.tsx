@@ -4,30 +4,14 @@ import * as React from "react"
 import { BaseLayout } from "@/components/layouts/base-layout"
 import {
   ChartAreaInteractive,
+  compactCurrency,
+  compactNumber,
   generatePortfolioSeries,
   portfolioSeriesReferenceDate,
 } from "./components/chart-area-interactive"
 import { DataTable, groupPlantedSize, groupSize, initialAssetGroups, upcomingPayments } from "./components/data-table"
 import { SectionCards } from "./components/section-cards"
 import type { MetricKey } from "./components/chart-area-interactive"
-
-function formatFullNumber(value: number, suffix?: string) {
-  const formatted = new Intl.NumberFormat("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value)
-
-  return suffix ? `${formatted} ${suffix}` : formatted
-}
-
-function formatFullCurrency(value: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value)
-}
 
 export default function Page() {
   const chartRef = React.useRef<HTMLDivElement | null>(null)
@@ -57,7 +41,7 @@ export default function Page() {
   )
   const getTrend = React.useCallback((currentValue: number, previousValue: number) => {
     if (previousValue === 0) {
-      return { isUp: currentValue >= 0, label: currentValue >= 0 ? "+0.00%" : "-0.00%" }
+      return { isUp: currentValue >= 0, label: currentValue >= 0 ? "+0.0%" : "-0.0%" }
     }
 
     const delta = ((currentValue - previousValue) / Math.abs(previousValue)) * 100
@@ -104,19 +88,19 @@ export default function Page() {
         <SectionCards
           onMetricCardClick={handleMetricCardClick}
           onPaymentsCardClick={handlePaymentsCardClick}
-          portfolioValue={formatFullCurrency(portfolioPoint?.portfolioValue ?? 0)}
+          portfolioValue={compactCurrency(portfolioPoint?.portfolioValue ?? 0)}
           portfolioTrendLabel={portfolioTrend.label}
           portfolioTrendUp={portfolioTrend.isUp}
           portfolioSummary={`Estimated valuation of ${plantedAreaLabel} ha planted and ${acquiredAreaLabel} ha acquired`}
-          landManaged={formatFullNumber(landPoint?.landManaged ?? 0, "ha")}
+          landManaged={`${compactNumber(landPoint?.landManaged ?? 0)} ha`}
           landTrendLabel={landTrend.label}
           landTrendUp={landTrend.isUp}
-          landSummary={`Managed footprint at ${landPoint?.label ?? "current horizon"} across Uganda, Kenya, and Tanzania`}
-          estimatedVolume={formatFullNumber(landPoint?.expectedVolume ?? 0, "m3")}
+          landSummary={`Managed footprint across Uganda, Kenya, and Tanzania`}
+          estimatedVolume={`${compactNumber(landPoint?.expectedVolume ?? 0)} m3`}
           volumeTrendLabel={volumeTrend.label}
           volumeTrendUp={volumeTrend.isUp}
           volumeSummary={`Standing timber estimate at ${landPoint?.label ?? "current horizon"} across planted blocks`}
-          pendingPayments={formatFullCurrency(pendingTotals.amount)}
+          pendingPayments={compactCurrency(pendingTotals.amount)}
           pendingInvoicesLabel={`${pendingTotals.count} invoices`}
           pendingSummary={`Scheduled contractor and operations payments awaiting release`}
         />
