@@ -7,7 +7,9 @@ import { Separator } from '@/components/ui/separator'
 
 export function CTASection() {
   return (
-    <section className='py-16 lg:py-24 bg-muted/80'>
+    <section className='section-map-shell section-map-cta relative overflow-hidden py-16 lg:py-24 bg-muted/80'>
+      <div aria-hidden className="section-map-bg absolute inset-0" />
+      <div aria-hidden className="section-map-tint absolute inset-0" />
       <div className='container mx-auto px-4 lg:px-8'>
         <div className='mx-auto max-w-4xl'>
           <div className='text-center'>
@@ -37,10 +39,10 @@ export function CTASection() {
                   Join the community of 
                   <span className='flex sm:inline-flex justify-center'>
                     <span className='relative mx-2'>
-                      <span className='bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent'>
+                      <span className='emerald-glitter-text bg-gradient-to-r from-emerald-300 via-emerald-500 to-emerald-200 bg-clip-text text-transparent'>
                       forestry
                       </span>
-                      <div className='absolute start-0 -bottom-2 h-1 w-full bg-gradient-to-r from-primary/30 to-secondary/30' />
+                      <div className='absolute start-0 -bottom-2 h-1 w-full bg-gradient-to-r from-emerald-400/35 via-emerald-500/20 to-emerald-200/35' />
                     </span>
                     businesses today
                   </span>

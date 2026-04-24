@@ -38,12 +38,12 @@ export function ForestryServicesCountdownBanner() {
 
   return (
     <BentoTilt className="rounded-xl">
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-amber-700 via-orange-600 to-emerald-600 p-[2px]">
+      <div className="countdown-run-border relative overflow-hidden rounded-xl bg-gradient-to-r from-amber-700 via-orange-600 to-emerald-600 p-[2px]">
         <div className="relative overflow-hidden rounded-[calc(theme(borderRadius.xl)-2px)] bg-white p-6 dark:bg-gray-900">
-          <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-orange-400 opacity-10" />
-          <div className="absolute -bottom-8 -left-8 h-32 w-32 rounded-full bg-emerald-500 opacity-10" />
-          <div className="absolute right-8 top-8 h-4 w-4 rotate-45 bg-amber-500/20" />
-          <div className="absolute bottom-10 right-1/4 h-6 w-6 rounded-full bg-orange-500/15" />
+          <div className="countdown-ornament absolute -right-6 -top-6 h-24 w-24 rounded-full bg-orange-400 opacity-10" />
+          <div className="countdown-ornament absolute -bottom-8 -left-8 h-32 w-32 rounded-full bg-emerald-500 opacity-10" />
+          <div className="countdown-ornament absolute right-8 top-8 h-4 w-4 rotate-45 bg-amber-500/20" />
+          <div className="countdown-ornament absolute bottom-10 right-1/4 h-6 w-6 rounded-full bg-orange-500/15" />
 
           <div className="relative flex flex-col items-center justify-between gap-6 md:flex-row">
             <div className="flex-shrink-0">

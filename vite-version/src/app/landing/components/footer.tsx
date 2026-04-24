@@ -45,7 +45,9 @@ export function LandingFooter() {
   }
 
   return (
-    <footer className="border-t bg-background">
+    <footer className="section-map-shell section-map-footer relative overflow-hidden border-t bg-background">
+      <div aria-hidden className="section-map-bg absolute inset-0" />
+      <div aria-hidden className="section-map-tint absolute inset-0" />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Newsletter Section */}
         <div className="mb-16">

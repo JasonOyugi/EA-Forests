@@ -72,11 +72,7 @@ const data = {
               url: "/shop/forests-land",
             },
             {
-              title: "Forestry Services",
-              url: "/shop/forestry-services",
-            },
-            {
-              title: "Roundwood",
+              title: "Markets",
               url: "/shop/roundwood",
             },
           ],

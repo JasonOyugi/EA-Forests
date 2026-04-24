@@ -18,7 +18,7 @@ export function ForestryServicesSaleBanner() {
         <div className="relative z-10 px-6 py-8 md:px-10">
           <div className="mx-auto max-w-4xl">
             <div className="mb-2 flex items-center justify-center">
-              <div className="rounded-full amber-pulse-on-hover bg-amber-500 px-4 py-1 text-sm font-bold uppercase tracking-wider text-white backdrop-blur-sm">
+              <div className="service-badge-glow rounded-full bg-amber-500 px-4 py-1 text-sm font-bold uppercase tracking-wider text-white backdrop-blur-sm">
                 Limited Seasonal Offer
               </div>
             </div>
@@ -30,7 +30,7 @@ export function ForestryServicesSaleBanner() {
             <div className="mb-4 flex justify-center">
               <div className="relative">
                 <div className="text-center text-5xl font-bold text-white drop-shadow md:text-6xl">20% OFF</div>
-                <div className="absolute -right-6 -top-1 rotate-12 rounded-md border-2 border-amber-600 amber-pulse-on-hover bg-amber-500 px-2 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+                <div className="service-badge-glow absolute -right-6 -top-1 rotate-12 rounded-md border-2 border-amber-600 bg-amber-500 px-2 py-1 text-xs font-semibold text-white backdrop-blur-sm">
                   EXCLUSIVE
                 </div>
               </div>
@@ -43,17 +43,19 @@ export function ForestryServicesSaleBanner() {
             <div className="flex flex-col items-center justify-center space-y-3 sm:flex-row sm:space-x-4 sm:space-y-0">
               <button
                 type="button"
-                className="rounded-md bg-white px-6 py-3 font-medium text-orange-600 transition-all hover:bg-white/90"
+                className="group/cta relative overflow-hidden rounded-md bg-white px-6 py-3 font-medium text-orange-600 transition-all hover:bg-white/90"
                 onClick={() => document.getElementById("products-section")?.scrollIntoView({ behavior: "smooth" })}
               >
-                Shop Services
+                <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-amber-300/35 via-amber-200/15 to-transparent transition-transform duration-900 group-hover/cta:translate-x-[220%]" />
+                <span className="relative z-10">Shop Services</span>
               </button>
               <button
                 type="button"
-                className="rounded-md border border-white/40 bg-transparent px-6 py-3 font-medium text-white transition-all hover:bg-white/10"
+                className="group/ghost relative overflow-hidden rounded-md border border-white/40 bg-transparent px-6 py-3 font-medium text-white transition-all hover:bg-white/10"
                 onClick={() => document.getElementById("featured-products")?.scrollIntoView({ behavior: "smooth" })}
               >
-                View Deals
+                <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-white/28 via-white/10 to-transparent transition-transform duration-900 group-hover/ghost:translate-x-[220%]" />
+                <span className="relative z-10">View Deals</span>
               </button>
             </div>
           </div>

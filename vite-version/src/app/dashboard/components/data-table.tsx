@@ -20,26 +20,20 @@ import {
 } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import {
-  Calendar,
+  CalendarDays,
   ChevronDown,
-  ChevronLeft,
   ChevronRight,
-  ExternalLink,
   MapPinned,
   GripVertical,
-  MessageCircle,
-  Trees,
   Plus,
 } from "lucide-react"
 
 import { events as calendarEvents, eventDates } from "@/app/calendar/data"
-import { Chat } from "@/app/chat/components/chat"
+import { Calendar as FullCalendar } from "@/app/calendar/components/calendar"
+import { ForestsLandTopBanner } from "@/components/commerce-ui/forests-land-top-banner"
+import { ForestryServicesSaleBanner } from "@/components/commerce-ui/forestry-services-sale-banner"
 import SeedlingsBanner from "@/components/commerce-ui/seedlings-banner"
 import { ForestryServicesCountdownBanner } from "@/components/commerce-ui/forestry-services-countdown-banner"
-import { useChat, type Conversation, type Message, type User } from "@/app/chat/use-chat"
-import conversationsData from "@/app/chat/data/conversations.json"
-import messagesData from "@/app/chat/data/messages.json"
-import usersData from "@/app/chat/data/users.json"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -50,15 +44,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Map, MapPolygon, MapTileLayer } from "@/components/ui/map"
 import {
   Select,
   SelectContent,
@@ -136,6 +121,15 @@ type DocumentRow = {
   lastModified: string
 }
 
+type SortColumn =
+  | "area"
+  | "plantedArea"
+  | "age"
+  | "estimatedVolume"
+  | "estimatedValuation"
+  | "investmentPlaced"
+type SortOrder = "asc" | "desc"
+
 export function groupVarieties(g: AssetGroup) {
   return [...new Set(g.subBlocks.map((s) => s.variety))].join(", ")
 }
@@ -152,7 +146,15 @@ function groupAge(g: AssetGroup) {
   return Math.max(...g.subBlocks.map((s) => s.age))
 }
 
-const speciesProfile: Record<TreeVariety, { volumePerHa: number; pricePerM3: number; investmentPerHa: number; color: string }> = {
+function formatTableNumber(value: number) {
+  return compactNumber(value)
+}
+
+function formatTableCurrency(value: number) {
+  return compactCurrency(value)
+}
+
+export const speciesProfile: Record<TreeVariety, { volumePerHa: number; pricePerM3: number; investmentPerHa: number; color: string }> = {
   eucalyptus: { volumePerHa: 31, pricePerM3: 84, investmentPerHa: 1880, color: "#15803d" },
   pine: { volumePerHa: 24, pricePerM3: 92, investmentPerHa: 1720, color: "#1d4ed8" },
   cypress: { volumePerHa: 27, pricePerM3: 88, investmentPerHa: 1790, color: "#0f766e" },
@@ -187,100 +189,82 @@ export function getGroupEstimatedMetrics(group: AssetGroup) {
   return { estimatedVolume, estimatedValuation, investmentPlaced }
 }
 
-function createPolygon(center: [number, number], index: number, totalArea: number, plantedArea: number) {
-  const latOffset = 0.08 + index * 0.035
-  const lngOffset = 0.12 + index * 0.04
-  const scale = Math.sqrt(totalArea) / 140
-  const plantedScale = Math.sqrt(Math.max(plantedArea, 1)) / 160
+export function getSubBlockEstimatedMetrics(group: AssetGroup, subBlock: SubBlock) {
+  const totals = getGroupEstimatedMetrics(group)
+  const rawShares = group.subBlocks.map((block) => {
+    const profile = speciesProfile[block.variety]
+    const maturityFactor = 0.48 + block.age * 0.09
+
+    return {
+      id: block.id,
+      estimatedVolume: block.size * profile.volumePerHa * maturityFactor,
+      estimatedValuation: block.size * profile.volumePerHa * maturityFactor * profile.pricePerM3,
+      investmentPlaced: block.plantedSize * profile.investmentPerHa,
+    }
+  })
+
+  function allocateMetric(metric: keyof typeof totals) {
+    const total = totals[metric]
+    const rawTotal = rawShares.reduce((sum, share) => sum + share[metric], 0)
+    if (rawTotal <= 0) return 0
+
+    const rounded = rawShares.map((share) => ({
+      id: share.id,
+      value: Math.floor((share[metric] / rawTotal) * total),
+      fraction: ((share[metric] / rawTotal) * total) % 1,
+    }))
+
+    let remainder = total - rounded.reduce((sum, share) => sum + share.value, 0)
+    for (const share of [...rounded].sort((a, b) => b.fraction - a.fraction)) {
+      if (remainder <= 0) break
+      share.value += 1
+      remainder -= 1
+    }
+
+    return rounded.find((share) => share.id === subBlock.id)?.value ?? 0
+  }
+
+  return {
+    estimatedVolume: allocateMetric("estimatedVolume"),
+    estimatedValuation: allocateMetric("estimatedValuation"),
+    investmentPlaced: allocateMetric("investmentPlaced"),
+  }
+}
+
+function scalePolygon(
+  positions: [number, number][],
+  ratio: number
+): [number, number][] {
+  const centroid = positions.reduce(
+    (acc, [lat, lng]) => [acc[0] + lat / positions.length, acc[1] + lng / positions.length],
+    [0, 0]
+  ) as [number, number]
+
+  return positions.map(([lat, lng]) => [
+    centroid[0] + (lat - centroid[0]) * ratio,
+    centroid[1] + (lng - centroid[1]) * ratio,
+  ])
+}
+
+export function createPolygon(center: [number, number], index: number, totalArea: number, plantedArea: number) {
+  const ring = Math.floor(index / 3)
+  const spoke = index % 3
+  const scale = Math.max(0.012, Math.sqrt(totalArea) * 0.0044)
+  const latOffset = 0.02 + ring * 0.018 + spoke * 0.008 + scale * 0.18
+  const lngOffset = 0.03 + ring * 0.022 + spoke * 0.012 + scale * 0.24
 
   const outer = [
     [center[0] + latOffset, center[1] - lngOffset],
-    [center[0] + latOffset + scale, center[1] - lngOffset + scale * 0.55],
-    [center[0] + latOffset - scale * 0.15, center[1] - lngOffset + scale * 1.1],
-    [center[0] + latOffset - scale * 0.45, center[1] - lngOffset + scale * 0.35],
+    [center[0] + latOffset + scale * 0.95, center[1] - lngOffset + scale * 0.28],
+    [center[0] + latOffset + scale * 0.68, center[1] - lngOffset + scale * 1.02],
+    [center[0] + latOffset - scale * 0.14, center[1] - lngOffset + scale * 1.14],
+    [center[0] + latOffset - scale * 0.38, center[1] - lngOffset + scale * 0.42],
   ] as [number, number][]
 
-  const inner = [
-    [center[0] + latOffset + plantedScale * 0.12, center[1] - lngOffset + plantedScale * 0.08],
-    [center[0] + latOffset + plantedScale * 0.62, center[1] - lngOffset + plantedScale * 0.34],
-    [center[0] + latOffset + plantedScale * 0.02, center[1] - lngOffset + plantedScale * 0.78],
-    [center[0] + latOffset - plantedScale * 0.26, center[1] - lngOffset + plantedScale * 0.3],
-  ] as [number, number][]
+  const plantedRatio = totalArea > 0 ? Math.sqrt(plantedArea / totalArea) * 0.9 : 0.52
+  const inner = scalePolygon(outer, Math.min(Math.max(plantedRatio, 0.25), 0.94))
 
   return { outer, inner }
-}
-
-function GroupMapDialog({ group }: { group: AssetGroup }) {
-  return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="h-8 gap-2">
-          <MapPinned className="h-3.5 w-3.5" />
-          Map
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-w-4xl">
-        <DialogHeader>
-          <DialogTitle>{group.block} map view</DialogTitle>
-          <DialogDescription>
-            Species polygons show total allocated hectares, with the planted area shaded inside each block.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_260px]">
-          <div className="h-[460px] overflow-hidden rounded-xl border">
-            <Map center={group.mapCenter} zoom={9}>
-              <MapTileLayer />
-              {group.subBlocks.map((subBlock, index) => {
-                const polygons = createPolygon(group.mapCenter, index, subBlock.size, subBlock.plantedSize)
-                const speciesColor = speciesProfile[subBlock.variety].color
-
-                return (
-                  <React.Fragment key={subBlock.id}>
-                    <MapPolygon
-                      positions={polygons.outer}
-                      pathOptions={{
-                        color: speciesColor,
-                        weight: 3,
-                        fillColor: speciesColor,
-                        fillOpacity: 0.18,
-                      }}
-                    />
-                    <MapPolygon
-                      positions={polygons.inner}
-                      pathOptions={{
-                        color: speciesColor,
-                        weight: 2,
-                        dashArray: "6 4",
-                        fillColor: speciesColor,
-                        fillOpacity: 0.38,
-                      }}
-                    />
-                  </React.Fragment>
-                )
-              })}
-            </Map>
-          </div>
-          <div className="space-y-3">
-            {group.subBlocks.map((subBlock) => (
-              <div key={subBlock.id} className="rounded-lg border p-3 text-sm">
-                <div className="flex items-center gap-2">
-                  <span
-                    className="h-3 w-3 rounded-full"
-                    style={{ backgroundColor: speciesProfile[subBlock.variety].color }}
-                  />
-                  <span className="font-medium capitalize">{subBlock.variety}</span>
-                  <span className="text-muted-foreground">{subBlock.subBlock}</span>
-                </div>
-                <div className="mt-2 text-xs text-muted-foreground">
-                  {subBlock.size} ha outline with {subBlock.plantedSize} ha planted inside
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
-  )
 }
 
 export const initialAssetGroups: AssetGroup[] = [
@@ -488,9 +472,6 @@ function PaymentList({
   )
 }
 
-type SortColumn = "block" | "size" | "age" | "variety" | "country"
-type SortOrder = "asc" | "desc"
-
 type SortableAssetRowProps = {
   group: AssetGroup
   isExpanded: boolean
@@ -498,6 +479,7 @@ type SortableAssetRowProps = {
 }
 
 function SortableAssetRow({ group, isExpanded, onToggle }: SortableAssetRowProps) {
+  const navigate = useNavigate()
   const {
     attributes,
     listeners,
@@ -544,19 +526,30 @@ function SortableAssetRow({ group, isExpanded, onToggle }: SortableAssetRowProps
             <CountryStripeBadge country={group.country} />
           </span>
         </TableCell>
-        <TableCell>{groupSize(group)}</TableCell>
-        <TableCell>{groupPlantedSize(group)}</TableCell>
-        <TableCell>{groupAge(group)}</TableCell>
-        <TableCell>{compactNumber(metrics.estimatedVolume)}</TableCell>
-        <TableCell>{compactCurrency(metrics.estimatedValuation)}</TableCell>
-        <TableCell>{compactCurrency(metrics.investmentPlaced)}</TableCell>
+        <TableCell>{formatTableNumber(groupSize(group))}</TableCell>
+        <TableCell>{formatTableNumber(groupPlantedSize(group))}</TableCell>
+        <TableCell>{formatTableNumber(groupAge(group))}</TableCell>
+        <TableCell>{formatTableNumber(metrics.estimatedVolume)}</TableCell>
+        <TableCell>{formatTableCurrency(metrics.estimatedValuation)}</TableCell>
+        <TableCell>{formatTableCurrency(metrics.investmentPlaced)}</TableCell>
         <TableCell onClick={(event) => event.stopPropagation()}>
-          <GroupMapDialog group={group} />
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-8 gap-2"
+            onClick={() => navigate(`/dashboard/assets-map?site=${group.id}`)}
+          >
+            <MapPinned className="h-3.5 w-3.5" />
+            Map
+          </Button>
         </TableCell>
       </TableRow>
 
       {isExpanded &&
-        group.subBlocks.map((sub) => (
+        group.subBlocks.map((sub) => {
+          const subMetrics = getSubBlockEstimatedMetrics(group, sub)
+
+          return (
           <TableRow key={sub.id}>
             <TableCell className="w-8 px-2" />
             <TableCell className="w-6 px-1" />
@@ -564,169 +557,16 @@ function SortableAssetRow({ group, isExpanded, onToggle }: SortableAssetRowProps
             <TableCell className="text-sm capitalize">{sub.variety}</TableCell>
             <TableCell className="text-sm text-muted-foreground">-</TableCell>
             <TableCell className="text-sm text-muted-foreground">-</TableCell>
-            <TableCell className="text-sm">{sub.size}</TableCell>
-            <TableCell className="text-sm">{sub.plantedSize}</TableCell>
-            <TableCell className="text-sm">{sub.age}</TableCell>
-            <TableCell className="text-sm text-muted-foreground">-</TableCell>
-            <TableCell className="text-sm text-muted-foreground">-</TableCell>
-            <TableCell className="text-sm text-muted-foreground">-</TableCell>
+            <TableCell className="text-sm">{formatTableNumber(sub.size)}</TableCell>
+            <TableCell className="text-sm">{formatTableNumber(sub.plantedSize)}</TableCell>
+            <TableCell className="text-sm">{formatTableNumber(sub.age)}</TableCell>
+            <TableCell className="text-sm">{formatTableNumber(subMetrics.estimatedVolume)}</TableCell>
+            <TableCell className="text-sm">{formatTableCurrency(subMetrics.estimatedValuation)}</TableCell>
+            <TableCell className="text-sm">{formatTableCurrency(subMetrics.investmentPlaced)}</TableCell>
             <TableCell className="text-sm text-muted-foreground">-</TableCell>
           </TableRow>
-        ))}
+        )})}
     </>
-  )
-}
-
-function dateKey(d: Date) {
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`
-}
-
-function MiniCalendarPreview() {
-  const [month, setMonth] = React.useState(() => new Date(new Date().getFullYear(), new Date().getMonth(), 1))
-  const [selectedDate, setSelectedDate] = React.useState(() => new Date())
-
-  const counts = React.useMemo(
-    () => new globalThis.Map(eventDates.map((item) => [dateKey(item.date), item.count])),
-    []
-  )
-
-  const monthLabel = month.toLocaleString("en-US", { month: "long", year: "numeric" })
-
-  const firstWeekday = new Date(month.getFullYear(), month.getMonth(), 1).getDay()
-  const daysInMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate()
-
-  const cells: Array<number | null> = []
-  for (let i = 0; i < firstWeekday; i += 1) cells.push(null)
-  for (let d = 1; d <= daysInMonth; d += 1) cells.push(d)
-
-  const selectedEvents = React.useMemo(() => {
-    const selectedKey = dateKey(selectedDate)
-    return calendarEvents
-      .filter((e) => dateKey(e.date) === selectedKey)
-      .sort((a, b) => a.date.getTime() - b.date.getTime())
-      .slice(0, 3)
-  }, [selectedDate])
-
-  return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-7 w-7"
-          onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() - 1, 1))}
-        >
-          <ChevronLeft className="h-4 w-4" />
-        </Button>
-        <p className="text-sm font-medium">{monthLabel}</p>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-7 w-7"
-          onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() + 1, 1))}
-        >
-          <ChevronRight className="h-4 w-4" />
-        </Button>
-      </div>
-
-      <div className="grid grid-cols-7 gap-1 text-center text-[11px] text-muted-foreground">
-        {"SMTWTFS".split("").map((w) => (
-          <span key={w}>{w}</span>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-7 gap-1">
-        {cells.map((day, idx) => {
-          if (day === null) {
-            return <div key={`blank-${idx}`} className="h-8" />
-          }
-
-          const current = new Date(month.getFullYear(), month.getMonth(), day)
-          const key = dateKey(current)
-          const count = counts.get(key) ?? 0
-          const isSelected = dateKey(selectedDate) === key
-
-          return (
-            <button
-              key={key}
-              type="button"
-              onClick={() => setSelectedDate(current)}
-              className={`relative h-8 rounded-md text-xs transition-colors ${
-                isSelected ? "bg-primary text-primary-foreground" : "hover:bg-muted"
-              }`}
-            >
-              {day}
-              {count > 0 && !isSelected && (
-                <span className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-emerald-500" />
-              )}
-            </button>
-          )
-        })}
-      </div>
-
-      <div className="rounded-md border p-2">
-        <p className="mb-1 text-xs font-medium">Events on {selectedDate.toLocaleDateString()}</p>
-        {selectedEvents.length === 0 ? (
-          <p className="text-xs text-muted-foreground">No events scheduled.</p>
-        ) : (
-          <ul className="space-y-1">
-            {selectedEvents.map((event) => (
-              <li key={event.id} className="text-xs text-muted-foreground">
-                <span className="font-medium text-foreground">{event.date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>{" "}
-                {event.title}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </div>
-  )
-}
-
-function MiniChatPreview() {
-  const { setSelectedConversation } = useChat()
-
-  const previewConversations = React.useMemo(
-    () =>
-      [...(conversationsData as Conversation[])]
-        .sort(
-          (a, b) =>
-            new Date(b.lastMessage.timestamp).getTime() -
-            new Date(a.lastMessage.timestamp).getTime()
-        )
-        .slice(0, 5),
-    []
-  )
-
-  const previewConversationIds = React.useMemo(
-    () => new Set(previewConversations.map((conv) => conv.id)),
-    [previewConversations]
-  )
-
-  const previewMessages = React.useMemo(
-    () =>
-      Object.fromEntries(
-        Object.entries(messagesData as Record<string, Message[]>).filter(([conversationId]) =>
-          previewConversationIds.has(conversationId)
-        )
-      ),
-    [previewConversationIds]
-  )
-
-  const previewUsers = usersData as User[]
-
-  React.useEffect(() => {
-    setSelectedConversation(previewConversations[0]?.id ?? null)
-  }, [previewConversations, setSelectedConversation])
-
-  return (
-    <div className="max-h-[430px] min-h-[430px] overflow-hidden rounded-md [&>div]:max-h-[430px] [&>div]:min-h-[430px]">
-      <Chat
-        conversations={previewConversations}
-        messages={previewMessages}
-        users={previewUsers}
-      />
-    </div>
   )
 }
 
@@ -761,32 +601,36 @@ export function DataTable({ activeTab, onActiveTabChange, transactionsHighlightK
     if (!sortConfig.col) return ordered
 
     return [...ordered].sort((a, b) => {
-      let aVal: string | number
-      let bVal: string | number
+      const aMetrics = getGroupEstimatedMetrics(a)
+      const bMetrics = getGroupEstimatedMetrics(b)
 
-      if (sortConfig.col === "block") {
-        aVal = a.block
-        bVal = b.block
-      } else if (sortConfig.col === "country") {
-        aVal = a.country
-        bVal = b.country
-      } else if (sortConfig.col === "variety") {
-        aVal = groupVarieties(a)
-        bVal = groupVarieties(b)
-      } else if (sortConfig.col === "size") {
-        aVal = groupSize(a)
-        bVal = groupSize(b)
-      } else {
-        aVal = groupAge(a)
-        bVal = groupAge(b)
-      }
+      const aVal =
+        sortConfig.col === "area"
+          ? groupSize(a)
+          : sortConfig.col === "plantedArea"
+            ? groupPlantedSize(a)
+            : sortConfig.col === "age"
+              ? groupAge(a)
+              : sortConfig.col === "estimatedVolume"
+                ? aMetrics.estimatedVolume
+                : sortConfig.col === "estimatedValuation"
+                  ? aMetrics.estimatedValuation
+                  : aMetrics.investmentPlaced
 
-      if (typeof aVal === "string") {
-        const cmp = aVal.toLowerCase().localeCompare((bVal as string).toLowerCase())
-        return sortConfig.order === "asc" ? cmp : -cmp
-      }
+      const bVal =
+        sortConfig.col === "area"
+          ? groupSize(b)
+          : sortConfig.col === "plantedArea"
+            ? groupPlantedSize(b)
+            : sortConfig.col === "age"
+              ? groupAge(b)
+              : sortConfig.col === "estimatedVolume"
+                ? bMetrics.estimatedVolume
+                : sortConfig.col === "estimatedValuation"
+                  ? bMetrics.estimatedValuation
+                  : bMetrics.investmentPlaced
 
-      return sortConfig.order === "asc" ? aVal - (bVal as number) : (bVal as number) - aVal
+      return sortConfig.order === "asc" ? aVal - bVal : bVal - aVal
     })
   }, [assetGroups, rowOrder, sortConfig])
 
@@ -870,16 +714,16 @@ export function DataTable({ activeTab, onActiveTabChange, transactionsHighlightK
                 <TableRow>
                   <TableHead className="w-8 px-2" />
                   <TableHead className="w-6 px-1" />
-                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("block")}>Block{sortIndicator("block")}</TableHead>
-                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("variety")}>Variety{sortIndicator("variety")}</TableHead>
+                  <TableHead>Block</TableHead>
+                  <TableHead>Variety</TableHead>
                   <TableHead>Location</TableHead>
-                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("country")}>Country{sortIndicator("country")}</TableHead>
-                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("size")}>Size (ha){sortIndicator("size")}</TableHead>
-                  <TableHead>Planted (ha)</TableHead>
+                  <TableHead>Country</TableHead>
+                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("area")}>Area (ha){sortIndicator("area")}</TableHead>
+                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("plantedArea")}>Planted (ha){sortIndicator("plantedArea")}</TableHead>
                   <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("age")}>Age (yr){sortIndicator("age")}</TableHead>
-                  <TableHead>Estimated Volume</TableHead>
-                  <TableHead>Estimated Valuation</TableHead>
-                  <TableHead>Investment Placed</TableHead>
+                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("estimatedVolume")}>Estimated Volume (m3){sortIndicator("estimatedVolume")}</TableHead>
+                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("estimatedValuation")}>Estimated Valuation (USD){sortIndicator("estimatedValuation")}</TableHead>
+                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("investmentPlaced")}>Investment Placed (USD){sortIndicator("investmentPlaced")}</TableHead>
                   <TableHead>Map</TableHead>
                 </TableRow>
               </TableHeader>
@@ -982,47 +826,27 @@ export function DataTable({ activeTab, onActiveTabChange, transactionsHighlightK
         </div>
       </TabsContent>
 
-      <div className="mt-6 grid gap-4 px-4 lg:grid-cols-2 lg:px-6">
-        <Card className="h-full">
-          <CardHeader>
+      <div className="mt-6 grid gap-4 px-4 lg:px-6">
+        <Card className="overflow-hidden">
+          <CardHeader className="border-b">
             <div className="flex items-center gap-2">
-              <Calendar className="h-5 w-5" />
-              <CardTitle>
-                <button
-                  type="button"
-                  onClick={() => navigate("/calendar")}
-                  className="cursor-pointer underline-offset-4 transition hover:underline"
-                >
-                  Calendar
-                </button>
-              </CardTitle>
-            </div>
-            <CardDescription>Mini planner preview. Open full calendar to edit.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <MiniCalendarPreview />
-          </CardContent>
-        </Card>
-
-        <Card className="h-full">
-          <CardHeader>
-            <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <MessageCircle className="h-5 w-5" />
-                <CardTitle>Chat</CardTitle>
+              <CalendarDays className="h-5 w-5 text-emerald-700" />
+              <div>
+                <CardTitle>
+                  <button
+                    type="button"
+                    onClick={() => navigate("/calendar")}
+                    className="cursor-pointer underline-offset-4 transition hover:underline"
+                  >
+                    Calendar
+                  </button>
+                </CardTitle>
+                <CardDescription>Full calendar tools embedded directly on the dashboard.</CardDescription>
               </div>
-              <button
-                type="button"
-                onClick={() => navigate("/chat")}
-                className="text-sm font-medium text-primary underline-offset-4 transition hover:underline"
-              >
-                + see more
-              </button>
             </div>
-            <CardDescription>Latest five chats in compact full-feature mode.</CardDescription>
           </CardHeader>
-          <CardContent>
-            <MiniChatPreview />
+          <CardContent className="p-0">
+            <FullCalendar events={calendarEvents} eventDates={eventDates} />
           </CardContent>
         </Card>
       </div>
@@ -1035,57 +859,13 @@ export function DataTable({ activeTab, onActiveTabChange, transactionsHighlightK
           <ForestryServicesCountdownBanner />
         </div>
 
-        <Card className="group border-cyan-500/20 bg-gradient-to-br from-cyan-500/10 via-card to-blue-500/10 transition-all hover:border-cyan-500/50 hover:shadow-lg">
-          <CardHeader>
-            <CardTitle className="flex items-center justify-between text-base">
-              <span className="inline-flex items-center gap-2">
-                <Trees className="h-4 w-4 text-cyan-600" />
-                Roundwood Market
-              </span>
-              <button
-                type="button"
-                onClick={() => navigate("/shop/roundwood")}
-                className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-              >
-                Open <ExternalLink className="h-3.5 w-3.5" />
-              </button>
-            </CardTitle>
-            <CardDescription>
-              Curated lots, pole classes, and log categories for timber buyers.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="rounded-lg border border-cyan-500/20 bg-background/70 p-4 text-sm text-muted-foreground">
-              Elegant quick access to the roundwood catalogue with market-ready listings.
-            </div>
-          </CardContent>
-        </Card>
+        <div className="overflow-hidden rounded-lg">
+          <ForestsLandTopBanner />
+        </div>
 
-        <Card className="group border-emerald-500/20 bg-gradient-to-br from-emerald-500/10 via-card to-lime-500/10 transition-all hover:border-emerald-500/50 hover:shadow-lg">
-          <CardHeader>
-            <CardTitle className="flex items-center justify-between text-base">
-              <span className="inline-flex items-center gap-2">
-                <Trees className="h-4 w-4 text-emerald-600" />
-                Forests & Land
-              </span>
-              <button
-                type="button"
-                onClick={() => navigate("/shop/forests-land")}
-                className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-              >
-                Open <ExternalLink className="h-3.5 w-3.5" />
-              </button>
-            </CardTitle>
-            <CardDescription>
-              Explore managed forest blocks and investment-ready land-linked assets.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="rounded-lg border border-emerald-500/20 bg-background/70 p-4 text-sm text-muted-foreground">
-              Designed for investor scouting: opportunities, due diligence context, and quick navigation.
-            </div>
-          </CardContent>
-        </Card>
+        <div className="overflow-hidden rounded-lg">
+          <ForestryServicesSaleBanner />
+        </div>
       </div>
       
     </Tabs>

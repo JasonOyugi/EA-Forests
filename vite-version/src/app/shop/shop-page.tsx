@@ -14,6 +14,10 @@ export default function ShopPage() {
     return <Navigate to="/errors/not-found" replace />
   }
 
+  if (shopSlug === "forestry-services") {
+    return <Navigate to="/shop/forests-land" replace />
+  }
+
   const shop = shopDefinitions[shopSlug]
   const inventory = shopInventoryMap[shopSlug]
   const ShopPageComponent = shopPageComponents[shopSlug]

@@ -41,7 +41,7 @@ export function RoundwoodTopBanner() {
                 NEW
               </span>
               <span>
-                <span className="font-bold">Free shipping</span> now available on selected roundwood lots.
+                <span className="font-bold">New vendor lanes</span> now available across carbon, roundwood, and sawn timber markets.
                 <a
                   href="#products-section"
                   className="ml-1.5 whitespace-nowrap underline hover:text-teal-100"
@@ -50,7 +50,7 @@ export function RoundwoodTopBanner() {
                     document.getElementById("products-section")?.scrollIntoView({ behavior: "smooth" })
                   }}
                 >
-                  Shop now
+                  Explore markets
                 </a>
               </span>
             </p>

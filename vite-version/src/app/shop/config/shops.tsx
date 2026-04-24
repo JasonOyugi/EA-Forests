@@ -52,18 +52,18 @@ export const shopDefinitions: Record<ShopSlug, ShopDefinition> = {
   },
   roundwood: {
     slug: "roundwood",
-    name: "Roundwood",
-    shortName: "Roundwood",
-    description: "Roundwood products, pole classes, and harvest-linked timber outputs.",
-    heroTitle: "Roundwood marketplace",
+    name: "Markets",
+    shortName: "Markets",
+    description: "Structured market access across carbon, roundwood, and sawn timber offtake channels.",
+    heroTitle: "Markets marketplace",
     heroDescription:
-      "Browse roundwood and timber output categories relevant to forestry value-chain offtake and upstream market alignment.",
-    heroBadge: "Timber commerce",
+      "Review downstream markets and vendor channels relevant to forestry value-chain offtake and commercial partnerships.",
+    heroBadge: "Market commerce",
     metrics: [
-      { label: "Product mode", value: "Pole classes · Logs · Lots" },
-      { label: "Commercial mode", value: "Spot / quote led" },
+      { label: "Markets", value: "Carbon · Roundwood · Sawn timber" },
+      { label: "Commercial mode", value: "Vendor / offtake led" },
     ],
-    emptyState: "No roundwood listings match the current filter.",
+    emptyState: "No market listings match the current filter.",
   },
 }
 
@@ -74,7 +74,9 @@ export const shopInventoryMap: Record<ShopSlug, ShopItem[]> = {
   roundwood: roundwoodInventory as ShopItem[],
 }
 
-export const shopList = Object.values(shopDefinitions)
+export const shopList = Object.values(shopDefinitions).filter(
+  (shop) => shop.slug !== "forestry-services"
+)
 
 export function isValidShopSlug(value: string): value is ShopSlug {
   return value in shopDefinitions

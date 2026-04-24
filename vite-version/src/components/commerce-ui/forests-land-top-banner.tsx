@@ -3,7 +3,15 @@
 import { useState } from "react"
 import { BentoTilt } from "@/components/ui/bento-tilt"
 
-export function ForestsLandTopBanner() {
+interface ForestsLandTopBannerProps {
+  rightIconSrc?: string
+  rightIconAlt?: string
+}
+
+export function ForestsLandTopBanner({
+  rightIconSrc = "/crested-crane.jpg",
+  rightIconAlt = "Crested crane",
+}: ForestsLandTopBannerProps) {
   const [isVisible, setIsVisible] = useState(true)
 
   if (!isVisible) return null
@@ -17,9 +25,10 @@ export function ForestsLandTopBanner() {
         </div>
 
         <div className="pointer-events-none absolute left-1/2 top-1/2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <div className="absolute h-14 w-14 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/70 animate-bannerCoreGlow" />
-          <div className="absolute h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/60 animate-bannerPulseRing" />
-          <div className="absolute h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/40 animate-bannerPulseRingDelayed" />
+          <div className="banner-flag-ring absolute h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-black" style={{ animationDelay: "0s" }} />
+          <div className="banner-flag-ring absolute h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-[#FCD116]" style={{ animationDelay: "0.35s" }} />
+          <div className="banner-flag-ring absolute h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-[#D90000]" style={{ animationDelay: "0.7s" }} />
+          <div className="banner-flag-ring absolute h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-black" style={{ animationDelay: "1.05s" }} />
         </div>
 
         <div className="pointer-events-none absolute right-12 top-1/2 hidden -translate-y-1/2 sm:block">
@@ -33,16 +42,12 @@ export function ForestsLandTopBanner() {
 
             <div className="absolute inset-1 rounded-full animate-ugandaHalo bg-[conic-gradient(from_180deg,#111111,#facc15,#dc2626,#111111)] opacity-40 blur-sm" />
 
-            <div className="uganda-crane-badge relative z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white shadow-md">
-              <svg viewBox="0 0 64 64" aria-label="Crested crane" className="h-8 w-8">
-                <circle cx="32" cy="32" r="30" fill="white" />
-                <path d="M20 42c8-2 13-7 16-15 2 5 3 10 2 16-3 2-7 4-12 4-3 0-5-2-6-5z" fill="#111111" />
-                <path d="M31 18c4 2 7 5 9 9l-4 2c-1-3-3-6-6-8z" fill="#D90000" />
-                <path d="M39 18c4 1 7 3 10 6l-4 2c-2-2-4-3-7-4z" fill="#FCD116" />
-                <path d="M35 30c4-1 7 0 10 3-2 1-5 1-8 1-1 3-3 6-6 8l-2-3c3-2 5-5 6-9z" fill="#9ca3af" />
-                <path d="M28 26c-1 5-3 10-8 14l-4-1c4-3 7-8 9-14z" fill="#9ca3af" />
-                <circle cx="34" cy="23" r="2" fill="#111111" />
-              </svg>
+            <div className="uganda-crane-badge relative z-10 flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white/20 bg-white shadow-md">
+              <img
+                src={rightIconSrc}
+                alt={rightIconAlt}
+                className="h-full w-full object-cover"
+              />
             </div>
           </div>
         </div>

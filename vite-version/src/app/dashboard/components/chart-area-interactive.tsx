@@ -25,8 +25,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-export const description = "Investor portfolio trends at trimester intervals"
-
 export type MetricKey =
   | "expectedPrice"
   | "expectedVolume"
@@ -45,7 +43,6 @@ export type PortfolioPoint = {
 
 type MetricMeta = {
   label: string
-  shortLabel: string
   unit: string
   format: (value: number) => string
   axisTick: (value: number) => string
@@ -61,42 +58,36 @@ function formatDecimal(value: number) {
 export const metricMeta: Record<MetricKey, MetricMeta> = {
   expectedPrice: {
     label: "Expected price",
-    shortLabel: "Price",
     unit: "$ per m3",
     format: (value) => `$${formatDecimal(value)} / m3`,
     axisTick: (value) => `$${formatDecimal(value)}`,
   },
   expectedVolume: {
     label: "Expected volume",
-    shortLabel: "Volume",
     unit: "m3",
     format: (value) => `${formatDecimal(value)} m3`,
     axisTick: (value) => compactNumber(value),
   },
   portfolioValue: {
     label: "Portfolio value",
-    shortLabel: "Portfolio",
     unit: "$",
     format: (value) => compactCurrency(value),
     axisTick: (value) => compactCurrency(value),
   },
   landManaged: {
     label: "Land managed",
-    shortLabel: "Land",
     unit: "hectares",
     format: (value) => `${formatDecimal(value)} ha`,
     axisTick: (value) => compactNumber(value),
   },
   cash: {
     label: "Cash",
-    shortLabel: "Cash",
     unit: "$",
     format: (value) => compactCurrency(value),
     axisTick: (value) => compactCurrency(value),
   },
   capitalDeployed: {
     label: "Capital deployed",
-    shortLabel: "Deployed",
     unit: "$",
     format: (value) => compactCurrency(value),
     axisTick: (value) => compactCurrency(value),
@@ -297,7 +288,7 @@ export function ChartAreaInteractive({ metric, onMetricChange }: ChartAreaIntera
           config={chartConfig}
           className="aspect-auto h-[250px] w-full"
         >
-          <BarChart data={tintedChartData} margin={{ left: -20, right: 12 }}>
+          <BarChart data={tintedChartData} margin={{ left: 8, right: 8 }}>
             <CartesianGrid vertical={false} />
             {futureStartLabel ? (
               <ReferenceArea
@@ -313,6 +304,7 @@ export function ChartAreaInteractive({ metric, onMetricChange }: ChartAreaIntera
               tickLine={false}
               axisLine={false}
               tickMargin={8}
+              padding={{ left: 22, right: 22 }}
               interval={0}
               angle={-45}
               textAnchor="end"
@@ -325,12 +317,6 @@ export function ChartAreaInteractive({ metric, onMetricChange }: ChartAreaIntera
               tickMargin={8}
               width={94}
               tickFormatter={activeMeta.axisTick}
-              label={{
-                value: `${activeMeta.label} (${activeMeta.unit})`,
-                angle: -90,
-                position: "insideLeft",
-                style: { textAnchor: "middle", fill: "hsl(var(--foreground))" },
-              }}
               tick={{ fill: "hsl(var(--foreground))", fontSize: 11 }}
             />
             <ChartTooltip

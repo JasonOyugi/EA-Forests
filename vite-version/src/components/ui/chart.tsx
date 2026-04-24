@@ -102,6 +102,20 @@ ${colorConfig
 
 const ChartTooltip = RechartsPrimitive.Tooltip
 
+type ChartTooltipPayload = {
+  color?: string
+  dataKey?: string | number
+  name?: string
+  value?: number | string
+  payload: Record<string, unknown> & { fill?: string }
+}
+
+type ChartLegendPayload = {
+  color?: string
+  dataKey?: string | number
+  value?: string
+}
+
 function ChartTooltipContent({
   active,
   payload,
@@ -116,8 +130,20 @@ function ChartTooltipContent({
   color,
   nameKey,
   labelKey,
-}: React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
-  React.ComponentProps<"div"> & {
+}: React.ComponentProps<"div"> & {
+    active?: boolean
+    payload?: ChartTooltipPayload[]
+    label?: React.ReactNode
+    labelFormatter?: (label: React.ReactNode, payload?: ChartTooltipPayload[]) => React.ReactNode
+    labelClassName?: string
+    formatter?: (
+      value: number | string,
+      name: string,
+      item: ChartTooltipPayload,
+      index: number,
+      payload: ChartTooltipPayload["payload"]
+    ) => React.ReactNode
+    color?: string
     hideLabel?: boolean
     hideIndicator?: boolean
     indicator?: "line" | "dot" | "dashed"
@@ -254,8 +280,9 @@ function ChartLegendContent({
   payload,
   verticalAlign = "bottom",
   nameKey,
-}: React.ComponentProps<"div"> &
-  Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
+}: React.ComponentProps<"div"> & {
+    payload?: ChartLegendPayload[]
+    verticalAlign?: "top" | "bottom"
     hideIcon?: boolean
     nameKey?: string
   }) {
@@ -273,7 +300,7 @@ function ChartLegendContent({
         className
       )}
     >
-      {payload.map((item) => {
+      {payload.map((item: ChartLegendPayload) => {
         const key = `${nameKey || item.dataKey || "value"}`
         const itemConfig = getPayloadConfigFromPayload(config, item, key)
 
@@ -307,7 +334,7 @@ function getPayloadConfigFromPayload(
   config: ChartConfig,
   payload: unknown,
   key: string
-) {
+): ChartConfig[string] | undefined {
   if (typeof payload !== "object" || payload === null) {
     return undefined
   }

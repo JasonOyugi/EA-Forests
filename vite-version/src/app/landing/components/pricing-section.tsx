@@ -114,7 +114,9 @@ export function PricingSection() {
   )
 
   return (
-    <section id="pricing" className="py-24 sm:py-32 bg-muted/40">
+    <section id="pricing" className="section-map-shell section-map-pricing relative overflow-hidden py-24 sm:py-32 bg-muted/40">
+      <div aria-hidden className="section-map-bg absolute inset-0" />
+      <div aria-hidden className="section-map-tint absolute inset-0" />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-12 max-w-2xl text-center">
           <Badge variant="outline" className="mb-4 border border-emerald-500/40">Plant Now!</Badge>

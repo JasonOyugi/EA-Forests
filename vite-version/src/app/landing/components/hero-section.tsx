@@ -273,7 +273,7 @@ export function HeroSection() {
                   onError={() => setForceHideLoader(true)}
                 />
 
-                <div className="absolute bottom-5 right-5 z-40 rounded-lg bg-red-500/50 px-2 py-1 backdrop-blur-sm">
+                <div className="hero-youtube-badge absolute bottom-5 right-5 z-40 rounded-lg bg-red-500/50 px-2 py-1 backdrop-blur-sm transition-transform duration-300">
                   <a
                     href={videoLabels[currentIndex - 1].url}
                     target="_blank"

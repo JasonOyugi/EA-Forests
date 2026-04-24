@@ -3,6 +3,8 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
+import { Facebook, Globe, Linkedin } from 'lucide-react'
+import { FaWhatsapp } from 'react-icons/fa6'
 
 type Testimonial = {
   name: string
@@ -87,12 +89,41 @@ const testimonials: Testimonial[] = [
 ]
 
 export function TestimonialsSection() {
+  const socialIcons = [
+    {
+      name: 'LinkedIn',
+      Icon: Linkedin,
+      className:
+        'text-[#0A66C2] hover:border-[#0A66C2]/45 hover:bg-[#0A66C2]/12 hover:shadow-[0_0_18px_rgba(10,102,194,0.3)]',
+    },
+    {
+      name: 'WhatsApp',
+      Icon: FaWhatsapp,
+      className:
+        'text-[#25D366] hover:border-[#25D366]/45 hover:bg-[#25D366]/12 hover:shadow-[0_0_18px_rgba(37,211,102,0.32)]',
+    },
+    {
+      name: 'Facebook',
+      Icon: Facebook,
+      className:
+        'text-[#1877F2] hover:border-[#1877F2]/45 hover:bg-[#1877F2]/12 hover:shadow-[0_0_18px_rgba(24,119,242,0.28)]',
+    },
+    {
+      name: 'Website',
+      Icon: Globe,
+      className:
+        'text-emerald-700 hover:border-emerald-500/45 hover:bg-emerald-500/12 hover:shadow-[0_0_18px_rgba(16,185,129,0.28)]',
+    },
+  ] as const
+
   return (
     <section id="testimonials" className="py-24 sm:py-32">
       <div className="container mx-auto px-8 sm:px-6">
         {/* Section Header */}
         <div className="mx-auto max-w-2xl text-center mb-16">
-          <Badge variant="outline" className="mb-4">Testimonials</Badge>
+          <Badge variant="outline" className="mb-4 border border-emerald-500/40" >
+            Testimonials
+          </Badge>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
             Accelerating Forestry In East Africa
           </h2>
@@ -104,8 +135,21 @@ export function TestimonialsSection() {
         {/* Testimonials Masonry Grid */}
         <div className="columns-1 gap-4 md:columns-2 md:gap-6 lg:columns-3 lg:gap-4">
           {testimonials.map((testimonial, index) => (
-            <Card key={index} className="mb-6 break-inside-avoid shadow-none lg:mb-4">
-              <CardContent>
+            <Card key={index} className="group mb-6 break-inside-avoid shadow-none lg:mb-4">
+              <CardContent className="relative">
+                <div className="absolute right-0 top-0 flex items-center gap-2">
+                  {socialIcons.map(({ name, Icon, className }) => (
+                    <button
+                      key={`${testimonial.name}-${name}`}
+                      type="button"
+                      aria-label={name}
+                      className={`testimonial-social-icon inline-flex size-8 items-center justify-center rounded-full border border-border/70 bg-background/85 transition-all duration-300 ${className}`}
+                    >
+                      <Icon className="size-3.5" />
+                    </button>
+                  ))}
+                </div>
+
                 <div className="flex items-start gap-4">
                   <Avatar className="bg-muted size-12 shrink-0">
                     <AvatarImage

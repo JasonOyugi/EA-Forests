@@ -698,12 +698,12 @@ html {
   animation: pulseLimeBorder 1.35s ease-in-out infinite;
 }
 
-/* ─── Running emerald light border for "new" seedlings cards ─── */
+/* --- Running emerald light border for "new" seedlings cards --- */
 @keyframes emerald-spin-border {
   to { transform: rotate(360deg); }
 }
 
-/* ─── Amber pulsating border for forestry services banners ─── */
+/* --- Amber pulsating border for forestry services banners --- */
 @keyframes amber-pulse-border {
   0%, 100% {
     box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.55);
@@ -955,4 +955,117 @@ html {
 
 .uganda-crane-badge {
   animation: ugandaCraneSwap 2.8s ease-in-out infinite;
+}
+
+@keyframes bannerPulseFlagRing {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0.82;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(4.6);
+    opacity: 0;
+  }
+}
+
+.banner-flag-ring {
+  animation: bannerPulseFlagRing 2.2s ease-out infinite;
+}
+
+@keyframes emeraldGlitterSweep {
+  0% {
+    background-position: 0% 50%;
+    filter: drop-shadow(0 0 0 rgba(16, 185, 129, 0));
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: drop-shadow(0 0 12px rgba(52, 211, 153, 0.26));
+  }
+  100% {
+    background-position: 0% 50%;
+    filter: drop-shadow(0 0 0 rgba(16, 185, 129, 0));
+  }
+}
+
+.emerald-glitter-text {
+  background-size: 220% 220%;
+  animation: emeraldGlitterSweep 3.2s ease-in-out infinite;
+}
+
+.testimonial-social-icon:hover,
+.testimonial-social-icon:focus-visible {
+  transform: scale(1.14);
+}
+
+.hero-youtube-badge:hover {
+  transform: scale(1.08);
+}
+
+.dark .hero-map-bg {
+  opacity: 0.24;
+  filter: grayscale(0.72) sepia(0.18) hue-rotate(168deg) saturate(0.7) brightness(0.74) contrast(0.92) invert(0.78);
+}
+
+.dark .landing-hero-shell .hero-map-bg {
+  opacity: 0.28;
+}
+
+.dark .hero-map-tint {
+  background:
+    radial-gradient(circle at top, rgb(16 24 39 / 0.16), transparent 42%),
+    linear-gradient(180deg, rgb(9 14 22 / 0.74) 0%, rgb(12 18 28 / 0.56) 25%, rgb(10 16 24 / 0.78) 100%);
+}
+
+.section-map-shell {
+  isolation: isolate;
+}
+
+.section-map-shell > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.section-map-bg {
+  background-image: url("maps.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  filter: sepia(0.3) saturate(0.75) hue-rotate(-8deg) brightness(1.02) contrast(0.95);
+}
+
+.section-map-tint {
+  background:
+    linear-gradient(180deg, hsl(var(--background) / 0.92), hsl(var(--background) / 0.84)),
+    radial-gradient(circle at top, hsl(var(--background) / 0.16), transparent 55%);
+  pointer-events: none;
+}
+
+.section-map-pricing .section-map-bg { opacity: 0.04; }
+.section-map-blog .section-map-bg { opacity: 0.07; }
+.section-map-cta .section-map-bg { opacity: 0.11; }
+.section-map-footer .section-map-bg { opacity: 0.16; }
+
+.dark .section-map-bg {
+  filter: grayscale(0.56) sepia(0.18) hue-rotate(172deg) saturate(0.68) brightness(0.86) contrast(0.94) invert(0.72);
+}
+
+.dark .section-map-tint {
+  background:
+    linear-gradient(180deg, rgb(10 16 24 / 0.68), rgb(10 16 24 / 0.52)),
+    radial-gradient(circle at top, rgb(16 24 39 / 0.08), transparent 55%);
+}
+
+.dark .section-map-pricing .section-map-bg { opacity: 0.1; }
+.dark .section-map-blog .section-map-bg { opacity: 0.14; }
+.dark .section-map-cta .section-map-bg { opacity: 0.19; }
+.dark .section-map-footer .section-map-bg { opacity: 0.26; }
+
+.motion-paused {
+  animation-play-state: paused;
+}
+
+.group:hover .motion-paused,
+.group:focus-within .motion-paused {
+  animation-play-state: running;
 }

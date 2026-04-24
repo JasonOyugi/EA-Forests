@@ -227,9 +227,9 @@ export function FeaturedSection({
                 quantity={quantities[item.id] || 0}
                 onAdd={onAdd}
                 onDecrement={onDecrement}
-                showVariants={type === "featured"}
+                showVariants={theme === "seedlings" || type === "featured"}
                 compact={compact}
-                showDescription={type !== "featured"}
+                showDescription={theme === "seedlings" || type !== "featured"}
                 theme={theme}
                 pricePulseOnHover={theme === "seedlings" && (type === "featured" || type === "new")}
                 runningBorderOnHover={theme === "seedlings" && type === "new"}
