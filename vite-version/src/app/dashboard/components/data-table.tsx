@@ -70,8 +70,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { compactCurrency, compactNumber } from "./chart-area-interactive"
-
 type TableView = "assets" | "transactions" | "activity-logs" | "documents"
 
 type TreeVariety = "eucalyptus" | "pine" | "cypress" | "teak" | "corymbia"
@@ -147,11 +145,19 @@ function groupAge(g: AssetGroup) {
 }
 
 function formatTableNumber(value: number) {
-  return compactNumber(value)
+  return new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value)
 }
 
 function formatTableCurrency(value: number) {
-  return compactCurrency(value)
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value)
 }
 
 export const speciesProfile: Record<TreeVariety, { volumePerHa: number; pricePerM3: number; investmentPerHa: number; color: string }> = {
@@ -721,7 +727,7 @@ export function DataTable({ activeTab, onActiveTabChange, transactionsHighlightK
                   <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("area")}>Area (ha){sortIndicator("area")}</TableHead>
                   <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("plantedArea")}>Planted (ha){sortIndicator("plantedArea")}</TableHead>
                   <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("age")}>Age (yr){sortIndicator("age")}</TableHead>
-                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("estimatedVolume")}>Estimated Volume (m3){sortIndicator("estimatedVolume")}</TableHead>
+                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("estimatedVolume")}>Estimated Volume (m³){sortIndicator("estimatedVolume")}</TableHead>
                   <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("estimatedValuation")}>Estimated Valuation (USD){sortIndicator("estimatedValuation")}</TableHead>
                   <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("investmentPlaced")}>Investment Placed (USD){sortIndicator("investmentPlaced")}</TableHead>
                   <TableHead>Map</TableHead>

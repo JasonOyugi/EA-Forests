@@ -67,16 +67,16 @@ export function LandingNavbar() {
   }, [])
 
   return (
-    <header className="landing-navbar sticky top-0 z-50 w-full overflow-hidden border-b border-border/70 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
+    <header className="landing-navbar sticky top-0 z-50 w-full overflow-hidden border-b border-transparent bg-transparent backdrop-blur-xl">
       <div
         aria-hidden
         className="navbar-map-bg absolute inset-0 transition-opacity duration-300"
-        style={{ opacity: heroProgress * 0.5 }}
+        style={{ opacity: heroProgress * 0.42 }}
       />
       <div
         aria-hidden
         className="navbar-map-tint absolute inset-0 transition-opacity duration-300"
-        style={{ opacity: 0.45 + heroProgress * 0.3 }}
+        style={{ opacity: 0.06 + heroProgress * 0.34 }}
       />
       <div className="container relative z-10 mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
@@ -247,8 +247,16 @@ export function LandingNavbar() {
                     <Button variant="outline" size="lg" asChild className="cursor-pointer">
                       <a href={getAppUrl("/auth/sign-in")}>Sign In</a>
                     </Button>
-                    <Button asChild size="lg" className="cursor-pointer">
-                      <a href={getAppUrl("/auth/sign-up")}>Get Started</a>
+                    <Button size="lg" className="text-base cursor-pointer" asChild>
+                      <a
+                        href={getAppUrl("/auth/sign-up")}
+                        className="group relative overflow-hidden"
+                      >
+                        <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
+                        <span className="relative z-10 inline-flex items-center group-hover:text-emerald-300">
+                          Get Started Free
+                        </span>
+                      </a>
                     </Button>
                   </div>
                 </div>

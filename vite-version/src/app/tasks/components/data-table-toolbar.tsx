@@ -21,11 +21,13 @@ import type { Task } from "../data/schema"
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
   onAddTask?: (task: Task) => void
+  showCreateTaskAction?: boolean
 }
 
 export function DataTableToolbar<TData>({
   table,
   onAddTask,
+  showCreateTaskAction = true,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
 
@@ -130,12 +132,7 @@ export function DataTableToolbar<TData>({
                   value={priority.value}
                   className="cursor-pointer"
                 >
-                  <div className="flex items-center">
-                    {priority.icon && (
-                      <priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-                    )}
-                    {priority.label}
-                  </div>
+                  <div className="flex items-center">{priority.label}</div>
                 </SelectItem>
               ))}
             </SelectContent>
@@ -166,7 +163,7 @@ export function DataTableToolbar<TData>({
         </div>
         <div className="flex items-center space-x-2">
           <DataTableViewOptions table={table} />
-          <AddTaskModal onAddTask={onAddTask} />
+          {showCreateTaskAction ? <AddTaskModal onAddTask={onAddTask} /> : null}
         </div>
       </div>
     </div>

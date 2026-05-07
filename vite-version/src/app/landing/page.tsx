@@ -5,7 +5,6 @@ import { LandingNavbar } from './components/navbar'
 import { HeroSection } from './components/hero-section'
 import { LogoCarousel } from './components/logo-carousel'
 import { FeaturesSection } from './components/features-section'
-"import { TeamSection } from './components/team-section'"
 import { TestimonialsSection } from './components/testimonials-section'
 import { BlogSection } from './components/blog-section'
 import { PricingSection } from './components/pricing-section'

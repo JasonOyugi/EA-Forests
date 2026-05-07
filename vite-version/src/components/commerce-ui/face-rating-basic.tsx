@@ -8,7 +8,6 @@ import {
   MehIcon,
   SmileIcon,
 } from "lucide-react";
-import * as React from "react";
 
 const DEFAULT_COLORS = {
   angry: "red",

@@ -16,7 +16,11 @@ export function CTASection() {
             <div className='space-y-8'>
               {/* Badge and Stats */}
               <div className='flex flex-col items-center gap-4'>
-                <Badge variant='outline' className='flex items-center gap-2'>
+                <Badge variant='outline' className="badge-emerald-run text-primary rounded-lg px-4 py-2 
+                          border border-emerald-500/40
+                          bg-emerald-400/5
+                          transition-shadow duration-300
+                          shadow-[0_0_22px_rgba(16,185,129,0.35)]">
                   <TrendingUp className='size-3' />
                   Become a trusted member
                 </Badge>
@@ -57,12 +61,15 @@ export function CTASection() {
               {/* CTA Buttons */}
               <div className='flex flex-col justify-center gap-4 sm:flex-row sm:gap-6'>
                 <Button size='lg' className='cursor-pointer px-8 py-6 text-lg font-medium' asChild>
-                  <a href='/auth/sign-up-2' target='_blank' rel='noopener noreferrer'>
-                    <Handshake className='me-2 size-5' />
-                    Become a member
+                  <a href='/auth/sign-up-2' target='_blank' rel='noopener noreferrer' className="group relative overflow-hidden">
+                    <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
+                    <span className="relative z-10 inline-flex items-center group-hover:text-emerald-100">
+                      <Handshake className='me-2 size-5' />
+                      Become a member
+                    </span>  
                   </a>
                 </Button>
-                <Button variant='outline' size='lg' className='cursor-pointer px-8 py-6 text-lg font-medium group' asChild>
+                <Button variant="outline" size="lg" className="px-8 py-6 emerald-border-hover text-base cursor-pointer transition-all duration-300 hover:text-emerald-400 hover:bg-secondary/20 hover:shadow-[0_0_24px_rgba(16,185,129,0.35)]" asChild>
                   <a href='/shop' target='_blank' rel='noopener noreferrer'>
                     <Package className='me-2 size-5' />
                     Browse services

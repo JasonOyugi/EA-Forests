@@ -1,11 +1,38 @@
 "use client"
 
+import { useState } from "react"
+
 import { BentoTilt } from "@/components/ui/bento-tilt"
 
 export function ForestryServicesSaleBanner() {
+  const [isVisible, setIsVisible] = useState(true)
+
+  if (!isVisible) return null
+
   return (
     <BentoTilt className="amber-pulse-on-hover rounded-xl">
       <div className="group relative overflow-hidden rounded-xl">
+        <button
+          className="absolute right-3 top-3 z-20 flex h-7 w-7 items-center justify-center rounded-full border border-white/20 bg-black/25 text-white/85 transition hover:bg-black/45 hover:text-white focus:outline-none"
+          onClick={() => setIsVisible(false)}
+          aria-label="Dismiss"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -14,11 +41,15 @@ export function ForestryServicesSaleBanner() {
           }}
         />
         <div className="absolute inset-0 bg-black/5" />
+        <div className="sale-banner-shape absolute -left-10 top-8 h-28 w-28 rounded-full bg-amber-300/14 blur-sm" />
+        <div className="sale-banner-shape sale-banner-shape-delayed absolute right-12 top-14 h-12 w-12 rotate-12 rounded-2xl bg-white/12" />
+        <div className="sale-banner-shape absolute bottom-8 left-[18%] h-8 w-8 rounded-full bg-orange-200/18" />
+        <div className="sale-banner-shape sale-banner-shape-delayed absolute -bottom-10 right-[14%] h-32 w-32 rounded-full bg-amber-500/12 blur-md" />
 
-        <div className="relative z-10 px-6 py-8 md:px-10">
+        <div className="relative z-10 px-6 py-8 pr-14 md:px-10 md:pr-16">
           <div className="mx-auto max-w-4xl">
             <div className="mb-2 flex items-center justify-center">
-              <div className="service-badge-glow rounded-full bg-amber-500 px-4 py-1 text-sm font-bold uppercase tracking-wider text-white backdrop-blur-sm">
+              <div className="service-badge-glow service-badge-boundary rounded-full bg-amber-500 px-4 py-1 text-sm font-bold uppercase tracking-wider text-white backdrop-blur-sm">
                 Limited Seasonal Offer
               </div>
             </div>
@@ -30,7 +61,7 @@ export function ForestryServicesSaleBanner() {
             <div className="mb-4 flex justify-center">
               <div className="relative">
                 <div className="text-center text-5xl font-bold text-white drop-shadow md:text-6xl">20% OFF</div>
-                <div className="service-badge-glow absolute -right-6 -top-1 rotate-12 rounded-md border-2 border-amber-600 bg-amber-500 px-2 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+                <div className="service-exclusive-badge absolute -right-8 -top-3 z-10 rotate-12 whitespace-nowrap rounded-md border border-amber-200/60 bg-amber-500 px-2.5 py-1 text-[11px] font-semibold tracking-wide text-white shadow-[0_8px_22px_rgba(251,191,36,0.28)] backdrop-blur-sm">
                   EXCLUSIVE
                 </div>
               </div>

@@ -4,17 +4,11 @@ import * as React from "react"
 import {
   LayoutPanelLeft,
   LayoutDashboard,
-  Mail,
-  CheckSquare,
-  MessageCircle,
-  Calendar,
   Shield,
   AlertTriangle,
   Settings,
   HelpCircle,
   CreditCard,
-  LayoutTemplate,
-  Users,
   ShoppingCart
 } from "lucide-react"
 import { Link } from "react-router-dom"
@@ -41,7 +35,7 @@ const data = {
   },
   navGroups: [
     {
-      label: "Dashboards",
+      label: "User Products",
       items: [
         {
           title: "FM Dashboard",
@@ -53,11 +47,6 @@ const data = {
           url: "/dashboard-2",
           icon: LayoutPanelLeft,
         },
-      ],
-    },
-    {
-      label: "Apps",
-      items: [
         {
           title: "Shops",
           url: "#",
@@ -77,42 +66,11 @@ const data = {
             },
           ],
         },
-        {
-          title: "Mail",
-          url: "/mail",
-          icon: Mail,
-        },
-        {
-          title: "Tasks",
-          url: "/tasks",
-          icon: CheckSquare,
-        },
-        {
-          title: "Chat",
-          url: "/chat",
-          icon: MessageCircle,
-        },
-        {
-          title: "Calendar",
-          url: "/calendar",
-          icon: Calendar,
-        },
-        {
-          title: "Users",
-          url: "/users",
-          icon: Users,
-        },
       ],
     },
     {
-      label: "Pages",
+      label: "Back Pages",
       items: [
-        {
-          title: "Landing",
-          url: "/landing",
-          target: "_blank",
-          icon: LayoutTemplate,
-        },
         {
           title: "Auth Pages",
           url: "#",
@@ -242,7 +200,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">EA Forests</span>
-                  <span className="truncate text-xs">Dashboards</span>
+                  <span className="truncate text-xs">Services</span>
                 </div>
               </Link>
             </SidebarMenuButton>

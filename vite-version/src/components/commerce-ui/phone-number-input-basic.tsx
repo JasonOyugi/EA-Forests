@@ -20,12 +20,9 @@ import { cn } from "@/lib/utils";
 import { CheckIcon, ChevronsUpDown } from "lucide-react";
 import * as React from "react";
 import RPNInput, {
-  Props,
-  Value,
-  Country,
-  FlagProps,
   getCountryCallingCode,
 } from "react-phone-number-input";
+import type { Country, FlagProps, Props, Value } from "react-phone-number-input";
 import flags from "react-phone-number-input/flags";
 
 type PhoneInputProps = Omit<

@@ -8,7 +8,6 @@ import {
   MehIcon,
   SmileIcon,
 } from "lucide-react";
-import * as React from "react";
 import tinycolor from "tinycolor2";
 
 interface FaceRatingGradientProps {

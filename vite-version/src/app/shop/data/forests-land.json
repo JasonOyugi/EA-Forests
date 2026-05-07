@@ -10,9 +10,9 @@
     "price": 2000,
     "currency": "USD",
     "description": "Conventional, professionally structured forestry investments with proven species, clear rotation planning, and conservative underwriting for first-time investors.",
-    "image": "/forest.webp",
+    "image": "/eucalyptus.jpg",
     "imageGallery": [
-      { "url": "/forest.webp", "title": "Core forests overview" },
+      { "url": "https://i.pinimg.com/1200x/33/24/af/3324af132934c56eeeade5bf6026e0bf.jpg", "title": "Core forests overview" },
       { "url": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80", "title": "Managed plantation block" },
       { "url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80", "title": "Field access and management lanes" }
     ],

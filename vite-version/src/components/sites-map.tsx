@@ -4,7 +4,12 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"
 import L from "leaflet"
 
 // Fix default icon issue
-delete (L.Icon.Default.prototype as any)._getIconUrl
+type LeafletDefaultIconPrototype = typeof L.Icon.Default.prototype & {
+  _getIconUrl?: string
+}
+
+const defaultIconPrototype = L.Icon.Default.prototype as LeafletDefaultIconPrototype
+delete defaultIconPrototype._getIconUrl
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",

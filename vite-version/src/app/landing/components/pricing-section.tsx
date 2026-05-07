@@ -1,11 +1,12 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState, type WheelEvent } from "react"
 import useEmblaCarousel from "embla-carousel-react"
 import { Check, ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { BentoTilt } from "@/components/ui/bento-tilt"
 import { cn } from "@/lib/utils"
 
 const plans = [
@@ -67,6 +68,9 @@ export function PricingSection() {
   const [isYearly, setIsYearly] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(1)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const wheelDeltaRef = useRef(0)
+  const wheelCooldownRef = useRef(false)
+  const wheelResetTimerRef = useRef<number | null>(null)
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: "center",
@@ -113,14 +117,47 @@ export function PricingSection() {
     [selectedIndex]
   )
 
+  const handleWheel = (event: WheelEvent<HTMLDivElement>) => {
+    if (!emblaApi) return
+
+    const dominantDelta = Math.abs(event.deltaY) > Math.abs(event.deltaX) ? event.deltaY : event.deltaX
+    if (Math.abs(dominantDelta) < 16) return
+
+    event.preventDefault()
+    if (wheelCooldownRef.current) return
+
+    wheelDeltaRef.current += dominantDelta
+    if (wheelResetTimerRef.current !== null) {
+      window.clearTimeout(wheelResetTimerRef.current)
+    }
+    wheelResetTimerRef.current = window.setTimeout(() => {
+      wheelDeltaRef.current = 0
+      wheelResetTimerRef.current = null
+    }, 140)
+
+    if (Math.abs(wheelDeltaRef.current) < 120) return
+
+    if (wheelDeltaRef.current > 0) {
+      emblaApi.scrollNext()
+    } else {
+      emblaApi.scrollPrev()
+    }
+
+    wheelDeltaRef.current = 0
+    wheelCooldownRef.current = true
+    window.setTimeout(() => {
+      wheelCooldownRef.current = false
+    }, 320)
+  }
+
   return (
     <section id="pricing" className="section-map-shell section-map-pricing relative overflow-hidden py-24 sm:py-32 bg-muted/40">
       <div aria-hidden className="section-map-bg absolute inset-0" />
       <div aria-hidden className="section-map-tint absolute inset-0" />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto mb-12 max-w-2xl text-center">
-          <Badge variant="outline" className="mb-4 border border-emerald-500/40">Plant Now!</Badge>
-          <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
+          <Badge variant="outline" className="mb-4 text-primary border border-emerald-500/40">Plant Now!</Badge>
+          <h2 className="mb-4 text-primary font-bold tracking-tight sm:text-4xl">
             Choose your forest
           </h2>
           <p className="mb-8 text-lg text-muted-foreground">
@@ -156,10 +193,10 @@ export function PricingSection() {
 
         <div className="mx-auto max-w-7xl">
           <div className="relative">
-            <div className="pointer-events-none absolute inset-y-10 left-0 z-10 hidden w-20 bg-gradient-to-r from-muted/80 to-transparent lg:block" />
-            <div className="pointer-events-none absolute inset-y-10 right-0 z-10 hidden w-20 bg-gradient-to-l from-muted/80 to-transparent lg:block" />
+            <div className="pointer-events-none absolute inset-y-5 left-0 z-10 hidden w-20 bg-gradient-to-r from-muted/80 to-transparent lg:block" />
+            <div className="pointer-events-none absolute inset-y-5 right-0 z-10 hidden w-20 bg-gradient-to-l from-muted/80 to-transparent lg:block" />
 
-            <div ref={emblaRef} className="overflow-hidden px-2 py-4">
+            <div ref={emblaRef} className="overflow-hidden px-2 py-4" onWheel={handleWheel}>
               <div className="-ml-4 flex touch-pan-y [perspective:1400px]">
                 {plans.map((plan, index) => {
                   const isActive = index === selectedIndex
@@ -171,93 +208,95 @@ export function PricingSection() {
                       key={plan.name}
                       className="min-w-0 flex-[0_0_88%] pl-4 sm:flex-[0_0_68%] lg:flex-[0_0_38%]"
                     >
-                      <div
-                        className={cn(
-                          "pricing-carousel-card group grid h-full cursor-pointer grid-rows-[auto_auto_auto_1fr] gap-4 rounded-[28px] border bg-card p-6 shadow-sm",
-                          isActive
-                            ? "is-active border-emerald-400/60 bg-card"
-                            : "border-border/70 bg-card/90",
-                          !isActive && "opacity-75"
-                        )}
-                        style={{
-                          transform: cardTransforms[index],
-                        }}
-                        onClick={() => emblaApi?.scrollTo(index)}
-                        onMouseEnter={() => setHoveredIndex(index)}
-                        onMouseLeave={() => setHoveredIndex((current) => (current === index ? null : current))}
-                        role="button"
-                        tabIndex={0}
-                        onKeyDown={(event) => {
-                          if (event.key === "Enter" || event.key === " ") {
-                            event.preventDefault()
-                            emblaApi?.scrollTo(index)
-                          }
-                        }}
-                      >
-                        <div className="space-y-3">
-                          <div
-                            className={cn(
-                              "relative overflow-hidden rounded-2xl ring-1",
-                              showEmeraldState ? "ring-emerald-400/35" : "ring-foreground/10"
-                            )}
-                          >
-                            <div className="h-24 w-full">
-                              <img
-                                src={plan.image.src}
-                                alt={plan.image.alt}
-                                className="h-full w-full object-cover"
-                                loading="lazy"
-                                decoding="async"
-                              />
+                      <BentoTilt className="h-full">
+                        <div
+                          className={cn(
+                            "pricing-carousel-card group grid h-full cursor-pointer grid-rows-[auto_auto_auto_1fr] gap-4 rounded-[28px] border bg-card p-6 shadow-sm",
+                            isActive
+                              ? "is-active border-emerald-400/60 bg-card"
+                              : "border-border/70 bg-card/90",
+                            !isActive && "opacity-75"
+                          )}
+                          style={{
+                            transform: cardTransforms[index],
+                          }}
+                          onClick={() => emblaApi?.scrollTo(index)}
+                          onMouseEnter={() => setHoveredIndex(index)}
+                          onMouseLeave={() => setHoveredIndex((current) => (current === index ? null : current))}
+                          role="button"
+                          tabIndex={0}
+                          onKeyDown={(event) => {
+                            if (event.key === "Enter" || event.key === " ") {
+                              event.preventDefault()
+                              emblaApi?.scrollTo(index)
+                            }
+                          }}
+                        >
+                          <div className="space-y-3">
+                            <div
+                              className={cn(
+                                "relative overflow-hidden rounded-2xl ring-1",
+                                showEmeraldState ? "ring-emerald-400/35" : "ring-foreground/10"
+                              )}
+                            >
+                              <div className="h-24 w-full">
+                                <img
+                                  src={plan.image.src}
+                                  alt={plan.image.alt}
+                                  className="h-full w-full object-cover"
+                                  loading="lazy"
+                                  decoding="async"
+                                />
+                              </div>
+                              <div className="absolute inset-0 bg-gradient-to-t from-background/35 via-transparent to-transparent" />
                             </div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-background/35 via-transparent to-transparent" />
+
+                            <div>
+                              <div className="mb-1 text-lg font-medium tracking-tight">
+                                {plan.name}
+                              </div>
+                              <div className="text-balance text-sm text-muted-foreground line-clamp-2">
+                                {plan.description}
+                              </div>
+                            </div>
                           </div>
 
                           <div>
-                            <div className="mb-1 text-lg font-medium tracking-tight">
-                              {plan.name}
+                            <div className={cn("pricing-price pricing-cta-hover mb-1 text-4xl font-bold transition-all duration-300")}>
+                              {displayedPrice}
                             </div>
-                            <div className="text-balance text-sm text-muted-foreground line-clamp-2">
-                              {plan.description}
+                            <div className="text-sm text-muted-foreground">
+                              {plan.monthlyPrice === 0 ? "Tailored structure" : isYearly ? "Per year" : "Per month"}
                             </div>
                           </div>
-                        </div>
 
-                        <div>
-                          <div className={cn("pricing-price pricing-cta-hover mb-1 text-4xl font-bold transition-all duration-300")}>
-                            {displayedPrice}
+                          <div>
+                            <Button
+                              className={cn(
+                                "w-full cursor-pointer my-1",
+                                showEmeraldState ? "emerald-border-active" : "emerald-border-hover",
+                                showEmeraldState
+                                  ? "border-[0.5px] border-white/25 bg-primary text-primary-foreground shadow-md shadow-black/20 ring-1 ring-primary/15 hover:bg-primary/90"
+                                  : "border border-transparent bg-secondary shadow-sm shadow-black/15 ring-1 ring-foreground/10 hover:bg-muted/50"
+                              )}
+                              variant={showEmeraldState ? "default" : "secondary"}
+                            >
+                              {plan.cta}
+                            </Button>
                           </div>
-                          <div className="text-sm text-muted-foreground">
-                            {plan.monthlyPrice === 0 ? "Tailored structure" : isYearly ? "Per year" : "Per month"}
+
+                          <div>
+                            <ul role="list" className="space-y-2 text-sm">
+                              {plan.features.map((feature) => (
+                                <li key={feature} className="flex items-start gap-3">
+                                  <Check className="mt-0.5 size-4 shrink-0 text-muted-foreground" strokeWidth={2.5} />
+                                  <span className="leading-5">{feature}</span>
+                                </li>
+                              ))}
+                            </ul>
                           </div>
                         </div>
-
-                        <div>
-                          <Button
-                            className={cn(
-                              "w-full cursor-pointer my-1",
-                              showEmeraldState ? "emerald-border-active" : "emerald-border-hover",
-                              showEmeraldState
-                                ? "border-[0.5px] border-white/25 bg-primary text-primary-foreground shadow-md shadow-black/20 ring-1 ring-primary/15 hover:bg-primary/90"
-                                : "border border-transparent bg-background shadow-sm shadow-black/15 ring-1 ring-foreground/10 hover:bg-muted/50"
-                            )}
-                            variant={showEmeraldState ? "default" : "secondary"}
-                          >
-                            {plan.cta}
-                          </Button>
-                        </div>
-
-                        <div>
-                          <ul role="list" className="space-y-2 text-sm">
-                            {plan.features.map((feature) => (
-                              <li key={feature} className="flex items-start gap-3">
-                                <Check className="mt-0.5 size-4 shrink-0 text-muted-foreground" strokeWidth={2.5} />
-                                <span className="leading-5">{feature}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
+                      </BentoTilt>
                     </div>
                   )
                 })}

@@ -22,12 +22,12 @@ export function SeedlingsShop({ shop, inventory }: SeedlingsShopProps) {
       featuredTitle="Featured Products"
       featuredSubtitle="Handpicked selections for quality and reliability"
       featuredTheme="seedlings"
-      featuredSectionClassName="border border-emerald-200 bg-emerald-50/75 rounded-xl"
+      featuredSectionClassName="border border-emerald-100 bg-secondary/50 rounded-xl"
       newItems={newItems}
       newTitle="New Arrivals"
       newSubtitle="Latest additions to our catalog"
       newTheme="seedlings"
-      newSectionClassName="border border-emerald-400 bg-emerald-100 rounded-xl"
+      newSectionClassName="border border-emerald-400 bg-secondary/100 rounded-xl"
       showNewArrivals={true}
     />
   )

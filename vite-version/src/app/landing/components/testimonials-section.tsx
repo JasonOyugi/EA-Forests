@@ -1,10 +1,14 @@
 "use client"
 
+import { useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
-import { Facebook, Globe, Linkedin } from 'lucide-react'
+import { Facebook, Globe, Linkedin, Phone } from 'lucide-react'
 import { FaWhatsapp } from 'react-icons/fa6'
+import { cn } from '@/lib/utils'
+import { Button } from "@/components/ui/button"
+import { BentoTilt } from '@/components/ui/bento-tilt'
 
 type Testimonial = {
   name: string
@@ -89,6 +93,8 @@ const testimonials: Testimonial[] = [
 ]
 
 export function TestimonialsSection() {
+  const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null)
+
   const socialIcons = [
     {
       name: 'LinkedIn',
@@ -121,7 +127,7 @@ export function TestimonialsSection() {
       <div className="container mx-auto px-8 sm:px-6">
         {/* Section Header */}
         <div className="mx-auto max-w-2xl text-center mb-16">
-          <Badge variant="outline" className="mb-4 border border-emerald-500/40" >
+          <Badge variant="outline" className="mb-4 text-primary border border-emerald-500/40" >
             Testimonials
           </Badge>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
@@ -135,53 +141,79 @@ export function TestimonialsSection() {
         {/* Testimonials Masonry Grid */}
         <div className="columns-1 gap-4 md:columns-2 md:gap-6 lg:columns-3 lg:gap-4">
           {testimonials.map((testimonial, index) => (
-            <Card key={index} className="group mb-6 break-inside-avoid shadow-none lg:mb-4">
-              <CardContent className="relative">
-                <div className="absolute right-0 top-0 flex items-center gap-2">
-                  {socialIcons.map(({ name, Icon, className }) => (
-                    <button
-                      key={`${testimonial.name}-${name}`}
-                      type="button"
-                      aria-label={name}
-                      className={`testimonial-social-icon inline-flex size-8 items-center justify-center rounded-full border border-border/70 bg-background/85 transition-all duration-300 ${className}`}
-                    >
-                      <Icon className="size-3.5" />
-                    </button>
-                  ))}
-                </div>
+            <BentoTilt key={index} className="mb-6 break-inside-avoid lg:mb-4">
+              <Card className="group shadow-none">
+                <CardContent className="relative">
+                  <div className="absolute right-2 top-2 z-10">
+                    <div className="group/social relative flex flex-col items-end gap-2">
+                      <Button
+                        type="button"
+                        aria-label={openMenuIndex === index ? 'Hide contact options' : 'Show contact options'}
+                        aria-expanded={openMenuIndex === index}
+                        onClick={() => setOpenMenuIndex(current => (current === index ? null : index))}
+                        className={cn(
+                          'testimonial-social-icon inline-flex size-8 items-center rounded-full border border-emerald-500/30 bg-background/90 text-emerald-700 shadow-sm transition-all duration-300 hover:border-emerald-500/45 hover:bg-emerald-500/12 hover:shadow-[0_0_18px_rgba(16,185,129,0.25)]',
+                          openMenuIndex === index && 'border-emerald-500/55 bg-emerald-500/12 shadow-[0_0_18px_rgba(16,185,129,0.25)]'
+                        )}
+                      >
+                        <Phone className="size-3" />
+                      </Button>
 
-                <div className="flex items-start gap-4">
-                  <Avatar className="bg-muted size-12 shrink-0">
-                    <AvatarImage
-                      alt={testimonial.name}
-                      src={testimonial.image}
-                      loading="lazy"
-                      width="120"
-                      height="120"
-                    />
-                    <AvatarFallback>
-                      {testimonial.name
-                        .split(' ')
-                        .map(n => n[0])
-                        .join('')}
-                    </AvatarFallback>
-                  </Avatar>
-
-                  <div className="min-w-0 flex-1">
-                    <a href="#" onClick={e => e.preventDefault()} className="cursor-pointer">
-                      <h3 className="font-medium hover:text-primary transition-colors">{testimonial.name}</h3>
-                    </a>
-                    <span className="text-muted-foreground block text-sm tracking-wide">
-                      {testimonial.role}
-                    </span>
+                      <div
+                        className={cn(
+                          'flex flex-col items-end gap-2 transition-all duration-300',
+                          openMenuIndex === index
+                            ? 'pointer-events-auto translate-y-0 opacity-100'
+                            : 'pointer-events-none -translate-y-2 opacity-0 group-hover/social:pointer-events-auto group-hover/social:translate-y-0 group-hover/social:opacity-100'
+                        )}
+                      >
+                        {socialIcons.map(({ name, Icon, className }) => (
+                          <button
+                            key={`${testimonial.name}-${name}`}
+                            type="button"
+                            aria-label={name}
+                            className={`testimonial-social-icon inline-flex size-8 items-center justify-center rounded-full border border-border/70 bg-background/85 transition-all duration-300 ${className}`}
+                          >
+                            <Icon className="size-3.5" />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                </div>
 
-                <blockquote className="mt-4">
-                  <p className="text-sm leading-relaxed text-balance">{testimonial.quote}</p>
-                </blockquote>
-              </CardContent>
-            </Card>
+                  <div className="flex items-start gap-4">
+                    <Avatar className="bg-muted size-12 shrink-0">
+                      <AvatarImage
+                        alt={testimonial.name}
+                        src={testimonial.image}
+                        loading="lazy"
+                        width="120"
+                        height="120"
+                      />
+                      <AvatarFallback>
+                        {testimonial.name
+                          .split(' ')
+                          .map(n => n[0])
+                          .join('')}
+                      </AvatarFallback>
+                    </Avatar>
+
+                    <div className="min-w-0 flex-1">
+                      <a href="#" onClick={e => e.preventDefault()} className="cursor-pointer">
+                        <h3 className="font-medium hover:text-primary transition-colors">{testimonial.name}</h3>
+                      </a>
+                      <span className="text-muted-foreground block text-sm tracking-wide">
+                        {testimonial.role}
+                      </span>
+                    </div>
+                  </div>
+
+                  <blockquote className="mt-4">
+                    <p className="text-sm leading-relaxed text-balance">{testimonial.quote}</p>
+                  </blockquote>
+                </CardContent>
+              </Card>
+            </BentoTilt>
           ))}
         </div>
       </div>

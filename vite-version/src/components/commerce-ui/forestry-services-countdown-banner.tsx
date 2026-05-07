@@ -6,6 +6,7 @@ import { ArrowRight, BadgePercent } from "lucide-react"
 import { BentoTilt } from "@/components/ui/bento-tilt"
 
 export function ForestryServicesCountdownBanner() {
+  const [isVisible, setIsVisible] = useState(true)
   const [timeLeft, setTimeLeft] = useState({ days: 44, hours: 0, minutes: 0, seconds: 0 })
 
   useEffect(() => {
@@ -36,16 +37,39 @@ export function ForestryServicesCountdownBanner() {
   const mm = String(timeLeft.minutes).padStart(2, "0")
   const ss = String(timeLeft.seconds).padStart(2, "0")
 
+  if (!isVisible) return null
+
   return (
     <BentoTilt className="rounded-xl">
       <div className="countdown-run-border relative overflow-hidden rounded-xl bg-gradient-to-r from-amber-700 via-orange-600 to-emerald-600 p-[2px]">
         <div className="relative overflow-hidden rounded-[calc(theme(borderRadius.xl)-2px)] bg-white p-6 dark:bg-gray-900">
+          <button
+            className="absolute right-3 top-3 z-20 flex h-7 w-7 items-center justify-center rounded-full border border-black/10 bg-white/85 text-gray-700 transition hover:bg-white hover:text-gray-900 focus:outline-none dark:border-white/10 dark:bg-gray-900/85 dark:text-gray-200 dark:hover:bg-gray-900 dark:hover:text-white"
+            onClick={() => setIsVisible(false)}
+            aria-label="Dismiss"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+
           <div className="countdown-ornament absolute -right-6 -top-6 h-24 w-24 rounded-full bg-orange-400 opacity-10" />
           <div className="countdown-ornament absolute -bottom-8 -left-8 h-32 w-32 rounded-full bg-emerald-500 opacity-10" />
           <div className="countdown-ornament absolute right-8 top-8 h-4 w-4 rotate-45 bg-amber-500/20" />
           <div className="countdown-ornament absolute bottom-10 right-1/4 h-6 w-6 rounded-full bg-orange-500/15" />
 
-          <div className="relative flex flex-col items-center justify-between gap-6 md:flex-row">
+          <div className="relative flex flex-col items-center justify-between gap-6 pr-8 md:flex-row md:pr-10">
             <div className="flex-shrink-0">
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg">
                 <BadgePercent className="h-8 w-8" />

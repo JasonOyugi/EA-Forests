@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group";
 
 import { cn } from "@/lib/utils";

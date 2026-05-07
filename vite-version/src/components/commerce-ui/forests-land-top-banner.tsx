@@ -9,7 +9,7 @@ interface ForestsLandTopBannerProps {
 }
 
 export function ForestsLandTopBanner({
-  rightIconSrc = "/crested-crane.jpg",
+  rightIconSrc = "https://images.seeklogo.com/logo-png/55/1/uganda-government-crested-crane-logo-png_seeklogo-556491.png",
   rightIconAlt = "Crested crane",
 }: ForestsLandTopBannerProps) {
   const [isVisible, setIsVisible] = useState(true)
@@ -19,6 +19,27 @@ export function ForestsLandTopBanner({
   return (
     <BentoTilt>
       <div className="group uganda-banner relative overflow-hidden rounded-xl border border-white/10 bg-black px-4 py-3 shadow-md">
+        <button
+          className="absolute right-3 top-3 z-20 flex h-7 w-7 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white/85 transition hover:bg-black/55 hover:text-white focus:outline-none"
+          onClick={() => setIsVisible(false)}
+          aria-label="Dismiss"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+
         <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
           <div className="uganda-banner-boundary absolute inset-0 rounded-xl" />
           <div className="absolute -inset-[2px] rounded-xl bg-[linear-gradient(90deg,#111111_0%,#facc15_50%,#dc2626_100%)] opacity-25 blur-xl" />
@@ -52,7 +73,7 @@ export function ForestsLandTopBanner({
           </div>
         </div>
 
-        <div className="relative z-10 flex items-center justify-between gap-3 pr-0 sm:pr-24">
+        <div className="relative z-10 flex items-center justify-between gap-3 pr-8 sm:pr-24">
           <div className="flex flex-1 items-center justify-center text-center sm:justify-start sm:text-left">
             <div className="hidden sm:block">
               <svg
@@ -83,7 +104,7 @@ export function ForestsLandTopBanner({
             </div>
 
             <p className="flex items-center text-sm font-medium text-white">
-              <span className="mr-2 rounded-full bg-black px-2 py-0.5 text-xs font-bold uganda-badge">
+              <span className="mr-2 rounded-full bg-black px-2 py-0.5 text-xs font-bold uganda-badge uganda-badge-glow">
                 NEW
               </span>
               <span>
@@ -102,26 +123,6 @@ export function ForestsLandTopBanner({
             </p>
           </div>
 
-          <button
-            className="ml-3 flex-shrink-0 text-white focus:outline-none"
-            onClick={() => setIsVisible(false)}
-            aria-label="Dismiss"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
         </div>
       </div>
     </BentoTilt>

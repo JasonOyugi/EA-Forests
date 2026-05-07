@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react"
 import { createPortal } from "react-dom"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -36,13 +35,7 @@ export function FloatingCart({
   onCheckout,
   onClear,
 }: FloatingCartProps) {
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) return null
+  if (typeof document === "undefined") return null
 
   return createPortal(
     <div className="fixed z-[80] bottom-24 right-4 md:right-6 lg:right-8 flex flex-col items-end gap-2">

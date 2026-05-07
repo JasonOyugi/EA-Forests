@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
-import { ScrollTrigger } from "gsap/all"
 import { AiFillYoutube } from "react-icons/ai";
 import { ArrowRight, Play, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -11,8 +10,6 @@ import { Badge } from "@/components/ui/badge"
 import VideoPreview from "@/components/VideoPreview"
 import { DotPattern } from "@/components/dot-pattern"
 import { getAppUrl } from "@/lib/utils"
-
-gsap.registerPlugin(ScrollTrigger)
 
 export function HeroSection() {
   const totalVideos = 4
@@ -104,33 +101,6 @@ export function HeroSection() {
   )
 
   // ✅ SCROLL MORPH — scoped and safe
-  useGSAP(
-    () => {
-      const root = rootRef.current
-      if (!root) return
-
-      const frame = root.querySelector<HTMLElement>('[data-video-frame="true"]')
-      if (!frame) return
-
-      gsap.set(frame, {
-        clipPath: "polygon(14% 0, 72% 0, 88% 90%, 0 95%)",
-        borderRadius: "0% 0% 40% 10%",
-      })
-
-      gsap.from(frame, {
-        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-        borderRadius: "0% 0% 0% 0%",
-        ease: "power1.inOut",
-        scrollTrigger: {
-          trigger: frame,
-          start: "center center",
-          end: "bottom center",
-          scrub: true,
-        },
-      })
-    },
-    { scope: rootRef }
-  )
   return (
     <section
       id="hero"
@@ -144,42 +114,45 @@ export function HeroSection() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="mx-auto max-w-4xl text-center">
-          <div className="mb-8 flex justify-center">
-            <a href="/shop/seedlings#featured-products" className="inline-flex">
+          <div className="landing-fade-up landing-delay-1 mb-8 flex justify-center">
+            <a href="/shop/seedlings#featured-products" className="group inline-flex">
               <Badge
                 variant="outline"
-                className="badge-emerald-run rounded-lg px-4 py-2 border border-emerald-500/40
+                className="badge-emerald-run text-primary rounded-lg px-4 py-2 
+                          border border-emerald-500/40
                           bg-transparent hover:bg-emerald-400/5
                           transition-shadow duration-300
                           hover:shadow-[0_0_22px_rgba(16,185,129,0.35)]"
               >
-                <Star className="w-3 h-3 mr-2 fill-current" />
+                <span className="hero-badge-star-shell mr-2 inline-flex size-5 items-center justify-center rounded-full">
+                  <Star className="h-3 w-3 fill-current" />
+                </span>
                 New: Pine Hybrids in stock!!
-                <ArrowRight className="w-3 h-3 ml-2" />
+                <ArrowRight className="ml-2 h-3 w-3 transition-transform duration-300 group-hover:translate-x-1" />
               </Badge>
             </a>
           </div>
 
-          <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
+          <h1 className="landing-fade-up landing-delay-2 mb-6 font-bold tracking-tight sm:text-6xl lg:text-7xl">
             Profit From Forestry in{" "}
-            <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+            <span className='emerald-glitter-text bg-gradient-to-r from-emerald-300 via-emerald-500 to-emerald-200 bg-clip-text text-transparent'>
               East Africa
             </span>{" "}
             Today
           </h1>
 
-          <p className="mx-auto mb-10 max-w-2xl text-lg text-muted-foreground sm:text-xl">
+          <p className="landing-fade-up landing-delay-3 mx-auto mb-10 max-w-2xl text-lg text-muted-foreground sm:text-xl">
             From nurseries to building with timber, start generating cash from East African forestry now!
           </p>
 
-          <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
+          <div className="landing-fade-up landing-delay-4 flex flex-col gap-4 sm:flex-row sm:justify-center">
             <Button size="lg" className="text-base cursor-pointer" asChild>
               <a
                 href={getAppUrl("/auth/sign-up")}
                 className="group relative overflow-hidden"
               >
                 <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
-                <span className="relative z-10 inline-flex items-center group-hover:text-emerald-300">
+                <span className="relative z-10 inline-flex items-center group-hover:text-emerald-100">
                   Get Started Free
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
@@ -193,18 +166,19 @@ export function HeroSection() {
               className="emerald-border-hover text-base cursor-pointer
                         transition-all duration-300
                         hover:text-emerald-400
+                        hover:bg-secondary/20
                         hover:shadow-[0_0_24px_rgba(16,185,129,0.35)]"
             >
               <a href="#pricing">
                 <Play className="mr-2 h-4 w-4" />
-                Plant Commercial Forest
+                Plant A Commercial Forest
               </a>
             </Button>
           </div>
         </div>
 
         {/* HERO VISUAL */}
-        <div className="mx-auto mt-20 max-w-6xl">
+        <div className="landing-video-reveal mx-auto mt-20 max-w-6xl">
           <div ref={rootRef} className="relative group [perspective:1200px]">
             <div className="absolute top-2 lg:-top-8 left-1/2 -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-80 bg-primary/50 rounded-full blur-3xl" />
 

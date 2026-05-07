@@ -9,7 +9,7 @@ interface ShopSectionHeaderProps {
   }: ShopSectionHeaderProps) {
     return (
       <div className="flex flex-col gap-1">
-        <h3 className="text-xl font-semibold tracking-tight">{title}</h3>
+        <h3 className="text-primary font-semibold tracking-tight">{title}</h3>
         <p className="text-sm text-muted-foreground">{description}</p>
       </div>
     )

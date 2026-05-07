@@ -4,16 +4,35 @@ import * as React from "react"
 import { BaseLayout } from "@/components/layouts/base-layout"
 import {
   ChartAreaInteractive,
-  compactCurrency,
-  compactNumber,
   generatePortfolioSeries,
   portfolioSeriesReferenceDate,
 } from "./components/chart-area-interactive"
 import { DataTable, groupPlantedSize, groupSize, initialAssetGroups, upcomingPayments } from "./components/data-table"
 import { SectionCards } from "./components/section-cards"
+import { SpeciesAllocation } from "./components/species-allocation"
 import type { MetricKey } from "./components/chart-area-interactive"
 
 export default function Page() {
+  const formatCurrencyExact = React.useCallback(
+    (value: number) =>
+      new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(value),
+    []
+  )
+
+  const formatNumberExact = React.useCallback(
+    (value: number) =>
+      new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(value),
+    []
+  )
+
   const chartRef = React.useRef<HTMLDivElement | null>(null)
   const tableRef = React.useRef<HTMLDivElement | null>(null)
   const [metric, setMetric] = React.useState<MetricKey>("portfolioValue")
@@ -88,25 +107,26 @@ export default function Page() {
         <SectionCards
           onMetricCardClick={handleMetricCardClick}
           onPaymentsCardClick={handlePaymentsCardClick}
-          portfolioValue={compactCurrency(portfolioPoint?.portfolioValue ?? 0)}
+          portfolioValue={formatCurrencyExact(portfolioPoint?.portfolioValue ?? 0)}
           portfolioTrendLabel={portfolioTrend.label}
           portfolioTrendUp={portfolioTrend.isUp}
           portfolioSummary={`Estimated valuation of ${plantedAreaLabel} ha planted and ${acquiredAreaLabel} ha acquired`}
-          landManaged={`${compactNumber(landPoint?.landManaged ?? 0)} ha`}
+          landManaged={`${formatNumberExact(landPoint?.landManaged ?? 0)} ha`}
           landTrendLabel={landTrend.label}
           landTrendUp={landTrend.isUp}
           landSummary={`Managed footprint across Uganda, Kenya, and Tanzania`}
-          estimatedVolume={`${compactNumber(landPoint?.expectedVolume ?? 0)} m3`}
+          estimatedVolume={`${formatNumberExact(landPoint?.expectedVolume ?? 0)} m³`}
           volumeTrendLabel={volumeTrend.label}
           volumeTrendUp={volumeTrend.isUp}
           volumeSummary={`Standing timber estimate at ${landPoint?.label ?? "current horizon"} across planted blocks`}
-          pendingPayments={compactCurrency(pendingTotals.amount)}
+          pendingPayments={formatCurrencyExact(pendingTotals.amount)}
           pendingInvoicesLabel={`${pendingTotals.count} invoices`}
           pendingSummary={`Scheduled contractor and operations payments awaiting release`}
         />
         <div ref={chartRef} id="portfolio-summary-chart">
           <ChartAreaInteractive metric={metric} onMetricChange={setMetric} />
         </div>
+        <SpeciesAllocation />
       </div>
       <div ref={tableRef} className="@container/main" id="dashboard-data-table">
         <DataTable

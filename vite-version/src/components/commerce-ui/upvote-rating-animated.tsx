@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 import { ArrowBigDown, ArrowBigUp } from "lucide-react";
-import * as React from "react";
 import NumberFlow from "@number-flow/react";
 
 const UPVOTE_COLOR = "bg-[#ff4500]";

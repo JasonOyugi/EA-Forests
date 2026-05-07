@@ -72,11 +72,12 @@ export function EnhancedProductCard({
   const compactHighlights = item.highlights?.slice(0, compact ? 2 : 3) ?? []
   const featuredStyleCard = theme === "seedlings" && compact
   const gridVariantShade = (variantId: string) => {
-    if (theme !== "seedlings") return "border-black bg-transparent text-slate-700 hover:border-slate-500"
-    if (variantId === "small") return "border-black bg-transparent text-slate-900 hover:border-emerald-400 hover:text-emerald-900 hover:shadow-[0_0_0_3px_rgba(52,211,153,0.18)]"
-    if (variantId === "medium") return "border-black bg-transparent text-slate-900 hover:border-emerald-500 hover:text-emerald-950 hover:shadow-[0_0_0_3px_rgba(16,185,129,0.2)]"
-    if (variantId === "large") return "border-black bg-transparent text-slate-900 hover:border-emerald-700 hover:text-emerald-950 hover:shadow-[0_0_0_3px_rgba(4,120,87,0.22)]"
-    return "border-black bg-transparent text-slate-900 hover:border-emerald-500 hover:text-emerald-950 hover:shadow-[0_0_0_3px_rgba(16,185,129,0.2)]"
+    if (theme !== "seedlings") return "border-white bg-transparent text-white hover:border-slate-500"
+    if (variantId === "small") return "border-white bg-transparent text-white hover:border-emerald-400 hover:text-emerald-900 hover:shadow-[0_0_0_3px_rgba(52,211,153,0.18)]"
+    if (variantId === "medium") return "border-white bg-transparent text-white hover:border-emerald-500 hover:text-emerald-950 hover:shadow-[0_0_0_3px_rgba(16,185,129,0.2)]"
+    if (variantId === "large") return "border-white bg-transparent text-white hover:border-emerald-700 hover:text-emerald-950 hover:shadow-[0_0_0_3px_rgba(4,120,87,0.22)]"
+    return "border-white
+     bg-transparent text-white hover:border-emerald-500 hover:text-emerald-950 hover:shadow-[0_0_0_3px_rgba(16,185,129,0.2)]"
   }
   const gridVariantSelectedShade = (variantId: string) => {
     if (theme !== "seedlings") return variantButtonSelected
@@ -181,7 +182,7 @@ export function EnhancedProductCard({
   const cardEl = (
     <Card
       className={cn(
-        "group cursor-pointer overflow-hidden bg-gradient-to-br py-0 transition-all hover:-translate-y-1 hover:shadow-lg",
+        "group relative cursor-pointer overflow-hidden bg-black py-0 transition-all hover:-translate-y-1 hover:shadow-lg",
         shellClass,
         themeCardClass,
         className
@@ -189,18 +190,21 @@ export function EnhancedProductCard({
       style={runningBorderOnHover ? { border: "none", background: "white" } : undefined}
       onClick={() => onClick?.(item)}
     >
-      <div className="relative bg-black">
-        <div
-          aria-hidden
-          className={cn(
-            "absolute inset-0 bg-cover bg-top bg-no-repeat transition-transform duration-300 group-hover:scale-105 [filter:brightness(0.72)_saturate(0.9)_contrast(1.03)]",
-            compact ? "aspect-[5/4]" : "aspect-[4/3]"
-          )}
-          style={{
-            backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.24) 48%, rgba(0,0,0,0.76) 100%), url(${item.image})`,
-          }}
+      <div
+        aria-hidden
+        className="absolute inset-0 overflow-hidden"
+      >
+        <img
+          src={item.image}
+          alt=""
+          className="size-full object-cover object-center transition-transform duration-300 group-hover:scale-105 [filter:brightness(0.78)_saturate(0.9)_contrast(1.04)]"
+          loading="lazy"
+          decoding="async"
         />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(4,10,18,0.08)_0%,rgba(4,10,18,0.14)_16%,rgba(4,10,18,0.24)_32%,rgba(4,10,18,0.38)_52%,rgba(4,10,18,0.58)_72%,rgba(4,10,18,0.82)_88%,rgba(4,10,18,0.94)_100%)]" />
+      </div>
 
+      <div className="relative z-10">
         {/* Badges */}
         <div className="absolute left-3 top-3 z-10 flex flex-col gap-2">
           {item.stockStatus === "in-stock" && <Badge className={stockBadgeClass}>In Stock</Badge>}
@@ -381,10 +385,10 @@ export function EnhancedProductCard({
         </div>
       </div>
 
-      <CardFooter className={cn("flex items-center justify-between gap-3 pt-3 pb-3", compact && "pt-2")}>
-        <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+      <CardFooter className={cn("relative z-10 flex items-center justify-between gap-3 border-t border-white/12 bg-black/18 px-4 pt-3 pb-3 backdrop-blur-[2px]", compact && "pt-2")}>
+        <div className="flex flex-wrap items-center gap-2 text-sm text-white/88 drop-shadow-[0_1px_8px_rgba(0,0,0,0.32)]">
           {compact ? (
-            <span className="text-xs text-muted-foreground">{startingUnitLabel}</span>
+            <span className="text-xs text-white/78">{startingUnitLabel}</span>
           ) : quantity > 0 ? (
             `${quantity} in cart`
           ) : (

@@ -22,10 +22,10 @@ export const shopDefinitions: Record<ShopSlug, ShopDefinition> = {
   },
   "forests-land": {
     slug: "forests-land",
-    name: "Forests & Land",
+    name: "Forestry Investment Hub",
     shortName: "Forests & Land",
-    description: "Browse fresh new land, forest blocks, land-linked forestry opportunities, and managed site offerings in one place.",
-    heroTitle: "Forests and land opportunities",
+    description: "Invest in profitable forestry assets: browse and select verified services and opportunities to grow your portfolio",
+    heroTitle: "Forestry opportunities",
     heroDescription:
       "Review managed forest blocks, land-linked opportunities, and forestry assets suitable for pipeline development.",
     heroBadge: "Asset commerce",

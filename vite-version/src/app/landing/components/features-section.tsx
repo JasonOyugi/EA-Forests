@@ -105,10 +105,10 @@ export function FeaturesSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Keep the first page header */}
         <div className="mx-auto max-w-2xl text-center mb-16">
-          <Badge variant="outline" className="mb-4 border-emerald-500/40">
+          <Badge variant="outline" className="mb-4 text-primary border-emerald-500/40">
             Our Features
           </Badge>
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
+          <h2 className="font-bold tracking-tight sm:text-4xl mb-4">
             Everything you need to know about East Africa forests in one place
           </h2>
         </div>
@@ -137,7 +137,7 @@ export function FeaturesSection() {
                   The Nursery Shop
                 </>
               }
-              description="Want to start a forest? Wether you already have land or not, you can find and plant the latest generation of tree species, hybrids and clones"
+              description="Want to start a forest? Whether you already have land or not, you can find and plant the latest generation of tree species, hybrids, and clones."
               href="/shop/seedlings"
             />
           </BentoTilt>

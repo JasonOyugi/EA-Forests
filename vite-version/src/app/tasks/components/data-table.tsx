@@ -33,12 +33,14 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   onAddTask?: (task: Task) => void
+  showCreateTaskAction?: boolean
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   onAddTask,
+  showCreateTaskAction = true,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
@@ -72,7 +74,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} onAddTask={onAddTask} />
+      <DataTableToolbar table={table} onAddTask={onAddTask} showCreateTaskAction={showCreateTaskAction} />
       <div className="rounded-md border">
         <Table>
           <TableHeader>

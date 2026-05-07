@@ -12,13 +12,34 @@ export function RoundwoodTopBanner() {
   return (
     <BentoTilt>
       <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600 px-4 py-3 shadow-md">
+        <button
+          className="absolute right-3 top-3 z-20 flex h-7 w-7 items-center justify-center rounded-full border border-white/20 bg-black/15 text-white/85 transition hover:bg-black/30 hover:text-white focus:outline-none"
+          onClick={() => setIsVisible(false)}
+          aria-label="Dismiss"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+
         <div className="absolute inset-0 flex items-center justify-center opacity-10">
           <div className="h-32 w-32 rotate-12 rounded-full border-4 border-white" />
           <div className="absolute -right-6 h-24 w-24 -rotate-12 rounded-full border-4 border-white" />
           <div className="absolute -left-8 h-16 w-16 rotate-45 rounded-full border-4 border-white" />
         </div>
 
-        <div className="relative z-10 flex items-center justify-between">
+        <div className="relative z-10 flex items-center justify-between pr-8 sm:pr-10">
           <div className="flex flex-1 items-center justify-center text-center sm:justify-start sm:text-left">
             <div className="hidden sm:block">
               <svg
@@ -55,26 +76,6 @@ export function RoundwoodTopBanner() {
               </span>
             </p>
           </div>
-          <button
-            className="ml-3 flex-shrink-0 text-white focus:outline-none"
-            onClick={() => setIsVisible(false)}
-            aria-label="Dismiss"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
         </div>
       </div>
     </BentoTilt>

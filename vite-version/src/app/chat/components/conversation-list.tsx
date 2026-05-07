@@ -51,6 +51,16 @@ function formatMessageTime(timestamp: string): string {
   }
 }
 
+function getDeterministicOnlineStatus(conversation: Conversation) {
+  if (conversation.type !== "direct" || conversation.participants.length !== 1) {
+    return false
+  }
+
+  const seed = `${conversation.id}-${conversation.name}`
+  const hash = Array.from(seed).reduce((total, char) => total + char.charCodeAt(0), 0)
+  return hash % 2 === 0
+}
+
 export function ConversationList({ 
   conversations, 
   selectedConversation, 
@@ -72,11 +82,7 @@ export function ConversationList({
   })
 
   const getOnlineStatus = (conversation: Conversation) => {
-    if (conversation.type === "direct" && conversation.participants.length === 1) {
-      // In a real app, you'd check user online status
-      return Math.random() > 0.5 // Mock online status
-    }
-    return false
+    return getDeterministicOnlineStatus(conversation)
   }
 
   return (

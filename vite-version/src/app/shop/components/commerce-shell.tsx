@@ -113,7 +113,7 @@ export function CommerceShell({ shop, inventory }: CommerceShellProps) {
 
   return (
     <>
-      <div className={isSeedlings ? "space-y-8 bg-emerald-50/70 p-6 rounded-[2rem]" : "space-y-8"}>
+      <div className={isSeedlings ? "space-y-8 bg-primary-50/70 p-6 rounded-[2rem]" : "space-y-8"}>
         {/* Custom banner for seedlings, generic promo banner for others */}
         {isSeedlings ? (
           <SeedlingsBanner />

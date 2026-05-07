@@ -8,7 +8,7 @@ import { ChartContainer, ChartStyle, ChartTooltip, ChartTooltipContent } from "@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 
-const revenueData = [
+const speciesAllocationData = [
   { category: "eucalyptus-gu", value: 48, amount: 150, fill: "var(--color-eucalyptus-gu)" },
   { category: "eucalyptus-gc", value: 30, amount: 94, fill: "var(--color-eucalyptus-gc)" },
   { category: "pine", value: 14, amount: 44, fill: "var(--color-pine)" },
@@ -37,17 +37,17 @@ const chartConfig = {
   },
 }
 
-export function RevenueBreakdown() {
+export function SpeciesAllocation() {
   const id = "species-allocation"
   const [activeCategory, setActiveCategory] = React.useState("eucalyptus-gu")
 
   const activeIndex = React.useMemo(
-    () => revenueData.findIndex((item) => item.category === activeCategory),
+    () => speciesAllocationData.findIndex((item) => item.category === activeCategory),
     [activeCategory]
   )
 
-  const categories = React.useMemo(() => revenueData.map((item) => item.category), [])
-  const activeItem = revenueData[activeIndex]
+  const categories = React.useMemo(() => speciesAllocationData.map((item) => item.category), [])
+  const activeItem = speciesAllocationData[activeIndex]
 
   return (
     <Card data-chart={id} className="flex flex-col cursor-pointer">
@@ -89,7 +89,7 @@ export function RevenueBreakdown() {
               <PieChart>
                 <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
                 <Pie
-                  data={revenueData}
+                  data={speciesAllocationData}
                   dataKey="amount"
                   nameKey="category"
                   innerRadius={60}
@@ -100,7 +100,7 @@ export function RevenueBreakdown() {
                       <Sector {...props} outerRadius={outerRadius + 25} innerRadius={outerRadius + 12} />
                     </g>
                   )}
-                  onClick={(_, index) => setActiveCategory(revenueData[index].category)}
+                  onClick={(_, index) => setActiveCategory(speciesAllocationData[index].category)}
                 >
                   <Label
                     content={({ viewBox }) => {
@@ -125,7 +125,7 @@ export function RevenueBreakdown() {
           </div>
 
           <div className="flex flex-col justify-center space-y-4">
-            {revenueData.map((item, index) => {
+            {speciesAllocationData.map((item, index) => {
               const config = chartConfig[item.category as keyof typeof chartConfig]
               const isActive = index === activeIndex
 
@@ -140,7 +140,7 @@ export function RevenueBreakdown() {
                   <div className="flex items-center gap-3">
                     <span className="flex h-3 w-3 shrink-0 rounded-full" style={{ backgroundColor: `var(--color-${item.category})` }} />
                     <div>
-                      <span className="font-medium">{config?.label}</span> 
+                      <span className="font-medium">{config?.label}</span>
                     </div>
                   </div>
                   <div className="text-right">

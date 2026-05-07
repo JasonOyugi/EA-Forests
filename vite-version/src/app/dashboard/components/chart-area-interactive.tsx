@@ -58,14 +58,14 @@ function formatDecimal(value: number) {
 export const metricMeta: Record<MetricKey, MetricMeta> = {
   expectedPrice: {
     label: "Expected price",
-    unit: "$ per m3",
-    format: (value) => `$${formatDecimal(value)} / m3`,
+    unit: "$ per m³",
+    format: (value) => `$${formatDecimal(value)} / m³`,
     axisTick: (value) => `$${formatDecimal(value)}`,
   },
   expectedVolume: {
     label: "Expected volume",
-    unit: "m3",
-    format: (value) => `${formatDecimal(value)} m3`,
+    unit: "m³",
+    format: (value) => `${formatDecimal(value)} m³`,
     axisTick: (value) => compactNumber(value),
   },
   portfolioValue: {

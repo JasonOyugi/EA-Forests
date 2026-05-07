@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 import { ArrowBigDown, ArrowBigUp } from "lucide-react";
-import * as React from "react";
 
 const UPVOTE_COLOR = "bg-[#ff4500]";
 const DOWNVOTE_COLOR = "bg-[#9494ff]";
