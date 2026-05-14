@@ -5,6 +5,7 @@ import useEmblaCarousel from "embla-carousel-react"
 import { Check, ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { ScrollReveal } from "@/components/ui/scroll-reveal"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { BentoTilt } from "@/components/ui/bento-tilt"
 import { cn } from "@/lib/utils"
@@ -155,7 +156,7 @@ export function PricingSection() {
       <div aria-hidden className="section-map-bg absolute inset-0" />
       <div aria-hidden className="section-map-tint absolute inset-0" />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto mb-12 max-w-2xl text-center">
+        <ScrollReveal className="mx-auto mb-12 max-w-2xl text-center" distance={22}>
           <Badge variant="outline" className="mb-4 text-primary border border-emerald-500/40">Plant Now!</Badge>
           <h2 className="mb-4 text-primary font-bold tracking-tight sm:text-4xl">
             Choose your forest
@@ -189,9 +190,9 @@ export function PricingSection() {
           <p className="text-sm text-muted-foreground">
             <span className="font-semibold text-primary">Save 20%</span> On Annual Billing
           </p>
-        </div>
+        </ScrollReveal>
 
-        <div className="mx-auto max-w-7xl">
+        <ScrollReveal className="mx-auto max-w-7xl" delay={100}>
           <div className="relative">
             <div className="pointer-events-none absolute inset-y-5 left-0 z-10 hidden w-20 bg-gradient-to-r from-muted/80 to-transparent lg:block" />
             <div className="pointer-events-none absolute inset-y-5 right-0 z-10 hidden w-20 bg-gradient-to-l from-muted/80 to-transparent lg:block" />
@@ -338,9 +339,9 @@ export function PricingSection() {
               </Button>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
-        <div className="mt-16 text-center">
+        <ScrollReveal className="mt-16 text-center" delay={160}>
           <p className="text-muted-foreground">
             Need custom components or have questions?{" "}
             <Button variant="link" className="h-auto cursor-pointer p-0" asChild>
@@ -349,7 +350,7 @@ export function PricingSection() {
               </a>
             </Button>
           </p>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   )

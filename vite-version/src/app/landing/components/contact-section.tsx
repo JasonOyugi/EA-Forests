@@ -56,21 +56,21 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-24 sm:py-32">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center mb-16">
-          <Badge variant="outline" className="mb-4">Get In Touch</Badge>
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
+    <section id="contact" className="py-12 sm:py-24 md:py-32">
+      <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="mx-auto max-w-2xl text-center mb-8 sm:mb-12 md:mb-16">
+          <Badge variant="outline" className="mb-2 sm:mb-3 md:mb-4 text-xs sm:text-sm">Get In Touch</Badge>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-2 sm:mb-3 md:mb-4">
             Need help or have questions?
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-xs sm:text-sm md:text-base lg:text-lg text-muted-foreground">
             Our team is here to help you get the most out of EA Forests. Choose the best way to reach out to us.
           </p>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-3">
+        <div className="grid gap-4 sm:gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {/* Contact Options */}
-          <div className="space-y-6 order-2 lg:order-1">
+          <div className="space-y-4 sm:space-y-6 order-2 lg:order-1">
             <Card className="hover:shadow-md transition-shadow cursor-pointer">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">

@@ -28,8 +28,8 @@ import {
   Plus,
 } from "lucide-react"
 
-import { events as calendarEvents, eventDates } from "@/app/calendar/data"
 import { Calendar as FullCalendar } from "@/app/calendar/components/calendar"
+import type { CalendarEvent } from "@/app/calendar/types"
 import { ForestsLandTopBanner } from "@/components/commerce-ui/forests-land-top-banner"
 import { ForestryServicesSaleBanner } from "@/components/commerce-ui/forestry-services-sale-banner"
 import SeedlingsBanner from "@/components/commerce-ui/seedlings-banner"
@@ -70,6 +70,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { deriveEventDates, getRecentPaymentRows, getUpcomingPaymentRows } from "./dashboard-events"
 type TableView = "assets" | "transactions" | "activity-logs" | "documents"
 
 type TreeVariety = "eucalyptus" | "pine" | "cypress" | "teak" | "corymbia"
@@ -127,9 +128,14 @@ type SortColumn =
   | "estimatedValuation"
   | "investmentPlaced"
 type SortOrder = "asc" | "desc"
+export type SiteMetricKey = "portfolioPerformance" | "expectedVolume" | "expectedPrice"
 
 export function groupVarieties(g: AssetGroup) {
   return [...new Set(g.subBlocks.map((s) => s.variety))].join(", ")
+}
+
+export function getGroupSpecies(group: AssetGroup) {
+  return [...new Set(group.subBlocks.map((subBlock) => subBlock.variety))] as TreeVariety[]
 }
 
 export function groupSize(g: AssetGroup) {
@@ -237,6 +243,68 @@ export function getSubBlockEstimatedMetrics(group: AssetGroup, subBlock: SubBloc
   }
 }
 
+export function formatVarietyLabel(variety: TreeVariety) {
+  return variety.charAt(0).toUpperCase() + variety.slice(1)
+}
+
+function estimateMetricForYear(subBlock: SubBlock, targetYear: number, baseYear: number) {
+  const profile = speciesProfile[subBlock.variety]
+  const age = Math.max(1, subBlock.age + (targetYear - baseYear))
+  const maturityFactor = Math.min(1.36, 0.42 + age * 0.095)
+  const expectedVolume = subBlock.plantedSize * profile.volumePerHa * maturityFactor
+  const expectedPrice = profile.pricePerM3 * (1 + (targetYear - baseYear) * 0.042 + Math.max(age - 4, 0) * 0.008)
+  const portfolioPerformance = expectedVolume * expectedPrice
+
+  return {
+    expectedVolume,
+    expectedPrice,
+    portfolioPerformance,
+  }
+}
+
+export function buildGroupMetricSeries(group: AssetGroup, metric: SiteMetricKey, baseYear = new Date().getFullYear()) {
+  const years = Array.from({ length: 6 }, (_, index) => baseYear - 2 + index)
+
+  return years.map((year) => {
+    const row: { year: string } & Record<TreeVariety, number> = {
+      year: String(year),
+      eucalyptus: 0,
+      pine: 0,
+      cypress: 0,
+      teak: 0,
+      corymbia: 0,
+    }
+    const priceWeights: Record<TreeVariety, { weightedValue: number; volume: number }> = {
+      eucalyptus: { weightedValue: 0, volume: 0 },
+      pine: { weightedValue: 0, volume: 0 },
+      cypress: { weightedValue: 0, volume: 0 },
+      teak: { weightedValue: 0, volume: 0 },
+      corymbia: { weightedValue: 0, volume: 0 },
+    }
+
+    group.subBlocks.forEach((subBlock) => {
+      const estimated = estimateMetricForYear(subBlock, year, baseYear)
+
+      if (metric === "expectedPrice") {
+        priceWeights[subBlock.variety].weightedValue += estimated.expectedPrice * estimated.expectedVolume
+        priceWeights[subBlock.variety].volume += estimated.expectedVolume
+        return
+      }
+
+      row[subBlock.variety] += estimated[metric]
+    })
+
+    if (metric === "expectedPrice") {
+      ;(Object.keys(priceWeights) as TreeVariety[]).forEach((variety) => {
+        const series = priceWeights[variety]
+        row[variety] = series.volume > 0 ? series.weightedValue / series.volume : 0
+      })
+    }
+
+    return row
+  })
+}
+
 function scalePolygon(
   positions: [number, number][],
   ratio: number
@@ -319,18 +387,6 @@ export const initialAssetGroups: AssetGroup[] = [
       { id: "sub-4b", subBlock: "B4b", variety: "eucalyptus", size: 30, plantedSize: 27, age: 3, activity: "planting", contractor: "Timberline Services" },
     ],
   },
-]
-
-export const latestPayments: PaymentRow[] = [
-  { invoice: "INV-2026-143", description: "Silviculture crew - North Ridge A1", dueDate: "2026-04-04", amount: 28450, status: "paid" },
-  { invoice: "INV-2026-138", description: "Planting materials - River Bend C2", dueDate: "2026-03-27", amount: 19780, status: "received" },
-  { invoice: "INV-2026-131", description: "Road maintenance - East Valley B4", dueDate: "2026-02-18", amount: 8920, status: "overdue" },
-]
-
-export const upcomingPayments: PaymentRow[] = [
-  { invoice: "INV-2026-151", description: "Thinning operation - Pine Hollow D7", dueDate: "2026-04-18", amount: 41300, status: "scheduled" },
-  { invoice: "INV-2026-154", description: "Seedling replenishment - East Valley B4", dueDate: "2026-04-29", amount: 12700, status: "scheduled" },
-  { invoice: "INV-2026-162", description: "Site inspection package", dueDate: "2026-05-12", amount: 6400, status: "scheduled" },
 ]
 
 const activityLogs: ActivityLogRow[] = [
@@ -482,10 +538,10 @@ type SortableAssetRowProps = {
   group: AssetGroup
   isExpanded: boolean
   onToggle: () => void
+  onMapOpen: (groupId: string) => void
 }
 
-function SortableAssetRow({ group, isExpanded, onToggle }: SortableAssetRowProps) {
-  const navigate = useNavigate()
+function SortableAssetRow({ group, isExpanded, onToggle, onMapOpen }: SortableAssetRowProps) {
   const {
     attributes,
     listeners,
@@ -543,7 +599,7 @@ function SortableAssetRow({ group, isExpanded, onToggle }: SortableAssetRowProps
             variant="outline"
             size="sm"
             className="h-8 gap-2"
-            onClick={() => navigate(`/dashboard/assets-map?site=${group.id}`)}
+            onClick={() => onMapOpen(group.id)}
           >
             <MapPinned className="h-3.5 w-3.5" />
             Map
@@ -580,9 +636,19 @@ interface DataTableProps {
   activeTab: TableView
   onActiveTabChange: (tab: TableView) => void
   transactionsHighlightKey: number
+  events: CalendarEvent[]
+  onEventsChange: (events: CalendarEvent[]) => void
+  onAssetMapOpen: (groupId: string) => void
 }
 
-export function DataTable({ activeTab, onActiveTabChange, transactionsHighlightKey }: DataTableProps) {
+export function DataTable({
+  activeTab,
+  onActiveTabChange,
+  transactionsHighlightKey,
+  events,
+  onEventsChange,
+  onAssetMapOpen,
+}: DataTableProps) {
   const navigate = useNavigate()
   const [highlightUpcomingPayments, setHighlightUpcomingPayments] = React.useState(false)
 
@@ -639,6 +705,9 @@ export function DataTable({ activeTab, onActiveTabChange, transactionsHighlightK
       return sortConfig.order === "asc" ? aVal - bVal : bVal - aVal
     })
   }, [assetGroups, rowOrder, sortConfig])
+  const latestPayments = React.useMemo(() => getRecentPaymentRows(events).slice(0, 3), [events])
+  const upcomingPayments = React.useMemo(() => getUpcomingPaymentRows(events), [events])
+  const eventDates = React.useMemo(() => deriveEventDates(events), [events])
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event
@@ -727,7 +796,7 @@ export function DataTable({ activeTab, onActiveTabChange, transactionsHighlightK
                   <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("area")}>Area (ha){sortIndicator("area")}</TableHead>
                   <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("plantedArea")}>Planted (ha){sortIndicator("plantedArea")}</TableHead>
                   <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("age")}>Age (yr){sortIndicator("age")}</TableHead>
-                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("estimatedVolume")}>Estimated Volume (m³){sortIndicator("estimatedVolume")}</TableHead>
+                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("estimatedVolume")}>Estimated Volume (m3){sortIndicator("estimatedVolume")}</TableHead>
                   <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("estimatedValuation")}>Estimated Valuation (USD){sortIndicator("estimatedValuation")}</TableHead>
                   <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("investmentPlaced")}>Investment Placed (USD){sortIndicator("investmentPlaced")}</TableHead>
                   <TableHead>Map</TableHead>
@@ -744,6 +813,7 @@ export function DataTable({ activeTab, onActiveTabChange, transactionsHighlightK
                       group={group}
                       isExpanded={expandedRows.has(group.id)}
                       onToggle={() => toggleExpand(group.id)}
+                      onMapOpen={onAssetMapOpen}
                     />
                   ))}
                 </SortableContext>
@@ -852,7 +922,7 @@ export function DataTable({ activeTab, onActiveTabChange, transactionsHighlightK
             </div>
           </CardHeader>
           <CardContent className="p-0">
-            <FullCalendar events={calendarEvents} eventDates={eventDates} />
+            <FullCalendar events={events} eventDates={eventDates} onEventsChange={onEventsChange} />
           </CardContent>
         </Card>
       </div>

@@ -5,6 +5,7 @@ import { CircleHelp } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Badge } from '@/components/ui/badge'
+import { ScrollReveal } from '@/components/ui/scroll-reveal'
 
 type FaqItem = {
   value: string
@@ -52,7 +53,7 @@ const FaqSection = () => {
     <section id="faq" className="relative overflow-hidden py-24 sm:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="mx-auto mb-16 max-w-2xl text-center">
+        <ScrollReveal className="mx-auto mb-16 max-w-2xl text-center" distance={22}>
           <Badge variant="outline" className="mb-4 border border-emerald-500/40" >FAQ</Badge>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
             Frequently Asked Questions
@@ -60,7 +61,7 @@ const FaqSection = () => {
           <p className="text-lg text-muted-foreground">
             What people are asking about EA Forests' features and purpose:
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* FAQ Content */}
         <div className="max-w-4xl mx-auto">
@@ -97,7 +98,7 @@ const FaqSection = () => {
                         <span className='text-start font-semibold'>{item.question}</span>
                       </div>
                     </AccordionTrigger>
-                    <AccordionContent className='relative z-10 p-4 bg-transparent'>{item.answer}</AccordionContent>
+                    <AccordionContent className='relative z-10 bg-transparent p-4'>{item.answer}</AccordionContent>
                   </AccordionItem>
                 ))}
               </Accordion>
@@ -105,7 +106,7 @@ const FaqSection = () => {
           </div>
 
           {/* Contact Support CTA */}
-          <div className="text-center mt-12">
+          <ScrollReveal className="mt-12 text-center" delay={120}>
             <p className="text-muted-foreground mb-4">
               Still have questions? We're here to help.
             </p>
@@ -120,8 +121,7 @@ const FaqSection = () => {
                 </span>
               </a>
             </Button>
-
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

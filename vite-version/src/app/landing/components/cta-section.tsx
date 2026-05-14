@@ -3,6 +3,7 @@
 import { ArrowRight, TrendingUp, Package, Handshake } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { ScrollReveal } from '@/components/ui/scroll-reveal'
 import { Separator } from '@/components/ui/separator'
 
 export function CTASection() {
@@ -12,7 +13,7 @@ export function CTASection() {
       <div aria-hidden className="section-map-tint absolute inset-0" />
       <div className='container mx-auto px-4 lg:px-8'>
         <div className='mx-auto max-w-4xl'>
-          <div className='text-center'>
+          <ScrollReveal className='text-center' distance={22}>
             <div className='space-y-8'>
               {/* Badge and Stats */}
               <div className='flex flex-col items-center gap-4'>
@@ -97,7 +98,7 @@ export function CTASection() {
                 </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

@@ -6,6 +6,7 @@ import { BentoTilt } from "@/components/ui/bento-tilt"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { ScrollReveal } from "@/components/ui/scroll-reveal"
 
 const values = [
   {
@@ -42,7 +43,7 @@ export function AboutSection() {
   return (
     <section id="about" className="py-24 sm:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto mb-16 max-w-4xl text-center">
+        <ScrollReveal className="mx-auto mb-16 max-w-4xl text-center" distance={22}>
           <Badge variant="outline" className="mb-4 border border-emerald-500/40 text-primary">
             About EA Forests
           </Badge>
@@ -54,38 +55,40 @@ export function AboutSection() {
             Whether you supply seedlings, operate planting crews, run a mill, trade assets, or are simply looking to make bank from land,
             we ensure you connect with the right people in the most informed way possible.
           </p>
-        </div>
+        </ScrollReveal>
 
         <div className="mb-12 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 xl:grid-cols-4">
-          {values.map((value) => (
-            <a key={value.title} href={value.href} className="block h-full">
-              <BentoTilt className="h-full">
-                <Card className="about-value-card group h-full overflow-hidden py-2 shadow-xs transition-all hover:-translate-y-1 hover:shadow-[0_6px_12px_rgba(16,185,129,0.28)]">
-                  <div className="absolute inset-0">
-                    <img
-                      src={value.image}
-                      alt=""
-                      className="about-card-bg size-full object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    <div className="about-card-bg-overlay absolute inset-0" />
-                  </div>
-                  <CardContent className="relative z-10 p-8">
-                    <div className="flex flex-col items-center text-center">
-                      <h3 className="mt-6 text-lg font-bold text-balance text-white group-hover:underline">
-                        {value.title}
-                      </h3>
-                      <p className="mt-3 text-md text-white/80">{value.description}</p>
+          {values.map((value, index) => (
+            <ScrollReveal key={value.title} className="h-full" delay={index * 90}>
+              <a href={value.href} className="block h-full">
+                <BentoTilt className="h-full">
+                  <Card className="about-value-card group h-full overflow-hidden py-2 shadow-xs transition-all hover:-translate-y-1 hover:shadow-[0_6px_12px_rgba(16,185,129,0.28)]">
+                    <div className="absolute inset-0">
+                      <img
+                        src={value.image}
+                        alt=""
+                        className="about-card-bg size-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <div className="about-card-bg-overlay absolute inset-0" />
                     </div>
-                  </CardContent>
-                </Card>
-              </BentoTilt>
-            </a>
+                    <CardContent className="relative z-10 p-8">
+                      <div className="flex flex-col items-center text-center">
+                        <h3 className="mt-6 text-lg font-bold text-balance text-white group-hover:underline">
+                          {value.title}
+                        </h3>
+                        <p className="text-md mt-3 text-white/80">{value.description}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </BentoTilt>
+              </a>
+            </ScrollReveal>
           ))}
         </div>
 
-        <div className="mt-16 text-center">
+        <ScrollReveal className="mt-16 text-center" delay={120}>
           <div className="mb-6 flex items-center justify-center gap-2">
             <span className="text-muted-foreground">Built for real forestry investing</span>
           </div>
@@ -112,7 +115,7 @@ export function AboutSection() {
               </a>
             </Button>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   )

@@ -120,20 +120,20 @@ export function ForestsLandShop({ inventory }: ForestsLandShopProps) {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4 sm:space-y-6 md:space-y-8">
       <ForestsLandTopBanner />
       <ForestryServicesSaleBanner />
       <ForestryServicesCountdownBanner />
 
-      <section className="space-y-5">
+      <section className="space-y-3 sm:space-y-4 md:space-y-5">
         <div>
-          <h2 className="text-2xl font-semibold tracking-tight text-slate-900">Find The Right Investment For You</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold tracking-tight text-slate-900">Find The Right Investment For You</h2>
+          <p className="mt-1 text-xs sm:text-sm md:text-base text-muted-foreground">
             Explore the flagship strategies, concessional pathways, and land-led entries in a full-width editorial layout.
           </p>
         </div>
 
-        <div className="grid gap-5 xl:grid-cols-3">
+        <div className="grid gap-3 sm:gap-4 md:gap-5 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
           {sections.map((section) => {
             const Icon = section.icon
 

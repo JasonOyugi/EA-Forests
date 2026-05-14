@@ -17,12 +17,15 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
 
+import { calendarEventTypeConfig, calendarSidebarGroups } from "../calendar-event-config"
+import type { CalendarEventType } from "../types"
+
 interface CalendarItem {
   id: string
   name: string
   color: string
   visible: boolean
-  type: "personal" | "work" | "shared"
+  type: CalendarEventType
 }
 
 interface CalendarGroup {
@@ -41,32 +44,16 @@ interface CalendarsProps {
   onNewCalendar?: () => void
 }
 
-// Enhanced calendar data with colors and visibility
-const enhancedCalendars: CalendarGroup[] = [
-  {
-    name: "My Calendars",
-    items: [
-      { id: "personal", name: "Personal", color: "bg-blue-500", visible: true, type: "personal" },
-      { id: "work", name: "Work", color: "bg-green-500", visible: true, type: "work" },
-      { id: "family", name: "Family", color: "bg-pink-500", visible: true, type: "personal" }
-    ]
-  },
-  {
-    name: "Favorites",
-    items: [
-      { id: "holidays", name: "Holidays", color: "bg-red-500", visible: true, type: "shared" },
-      { id: "birthdays", name: "Birthdays", color: "bg-purple-500", visible: true, type: "personal" }
-    ]
-  },
-  {
-    name: "Other",
-    items: [
-      { id: "travel", name: "Travel", color: "bg-orange-500", visible: false, type: "personal" },
-      { id: "reminders", name: "Reminders", color: "bg-yellow-500", visible: true, type: "personal" },
-      { id: "deadlines", name: "Deadlines", color: "bg-red-600", visible: true, type: "work" }
-    ]
-  }
-]
+const enhancedCalendars: CalendarGroup[] = calendarSidebarGroups.map((group, groupIndex) => ({
+  name: group.name,
+  items: group.items.map((type, itemIndex) => ({
+    id: type,
+    name: calendarEventTypeConfig[type].label,
+    color: calendarEventTypeConfig[type].color,
+    visible: groupIndex === 0 || itemIndex < 2,
+    type,
+  })),
+}))
 
 export function Calendars({
   onCalendarToggle,
@@ -137,7 +124,6 @@ export function Calendars({
                           {item.visible && <Check className="size-3" />}
                         </button>
 
-                        {/* Calendar Name */}
                         <span 
                           className={cn(
                             "flex-1 truncate text-sm cursor-pointer",
@@ -147,8 +133,6 @@ export function Calendars({
                         >
                           {item.name}
                         </span>
-
-                        {/* Visibility Icon */}
                         <div className="opacity-0 group-hover/calendar-item:opacity-100">
                           {item.visible ? (
                             <Eye className="h-3 w-3 text-muted-foreground" />
@@ -157,7 +141,6 @@ export function Calendars({
                           )}
                         </div>
 
-                        {/* More Options */}
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <div

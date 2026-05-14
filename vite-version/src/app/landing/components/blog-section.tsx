@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { BentoTilt } from '@/components/ui/bento-tilt'
+import { ScrollReveal } from '@/components/ui/scroll-reveal'
 import { cn } from '@/lib/utils'
 
 
@@ -102,7 +103,7 @@ export function BlogSection() {
       <div aria-hidden className="section-map-tint absolute inset-0" />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="mx-auto max-w-2xl text-center mb-16">
+        <ScrollReveal className="mx-auto mb-16 max-w-2xl text-center" distance={22}>
           <Badge variant="outline" className="mb-4 border border-emerald-500/40">Latest Insights</Badge>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
             From our blog
@@ -110,9 +111,9 @@ export function BlogSection() {
           <p className="text-lg text-muted-foreground">
             Stay updated with the latest trends, best practices, and insights from our team of experts.
           </p>
-        </div>
+        </ScrollReveal>
 
-        <div className="mx-auto max-w-6xl">
+        <ScrollReveal className="mx-auto max-w-6xl" delay={90}>
           <div className="relative">
             <div ref={emblaRef} className="overflow-hidden" onWheel={handleWheel}>
               <div className="-ml-4 flex gap-8 py-4 px-4 md:-ml-6 lg:-ml-8">
@@ -193,7 +194,7 @@ export function BlogSection() {
               </Button>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   )

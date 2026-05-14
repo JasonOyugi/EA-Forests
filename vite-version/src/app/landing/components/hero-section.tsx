@@ -133,7 +133,7 @@ export function HeroSection() {
             </a>
           </div>
 
-          <h1 className="landing-fade-up landing-delay-2 mb-6 font-bold tracking-tight sm:text-6xl lg:text-7xl">
+          <h1 className="landing-fade-up landing-delay-2 mb-6 font-bold tracking-tight text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
             Profit From Forestry in{" "}
             <span className='emerald-glitter-text bg-gradient-to-r from-emerald-300 via-emerald-500 to-emerald-200 bg-clip-text text-transparent'>
               East Africa
@@ -141,7 +141,7 @@ export function HeroSection() {
             Today
           </h1>
 
-          <p className="landing-fade-up landing-delay-3 mx-auto mb-10 max-w-2xl text-lg text-muted-foreground sm:text-xl">
+          <p className="landing-fade-up landing-delay-3 mx-auto mb-10 max-w-2xl text-sm sm:text-base md:text-lg text-muted-foreground lg:text-xl">
             From nurseries to building with timber, start generating cash from East African forestry now!
           </p>
 

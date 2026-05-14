@@ -1,6 +1,7 @@
 "use client"
 
 import { Card } from "@/components/ui/card"
+import { ScrollReveal } from "@/components/ui/scroll-reveal"
 
 const companies = [
   { name: "UTGA", src: "/UTGA.png" },
@@ -10,6 +11,7 @@ const companies = [
   { name: "CMA Kenya", src: "/CMA_KE.png" },
   { name: "CrossBoundary", src: "/Crossboundary.png" },
 ] as const
+const marqueeCompanies = [...companies, ...companies]
 
 function Logo({ src, name, size = 28 }: { src: string; name: string; size?: number }) {
   return (
@@ -29,7 +31,7 @@ export function LogoCarousel() {
   return (
     <section className="pb-12 sm:pb-16 lg:pb-20 pt-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
+        <ScrollReveal className="text-center" distance={18}>
           <p className="text-sm font-medium text-muted-foreground mb-8">
             Trusted by leading regional forestry and investment experts
           </p>
@@ -43,7 +45,7 @@ export function LogoCarousel() {
 
             <div className="overflow-hidden">
               <div className="flex animate-logo-scroll space-x-8 sm:space-x-12">
-                {[...companies, ...companies].map((company, index) => (
+                {marqueeCompanies.map((company, index) => (
                   <Card
                     key={`${company.name}-${index}`}
                     className="flex-shrink-0 flex items-center justify-center h-16 w-40
@@ -62,7 +64,7 @@ export function LogoCarousel() {
             </div>
 
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   )

@@ -38,12 +38,12 @@ const data = {
       label: "User Products",
       items: [
         {
-          title: "FM Dashboard",
+          title: "Investor Dashboard",
           url: "/dashboard",
           icon: LayoutDashboard,
         },
         {
-          title: "FI Dashboard",
+          title: "Contractor Dashboard (under construction)",
           url: "/dashboard-2",
           icon: LayoutPanelLeft,
         },

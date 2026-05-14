@@ -63,6 +63,98 @@ export function EnhancedProductCard({
   const activeVariant = item.variants?.find((variant) => variant.id === selectedVariant) ?? defaultVariant
   const { rating, reviewCount } = React.useMemo(() => deriveRatingFromId(item.id), [item.id])
 
+  // Define theme styles and extract colors early for use in variant shade functions
+  const themeStyles = {
+    seedlings: {
+      stockBadgeClass: "bg-emerald-600 text-white",
+      starActiveClass: "fill-emerald-400 text-emerald-400",
+      themeCardClass: "border border-emerald-100 bg-white/80",
+      quickAddButtonClass: "bg-emerald-700 text-white hover:bg-emerald-800",
+      footerButtonClass: "bg-emerald-700 text-white hover:bg-emerald-800 emerald-border-hover",
+      variantButtonSelected: "border-emerald-700 bg-emerald-100 text-emerald-900",
+      accentClass: "text-emerald-700",
+      shellClass: "from-white via-emerald-50 to-lime-50/70",
+      titleClass: "text-lime-50",
+      bodyClass: "text-emerald-50",
+      metaClass: "text-lime-100/90",
+      overlayClass:
+        "bg-[linear-gradient(to_bottom,rgba(6,14,10,0.12)_0%,rgba(6,14,10,0.22)_20%,rgba(5,24,16,0.42)_42%,rgba(4,28,18,0.68)_66%,rgba(3,20,13,0.88)_84%,rgba(2,12,8,0.96)_100%)]",
+      footerSurfaceClass: "border-white/18 bg-emerald-950/40",
+      featuredBadgeClass: "bg-emerald-50/92 text-emerald-950",
+    },
+    "forests-land": {
+      stockBadgeClass: "bg-slate-700 text-white",
+      starActiveClass: "fill-slate-700 text-slate-700",
+      themeCardClass: "border border-slate-200 bg-white/90",
+      quickAddButtonClass: "bg-slate-700 text-white hover:bg-slate-800",
+      footerButtonClass: "bg-slate-700 text-white hover:bg-slate-800 emerald-border-hover",
+      variantButtonSelected: "border-slate-700 bg-slate-100 text-slate-900",
+      accentClass: "text-slate-700",
+      shellClass: "from-white via-slate-50 to-emerald-50/70",
+      titleClass: "text-sky-50",
+      bodyClass: "text-slate-100",
+      metaClass: "text-emerald-50/90",
+      overlayClass:
+        "bg-[linear-gradient(to_bottom,rgba(5,10,18,0.12)_0%,rgba(8,14,24,0.22)_20%,rgba(12,24,30,0.44)_42%,rgba(8,24,27,0.68)_66%,rgba(7,18,23,0.88)_84%,rgba(4,10,14,0.96)_100%)]",
+      footerSurfaceClass: "border-white/18 bg-slate-950/42",
+      featuredBadgeClass: "bg-sky-50/92 text-slate-950",
+    },
+    "forestry-services": {
+      stockBadgeClass: "bg-amber-700 text-white",
+      starActiveClass: "fill-amber-500 text-amber-500",
+      themeCardClass: "border border-amber-200 bg-white/90",
+      quickAddButtonClass: "bg-amber-700 text-white hover:bg-amber-800",
+      footerButtonClass: "bg-amber-700 text-white hover:bg-amber-800 emerald-border-hover",
+      variantButtonSelected: "border-amber-700 bg-amber-100 text-amber-900",
+      accentClass: "text-amber-700",
+      shellClass: "from-white via-amber-50 to-orange-50/70",
+      titleClass: "text-amber-50",
+      bodyClass: "text-orange-50",
+      metaClass: "text-amber-100/90",
+      overlayClass:
+        "bg-[linear-gradient(to_bottom,rgba(18,10,4,0.1)_0%,rgba(24,12,4,0.18)_18%,rgba(50,24,8,0.4)_40%,rgba(66,28,7,0.66)_64%,rgba(48,18,5,0.86)_82%,rgba(24,10,3,0.96)_100%)]",
+      footerSurfaceClass: "border-white/18 bg-amber-950/44",
+      featuredBadgeClass: "bg-amber-50/92 text-amber-950",
+    },
+    roundwood: {
+      stockBadgeClass: "bg-rose-800 text-white",
+      starActiveClass: "fill-rose-500 text-rose-500",
+      themeCardClass: "border border-rose-200 bg-white/90",
+      quickAddButtonClass: "bg-rose-800 text-white hover:bg-rose-900",
+      footerButtonClass: "bg-rose-800 text-white hover:bg-rose-900 emerald-border-hover",
+      variantButtonSelected: "border-rose-800 bg-rose-100 text-rose-900",
+      accentClass: "text-rose-700",
+      shellClass: "from-white via-rose-50 to-orange-50/70",
+      titleClass: "text-rose-50",
+      bodyClass: "text-orange-50",
+      metaClass: "text-rose-100/90",
+      overlayClass:
+        "bg-[linear-gradient(to_bottom,rgba(18,6,10,0.1)_0%,rgba(24,8,14,0.18)_18%,rgba(48,10,22,0.4)_40%,rgba(72,12,26,0.66)_64%,rgba(52,10,20,0.86)_82%,rgba(24,6,10,0.96)_100%)]",
+      footerSurfaceClass: "border-white/18 bg-rose-950/42",
+      featuredBadgeClass: "bg-rose-50/92 text-rose-950",
+    },
+    default: {
+      stockBadgeClass: "bg-green-500 text-white",
+      starActiveClass: "fill-yellow-400 text-yellow-400",
+      themeCardClass: "",
+      quickAddButtonClass: "",
+      footerButtonClass: "emerald-border-hover",
+      variantButtonSelected: "border-slate-300 bg-white text-slate-700",
+      accentClass: "text-slate-700",
+      shellClass: "from-white via-slate-50 to-slate-100",
+      titleClass: "text-white",
+      bodyClass: "text-white/95",
+      metaClass: "text-white/88",
+      overlayClass:
+        "bg-[linear-gradient(to_bottom,rgba(4,10,18,0.08)_0%,rgba(4,10,18,0.14)_16%,rgba(4,10,18,0.24)_32%,rgba(4,10,18,0.38)_52%,rgba(4,10,18,0.58)_72%,rgba(4,10,18,0.82)_88%,rgba(4,10,18,0.94)_100%)]",
+      footerSurfaceClass: "border-white/12 bg-black/18",
+      featuredBadgeClass: "bg-black/80 text-white",
+    },
+  }
+
+  const activeTheme = theme ? themeStyles[theme] : themeStyles.default
+  const variantButtonSelected = activeTheme.variantButtonSelected
+
   const activeUnitLabel =
     activeVariant?.unitLabel ??
     (activeVariant?.count ? `per ${activeVariant.count} seedlings` : item.unitLabel)
@@ -76,8 +168,7 @@ export function EnhancedProductCard({
     if (variantId === "small") return "border-white bg-transparent text-white hover:border-emerald-400 hover:text-emerald-900 hover:shadow-[0_0_0_3px_rgba(52,211,153,0.18)]"
     if (variantId === "medium") return "border-white bg-transparent text-white hover:border-emerald-500 hover:text-emerald-950 hover:shadow-[0_0_0_3px_rgba(16,185,129,0.2)]"
     if (variantId === "large") return "border-white bg-transparent text-white hover:border-emerald-700 hover:text-emerald-950 hover:shadow-[0_0_0_3px_rgba(4,120,87,0.22)]"
-    return "border-white
-     bg-transparent text-white hover:border-emerald-500 hover:text-emerald-950 hover:shadow-[0_0_0_3px_rgba(16,185,129,0.2)]"
+    return "border-white bg-transparent text-white hover:border-emerald-500 hover:text-emerald-950 hover:shadow-[0_0_0_3px_rgba(16,185,129,0.2)]"
   }
   const gridVariantSelectedShade = (variantId: string) => {
     if (theme !== "seedlings") return variantButtonSelected
@@ -109,66 +200,17 @@ export function EnhancedProductCard({
       ? "bg-rose-700"
       : "bg-slate-700"
 
-  const themeStyles = {
-    seedlings: {
-      stockBadgeClass: "bg-emerald-600 text-white",
-      starActiveClass: "fill-emerald-400 text-emerald-400",
-      themeCardClass: "border border-emerald-100 bg-white/80",
-      quickAddButtonClass: "bg-emerald-700 text-white hover:bg-emerald-800",
-      footerButtonClass: "bg-emerald-700 text-white hover:bg-emerald-800 emerald-border-hover",
-      variantButtonSelected: "border-emerald-700 bg-emerald-100 text-emerald-900",
-      accentClass: "text-emerald-700",
-      shellClass: "from-white via-emerald-50 to-lime-50/70",
-    },
-    "forests-land": {
-      stockBadgeClass: "bg-slate-700 text-white",
-      starActiveClass: "fill-slate-700 text-slate-700",
-      themeCardClass: "border border-slate-200 bg-white/90",
-      quickAddButtonClass: "bg-slate-700 text-white hover:bg-slate-800",
-      footerButtonClass: "bg-slate-700 text-white hover:bg-slate-800 emerald-border-hover",
-      variantButtonSelected: "border-slate-700 bg-slate-100 text-slate-900",
-      accentClass: "text-slate-700",
-      shellClass: "from-white via-slate-50 to-emerald-50/70",
-    },
-    "forestry-services": {
-      stockBadgeClass: "bg-amber-700 text-white",
-      starActiveClass: "fill-amber-500 text-amber-500",
-      themeCardClass: "border border-amber-200 bg-white/90",
-      quickAddButtonClass: "bg-amber-700 text-white hover:bg-amber-800",
-      footerButtonClass: "bg-amber-700 text-white hover:bg-amber-800 emerald-border-hover",
-      variantButtonSelected: "border-amber-700 bg-amber-100 text-amber-900",
-      accentClass: "text-amber-700",
-      shellClass: "from-white via-amber-50 to-orange-50/70",
-    },
-    roundwood: {
-      stockBadgeClass: "bg-rose-800 text-white",
-      starActiveClass: "fill-rose-500 text-rose-500",
-      themeCardClass: "border border-rose-200 bg-white/90",
-      quickAddButtonClass: "bg-rose-800 text-white hover:bg-rose-900",
-      footerButtonClass: "bg-rose-800 text-white hover:bg-rose-900 emerald-border-hover",
-      variantButtonSelected: "border-rose-800 bg-rose-100 text-rose-900",
-      accentClass: "text-rose-700",
-      shellClass: "from-white via-rose-50 to-orange-50/70",
-    },
-    default: {
-      stockBadgeClass: "bg-green-500 text-white",
-      starActiveClass: "fill-yellow-400 text-yellow-400",
-      themeCardClass: "",
-      quickAddButtonClass: "",
-      footerButtonClass: "emerald-border-hover",
-      variantButtonSelected: "border-slate-300 bg-white text-slate-700",
-      accentClass: "text-slate-700",
-      shellClass: "from-white via-slate-50 to-slate-100",
-    },
-  }
-
-  const activeTheme = theme ? themeStyles[theme] : themeStyles.default
   const stockBadgeClass = activeTheme.stockBadgeClass
   const starActiveClass = activeTheme.starActiveClass
   const themeCardClass = activeTheme.themeCardClass
   const footerButtonClass = activeTheme.footerButtonClass
-  const variantButtonSelected = activeTheme.variantButtonSelected
   const shellClass = activeTheme.shellClass
+  const titleClass = activeTheme.titleClass
+  const bodyClass = activeTheme.bodyClass
+  const metaClass = activeTheme.metaClass
+  const overlayClass = activeTheme.overlayClass
+  const footerSurfaceClass = activeTheme.footerSurfaceClass
+  const featuredBadgeClass = activeTheme.featuredBadgeClass
 
   const footerFallbackText = item.domain ? item.domain.replace(/(^|\s)\S/g, (match) => match.toUpperCase()) : item.kind === "service" ? "Service" : "Product"
   const startingPrice = formatCurrency(
@@ -201,7 +243,7 @@ export function EnhancedProductCard({
           loading="lazy"
           decoding="async"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(4,10,18,0.08)_0%,rgba(4,10,18,0.14)_16%,rgba(4,10,18,0.24)_32%,rgba(4,10,18,0.38)_52%,rgba(4,10,18,0.58)_72%,rgba(4,10,18,0.82)_88%,rgba(4,10,18,0.94)_100%)]" />
+        <div className={cn("absolute inset-0", overlayClass)} />
       </div>
 
       <div className="relative z-10">
@@ -222,7 +264,7 @@ export function EnhancedProductCard({
             </Badge>
           )}
           {item.featuredLabel ? (
-            <Badge variant="secondary" className="bg-black/80 text-white">
+            <Badge variant="secondary" className={featuredBadgeClass}>
               {item.featuredLabel}
             </Badge>
           ) : null}
@@ -245,13 +287,14 @@ export function EnhancedProductCard({
           </Button>
         )}
 
-        <div className="relative z-10 flex min-h-[420px] flex-col justify-between p-4">
+        <div className="relative z-10 flex min-h-[360px] sm:min-h-[390px] md:min-h-[420px] flex-col justify-between p-3 sm:p-4">
           <div className="flex-1" />
 
           <div className="space-y-3">
             <CardTitle
               className={cn(
                 "line-clamp-2 text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.38)]",
+                titleClass,
                 compact ? "text-xl" : "text-xl"
               )}
             >
@@ -261,7 +304,8 @@ export function EnhancedProductCard({
             {showDescription ? (
               <CardDescription
                 className={cn(
-                  "line-clamp-2 text-white/95 drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)]",
+                  "line-clamp-2 drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)]",
+                  bodyClass,
                   featuredStyleCard ? "text-sm leading-6" : "text-sm"
                 )}
               >
@@ -278,7 +322,8 @@ export function EnhancedProductCard({
               />
               <span
                 className={cn(
-                  "text-white/95 drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]",
+                  "drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]",
+                  bodyClass,
                   featuredStyleCard ? "text-sm" : compact ? "text-xs" : "text-sm"
                 )}
               >
@@ -286,7 +331,8 @@ export function EnhancedProductCard({
               </span>
               <span
                 className={cn(
-                  "text-white/90 drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]",
+                  "drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]",
+                  metaClass,
                   featuredStyleCard ? "text-sm" : "text-xs"
                 )}
               >
@@ -296,7 +342,7 @@ export function EnhancedProductCard({
 
             {showVariants && !compact && item.variants?.length ? (
               <div className="space-y-2">
-                <span className="text-sm font-medium text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]">
+                <span className={cn("text-sm font-medium drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]", bodyClass)}>
                   Seedling band
                 </span>
                 <div className="flex flex-wrap gap-2">
@@ -321,7 +367,7 @@ export function EnhancedProductCard({
                   ))}
                 </div>
                 {activeVariant?.description ? (
-                  <p className="text-xs text-white/90 drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]">
+                  <p className={cn("text-xs drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]", metaClass)}>
                     {activeVariant.description}
                   </p>
                 ) : null}
@@ -333,7 +379,7 @@ export function EnhancedProductCard({
                 {compactHighlights.map((highlight) => (
                   <div
                     key={highlight}
-                    className="flex items-start gap-2 text-xs text-white/90 drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]"
+                    className={cn("flex items-start gap-2 text-xs drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]", metaClass)}
                   >
                     <span className={cn("mt-1 h-1.5 w-1.5 rounded-full", accentDotClass)} />
                     <span className="line-clamp-2">{highlight}</span>
@@ -345,13 +391,14 @@ export function EnhancedProductCard({
             <div className={cn("flex items-start justify-between gap-4", compact && "pt-1")}>
               <div>
                 {featuredStyleCard ? (
-                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/90 drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]">
+                  <div className={cn("text-[10px] font-medium uppercase tracking-[0.18em] drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]", metaClass)}>
                     Starting from
                   </div>
                 ) : null}
                 <div
                   className={cn(
-                    "font-bold text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)] transition-colors",
+                    "font-bold drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)] transition-colors",
+                    titleClass,
                     featuredStyleCard ? "text-2xl" : compact ? "text-lg" : "text-2xl",
                     pricePulseOnHover && "group-hover:text-green-200 group-hover:animate-pulse"
                   )}
@@ -359,23 +406,23 @@ export function EnhancedProductCard({
                   {startingPrice}
                 </div>
                 {!compact ? (
-                  <div className="text-xs text-white/90 drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]">
+                  <div className={cn("text-xs drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]", metaClass)}>
                     {activeUnitLabel}
                   </div>
                 ) : null}
                 {!compact && activeSecondaryPrice ? (
-                  <div className="text-xs text-white/90 drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]">
+                  <div className={cn("text-xs drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]", metaClass)}>
                     Maintenance {formatCurrency(activeSecondaryPrice, item.currency)}{" "}
                     {activeSecondaryUnitLabel}
                   </div>
                 ) : null}
                 {compact && activeSecondaryPrice ? (
-                  <div className="text-xs text-white/90 drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]">
+                  <div className={cn("text-xs drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]", metaClass)}>
                     + {formatCurrency(activeSecondaryPrice, item.currency)} maintenance
                   </div>
                 ) : null}
                 {!activeSecondaryPrice && item.minimumPriceLabel && !compact ? (
-                  <div className="text-xs text-white/90 drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]">
+                  <div className={cn("text-xs drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]", metaClass)}>
                     {item.minimumPriceLabel}
                   </div>
                 ) : null}
@@ -385,10 +432,10 @@ export function EnhancedProductCard({
         </div>
       </div>
 
-      <CardFooter className={cn("relative z-10 flex items-center justify-between gap-3 border-t border-white/12 bg-black/18 px-4 pt-3 pb-3 backdrop-blur-[2px]", compact && "pt-2")}>
-        <div className="flex flex-wrap items-center gap-2 text-sm text-white/88 drop-shadow-[0_1px_8px_rgba(0,0,0,0.32)]">
+      <CardFooter className={cn("relative z-10 flex items-center justify-between gap-3 border-t px-4 pt-3 pb-3 backdrop-blur-[2px]", footerSurfaceClass, compact && "pt-2")}>
+        <div className={cn("flex flex-wrap items-center gap-2 text-sm drop-shadow-[0_1px_8px_rgba(0,0,0,0.32)]", metaClass)}>
           {compact ? (
-            <span className="text-xs text-white/78">{startingUnitLabel}</span>
+            <span className={cn("text-xs", metaClass)}>{startingUnitLabel}</span>
           ) : quantity > 0 ? (
             `${quantity} in cart`
           ) : (

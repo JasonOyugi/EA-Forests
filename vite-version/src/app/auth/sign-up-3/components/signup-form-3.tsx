@@ -13,36 +13,37 @@ export function SignupForm3({
   ...props
 }: React.ComponentProps<"div">) {
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn("flex flex-col gap-3 sm:gap-4 md:gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
-        <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
-            <div className="flex flex-col gap-6">
-              <div className="flex justify-center mb-2">
+        <CardContent className="grid p-0 grid-cols-1 md:grid-cols-2">
+          <form className="p-4 sm:p-5 md:p-6 lg:p-8">
+            <div className="flex flex-col gap-4 sm:gap-5 md:gap-6">
+              <div className="flex justify-center mb-1 sm:mb-2">
                 <a href="/" className="flex items-center gap-2 font-medium">
-                  <div className="text-primary-foreground flex size-8 items-center justify-center rounded-md">
-                    <Logo size={24} />
+                  <div className="text-primary-foreground flex size-7 sm:size-8 items-center justify-center rounded-md">
+                    <Logo size={20} sm:size-24 />
                   </div>
-                  <span className="text-xl">EA Forests</span>
+                  <span className="text-lg sm:text-xl">EA Forests</span>
                 </a>
               </div>
               <div className="flex flex-col items-center text-center">
-                <h1 className="text-2xl font-bold">Create your account</h1>
-                <p className="text-muted-foreground text-balance">
+                <h1 className="text-xl sm:text-2xl font-bold">Create your account</h1>
+                <p className="text-xs sm:text-sm text-muted-foreground text-balance">
                   Enter your information to create a new account
                 </p>
               </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="grid gap-3">
-                  <Label htmlFor="firstName">First Name</Label>
+              <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                <div className="grid gap-2 sm:gap-3">
+                  <Label htmlFor="firstName" className="text-xs sm:text-sm">First Name</Label>
                   <Input
                     id="firstName"
                     placeholder="John"
+                    className="text-sm"
                     required
                   />
                 </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="lastName">Last Name</Label>
+                <div className="grid gap-2 sm:gap-3">
+                  <Label htmlFor="lastName" className="text-xs sm:text-sm">Last Name</Label>
                   <Input
                     id="lastName"
                     placeholder="Doe"

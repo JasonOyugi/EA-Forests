@@ -1,8 +1,10 @@
 "use client"
 
 import { useRef, useState } from "react"
-import { Badge } from "@/components/ui/badge"
 import { TiLocationArrow } from "react-icons/ti"
+
+import { Badge } from "@/components/ui/badge"
+import { ScrollReveal } from "@/components/ui/scroll-reveal"
 
 type BentoTiltProps = {
   children: React.ReactNode
@@ -65,16 +67,15 @@ function BentoCard({ src, title, description, isComingSoon, href }: BentoCardPro
         className="absolute left-0 top-0 size-full object-cover object-center"
       />
 
-      {/* overlay for readability */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
 
       <div className="relative z-10 flex size-full flex-col justify-between p-5 text-white">
         <div>
-          <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight leading-tight">
+          <h3 className="text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">
             {title}
           </h3>
           {description ? (
-            <p className="mt-3 text-sm sm:text-base text-white/80 max-w-[48ch]">
+            <p className="mt-3 max-w-[48ch] text-sm text-white/80 sm:text-base">
               {description}
             </p>
           ) : null}
@@ -82,7 +83,7 @@ function BentoCard({ src, title, description, isComingSoon, href }: BentoCardPro
 
         {isComingSoon ? (
           <div className="w-fit rounded-full bg-white/10 px-4 py-2 text-xs uppercase text-white/70 backdrop-blur">
-            <TiLocationArrow className="inline mr-1" />
+            <TiLocationArrow className="mr-1 inline" />
             coming soon
           </div>
         ) : null}
@@ -101,86 +102,72 @@ function BentoCard({ src, title, description, isComingSoon, href }: BentoCardPro
 
 export function FeaturesSection() {
   return (
-    <section id="features" className="py-24 sm:py-32 bg-muted/30">
+    <section id="features" className="bg-muted/30 py-24 sm:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Keep the first page header */}
-        <div className="mx-auto max-w-2xl text-center mb-16">
-          <Badge variant="outline" className="mb-4 text-primary border-emerald-500/40">
+        <ScrollReveal className="mx-auto mb-16 max-w-2xl text-center" distance={22}>
+          <Badge variant="outline" className="mb-4 border-emerald-500/40 text-primary">
             Our Features
           </Badge>
-          <h2 className="font-bold tracking-tight sm:text-4xl mb-4">
+          <h2 className="mb-4 font-bold tracking-tight sm:text-4xl">
             Everything you need to know about East Africa forests in one place
           </h2>
-        </div>
+        </ScrollReveal>
 
-        {/* Big hero bento */}
-        <BentoTilt className="relative mb-7 h-96 w-full overflow-hidden rounded-xl border bg-card shadow-sm md:h-[60vh]">
-          <BentoCard
-            src="/feature-1.mp4"
-            title={
-              <>
-                Trade Forestry Assets
-              </>
-            }
-            description="Have a forest? Looking to source roundwood or carbon? Click here to find credible partners asap."
-            href="/shop/roundwood"
-          />
-        </BentoTilt>
+        <ScrollReveal className="mb-7" delay={80}>
+          <BentoTilt className="relative h-96 w-full overflow-hidden rounded-xl border bg-card shadow-sm md:h-[60vh]">
+            <BentoCard
+              src="/feature-1.mp4"
+              title={<>Trade Forestry Assets</>}
+              description="Have a forest? Looking to source roundwood or carbon? Click here to find credible partners asap."
+              href="/shop/roundwood"
+            />
+          </BentoTilt>
+        </ScrollReveal>
 
-        {/* Grid */}
         <div className="grid w-full grid-cols-1 gap-7 md:grid-cols-2 md:auto-rows-[260px]">
-          <BentoTilt className="md:row-span-2 overflow-hidden rounded-xl border bg-card shadow-sm">
-            <BentoCard
-              src="/feature-2.mp4"
-              title={
-                <>
-                  The Nursery Shop
-                </>
-              }
-              description="Want to start a forest? Whether you already have land or not, you can find and plant the latest generation of tree species, hybrids, and clones."
-              href="/shop/seedlings"
-            />
-          </BentoTilt>
+          <ScrollReveal className="h-full md:row-span-2" delay={120}>
+            <BentoTilt className="h-full overflow-hidden rounded-xl border bg-card shadow-sm">
+              <BentoCard
+                src="/feature-2.mp4"
+                title={<>The Nursery Shop</>}
+                description="Want to start a forest? Whether you already have land or not, you can find and plant the latest generation of tree species, hybrids, and clones."
+                href="/shop/seedlings"
+              />
+            </BentoTilt>
+          </ScrollReveal>
 
-          <BentoTilt className="overflow-hidden rounded-xl border bg-card shadow-sm">
-            <BentoCard
-              src="/feature-3.mp4"
-              title={
-                <>
-                  Market Insight Tools
-                </>
-              }
-              description="Forestry on steroids - introduce cutting edge, on-the-ground analysis to calculate the most profitable trades and deals in real-time"
-              href="https://github.com/JasonOyugi/EA-Forestry-Geospatial-Analysis.git"
-            />
-          </BentoTilt>
+          <ScrollReveal delay={180}>
+            <BentoTilt className="overflow-hidden rounded-xl border bg-card shadow-sm">
+              <BentoCard
+                src="/feature-3.mp4"
+                title={<>Market Insight Tools</>}
+                description="Forestry on steroids - introduce cutting edge, on-the-ground analysis to calculate the most profitable trades and deals in real-time"
+                href="https://github.com/JasonOyugi/EA-Forestry-Geospatial-Analysis.git"
+              />
+            </BentoTilt>
+          </ScrollReveal>
 
-          <BentoTilt className="overflow-hidden rounded-xl border bg-card shadow-sm">
-            <BentoCard
-              src="/feature-4.mp4"
-              title={
-                <>
-                  Project Development
-                </>
-              }
-              description="Create, develop, execute and monitor a forestry-based project with AI"
-              isComingSoon
-            />
-          </BentoTilt>
+          <ScrollReveal delay={240}>
+            <BentoTilt className="overflow-hidden rounded-xl border bg-card shadow-sm">
+              <BentoCard
+                src="/feature-4.mp4"
+                title={<>Project Development</>}
+                description="Create, develop, execute and monitor a forestry-based project with AI"
+                isComingSoon
+              />
+            </BentoTilt>
+          </ScrollReveal>
 
-          {/* “More coming soon” tile */}
-          <BentoTilt className="overflow-hidden rounded-xl border bg-card shadow-sm">
-            <BentoCard
-              src="/feature-5.mp4"
-              title={
-                <>
-                  More coming soon!!
-                </>
-              }
-              description="!!!"
-              isComingSoon
-            />
-          </BentoTilt>
+          <ScrollReveal delay={300}>
+            <BentoTilt className="overflow-hidden rounded-xl border bg-card shadow-sm">
+              <BentoCard
+                src="/feature-5.mp4"
+                title={<>More coming soon!!</>}
+                description="!!!"
+                isComingSoon
+              />
+            </BentoTilt>
+          </ScrollReveal>
         </div>
       </div>
     </section>

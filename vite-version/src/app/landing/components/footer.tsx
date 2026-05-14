@@ -81,16 +81,16 @@ export function LandingFooter() {
         </div>
 
         {/* Main Footer Content */}
-        <div className="grid gap-8 grid-cols-4 lg:grid-cols-2">
+        <div className="grid gap-4 sm:gap-6 md:gap-8 grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2">
           {/* Brand Column */}
-          <div className="col-span-4 lg:col-span-2 max-w-2xl">
-            <div className="flex items-center space-x-2 mb-4 max-lg:justify-center">
+          <div className="col-span-2 sm:col-span-2 md:col-span-4 lg:col-span-2 max-w-2xl">
+            <div className="flex items-center space-x-2 mb-3 sm:mb-4 max-lg:justify-center">
               <a href="#hero" className="flex items-center space-x-2 cursor-pointer">
-                <Logo size={32} />
-                <span className="font-bold text-xl">EA Forests</span>
+                <Logo size={28} sm:size-32 />
+                <span className="font-bold text-lg sm:text-xl">EA Forests</span>
               </a>
             </div>
-            <p className="text-muted-foreground mb-6 max-lg:text-center max-lg:flex max-lg:justify-center">
+            <p className="text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6 max-lg:text-center max-lg:flex max-lg:justify-center">
               Accelerating trade and investments into forestry in East Africa.
             </p>
             <div className="flex space-x-4 max-lg:justify-center">
@@ -113,11 +113,11 @@ export function LandingFooter() {
         <Separator className="my-8" />
 
         {/* Bottom Footer */}
-        <div className="flex flex-col lg:flex-row justify-between items-center gap-2">
-          <div className="flex flex-col sm:flex-row items-center gap-2 text-muted-foreground text-sm">
+        <div className="flex flex-col lg:flex-row justify-between items-center gap-3 sm:gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-2 text-xs sm:text-sm text-muted-foreground">
             <div className="flex items-center gap-1">
               <span>Made with</span>
-              <Heart className="h-4 w-4 text-red-500 fill-current" />
+              <Heart className="h-3 sm:h-4 w-3 sm:w-4 text-red-500 fill-current" />
               <span>by</span>
               <a href="#hero" className="font-semibold text-foreground hover:text-primary transition-colors cursor-pointer">
                 EA Forests
@@ -126,7 +126,7 @@ export function LandingFooter() {
             <span className="hidden sm:inline">•</span>
             <span>© {new Date().getFullYear()} for the forestry community</span>
           </div>
-          <div className="flex items-center space-x-4 text-sm text-muted-foreground mt-4 md:mt-0">
+          <div className="flex items-center space-x-3 sm:space-x-4 text-xs sm:text-sm text-muted-foreground mt-3 sm:mt-0 md:mt-0">
             <a href="#privacy" className="hover:text-foreground transition-colors">
               Privacy Policy
             </a>

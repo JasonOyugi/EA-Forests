@@ -81,10 +81,10 @@ export function ForestryServicesCountdownBanner() {
                 Forestry Membership Offer
               </div>
               <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Join Our Forestry Rewards Program
+                Join Our Forestry Group Scheme Program
               </h2>
               <p className="text-gray-600 dark:text-gray-300">
-                Unlock service bundle discounts, priority scheduling, early access to planting windows, and enterprise support perks.
+                Unlock service bundle discounts, improved genetic selection, priority scheduling, early access to planting windows, and many other support perks.
               </p>
 
               <div className="mt-4 flex flex-wrap items-center justify-center gap-2 md:justify-start">

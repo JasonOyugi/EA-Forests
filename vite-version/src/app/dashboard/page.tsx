@@ -7,10 +7,13 @@ import {
   generatePortfolioSeries,
   portfolioSeriesReferenceDate,
 } from "./components/chart-area-interactive"
-import { DataTable, groupPlantedSize, groupSize, initialAssetGroups, upcomingPayments } from "./components/data-table"
+import { DashboardAssetMap } from "./components/dashboard-asset-map"
+import { createDashboardCalendarEvents, getUpcomingPaymentRows } from "./components/dashboard-events"
+import { DataTable, groupPlantedSize, groupSize, initialAssetGroups } from "./components/data-table"
 import { SectionCards } from "./components/section-cards"
 import { SpeciesAllocation } from "./components/species-allocation"
 import type { MetricKey } from "./components/chart-area-interactive"
+import type { CalendarEvent } from "@/app/calendar/types"
 
 export default function Page() {
   const formatCurrencyExact = React.useCallback(
@@ -34,10 +37,13 @@ export default function Page() {
   )
 
   const chartRef = React.useRef<HTMLDivElement | null>(null)
+  const assetMapRef = React.useRef<HTMLDivElement | null>(null)
   const tableRef = React.useRef<HTMLDivElement | null>(null)
   const [metric, setMetric] = React.useState<MetricKey>("portfolioValue")
   const [tableTab, setTableTab] = React.useState<"assets" | "transactions" | "activity-logs" | "documents">("assets")
   const [transactionsHighlightKey, setTransactionsHighlightKey] = React.useState(0)
+  const [dashboardEvents, setDashboardEvents] = React.useState<CalendarEvent[]>(() => createDashboardCalendarEvents())
+  const [selectedAssetMapId, setSelectedAssetMapId] = React.useState(initialAssetGroups[0]?.id ?? "")
   const series = React.useMemo(
     () => generatePortfolioSeries(portfolioSeriesReferenceDate),
     []
@@ -48,9 +54,10 @@ export default function Page() {
     return { plantedArea, acquiredArea }
   }, [])
   const pendingTotals = React.useMemo(() => {
+    const upcomingPayments = getUpcomingPaymentRows(dashboardEvents)
     const amount = upcomingPayments.reduce((sum, payment) => sum + payment.amount, 0)
     return { amount, count: upcomingPayments.length }
-  }, [])
+  }, [dashboardEvents])
   const plantedAreaLabel = totals.plantedArea.toFixed(2)
   const acquiredAreaLabel = totals.acquiredArea.toFixed(2)
 
@@ -101,6 +108,11 @@ export default function Page() {
     tableRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
   }
 
+  const handleAssetMapOpen = (groupId: string) => {
+    setSelectedAssetMapId(groupId)
+    assetMapRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
+
   return (
     <BaseLayout title="Investor Dashboard" description="Welcome to your admin dashboard: see your portfolio's performance this season">
       <div className="@container/main px-4 lg:px-6 space-y-6">
@@ -115,7 +127,7 @@ export default function Page() {
           landTrendLabel={landTrend.label}
           landTrendUp={landTrend.isUp}
           landSummary={`Managed footprint across Uganda, Kenya, and Tanzania`}
-          estimatedVolume={`${formatNumberExact(landPoint?.expectedVolume ?? 0)} m³`}
+          estimatedVolume={`${formatNumberExact(landPoint?.expectedVolume ?? 0)} m3`}
           volumeTrendLabel={volumeTrend.label}
           volumeTrendUp={volumeTrend.isUp}
           volumeSummary={`Standing timber estimate at ${landPoint?.label ?? "current horizon"} across planted blocks`}
@@ -127,12 +139,18 @@ export default function Page() {
           <ChartAreaInteractive metric={metric} onMetricChange={setMetric} />
         </div>
         <SpeciesAllocation />
+        <div ref={assetMapRef}>
+          <DashboardAssetMap selectedGroupId={selectedAssetMapId} onSelectGroup={setSelectedAssetMapId} />
+        </div>
       </div>
       <div ref={tableRef} className="@container/main" id="dashboard-data-table">
         <DataTable
           activeTab={tableTab}
           onActiveTabChange={setTableTab}
           transactionsHighlightKey={transactionsHighlightKey}
+          events={dashboardEvents}
+          onEventsChange={setDashboardEvents}
+          onAssetMapOpen={handleAssetMapOpen}
         />
       </div>
     </BaseLayout>
