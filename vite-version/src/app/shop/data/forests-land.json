@@ -4,7 +4,7 @@
     "slug": "core-forests",
     "shop": "forests-land",
     "name": "Core Forests",
-    "subtitle": "New Forestry investors",
+    "subtitle": "Introduction to forestry investments",
     "kind": "asset",
     "unitLabel": "establishment per hectare",
     "price": 2000,
@@ -102,7 +102,7 @@
     "slug": "high-performance-forests",
     "shop": "forests-land",
     "name": "High-Performance Forests",
-    "subtitle": "World-class genetics and optimized systems targeting superior returns",
+    "subtitle": "Forest growth/yield optimisation",
     "kind": "asset",
     "unitLabel": "establishment per hectare",
     "price": 2500,
@@ -397,6 +397,174 @@
           "Start with the map to compare concession geography and site labels.",
           "Click a marker or popup action to swap the right-hand panel into a full site description.",
           "Use the metrics to shortlist the concessions that fit your mandate before moving into diligence."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "kenya-concessions-005b",
+    "slug": "kenya-concessions",
+    "shop": "forests-land",
+    "name": "Kenya Concessions",
+    "subtitle": "Kenya concession pathways with a draft country map experience",
+    "kind": "asset",
+    "unitLabel": "starting diligence package",
+    "price": 22000,
+    "currency": "USD",
+    "description": "A draft Kenya concession map page where investors can compare early-stage concession pathways, open each marker, and move into a more focused country-level review.",
+    "image": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80",
+    "imageGallery": [
+      { "url": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80", "title": "Kenya concessions overview" },
+      { "url": "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=1200&q=80", "title": "Landscape corridor" },
+      { "url": "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1200&q=80", "title": "Access terrain view" }
+    ],
+    "tags": ["featured", "new", "timber"],
+    "stockStatus": "quote",
+    "domain": "timber",
+    "featured": true,
+    "ctaLabel": "Review Kenya concessions",
+    "featuredLabel": "Featured",
+    "minimumPriceLabel": "Starting diligence package from $22,000",
+    "highlights": [
+      "Country map placeholder for Kenya concession review",
+      "Marker-led comparison of investor-ready pathways",
+      "Built for later enrichment with deeper diligence layers"
+    ],
+    "mapTitle": "Current Kenya concession offerings",
+    "mapDescription": "Select a marker to switch the page into that concession profile.",
+    "mapPoints": [
+      {
+        "id": "ke-concession-laikipia",
+        "name": "Laikipia Upland Concession",
+        "label": "Concession",
+        "category": "Government concession",
+        "summary": "A higher-elevation concession corridor suited to phased timber development and resilience-oriented planning.",
+        "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
+        "latitude": 0.3602,
+        "longitude": 36.7822,
+        "details": [
+          "Positioned for phased entry with a stronger infrastructure story than more remote alternatives.",
+          "Useful for investors comparing cooler upland forestry conditions in Kenya."
+        ],
+        "metrics": [
+          { "label": "Indicative area", "value": "7,800 ha" },
+          { "label": "Access status", "value": "Primary road within 24 km" },
+          { "label": "Starting diligence", "value": "$22,000" }
+        ],
+        "ctaLabel": "Open concession profile"
+      },
+      {
+        "id": "ke-concession-kericho",
+        "name": "Kericho Growth Belt Concession",
+        "label": "Concession",
+        "category": "Government concession",
+        "summary": "A greener corridor with stronger rainfall profile and room for more conventional timber establishment.",
+        "image": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80",
+        "latitude": -0.367,
+        "longitude": 35.2831,
+        "details": [
+          "Designed as a draft placeholder for investors who want a more conservative Kenya concession story.",
+          "Useful for comparing access, rainfall, and logistics against the upland option."
+        ],
+        "metrics": [
+          { "label": "Indicative area", "value": "5,900 ha" },
+          { "label": "Priority use", "value": "Conventional timber platform" },
+          { "label": "Starting diligence", "value": "$24,500" }
+        ],
+        "ctaLabel": "View site diligence"
+      }
+    ],
+    "detailSections": [
+      {
+        "title": "How to use this page",
+        "items": [
+          "Use the country map to compare draft Kenya concession pathways.",
+          "Click a marker to switch the right-hand panel into that site profile.",
+          "This is a placeholder structure that we can enrich with deeper diligence content next."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tanzania-concessions-006b",
+    "slug": "tanzania-concessions",
+    "shop": "forests-land",
+    "name": "Tanzania Concessions",
+    "subtitle": "Tanzania concession pathways with a draft country map experience",
+    "kind": "asset",
+    "unitLabel": "starting diligence package",
+    "price": 23500,
+    "currency": "USD",
+    "description": "A draft Tanzania concession map page for comparing larger-format concession pathways before we layer in fuller diligence and market context.",
+    "image": "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=1200&q=80",
+    "imageGallery": [
+      { "url": "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=1200&q=80", "title": "Tanzania concessions overview" },
+      { "url": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80", "title": "Field corridor context" },
+      { "url": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80", "title": "Terrain access" }
+    ],
+    "tags": ["featured", "new", "timber"],
+    "stockStatus": "quote",
+    "domain": "timber",
+    "featured": true,
+    "ctaLabel": "Review Tanzania concessions",
+    "featuredLabel": "Featured",
+    "minimumPriceLabel": "Starting diligence package from $23,500",
+    "highlights": [
+      "Country map placeholder for Tanzania concession review",
+      "Marker-led comparison of larger concession corridors",
+      "Structured to grow into a richer Tanzania diligence page later"
+    ],
+    "mapTitle": "Current Tanzania concession offerings",
+    "mapDescription": "Select a marker to switch the page into that concession profile.",
+    "mapPoints": [
+      {
+        "id": "tz-concession-iringa",
+        "name": "Iringa Highland Concession",
+        "label": "Concession",
+        "category": "Government concession",
+        "summary": "A highland concession corridor designed as a first draft for larger-format commercial timber comparison.",
+        "image": "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=600&q=80",
+        "latitude": -7.7689,
+        "longitude": 35.6996,
+        "details": [
+          "Placeholder corridor with a strong fit for future timber and processing-linked analysis.",
+          "Useful as a Tanzania benchmark against other East African concession structures."
+        ],
+        "metrics": [
+          { "label": "Indicative area", "value": "14,200 ha" },
+          { "label": "Access status", "value": "Regional corridor access" },
+          { "label": "Starting diligence", "value": "$23,500" }
+        ],
+        "ctaLabel": "Open concession profile"
+      },
+      {
+        "id": "tz-concession-morogoro",
+        "name": "Morogoro Expansion Concession",
+        "label": "Concession",
+        "category": "Government concession",
+        "summary": "A more expansion-led pathway suited to investors comparing logistics and scale-up sequencing in Tanzania.",
+        "image": "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=600&q=80",
+        "latitude": -6.8235,
+        "longitude": 37.6613,
+        "details": [
+          "Useful placeholder for corridor-led review with easier commercial narrative around staged expansion.",
+          "Designed for later enrichment with deeper land, access, and market layers."
+        ],
+        "metrics": [
+          { "label": "Indicative area", "value": "9,600 ha" },
+          { "label": "Priority use", "value": "Expansion platform" },
+          { "label": "Starting diligence", "value": "$26,000" }
+        ],
+        "ctaLabel": "View site diligence"
+      }
+    ],
+    "detailSections": [
+      {
+        "title": "How to use this page",
+        "items": [
+          "Use the country map to compare draft Tanzania concession pathways.",
+          "Click a marker to switch the right-hand panel into that site profile.",
+          "This is a placeholder structure that we can enrich with deeper diligence content next."
         ]
       }
     ]

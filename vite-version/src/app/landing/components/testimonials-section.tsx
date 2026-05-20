@@ -10,6 +10,14 @@ import { cn } from '@/lib/utils'
 import { Button } from "@/components/ui/button"
 import { BentoTilt } from '@/components/ui/bento-tilt'
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
+import {
+  landingBadgeClass,
+  landingContainer,
+  landingHeadingClass,
+  landingLeadClass,
+  landingSectionIntro,
+  landingSectionPadding,
+} from './landing-shared'
 
 type Testimonial = {
   name: string
@@ -124,27 +132,26 @@ export function TestimonialsSection() {
   ] as const
 
   return (
-    <section id="testimonials" className="py-24 sm:py-32">
-      <div className="container mx-auto px-8 sm:px-6">
+    <section id="testimonials" className={landingSectionPadding}>
+      <div className={landingContainer}>
         {/* Section Header */}
-        <ScrollReveal className="mx-auto mb-16 max-w-2xl text-center" distance={22}>
-          <Badge variant="outline" className="mb-4 text-primary border border-emerald-500/40" >
+        <ScrollReveal className={landingSectionIntro} distance={22}>
+          <Badge variant="outline" className={landingBadgeClass} >
             Testimonials
           </Badge>
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
+          <h2 className={landingHeadingClass}>
             Accelerating Forestry In East Africa
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className={landingLeadClass}>
             Join thousands of entrepreneurs and investors who trust our platform to build exceptional forestry investments.
           </p>
         </ScrollReveal>
 
-        {/* Testimonials Masonry Grid */}
-        <div className="columns-1 gap-4 md:columns-2 md:gap-6 lg:columns-3 lg:gap-4">
+        <div className="grid gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
           {testimonials.map((testimonial, index) => (
-            <ScrollReveal key={index} className="mb-6 break-inside-avoid lg:mb-4" delay={(index % 6) * 70}>
-              <BentoTilt>
-                <Card className="group shadow-none">
+            <ScrollReveal key={index} className="h-full" delay={(index % 6) * 70}>
+              <BentoTilt className="h-full">
+                <Card className="group h-full shadow-none">
                   <CardContent className="relative">
                   <div className="absolute right-2 top-2 z-10">
                     <div className="group/social relative flex flex-col items-end gap-2">
@@ -211,7 +218,7 @@ export function TestimonialsSection() {
                   </div>
 
                   <blockquote className="mt-4">
-                    <p className="text-sm leading-relaxed text-balance">{testimonial.quote}</p>
+                    <p className="text-sm leading-relaxed">{testimonial.quote}</p>
                   </blockquote>
                   </CardContent>
                 </Card>

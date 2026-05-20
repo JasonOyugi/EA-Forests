@@ -12,6 +12,7 @@ interface ForestryServicesShopProps {
 
 export function ForestryServicesShop({ shop, inventory }: ForestryServicesShopProps) {
   const featuredItems = inventory.filter((item) => item.tags.includes("featured") || item.tags.includes("popular"))
+  const newItems = inventory.filter((item) => item.tags.includes("new"))
 
   return (
     <ShopCommonLayout
@@ -29,8 +30,13 @@ export function ForestryServicesShop({ shop, inventory }: ForestryServicesShopPr
       featuredTitle="Featured Services"
       featuredSubtitle="Operational services ready for booking"
       featuredTheme="forestry-services"
-      featuredSectionClassName="rounded-2xl border border-amber-300 bg-amber-50/70"
-      showNewArrivals={false}
+      featuredSectionClassName="rounded-xl"
+      newItems={newItems}
+      newTitle="New Arrivals"
+      newSubtitle="Latest forestry service offers and bundled operations"
+      newTheme="forestry-services"
+      newSectionClassName="rounded-xl"
+      showNewArrivals={newItems.length > 0}
     />
   )
 }

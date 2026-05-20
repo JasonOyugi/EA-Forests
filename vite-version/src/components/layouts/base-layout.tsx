@@ -24,6 +24,7 @@ export function BaseLayout({ children, title, description }: BaseLayoutProps) {
 
   return (
     <SidebarProvider
+      defaultOpen={false}
       style={
         {
           "--sidebar-width": "16rem",

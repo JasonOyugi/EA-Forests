@@ -1,4 +1,12 @@
-import { TrendingDown, TrendingUp, Sprout, Rocket, TriangleAlert, Wallet } from "lucide-react"
+import {
+  Rocket,
+  Sprout,
+  TrendingDown,
+  TrendingUp,
+  TriangleAlert,
+  Wallet,
+  type LucideIcon,
+} from "lucide-react"
 
 import { BentoTilt } from "@/components/ui/bento-tilt"
 import { Badge } from "@/components/ui/badge"
@@ -32,6 +40,58 @@ interface SectionCardsProps {
   pendingSummary: string
 }
 
+type SummaryCard = {
+  title: string
+  value: string
+  trendLabel: string
+  trendUp: boolean
+  summary: string
+  icon: LucideIcon
+  onClick: () => void
+  toneClassName: string
+}
+
+function DashboardSummaryCard({
+  title,
+  value,
+  trendLabel,
+  trendUp,
+  summary,
+  icon: Icon,
+  onClick,
+  toneClassName,
+}: SummaryCard) {
+  return (
+    <BentoTilt className="h-full">
+      <Card
+        className={`@container/card h-full cursor-pointer shadow-xs investor-card ${toneClassName}`}
+        onClick={onClick}
+      >
+        <CardHeader>
+          <CardDescription className="font-bold text-foreground">
+            {title}
+          </CardDescription>
+          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+            {value}
+          </CardTitle>
+          <CardAction>
+            <Badge variant="outline" className="animate-pulse bg-gray">
+              {trendUp ? <TrendingUp /> : <TrendingDown />}
+              {trendLabel}
+            </Badge>
+          </CardAction>
+        </CardHeader>
+        <CardFooter className="flex-col items-start gap-1.5 text-sm">
+          <div className="line-clamp-2 flex gap-2 font-medium">
+            {summary}
+            <Icon className="size-5" />
+          </div>
+        </CardFooter>
+      </Card>
+    </BentoTilt>
+  )
+}
+
 export function SectionCards({
   onMetricCardClick,
   onPaymentsCardClick,
@@ -51,117 +111,60 @@ export function SectionCards({
   pendingInvoicesLabel,
   pendingSummary,
 }: SectionCardsProps) {
+  const cards: SummaryCard[] = [
+    {
+      title: "Projected Portfolio Value",
+      value: portfolioValue,
+      trendLabel: portfolioTrendLabel,
+      trendUp: portfolioTrendUp,
+      summary: portfolioSummary,
+      icon: TriangleAlert,
+      onClick: () => onMetricCardClick("portfolioValue"),
+      toneClassName: portfolioTrendUp
+        ? "bg-emerald-400 investor-card-emerald"
+        : "bg-rose-400 investor-card-rose",
+    },
+    {
+      title: "Land Managed",
+      value: landManaged,
+      trendLabel: landTrendLabel,
+      trendUp: landTrendUp,
+      summary: landSummary,
+      icon: Rocket,
+      onClick: () => onMetricCardClick("landManaged"),
+      toneClassName: landTrendUp
+        ? "bg-emerald-400 investor-card-emerald"
+        : "bg-rose-400 investor-card-rose",
+    },
+    {
+      title: "Estimated Volume",
+      value: estimatedVolume,
+      trendLabel: volumeTrendLabel,
+      trendUp: volumeTrendUp,
+      summary: volumeSummary,
+      icon: Sprout,
+      onClick: () => onMetricCardClick("expectedVolume"),
+      toneClassName: volumeTrendUp
+        ? "bg-emerald-400 investor-card-emerald"
+        : "bg-rose-300 investor-card-rose",
+    },
+    {
+      title: "Payments Pending",
+      value: pendingPayments,
+      trendLabel: pendingInvoicesLabel,
+      trendUp: true,
+      summary: pendingSummary,
+      icon: Wallet,
+      onClick: onPaymentsCardClick,
+      toneClassName: "bg-lime-200 dark:bg-yellow-300 investor-card-lime",
+    },
+  ]
+
   return (
     <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      <BentoTilt className="h-full">
-        <Card
-          className={`@container/card h-full cursor-pointer to-card shadow-xs investor-card ${
-            portfolioTrendUp ? "bg-emerald-400 investor-card-emerald" : "bg-rose-400 investor-card-rose"
-          }`}
-          onClick={() => onMetricCardClick("portfolioValue")}
-        >
-          <CardHeader>
-            <CardDescription className="font-bold text-foreground">Projected Portfolio Value</CardDescription>
-            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-              {portfolioValue}
-            </CardTitle>
-            <CardAction>
-              <Badge variant="outline" className="bg-gray animate-pulse">
-                {portfolioTrendUp ? <TrendingUp /> : <TrendingDown />}
-                {portfolioTrendLabel}
-              </Badge>
-            </CardAction>
-          </CardHeader>
-          <CardFooter className="flex-col items-start gap-1.5 text-sm">
-            <div className="line-clamp-2 flex gap-2 font-medium">
-              {portfolioSummary}
-              <Rocket className="size-5" />
-            </div>
-          </CardFooter>
-        </Card>
-      </BentoTilt>
-
-      <BentoTilt className="h-full">
-        <Card
-          className={`@container/card h-full cursor-pointer to-card shadow-xs investor-card ${
-            landTrendUp ? "bg-emerald-400 investor-card-emerald" : "bg-rose-400 investor-card-rose"
-          }`}
-          onClick={() => onMetricCardClick("landManaged")}
-        >
-          <CardHeader>
-            <CardDescription className="font-bold text-foreground">Land Managed</CardDescription>
-            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-              {landManaged}
-            </CardTitle>
-            <CardAction>
-              <Badge variant="outline" className="bg-gray animate-pulse">
-                {landTrendUp ? <TrendingUp /> : <TrendingDown />}
-                {landTrendLabel}
-              </Badge>
-            </CardAction>
-          </CardHeader>
-          <CardFooter className="flex-col items-start gap-1.5 text-sm">
-            <div className="line-clamp-2 flex gap-2 font-medium">
-              {landSummary}
-              <TriangleAlert className="size-5" />
-            </div>
-          </CardFooter>
-        </Card>
-      </BentoTilt>
-
-      <BentoTilt className="h-full">
-        <Card
-          className={`@container/card h-full cursor-pointer to-card shadow-xs investor-card ${
-            volumeTrendUp ? "bg-emerald-400 investor-card-emerald" : "bg-rose-300 investor-card-rose"
-          }`}
-          onClick={() => onMetricCardClick("expectedVolume")}
-        >
-          <CardHeader>
-            <CardDescription className="font-bold text-foreground">Estimated Volume</CardDescription>
-            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-              {estimatedVolume}
-            </CardTitle>
-            <CardAction>
-              <Badge variant="outline" className="bg-gray animate-pulse">
-                {volumeTrendUp ? <TrendingUp /> : <TrendingDown />}
-                {volumeTrendLabel}
-              </Badge>
-            </CardAction>
-          </CardHeader>
-          <CardFooter className="flex-col items-start gap-1.5 text-sm">
-            <div className="line-clamp-2 flex gap-2 font-medium">
-              {volumeSummary}
-              <Sprout className="size-5" />
-            </div>
-          </CardFooter>
-        </Card>
-      </BentoTilt>
-
-      <BentoTilt className="h-full">
-        <Card
-          className="@container/card h-full cursor-pointer bg-lime-200 to-card shadow-xs dark:bg-yellow-300 investor-card investor-card-lime"
-          onClick={onPaymentsCardClick}
-        >
-          <CardHeader>
-            <CardDescription className="font-bold text-foreground">Payments Pending</CardDescription>
-            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-              {pendingPayments}
-            </CardTitle>
-            <CardAction>
-              <Badge variant="outline" className="bg-gray animate-pulse">
-                <Wallet />
-                {pendingInvoicesLabel}
-              </Badge>
-            </CardAction>
-          </CardHeader>
-          <CardFooter className="flex-col items-start gap-1.5 text-sm">
-            <div className="line-clamp-2 flex gap-2 font-medium">
-              {pendingSummary}
-              <Wallet className="size-5" />
-            </div>
-          </CardFooter>
-        </Card>
-      </BentoTilt>
+      {cards.map((card) => (
+        <DashboardSummaryCard key={card.title} {...card} />
+      ))}
     </div>
   )
 }

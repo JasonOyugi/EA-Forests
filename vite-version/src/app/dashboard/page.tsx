@@ -144,6 +144,9 @@ export default function Page() {
         </div>
       </div>
       <div ref={tableRef} className="@container/main" id="dashboard-data-table">
+        <div className="px-4 lg:px-6 pb-3">
+          <h2 className="text-xl font-semibold tracking-tight">Activity table</h2>
+        </div>
         <DataTable
           activeTab={tableTab}
           onActiveTabChange={setTableTab}

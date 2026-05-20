@@ -5,9 +5,17 @@ import { ArrowRight, BadgePercent } from "lucide-react"
 
 import { BentoTilt } from "@/components/ui/bento-tilt"
 
-export function ForestryServicesCountdownBanner() {
+export function ForestryServicesCountdownBanner({
+  onVisibilityChange,
+}: {
+  onVisibilityChange?: (isVisible: boolean) => void
+}) {
   const [isVisible, setIsVisible] = useState(true)
   const [timeLeft, setTimeLeft] = useState({ days: 44, hours: 0, minutes: 0, seconds: 0 })
+
+  useEffect(() => {
+    onVisibilityChange?.(isVisible)
+  }, [isVisible, onVisibilityChange])
 
   useEffect(() => {
     const expiry = new Date()

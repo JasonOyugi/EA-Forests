@@ -9,7 +9,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { CheckoutPlaceholder } from "../checkout-placeholder"
 import { FloatingCart } from "../floating-cart"
 import { ProductGrid } from "../product-grid"
-import { ShopSectionHeader } from "../shop-section-header"
 import { FeaturedSection } from "@/components/commerce-ui/featured-section"
 import { useShopStore } from "@/stores/shop-store"
 import type { ShopDefinition, ShopItem } from "@/app/shop/types"
@@ -135,6 +134,11 @@ export function ShopCommonLayout({
           const bPrice = b.variants?.[0]?.price ?? b.price
           return aPrice - bPrice
         }
+        if (sortOrder === "priceHighToLow") {
+          const aPrice = a.variants?.[0]?.price ?? a.price
+          const bPrice = b.variants?.[0]?.price ?? b.price
+          return bPrice - aPrice
+        }
         return 0
       })
   }, [inventory, search, selectedCategory, selectedSpecies, sortOrder])
@@ -189,10 +193,8 @@ export function ShopCommonLayout({
           </div>
         ) : null}
 
-        <div id="products-section" className="rounded-xl border bg-card p-6">
+        <div id="products-section" className="rounded-xl bg-transparent border-none p-6">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-            <ShopSectionHeader title={shop.name} description={shop.description} />
-
             <div className="w-full max-w-sm">
               <Input
                 value={search}
@@ -250,6 +252,7 @@ export function ShopCommonLayout({
                 <SelectContent>
                   <SelectItem value="none">Relevance</SelectItem>
                   <SelectItem value="priceLowToHigh">Price: Low to high</SelectItem>
+                  <SelectItem value="priceHighToLow">Price: High to low</SelectItem>
                 </SelectContent>
               </Select>
             </div>

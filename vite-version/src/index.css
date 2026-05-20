@@ -226,18 +226,18 @@ html {
 }
 
 .dark .hero-map-bg {
-  opacity: 0.15;
-  filter: grayscale(0.95) sepia(0.25) hue-rotate(165deg) saturate(0.5) brightness(0.48) contrast(0.92) invert(0.9);
+  opacity: 0.24;
+  filter: grayscale(0.72) sepia(0.18) hue-rotate(168deg) saturate(0.7) brightness(0.74) contrast(0.92) invert(0.78);
 }
 
 .dark .landing-hero-shell .hero-map-bg {
-  opacity: 0.13;
+  opacity: 0.48;
 }
 
 .dark .hero-map-tint {
   background:
-    radial-gradient(circle at top, rgb(16 24 39 / 0.22), transparent 42%),
-    linear-gradient(180deg, rgb(9 14 22 / 0.94) 0%, rgb(12 18 28 / 0.82) 25%, rgb(10 16 24 / 0.94) 100%);
+    radial-gradient(circle at top, rgb(16 24 39 / 0.16), transparent 42%),
+    linear-gradient(180deg, rgb(9 14 22 / 0.74) 0%, rgb(12 18 28 / 0.56) 25%, rgb(10 16 24 / 0.78) 100%);
 }
 
 .navbar-map-bg {
@@ -366,6 +366,9 @@ html {
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
@@ -408,6 +411,9 @@ html {
   transition: opacity 180ms ease;
   animation: chart-accent-run 2.1s linear infinite;
   -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -484,35 +490,6 @@ html {
   }
 }
 
-@keyframes aboutIconShake {
-  0%, 100% {
-    transform: translate3d(0, 0, 0) rotate(0deg);
-  }
-  20% {
-    transform: translate3d(-1px, 1px, 0) rotate(-7deg);
-  }
-  40% {
-    transform: translate3d(1px, -1px, 0) rotate(6deg);
-  }
-  60% {
-    transform: translate3d(-1px, 0, 0) rotate(-4deg);
-  }
-  80% {
-    transform: translate3d(1px, 1px, 0) rotate(4deg);
-  }
-}
-
-@keyframes aboutIconBoundaryPulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.12);
-    border-color: rgba(5, 150, 105, 0.18);
-  }
-  50% {
-    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.14);
-    border-color: rgba(16, 185, 129, 0.6);
-  }
-}
-
 .about-value-card {
   position: relative;
   background: hsl(var(--card));
@@ -575,18 +552,6 @@ html {
 .about-value-card:focus-within::before {
   opacity: 1;
   animation: aboutCardBoundaryPulse 1.6s ease-in-out 2;
-}
-
-.about-value-card:hover .about-icon-decorator,
-.about-value-card:focus-visible .about-icon-decorator,
-.about-value-card:focus-within .about-icon-decorator {
-  animation: aboutIconShake 0.65s ease-in-out 2;
-}
-
-.about-value-card:hover .about-icon-shell,
-.about-value-card:focus-visible .about-icon-shell,
-.about-value-card:focus-within .about-icon-shell {
-  animation: aboutIconBoundaryPulse 1.2s ease-in-out 2, aboutIconShake 0.65s ease-in-out 2;
 }
 
 @keyframes countryPulseUg {
@@ -794,6 +759,9 @@ html {
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
@@ -820,6 +788,9 @@ html {
   background-size: 240% 100%;
   animation: emerald-run 2.4s linear infinite;
   -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -853,6 +824,9 @@ html {
   background-size: 280% 100%;
   animation: emerald-run 2s linear infinite;
   -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -920,6 +894,24 @@ html {
   }
 }
 
+@keyframes cartShake {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  20% {
+    transform: translate3d(-1px, 0, 0) rotate(-10deg);
+  }
+  40% {
+    transform: translate3d(1px, 0, 0) rotate(10deg);
+  }
+  60% {
+    transform: translate3d(-1px, 0, 0) rotate(-6deg);
+  }
+  80% {
+    transform: translate3d(1px, 0, 0) rotate(6deg);
+  }
+}
+
 .group:hover .hero-badge-star-shell,
 .group:focus-within .hero-badge-star-shell {
   animation: heroStarFlicker 1.8s ease-in-out infinite;
@@ -953,6 +945,9 @@ html {
   opacity: 0;
   transition: opacity 0.2s ease;
   -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -997,6 +992,9 @@ html {
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
@@ -1034,8 +1032,6 @@ html {
 }
 
 .flagship-investment-page {
-  position: relative;
-  overflow: hidden;
   background: hsl(var(--primary));
 }
 
@@ -1141,6 +1137,9 @@ html {
   opacity: 0;
   transition: opacity 220ms ease;
   -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -1336,6 +1335,9 @@ html {
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   animation: emerald-run 3.6s linear infinite;
@@ -1430,6 +1432,176 @@ html {
   box-shadow: 0 8px 24px rgb(15 23 42 / 0.12);
 }
 
+.flagship-hero-section {
+  background:
+    radial-gradient(circle at top right, rgb(16 185 129 / 0.08), transparent 32%),
+    linear-gradient(180deg, hsl(var(--primary) / 0.03), transparent);
+}
+
+.flagship-premium-hover-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.03), rgb(255 255 255 / 0.015));
+  backdrop-filter: blur(16px);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  transition:
+    transform 280ms ease,
+    border-color 280ms ease,
+    background-color 280ms ease,
+    box-shadow 280ms ease;
+}
+
+.flagship-premium-hover-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(16 185 129 / 0.18),
+    rgb(16 185 129 / 0.92),
+    rgb(16 185 129 / 0.2),
+    transparent
+  );
+  background-size: 300% 100%;
+  opacity: 0;
+  transition: opacity 220ms ease;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.flagship-premium-hover-card::after {
+  content: "";
+  position: absolute;
+  right: -18%;
+  bottom: -30%;
+  width: 14rem;
+  height: 14rem;
+  border-radius: 999px;
+  opacity: 0;
+  transition: opacity 280ms ease;
+  pointer-events: none;
+}
+
+.flagship-premium-hover-card:hover,
+.flagship-premium-hover-card:focus-within {
+  transform: translateY(-4px);
+  border-color: rgb(16 185 129 / 0.22);
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.04), rgb(255 255 255 / 0.02));
+  box-shadow:
+    0 20px 40px rgb(5 16 24 / 0.18),
+    0 0 24px rgb(16 185 129 / 0.08),
+    inset 0 1px 0 rgb(255 255 255 / 0.04);
+}
+
+.flagship-premium-hover-card:hover::before,
+.flagship-premium-hover-card:focus-within::before {
+  animation: emerald-run 2s linear infinite;
+  opacity: 1;
+}
+
+.flagship-premium-hover-card:hover::after,
+.flagship-premium-hover-card:focus-within::after {
+  opacity: 1;
+}
+
+.flagship-premium-hover-card .flagship-card-icon {
+  transition:
+    transform 280ms ease,
+    box-shadow 280ms ease,
+    background-color 280ms ease;
+}
+
+.flagship-premium-hover-card:hover .flagship-card-icon,
+.flagship-premium-hover-card:focus-within .flagship-card-icon {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 24px rgb(16 185 129 / 0.14);
+}
+
+.flagship-premium-hover-card:hover .flagship-card-icon::after,
+.flagship-premium-hover-card:focus-within .flagship-card-icon::after {
+  animation: flagshipIconGlisten 0.95s ease;
+  opacity: 1;
+}
+
+.flagship-managed-shell {
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.02), transparent 58%);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  backdrop-filter: blur(18px);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+}
+
+.flagship-step-spotlight {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.04),
+    0 18px 40px rgb(5 16 24 / 0.14);
+}
+
+.flagship-premium-badge {
+  position: relative;
+  overflow: hidden;
+  border-color: rgb(110 231 183 / 0.52);
+  background: rgb(16 185 129 / 0.18);
+  color: rgb(236 253 245);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.12),
+    0 0 0 0 rgb(16 185 129 / 0.18);
+  animation: flagshipBadgePulse 2.8s ease-in-out infinite;
+}
+
+.flagship-premium-badge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(110 231 183 / 0.22),
+    rgb(16 185 129 / 0.95),
+    rgb(110 231 183 / 0.22),
+    transparent
+  );
+  background-size: 300% 100%;
+  animation: emerald-run 2.4s linear infinite;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes flagshipBadgePulse {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.12),
+      0 0 0 0 rgb(16 185 129 / 0.14);
+  }
+
+  50% {
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.16),
+      0 0 0 10px rgb(16 185 129 / 0.05),
+      0 0 24px rgb(16 185 129 / 0.18);
+  }
+}
+
 /* Investment Steps Section */
 .investment-steps-section {
   background: linear-gradient(180deg, transparent, hsl(var(--primary) / 0.01));
@@ -1448,6 +1620,84 @@ html {
 /* Managed Path Section */
 .managed-path-section {
   background: linear-gradient(135deg, hsl(var(--primary) / 0.01), hsl(var(--primary) / 0.005));
+}
+
+.managed-path-hover-border {
+  pointer-events: none;
+  z-index: 2;
+}
+
+.managed-path-hover-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(16, 185, 129, 0.2),
+    rgba(16, 185, 129, 0.9),
+    rgba(16, 185, 129, 0.2),
+    transparent
+  );
+  background-size: 300% 100%;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.managed-path-section:hover .managed-path-hover-border::before,
+.managed-path-section:focus-within .managed-path-hover-border::before {
+  animation: emerald-run 2s linear infinite;
+  opacity: 1;
+}
+
+.flagship-progression-shell {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(16 185 129 / 0.45) transparent;
+}
+
+.flagship-progress-arrow {
+  transition:
+    transform 260ms ease,
+    filter 260ms ease;
+  color: var(--progress-accent);
+}
+
+.flagship-progress-arrow svg {
+  transition:
+    transform 260ms ease,
+    filter 260ms ease,
+    opacity 260ms ease;
+  filter:
+    drop-shadow(0 0 10px var(--progress-accent-soft))
+    drop-shadow(0 0 16px color-mix(in srgb, var(--progress-accent) 32%, transparent));
+}
+
+.flagship-progression-shell:hover .flagship-progress-arrow,
+.flagship-progression-shell:focus-within .flagship-progress-arrow {
+  transform: translateX(6px) scale(1.04);
+  filter: drop-shadow(0 0 16px color-mix(in srgb, var(--progress-accent) 42%, transparent));
+}
+
+.flagship-progression-shell:hover .flagship-progress-arrow svg,
+.flagship-progression-shell:focus-within .flagship-progress-arrow svg {
+  transform: translateX(6px) scale(1.16);
+  filter:
+    drop-shadow(0 0 12px var(--progress-accent-soft))
+    drop-shadow(0 0 24px color-mix(in srgb, var(--progress-accent) 50%, transparent));
+}
+
+.flagship-signal-pill {
+  animation: pulseEmeraldBorder 1.8s ease-in-out infinite;
 }
 
 /* DIY Path Section */
@@ -1597,6 +1847,9 @@ html {
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
 
@@ -1631,6 +1884,9 @@ html {
   opacity: 1;
   animation: emerald-run 2s linear infinite;
   -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -1824,19 +2080,66 @@ html {
   transform: scale(1.5);
 }
 
-.dark .hero-map-bg {
-  opacity: 0.24;
-  filter: grayscale(0.72) sepia(0.18) hue-rotate(168deg) saturate(0.7) brightness(0.74) contrast(0.92) invert(0.78);
+.dashboard-grid-shell {
+  isolation: isolate;
 }
 
-.dark .landing-hero-shell .hero-map-bg {
-  opacity: 0.48;
+.dashboard-grid-block {
+  position: relative;
+  border-color: rgb(255 255 255 / 0.35);
+  transition:
+    filter 220ms ease,
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
 }
 
-.dark .hero-map-tint {
-  background:
-    radial-gradient(circle at top, rgb(16 24 39 / 0.16), transparent 42%),
-    linear-gradient(180deg, rgb(9 14 22 / 0.74) 0%, rgb(12 18 28 / 0.56) 25%, rgb(10 16 24 / 0.78) 100%);
+.dashboard-grid-block::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--grid-block-color) 20%, white 5%),
+    color-mix(in srgb, var(--grid-block-color) 78%, white 18%),
+    color-mix(in srgb, var(--grid-block-color) 20%, white 5%),
+    transparent
+  );
+  background-size: 300% 100%;
+  opacity: 0;
+  transition: opacity 180ms ease;
+  animation: chart-accent-run 2s linear infinite;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.dashboard-grid-block:hover,
+.dashboard-grid-block:focus-visible,
+.dashboard-grid-block.is-active {
+  filter: brightness(0.84) saturate(1.06);
+  transform: translateY(-1px);
+  border-color: rgb(255 255 255 / 0.75);
+  box-shadow: 0 14px 28px rgb(15 23 42 / 0.16);
+}
+
+.dashboard-grid-block:hover::before,
+.dashboard-grid-block:focus-visible::before,
+.dashboard-grid-block.is-active::before {
+  opacity: 1;
+}
+
+.dashboard-grid-tooltip {
+  transform: translate3d(0, 0, 0);
 }
 
 .dark .flagship-investment-page::before {

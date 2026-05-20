@@ -174,7 +174,9 @@ export function FeaturedSection({
   const Icon = config.icon
   const cardClass =
     theme === "seedlings"
-      ? "rounded-2xl border border-emerald-100 bg-transparent overflow-hidden"
+      ? type === "featured"
+        ? "emerald-border-hover rounded-2xl border border-transparent bg-transparent shadow-none overflow-hidden transition-shadow duration-300 hover:shadow-[0_0_28px_rgba(16,185,129,0.18)]"
+        : "emerald-border-hover rounded-2xl border border-emerald-300 bg-secondary/100 overflow-hidden transition-shadow duration-300 hover:shadow-[0_0_28px_rgba(16,185,129,0.24)]"
       : theme === "forests-land"
       ? "rounded-2xl border border-slate-200 bg-transparent overflow-hidden"
       : theme === "forestry-services"

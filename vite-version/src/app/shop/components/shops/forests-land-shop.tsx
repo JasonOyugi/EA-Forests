@@ -1,5 +1,6 @@
 "use client"
 
+import * as React from "react"
 import { useNavigate } from "react-router-dom"
 import { useShallow } from "zustand/react/shallow"
 import { ArrowUpRight, MapPinned, TrendingUp, Trees } from "lucide-react"
@@ -38,6 +39,9 @@ const forestryServicesItems = forestryServicesInventory as ShopItem[]
 
 export function ForestsLandShop({ inventory }: ForestsLandShopProps) {
   const navigate = useNavigate()
+  const [topBannerVisible, setTopBannerVisible] = React.useState(true)
+  const [saleBannerVisible, setSaleBannerVisible] = React.useState(true)
+  const [countdownBannerVisible, setCountdownBannerVisible] = React.useState(true)
 
   const { cart, addItem, decrementItem } = useShopStore(
     useShallow((state) => ({
@@ -50,7 +54,9 @@ export function ForestsLandShop({ inventory }: ForestsLandShopProps) {
   const strategies = inventory.filter((item) =>
     ["core-forests", "high-performance-forests", "dryland-frontier-forests"].includes(item.slug)
   )
-  const concessions = inventory.find((item) => item.slug === "uganda-concessions")
+  const ugandaConcessions = inventory.find((item) => item.slug === "uganda-concessions")
+  const kenyaConcessions = inventory.find((item) => item.slug === "kenya-concessions")
+  const tanzaniaConcessions = inventory.find((item) => item.slug === "tanzania-concessions")
   const landListings = inventory.find((item) => item.slug === "land-listings")
 
   const sections: InvestmentSection[] = [
@@ -71,27 +77,29 @@ export function ForestsLandShop({ inventory }: ForestsLandShopProps) {
     {
       id: "concessions",
       title: "Concessional Investments",
-      subtitle: "Country-level concession pathways arranged for quick review and investor-ready diligence.",
+      subtitle: "Country-level public-private partnerships arranged for quick review and investor-ready diligence.",
       icon: MapPinned,
       items: [
         {
           title: "Uganda",
-          subtitle: concessions?.subtitle ?? "Government-linked concession opportunities with map-based site review.",
+          subtitle: ugandaConcessions?.subtitle ?? "Government-linked concession opportunities with map-based site review.",
           image: "/ug.jpg",
-          actionLabel: concessions?.ctaLabel ?? "Review Uganda concessions",
-          item: concessions,
+          actionLabel: ugandaConcessions?.ctaLabel ?? "Review Uganda concessions",
+          item: ugandaConcessions,
         },
         {
           title: "Kenya",
-          subtitle: "Regional concessional pipeline under review for investor-ready allocation structures.",
+          subtitle: kenyaConcessions?.subtitle ?? "Regional concessional pipeline under review for investor-ready allocation structures.",
           image: "/ke.jpg",
-          actionLabel: "Kenya pipeline",
+          actionLabel: kenyaConcessions?.ctaLabel ?? "Review Kenya concessions",
+          item: kenyaConcessions,
         },
         {
           title: "Tanzania",
-          subtitle: "Cross-border concession opportunities being prepared for diligence and rollout sequencing.",
+          subtitle: tanzaniaConcessions?.subtitle ?? "Cross-border concession opportunities being prepared for diligence and rollout sequencing.",
           image: "/tz.jpg",
-          actionLabel: "Tanzania pipeline",
+          actionLabel: tanzaniaConcessions?.ctaLabel ?? "Review Tanzania concessions",
+          item: tanzaniaConcessions,
         },
       ],
     },
@@ -119,19 +127,20 @@ export function ForestsLandShop({ inventory }: ForestsLandShopProps) {
     navigate(`/shop/${item.shop}/${item.slug}`)
   }
 
+  const hasVisibleBanner = topBannerVisible || saleBannerVisible || countdownBannerVisible
+
   return (
     <div className="space-y-4 sm:space-y-6 md:space-y-8">
-      <ForestsLandTopBanner />
-      <ForestryServicesSaleBanner />
-      <ForestryServicesCountdownBanner />
+      <ForestsLandTopBanner onVisibilityChange={setTopBannerVisible} />
+      <ForestryServicesSaleBanner onVisibilityChange={setSaleBannerVisible} />
+      <ForestryServicesCountdownBanner onVisibilityChange={setCountdownBannerVisible} />
 
       <section className="space-y-3 sm:space-y-4 md:space-y-5">
-        <div>
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold tracking-tight text-slate-900">Find The Right Investment For You</h2>
-          <p className="mt-1 text-xs sm:text-sm md:text-base text-muted-foreground">
-            Explore the flagship strategies, concessional pathways, and land-led entries in a full-width editorial layout.
-          </p>
-        </div>
+        {hasVisibleBanner ? (
+          <div>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold tracking-tight text-slate-900">Find The Right Investment For You</h2>
+          </div>
+        ) : null}
 
         <div className="grid gap-3 sm:gap-4 md:gap-5 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
           {sections.map((section) => {

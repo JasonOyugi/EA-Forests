@@ -1,11 +1,13 @@
 "use client"
 
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { ArrowUpRight, Building2, Globe2, Trees } from "lucide-react"
+import { ArrowUpRight, Building2, Globe2, LayoutPanelTop, MapPinned, Trees } from "lucide-react"
+
 import { RoundwoodTopBanner } from "@/components/commerce-ui/roundwood-top-banner"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { BentoTilt } from "@/components/ui/bento-tilt"
+import { Map, MapMarker, MapPopup, MapTileLayer } from "@/components/ui/map"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import type { ShopDefinition, ShopItem } from "@/app/shop/types"
 
 interface RoundwoodShopProps {
@@ -13,49 +15,108 @@ interface RoundwoodShopProps {
   inventory: ShopItem[]
 }
 
-type MarketCard = {
+const mapStyleOptions = [
+  {
+    value: "carto",
+    label: "Light atlas",
+    url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  },
+  {
+    value: "terrain",
+    label: "Terrain",
+    url: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+    attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="https://opentopomap.org">OpenTopoMap</a>',
+  },
+  {
+    value: "satellite",
+    label: "Satellite",
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    attribution: "Tiles &copy; Esri",
+  },
+] as const
+
+const layoutOptions = [
+  { value: "map-only", label: "Map only" },
+  { value: "map-notes", label: "Map + notes" },
+] as const
+
+type MarketNode = {
+  id: string
   title: string
   subtitle: string
+  summary: string
+  latitude: number
+  longitude: number
   image: string
-  vendors: Array<{
-    name: string
-    focus: string
-  }>
+  accent: string
+  icon: "carbon" | "roundwood" | "timber"
+}
+
+function MarketPin({ accent, icon }: { accent: string; icon: MarketNode["icon"] }) {
+  return (
+    <div className="relative flex h-12 w-12 items-center justify-center">
+      <div className="absolute inset-0 rounded-full blur-lg" style={{ backgroundColor: accent, opacity: 0.28 }} />
+      <div
+        className="relative flex h-10 w-10 items-center justify-center rounded-full border border-white/55 text-white shadow-[0_0_24px_rgba(15,23,42,0.28)]"
+        style={{ backgroundColor: accent }}
+      >
+        {icon === "carbon" ? (
+          <Globe2 className="h-5 w-5" />
+        ) : icon === "roundwood" ? (
+          <Trees className="h-5 w-5" />
+        ) : (
+          <Building2 className="h-5 w-5" />
+        )}
+      </div>
+    </div>
+  )
 }
 
 export function RoundwoodShop({ shop, inventory }: RoundwoodShopProps) {
   const navigate = useNavigate()
   const fallbackItem = inventory[0]
+  const [layoutMode, setLayoutMode] = useState<(typeof layoutOptions)[number]["value"]>("map-only")
+  const [selectedMapStyle, setSelectedMapStyle] = useState<(typeof mapStyleOptions)[number]["value"]>("carto")
 
-  const markets: MarketCard[] = [
+  const marketNodes: MarketNode[] = [
     {
-      title: "Carbon",
-      subtitle: "Nature-based credit demand from project developers and climate buyers.",
+      id: "carbon-hub",
+      title: "Carbon market demand",
+      subtitle: "Climate buyers and project developers",
+      summary: "Temporary placeholder for carbon offtake demand, developer pipelines, and removals buyers across the region.",
+      latitude: 0.3476,
+      longitude: 32.5825,
       image: "https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?auto=format&fit=crop&w=1200&q=80",
-      vendors: [
-        { name: "Viridian Carbon Desk", focus: "Forward carbon offtake and project aggregation." },
-        { name: "Canopy Climate Partners", focus: "Premium removals procurement for regional buyers." },
-      ],
+      accent: "#06b6d4",
+      icon: "carbon",
     },
     {
-      title: "Roundwood",
-      subtitle: "Structured channels for poles, pulpwood, and log buyers.",
+      id: "roundwood-corridor",
+      title: "Roundwood offtake corridor",
+      subtitle: "Poles, logs, and processor demand",
+      summary: "Temporary placeholder for poles, pulpwood, and processor-linked roundwood channels that will later expand into live market markers.",
+      latitude: -1.2864,
+      longitude: 36.8172,
       image: fallbackItem?.image ?? "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1200&q=80",
-      vendors: [
-        { name: "TimberFlow Commodities", focus: "Utility poles and harvest-linked roundwood lots." },
-        { name: "RidgeLine Pole Markets", focus: "Regional pole classes and processor demand." },
-      ],
+      accent: "#14b8a6",
+      icon: "roundwood",
     },
     {
-      title: "Sawn Timber",
-      subtitle: "Value-added lumber channels for construction, furniture, and export supply.",
+      id: "timber-hub",
+      title: "Sawn timber buyers",
+      subtitle: "Construction and furniture channels",
+      summary: "Temporary placeholder for sawn timber routes, joinery demand, and downstream buyer networks across East Africa.",
+      latitude: -6.7924,
+      longitude: 39.2083,
       image: "https://images.unsplash.com/photo-1516826957135-700dedea698c?auto=format&fit=crop&w=1200&q=80",
-      vendors: [
-        { name: "East Africa Lumber Exchange", focus: "Construction-grade sawn timber programs." },
-        { name: "Savanna Woodcraft Supply", focus: "Furniture and premium joinery buyers." },
-      ],
+      accent: "#0f766e",
+      icon: "timber",
     },
   ]
+
+  const [, setSelectedNodeId] = useState(marketNodes[0]?.id ?? "")
+  const activeMapStyle = mapStyleOptions.find((option) => option.value === selectedMapStyle) ?? mapStyleOptions[0]
 
   const openMarket = () => {
     if (!fallbackItem) return
@@ -66,66 +127,76 @@ export function RoundwoodShop({ shop, inventory }: RoundwoodShopProps) {
     <div className="space-y-8">
       <RoundwoodTopBanner />
 
-      <div className="grid items-start gap-6 xl:grid-cols-3">
-        {markets.map((market) => (
-          <Card
-            key={market.title}
-            className="self-start border border-cyan-200 bg-gradient-to-br from-cyan-50 via-white to-emerald-50/70"
-          >
-            <CardHeader className="space-y-3">
-              <div className="flex items-center gap-3">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-cyan-100 text-cyan-700">
-                  {market.title === "Carbon" ? (
-                    <Globe2 className="h-5 w-5" />
-                  ) : market.title === "Roundwood" ? (
-                    <Trees className="h-5 w-5" />
-                  ) : (
-                    <Building2 className="h-5 w-5" />
-                  )}
-                </span>
-                <div>
-                  <CardTitle>{market.title}</CardTitle>
-                  <CardDescription>{market.subtitle}</CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {market.vendors.map((vendor) => (
-                <BentoTilt key={vendor.name} className="block">
-                  <button
-                    type="button"
-                    onClick={openMarket}
-                    className="w-full overflow-hidden rounded-2xl border border-cyan-200 bg-white/95 text-left transition hover:border-cyan-400 hover:bg-cyan-50"
-                  >
-                    <div className="relative h-44 overflow-hidden">
-                      <img
-                        src={market.image}
-                        alt={vendor.name}
-                        className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
-                      />
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <MapPinned className="h-5 w-5 text-cyan-700" />
+            <span className="text-base font-semibold text-foreground">Markets map</span>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <Select value={layoutMode} onValueChange={(value) => setLayoutMode(value as (typeof layoutOptions)[number]["value"])}>
+              <SelectTrigger className="w-[170px] cursor-pointer bg-background/90">
+                <LayoutPanelTop className="mr-2 h-4 w-4" />
+                <SelectValue placeholder="Layout" />
+              </SelectTrigger>
+              <SelectContent>
+                {layoutOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select value={selectedMapStyle} onValueChange={(value) => setSelectedMapStyle(value as (typeof mapStyleOptions)[number]["value"])}>
+              <SelectTrigger className="w-[170px] cursor-pointer bg-background/90">
+                <SelectValue placeholder="Map type" />
+              </SelectTrigger>
+              <SelectContent>
+                {mapStyleOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        <div className="overflow-hidden rounded-[1.8rem]">
+          <Map center={[-1.8, 36.4]} zoom={6} className="h-[540px] w-full lg:h-[640px]">
+            <MapTileLayer url={activeMapStyle.url} attribution={activeMapStyle.attribution} />
+            {marketNodes.map((node) => (
+              <MapMarker
+                key={node.id}
+                position={[node.latitude, node.longitude]}
+                icon={<MarketPin accent={node.accent} icon={node.icon} />}
+                iconAnchor={[24, 24]}
+                eventHandlers={{ click: () => setSelectedNodeId(node.id) }}
+              >
+                <MapPopup className="w-72 border-0 p-0">
+                  <div className="overflow-hidden rounded-[1rem] bg-background">
+                    <div className="relative h-32 overflow-hidden">
+                      <img src={node.image} alt={node.title} className="h-full w-full object-cover" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
-                      <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3">
-                        <div>
-                          <div className="text-xs font-medium uppercase tracking-[0.18em] text-cyan-100">
-                            {market.title} Market
-                          </div>
-                          <div className="mt-1 text-lg font-semibold text-white">{vendor.name}</div>
-                        </div>
-                        <ArrowUpRight className="mb-1 h-4 w-4 text-white" />
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-cyan-100">{node.subtitle}</div>
+                        <div className="mt-1 text-lg font-semibold text-white">{node.title}</div>
                       </div>
                     </div>
-                    <div className="p-4">
-                      <p className="text-sm leading-6 text-slate-600">{vendor.focus}</p>
+                    <div className="space-y-3 p-4">
+                      <p className="text-sm leading-6 text-muted-foreground">{node.summary}</p>
+                      <Button size="sm" className="w-full bg-cyan-700 text-white hover:bg-cyan-800" onClick={openMarket}>
+                        Explore market
+                        <ArrowUpRight className="h-4 w-4" />
+                      </Button>
                     </div>
-                  </button>
-                </BentoTilt>
-              ))}
-              <Button className="w-full bg-cyan-700 text-white hover:bg-cyan-800" onClick={openMarket}>
-                Explore {market.title.toLowerCase()} market
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
+                  </div>
+                </MapPopup>
+              </MapMarker>
+            ))}
+          </Map>
+        </div>
       </div>
     </div>
   )

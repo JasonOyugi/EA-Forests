@@ -1,11 +1,19 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { BentoTilt } from "@/components/ui/bento-tilt"
 
-export function ForestryServicesSaleBanner() {
+export function ForestryServicesSaleBanner({
+  onVisibilityChange,
+}: {
+  onVisibilityChange?: (isVisible: boolean) => void
+}) {
   const [isVisible, setIsVisible] = useState(true)
+
+  useEffect(() => {
+    onVisibilityChange?.(isVisible)
+  }, [isVisible, onVisibilityChange])
 
   if (!isVisible) return null
 

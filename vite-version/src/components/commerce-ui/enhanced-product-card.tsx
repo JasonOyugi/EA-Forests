@@ -227,9 +227,9 @@ export function EnhancedProductCard({
         "group relative cursor-pointer overflow-hidden bg-black py-0 transition-all hover:-translate-y-1 hover:shadow-lg",
         shellClass,
         themeCardClass,
+        runningBorderOnHover && "border-transparent",
         className
       )}
-      style={runningBorderOnHover ? { border: "none", background: "white" } : undefined}
       onClick={() => onClick?.(item)}
     >
       <div
@@ -418,7 +418,8 @@ export function EnhancedProductCard({
                 ) : null}
                 {compact && activeSecondaryPrice ? (
                   <div className={cn("text-xs drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]", metaClass)}>
-                    + {formatCurrency(activeSecondaryPrice, item.currency)} maintenance
+                    Maintenance {formatCurrency(activeSecondaryPrice, item.currency)}{" "}
+                    {activeSecondaryUnitLabel ?? ""}
                   </div>
                 ) : null}
                 {!activeSecondaryPrice && item.minimumPriceLabel && !compact ? (
@@ -471,18 +472,8 @@ export function EnhancedProductCard({
 
   if (runningBorderOnHover) {
     return (
-      <div className="group/ring relative overflow-hidden rounded-lg bg-emerald-300/70 p-[1.5px]">
-        <div className="pointer-events-none absolute inset-0 rounded-lg opacity-0 transition-opacity duration-300 group-hover/ring:opacity-100">
-          <div
-            className="h-full w-full"
-            style={{
-              background:
-                "conic-gradient(from 0deg, transparent 0deg, #059669 38deg, #34d399 78deg, transparent 136deg, transparent 216deg, #10b981 276deg, #6ee7b7 322deg, transparent 360deg)",
-              animation: "emerald-spin-border 1.8s linear infinite",
-            }}
-          />
-        </div>
-        <div className="relative z-10">{cardEl}</div>
+      <div className="emerald-border-hover rounded-[calc(var(--radius-xl)+2px)] bg-transparent p-[1px] transition-shadow duration-300 hover:shadow-[0_0_28px_rgba(16,185,129,0.28)]">
+        {cardEl}
       </div>
     )
   }

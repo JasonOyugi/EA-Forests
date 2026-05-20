@@ -73,7 +73,7 @@ import {
 import { deriveEventDates, getRecentPaymentRows, getUpcomingPaymentRows } from "./dashboard-events"
 type TableView = "assets" | "transactions" | "activity-logs" | "documents"
 
-type TreeVariety = "eucalyptus" | "pine" | "cypress" | "teak" | "corymbia"
+export type TreeVariety = "eucalyptus" | "pine" | "cypress" | "teak" | "corymbia"
 type Activity = "silviculture" | "planting" | "none"
 type Country = "Uganda" | "Kenya" | "Tanzania"
 
@@ -91,6 +91,8 @@ export type SubBlock = {
 export type AssetGroup = {
   id: string
   block: string
+  summaryTitle: string
+  summaryDescription: string
   location: string
   country: Country
   mapCenter: [number, number]
@@ -166,12 +168,69 @@ function formatTableCurrency(value: number) {
   }).format(value)
 }
 
-export const speciesProfile: Record<TreeVariety, { volumePerHa: number; pricePerM3: number; investmentPerHa: number; color: string }> = {
-  eucalyptus: { volumePerHa: 31, pricePerM3: 84, investmentPerHa: 1880, color: "#15803d" },
-  pine: { volumePerHa: 24, pricePerM3: 92, investmentPerHa: 1720, color: "#1d4ed8" },
-  cypress: { volumePerHa: 27, pricePerM3: 88, investmentPerHa: 1790, color: "#0f766e" },
-  teak: { volumePerHa: 22, pricePerM3: 114, investmentPerHa: 2140, color: "#b45309" },
-  corymbia: { volumePerHa: 29, pricePerM3: 96, investmentPerHa: 1950, color: "#7c3aed" },
+export const speciesProfile: Record<
+  TreeVariety,
+  {
+    volumePerHa: number
+    pricePerM3: number
+    investmentPerHa: number
+    treesPerHa: number
+    heightRate: number
+    dbhRate: number
+    baselineSurvival: number
+    color: string
+  }
+> = {
+  eucalyptus: {
+    volumePerHa: 31,
+    pricePerM3: 84,
+    investmentPerHa: 1880,
+    treesPerHa: 1111,
+    heightRate: 3.8,
+    dbhRate: 2.6,
+    baselineSurvival: 0.92,
+    color: "#1f7a45",
+  },
+  pine: {
+    volumePerHa: 24,
+    pricePerM3: 92,
+    investmentPerHa: 1720,
+    treesPerHa: 950,
+    heightRate: 2.9,
+    dbhRate: 2.1,
+    baselineSurvival: 0.89,
+    color: "#2563eb",
+  },
+  cypress: {
+    volumePerHa: 27,
+    pricePerM3: 88,
+    investmentPerHa: 1790,
+    treesPerHa: 975,
+    heightRate: 3.1,
+    dbhRate: 2.25,
+    baselineSurvival: 0.9,
+    color: "#0f766e",
+  },
+  teak: {
+    volumePerHa: 22,
+    pricePerM3: 114,
+    investmentPerHa: 2140,
+    treesPerHa: 816,
+    heightRate: 2.3,
+    dbhRate: 2,
+    baselineSurvival: 0.87,
+    color: "#c2410c",
+  },
+  corymbia: {
+    volumePerHa: 29,
+    pricePerM3: 96,
+    investmentPerHa: 1950,
+    treesPerHa: 1020,
+    heightRate: 3.5,
+    dbhRate: 2.45,
+    baselineSurvival: 0.91,
+    color: "#b45309",
+  },
 }
 
 export function getGroupEstimatedMetrics(group: AssetGroup) {
@@ -344,8 +403,11 @@ export function createPolygon(center: [number, number], index: number, totalArea
 export const initialAssetGroups: AssetGroup[] = [
   {
     id: "group-1",
-    block: "North Ridge A1",
-    location: "Northern Region",
+    block: "Amuru-Atiti",
+    summaryTitle: "Amuru-Atiti production grid",
+    summaryDescription:
+      "A broad mixed-species Uganda estate where eucalyptus, corymbia, and pine run in production bands designed for quick stand-by-stand health review.",
+    location: "Albert-Nile, Northern",
     country: "Uganda",
     mapCenter: [2.78, 31.47],
     subBlocks: [
@@ -356,8 +418,11 @@ export const initialAssetGroups: AssetGroup[] = [
   },
   {
     id: "group-2",
-    block: "River Bend C2",
-    location: "Central Valley",
+    block: "Sarora",
+    summaryTitle: "Sarora remote grid",
+    summaryDescription:
+      "A compact Kenya footprint with pine and teak laid out in clean hectare lanes, making it ideal for fast condition scanning before drilling into sub-compartment detail.",
+    location: "Nandi, Rift Valley",
     country: "Kenya",
     mapCenter: [0.42, 35.02],
     subBlocks: [
@@ -367,8 +432,11 @@ export const initialAssetGroups: AssetGroup[] = [
   },
   {
     id: "group-3",
-    block: "Pine Hollow D7",
-    location: "Highland Zone",
+    block: "Nyakipam-Mtambula",
+    summaryTitle: "Nyakipam-Mtambula canopy grid",
+    summaryDescription:
+      "A larger, more mature Tanzania site anchored by cypress and eucalyptus, where hectare-level patterns help surface the strongest and weakest production pockets quickly.",
+    location: "Mufindi, Iringa",
     country: "Tanzania",
     mapCenter: [-8.73, 35.04],
     subBlocks: [
@@ -378,8 +446,11 @@ export const initialAssetGroups: AssetGroup[] = [
   },
   {
     id: "group-4",
-    block: "East Valley B4",
-    location: "Eastern Plateau",
+    block: "Kakosi C",
+    summaryTitle: "Kakosi C field grid",
+    summaryDescription:
+      "A growth-stage Uganda site blending teak and eucalyptus, with active silviculture work that benefits from comparing hectare summaries against opened block detail.",
+    location: "Kaliro, Eastern",
     country: "Uganda",
     mapCenter: [1.08, 33.64],
     subBlocks: [
@@ -903,28 +974,21 @@ export function DataTable({
       </TabsContent>
 
       <div className="mt-6 grid gap-4 px-4 lg:px-6">
-        <Card className="overflow-hidden">
-          <CardHeader className="border-b">
-            <div className="flex items-center gap-2">
-              <CalendarDays className="h-5 w-5 text-emerald-700" />
-              <div>
-                <CardTitle>
-                  <button
-                    type="button"
-                    onClick={() => navigate("/calendar")}
-                    className="cursor-pointer underline-offset-4 transition hover:underline"
-                  >
-                    Calendar
-                  </button>
-                </CardTitle>
-                <CardDescription>Full calendar tools embedded directly on the dashboard.</CardDescription>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="p-0">
-            <FullCalendar events={events} eventDates={eventDates} onEventsChange={onEventsChange} />
-          </CardContent>
-        </Card>
+        <div className="flex items-center gap-2 p-4">
+          <CalendarDays className="h-5 w-5 text-emerald-700" />
+          <div>
+            <button
+              type="button"
+              onClick={() => navigate("/calendar")}
+              className="cursor-pointer underline-offset-4 font-semibold text-xl transition hover:underline"
+            >
+              Calendar
+            </button>
+          </div>
+        </div>
+        <div className="p-0">
+          <FullCalendar events={events} eventDates={eventDates} onEventsChange={onEventsChange} />
+        </div>
       </div>
       <div className="grid gap-4 px-4 pb-2 lg:px-6">
         <div className=" overflow-hidden rounded-lg">

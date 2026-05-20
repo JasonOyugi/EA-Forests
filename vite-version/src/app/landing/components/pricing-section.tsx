@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState, type WheelEvent } from "react"
+import { useEffect, useMemo, useState } from "react"
 import useEmblaCarousel from "embla-carousel-react"
 import { Check, ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -8,60 +8,75 @@ import { Badge } from "@/components/ui/badge"
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { BentoTilt } from "@/components/ui/bento-tilt"
+import {
+  flagshipPricingCatalog,
+  getFlagshipPricing,
+} from "@/app/shop/lib/flagship-pricing"
 import { cn } from "@/lib/utils"
+import {
+  landingBadgeClass,
+  landingContainer,
+  landingHeadingClass,
+  landingLeadClass,
+  landingSectionIntro,
+  landingSectionPadding,
+} from "./landing-shared"
+import { useEmblaWheelNavigation } from "./use-embla-wheel-navigation"
 
 const plans = [
   {
-    name: "Core Forests",
+    name: flagshipPricingCatalog["core-forests"].name,
     description: "A low-risk entry point into professionally designed forestry investments",
-    monthlyPrice: 300,
-    yearlyPrice: 3000,
+    monthlyPrice: flagshipPricingCatalog["core-forests"].monthlyPrice,
+    yearlyPrice: flagshipPricingCatalog["core-forests"].yearlyPrice,
     image: {
       src: "/forest.webp",
       alt: "Core forests plan",
     },
     features: [
       "Conventional, proven species and silviculture",
-      "Conservative underwriting with clear rotation visibility",
+      "Conservative, clear and confident projections",
       "Ideal for first-time forestry investors",
     ],
     cta: "Explore Core Forests",
+    href: "/shop/forests-land/core-forests",
   },
   {
-    name: "High-Performance Forests",
+    name: flagshipPricingCatalog["high-performance-forests"].name,
     description: "World-class genetics and optimized systems targeting superior returns",
-    monthlyPrice: 800,
-    yearlyPrice: 8000,
+    monthlyPrice: flagshipPricingCatalog["high-performance-forests"].monthlyPrice,
+    yearlyPrice: flagshipPricingCatalog["high-performance-forests"].yearlyPrice,
     image: {
       src: "/about.webp",
       alt: "High-performance forests plan",
     },
     features: [
-      "Improved, hybrid and clonal genetics with superior growth traits",
-      "Higher yield and shorter rotation potential",
-      "Site-genotype matching using performance data",
-      "Advanced monitoring and growth forecasting",
+      "Best in the world genetics optimised for growth, site and market performance",
+      "Cutting edge analysis driven by performance data and advanced mathematical modelling",
+      "Advanced geospatial monitoring and market forecasting using machine learning",
       "Designed for return-focused investors",
     ],
     cta: "View High-Performance Plans",
+    href: "/shop/forests-land/high-performance-forests",
   },
   {
-    name: "Dryland & Frontier Forests",
-    description: "Cutting edge forestry systems engineered for dry and marginal environments",
-    monthlyPrice: 0,
-    yearlyPrice: 8000,
+    name: flagshipPricingCatalog["dryland-frontier-forests"].name,
+    description: "Pioneer forestry systems engineered for arid and semi-arid lands (ASALs)",
+    monthlyPrice: flagshipPricingCatalog["dryland-frontier-forests"].monthlyPrice,
+    yearlyPrice: flagshipPricingCatalog["dryland-frontier-forests"].yearlyPrice,
     image: {
       src: "/drylands.webp",
       alt: "Dryland and frontier forests plan",
     },
     features: [
-      "Elite, stress-tolerant genetics and advanced clones/hybrids",
-      "Dryland and water-limited silvicultural systems",
-      "Higher biological and execution risk with asymmetric upside",
-      "Deep climate-resilience and site analytics",
-      "Built for sophisticated, innovation driven capital",
+      "Access to genetics and systems optimized for ASALs",
+      "Mahogany type hardwoods that thrive in the drylands and mature in 10 years",
+      "Higher execution technicalities and risk with the highest profitability potential",
+      "Deep climate-resilience, performance data and site analytics",
+      "Built for sophisticated, innovation driven capital with a high risk-reward appetite",
     ],
     cta: "Access Dryland Strategies",
+    href: "/shop/forests-land/dryland-frontier-forests",
   },
 ] as const
 
@@ -69,15 +84,13 @@ export function PricingSection() {
   const [isYearly, setIsYearly] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(1)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  const wheelDeltaRef = useRef(0)
-  const wheelCooldownRef = useRef(false)
-  const wheelResetTimerRef = useRef<number | null>(null)
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: "center",
     skipSnaps: false,
     dragFree: false,
   })
+  const handleWheel = useEmblaWheelNavigation(emblaApi)
 
   useEffect(() => {
     if (!emblaApi) return
@@ -118,50 +131,17 @@ export function PricingSection() {
     [selectedIndex]
   )
 
-  const handleWheel = (event: WheelEvent<HTMLDivElement>) => {
-    if (!emblaApi) return
-
-    const dominantDelta = Math.abs(event.deltaY) > Math.abs(event.deltaX) ? event.deltaY : event.deltaX
-    if (Math.abs(dominantDelta) < 16) return
-
-    event.preventDefault()
-    if (wheelCooldownRef.current) return
-
-    wheelDeltaRef.current += dominantDelta
-    if (wheelResetTimerRef.current !== null) {
-      window.clearTimeout(wheelResetTimerRef.current)
-    }
-    wheelResetTimerRef.current = window.setTimeout(() => {
-      wheelDeltaRef.current = 0
-      wheelResetTimerRef.current = null
-    }, 140)
-
-    if (Math.abs(wheelDeltaRef.current) < 120) return
-
-    if (wheelDeltaRef.current > 0) {
-      emblaApi.scrollNext()
-    } else {
-      emblaApi.scrollPrev()
-    }
-
-    wheelDeltaRef.current = 0
-    wheelCooldownRef.current = true
-    window.setTimeout(() => {
-      wheelCooldownRef.current = false
-    }, 320)
-  }
-
   return (
-    <section id="pricing" className="section-map-shell section-map-pricing relative overflow-hidden py-24 sm:py-32 bg-muted/40">
+    <section id="pricing" className={`section-map-shell section-map-pricing relative overflow-hidden bg-muted/40 ${landingSectionPadding}`}>
       <div aria-hidden className="section-map-bg absolute inset-0" />
       <div aria-hidden className="section-map-tint absolute inset-0" />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal className="mx-auto mb-12 max-w-2xl text-center" distance={22}>
-          <Badge variant="outline" className="mb-4 text-primary border border-emerald-500/40">Plant Now!</Badge>
-          <h2 className="mb-4 text-primary font-bold tracking-tight sm:text-4xl">
+      <div className={landingContainer}>
+        <ScrollReveal className={landingSectionIntro} distance={22}>
+          <Badge variant="outline" className={landingBadgeClass}>Plant Now!</Badge>
+          <h2 className={`text-primary ${landingHeadingClass}`}>
             Choose your forest
           </h2>
-          <p className="mb-8 text-lg text-muted-foreground">
+          <p className={`${landingLeadClass} mb-8`}>
             It all starts with planting a tree
           </p>
 
@@ -186,10 +166,6 @@ export function PricingSection() {
               </ToggleGroupItem>
             </ToggleGroup>
           </div>
-
-          <p className="text-sm text-muted-foreground">
-            <span className="font-semibold text-primary">Save 20%</span> On Annual Billing
-          </p>
         </ScrollReveal>
 
         <ScrollReveal className="mx-auto max-w-7xl" delay={100}>
@@ -202,7 +178,17 @@ export function PricingSection() {
                 {plans.map((plan, index) => {
                   const isActive = index === selectedIndex
                   const showEmeraldState = isActive || hoveredIndex === index
-                  const displayedPrice = plan.monthlyPrice === 0 ? "Custom" : `$${isYearly ? plan.yearlyPrice : plan.monthlyPrice}`
+                  const pricing = getFlagshipPricing(plan.href.split("/").pop() ?? "")
+                  const displayedPrice =
+                    pricing?.[
+                      isYearly ? "yearlyDisplayLabel" : "monthlyDisplayLabel"
+                    ] ??
+                    `${isYearly ? plan.yearlyPrice : plan.monthlyPrice}`
+                  const maintenancePrice = pricing?.[
+                    isYearly
+                      ? "maintenanceYearlyDisplayLabel"
+                      : "maintenanceMonthlyDisplayLabel"
+                  ]
 
                   return (
                     <div
@@ -256,7 +242,7 @@ export function PricingSection() {
                               <div className="mb-1 text-lg font-medium tracking-tight">
                                 {plan.name}
                               </div>
-                              <div className="text-balance text-sm text-muted-foreground line-clamp-2">
+                              <div className="text-sm text-muted-foreground line-clamp-2">
                                 {plan.description}
                               </div>
                             </div>
@@ -267,12 +253,18 @@ export function PricingSection() {
                               {displayedPrice}
                             </div>
                             <div className="text-sm text-muted-foreground">
-                              {plan.monthlyPrice === 0 ? "Tailored structure" : isYearly ? "Per year" : "Per month"}
+                              Establishment fee
                             </div>
+                            {maintenancePrice ? (
+                              <div className="mt-2 text-xs text-muted-foreground">
+                                Maintenance: {maintenancePrice}
+                              </div>
+                            ) : null}
                           </div>
 
                           <div>
                             <Button
+                              asChild
                               className={cn(
                                 "w-full cursor-pointer my-1",
                                 showEmeraldState ? "emerald-border-active" : "emerald-border-hover",
@@ -282,7 +274,7 @@ export function PricingSection() {
                               )}
                               variant={showEmeraldState ? "default" : "secondary"}
                             >
-                              {plan.cta}
+                              <a href={plan.href}>{plan.cta}</a>
                             </Button>
                           </div>
 
@@ -349,6 +341,9 @@ export function PricingSection() {
                 Contact our team
               </a>
             </Button>
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Flagship rates are standardized per hectare across the landing and product pages.
           </p>
         </ScrollReveal>
       </div>

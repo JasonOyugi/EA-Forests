@@ -2,6 +2,7 @@
 
 import { Card } from "@/components/ui/card"
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
+import { landingContainer, landingEyebrowClass, landingSectionPaddingCompact } from "./landing-shared"
 
 const companies = [
   { name: "UTGA", src: "/UTGA.png" },
@@ -11,9 +12,10 @@ const companies = [
   { name: "CMA Kenya", src: "/CMA_KE.png" },
   { name: "CrossBoundary", src: "/Crossboundary.png" },
 ] as const
+
 const marqueeCompanies = [...companies, ...companies]
 
-function Logo({ src, name, size = 28 }: { src: string; name: string; size?: number }) {
+function Logo({ src, name, size = 32 }: { src: string; name: string; size?: number }) {
   return (
     <img
       src={src}
@@ -29,32 +31,27 @@ function Logo({ src, name, size = 28 }: { src: string; name: string; size?: numb
 
 export function LogoCarousel() {
   return (
-    <section className="pb-12 sm:pb-16 lg:pb-20 pt-12">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className={landingSectionPaddingCompact}>
+      <div className={landingContainer}>
         <ScrollReveal className="text-center" distance={18}>
-          <p className="text-sm font-medium text-muted-foreground mb-8">
+          <p className={`${landingEyebrowClass} mb-8`}>
             Trusted by leading regional forestry and investment experts
           </p>
 
           <div className="relative">
-            {/* Left fade */}
-            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-
-            {/* Right fade */}
-            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+            <div className="pointer-events-none absolute bottom-0 left-0 top-0 z-10 w-20 bg-gradient-to-r from-background to-transparent" />
+            <div className="pointer-events-none absolute bottom-0 right-0 top-0 z-10 w-20 bg-gradient-to-l from-background to-transparent" />
 
             <div className="overflow-hidden">
               <div className="flex animate-logo-scroll space-x-8 sm:space-x-12">
                 {marqueeCompanies.map((company, index) => (
                   <Card
                     key={`${company.name}-${index}`}
-                    className="flex-shrink-0 flex items-center justify-center h-16 w-40
-                               opacity-60 hover:opacity-100 transition-opacity duration-300
-                               border-0 shadow-none bg-transparent"
+                    className="flex h-16 w-40 flex-shrink-0 items-center justify-center border-0 bg-transparent opacity-60 shadow-none transition-opacity duration-300 hover:opacity-100 sm:h-[4.5rem] sm:w-44"
                   >
                     <div className="flex items-center gap-3">
-                      <Logo src={company.src} name={company.name} size={28} />
-                      <span className="text-foreground text-lg font-semibold whitespace-nowrap">
+                      <Logo src={company.src} name={company.name} />
+                      <span className="whitespace-nowrap text-base font-semibold text-foreground sm:text-lg">
                         {company.name}
                       </span>
                     </div>
@@ -62,7 +59,6 @@ export function LogoCarousel() {
                 ))}
               </div>
             </div>
-
           </div>
         </ScrollReveal>
       </div>

@@ -6,6 +6,14 @@ import { Button } from '@/components/ui/button'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Badge } from '@/components/ui/badge'
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
+import {
+  landingBadgeClass,
+  landingContainer,
+  landingHeadingClass,
+  landingLeadClass,
+  landingSectionIntro,
+  landingSectionPadding,
+} from './landing-shared'
 
 type FaqItem = {
   value: string
@@ -50,15 +58,15 @@ const FaqSection = () => {
   const [openItem, setOpenItem] = useState<string | undefined>()
 
   return (
-    <section id="faq" className="relative overflow-hidden py-24 sm:py-32">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="faq" className={`relative overflow-hidden ${landingSectionPadding}`}>
+      <div className={landingContainer}>
         {/* Section Header */}
-        <ScrollReveal className="mx-auto mb-16 max-w-2xl text-center" distance={22}>
-          <Badge variant="outline" className="mb-4 border border-emerald-500/40" >FAQ</Badge>
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
+        <ScrollReveal className={landingSectionIntro} distance={22}>
+          <Badge variant="outline" className={landingBadgeClass} >FAQ</Badge>
+          <h2 className={landingHeadingClass}>
             Frequently Asked Questions
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className={landingLeadClass}>
             What people are asking about EA Forests' features and purpose:
           </p>
         </ScrollReveal>

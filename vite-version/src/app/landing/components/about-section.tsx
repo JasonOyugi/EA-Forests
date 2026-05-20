@@ -7,6 +7,14 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
+import {
+  landingBadgeClass,
+  landingContainer,
+  landingHeadingClass,
+  landingLeadClass,
+  landingSectionIntro,
+  landingSectionPadding,
+} from "./landing-shared"
 
 const values = [
   {
@@ -41,16 +49,16 @@ const values = [
 
 export function AboutSection() {
   return (
-    <section id="about" className="py-24 sm:py-32">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <ScrollReveal className="mx-auto mb-16 max-w-4xl text-center" distance={22}>
-          <Badge variant="outline" className="mb-4 border border-emerald-500/40 text-primary">
+    <section id="about" className={landingSectionPadding}>
+      <div className={landingContainer}>
+        <ScrollReveal className={landingSectionIntro} distance={22}>
+          <Badge variant="outline" className={landingBadgeClass}>
             About EA Forests
           </Badge>
-          <h2 className="mb-6 font-bold tracking-tight sm:text-4xl">
+          <h2 className={landingHeadingClass}>
             Who said money doesn&apos;t grow on trees!
           </h2>
-          <p className="mb-8 text-lg text-muted-foreground">
+          <p className={`${landingLeadClass} max-w-4xl`}>
             Serious profits are already being generated from forestry. The question is, are you a part of it?
             Whether you supply seedlings, operate planting crews, run a mill, trade assets, or are simply looking to make bank from land,
             we ensure you connect with the right people in the most informed way possible.
@@ -75,10 +83,10 @@ export function AboutSection() {
                     </div>
                     <CardContent className="relative z-10 p-8">
                       <div className="flex flex-col items-center text-center">
-                        <h3 className="mt-6 text-lg font-bold text-balance text-white group-hover:underline">
+                        <h3 className="mt-6 text-lg font-bold text-white group-hover:underline sm:text-xl">
                           {value.title}
                         </h3>
-                        <p className="text-md mt-3 text-white/80">{value.description}</p>
+                        <p className="mt-3 text-sm leading-7 text-white/80 sm:text-base">{value.description}</p>
                       </div>
                     </CardContent>
                   </Card>

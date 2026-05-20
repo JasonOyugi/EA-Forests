@@ -3,27 +3,26 @@
 import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
-import { AiFillYoutube } from "react-icons/ai";
+import { AiFillYoutube } from "react-icons/ai"
 import { ArrowRight, Play, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import VideoPreview from "@/components/VideoPreview"
 import { DotPattern } from "@/components/dot-pattern"
 import { getAppUrl } from "@/lib/utils"
+import { landingContainer, landingHeroHeadingClass, landingHeroLeadClass } from "./landing-shared"
+
+const TOTAL_HERO_VIDEOS = 4
+const heroVideoLinks = [
+  { url: "https://www.youtube.com/watch?v=VIDEO_ID_1" },
+  { url: "https://www.youtube.com/watch?v=VIDEO_ID_2" },
+  { url: "https://www.youtube.com/watch?v=VIDEO_ID_3" },
+  { url: "https://www.youtube.com/watch?v=VIDEO_ID_4" },
+] as const
 
 export function HeroSection() {
-  const totalVideos = 4
-  const videoLabels = [
-    { url: "https://www.youtube.com/watch?v=VIDEO_ID_1" },
-    { url: "https://www.youtube.com/watch?v=VIDEO_ID_2" },
-    { url: "https://www.youtube.com/watch?v=VIDEO_ID_3" },
-    { url: "https://www.youtube.com/watch?v=VIDEO_ID_4" },
-  ]
-
   const [currentIndex, setCurrentIndex] = useState(1)
   const [hasClicked, setHasClicked] = useState(false)
-
-  // ✅ only gate initial UI on background readiness
   const [bgReady, setBgReady] = useState(false)
   const [forceHideLoader, setForceHideLoader] = useState(false)
 
@@ -32,36 +31,31 @@ export function HeroSection() {
   const previewVideoRef = useRef<HTMLVideoElement | null>(null)
 
   const getVideoSrc = (index: number) => `/hero-${index}.mp4`
-
-  // Optional posters (recommended). Put these in /public/posters/
-  // If you don’t have posters yet, you can remove poster props below.
   const getPosterSrc = (index: number) => `/posters/hero-${index}.jpg`
+  const backgroundVideoIndex = currentIndex === TOTAL_HERO_VIDEOS - 1 ? 1 : currentIndex
 
-  // Safety: never block forever (e.g. if a video 404s)
   useEffect(() => {
-    const t = window.setTimeout(() => setForceHideLoader(true), 3500)
-    return () => window.clearTimeout(t)
+    const timeoutId = window.setTimeout(() => setForceHideLoader(true), 3500)
+    return () => window.clearTimeout(timeoutId)
   }, [])
 
   const loading = !bgReady && !forceHideLoader
 
   const handleMiniVdClick = () => {
     setHasClicked(true)
-    setCurrentIndex((prevIndex) => (prevIndex % totalVideos) + 1)
+    setCurrentIndex((prevIndex) => (prevIndex % TOTAL_HERO_VIDEOS) + 1)
   }
 
   const handleHoverStart = () => {
-    if (previewVideoRef.current) {
-      previewVideoRef.current.currentTime = 0
-      previewVideoRef.current.play().catch(() => {})
-    }
+    if (!previewVideoRef.current) return
+    previewVideoRef.current.currentTime = 0
+    previewVideoRef.current.play().catch(() => {})
   }
 
   const handleHoverEnd = () => {
     previewVideoRef.current?.pause()
   }
 
-  // ✅ CLICK EXPAND TRANSITION — scoped to this component (no global ID collisions)
   useGSAP(
     () => {
       if (!hasClicked) return
@@ -70,7 +64,6 @@ export function HeroSection() {
 
       const nextEl = root.querySelector<HTMLVideoElement>('[data-next-video="true"]')
       const currentEl = root.querySelector<HTMLVideoElement>('[data-current-video="true"]')
-
       if (!nextEl || !currentEl) return
 
       gsap.set(nextEl, { visibility: "visible" })
@@ -83,11 +76,8 @@ export function HeroSection() {
         duration: 1,
         ease: "power1.inOut",
         onStart: () => {
-          if (nextVdRef.current) {
-            nextVdRef.current.play().catch(() => {});
-          }
+          nextVdRef.current?.play().catch(() => {})
         },
-        
       })
 
       gsap.from(currentEl, {
@@ -100,11 +90,10 @@ export function HeroSection() {
     { dependencies: [currentIndex], revertOnUpdate: true, scope: rootRef }
   )
 
-  // ✅ SCROLL MORPH — scoped and safe
   return (
     <section
       id="hero"
-      className="landing-hero-shell relative overflow-hidden bg-gradient-to-b from-background to-background/80 pt-16 sm:pt-20 pb-16"
+      className="landing-hero-shell relative overflow-hidden bg-gradient-to-b from-background to-background/80 pb-16 pt-16 sm:pb-20 sm:pt-20 lg:pb-24"
     >
       <div aria-hidden className="hero-map-bg absolute inset-0" />
       <div aria-hidden className="hero-map-tint absolute inset-0" />
@@ -112,17 +101,13 @@ export function HeroSection() {
         <DotPattern className="opacity-100" size="lg" fadeStyle="none" />
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div className={`${landingContainer} relative`}>
         <div className="mx-auto max-w-4xl text-center">
           <div className="landing-fade-up landing-delay-1 mb-8 flex justify-center">
             <a href="/shop/seedlings#featured-products" className="group inline-flex">
               <Badge
                 variant="outline"
-                className="badge-emerald-run text-primary rounded-lg px-4 py-2 
-                          border border-emerald-500/40
-                          bg-transparent hover:bg-emerald-400/5
-                          transition-shadow duration-300
-                          hover:shadow-[0_0_22px_rgba(16,185,129,0.35)]"
+                className="badge-emerald-run rounded-lg border border-emerald-500/40 bg-transparent px-4 py-2 text-primary transition-shadow duration-300 hover:bg-emerald-400/5 hover:shadow-[0_0_22px_rgba(16,185,129,0.35)]"
               >
                 <span className="hero-badge-star-shell mr-2 inline-flex size-5 items-center justify-center rounded-full">
                   <Star className="h-3 w-3 fill-current" />
@@ -133,24 +118,21 @@ export function HeroSection() {
             </a>
           </div>
 
-          <h1 className="landing-fade-up landing-delay-2 mb-6 font-bold tracking-tight text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
+          <h1 className={`landing-fade-up landing-delay-2 ${landingHeroHeadingClass}`}>
             Profit From Forestry in{" "}
-            <span className='emerald-glitter-text bg-gradient-to-r from-emerald-300 via-emerald-500 to-emerald-200 bg-clip-text text-transparent'>
+            <span className="emerald-glitter-text bg-gradient-to-r from-emerald-300 via-emerald-500 to-emerald-200 bg-clip-text text-transparent">
               East Africa
             </span>{" "}
             Today
           </h1>
 
-          <p className="landing-fade-up landing-delay-3 mx-auto mb-10 max-w-2xl text-sm sm:text-base md:text-lg text-muted-foreground lg:text-xl">
+          <p className={`landing-fade-up landing-delay-3 ${landingHeroLeadClass}`}>
             From nurseries to building with timber, start generating cash from East African forestry now!
           </p>
 
           <div className="landing-fade-up landing-delay-4 flex flex-col gap-4 sm:flex-row sm:justify-center">
-            <Button size="lg" className="text-base cursor-pointer" asChild>
-              <a
-                href={getAppUrl("/auth/sign-up")}
-                className="group relative overflow-hidden"
-              >
+            <Button size="lg" className="cursor-pointer text-base" asChild>
+              <a href={getAppUrl("/auth/sign-up")} className="group relative overflow-hidden">
                 <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
                 <span className="relative z-10 inline-flex items-center group-hover:text-emerald-100">
                   Get Started Free
@@ -163,11 +145,7 @@ export function HeroSection() {
               variant="outline"
               size="lg"
               asChild
-              className="emerald-border-hover text-base cursor-pointer
-                        transition-all duration-300
-                        hover:text-emerald-400
-                        hover:bg-secondary/20
-                        hover:shadow-[0_0_24px_rgba(16,185,129,0.35)]"
+              className="emerald-border-hover cursor-pointer text-base transition-all duration-300 hover:bg-secondary/20 hover:text-emerald-400 hover:shadow-[0_0_24px_rgba(16,185,129,0.35)]"
             >
               <a href="#pricing">
                 <Play className="mr-2 h-4 w-4" />
@@ -177,26 +155,20 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* HERO VISUAL */}
-        <div className="landing-video-reveal mx-auto mt-20 max-w-6xl">
-          <div ref={rootRef} className="relative group [perspective:1200px]">
-            <div className="absolute top-2 lg:-top-8 left-1/2 -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-80 bg-primary/50 rounded-full blur-3xl" />
+        <div className="landing-video-reveal mx-auto mt-20 w-full">
+          <div ref={rootRef} className="group relative [perspective:1200px]">
+            <div className="absolute left-1/2 top-2 mx-auto h-24 w-[90%] -translate-x-1/2 rounded-full bg-primary/50 blur-3xl lg:-top-8 lg:h-80" />
 
-            <div className="relative rounded-xl border bg-card shadow-2xl overflow-hidden">
+            <div className="relative overflow-hidden rounded-xl border bg-card shadow-2xl">
               {loading && (
                 <div className="absolute inset-0 z-[100] grid place-items-center bg-background/80 backdrop-blur-sm">
                   <div className="h-8 w-8 animate-spin rounded-full border-2 border-foreground/30 border-t-foreground" />
                 </div>
               )}
 
-              <div
-                data-video-frame="true"
-                className="relative z-10 w-full overflow-hidden rounded-xl aspect-[16/9]"
-              >
-
-                {/* MINI PREVIEW (MATCHES SECOND HERO) */}
+              <div data-video-frame="true" className="relative z-10 aspect-[16/9] w-full overflow-hidden rounded-xl">
                 <div
-                  className="absolute left-1/2 top-1/2 z-50 h-48 w-64 -translate-x-1/2 -translate-y-1/2 cursor-pointer overflow-hidden transition-all duration-700 ease-in-out"
+                  className="absolute left-1/2 top-1/2 z-50 h-36 w-52 -translate-x-1/2 -translate-y-1/2 cursor-pointer overflow-hidden transition-all duration-700 ease-in-out sm:h-44 sm:w-60 lg:h-48 lg:w-64"
                   onMouseEnter={handleHoverStart}
                   onMouseLeave={handleHoverEnd}
                 >
@@ -208,8 +180,8 @@ export function HeroSection() {
                       <video
                         ref={previewVideoRef}
                         data-current-video="true"
-                        src={getVideoSrc((currentIndex % totalVideos) + 1)}
-                        poster={getPosterSrc((currentIndex % totalVideos) + 1)}
+                        src={getVideoSrc((currentIndex % TOTAL_HERO_VIDEOS) + 1)}
+                        poster={getPosterSrc((currentIndex % TOTAL_HERO_VIDEOS) + 1)}
                         loop
                         muted
                         playsInline
@@ -220,7 +192,6 @@ export function HeroSection() {
                   </VideoPreview>
                 </div>
 
-                {/* NEXT VIDEO (EXPANDS ON CLICK, MATCHES SECOND HERO) */}
                 <video
                   ref={nextVdRef}
                   data-next-video="true"
@@ -230,13 +201,12 @@ export function HeroSection() {
                   muted
                   playsInline
                   preload="none"
-                  className="absolute left-1/2 top-1/2 invisible z-20 h-48 w-64 -translate-x-1/2 -translate-y-1/2 object-cover object-center"
+                  className="absolute left-1/2 top-1/2 invisible z-20 h-36 w-52 -translate-x-1/2 -translate-y-1/2 object-cover object-center sm:h-44 sm:w-60 lg:h-48 lg:w-64"
                 />
 
-                {/* BACKGROUND VIDEO (MATCHES SECOND HERO BEHAVIOR) */}
                 <video
-                  src={getVideoSrc(currentIndex === totalVideos - 1 ? 1 : currentIndex)}
-                  poster={getPosterSrc(currentIndex === totalVideos - 1 ? 1 : currentIndex)}
+                  src={getVideoSrc(backgroundVideoIndex)}
+                  poster={getPosterSrc(backgroundVideoIndex)}
                   autoPlay
                   loop
                   muted
@@ -249,21 +219,20 @@ export function HeroSection() {
 
                 <div className="hero-youtube-badge absolute bottom-5 right-5 z-40 rounded-lg bg-red-500/50 px-2 py-1 backdrop-blur-sm transition-transform duration-300">
                   <a
-                    href={videoLabels[currentIndex - 1].url}
+                    href={heroVideoLinks[currentIndex - 1].url}
                     target="_blank"
                     rel="noreferrer"
                     className="text-lg font-bold text-white"
+                    aria-label="Open featured video on YouTube"
                   >
-                   <AiFillYoutube />
+                    <AiFillYoutube />
                   </a>
                 </div>
-
-                <div className="absolute bottom-0 left-0 w-full h-32 md:h-40 lg:h-48 bg-gradient-to-b from-background/0 via-background/70 to-background" />
               </div>
             </div>
           </div>
         </div>
-        </div>
+      </div>
     </section>
   )
 }

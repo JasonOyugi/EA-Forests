@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState, type WheelEvent } from 'react'
+import { useEffect, useState } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
@@ -9,7 +9,15 @@ import { Button } from '@/components/ui/button'
 import { BentoTilt } from '@/components/ui/bento-tilt'
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
 import { cn } from '@/lib/utils'
-
+import {
+  landingBadgeClass,
+  landingContainer,
+  landingHeadingClass,
+  landingLeadClass,
+  landingSectionIntro,
+  landingSectionPadding,
+} from './landing-shared'
+import { useEmblaWheelNavigation } from './use-embla-wheel-navigation'
 
 const blogs = [
     {
@@ -40,15 +48,13 @@ const blogs = [
 
 export function BlogSection() {
   const [selectedIndex, setSelectedIndex] = useState(0)
-  const wheelDeltaRef = useRef(0)
-  const wheelCooldownRef = useRef(false)
-  const wheelResetTimerRef = useRef<number | null>(null)
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: 'start',
     skipSnaps: false,
     dragFree: false,
   })
+  const handleWheel = useEmblaWheelNavigation(emblaApi)
 
   useEffect(() => {
     if (!emblaApi) return
@@ -64,51 +70,18 @@ export function BlogSection() {
     }
   }, [emblaApi])
 
-  const handleWheel = (event: WheelEvent<HTMLDivElement>) => {
-    if (!emblaApi) return
-
-    const dominantDelta = Math.abs(event.deltaY) > Math.abs(event.deltaX) ? event.deltaY : event.deltaX
-    if (Math.abs(dominantDelta) < 16) return
-
-    event.preventDefault()
-    if (wheelCooldownRef.current) return
-
-    wheelDeltaRef.current += dominantDelta
-    if (wheelResetTimerRef.current !== null) {
-      window.clearTimeout(wheelResetTimerRef.current)
-    }
-    wheelResetTimerRef.current = window.setTimeout(() => {
-      wheelDeltaRef.current = 0
-      wheelResetTimerRef.current = null
-    }, 140)
-
-    if (Math.abs(wheelDeltaRef.current) < 120) return
-
-    if (wheelDeltaRef.current > 0) {
-      emblaApi.scrollNext()
-    } else {
-      emblaApi.scrollPrev()
-    }
-
-    wheelDeltaRef.current = 0
-    wheelCooldownRef.current = true
-    window.setTimeout(() => {
-      wheelCooldownRef.current = false
-    }, 320)
-  }
-
   return (
-    <section id="blog" className="section-map-shell section-map-blog relative overflow-hidden py-24 sm:py-32">
+    <section id="blog" className={`section-map-shell section-map-blog relative overflow-hidden ${landingSectionPadding}`}>
       <div aria-hidden className="section-map-bg absolute inset-0" />
       <div aria-hidden className="section-map-tint absolute inset-0" />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className={landingContainer}>
         {/* Section Header */}
-        <ScrollReveal className="mx-auto mb-16 max-w-2xl text-center" distance={22}>
-          <Badge variant="outline" className="mb-4 border border-emerald-500/40">Latest Insights</Badge>
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
+        <ScrollReveal className={landingSectionIntro} distance={22}>
+          <Badge variant="outline" className={landingBadgeClass}>Latest Insights</Badge>
+          <h2 className={landingHeadingClass}>
             From our blog
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className={landingLeadClass}>
             Stay updated with the latest trends, best practices, and insights from our team of experts.
           </p>
         </ScrollReveal>
@@ -126,7 +99,7 @@ export function BlogSection() {
                             <img
                               src={blog.image}
                               alt={blog.title}
-                              className="size-full object-cover dark:invert dark:brightness-[0.95]"
+                              className="size-full object-cover"
                               loading="lazy"
                               decoding="async"
                             />

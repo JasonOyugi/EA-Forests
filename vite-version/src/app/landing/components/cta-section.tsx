@@ -5,13 +5,18 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { ScrollReveal } from '@/components/ui/scroll-reveal'
 import { Separator } from '@/components/ui/separator'
+import {
+  landingContainer,
+  landingLeadClass,
+  landingSectionPaddingCompact,
+} from './landing-shared'
 
 export function CTASection() {
   return (
-    <section className='section-map-shell section-map-cta relative overflow-hidden py-16 lg:py-24 bg-muted/80'>
+    <section className={`section-map-shell section-map-cta relative overflow-hidden bg-muted/80 ${landingSectionPaddingCompact}`}>
       <div aria-hidden className="section-map-bg absolute inset-0" />
       <div aria-hidden className="section-map-tint absolute inset-0" />
-      <div className='container mx-auto px-4 lg:px-8'>
+      <div className={landingContainer}>
         <div className='mx-auto max-w-4xl'>
           <ScrollReveal className='text-center' distance={22}>
             <div className='space-y-8'>
@@ -40,7 +45,7 @@ export function CTASection() {
 
               {/* Main Content */}
               <div className='space-y-6'>
-                <h1 className='text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl'>
+                <h1 className='text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl xl:text-6xl'>
                   Join the community of 
                   <span className='flex sm:inline-flex justify-center'>
                     <span className='relative mx-2'>
@@ -53,7 +58,7 @@ export function CTASection() {
                   </span>
                 </h1>
 
-                <p className='text-muted-foreground mx-auto max-w-2xl text-balance lg:text-xl'>
+                <p className={landingLeadClass}>
                   From seed suppliers to timber processers, we bring the clients and dealers to you - partner with us, increase your visibility,
                   find customers and suppliers, start trading and earn profits!
                 </p>

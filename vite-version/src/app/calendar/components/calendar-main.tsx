@@ -9,18 +9,28 @@ import {
   MapPin,
   MoreHorizontal,
   Search,
-  Grid3X3,
-  List,
-  ChevronDown,
-  Menu,
+  LayoutGrid,
+  Plus,
 } from "lucide-react"
-import { addMonths, eachDayOfInterval, endOfMonth, format, isSameDay, isSameMonth, isToday, startOfMonth, subMonths } from "date-fns"
+import {
+  addMonths,
+  addYears,
+  eachDayOfInterval,
+  endOfMonth,
+  format,
+  isSameDay,
+  isSameMonth,
+  isToday,
+  startOfMonth,
+  subMonths,
+  subYears,
+} from "date-fns"
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { cn } from "@/lib/utils"
 
 import { calendarEventTypeConfig } from "../calendar-event-config"
@@ -32,24 +42,31 @@ interface CalendarMainProps {
   selectedDate?: Date
   onDateSelect?: (date: Date) => void
   onDayClick?: (date: Date) => void
-  onMenuClick?: () => void
+  onNewEvent?: () => void
   events?: CalendarEvent[]
   onEventEdit?: (event: CalendarEvent) => void
 }
 
-export function CalendarMain({ selectedDate, onDateSelect, onDayClick, onMenuClick, events, onEventEdit }: CalendarMainProps) {
+export function CalendarMain({
+  selectedDate,
+  onDateSelect,
+  onDayClick,
+  onNewEvent,
+  events,
+  onEventEdit,
+}: CalendarMainProps) {
   const sampleEvents: CalendarEvent[] = events ?? []
 
   const [currentDate, setCurrentDate] = useState(selectedDate || new Date())
-  const [viewMode, setViewMode] = useState<"month" | "week" | "day" | "list">("month")
+  const [viewMode, setViewMode] = useState<"month" | "year" | "list">("month")
   const [showEventDialog, setShowEventDialog] = useState(false)
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null)
 
   useEffect(() => {
-    if (selectedDate && !isSameMonth(selectedDate, currentDate)) {
+    if (selectedDate) {
       setCurrentDate(selectedDate)
     }
-  }, [currentDate, selectedDate])
+  }, [selectedDate])
 
   const monthStart = startOfMonth(currentDate)
   const monthEnd = endOfMonth(currentDate)
@@ -60,8 +77,14 @@ export function CalendarMain({ selectedDate, onDateSelect, onDayClick, onMenuCli
   const calendarDays = eachDayOfInterval({ start: calendarStart, end: calendarEnd })
 
   const getEventsForDay = (date: Date) => sampleEvents.filter((event) => isSameDay(event.date, date))
+  const monthsOfYear = Array.from({ length: 12 }, (_, index) => new Date(currentDate.getFullYear(), index, 1))
 
-  const navigateMonth = (direction: "prev" | "next") => {
+  const navigatePeriod = (direction: "prev" | "next") => {
+    if (viewMode === "year") {
+      setCurrentDate(direction === "prev" ? subYears(currentDate, 1) : addYears(currentDate, 1))
+      return
+    }
+
     setCurrentDate(direction === "prev" ? subMonths(currentDate, 1) : addMonths(currentDate, 1))
   }
 
@@ -201,19 +224,85 @@ export function CalendarMain({ selectedDate, onDateSelect, onDayClick, onMenuCli
     )
   }
 
+  const renderYearView = () => {
+    return (
+      <div className="flex-1 p-6">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {monthsOfYear.map((monthDate) => {
+            const monthEvents = sampleEvents.filter(
+              (event) =>
+                event.date.getFullYear() === monthDate.getFullYear() &&
+                event.date.getMonth() === monthDate.getMonth()
+            )
+            const isActiveMonth = isSameMonth(monthDate, currentDate)
+            const isSelectedMonth =
+              selectedDate &&
+              selectedDate.getFullYear() === monthDate.getFullYear() &&
+              selectedDate.getMonth() === monthDate.getMonth()
+
+            return (
+              <button
+                key={monthDate.toISOString()}
+                type="button"
+                onClick={() => {
+                  setCurrentDate(monthDate)
+                  onDateSelect?.(monthDate)
+                  setViewMode("month")
+                }}
+                className={cn(
+                  "rounded-3xl border p-5 text-left transition-all",
+                  isActiveMonth || isSelectedMonth
+                    ? "border-primary/45 bg-primary/8 shadow-sm"
+                    : "border-border/70 bg-background hover:border-primary/25 hover:bg-accent/30"
+                )}
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <div className="text-lg font-semibold">
+                      {format(monthDate, "MMMM")}
+                    </div>
+                    <div className="mt-1 text-sm text-muted-foreground">
+                      {monthEvents.length} event{monthEvents.length === 1 ? "" : "s"}
+                    </div>
+                  </div>
+                  <LayoutGrid className="h-5 w-5 text-primary/70" />
+                </div>
+
+                <div className="mt-4 space-y-2">
+                  {monthEvents.slice(0, 3).map((event) => (
+                    <div
+                      key={event.id}
+                      className="rounded-2xl border border-border/70 bg-muted/25 px-3 py-2 text-sm"
+                    >
+                      <div className="font-medium">{event.title}</div>
+                      <div className="mt-1 text-xs text-muted-foreground">
+                        {format(event.date, "MMM d")} at {event.time}
+                      </div>
+                    </div>
+                  ))}
+                  {monthEvents.length === 0 ? (
+                    <div className="rounded-2xl border border-dashed border-border/70 px-3 py-5 text-sm text-muted-foreground">
+                      No events scheduled yet.
+                    </div>
+                  ) : null}
+                </div>
+              </button>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="flex h-full flex-col">
       <div className="flex flex-col flex-wrap gap-4 border-b p-6 md:flex-row md:items-center md:justify-between">
         <div className="flex flex-wrap items-center gap-4">
-          <Button variant="outline" size="sm" className="cursor-pointer xl:hidden" onClick={onMenuClick}>
-            <Menu className="h-4 w-4" />
-          </Button>
-
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" onClick={() => navigateMonth("prev")} className="cursor-pointer">
+            <Button variant="outline" size="sm" onClick={() => navigatePeriod("prev")} className="cursor-pointer">
               <ChevronLeft className="h-4 w-4" />
             </Button>
-            <Button variant="outline" size="sm" onClick={() => navigateMonth("next")} className="cursor-pointer">
+            <Button variant="outline" size="sm" onClick={() => navigatePeriod("next")} className="cursor-pointer">
               <ChevronRight className="h-4 w-4" />
             </Button>
             <Button variant="outline" size="sm" onClick={goToToday} className="cursor-pointer">
@@ -221,7 +310,9 @@ export function CalendarMain({ selectedDate, onDateSelect, onDayClick, onMenuCli
             </Button>
           </div>
 
-          <h1 className="text-2xl font-semibold">{format(currentDate, "MMMM yyyy")}</h1>
+          <h1 className="text-2xl font-semibold">
+            {viewMode === "year" ? format(currentDate, "yyyy") : format(currentDate, "MMMM yyyy")}
+          </h1>
         </div>
 
         <div className="flex flex-col gap-3 md:flex-row md:items-center">
@@ -230,29 +321,39 @@ export function CalendarMain({ selectedDate, onDateSelect, onDayClick, onMenuCli
             <Input placeholder="Search events..." className="w-64 pl-10" />
           </div>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="cursor-pointer">
-                {viewMode === "month" ? <Grid3X3 className="mr-2 h-4 w-4" /> : <List className="mr-2 h-4 w-4" />}
-                {viewMode.charAt(0).toUpperCase() + viewMode.slice(1)}
-                <ChevronDown className="ml-2 h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem onClick={() => setViewMode("month")} className="cursor-pointer">
-                <Grid3X3 className="mr-2 h-4 w-4" />
-                Month
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setViewMode("list")} className="cursor-pointer">
-                <List className="mr-2 h-4 w-4" />
-                List
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <ToggleGroup
+            type="single"
+            value={viewMode}
+            onValueChange={(value) => {
+              if (value) {
+                setViewMode(value as "month" | "year" | "list")
+              }
+            }}
+            className="rounded-2xl border border-border/70 bg-background p-1"
+          >
+            <ToggleGroupItem value="month" className="rounded-xl px-3 py-2 text-sm">
+              Month
+            </ToggleGroupItem>
+            <ToggleGroupItem value="year" className="rounded-xl px-3 py-2 text-sm">
+              Year
+            </ToggleGroupItem>
+            <ToggleGroupItem value="list" className="rounded-xl px-3 py-2 text-sm">
+              Agenda
+            </ToggleGroupItem>
+          </ToggleGroup>
+
+          <Button onClick={onNewEvent} className="cursor-pointer">
+            <Plus className="mr-2 h-4 w-4" />
+            New event
+          </Button>
         </div>
       </div>
 
-      {viewMode === "month" ? renderCalendarGrid() : renderListView()}
+      {viewMode === "month"
+        ? renderCalendarGrid()
+        : viewMode === "year"
+          ? renderYearView()
+          : renderListView()}
 
       <EventDetailDialog
         event={selectedEvent}

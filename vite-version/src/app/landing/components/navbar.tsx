@@ -29,6 +29,12 @@ const navigationItems = [
   { name: "Contact", href: "#contact" },
 ] as const
 
+const shopToggleItems = [
+  { name: "Seedlings", href: getAppUrl("/shop/seedlings") },
+  { name: "Forests & Land", href: getAppUrl("/shop/forests-land") },
+  { name: "Markets", href: getAppUrl("/shop/roundwood") },
+] as const
+
 const smoothScrollTo = (targetId: string) => {
   if (!targetId.startsWith("#")) return
   const element = document.querySelector(targetId)
@@ -84,8 +90,6 @@ export function LandingNavbar() {
           <a
             href="#hero"
             className="flex items-center space-x-2 cursor-pointer"
-            target="_blank"
-            rel="noopener noreferrer"
           >
             <Logo size={32} />
             <span className="font-bold">EA Forests</span>
@@ -111,6 +115,14 @@ export function LandingNavbar() {
             ))}
           </NavigationMenuList>
         </NavigationMenu>
+
+        <div className="hidden xl:flex items-center gap-1 rounded-full border border-border/70 bg-background/70 p-1 shadow-sm backdrop-blur-sm">
+          {shopToggleItems.map((item) => (
+            <Button key={item.name} variant="ghost" size="sm" asChild className="rounded-full px-3 text-xs font-medium sm:text-sm">
+              <a href={item.href}>{item.name}</a>
+            </Button>
+          ))}
+        </div>
 
         {/* Desktop CTA */}
         <div className="hidden xl:flex items-center space-x-2">
@@ -171,10 +183,10 @@ export function LandingNavbar() {
               {/* Header */}
               <SheetHeader className="space-y-0 p-4 pb-2 border-b">
                 <div className="flex items-center gap-2">
-                  <div className="p-2 bg-primary/10 rounded-lg">
+                  <div className="p-2 rounded-lg">
                     <Logo size={16} />
                   </div>
-                  <SheetTitle className="text-lg font-semibold">EA Forests</SheetTitle>
+                  <SheetTitle className="text-sm">EA Forests</SheetTitle>
 
                   <div className="ml-auto flex items-center gap-2">
                     <Button
@@ -189,7 +201,7 @@ export function LandingNavbar() {
 
                     <Button variant="ghost" size="icon" asChild className="cursor-pointer h-8 w-8">
                       <a
-                        href="https://github.com/silicondeck/shadcn-dashboard-landing-template"
+                        href="https://github.com/JasonOyugi/EA_Forests"
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="GitHub Repository"
@@ -231,12 +243,27 @@ export function LandingNavbar() {
                     </div>
                   ))}
                 </nav>
+
+                <div className="px-6 pb-6">
+                  <div className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                    Shop
+                  </div>
+                  <div className="grid gap-2">
+                    {shopToggleItems.map((item) => (
+                      <Button key={item.name} variant="outline" asChild className="justify-start rounded-full">
+                        <a href={item.href} onClick={() => setIsOpen(false)}>
+                          {item.name}
+                        </a>
+                      </Button>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               {/* Footer Actions */}
               <div className="border-t p-6 space-y-4">
                 <div className="space-y-3">
-                  <Button variant="outline" size="lg" asChild className="emerald-border-hover text-base cursor-pointer transition-all duration-300 hover:text-emerald-400 hover:shadow-[0_0_24px_rgba(16,185,129,0.35)]">
+                  <Button variant="outline" size="lg" asChild className="emerald-border-hover text-base cursor-pointer w-full transition-all duration-300 hover:text-emerald-400 hover:shadow-[0_0_24px_rgba(16,185,129,0.35)]">
                     <a href={getAppUrl("/dashboard")}>
                       <LayoutDashboard className="size-4" />
                       Dashboard

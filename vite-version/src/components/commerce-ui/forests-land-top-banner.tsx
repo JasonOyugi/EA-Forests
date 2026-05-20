@@ -1,18 +1,24 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { BentoTilt } from "@/components/ui/bento-tilt"
 
 interface ForestsLandTopBannerProps {
   rightIconSrc?: string
   rightIconAlt?: string
+  onVisibilityChange?: (isVisible: boolean) => void
 }
 
 export function ForestsLandTopBanner({
   rightIconSrc = "https://images.seeklogo.com/logo-png/55/1/uganda-government-crested-crane-logo-png_seeklogo-556491.png",
   rightIconAlt = "Crested crane",
+  onVisibilityChange,
 }: ForestsLandTopBannerProps) {
   const [isVisible, setIsVisible] = useState(true)
+
+  useEffect(() => {
+    onVisibilityChange?.(isVisible)
+  }, [isVisible, onVisibilityChange])
 
   if (!isVisible) return null
 

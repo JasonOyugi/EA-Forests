@@ -2,6 +2,7 @@ import seedlingsInventory from "../data/seedlings.json"
 import forestsLandInventory from "../data/forests-land.json"
 import forestryServicesInventory from "../data/forestry-services.json"
 import roundwoodInventory from "../data/roundwood.json"
+import { normalizeFlagshipShopItem } from "../lib/flagship-pricing"
 import type { ShopDefinition, ShopItem, ShopSlug } from "../types"
 
 export const shopDefinitions: Record<ShopSlug, ShopDefinition> = {
@@ -69,7 +70,7 @@ export const shopDefinitions: Record<ShopSlug, ShopDefinition> = {
 
 export const shopInventoryMap: Record<ShopSlug, ShopItem[]> = {
   seedlings: seedlingsInventory as ShopItem[],
-  "forests-land": forestsLandInventory as ShopItem[],
+  "forests-land": (forestsLandInventory as ShopItem[]).map(normalizeFlagshipShopItem),
   "forestry-services": forestryServicesInventory as ShopItem[],
   roundwood: roundwoodInventory as ShopItem[],
 }

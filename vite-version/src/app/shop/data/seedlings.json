@@ -3,122 +3,122 @@
     "id": "seedlings-eucalyptus-gn04",
     "slug": "eucalyptus-gn04-seedlings",
     "shop": "seedlings",
-    "name": "Eucalyptus GN04 Clones",
+    "name": "Eucalyptus GN04",
     "species": "Eucalyptus",
-    "kind": "product",
+    "kind": "Clonal/Hybrid",
     "unitLabel": "per package",
-    "price": 39.99,
+    "price": 19.99,
     "currency": "USD",
-    "description": "High-yield hybrid eucalyptus seedlings designed for fast establishment and timber performance.",
+    "description": "High-yield hybrid-clonal eucalyptus seedlings designed for fast growth and timber/veneer/pole performance.",
     "image": "https://files.crtgroupstorage.com/assets/silviculture/627B295A-A403-A78E-B34A-2650F3016798.jpg",
     "imageGallery": [
       { "url": "https://files.crtgroupstorage.com/assets/silviculture/627B295A-A403-A78E-B34A-2650F3016798.jpg", "title": "1" },
       { "url": "https://files.crtgroupstorage.com/assets/silviculture/63DAD0BA-CC9F-0B9C-655B-546A6A26E8A7.jpg", "title": "2" },
       { "url": "https://files.crtgroupstorage.com/assets/silviculture/48B93BDF-5733-C613-8E53-2202E7B06FB2.jpg", "title": "3" }
     ],
-    "tags": ["timber", "featured", "popular"],
+    "tags": ["timber", "featured", "popular", "hardwood"],
     "stockStatus": "in-stock",
     "domain": "timber",
     "featured": true,
     "variants": [
-      { "id": "small", "label": "Small", "count": 50, "price": 39.99, "unitLabel": "per 50 seedlings" },
-      { "id": "medium", "label": "Medium", "count": 100, "price": 74.99, "unitLabel": "per 100 seedlings" },
-      { "id": "large", "label": "Large", "count": 200, "price": 139.99, "unitLabel": "per 200 seedlings" }
+      { "id": "small", "label": "Small", "count": 100, "price": 38.99, "unitLabel": "per 100 seedlings" },
+      { "id": "medium", "label": "Medium", "count": 500, "price": 179.99, "unitLabel": "per 500 seedlings" },
+      { "id": "large", "label": "Large", "count": 1000, "price": 349.99, "unitLabel": "per 1000 seedlings" }
     ]
   },
   {
     "id": "seedlings-pine-patxtec",
     "slug": "pine-patxtec-seedlings",
     "shop": "seedlings",
-    "name": "Pine PAT*TEC Hybrids",
+    "name": "Pine PAT*TEC",
     "species": "Pine",
-    "kind": "product",
+    "kind": "Hybrid",
     "unitLabel": "per package",
     "price": 34.99,
     "currency": "USD",
-    "description": "Resilient hybrid pine seedlings for rapid establishment and strong growth in cooler climates.",
+    "description": "Resilient hybrid pine seedlings for high-survival establishment and strong growth across various climates.",
     "image": "https://files.crtgroupstorage.com/assets/silviculture/F1467843-D02B-67BD-FB09-98CEB0D4F747.jpg",
     "imageGallery": [
       { "url": "https://files.crtgroupstorage.com/assets/silviculture/F1467843-D02B-67BD-FB09-98CEB0D4F747.jpg", "title": "1" },
       { "url": "https://www.tcenergy.com/siteassets/stories/2022/2022-10-28-tree-spree/tce-tree-spree-vid-tn.jpg", "title": "2" },
       { "url": "https://i0.wp.com/blog.treetime.ca/wp-content/uploads/2020/10/Nursery-TreeTime-11-low-res.jpg?resize=816%2C408&ssl=1", "title": "3" }
     ],
-    "tags": ["timber", "featured", "popular"],
+    "tags": ["timber", "featured", "popular", "softwood"],
     "stockStatus": "in-stock",
     "domain": "timber",
     "featured": true,
     "variants": [
-      { "id": "small", "label": "Small", "count": 75, "price": 34.99, "unitLabel": "per 75 seedlings" },
-      { "id": "medium", "label": "Medium", "count": 150, "price": 64.99, "unitLabel": "per 150 seedlings" },
-      { "id": "large", "label": "Large", "count": 300, "price": 119.99, "unitLabel": "per 300 seedlings" }
+      { "id": "small", "label": "Small", "count": 100, "price": 23.99, "unitLabel": "per 100 seedlings" },
+      { "id": "medium", "label": "Medium", "count": 500, "price": 109.99, "unitLabel": "per 500 seedlings" },
+      { "id": "large", "label": "Large", "count": 1000, "price": 239.99, "unitLabel": "per 1000 seedlings" }
     ]
   },
   {
     "id": "seedlings-melia-volkensii",
     "slug": "melia-volkensii-seedlings",
     "shop": "seedlings",
-    "name": "F2 Melia Volkensii",
+    "name": "F2 Melia volkensii",
     "species": "Melia",
-    "kind": "product",
+    "kind": "Advanced Pure Indigenous",
     "unitLabel": "per package",
     "price": 29.99,
     "currency": "USD",
-    "description": "Premium dryland agroforestry seedlings with rapid growth and strong performance in arid conditions.",
+    "description": "The flagship dryland agroforestry tree producing Mahogany-like timber; seedlings with improved survival and strong performance in arid conditions.",
     "image": "https://static.wixstatic.com/media/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg/v1/fill/w_959,h_705,al_c,q_85,enc_avif,quality_auto/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg",
     "imageGallery": [
       { "url": "https://static.wixstatic.com/media/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg/v1/fill/w_959,h_705,al_c,q_85,enc_avif,quality_auto/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg", "title": "1" },
       { "url": "https://static.wixstatic.com/media/b9a05c_d6d8314627f7401192845ada2f4a9e0c~mv2.jpg/v1/fill/w_821,h_718,al_c,q_85,enc_avif,quality_auto/b9a05c_d6d8314627f7401192845ada2f4a9e0c~mv2.jpg", "title": "2" },
       { "url": "https://static.wixstatic.com/media/b9a05c_d3996a8c34f541959bf69c611c218db5~mv2.jpg/v1/fill/w_971,h_715,al_c,q_85,enc_avif,quality_auto/b9a05c_d3996a8c34f541959bf69c611c218db5~mv2.jpg", "title": "3" }
     ],
-    "tags": ["new", "agroforestry", "restoration"],
+    "tags": ["new", "agroforestry", "premium hardwood"],
     "stockStatus": "limited",
     "domain": "agroforestry",
     "variants": [
-      { "id": "small", "label": "Small", "count": 50, "price": 29.99, "unitLabel": "per 50 seedlings" },
-      { "id": "medium", "label": "Medium", "count": 100, "price": 54.99, "unitLabel": "per 100 seedlings" },
-      { "id": "large", "label": "Large", "count": 200, "price": 99.99, "unitLabel": "per 200 seedlings" }
+      { "id": "small", "label": "Small", "count": 50, "price": 19.99, "unitLabel": "per 50 seedlings" },
+      { "id": "medium", "label": "Medium", "count": 100, "price": 37.99, "unitLabel": "per 100 seedlings" },
+      { "id": "large", "label": "Large", "count": 250, "price": 95.99, "unitLabel": "per 250 seedlings" }
     ]
   },
   {
     "id": "seedlings-cypress",
     "slug": "cypress-seedlings",
     "shop": "seedlings",
-    "name": "Cypress",
+    "name": "Cypress lusitanica",
     "species": "Cypress",
-    "kind": "product",
+    "kind": "Pure Exotic",
     "unitLabel": "per package",
     "price": 24.99,
     "currency": "USD",
-    "description": "Hardy cypress seedlings for windbreaks, screen planting, and long-term forestry production.",
+    "description": "Quality, high-demand cypress seedlings for long-term, high-value forestry production.",
     "image": "https://cdn.creativefabrica.com/2022/04/05/Illustration-Vector-Graphic-of-Grow-icon-Graphics-28453606-1.jpg",
-    "tags": ["reforestation", "conservation"],
+    "tags": ["premium softwood", "timber"],
     "stockStatus": "in-stock",
     "domain": "timber",
     "variants": [
-      { "id": "small", "label": "Small", "count": 40, "price": 24.99, "unitLabel": "per 40 seedlings" },
-      { "id": "medium", "label": "Medium", "count": 100, "price": 44.99, "unitLabel": "per 100 seedlings" },
-      { "id": "large", "label": "Large", "count": 200, "price": 84.99, "unitLabel": "per 200 seedlings" }
+      { "id": "small", "label": "Small", "count": 100, "price": 7.99, "unitLabel": "per 100 seedlings" },
+      { "id": "medium", "label": "Medium", "count": 500, "price": 39.99, "unitLabel": "per 500 seedlings" },
+      { "id": "large", "label": "Large", "count": 1000, "price": 79.99, "unitLabel": "per 1000 seedlings" }
     ]
   },
   {
     "id": "seedlings-acacia",
     "slug": "acacia-seedlings",
     "shop": "seedlings",
-    "name": "Acacia",
-    "species": "acacia",
-    "kind": "product",
+    "name": "Acacia Nilotica",
+    "species": "Acacia",
+    "kind": "Pure Indigenous",
     "unitLabel": "per package",
     "price": 19.99,
     "currency": "USD",
-    "description": "Nitrogen-fixing acacia seedlings that support soil health and rapid canopy closure.",
+    "description": "A perfect agroforestry companion (especially in degraded and dry land) that supports soil health and produces some of the best gum, timber and charcoal.",
     "image": "https://cdn.creativefabrica.com/2022/04/05/Illustration-Vector-Graphic-of-Grow-icon-Graphics-28453606-1.jpg",
-    "tags": ["restoration", "soil-health"],
+    "tags": ["gum", "soil-health", "charcoal", "hardwood"],
     "stockStatus": "in-stock",
     "domain": "agroforestry",
     "variants": [
-      { "id": "small", "label": "Small", "count": 60, "price": 19.99, "unitLabel": "per 60 seedlings" },
-      { "id": "medium", "label": "Medium", "count": 120, "price": 38.99, "unitLabel": "per 120 seedlings" },
-      { "id": "large", "label": "Large", "count": 240, "price": 74.99, "unitLabel": "per 240 seedlings" }
+      { "id": "small", "label": "Small", "count": 100, "price": 25.99, "unitLabel": "per 100 seedlings" },
+      { "id": "medium", "label": "Medium", "count": 250, "price": 99.99, "unitLabel": "per 250 seedlings" },
+      { "id": "large", "label": "Large", "count": 500, "price": 169.99, "unitLabel": "per 500 seedlings" }
     ]
   }
 ]
