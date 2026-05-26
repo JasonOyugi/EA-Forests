@@ -9,7 +9,8 @@ import {
   Settings,
   HelpCircle,
   CreditCard,
-  ShoppingCart
+  ShoppingCart,
+  Trees
 } from "lucide-react"
 import { Link } from "react-router-dom"
 import { Logo } from "@/components/logo"
@@ -63,6 +64,25 @@ const data = {
             {
               title: "Markets",
               url: "/shop/roundwood",
+            },
+          ],
+        },
+        {
+          title: "Models",
+          url: "/models",
+          icon: Trees,
+          items: [
+            {
+              title: "Model 1: Site classification",
+              url: "/models/site-classification",
+            },
+            {
+              title: "Model 2: TBD",
+              url: "/models/model-2",
+            },
+            {
+              title: "Model 3: TBD",
+              url: "/models/model-3",
             },
           ],
         },

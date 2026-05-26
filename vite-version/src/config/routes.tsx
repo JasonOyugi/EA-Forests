@@ -18,6 +18,10 @@ const Calendar = lazy(() => import('@/app/calendar/page'))
 const Users = lazy(() => import('@/app/users/page'))
 const FAQs = lazy(() => import('@/app/faqs/page'))
 const Pricing = lazy(() => import('@/app/pricing/page'))
+const Models = lazy(() => import('@/app/models/page'))
+const SiteClassification = lazy(() => import('@/app/models/site-classification/page'))
+const Model2 = lazy(() => import('@/app/models/model-2/page'))
+const Model3 = lazy(() => import('@/app/models/model-3/page'))
 
 // Auth pages
 const SignIn = lazy(() => import('@/app/auth/sign-in/page'))
@@ -133,6 +137,22 @@ export const routes: RouteConfig[] = [
   {
     path: "/pricing",
     element: <Pricing />
+  },
+  {
+    path: "/models",
+    element: <Models />
+  },
+  {
+    path: "/models/site-classification",
+    element: <SiteClassification />
+  },
+  {
+    path: "/models/model-2",
+    element: <Model2 />
+  },
+  {
+    path: "/models/model-3",
+    element: <Model3 />
   },
 
   // Authentication Routes

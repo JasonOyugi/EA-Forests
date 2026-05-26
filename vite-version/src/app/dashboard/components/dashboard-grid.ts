@@ -1,9 +1,10 @@
 import {
+  estimateSubBlockAreaMetrics,
   speciesProfile,
   type AssetGroup,
   type SubBlock,
   type TreeVariety,
-} from "./data-table"
+} from "../data/forestry-data"
 import { clamp } from "./dashboard-shared"
 
 export const compartmentScaleOptions = [
@@ -145,30 +146,14 @@ export function getGridColumns(hectaresPerCell: number) {
 }
 
 export function estimateBlockMetrics(subBlock: SubBlock, representedArea: number): BlockMetrics {
-  const profile = speciesProfile[subBlock.variety]
-  const maturityFactor = clamp(0.48 + subBlock.age * 0.09, 0.56, 1.34)
-  const survivalRate = clamp(
-    profile.baselineSurvival - Math.max(0, 0.06 - subBlock.age * 0.004),
-    0.58,
-    0.97
-  )
-  const totalTrees = Math.round(representedArea * profile.treesPerHa * survivalRate)
-  const estimatedVolume = Math.round(
-    representedArea * profile.volumePerHa * maturityFactor * survivalRate
-  )
-  const averageHeight = roundMetric(
-    profile.heightRate * subBlock.age * (0.82 + survivalRate * 0.24)
-  )
-  const averageDbh = roundMetric(
-    profile.dbhRate * subBlock.age * (0.84 + survivalRate * 0.2)
-  )
+  const metrics = estimateSubBlockAreaMetrics(subBlock, representedArea)
 
   return {
-    totalTrees,
-    estimatedVolume,
-    averageHeight,
-    averageDbh,
-    survivalRate,
+    totalTrees: metrics.totalTrees,
+    estimatedVolume: metrics.estimatedVolume,
+    averageHeight: roundMetric(metrics.averageHeight),
+    averageDbh: roundMetric(metrics.averageDbh),
+    survivalRate: clamp(metrics.survivalRate, 0, 1),
   }
 }
 

@@ -122,7 +122,7 @@ export default function Page() {
           portfolioValue={formatCurrencyExact(portfolioPoint?.portfolioValue ?? 0)}
           portfolioTrendLabel={portfolioTrend.label}
           portfolioTrendUp={portfolioTrend.isUp}
-          portfolioSummary={`Estimated valuation of ${plantedAreaLabel} ha planted and ${acquiredAreaLabel} ha acquired`}
+          portfolioSummary={`Derived from ${plantedAreaLabel} ha financed across ${acquiredAreaLabel} ha managed`}
           landManaged={`${formatNumberExact(landPoint?.landManaged ?? 0)} ha`}
           landTrendLabel={landTrend.label}
           landTrendUp={landTrend.isUp}

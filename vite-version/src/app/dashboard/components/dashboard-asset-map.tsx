@@ -128,7 +128,7 @@ const metricMeta: Record<
   expectedPrice: {
     label: "Expected price",
     description: "[For the selected site]",
-    format: (value) => `$${value.toFixed(2)} / m3`,
+    format: (value) => `$${value.toFixed(2)} / tonne`,
     axisTick: (value) => `$${value.toFixed(0)}`,
   },
 }

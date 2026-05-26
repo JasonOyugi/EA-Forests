@@ -343,7 +343,7 @@ export function PricingSection() {
             </Button>
           </p>
           <p className="text-xs text-muted-foreground">
-            Flagship rates are standardized per hectare across the landing and product pages.
+            Rates depend highly on the site - ensure you contact us or use our models before making any decisions.
           </p>
         </ScrollReveal>
       </div>

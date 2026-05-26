@@ -366,7 +366,7 @@ const flagshipConfigs: Record<string, FlagshipConfig> = {
       "Verified supply, contractor, and management based on extensive R&D and live field trials in the Kenyan drylands",
       "Adaptive oversight with climate-aware execution and reporting checkpoints",
     ],
-    managedTitle: "Let us change the drylands profitably.",
+    managedTitle: "Let us profitably restore the drylands together.",
     managedSummary:
       "You provide the investment. We coordinate the improved genetics sourcing, the agroforestry design, adaptive field execution, and climate-aware monitoring so you can grow the most coveted hardwoods and gum arabic in the world.",
     progressAccent: "#f59e0b",
@@ -725,7 +725,7 @@ export function FlagshipInvestmentPage({ item, onBack }: FlagshipInvestmentPageP
           src={heroImage}
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-96 [filter:brightness(0.12)_saturate(0.26)]"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-86 [filter:brightness(0.2)_saturate(0.6)]"
         />
         <div
           aria-hidden="true"

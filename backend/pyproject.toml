@@ -1,0 +1,23 @@
+[project]
+name = "ea-forests-models-backend"
+version = "0.1.0"
+description = "Python backend for EA Forests notebook-driven models"
+readme = "README.md"
+requires-python = ">=3.12,<3.15"
+dependencies = [
+  "earthengine-api>=1.7.0",
+  "fastapi>=0.116.0",
+  "httpx>=0.28.0",
+  "numpy>=2.3.0",
+  "pandas>=2.3.0",
+  "pydantic>=2.11.0",
+  "requests>=2.32.0",
+  "uvicorn[standard]>=0.35.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+package = false

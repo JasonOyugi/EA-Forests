@@ -71,33 +71,38 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { deriveEventDates, getRecentPaymentRows, getUpcomingPaymentRows } from "./dashboard-events"
+import {
+  getGroupEstimatedMetrics,
+  getSubBlockEstimatedMetrics,
+  groupPlantedSize,
+  groupSize,
+  groupVarieties,
+  initialAssetGroups,
+} from "../data/forestry-data"
+import type {
+  AssetGroup,
+  Country,
+} from "../data/forestry-data"
+
+export {
+  buildGroupMetricSeries,
+  formatVarietyLabel,
+  getGroupEstimatedMetrics,
+  getGroupSpecies,
+  getSubBlockEstimatedMetrics,
+  groupPlantedSize,
+  groupSize,
+  initialAssetGroups,
+  speciesProfile,
+} from "../data/forestry-data"
+export type {
+  AssetGroup,
+  AssetSubBlock as SubBlock,
+  SiteMetricKey,
+  TreeVariety,
+} from "../data/forestry-data"
+
 type TableView = "assets" | "transactions" | "activity-logs" | "documents"
-
-export type TreeVariety = "eucalyptus" | "pine" | "cypress" | "teak" | "corymbia"
-type Activity = "silviculture" | "planting" | "none"
-type Country = "Uganda" | "Kenya" | "Tanzania"
-
-export type SubBlock = {
-  id: string
-  subBlock: string
-  variety: TreeVariety
-  size: number
-  plantedSize: number
-  age: number
-  activity: Activity
-  contractor: string
-}
-
-export type AssetGroup = {
-  id: string
-  block: string
-  summaryTitle: string
-  summaryDescription: string
-  location: string
-  country: Country
-  mapCenter: [number, number]
-  subBlocks: SubBlock[]
-}
 
 export type PaymentRow = {
   invoice: string
@@ -130,23 +135,6 @@ type SortColumn =
   | "estimatedValuation"
   | "investmentPlaced"
 type SortOrder = "asc" | "desc"
-export type SiteMetricKey = "portfolioPerformance" | "expectedVolume" | "expectedPrice"
-
-export function groupVarieties(g: AssetGroup) {
-  return [...new Set(g.subBlocks.map((s) => s.variety))].join(", ")
-}
-
-export function getGroupSpecies(group: AssetGroup) {
-  return [...new Set(group.subBlocks.map((subBlock) => subBlock.variety))] as TreeVariety[]
-}
-
-export function groupSize(g: AssetGroup) {
-  return g.subBlocks.reduce((sum, s) => sum + s.size, 0)
-}
-
-export function groupPlantedSize(g: AssetGroup) {
-  return g.subBlocks.reduce((sum, s) => sum + s.plantedSize, 0)
-}
 
 function groupAge(g: AssetGroup) {
   return Math.max(...g.subBlocks.map((s) => s.age))
@@ -166,202 +154,6 @@ function formatTableCurrency(value: number) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(value)
-}
-
-export const speciesProfile: Record<
-  TreeVariety,
-  {
-    volumePerHa: number
-    pricePerM3: number
-    investmentPerHa: number
-    treesPerHa: number
-    heightRate: number
-    dbhRate: number
-    baselineSurvival: number
-    color: string
-  }
-> = {
-  eucalyptus: {
-    volumePerHa: 31,
-    pricePerM3: 84,
-    investmentPerHa: 1880,
-    treesPerHa: 1111,
-    heightRate: 3.8,
-    dbhRate: 2.6,
-    baselineSurvival: 0.92,
-    color: "#1f7a45",
-  },
-  pine: {
-    volumePerHa: 24,
-    pricePerM3: 92,
-    investmentPerHa: 1720,
-    treesPerHa: 950,
-    heightRate: 2.9,
-    dbhRate: 2.1,
-    baselineSurvival: 0.89,
-    color: "#2563eb",
-  },
-  cypress: {
-    volumePerHa: 27,
-    pricePerM3: 88,
-    investmentPerHa: 1790,
-    treesPerHa: 975,
-    heightRate: 3.1,
-    dbhRate: 2.25,
-    baselineSurvival: 0.9,
-    color: "#0f766e",
-  },
-  teak: {
-    volumePerHa: 22,
-    pricePerM3: 114,
-    investmentPerHa: 2140,
-    treesPerHa: 816,
-    heightRate: 2.3,
-    dbhRate: 2,
-    baselineSurvival: 0.87,
-    color: "#c2410c",
-  },
-  corymbia: {
-    volumePerHa: 29,
-    pricePerM3: 96,
-    investmentPerHa: 1950,
-    treesPerHa: 1020,
-    heightRate: 3.5,
-    dbhRate: 2.45,
-    baselineSurvival: 0.91,
-    color: "#b45309",
-  },
-}
-
-export function getGroupEstimatedMetrics(group: AssetGroup) {
-  const estimatedVolume = Math.round(
-    group.subBlocks.reduce((sum, block) => {
-      const profile = speciesProfile[block.variety]
-      const maturityFactor = 0.48 + block.age * 0.09
-      return sum + block.size * profile.volumePerHa * maturityFactor
-    }, 0)
-  )
-
-  const estimatedValuation = Math.round(
-    group.subBlocks.reduce((sum, block) => {
-      const profile = speciesProfile[block.variety]
-      const maturityFactor = 0.48 + block.age * 0.09
-      return sum + block.size * profile.volumePerHa * maturityFactor * profile.pricePerM3
-    }, 0)
-  )
-
-  const investmentPlaced = Math.round(
-    group.subBlocks.reduce((sum, block) => {
-      const profile = speciesProfile[block.variety]
-      return sum + block.plantedSize * profile.investmentPerHa
-    }, 0)
-  )
-
-  return { estimatedVolume, estimatedValuation, investmentPlaced }
-}
-
-export function getSubBlockEstimatedMetrics(group: AssetGroup, subBlock: SubBlock) {
-  const totals = getGroupEstimatedMetrics(group)
-  const rawShares = group.subBlocks.map((block) => {
-    const profile = speciesProfile[block.variety]
-    const maturityFactor = 0.48 + block.age * 0.09
-
-    return {
-      id: block.id,
-      estimatedVolume: block.size * profile.volumePerHa * maturityFactor,
-      estimatedValuation: block.size * profile.volumePerHa * maturityFactor * profile.pricePerM3,
-      investmentPlaced: block.plantedSize * profile.investmentPerHa,
-    }
-  })
-
-  function allocateMetric(metric: keyof typeof totals) {
-    const total = totals[metric]
-    const rawTotal = rawShares.reduce((sum, share) => sum + share[metric], 0)
-    if (rawTotal <= 0) return 0
-
-    const rounded = rawShares.map((share) => ({
-      id: share.id,
-      value: Math.floor((share[metric] / rawTotal) * total),
-      fraction: ((share[metric] / rawTotal) * total) % 1,
-    }))
-
-    let remainder = total - rounded.reduce((sum, share) => sum + share.value, 0)
-    for (const share of [...rounded].sort((a, b) => b.fraction - a.fraction)) {
-      if (remainder <= 0) break
-      share.value += 1
-      remainder -= 1
-    }
-
-    return rounded.find((share) => share.id === subBlock.id)?.value ?? 0
-  }
-
-  return {
-    estimatedVolume: allocateMetric("estimatedVolume"),
-    estimatedValuation: allocateMetric("estimatedValuation"),
-    investmentPlaced: allocateMetric("investmentPlaced"),
-  }
-}
-
-export function formatVarietyLabel(variety: TreeVariety) {
-  return variety.charAt(0).toUpperCase() + variety.slice(1)
-}
-
-function estimateMetricForYear(subBlock: SubBlock, targetYear: number, baseYear: number) {
-  const profile = speciesProfile[subBlock.variety]
-  const age = Math.max(1, subBlock.age + (targetYear - baseYear))
-  const maturityFactor = Math.min(1.36, 0.42 + age * 0.095)
-  const expectedVolume = subBlock.plantedSize * profile.volumePerHa * maturityFactor
-  const expectedPrice = profile.pricePerM3 * (1 + (targetYear - baseYear) * 0.042 + Math.max(age - 4, 0) * 0.008)
-  const portfolioPerformance = expectedVolume * expectedPrice
-
-  return {
-    expectedVolume,
-    expectedPrice,
-    portfolioPerformance,
-  }
-}
-
-export function buildGroupMetricSeries(group: AssetGroup, metric: SiteMetricKey, baseYear = new Date().getFullYear()) {
-  const years = Array.from({ length: 6 }, (_, index) => baseYear - 2 + index)
-
-  return years.map((year) => {
-    const row: { year: string } & Record<TreeVariety, number> = {
-      year: String(year),
-      eucalyptus: 0,
-      pine: 0,
-      cypress: 0,
-      teak: 0,
-      corymbia: 0,
-    }
-    const priceWeights: Record<TreeVariety, { weightedValue: number; volume: number }> = {
-      eucalyptus: { weightedValue: 0, volume: 0 },
-      pine: { weightedValue: 0, volume: 0 },
-      cypress: { weightedValue: 0, volume: 0 },
-      teak: { weightedValue: 0, volume: 0 },
-      corymbia: { weightedValue: 0, volume: 0 },
-    }
-
-    group.subBlocks.forEach((subBlock) => {
-      const estimated = estimateMetricForYear(subBlock, year, baseYear)
-
-      if (metric === "expectedPrice") {
-        priceWeights[subBlock.variety].weightedValue += estimated.expectedPrice * estimated.expectedVolume
-        priceWeights[subBlock.variety].volume += estimated.expectedVolume
-        return
-      }
-
-      row[subBlock.variety] += estimated[metric]
-    })
-
-    if (metric === "expectedPrice") {
-      ;(Object.keys(priceWeights) as TreeVariety[]).forEach((variety) => {
-        const series = priceWeights[variety]
-        row[variety] = series.volume > 0 ? series.weightedValue / series.volume : 0
-      })
-    }
-
-    return row
-  })
 }
 
 function scalePolygon(
@@ -399,66 +191,6 @@ export function createPolygon(center: [number, number], index: number, totalArea
 
   return { outer, inner }
 }
-
-export const initialAssetGroups: AssetGroup[] = [
-  {
-    id: "group-1",
-    block: "Amuru-Atiti",
-    summaryTitle: "Amuru-Atiti production grid",
-    summaryDescription:
-      "A broad mixed-species Uganda estate where eucalyptus, corymbia, and pine run in production bands designed for quick stand-by-stand health review.",
-    location: "Albert-Nile, Northern",
-    country: "Uganda",
-    mapCenter: [2.78, 31.47],
-    subBlocks: [
-      { id: "sub-1a", subBlock: "A1a", variety: "eucalyptus", size: 32, plantedSize: 29, age: 6, activity: "silviculture", contractor: "GreenCanopy Ltd" },
-      { id: "sub-1b", subBlock: "A1b", variety: "corymbia", size: 28, plantedSize: 26, age: 4, activity: "none", contractor: "-" },
-      { id: "sub-1c", subBlock: "A1c", variety: "pine", size: 24, plantedSize: 24, age: 3, activity: "planting", contractor: "Timberline Services" },
-    ],
-  },
-  {
-    id: "group-2",
-    block: "Sarora",
-    summaryTitle: "Sarora remote grid",
-    summaryDescription:
-      "A compact Kenya footprint with pine and teak laid out in clean hectare lanes, making it ideal for fast condition scanning before drilling into sub-compartment detail.",
-    location: "Nandi, Rift Valley",
-    country: "Kenya",
-    mapCenter: [0.42, 35.02],
-    subBlocks: [
-      { id: "sub-2a", subBlock: "C2a", variety: "pine", size: 30, plantedSize: 30, age: 3, activity: "planting", contractor: "Timberline Services" },
-      { id: "sub-2b", subBlock: "C2b", variety: "teak", size: 26, plantedSize: 26, age: 3, activity: "planting", contractor: "Timberline Services" },
-    ],
-  },
-  {
-    id: "group-3",
-    block: "Nyakipam-Mtambula",
-    summaryTitle: "Nyakipam-Mtambula canopy grid",
-    summaryDescription:
-      "A larger, more mature Tanzania site anchored by cypress and eucalyptus, where hectare-level patterns help surface the strongest and weakest production pockets quickly.",
-    location: "Mufindi, Iringa",
-    country: "Tanzania",
-    mapCenter: [-8.73, 35.04],
-    subBlocks: [
-      { id: "sub-3a", subBlock: "D7a", variety: "cypress", size: 60, plantedSize: 50, age: 11, activity: "none", contractor: "-" },
-      { id: "sub-3b", subBlock: "D7b", variety: "eucalyptus", size: 52, plantedSize: 44, age: 9, activity: "silviculture", contractor: "GreenCanopy Ltd" },
-    ],
-  },
-  {
-    id: "group-4",
-    block: "Kakosi C",
-    summaryTitle: "Kakosi C field grid",
-    summaryDescription:
-      "A growth-stage Uganda site blending teak and eucalyptus, with active silviculture work that benefits from comparing hectare summaries against opened block detail.",
-    location: "Kaliro, Eastern",
-    country: "Uganda",
-    mapCenter: [1.08, 33.64],
-    subBlocks: [
-      { id: "sub-4a", subBlock: "B4a", variety: "teak", size: 38, plantedSize: 34, age: 4, activity: "silviculture", contractor: "SylvaOps" },
-      { id: "sub-4b", subBlock: "B4b", variety: "eucalyptus", size: 30, plantedSize: 27, age: 3, activity: "planting", contractor: "Timberline Services" },
-    ],
-  },
-]
 
 const activityLogs: ActivityLogRow[] = [
   { activity: "2026-04-08", activityName: "Form pruning pass", operation: "Silviculture", status: "completed", contractor: "GreenCanopy Ltd" },

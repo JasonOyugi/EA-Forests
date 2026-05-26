@@ -46,7 +46,11 @@ export function NavMain({
 
   const shouldBeOpen = (item: NavItem) => {
     if (item.isActive) return true
-    return item.items?.some((subItem) => location.pathname === subItem.url) || false
+    return (
+      location.pathname === item.url ||
+      item.items?.some((subItem) => location.pathname === subItem.url) ||
+      false
+    )
   }
 
   const menuContent = (

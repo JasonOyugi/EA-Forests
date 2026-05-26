@@ -46,16 +46,11 @@ export function CTASection() {
               {/* Main Content */}
               <div className='space-y-6'>
                 <h1 className='text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl xl:text-6xl'>
-                  Join the community of 
-                  <span className='flex sm:inline-flex justify-center'>
-                    <span className='relative mx-2'>
-                      <span className='emerald-glitter-text bg-gradient-to-r from-emerald-300 via-emerald-500 to-emerald-200 bg-clip-text text-transparent'>
-                      forestry
-                      </span>
-                      <div className='absolute start-0 -bottom-2 h-1 w-full bg-gradient-to-r from-emerald-400/35 via-emerald-500/20 to-emerald-200/35' />
-                    </span>
-                    businesses today
-                  </span>
+                  Join the Community of {" "}
+                  <span className="emerald-glitter-text bg-gradient-to-r from-emerald-300 via-emerald-500 to-emerald-200 bg-clip-text text-transparent">
+                    Forestry Investors and Businesses
+                  </span>{" "}
+                  Today
                 </h1>
 
                 <p className={landingLeadClass}>

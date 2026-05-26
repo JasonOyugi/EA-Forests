@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
@@ -37,14 +38,9 @@ export function SiteHeader() {
           </div>
           <div className="ml-auto flex items-center gap-2">
             <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
-              <a
-                href="https://github.com/JasonOyugi?tab=repositories"
-                rel="noopener noreferrer"
-                target="_blank"
-                className="dark:text-foreground"
-              >
+              <Link to="/models" className="dark:text-foreground">
                 Models
-              </a>
+              </Link>
             </Button>
             <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
               <a
