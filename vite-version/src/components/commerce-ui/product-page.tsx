@@ -27,7 +27,6 @@ import ImageCarouselBasic from "./image-carousel-basic";
 import StarRatingFractions from "./star-rating-fractions";
 import { Map, MapMarker, MapPopup, MapTileLayer } from "@/components/ui/map";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ForestsLandTopBanner } from "@/components/commerce-ui/forests-land-top-banner";
 import { ForestryServicesCountdownBanner } from "@/components/commerce-ui/forestry-services-countdown-banner";
 import { ForestryServicesSaleBanner } from "@/components/commerce-ui/forestry-services-sale-banner";
 import { FloatingCart } from "@/app/shop/components/floating-cart";
@@ -255,22 +254,18 @@ function getNearestRetailers(item: ShopItem): RetailerLocation[] {
   ];
 }
 
-function UgandaMarker({ active }: { active: boolean }) {
+function SiteMarker({ active }: { active: boolean }) {
   return (
     <div className="relative flex flex-col items-center">
       <div
         className={cn(
-          "flex h-11 w-11 items-center justify-center rounded-full border-2 border-white shadow-lg transition-transform",
-          active
-            ? "scale-105 bg-gradient-to-br from-yellow-300 via-red-500 to-black"
-            : "bg-gradient-to-br from-black via-yellow-300 to-red-600"
+          "flex h-11 w-11 items-center justify-center rounded-full border-2 border-primary-foreground bg-primary text-primary-foreground shadow-lg transition-transform",
+          active && "scale-105 ring-2 ring-primary/25"
         )}
       >
-        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[10px] font-black tracking-[0.25em] text-slate-900">
-          UG
-        </div>
+        <MapPinned className="h-5 w-5" />
       </div>
-      <div className="mt-1 rounded-full bg-black/75 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white">
+      <div className="mt-1 rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-primary-foreground">
         Site
       </div>
     </div>
@@ -280,14 +275,14 @@ function UgandaMarker({ active }: { active: boolean }) {
 function RetailerMarker({ active }: { active: boolean }) {
   return (
     <div className="relative flex items-center justify-center">
-      <div className={cn("absolute inset-0 scale-110 rounded-full blur-xl transition-opacity", active ? "bg-emerald-400/45 opacity-100" : "bg-emerald-300/20 opacity-70")} />
+      <div className={cn("absolute inset-0 scale-110 rounded-full bg-primary/25 blur-xl transition-opacity", active ? "opacity-100" : "opacity-70")} />
       <div
         className={cn(
-          "relative flex h-12 w-12 items-center justify-center rounded-full border-2 border-white shadow-lg transition-transform",
-          active ? "scale-105 bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-900" : "bg-gradient-to-br from-emerald-400 via-emerald-600 to-emerald-800"
+          "relative flex h-12 w-12 items-center justify-center rounded-full border-2 border-primary-foreground bg-primary text-primary-foreground shadow-lg transition-transform",
+          active && "scale-105 ring-2 ring-primary/25"
         )}
       >
-        <Store className="h-5 w-5 text-white" />
+        <Store className="h-5 w-5" />
       </div>
     </div>
   );
@@ -310,16 +305,16 @@ function SweepActionButton({
 }) {
   const buttonClassName =
     variant === "solid"
-      ? "w-full cursor-pointer overflow-hidden rounded-full bg-emerald-700 text-white hover:bg-emerald-800"
-      : "cursor-pointer overflow-hidden rounded-full border-emerald-200/80 bg-transparent text-foreground hover:bg-transparent";
+      ? "w-full cursor-pointer overflow-hidden rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+      : "cursor-pointer overflow-hidden rounded-full border-primary/25 bg-transparent text-foreground hover:bg-primary/5";
   const iconClassName = variant === "solid" ? "group-hover:animate-[cartShake_0.55s_ease-in-out]" : "group-hover:animate-[cartShake_0.55s_ease-in-out]";
 
   if (href) {
     return (
       <Button variant={variant === "solid" ? "default" : "outline"} className={cn(buttonClassName, className)} asChild>
         <a href={href} onClick={onClick} className="group relative inline-flex items-center justify-center overflow-hidden rounded-full px-4 py-2.5">
-          <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
-          <span className="relative z-10 inline-flex items-center group-hover:text-emerald-400">
+          <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-primary/25 via-primary/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
+          <span className="relative z-10 inline-flex items-center group-hover:text-primary">
             <span className={cn("mr-2 inline-flex", iconClassName)}>{icon}</span>
             {children}
           </span>
@@ -331,8 +326,8 @@ function SweepActionButton({
   return (
     <Button variant={variant === "solid" ? "default" : "outline"} className={cn(buttonClassName, className)} onClick={onClick} asChild>
       <button type="button" className="group relative inline-flex items-center justify-center overflow-hidden rounded-full px-4 py-2.5">
-        <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
-        <span className="relative z-10 inline-flex items-center group-hover:text-emerald-100">
+        <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-primary-foreground/25 via-primary-foreground/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
+        <span className="relative z-10 inline-flex items-center group-hover:text-primary-foreground">
           <span className={cn("mr-2 inline-flex", iconClassName)}>{icon}</span>
           {children}
         </span>
@@ -356,10 +351,10 @@ function SiteMapPanel({
 
   return (
     <div className="grid gap-6 xl:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.9fr)]">
-      <Card className="overflow-hidden border-slate-200">
+      <Card className="overflow-hidden border-border bg-card">
         <CardHeader className="space-y-2">
           <CardTitle className="flex items-center gap-2 text-xl">
-            <MapPinned className="h-5 w-5 text-emerald-700" />
+            <MapPinned className="h-5 w-5 text-primary" />
             {item.mapTitle ?? "Site map"}
           </CardTitle>
           <p className="text-sm text-muted-foreground">
@@ -367,13 +362,13 @@ function SiteMapPanel({
           </p>
         </CardHeader>
         <CardContent>
-          <div className="h-[420px] overflow-hidden rounded-xl border border-slate-200">
+          <div className="h-[420px] overflow-hidden rounded-xl border border-border">
             <Map center={mapCenter} zoom={7} className="h-full w-full">
               {item.mapPoints.map((point) => (
                 <MapMarker
                   key={point.id}
                   position={[point.latitude, point.longitude]}
-                  icon={<UgandaMarker active={selectedPoint.id === point.id} />}
+                  icon={<SiteMarker active={selectedPoint.id === point.id} />}
                   iconAnchor={[22, 42]}
                 >
                   <MapPopup className="w-72 border-0 p-0">
@@ -402,7 +397,7 @@ function SiteMapPanel({
         </CardContent>
       </Card>
 
-      <Card className="border-slate-200 bg-gradient-to-br from-white via-slate-50 to-emerald-50/60">
+      <Card className="border-border bg-card">
         <CardHeader className="space-y-2">
           <div className="flex items-center gap-2">
             <Badge variant="secondary">{selectedPoint.category}</Badge>
@@ -412,14 +407,14 @@ function SiteMapPanel({
           <p className="text-sm text-muted-foreground">{selectedPoint.summary}</p>
         </CardHeader>
         <CardContent className="space-y-5">
-          <div className="overflow-hidden rounded-xl border border-slate-200">
+          <div className="overflow-hidden rounded-xl border border-border">
             <img src={selectedPoint.image} alt={selectedPoint.name} className="h-48 w-full object-cover" />
           </div>
 
           {selectedPoint.metrics?.length ? (
             <div className="grid gap-3 sm:grid-cols-2">
               {selectedPoint.metrics.map((metric) => (
-                <div key={metric.label} className="rounded-xl border border-slate-200 bg-white/80 p-3">
+                <div key={metric.label} className="rounded-xl border border-border bg-primary/5 p-3">
                   <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">{metric.label}</div>
                   <div className="mt-1 text-sm font-semibold text-foreground">{metric.value}</div>
                 </div>
@@ -430,8 +425,8 @@ function SiteMapPanel({
           {selectedPoint.details?.length ? (
             <div className="space-y-3">
               {selectedPoint.details.map((detail) => (
-                <div key={detail} className="flex gap-3 rounded-xl border border-slate-200 bg-white/75 p-3">
-                  <span className="mt-1 h-2 w-2 rounded-full bg-emerald-600" />
+                <div key={detail} className="flex gap-3 rounded-xl border border-border bg-card p-3">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-primary" />
                   <p className="text-sm text-muted-foreground">{detail}</p>
                 </div>
               ))}
@@ -447,8 +442,8 @@ function SiteMapPanel({
                 className={cn(
                   "rounded-xl border px-4 py-3 text-left transition",
                   point.id === selectedPoint.id
-                    ? "border-emerald-600 bg-emerald-50 text-emerald-950"
-                    : "border-slate-200 bg-white/80 hover:border-slate-400"
+                    ? "border-primary bg-primary/10 text-primary"
+                    : "border-border bg-card hover:border-primary/40 hover:bg-primary/5"
                 )}
               >
                 <div className="text-sm font-semibold">{point.name}</div>
@@ -478,10 +473,10 @@ function RetailerMapPanel({
   const mapCenter = getRetailerMapCenter(retailers);
 
   return (
-    <div className="emerald-border-hover rounded-[2rem] border border-transparent bg-transparent p-3 transition-shadow duration-300 hover:shadow-[0_0_28px_rgba(16,185,129,0.2)]">
+    <div className="theme-primary-border-hover rounded-[2rem] border border-transparent bg-transparent p-3 transition-shadow duration-300 hover:shadow-lg">
       <div className="space-y-2 px-1 pb-4">
         <CardTitle className="flex items-center gap-2 text-xl">
-          <MapPinned className="h-5 w-5 text-emerald-700" />
+          <MapPinned className="h-5 w-5 text-primary" />
           {copy.panelTitle}
         </CardTitle>
         <p className="text-sm text-muted-foreground">
@@ -489,7 +484,7 @@ function RetailerMapPanel({
         </p>
       </div>
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
-        <div className="h-[430px] overflow-hidden rounded-2xl border border-emerald-200">
+        <div className="h-[430px] overflow-hidden rounded-2xl border border-primary/20">
           <Map center={mapCenter} zoom={8} className="h-full w-full">
             <MapTileLayer
               url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
@@ -509,7 +504,7 @@ function RetailerMapPanel({
                       <img src={retailer.image} alt={retailer.name} className="h-full w-full object-cover" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                       <div className="absolute bottom-4 left-4 right-4">
-                        <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-100">{copy.popupEyebrow}</div>
+                        <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary-foreground/85">{copy.popupEyebrow}</div>
                         <div className="mt-1 text-lg font-semibold text-white">{retailer.name}</div>
                       </div>
                     </div>
@@ -548,16 +543,16 @@ function RetailerMapPanel({
             <img src={selectedRetailer.image} alt={selectedRetailer.name} className="h-44 w-full object-cover" />
           </div>
           <div>
-            <Badge className="bg-emerald-100 text-emerald-900">{copy.selectedBadge}</Badge>
+            <Badge className="bg-primary/10 text-primary">{copy.selectedBadge}</Badge>
             <h3 className="mt-3 text-xl font-semibold">{selectedRetailer.name}</h3>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">{selectedRetailer.description}</p>
           </div>
           <div className="grid gap-3">
-            <div className="border-b border-emerald-200/70 pb-3 text-sm">
+            <div className="border-b border-primary/20 pb-3 text-sm">
               <div className="font-medium">Address</div>
               <div className="text-muted-foreground">{selectedRetailer.address}</div>
             </div>
-            <div className="border-b border-emerald-200/70 pb-3 text-sm">
+            <div className="border-b border-primary/20 pb-3 text-sm">
               <div className="font-medium">Lead time</div>
               <div className="text-muted-foreground">{selectedRetailer.leadTime}</div>
             </div>
@@ -630,10 +625,10 @@ function CustomerRatingsPanel({
   };
 
   return (
-    <Card className="border-emerald-200 bg-white/95">
+    <Card className="border-border bg-card">
       <CardHeader className="space-y-3">
         <div className="flex items-center gap-2">
-          <Users className="h-5 w-5 text-emerald-700" />
+          <Users className="h-5 w-5 text-primary" />
           <CardTitle>Customer ratings</CardTitle>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -660,11 +655,11 @@ function CustomerRatingsPanel({
         </div>
       </CardHeader>
       <CardContent className="space-y-5">
-        <form onSubmit={handleSubmit} className="space-y-3 rounded-2xl border border-emerald-200 bg-emerald-50/60 p-4">
+        <form onSubmit={handleSubmit} className="space-y-3 rounded-2xl border border-primary/20 bg-primary/5 p-4">
           <div className="text-sm font-medium">Add your rating</div>
           <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_200px] sm:items-start">
             <Input value={name} onChange={(event) => setName(event.target.value)} placeholder="Your name" />
-            <div className="space-y-2 rounded-xl border border-emerald-200/70 bg-white/75 px-3 py-2.5">
+            <div className="space-y-2 rounded-xl border border-primary/20 bg-background/75 px-3 py-2.5">
               <div className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">Your rating</div>
               <StarRatingFractions value={ratingInput} onChange={setRatingInput} iconSize={22} color="#f4b400" />
               <div className="text-xs text-muted-foreground">{ratingInput.toFixed(2)} / 5 selected</div>
@@ -676,14 +671,14 @@ function CustomerRatingsPanel({
             placeholder="Share your experience with this nursery stock, quality, fulfillment, or communication."
             className="min-h-[120px] w-full rounded-xl border border-input bg-background px-3 py-2 text-sm outline-none transition focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
           />
-          <Button type="submit" className="bg-emerald-700 text-white hover:bg-emerald-800">
+          <Button type="submit">
             Submit rating
           </Button>
         </form>
 
         <div className="space-y-3">
           {sortedReviews.map((review) => (
-            <div key={review.id} className="rounded-xl border border-emerald-100 bg-white p-4">
+            <div key={review.id} className="rounded-xl border border-border bg-card p-4">
               <div className="mb-2 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2 text-sm font-medium">
                   <UserRound className="h-4 w-4 text-muted-foreground" />
@@ -706,17 +701,25 @@ function CustomerRatingsPanel({
   );
 }
 
-function OtherDealsPanel() {
+function OtherDealsPanel({ item }: { item: ShopItem }) {
+  const isLandItem = item.tags.includes("land");
+  const noun = item.shop === "seedlings"
+    ? "nursery stock"
+    : isLandItem
+      ? "land listing"
+      : item.shop === "forestry-services"
+        ? "field service"
+        : "forestry offer";
+
   return (
     <div className="space-y-4">
       <div className="space-y-1">
         <h3 className="text-2xl font-semibold">What next?</h3>
-        <p className="text-sm text-muted-foreground">Keep moving through the rest of the platform after you shortlist the right nursery stock.</p>
+        <p className="text-sm text-muted-foreground">Keep moving through the rest of the platform after you shortlist the right {noun}.</p>
       </div>
       <div className="space-y-4">
         <ForestryServicesSaleBanner />
         <ForestryServicesCountdownBanner />
-        <ForestsLandTopBanner />
       </div>
     </div>
   );
@@ -762,7 +765,8 @@ export function ProductPage({
   const selectedPoint =
     item.mapPoints?.find((point) => point.id === selectedPointId) ?? item.mapPoints?.[0] ?? null;
   const isSeedlingsItem = item.shop === "seedlings";
-  const isEnhancedCommerceItem = item.shop === "seedlings" || item.shop === "forestry-services";
+  const isLandItem = item.tags.includes("land");
+  const isEnhancedCommerceItem = item.shop === "seedlings" || item.shop === "forestry-services" || isLandItem;
   const seedlingVariantVisual = getSeedlingVariantVisual(activeVariant?.id);
   const { rating, reviewCount } = React.useMemo(() => deriveRatingFromId(item.id), [item.id]);
   const retailerInfo = React.useMemo(() => getRetailerInfo(item.shop), [item.shop]);
@@ -887,7 +891,7 @@ export function ProductPage({
                 <Button variant="outline" size="icon" onClick={handleAddToCart} className="relative">
                   <ShoppingCart className="h-4 w-4" />
                   {quantity > 0 ? (
-                    <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-emerald-600 px-1 text-[10px] font-semibold text-white">
+                    <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold text-primary-foreground">
                       {quantity}
                     </span>
                   ) : null}
@@ -905,7 +909,7 @@ export function ProductPage({
                 {item.stockStatus === "quote" ? "Quote required" : item.stockStatus}
               </Badge>
               {item.tags.includes("featured") ? (
-                <Badge variant="secondary" className="bg-emerald-400 animate-pulse opacity-100">
+                <Badge variant="secondary" className="bg-primary text-primary-foreground animate-pulse opacity-100">
                   Featured
                 </Badge>
               ) : null}
@@ -918,7 +922,7 @@ export function ProductPage({
                 "rounded-2xl border p-5 transition-colors duration-300",
                 isSeedlingsItem
                   ? cn(seedlingVariantVisual.priceCard, seedlingVariantVisual.priceText)
-                  : "border-slate-200 bg-gradient-to-r from-white via-slate-50 to-emerald-50/70"
+                  : "border-primary/20 bg-primary/5 text-foreground"
               )}
             >
               <div className="flex items-center gap-2 text-4xl font-bold">
@@ -954,7 +958,7 @@ export function ProductPage({
                 <ChevronDown className={cn("h-4 w-4 transition-transform", optionsOpen && "rotate-180")} />
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <div className="grid gap-3 border-t border-slate-200/60 px-4 py-4">
+                <div className="grid gap-3 border-t border-border px-4 py-4">
                   {item.variants?.length ? (
                     item.variants.map((variant) => (
                       <button
@@ -962,10 +966,12 @@ export function ProductPage({
                         type="button"
                         onClick={() => setSelectedVariant(variant.id)}
                         className={cn(
-                          "emerald-border-hover rounded-2xl border px-4 py-3 text-left transition",
+                          "theme-primary-border-hover rounded-2xl border px-4 py-3 text-left transition",
                           selectedVariant === variant.id
                             ? getSeedlingVariantVisual(variant.id).selected
-                            : cn("border-slate-200 bg-transparent", getSeedlingVariantVisual(variant.id).hover)
+                            : isSeedlingsItem
+                              ? cn("border-border bg-transparent", getSeedlingVariantVisual(variant.id).hover)
+                              : "border-border bg-transparent hover:border-primary/40 hover:bg-primary/5"
                         )}
                       >
                         <div className="flex flex-wrap items-center justify-between gap-2">
@@ -1009,8 +1015,8 @@ export function ProductPage({
                 {quantity > 0 ? <span className="w-12 text-center font-medium">{quantity}</span> : null}
                 <Button onClick={handleAddToCart} className="cursor-pointer text-base" asChild>
                   <button type="button" className="group relative overflow-hidden rounded-full">
-                    <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
-                    <span className="relative z-10 inline-flex items-center group-hover:text-emerald-100">
+                    <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-primary-foreground/25 via-primary-foreground/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
+                    <span className="relative z-10 inline-flex items-center group-hover:text-primary-foreground">
                       <ShoppingCart className="mr-2 h-4 w-4 group-hover:animate-[cartShake_0.55s_ease-in-out]" />
                       {quantity > 0 ? "Add more" : "Add to cart"}
                     </span>
@@ -1025,7 +1031,7 @@ export function ProductPage({
 
           {item.highlights?.length ? (
             <Collapsible open={highlightsOpen} onOpenChange={setHighlightsOpen}>
-              <div className="emerald-border-hover rounded-2xl border border-transparent bg-transparent transition-shadow duration-300 hover:shadow-[0_0_24px_rgba(16,185,129,0.16)]">
+              <div className="theme-primary-border-hover rounded-2xl border border-transparent bg-transparent transition-shadow duration-300 hover:shadow-lg">
                 <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 text-left">
                   <div>
                     <h3 className="font-semibold">Why this offer stands out</h3>
@@ -1034,10 +1040,10 @@ export function ProductPage({
                   <ChevronDown className={cn("h-4 w-4 transition-transform", highlightsOpen && "rotate-180")} />
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                  <div className="space-y-3 border-t border-slate-200/60 px-4 py-4">
+                  <div className="space-y-3 border-t border-border px-4 py-4">
                     {item.highlights.map((highlight) => (
                       <div key={highlight} className="flex gap-3 py-1">
-                        <span className="mt-1 h-2 w-2 rounded-full bg-emerald-600" />
+                        <span className="mt-1 h-2 w-2 rounded-full bg-primary" />
                         <p className="text-sm text-muted-foreground">{highlight}</p>
                       </div>
                     ))}
@@ -1097,7 +1103,7 @@ export function ProductPage({
             />
             <CustomerRatingsPanel initialReviews={dummyReviews} initialAverage={rating} />
           </div>
-          <OtherDealsPanel />
+          <OtherDealsPanel item={item} />
         </div>
       ) : (
         <div className="grid items-start gap-6 lg:grid-cols-3">

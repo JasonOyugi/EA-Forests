@@ -3,17 +3,24 @@
 import * as React from "react"
 import { useNavigate } from "react-router-dom"
 import { useShallow } from "zustand/react/shallow"
-import { ArrowUpRight, MapPinned, TrendingUp, Trees } from "lucide-react"
+import { ArrowDownUp, ArrowUpRight, Filter, TrendingUp } from "lucide-react"
 
 import forestryServicesInventory from "@/app/shop/data/forestry-services.json"
 import { ProductGrid } from "@/app/shop/components/product-grid"
 import { ShopSectionHeader } from "@/app/shop/components/shop-section-header"
 import type { ShopDefinition, ShopItem } from "@/app/shop/types"
-import { ForestsLandTopBanner } from "@/components/commerce-ui/forests-land-top-banner"
 import { ForestryServicesCountdownBanner } from "@/components/commerce-ui/forestry-services-countdown-banner"
 import { ForestryServicesSaleBanner } from "@/components/commerce-ui/forestry-services-sale-banner"
 import { BentoTilt } from "@/components/ui/bento-tilt"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
 import { useShopStore } from "@/stores/shop-store"
 
 interface ForestsLandShopProps {
@@ -36,12 +43,27 @@ type InvestmentSection = {
 }
 
 const forestryServicesItems = forestryServicesInventory as ShopItem[]
+type CatalogueFilter = "all" | "land" | "services"
+type CatalogueSort = "relevance" | "priceLowToHigh" | "priceHighToLow"
+
+const filterLabels: Record<CatalogueFilter, string> = {
+  all: "All",
+  land: "Land",
+  services: "Services",
+}
+
+const sortLabels: Record<CatalogueSort, string> = {
+  relevance: "Relevance",
+  priceLowToHigh: "Increasing price",
+  priceHighToLow: "Decreasing price",
+}
 
 export function ForestsLandShop({ inventory }: ForestsLandShopProps) {
   const navigate = useNavigate()
-  const [topBannerVisible, setTopBannerVisible] = React.useState(true)
   const [saleBannerVisible, setSaleBannerVisible] = React.useState(true)
   const [countdownBannerVisible, setCountdownBannerVisible] = React.useState(true)
+  const [catalogueFilter, setCatalogueFilter] = React.useState<CatalogueFilter>("all")
+  const [catalogueSort, setCatalogueSort] = React.useState<CatalogueSort>("relevance")
 
   const { cart, addItem, decrementItem } = useShopStore(
     useShallow((state) => ({
@@ -54,10 +76,31 @@ export function ForestsLandShop({ inventory }: ForestsLandShopProps) {
   const strategies = inventory.filter((item) =>
     ["core-forests", "high-performance-forests", "dryland-frontier-forests"].includes(item.slug)
   )
-  const ugandaConcessions = inventory.find((item) => item.slug === "uganda-concessions")
-  const kenyaConcessions = inventory.find((item) => item.slug === "kenya-concessions")
-  const tanzaniaConcessions = inventory.find((item) => item.slug === "tanzania-concessions")
-  const landListings = inventory.find((item) => item.slug === "land-listings")
+  const landOfferings = React.useMemo(
+    () => inventory.filter((item) => item.tags.includes("land")),
+    [inventory]
+  )
+  const catalogueItems = React.useMemo(
+    () => [...forestryServicesItems, ...landOfferings],
+    [landOfferings]
+  )
+  const filteredCatalogueItems = React.useMemo(() => {
+    const items = catalogueItems
+      .filter((item) => {
+        if (catalogueFilter === "land") return item.tags.includes("land")
+        if (catalogueFilter === "services") return item.kind === "service"
+        return true
+      })
+      .map((item, index) => ({ item, index }))
+
+    if (catalogueSort === "priceLowToHigh") {
+      items.sort((a, b) => a.item.price - b.item.price || a.index - b.index)
+    } else if (catalogueSort === "priceHighToLow") {
+      items.sort((a, b) => b.item.price - a.item.price || a.index - b.index)
+    }
+
+    return items.map(({ item }) => item)
+  }, [catalogueFilter, catalogueItems, catalogueSort])
 
   const sections: InvestmentSection[] = [
     {
@@ -74,52 +117,6 @@ export function ForestsLandShop({ inventory }: ForestsLandShopProps) {
         item,
       })),
     },
-    {
-      id: "concessions",
-      title: "Concessional Investments",
-      subtitle: "Country-level public-private partnerships arranged for quick review and investor-ready diligence.",
-      icon: MapPinned,
-      items: [
-        {
-          title: "Uganda",
-          subtitle: ugandaConcessions?.subtitle ?? "Government-linked concession opportunities with map-based site review.",
-          image: "/ug.jpg",
-          actionLabel: ugandaConcessions?.ctaLabel ?? "Review Uganda concessions",
-          item: ugandaConcessions,
-        },
-        {
-          title: "Kenya",
-          subtitle: kenyaConcessions?.subtitle ?? "Regional concessional pipeline under review for investor-ready allocation structures.",
-          image: "/ke.jpg",
-          actionLabel: kenyaConcessions?.ctaLabel ?? "Review Kenya concessions",
-          item: kenyaConcessions,
-        },
-        {
-          title: "Tanzania",
-          subtitle: tanzaniaConcessions?.subtitle ?? "Cross-border concession opportunities being prepared for diligence and rollout sequencing.",
-          image: "/tz.jpg",
-          actionLabel: tanzaniaConcessions?.ctaLabel ?? "Review Tanzania concessions",
-          item: tanzaniaConcessions,
-        },
-      ],
-    },
-    {
-      id: "land",
-      title: "Land Listings",
-      subtitle: "Map-led land opportunities with minimum pricing, site context, and room to structure a thesis around them.",
-      icon: Trees,
-      items: landListings
-        ? [
-            {
-              title: landListings.name,
-              subtitle: landListings.subtitle ?? landListings.description,
-              image: landListings.image,
-              actionLabel: landListings.ctaLabel ?? "Explore listings",
-              item: landListings,
-            },
-          ]
-        : [],
-    },
   ]
 
   const openItem = (item?: ShopItem) => {
@@ -127,22 +124,21 @@ export function ForestsLandShop({ inventory }: ForestsLandShopProps) {
     navigate(`/shop/${item.shop}/${item.slug}`)
   }
 
-  const hasVisibleBanner = topBannerVisible || saleBannerVisible || countdownBannerVisible
+  const hasVisibleBanner = saleBannerVisible || countdownBannerVisible
 
   return (
     <div className="space-y-4 sm:space-y-6 md:space-y-8">
-      <ForestsLandTopBanner onVisibilityChange={setTopBannerVisible} />
       <ForestryServicesSaleBanner onVisibilityChange={setSaleBannerVisible} />
       <ForestryServicesCountdownBanner onVisibilityChange={setCountdownBannerVisible} />
 
       <section className="space-y-3 sm:space-y-4 md:space-y-5">
         {hasVisibleBanner ? (
           <div>
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold tracking-tight text-slate-900">Find The Right Investment For You</h2>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold tracking-tight text-foreground">Find The Right Investment For You</h2>
           </div>
         ) : null}
 
-        <div className="grid gap-3 sm:gap-4 md:gap-5 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-3 sm:gap-4 md:gap-5 grid-cols-1">
           {sections.map((section) => {
             const Icon = section.icon
 
@@ -187,7 +183,7 @@ export function ForestsLandShop({ inventory }: ForestsLandShopProps) {
                           </div>
                         </div>
                         <div className="p-5">
-                          <p className="text-sm leading-6 text-slate-600">{entry.subtitle}</p>
+                          <p className="text-sm leading-6 text-muted-foreground">{entry.subtitle}</p>
                         </div>
                       </button>
                     </BentoTilt>
@@ -200,18 +196,60 @@ export function ForestsLandShop({ inventory }: ForestsLandShopProps) {
       </section>
 
       <section id="products-section" className="rounded-2xl border bg-card p-6">
-        <ShopSectionHeader
-          title="Forestry Services Catalogue"
-          description="Operational services, bundled offers, and dryland support now sit directly under forests and land."
-        />
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <ShopSectionHeader
+            title="Forestry Land and Services"
+            description="Browse forestry land offerings and operational services in one catalogue."
+          />
+          <div className="flex flex-wrap gap-2 lg:justify-end">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="theme-primary-border-hover">
+                  <Filter className="h-4 w-4" />
+                  {filterLabels[catalogueFilter]}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuRadioGroup
+                  value={catalogueFilter}
+                  onValueChange={(value) => setCatalogueFilter(value as CatalogueFilter)}
+                >
+                  <DropdownMenuRadioItem value="all">All</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="land">Land</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="services">Forestry services</DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="theme-primary-border-hover">
+                  <ArrowDownUp className="h-4 w-4" />
+                  {sortLabels[catalogueSort]}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuRadioGroup
+                  value={catalogueSort}
+                  onValueChange={(value) => setCatalogueSort(value as CatalogueSort)}
+                >
+                  <DropdownMenuRadioItem value="relevance">Relevance</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="priceLowToHigh">Increasing price</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="priceHighToLow">Decreasing price</DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+
         <div className="mt-6">
           <ProductGrid
-            items={forestryServicesItems}
+            items={filteredCatalogueItems}
             quantities={cart}
             onAdd={addItem}
             onDecrement={decrementItem}
             useEnhancedCards={true}
-            theme="forestry-services"
+            theme="forests-land"
             onClick={openItem}
           />
         </div>

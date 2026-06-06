@@ -126,7 +126,7 @@ export default function Page() {
           landManaged={`${formatNumberExact(landPoint?.landManaged ?? 0)} ha`}
           landTrendLabel={landTrend.label}
           landTrendUp={landTrend.isUp}
-          landSummary={`Managed footprint across Uganda, Kenya, and Tanzania`}
+          landSummary={`Previous period: ${formatNumberExact(landPreviousPoint?.landManaged ?? 0)} ha across Uganda, Kenya, and Tanzania`}
           estimatedVolume={`${formatNumberExact(landPoint?.expectedVolume ?? 0)} m3`}
           volumeTrendLabel={volumeTrend.label}
           volumeTrendUp={volumeTrend.isUp}

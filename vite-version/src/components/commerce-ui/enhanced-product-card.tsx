@@ -83,38 +83,38 @@ export function EnhancedProductCard({
       featuredBadgeClass: "bg-emerald-50/92 text-emerald-950",
     },
     "forests-land": {
-      stockBadgeClass: "bg-slate-700 text-white",
-      starActiveClass: "fill-slate-700 text-slate-700",
-      themeCardClass: "border border-slate-200 bg-white/90",
-      quickAddButtonClass: "bg-slate-700 text-white hover:bg-slate-800",
-      footerButtonClass: "bg-slate-700 text-white hover:bg-slate-800 emerald-border-hover",
-      variantButtonSelected: "border-slate-700 bg-slate-100 text-slate-900",
-      accentClass: "text-slate-700",
-      shellClass: "from-white via-slate-50 to-emerald-50/70",
-      titleClass: "text-sky-50",
-      bodyClass: "text-slate-100",
-      metaClass: "text-emerald-50/90",
+      stockBadgeClass: "bg-primary text-primary-foreground",
+      starActiveClass: "fill-primary text-primary",
+      themeCardClass: "border border-primary/15 bg-card",
+      quickAddButtonClass: "bg-primary text-primary-foreground hover:bg-primary/90",
+      footerButtonClass: "bg-primary text-primary-foreground hover:bg-primary/90 theme-primary-border-hover",
+      variantButtonSelected: "border-primary bg-primary/10 text-primary",
+      accentClass: "text-primary",
+      shellClass: "from-card via-primary/5 to-primary/10",
+      titleClass: "text-primary-foreground",
+      bodyClass: "text-primary-foreground/90",
+      metaClass: "text-primary-foreground/78",
       overlayClass:
-        "bg-[linear-gradient(to_bottom,rgba(5,10,18,0.12)_0%,rgba(8,14,24,0.22)_20%,rgba(12,24,30,0.44)_42%,rgba(8,24,27,0.68)_66%,rgba(7,18,23,0.88)_84%,rgba(4,10,14,0.96)_100%)]",
-      footerSurfaceClass: "border-white/18 bg-slate-950/42",
-      featuredBadgeClass: "bg-sky-50/92 text-slate-950",
+        "bg-[linear-gradient(to_bottom,rgba(4,10,18,0.08)_0%,rgba(4,10,18,0.16)_18%,rgba(4,10,18,0.34)_40%,rgba(4,10,18,0.62)_64%,rgba(4,10,18,0.84)_82%,rgba(4,10,18,0.94)_100%)]",
+      footerSurfaceClass: "border-primary-foreground/18 bg-primary/55",
+      featuredBadgeClass: "bg-primary-foreground/92 text-primary",
     },
     "forestry-services": {
-      stockBadgeClass: "bg-amber-700 text-white",
-      starActiveClass: "fill-amber-500 text-amber-500",
-      themeCardClass: "border border-amber-200 bg-white/90",
-      quickAddButtonClass: "bg-amber-700 text-white hover:bg-amber-800",
-      footerButtonClass: "bg-amber-700 text-white hover:bg-amber-800 emerald-border-hover",
-      variantButtonSelected: "border-amber-700 bg-amber-100 text-amber-900",
-      accentClass: "text-amber-700",
-      shellClass: "from-white via-amber-50 to-orange-50/70",
-      titleClass: "text-amber-50",
-      bodyClass: "text-orange-50",
-      metaClass: "text-amber-100/90",
+      stockBadgeClass: "bg-primary text-primary-foreground",
+      starActiveClass: "fill-primary text-primary",
+      themeCardClass: "border border-primary/15 bg-card",
+      quickAddButtonClass: "bg-primary text-primary-foreground hover:bg-primary/90",
+      footerButtonClass: "bg-primary text-primary-foreground hover:bg-primary/90 theme-primary-border-hover",
+      variantButtonSelected: "border-primary bg-primary/10 text-primary",
+      accentClass: "text-primary",
+      shellClass: "from-card via-primary/5 to-primary/10",
+      titleClass: "text-primary-foreground",
+      bodyClass: "text-primary-foreground/90",
+      metaClass: "text-primary-foreground/78",
       overlayClass:
-        "bg-[linear-gradient(to_bottom,rgba(18,10,4,0.1)_0%,rgba(24,12,4,0.18)_18%,rgba(50,24,8,0.4)_40%,rgba(66,28,7,0.66)_64%,rgba(48,18,5,0.86)_82%,rgba(24,10,3,0.96)_100%)]",
-      footerSurfaceClass: "border-white/18 bg-amber-950/44",
-      featuredBadgeClass: "bg-amber-50/92 text-amber-950",
+        "bg-[linear-gradient(to_bottom,rgba(4,10,18,0.08)_0%,rgba(4,10,18,0.16)_18%,rgba(4,10,18,0.34)_40%,rgba(4,10,18,0.62)_64%,rgba(4,10,18,0.84)_82%,rgba(4,10,18,0.94)_100%)]",
+      footerSurfaceClass: "border-primary-foreground/18 bg-primary/55",
+      featuredBadgeClass: "bg-primary-foreground/92 text-primary",
     },
     roundwood: {
       stockBadgeClass: "bg-rose-800 text-white",
@@ -164,7 +164,7 @@ export function EnhancedProductCard({
   const compactHighlights = item.highlights?.slice(0, compact ? 2 : 3) ?? []
   const featuredStyleCard = theme === "seedlings" && compact
   const gridVariantShade = (variantId: string) => {
-    if (theme !== "seedlings") return "border-white bg-transparent text-white hover:border-slate-500"
+    if (theme !== "seedlings") return "border-white/80 bg-transparent text-white hover:border-primary hover:bg-primary/10"
     if (variantId === "small") return "border-white bg-transparent text-white hover:border-emerald-400 hover:text-emerald-900 hover:shadow-[0_0_0_3px_rgba(52,211,153,0.18)]"
     if (variantId === "medium") return "border-white bg-transparent text-white hover:border-emerald-500 hover:text-emerald-950 hover:shadow-[0_0_0_3px_rgba(16,185,129,0.2)]"
     if (variantId === "large") return "border-white bg-transparent text-white hover:border-emerald-700 hover:text-emerald-950 hover:shadow-[0_0_0_3px_rgba(4,120,87,0.22)]"
@@ -192,10 +192,10 @@ export function EnhancedProductCard({
   const accentDotClass =
     theme === "seedlings"
       ? "bg-emerald-600"
-      : theme === "forests-land"
-      ? "bg-slate-700"
-      : theme === "forestry-services"
-      ? "bg-amber-700"
+    : theme === "forests-land"
+      ? "bg-primary"
+    : theme === "forestry-services"
+      ? "bg-primary"
       : theme === "roundwood"
       ? "bg-rose-700"
       : "bg-slate-700"
@@ -258,7 +258,12 @@ export function EnhancedProductCard({
           {item.tags.includes("new") && (
             <Badge
               variant="destructive"
-              className="bg-emerald-400 animate-pulse opacity-100"
+              className={cn(
+                "animate-pulse opacity-100",
+                theme === "seedlings"
+                  ? "bg-emerald-400"
+                  : "bg-primary text-primary-foreground"
+              )}
             >
               New
             </Badge>
@@ -471,8 +476,13 @@ export function EnhancedProductCard({
   )
 
   if (runningBorderOnHover) {
+    const runningBorderClass =
+      theme === "seedlings"
+        ? "emerald-border-hover hover:shadow-[0_0_28px_rgba(16,185,129,0.28)]"
+        : "theme-primary-border-hover hover:shadow-lg"
+
     return (
-      <div className="emerald-border-hover rounded-[calc(var(--radius-xl)+2px)] bg-transparent p-[1px] transition-shadow duration-300 hover:shadow-[0_0_28px_rgba(16,185,129,0.28)]">
+      <div className={cn("rounded-[calc(var(--radius-xl)+2px)] bg-transparent p-[1px] transition-shadow duration-300", runningBorderClass)}>
         {cardEl}
       </div>
     )

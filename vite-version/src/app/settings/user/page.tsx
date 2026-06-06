@@ -91,14 +91,14 @@ export default function UserSettingsPage() {
   }
 
   return (
-    <BaseLayout title="User Settings" description="Manage your personal information and preferences">
+    <BaseLayout title="User Settings" description="Update your forestry profile, land contacts, and account preferences.">
       <div className="px-4 lg:px-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <Card>
               <CardHeader>
                 <CardTitle>Profile Settings</CardTitle>
-                <CardDescription>Update your personal information and preferences</CardDescription>
+                <CardDescription>Keep your profile current and make sure your account details are right.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
             {/* Profile Picture Section */}
@@ -134,10 +134,10 @@ export default function UserSettingsPage() {
                   </Button>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Allowed JPG, GIF or PNG. Max size of 800K
+                  Allowed JPG, GIF, or PNG. Max size 800 KB.
                 </p>
               </div>
-              <input
+              <Input
                 ref={fileInputRef}
                 type="file"
                 accept="image/jpeg,image/gif,image/png"

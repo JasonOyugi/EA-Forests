@@ -16,6 +16,11 @@ except Exception:  # pragma: no cover - dependency install decides this at runti
     ee = None
 
 from app.schemas import SiteClassificationRequest
+from app.earth_engine import (
+    USE_SYSTEM_PROXY_ENV,
+    configure_earth_engine_network,
+    earth_engine_project,
+)
 
 MONTH_NAMES = {
     1: "Jan",
@@ -133,6 +138,23 @@ class EarthEngineAuthenticationError(RuntimeError):
     """Raised when Earth Engine is required but unavailable."""
 
 
+EARTH_ENGINE_DYNAMIC_SOURCES = {"terraclimate", "chirps", "era5_land_ee"}
+EARTH_ENGINE_STATIC_GROUPS = {"topography"}
+EARTH_ENGINE_AUTH_COMMAND = "`uv run python -m app.auth_earth_engine`"
+
+
+def external_get(url: str, **kwargs: Any) -> requests.Response:
+    """Fetch public APIs directly unless system proxy use is explicitly enabled."""
+    use_system_proxy = os.getenv(USE_SYSTEM_PROXY_ENV, "").lower() in {
+        "1",
+        "true",
+        "yes",
+    }
+    with requests.Session() as session:
+        session.trust_env = use_system_proxy
+        return session.get(url, **kwargs)
+
+
 def validate_lon_lat(lon: float, lat: float) -> tuple[float, float]:
     lon = float(lon)
     lat = float(lat)
@@ -190,9 +212,24 @@ def safe_getinfo(obj: Any) -> Any:
     try:
         return obj.getInfo()
     except Exception as exc:  # pragma: no cover - network/auth driven
+        # Include the original exception message to aid diagnostics.
         raise RuntimeError(
-            "Earth Engine request failed. Check authentication, dataset availability, coordinates, and date range."
+            f"Earth Engine request failed: {exc}. Check authentication, dataset availability, coordinates, date range, and band names."
         ) from exc
+
+
+def uses_earth_engine(
+    sources: list[str],
+    data_types: list[str],
+    static_metric_groups: list[str],
+) -> bool:
+    dynamic_requires_ee = "dynamic" in data_types and any(
+        source in EARTH_ENGINE_DYNAMIC_SOURCES for source in sources
+    )
+    static_requires_ee = "static" in data_types and any(
+        group in EARTH_ENGINE_STATIC_GROUPS for group in static_metric_groups
+    )
+    return dynamic_requires_ee or static_requires_ee
 
 
 @lru_cache(maxsize=1)
@@ -202,7 +239,8 @@ def ensure_earth_engine_initialized() -> bool:
             "earthengine-api is not installed. Run `uv sync` inside the backend folder first."
         )
 
-    project = os.getenv("EARTH_ENGINE_PROJECT") or os.getenv("GOOGLE_CLOUD_PROJECT")
+    configure_earth_engine_network()
+    project = earth_engine_project()
 
     try:
         if project:
@@ -213,9 +251,41 @@ def ensure_earth_engine_initialized() -> bool:
     except Exception as exc:  # pragma: no cover - interactive/auth driven
         raise EarthEngineAuthenticationError(
             "Earth Engine is not authenticated for the backend yet. Run "
-            "`uv run python -m app.auth_earth_engine` in the backend folder, "
+            f"{EARTH_ENGINE_AUTH_COMMAND} in the backend folder, "
             "complete the browser popup, then retry."
         ) from exc
+
+
+def verify_earth_engine_ready() -> bool:
+    ensure_earth_engine_initialized()
+
+    try:
+        probe_value = safe_getinfo(ee.Number(1))
+    except Exception as exc:  # pragma: no cover - network/auth driven
+        ensure_earth_engine_initialized.cache_clear()
+        project_hint = (
+            " If your Earth Engine access is tied to a Google Cloud project, "
+            "set EARTH_ENGINE_PROJECT before authenticating and before running the backend."
+            if not earth_engine_project()
+            else ""
+        )
+        raise EarthEngineAuthenticationError(
+            "Earth Engine initialized, but a live backend request failed. Run "
+            f"{EARTH_ENGINE_AUTH_COMMAND} in the backend folder, complete the browser popup, "
+            f"restart the backend, then retry.{project_hint} Details: {exc}"
+        ) from exc
+
+    try:
+        probe_matches = int(probe_value) == 1
+    except (TypeError, ValueError):
+        probe_matches = False
+
+    if not probe_matches:
+        raise EarthEngineAuthenticationError(
+            "Earth Engine live probe returned an unexpected response. Restart the backend and retry."
+        )
+
+    return True
 
 
 def site_geometry(lon: float, lat: float, buffer_m: int):
@@ -439,8 +509,10 @@ def era5_land_scaled_image(img):
 
     bands = [total_precip, temperature, pet_raw, solar, soil]
 
-    available_bands = safe_getinfo(img.bandNames())
-    if "u_component_of_wind_10m" in available_bands and "v_component_of_wind_10m" in available_bands:
+    # Wind components may not be present in all ERA5-Land images.
+    # Avoid calling client-side getInfo inside a mapped function; instead try to compute
+    # the wind speed server-side and append if the bands exist for the image.
+    try:
         wind = (
             img.select("u_component_of_wind_10m")
             .pow(2)
@@ -450,6 +522,9 @@ def era5_land_scaled_image(img):
             .toFloat()
         )
         bands.append(wind)
+    except Exception:
+        # If wind bands are missing for this image, skip adding wind.
+        pass
 
     return ee.Image.cat(bands).copyProperties(img, img.propertyNames()).set("system:time_start", img.get("system:time_start"))
 
@@ -471,10 +546,22 @@ def get_era5_land_monthly_ee(
     start = ee.Date.fromYMD(start_year, 1, 1)
     end = ee.Date.fromYMD(end_year + 1, 1, 1)
     collection = ee.ImageCollection("ECMWF/ERA5_LAND/MONTHLY_AGGR").filterDate(start, end).map(era5_land_scaled_image)
-    selected_bands = safe_getinfo(collection.first().bandNames())
 
-    def image_to_feature(img):
-        vals = img.select(selected_bands).reduceRegion(
+    # Iterate month-by-month and reduce each image to avoid mapping Python functions
+    # that can trigger client-side operations on mapped arguments.
+    records = []
+
+    for year, month in month_sequence(start_year, end_year):
+        start_m = ee.Date.fromYMD(year, month, 1)
+        end_m = start_m.advance(1, "month")
+
+        monthly_img = collection.filterDate(start_m, end_m).first()
+
+        if monthly_img is None:
+            # No image for this month; skip
+            continue
+
+        vals = monthly_img.reduceRegion(
             reducer=ee.Reducer.mean(),
             geometry=geom,
             scale=scale_m,
@@ -482,28 +569,28 @@ def get_era5_land_monthly_ee(
             bestEffort=True,
             tileScale=4,
         )
-        date = ee.Date(img.get("system:time_start"))
-        return ee.Feature(
-            None,
-            vals.combine(
-                ee.Dictionary(
-                    {
-                        "site_id": site_id,
-                        "source": "era5_land_ee",
-                        "lon": lon,
-                        "lat": lat,
-                        "year": date.get("year"),
-                        "month": date.get("month"),
-                        "climate_buffer_m": climate_buffer_m,
-                        "native_resolution": "approx 9-11 km",
-                        "extraction_method": "ERA5-Land monthly aggregate via Google Earth Engine; spatial mean over buffer",
-                    }
-                ),
-                overwrite=True,
-            ),
+
+        info = safe_getinfo(vals)
+        if not info:
+            continue
+
+        # Add metadata fields
+        info.update(
+            {
+                "site_id": site_id,
+                "source": "era5_land_ee",
+                "lon": lon,
+                "lat": lat,
+                "year": int(year),
+                "month": int(month),
+                "climate_buffer_m": climate_buffer_m,
+                "native_resolution": "approx 9-11 km",
+                "extraction_method": "ERA5-Land monthly aggregate via Google Earth Engine; spatial mean over buffer",
+            }
         )
 
-    records = [feature["properties"] for feature in safe_getinfo(collection.map(image_to_feature))["features"]]
+        records.append(info)
+
     df = make_date_columns(pd.DataFrame(records))
     ordered = [
         "site_id",
@@ -539,7 +626,7 @@ def get_nasa_power_monthly(
     lon, lat = validate_lon_lat(lon, lat)
     start_year, end_year = validate_year_range(start_year, end_year, min_year=1981)
 
-    response = requests.get(
+    response = external_get(
         "https://power.larc.nasa.gov/api/temporal/monthly/point",
         params={
             "parameters": ",".join(NASA_POWER_PARAMETER_MAP.keys()),
@@ -683,7 +770,7 @@ def get_topography_metrics(lon: float, lat: float, topo_buffer_m: int) -> dict[s
 
 
 def get_soil_metrics(lon: float, lat: float) -> tuple[dict[str, Any] | None, str | None]:
-    response = requests.get(
+    response = external_get(
         "https://rest.isric.org/soilgrids/v2.0/properties/query",
         params=[
             ("lon", lon),
@@ -993,25 +1080,42 @@ def dataframe_to_records(df: pd.DataFrame | None) -> list[dict[str, Any]]:
     return out.to_dict(orient="records")
 
 
-def get_earth_engine_status() -> dict[str, Any]:
+def get_earth_engine_not_required_status() -> dict[str, Any]:
+    return {
+        "available": ee is not None,
+        "authenticated": False,
+        "required": False,
+        "message": "Earth Engine was not required for the selected backend inputs.",
+    }
+
+
+def get_earth_engine_status(*, live_probe: bool = True) -> dict[str, Any]:
     if ee is None:
         return {
             "available": False,
             "authenticated": False,
+            "required": True,
             "message": "earthengine-api is not installed in the backend environment yet.",
         }
 
     try:
-        ensure_earth_engine_initialized()
+        if live_probe:
+            verify_earth_engine_ready()
+            message = "Earth Engine is authenticated and live backend requests are succeeding."
+        else:
+            ensure_earth_engine_initialized()
+            message = "Earth Engine is initialized for backend requests."
         return {
             "available": True,
             "authenticated": True,
-            "message": "Earth Engine is ready for backend requests.",
+            "required": True,
+            "message": message,
         }
     except EarthEngineAuthenticationError as exc:
         return {
             "available": True,
             "authenticated": False,
+            "required": True,
             "message": str(exc),
         }
 
@@ -1024,6 +1128,15 @@ def run_site_classification(payload: SiteClassificationRequest) -> dict[str, Any
     static_metric_groups = normalise_list(payload.static_metric_groups, DEFAULT_STATIC_METRIC_GROUPS)
     summary_levels = normalise_list(payload.summary_levels, DEFAULT_SUMMARY_LEVELS)
     agreement_families = normalise_list(payload.agreement_families, DEFAULT_AGREEMENT_FAMILIES)
+    earth_engine_required = uses_earth_engine(sources, data_types, static_metric_groups)
+    earth_engine_status = (
+        get_earth_engine_status(live_probe=True)
+        if earth_engine_required
+        else get_earth_engine_not_required_status()
+    )
+
+    if earth_engine_required and not earth_engine_status["authenticated"]:
+        raise EarthEngineAuthenticationError(earth_engine_status["message"])
 
     response: dict[str, Any] = {
         "request": payload.model_dump(),
@@ -1035,7 +1148,7 @@ def run_site_classification(payload: SiteClassificationRequest) -> dict[str, Any
         "agreement_ranking": [],
         "warnings": [],
         "errors": [],
-        "earth_engine": get_earth_engine_status(),
+        "earth_engine": earth_engine_status,
     }
 
     source_tables: dict[str, pd.DataFrame] = {}

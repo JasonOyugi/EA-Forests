@@ -54,7 +54,7 @@ export default function AccountSettings() {
         <div>
           <h1 className="text-3xl font-bold">Account Settings</h1>
           <p className="text-muted-foreground">
-            Manage your account settings and preferences.
+            Update login details, profile data, and account security.
           </p>
         </div>
 
@@ -64,7 +64,7 @@ export default function AccountSettings() {
               <CardHeader>
                 <CardTitle>Personal Information</CardTitle>
                 <CardDescription>
-                  Update your personal information that will be displayed on your profile.
+                  Keep the details on your profile up to date.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -129,7 +129,7 @@ export default function AccountSettings() {
               <CardHeader>
                 <CardTitle>Change Password</CardTitle>
                 <CardDescription>
-                  Update your password to keep your account secure.
+                  Choose a strong password to protect your account.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -179,7 +179,7 @@ export default function AccountSettings() {
               <CardHeader>
                 <CardTitle>Danger Zone</CardTitle>
                 <CardDescription>
-                  Irreversible and destructive actions.
+                  These actions cannot be undone.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -188,7 +188,7 @@ export default function AccountSettings() {
                   <div>
                     <h4 className="font-semibold">Delete Account</h4>
                     <p className="text-sm text-muted-foreground">
-                      Permanently delete your account and all associated data.
+                      Delete your account and remove all associated data permanently.
                     </p>
                   </div>
                   <Button variant="destructive" type="button" className="cursor-pointer">

@@ -4,7 +4,6 @@ import * as React from "react"
 import { useMap, useMapEvents } from "react-leaflet"
 import {
   AlertTriangle,
-  Database,
   LoaderCircle,
   MapPinned,
   Play,
@@ -38,25 +37,66 @@ import {
   MapPopup,
   MapTileLayer,
 } from "@/components/ui/map"
+import { Bar, BarChart, CartesianGrid, Legend, XAxis, YAxis } from "recharts"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import {
-  agreementFamilyOptions,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import {
+  agreementFamilyCategoryOptions,
+  agreementFamilyCategoryMap,
   dataTypeOptions,
   defaultSiteClassificationForm,
   dynamicMetricGroupOptions,
-  type AgreementFamily,
+  type AgreementFamilyCategory,
   type DynamicMetricGroup,
   type SiteClassificationForm,
   type SiteModelDataType,
   type SiteModelSource,
   staticMetricGroupOptions,
-  summaryLevelOptions,
   type StaticMetricGroup,
-  type SummaryLevel,
   sourceOptions,
 } from "@/app/models/data"
 
 type TableRowValue = string | number | boolean | null
 type TableRowRecord = Record<string, TableRowValue>
+
+const EARTH_ENGINE_AUTH_COMMAND = [
+  "cd backend",
+  "$env:UV_CACHE_DIR='c:\\Users\\JasonOyugi\\Downloads\\EA_Forests\\.uv-cache'",
+  "uv run python -m app.auth_earth_engine",
+].join("\n")
+
+const earthEngineSources: SiteModelSource[] = [
+  "terraclimate",
+  "chirps",
+  "era5_land_ee",
+]
+
+const dynamicSummaryExcludedColumns = new Set([
+  "site_id",
+  "source",
+  "lon",
+  "lat",
+  "date",
+  "year",
+  "month",
+  "month_name",
+  "climate_buffer_m",
+  "native_resolution",
+  "extraction_method",
+])
+
+const sourceColumnSuffixes: Record<SiteModelSource, string[]> = {
+  terraclimate: ["terraclimate"],
+  chirps: ["chirps"],
+  nasa_power: ["nasa_power"],
+  era5_land_ee: ["era5_land_ee", "era5_land"],
+}
 
 interface BackendError {
   scope: string
@@ -67,6 +107,7 @@ interface BackendError {
 interface BackendEarthEngineStatus {
   available: boolean
   authenticated: boolean
+  required?: boolean
   message: string
 }
 
@@ -107,6 +148,143 @@ function toggleSelection<T extends string>(
   return values.filter((value) => value !== nextValue)
 }
 
+function getDynamicMetricBase(column: string) {
+  let base = String(column)
+
+  // strip known source suffixes (e.g. _terraclimate, _chirps, _nasa_power, _era5_land)
+  for (const source of sourceOptions) {
+    for (const suffixName of sourceColumnSuffixes[source]) {
+      const suffix = `_${suffixName}`
+      if (base.endsWith(suffix)) {
+        base = base.slice(0, -suffix.length)
+        break
+      }
+    }
+  }
+
+  base = base.toLowerCase()
+
+  // remove common unit-like suffixes
+  base = base.replace(/_(mm|c|mj_m2_day|m3_m3|pct|ms|kwh_m2_day|raw_sign|sum)$/, "")
+
+  // canonicalize to a small set of metric keys so metrics align across sources
+  if (base.includes("tmin")) return "tmin"
+  if (base.includes("tmax")) return "tmax"
+  if (base.includes("tmean") || base.includes("temperature") || base.includes("temp")) return "tmean"
+  if (base.includes("ppt") || base.includes("precip") || base.includes("rain")) return "ppt"
+  if (base.includes("pet")) return "pet"
+  if (base.includes("aet") || base.includes("actual_evapotranspiration")) return "aet"
+  if (base.includes("runoff")) return "runoff"
+  if (base.includes("vpd")) return "vpd"
+  if (base.includes("srad") || base.includes("solar") || base.includes("radiation")) return "srad"
+  if (base.includes("soil") || base.includes("volumetric") || base.includes("layer")) return "soil_water"
+  if (base.includes("wind")) return "wind"
+
+  // fallback: strip non-alphanumeric/underscore and return
+  return base.replace(/[^a-z0-9_]/g, "")
+}
+
+function formatChartLabel(value: string) {
+  return startCase(value.replace(/_terraclimate|_chirps|_nasa_power|_era5_land_ee|_era5_land$/, ""))
+}
+
+function isDynamicSummaryMetricColumn(column: string) {
+  const base = getDynamicMetricBase(column)
+  return !dynamicSummaryExcludedColumns.has(base) && base !== column
+}
+
+function columnBelongsToSource(column: string, source: SiteModelSource) {
+  return sourceColumnSuffixes[source].some((suffixName) =>
+    column.endsWith(`_${suffixName}`)
+  )
+}
+
+function toChartNumber(value: TableRowValue) {
+  if (typeof value === "number") {
+    return Number.isFinite(value) ? value : null
+  }
+  if (typeof value === "string" && value.trim() !== "") {
+    const nextValue = Number(value)
+    return Number.isFinite(nextValue) ? nextValue : null
+  }
+  return null
+}
+
+function findDynamicMetricColumn(
+  row: TableRowRecord,
+  source: SiteModelSource,
+  metric: string
+) {
+  return Object.keys(row).find(
+    (column) =>
+      isDynamicSummaryMetricColumn(column) &&
+      columnBelongsToSource(column, source) &&
+      getDynamicMetricBase(column) === metric
+  )
+}
+
+function formatSourceList(values: string[]) {
+  if (!values.length) return ""
+  return values.map(startCase).join(", ")
+}
+
+function earthEngineBadgeText(status: BackendEarthEngineStatus) {
+  if (status.required === false) return "Earth Engine not used"
+  return status.authenticated ? "Earth Engine ready" : "Earth Engine needs auth"
+}
+
+function earthEngineBadgeClass(status: BackendEarthEngineStatus) {
+  if (status.required === false) return "border-border/70 text-muted-foreground"
+  return status.authenticated
+    ? "border-emerald-300 text-emerald-700"
+    : "border-amber-300 text-amber-700"
+}
+
+function summarizeBackendErrors(errors: BackendError[]) {
+  return errors
+    .map((error) =>
+      [error.scope, error.source, error.message].filter(Boolean).join(": ")
+    )
+    .join(" ")
+}
+
+function hasSiteClassificationOutput(result: BackendSiteClassificationResponse) {
+  return (
+    Object.values(result.source_tables ?? {}).some((rows) => rows.length > 0) ||
+    result.static_table.length > 0 ||
+    result.comparison_table.length > 0 ||
+    result.agreement_report.length > 0
+  )
+}
+
+function downloadCSV(rows: TableRowRecord[], filename: string) {
+  if (rows.length === 0) return
+  const headers = Object.keys(rows[0])
+  const csv = [headers.join(",")].concat(
+    rows.map((row) =>
+      headers
+        .map((header) => {
+          const value = row[header]
+          if (value === null || value === undefined) {
+            return ""
+          }
+          const cell = String(value).replace(/"/g, '""')
+          return `"${cell}"`
+        })
+        .join(",")
+    )
+  )
+  const blob = new Blob([csv.join("\r\n")], { type: "text/csv;charset=utf-8;" })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement("a")
+  link.href = url
+  link.download = filename
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+  URL.revokeObjectURL(url)
+}
+
 function CoordinateMapEvents({
   onCoordinateLock,
 }: {
@@ -144,26 +322,48 @@ function CoordinateFocus({
 
 function SelectionGroup<T extends string>({
   title,
-  description,
   options,
   values,
   onToggle,
   required = false,
+  showSelectAll = false,
 }: {
   title: string
-  description: string
   options: T[]
   values: T[]
   onToggle: (nextValues: T[]) => void
   required?: boolean
+  showSelectAll?: boolean
 }) {
+  const allSelected = options.every((option) => values.includes(option))
+
+  const handleSelectAll = () => {
+    if (allSelected) {
+      onToggle(values.filter((value) => !options.includes(value)))
+      return
+    }
+
+    onToggle(Array.from(new Set([...values, ...options])))
+  }
+
   return (
     <Card className="gap-4 border-border/70 bg-background/70 py-5">
       <CardHeader className="px-5">
-        <CardTitle className="text-base">{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <div className="flex items-center justify-between gap-3">
+          <CardTitle className="text-base">{title}</CardTitle>
+          {showSelectAll ? (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-xs"
+              onClick={handleSelectAll}
+            >
+              {allSelected ? "Clear" : "Select all"}
+            </Button>
+          ) : null}
+        </div>
       </CardHeader>
-      <CardContent className="grid gap-3 px-5">
+      <CardContent className="grid gap-2 px-5 grid-cols-1 sm:grid-cols-2">
         {options.map((option) => {
           const isChecked = values.includes(option)
           const disableToggleOff = required && isChecked && values.length === 1
@@ -171,7 +371,7 @@ function SelectionGroup<T extends string>({
           return (
             <label
               key={option}
-              className="flex items-start gap-3 rounded-xl border border-border/70 bg-background/75 px-3 py-3 text-sm"
+              className="flex items-center gap-2 rounded-lg border border-border/70 bg-background/75 px-3 py-2 text-sm"
             >
               <Checkbox
                 checked={isChecked}
@@ -180,12 +380,7 @@ function SelectionGroup<T extends string>({
                   onToggle(toggleSelection(values, option, checked === true))
                 }
               />
-              <div className="space-y-1">
-                <div className="font-medium">{startCase(option)}</div>
-                <div className="text-xs text-muted-foreground">
-                  Notebook option: <code>{option}</code>
-                </div>
-              </div>
+              <span className="font-medium">{startCase(option)}</span>
             </label>
           )
         })}
@@ -250,36 +445,99 @@ export default function SiteClassificationPage() {
   const [isRunning, setIsRunning] = React.useState(false)
   const [runError, setRunError] = React.useState<string | null>(null)
   const [result, setResult] = React.useState<BackendSiteClassificationResponse | null>(null)
+  const [agreementFamilyCategories, setAgreementFamilyCategories] =
+    React.useState<AgreementFamilyCategory[]>(agreementFamilyCategoryOptions)
+  const [dynamicSummaryPeriod, setDynamicSummaryPeriod] =
+    React.useState<"monthly" | "annual">("monthly")
+  const [selectedDynamicSources, setSelectedDynamicSources] =
+    React.useState<SiteModelSource[]>(sourceOptions)
+  const [selectedDynamicMetrics, setSelectedDynamicMetrics] = React.useState<string[]>([])
+  const [earthEngineStatus, setEarthEngineStatus] =
+    React.useState<BackendEarthEngineStatus | null>(null)
+  const [isCheckingEarthEngine, setIsCheckingEarthEngine] = React.useState(false)
 
   const apiBaseUrl = React.useMemo(
     () => (import.meta.env.VITE_API_URL?.replace(/\/$/, "") || "/api"),
     []
   )
 
-  const runPayload = React.useMemo(
+  const expandedAgreementFamilies = React.useMemo(
     () =>
-      JSON.stringify(
-        {
-          site_id: "selected_coordinate",
-          lon: lockedCoordinate?.lon ?? null,
-          lat: lockedCoordinate?.lat ?? null,
-          start_year: draftForm.startYear,
-          end_year: draftForm.endYear,
-          sources: draftForm.sources,
-          data_types: draftForm.dataTypes,
-          dynamic_metric_groups: draftForm.dynamicMetricGroups,
-          static_metric_groups: draftForm.staticMetricGroups,
-          summary_levels: draftForm.summaryLevels,
-          agreement_families: draftForm.agreementFamilies,
-          climate_buffer_m: 5000,
-          topo_buffer_m: 300,
-          min_overlap: 12,
-        },
-        null,
-        2
+      Array.from(
+        new Set(
+          agreementFamilyCategories.flatMap(
+            (category) => agreementFamilyCategoryMap[category]
+          )
+        )
       ),
-    [draftForm, lockedCoordinate]
+    [agreementFamilyCategories]
   )
+
+  const selectedEarthEngineSources = React.useMemo(
+    () =>
+      draftForm.dataTypes.includes("dynamic")
+        ? draftForm.sources.filter((source) => earthEngineSources.includes(source))
+        : [],
+    [draftForm.dataTypes, draftForm.sources]
+  )
+
+  const selectedEarthEngineStaticGroups = React.useMemo(
+    () =>
+      draftForm.dataTypes.includes("static") &&
+      draftForm.staticMetricGroups.includes("topography")
+        ? ["topography"]
+        : [],
+    [draftForm.dataTypes, draftForm.staticMetricGroups]
+  )
+
+  const needsEarthEngine =
+    selectedEarthEngineSources.length > 0 ||
+    selectedEarthEngineStaticGroups.length > 0
+
+  const displayedEarthEngineStatus =
+    earthEngineStatus ?? result?.earth_engine ?? null
+
+  const earthEngineReady =
+    !needsEarthEngine || displayedEarthEngineStatus?.authenticated === true
+
+  const refreshEarthEngineStatus = React.useCallback(async () => {
+    setIsCheckingEarthEngine(true)
+    try {
+      const response = await fetch(`${apiBaseUrl}/earth-engine/status`)
+      const responseText = await response.text()
+      const parsed = responseText ? JSON.parse(responseText) : null
+
+      if (!response.ok) {
+        throw new Error(
+          parsed?.detail ||
+            parsed?.message ||
+            `Backend status check failed with status ${response.status}.`
+        )
+      }
+
+      const status = parsed as BackendEarthEngineStatus
+      setEarthEngineStatus(status)
+      return status
+    } catch (error) {
+      const status = {
+        available: false,
+        authenticated: false,
+        required: true,
+        message:
+          error instanceof Error
+            ? error.message
+            : "Earth Engine status could not be checked.",
+      }
+      setEarthEngineStatus(status)
+      return status
+    } finally {
+      setIsCheckingEarthEngine(false)
+    }
+  }, [apiBaseUrl])
+
+  React.useEffect(() => {
+    void refreshEarthEngineStatus()
+  }, [refreshEarthEngineStatus])
 
   const runSiteClassification = React.useCallback(async () => {
     if (!lockedCoordinate) {
@@ -291,6 +549,17 @@ export default function SiteClassificationPage() {
     setRunError(null)
 
     try {
+      if (needsEarthEngine) {
+        const latestStatus = await refreshEarthEngineStatus()
+
+        if (!latestStatus?.authenticated) {
+          throw new Error(
+            latestStatus?.message ||
+              "Google Earth Engine authentication is required for the selected inputs."
+          )
+        }
+      }
+
       const response = await fetch(`${apiBaseUrl}/models/site-classification`, {
         method: "POST",
         headers: {
@@ -307,7 +576,7 @@ export default function SiteClassificationPage() {
           dynamic_metric_groups: draftForm.dynamicMetricGroups,
           static_metric_groups: draftForm.staticMetricGroups,
           summary_levels: draftForm.summaryLevels,
-          agreement_families: draftForm.agreementFamilies,
+          agreement_families: expandedAgreementFamilies,
           climate_buffer_m: 5000,
           topo_buffer_m: 300,
           min_overlap: 12,
@@ -325,7 +594,15 @@ export default function SiteClassificationPage() {
         )
       }
 
-      setResult(parsed as BackendSiteClassificationResponse)
+      const nextResult = parsed as BackendSiteClassificationResponse
+      setResult(nextResult)
+      if (nextResult?.earth_engine) {
+        setEarthEngineStatus(nextResult.earth_engine)
+      }
+
+      if (nextResult.errors?.length && !hasSiteClassificationOutput(nextResult)) {
+        setRunError(summarizeBackendErrors(nextResult.errors))
+      }
     } catch (error) {
       setResult(null)
       setRunError(
@@ -334,7 +611,14 @@ export default function SiteClassificationPage() {
     } finally {
       setIsRunning(false)
     }
-  }, [apiBaseUrl, draftForm, lockedCoordinate])
+  }, [
+    apiBaseUrl,
+    draftForm,
+    expandedAgreementFamilies,
+    lockedCoordinate,
+    needsEarthEngine,
+    refreshEarthEngineStatus,
+  ])
 
   const updateYear =
     (field: "startYear" | "endYear") =>
@@ -372,14 +656,6 @@ export default function SiteClassificationPage() {
     setDraftForm((current) => ({ ...current, staticMetricGroups }))
   }
 
-  const setSummaryLevels = (summaryLevels: SummaryLevel[]) => {
-    setDraftForm((current) => ({ ...current, summaryLevels }))
-  }
-
-  const setAgreementFamilies = (agreementFamilies: AgreementFamily[]) => {
-    setDraftForm((current) => ({ ...current, agreementFamilies }))
-  }
-
   const monthlyRows = React.useMemo(
     () =>
       Object.values(result?.source_summaries ?? {}).flatMap(
@@ -396,24 +672,156 @@ export default function SiteClassificationPage() {
     [result]
   )
 
+  const dynamicSummaryRows = React.useMemo(
+    () =>
+      (dynamicSummaryPeriod === "annual" ? annualRows : monthlyRows) ?? [],
+    [annualRows, monthlyRows, dynamicSummaryPeriod]
+  )
+
+  // Get available sources
+  const dynamicSourceOptions = React.useMemo(
+    () => Array.from(new Set(dynamicSummaryRows.map((row) => String(row.source)))) as SiteModelSource[],
+    [dynamicSummaryRows]
+  )
+
+  React.useEffect(() => {
+    setSelectedDynamicSources((current) => {
+      const availableSources = new Set(dynamicSourceOptions)
+      const selectedAvailableSources = current.filter((source) =>
+        availableSources.has(source)
+      )
+      const nextSources =
+        selectedAvailableSources.length > 0
+          ? selectedAvailableSources
+          : dynamicSourceOptions
+
+      if (
+        nextSources.length === current.length &&
+        nextSources.every((source, index) => source === current[index])
+      ) {
+        return current
+      }
+
+      return nextSources
+    })
+  }, [dynamicSourceOptions])
+
+  // Get metrics available for each source
+  const metricsPerSource = React.useMemo(() => {
+    const map: Record<string, Set<string>> = {}
+    dynamicSummaryRows.forEach((row) => {
+      const source = String(row.source)
+      if (!map[source]) {
+        map[source] = new Set<string>()
+      }
+      Object.keys(row).forEach((column) => {
+        const base = getDynamicMetricBase(column)
+        if (isDynamicSummaryMetricColumn(column)) {
+          map[source].add(base)
+        }
+      })
+    })
+    return map
+  }, [dynamicSummaryRows])
+
+  // Get metrics common to all selected sources
+  const commonDynamicMetrics = React.useMemo(() => {
+    if (selectedDynamicSources.length === 0) return []
+    const sourceSets = selectedDynamicSources.map((s) => metricsPerSource[String(s)] ?? new Set())
+    if (sourceSets.length === 0) return []
+    const intersection = new Set(sourceSets[0])
+    for (let i = 1; i < sourceSets.length; i++) {
+      intersection.forEach((metric) => {
+        if (!sourceSets[i].has(metric)) {
+          intersection.delete(metric)
+        }
+      })
+    }
+    return Array.from(intersection)
+  }, [selectedDynamicSources, metricsPerSource])
+
+  // Auto-select all common metrics when sources change
+  React.useEffect(() => {
+    setSelectedDynamicMetrics(commonDynamicMetrics)
+  }, [commonDynamicMetrics])
+
+
+  // Build chart data
+  const dynamicChartData = React.useMemo(() => {
+    if (selectedDynamicSources.length === 0 || selectedDynamicMetrics.length === 0) {
+      return []
+    }
+
+    const labelKey = dynamicSummaryPeriod === "annual" ? "year" : "month_name"
+    const grouped = new globalThis.Map<string, TableRowRecord>()
+
+    dynamicSummaryRows.forEach((row) => {
+      if (!selectedDynamicSources.includes(row.source as SiteModelSource)) {
+        return
+      }
+
+      const label = String(row[labelKey as keyof TableRowRecord] ?? "")
+      const existing = grouped.get(label) ?? { label }
+
+      selectedDynamicMetrics.forEach((metric) => {
+        const key = `${metric}__${row.source}`
+        const matchedColumn = findDynamicMetricColumn(
+          row,
+          row.source as SiteModelSource,
+          metric
+        )
+        if (matchedColumn) {
+          existing[key] = toChartNumber(row[matchedColumn])
+        } else {
+          existing[key] = null
+        }
+      })
+
+      grouped.set(label, existing)
+    })
+
+    return Array.from(grouped.values())
+  }, [dynamicSummaryRows, dynamicSummaryPeriod, selectedDynamicSources, selectedDynamicMetrics])
+
+  // Build chart config with unique keys for each metric-source combo
+  const dynamicChartConfig = React.useMemo(() => {
+    const chartColors = [
+      "#3b82f6",
+      "#10b981",
+      "#f59e0b",
+      "#8b5cf6",
+      "#ec4899",
+      "#f97316",
+      "#06b6d4",
+      "#ef4444",
+    ]
+    const config: Record<string, { label: string; color: string }> = {}
+    let colorIndex = 0
+
+    selectedDynamicMetrics.forEach((metric) => {
+      selectedDynamicSources.forEach((source) => {
+        const key = `${metric}__${source}`
+        config[key] = {
+          label: `${formatChartLabel(metric)} (${startCase(source)})`,
+          color: chartColors[colorIndex % chartColors.length],
+        }
+        colorIndex++
+      })
+    })
+    return config
+  }, [selectedDynamicMetrics, selectedDynamicSources])
+
   return (
     <BaseLayout
-      title="Model 1: Site classification"
+      title="Site classification"
       description="Double-click anywhere on the map to lock coordinates, choose the model parameters, then run the Python backend and review the returned tables below."
     >
       <div className="@container/main px-4 lg:px-6">
         <div className="space-y-6">
           <div className="grid gap-4 xl:grid-cols-[minmax(0,1.15fr)_380px]">
-            <Card className="gap-4 overflow-hidden border-border/70 bg-background/75 py-0">
-              <CardHeader className="border-b border-border/70 px-5 py-5">
+            <Card className="gap-4 py-0">
+              <CardHeader className="p-3">
                 <div className="flex flex-wrap items-center gap-3">
-                  <Badge variant="outline" className="gap-1">
-                    <MapPinned className="size-3.5" />
-                    Blank coordinate map
-                  </Badge>
-                  <Badge variant="outline">
-                    Double-click to lock point
-                  </Badge>
                   {lockedCoordinate ? (
                     <Badge variant="outline">
                       {lockedCoordinate.lat.toFixed(4)}, {lockedCoordinate.lon.toFixed(4)}
@@ -422,25 +830,20 @@ export default function SiteClassificationPage() {
                   {result?.earth_engine ? (
                     <Badge
                       variant="outline"
-                      className={
-                        result.earth_engine.authenticated
-                          ? "border-emerald-300 text-emerald-700"
-                          : "border-amber-300 text-amber-700"
-                      }
+                      className={earthEngineBadgeClass(result.earth_engine)}
                     >
-                      {result.earth_engine.authenticated
-                        ? "Earth Engine ready"
-                        : "Earth Engine needs auth"}
+                      {earthEngineBadgeText(result.earth_engine)}
+                    </Badge>
+                  ) : null}
+                  {displayedEarthEngineStatus && !result?.earth_engine ? (
+                    <Badge
+                      variant="outline"
+                      className={earthEngineBadgeClass(displayedEarthEngineStatus)}
+                    >
+                      {earthEngineBadgeText(displayedEarthEngineStatus)}
                     </Badge>
                   ) : null}
                 </div>
-                <CardTitle className="mt-2 text-xl">
-                  Lock coordinates directly from the map
-                </CardTitle>
-                <CardDescription>
-                  The model runs against one coordinate. Double-click on the map to place the
-                  point, adjust any parameters you want, and then run the model.
-                </CardDescription>
               </CardHeader>
               <CardContent className="p-0">
                 <Map
@@ -459,8 +862,8 @@ export default function SiteClassificationPage() {
                     <MapMarker
                       position={[lockedCoordinate.lat, lockedCoordinate.lon]}
                       icon={
-                        <div className="rounded-full border border-white/80 bg-emerald-600 p-1.5 text-white shadow-lg">
-                          <MapPinned className="size-4" />
+                        <div className="rounded-full text-emerald-700 shadow-lg">
+                          <MapPinned className="h-4 w-4" />
                         </div>
                       }
                     >
@@ -495,9 +898,6 @@ export default function SiteClassificationPage() {
                     <Settings className="h-5 w-5 text-emerald-700" />
                     <CardTitle className="text-base">Run configuration</CardTitle>
                   </div>
-                  <CardDescription>
-                    Choose the coordinate and the notebook parameters you want to send to Python.
-                  </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4 px-5">
                   <div className="grid gap-3 sm:grid-cols-2">
@@ -550,7 +950,11 @@ export default function SiteClassificationPage() {
                     <Button
                       className="w-full gap-2"
                       onClick={() => void runSiteClassification()}
-                      disabled={isRunning || !lockedCoordinate}
+                      disabled={
+                        isRunning ||
+                        !lockedCoordinate ||
+                        (needsEarthEngine && !earthEngineReady)
+                      }
                     >
                       {isRunning ? (
                         <LoaderCircle className="h-4 w-4 animate-spin" />
@@ -574,76 +978,88 @@ export default function SiteClassificationPage() {
                 </CardContent>
               </Card>
 
-              <Card className="gap-4 border-border/70 bg-background/75 py-5">
-                <CardHeader className="px-5">
-                  <div className="flex items-center gap-2">
-                    <Database className="h-5 w-5 text-emerald-700" />
-                    <CardTitle className="text-base">Executed payload</CardTitle>
-                  </div>
-                  <CardDescription>
-                    This is the request body that will be sent to the Python backend.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="px-5">
-                  <pre className="overflow-x-auto rounded-2xl border border-border/70 bg-slate-950 px-4 py-4 text-xs text-slate-100">
-                    {runPayload}
-                  </pre>
-                  {result?.earth_engine ? (
-                    <p className="mt-3 text-xs text-muted-foreground">
-                      {result.earth_engine.message}
-                    </p>
-                  ) : null}
-                </CardContent>
-              </Card>
+              {needsEarthEngine && !earthEngineReady ? (
+                <Card className="gap-4 border-amber-300/70 bg-amber-50/80 py-5">
+                  <CardHeader className="px-5">
+                    <CardTitle className="flex items-center gap-2 text-base text-amber-900">
+                      <AlertTriangle className="h-4 w-4" />
+                      Google Earth Engine authentication required
+                    </CardTitle>
+                    <CardDescription className="text-amber-900/80">
+                      Selected Earth Engine inputs:{" "}
+                      {formatSourceList([
+                        ...selectedEarthEngineSources,
+                        ...selectedEarthEngineStaticGroups,
+                      ])}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4 px-5">
+                    <pre className="max-w-full overflow-x-auto rounded-lg border border-amber-300/70 bg-background/80 p-3 text-xs text-foreground">
+                      <code>{EARTH_ENGINE_AUTH_COMMAND}</code>
+                    </pre>
+                    {displayedEarthEngineStatus?.message ? (
+                      <p className="text-sm text-amber-900">
+                        {displayedEarthEngineStatus.message}
+                      </p>
+                    ) : null}
+                    <Button
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => void refreshEarthEngineStatus()}
+                      disabled={isCheckingEarthEngine}
+                    >
+                      {isCheckingEarthEngine ? (
+                        <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+                      ) : null}
+                      Recheck Earth Engine status
+                    </Button>
+                  </CardContent>
+                </Card>
+              ) : null}
             </div>
           </div>
 
-          <div className="grid gap-4 xl:grid-cols-2">
+          <div className="grid gap-4 grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3">
             <SelectionGroup
               title="Sources"
-              description="Pick which climate providers to include in the run."
               options={sourceOptions}
               values={draftForm.sources}
               onToggle={setSources}
               required
+              showSelectAll
             />
             <SelectionGroup
               title="Data types"
-              description="Choose whether the backend should return dynamic tables, static tables, or both."
               options={dataTypeOptions}
               values={draftForm.dataTypes}
               onToggle={setDataTypes}
               required
+              showSelectAll
             />
             <SelectionGroup
               title="Dynamic metric groups"
-              description="These filter the dynamic climate columns returned by the backend."
               options={dynamicMetricGroupOptions}
               values={draftForm.dynamicMetricGroups}
               onToggle={setDynamicMetricGroups}
+              showSelectAll
             />
             <SelectionGroup
               title="Static metric groups"
-              description="These filter the topography and soil outputs for the selected point."
               options={staticMetricGroupOptions}
               values={draftForm.staticMetricGroups}
               onToggle={setStaticMetricGroups}
+              showSelectAll
             />
-            <SelectionGroup
-              title="Summary levels"
-              description="Choose which dynamic table summaries should be returned below."
-              options={summaryLevelOptions}
-              values={draftForm.summaryLevels}
-              onToggle={setSummaryLevels}
-              required
-            />
-            <SelectionGroup
-              title="Agreement families"
-              description="These drive the cross-source agreement report."
-              options={agreementFamilyOptions}
-              values={draftForm.agreementFamilies}
-              onToggle={setAgreementFamilies}
-            />
+            <div className="xl:col-span-2 2xl:col-span-3">
+              <SelectionGroup
+                title="Agreement families"
+                options={agreementFamilyCategoryOptions}
+                values={agreementFamilyCategories}
+                onToggle={setAgreementFamilyCategories}
+                required
+                showSelectAll
+              />
+            </div>
           </div>
 
           <div className="space-y-4">
@@ -652,8 +1068,7 @@ export default function SiteClassificationPage() {
                 Model outputs
               </div>
               <p className="mt-1 text-sm text-muted-foreground">
-                Once you run the model, the relevant backend tables appear below for the locked
-                coordinate.
+                Once you run the model, the visual summaries appear below for the locked coordinate.
               </p>
             </div>
 
@@ -719,21 +1134,242 @@ export default function SiteClassificationPage() {
               </Card>
             ) : null}
 
-            <ModelTableCard
-              title="Monthly climatology summary"
-              description="Dynamic climate table grouped by source and month."
-              rows={monthlyRows}
-            />
-            <ModelTableCard
-              title="Annual summary"
-              description="Annualized dynamic climate table for the selected run period."
-              rows={annualRows}
-            />
-            <ModelTableCard
-              title="Static site metrics"
-              description="Topography and soil outputs derived from the locked coordinate."
-              rows={result?.static_table ?? []}
-            />
+            <Card className="gap-4 border-border/70 bg-background/75 py-5">
+              <CardHeader className="flex flex-wrap items-start justify-between gap-4 px-5">
+                <div>
+                  <CardTitle>Dynamic summary charts</CardTitle>
+                  <CardDescription>
+                    View monthly and annual climate metrics as bar charts grouped by selected sources or metrics.
+                  </CardDescription>
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() =>
+                    downloadCSV(
+                      dynamicSummaryRows,
+                      `${dynamicSummaryPeriod}-summary.csv`
+                    )
+                  }
+                  disabled={!dynamicSummaryRows.length}
+                >
+                  Download CSV
+                </Button>
+              </CardHeader>
+              <CardContent className="space-y-4 px-5">
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <div className="text-sm font-medium text-foreground">Summary period</div>
+                    <Select
+                      value={dynamicSummaryPeriod}
+                      onValueChange={(value) =>
+                        setDynamicSummaryPeriod(value as "monthly" | "annual")
+                      }
+                    >
+                      <SelectTrigger size="sm" className="w-full">
+                        <SelectValue placeholder="Select period" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="monthly">Monthly</SelectItem>
+                        <SelectItem value="annual">Annual</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="text-sm font-medium text-foreground">Data sources</div>
+                    <div className="grid gap-2 grid-cols-2 sm:grid-cols-3">
+                      {dynamicSourceOptions.map((source) => {
+                        const isSelected = selectedDynamicSources.includes(source)
+                        return (
+                          <label
+                            key={source}
+                            className="flex items-center gap-2 rounded-lg border border-border/70 bg-background/75 px-3 py-2 text-sm cursor-pointer"
+                          >
+                            <Checkbox
+                              checked={isSelected}
+                              onCheckedChange={(checked) => {
+                                if (checked === true) {
+                                  setSelectedDynamicSources((current) =>
+                                    current.includes(source) ? current : [...current, source]
+                                  )
+                                } else {
+                                  setSelectedDynamicSources((current) =>
+                                    current.filter((s) => s !== source)
+                                  )
+                                }
+                              }}
+                            />
+                            <span className="font-medium">{startCase(source)}</span>
+                          </label>
+                        )
+                      })}
+                    </div>
+                  </div>
+
+                  {commonDynamicMetrics.length > 0 ? (
+                    <div className="space-y-2">
+                      <div className="text-sm font-medium text-foreground">
+                        Metrics ({commonDynamicMetrics.length} available)
+                      </div>
+                      <div className="grid gap-2 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+                        {commonDynamicMetrics.map((metric) => {
+                          const isSelected = selectedDynamicMetrics.includes(metric)
+                          return (
+                            <label
+                              key={metric}
+                              className="flex items-center gap-2 rounded-lg border border-border/70 bg-background/75 px-3 py-2 text-sm cursor-pointer"
+                            >
+                              <Checkbox
+                                checked={isSelected}
+                                onCheckedChange={(checked) => {
+                                  if (checked === true) {
+                                    setSelectedDynamicMetrics((current) =>
+                                      current.includes(metric) ? current : [...current, metric]
+                                    )
+                                  } else {
+                                    setSelectedDynamicMetrics((current) =>
+                                      current.filter((m) => m !== metric)
+                                    )
+                                  }
+                                }}
+                              />
+                              <span className="font-medium text-xs">{formatChartLabel(metric)}</span>
+                            </label>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+
+                {dynamicChartData.length && selectedDynamicMetrics.length ? (
+                  <div className="h-[420px] w-full">
+                    <ChartContainer config={dynamicChartConfig} className="h-full w-full">
+                      <BarChart data={dynamicChartData} margin={{ left: 8, right: 8, top: 8, bottom: 28 }}>
+                        <CartesianGrid vertical={false} strokeDasharray="3 3" />
+                        <XAxis
+                          dataKey="label"
+                          tickLine={false}
+                          axisLine={false}
+                          tickMargin={8}
+                          interval={0}
+                          tick={{ fill: "hsl(var(--foreground))", fontSize: 11 }}
+                          height={60}
+                        />
+                        <YAxis
+                          tickLine={false}
+                          axisLine={false}
+                          tickMargin={8}
+                          tick={{ fill: "hsl(var(--foreground))", fontSize: 11 }}
+                        />
+                        <ChartTooltip content={<ChartTooltipContent />} />
+                        <Legend />
+                        {selectedDynamicMetrics.map((metric) =>
+                          selectedDynamicSources.map((source) => {
+                            const key = `${metric}__${source}`
+                            return (
+                              <Bar
+                                key={key}
+                                dataKey={key}
+                                fill={dynamicChartConfig[key]?.color ?? "#3b82f6"}
+                                radius={[4, 4, 0, 0]}
+                              />
+                            )
+                          })
+                        )}
+                      </BarChart>
+                    </ChartContainer>
+                  </div>
+                ) : (
+                  <Card className="border-border/70 bg-background/75 py-12 text-center">
+                    <div className="text-sm text-muted-foreground">
+                      No dynamic summary data available yet. Run the model to populate the charts.
+                    </div>
+                  </Card>
+                )}
+              </CardContent>
+            </Card>
+
+            <div className="grid gap-4 lg:grid-cols-2">
+              {result?.static_table?.length ? (
+                result.static_table.map((row, index) => {
+                  const metricRows = Object.entries(row)
+                    .filter(
+                      ([column, value]) =>
+                        typeof value === "number" &&
+                        ![
+                          "site_id",
+                          "source",
+                          "metric_group",
+                          "native_resolution",
+                          "extraction_method",
+                        ].includes(column)
+                    )
+                    .map(([column, value]) => ({
+                      metric: formatChartLabel(column),
+                      value: Number(value),
+                    }))
+
+                  return (
+                    <Card key={`${row.metric_group ?? index}-${row.source ?? index}`} className="gap-4 border-border/70 bg-background/75 py-5">
+                      <CardHeader className="flex flex-wrap items-center justify-between gap-4 px-5">
+                        <div>
+                          <CardTitle className="text-base">
+                            {row.metric_group ? startCase(String(row.metric_group)) : "Static metrics"}
+                          </CardTitle>
+                          <CardDescription>
+                            {row.source ? startCase(String(row.source)) : "Static site metrics."}
+                          </CardDescription>
+                        </div>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() =>
+                            downloadCSV([row], `static-metrics-${index + 1}.csv`)
+                          }
+                        >
+                          Download CSV
+                        </Button>
+                      </CardHeader>
+                      <CardContent className="px-5">
+                        {metricRows.length ? (
+                          <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+                            {metricRows.map((item) => (
+                              <div
+                                key={item.metric}
+                                className="rounded-lg border border-border/70 bg-background/50 px-4 py-3"
+                              >
+                                <div className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                  {item.metric}
+                                </div>
+                                <div className="mt-2 text-lg font-semibold text-foreground">
+                                  {item.value.toLocaleString(undefined, {
+                                    minimumFractionDigits: 0,
+                                    maximumFractionDigits: 2,
+                                  })}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="rounded-xl border border-border/70 bg-background/70 px-4 py-6 text-sm text-muted-foreground">
+                            No static metric values available for this row.
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  )
+                })
+              ) : (
+                <Card className="border-border/70 bg-background/75 py-12 text-center">
+                  <div className="text-sm text-muted-foreground">
+                    No static site metrics are available until the model has run.
+                  </div>
+                </Card>
+              )}
+            </div>
+
             <ModelTableCard
               title="Comparison table"
               description="Combined wide table across successful climate sources."

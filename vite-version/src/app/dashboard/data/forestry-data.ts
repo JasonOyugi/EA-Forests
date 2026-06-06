@@ -166,6 +166,7 @@ type SubBlockSeed = {
   currentFinancedAreaHa: number
   currentAge: number
   managedAreaDeltaPerYear: number
+  managedAreaByYear?: Partial<Record<number, number>>
   financedAreaDeltaPerYear: number
   plantedTreesPerHa: number
   defaultContractor: string
@@ -359,6 +360,7 @@ const siteSeeds: SiteSeed[] = [
         currentFinancedAreaHa: 29,
         currentAge: 6,
         managedAreaDeltaPerYear: 0.8,
+        managedAreaByYear: { 2025: 33.4, 2026: 32, 2027: 30.8 },
         financedAreaDeltaPerYear: 0.7,
         plantedTreesPerHa: 1111,
         defaultContractor: "GreenCanopy Ltd",
@@ -385,6 +387,7 @@ const siteSeeds: SiteSeed[] = [
         currentFinancedAreaHa: 26,
         currentAge: 4,
         managedAreaDeltaPerYear: 0.4,
+        managedAreaByYear: { 2025: 29.1, 2026: 28, 2027: 27.1 },
         financedAreaDeltaPerYear: 0.8,
         plantedTreesPerHa: 1020,
         defaultContractor: "-",
@@ -411,6 +414,7 @@ const siteSeeds: SiteSeed[] = [
         currentFinancedAreaHa: 24,
         currentAge: 3,
         managedAreaDeltaPerYear: 0.5,
+        managedAreaByYear: { 2025: 25.1, 2026: 24, 2027: 23.2 },
         financedAreaDeltaPerYear: 0.8,
         plantedTreesPerHa: 950,
         defaultContractor: "Timberline Services",
@@ -449,6 +453,7 @@ const siteSeeds: SiteSeed[] = [
         currentFinancedAreaHa: 30,
         currentAge: 3,
         managedAreaDeltaPerYear: 0.4,
+        managedAreaByYear: { 2025: 31.2, 2026: 30, 2027: 29.1 },
         financedAreaDeltaPerYear: 0.6,
         plantedTreesPerHa: 950,
         defaultContractor: "Timberline Services",
@@ -475,6 +480,7 @@ const siteSeeds: SiteSeed[] = [
         currentFinancedAreaHa: 26,
         currentAge: 3,
         managedAreaDeltaPerYear: 0.3,
+        managedAreaByYear: { 2025: 27.1, 2026: 26, 2027: 25.2 },
         financedAreaDeltaPerYear: 0.5,
         plantedTreesPerHa: 816,
         defaultContractor: "Timberline Services",
@@ -513,6 +519,7 @@ const siteSeeds: SiteSeed[] = [
         currentFinancedAreaHa: 50,
         currentAge: 11,
         managedAreaDeltaPerYear: 0.2,
+        managedAreaByYear: { 2025: 61.4, 2026: 60, 2027: 58.6 },
         financedAreaDeltaPerYear: 0.1,
         plantedTreesPerHa: 975,
         defaultContractor: "-",
@@ -539,6 +546,7 @@ const siteSeeds: SiteSeed[] = [
         currentFinancedAreaHa: 44,
         currentAge: 9,
         managedAreaDeltaPerYear: 0.2,
+        managedAreaByYear: { 2025: 53.3, 2026: 52, 2027: 50.9 },
         financedAreaDeltaPerYear: 0.2,
         plantedTreesPerHa: 1111,
         defaultContractor: "GreenCanopy Ltd",
@@ -577,6 +585,7 @@ const siteSeeds: SiteSeed[] = [
         currentFinancedAreaHa: 34,
         currentAge: 4,
         managedAreaDeltaPerYear: 0.6,
+        managedAreaByYear: { 2025: 39.1, 2026: 38, 2027: 37.1 },
         financedAreaDeltaPerYear: 0.9,
         plantedTreesPerHa: 816,
         defaultContractor: "SylvaOps",
@@ -603,6 +612,7 @@ const siteSeeds: SiteSeed[] = [
         currentFinancedAreaHa: 27,
         currentAge: 3,
         managedAreaDeltaPerYear: 0.7,
+        managedAreaByYear: { 2025: 31.3, 2026: 30, 2027: 29.1 },
         financedAreaDeltaPerYear: 0.9,
         plantedTreesPerHa: 1111,
         defaultContractor: "Timberline Services",
@@ -678,7 +688,8 @@ function buildSubBlockPeriods(seed: SubBlockSeed): ForestrySubBlockPeriod[] {
   return forestryYears.map((year) => {
     const ageDelta = year - dashboardCurrentYear
     const managedAreaHa = round(
-      Math.max(0.5, seed.currentManagedAreaHa + ageDelta * seed.managedAreaDeltaPerYear)
+      seed.managedAreaByYear?.[year] ??
+        Math.max(0.5, seed.currentManagedAreaHa + ageDelta * seed.managedAreaDeltaPerYear)
     )
     const financedAreaHa = round(
       clamp(

@@ -653,6 +653,183 @@ html {
   animation: flagRowPulseTz 1.2s linear infinite;
 }
 
+.flag-button {
+  transition:
+    filter 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.flag-button:hover,
+.flag-button:focus-visible {
+  filter: brightness(1.06);
+}
+
+.flag-button.flag-row-ug:hover,
+.flag-button.flag-row-ug:focus-visible {
+  animation: flagRowPulseUg 1.2s linear infinite;
+}
+
+.flag-button.flag-row-ke:hover,
+.flag-button.flag-row-ke:focus-visible {
+  animation: flagRowPulseKe 1.2s linear infinite;
+}
+
+.flag-button.flag-row-tz:hover,
+.flag-button.flag-row-tz:focus-visible {
+  animation: flagRowPulseTz 1.2s linear infinite;
+}
+
+.roundwood-analysis-shell {
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    filter 220ms ease;
+}
+
+.roundwood-analysis-subcard {
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.roundwood-analysis-subcard:hover,
+.roundwood-analysis-subcard:focus-within {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklch, var(--primary) 18%, transparent);
+  box-shadow:
+    0 16px 30px rgb(15 23 42 / 0.08),
+    inset 0 1px 0 rgb(255 255 255 / 0.06);
+}
+
+.roundwood-metric-card {
+  position: relative;
+  overflow: hidden;
+  border-color: color-mix(in oklch, var(--metric-color) 28%, transparent);
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.roundwood-metric-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklch, var(--metric-color) 18%, transparent),
+    color-mix(in oklch, var(--metric-color) 78%, white),
+    color-mix(in oklch, var(--metric-color) 18%, transparent),
+    transparent
+  );
+  background-size: 300% 100%;
+  opacity: 0;
+  transition: opacity 180ms ease;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.roundwood-metric-card:hover,
+.roundwood-metric-card:focus-within {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklch, var(--metric-color) 46%, transparent);
+  box-shadow: 0 14px 26px color-mix(in oklch, var(--metric-color) 16%, transparent);
+}
+
+.roundwood-metric-card:hover::before,
+.roundwood-metric-card:focus-within::before {
+  animation: emerald-run 2.2s linear infinite;
+  opacity: 1;
+}
+
+.roundwood-metric-icon {
+  position: relative;
+  overflow: hidden;
+  background-color: color-mix(in oklch, var(--metric-color) 20%, white);
+  color: color-mix(in oklch, var(--metric-color) 82%, black);
+  transition:
+    background-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.roundwood-metric-icon::after {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  background: linear-gradient(120deg, transparent 35%, rgb(255 255 255 / 0.65), transparent 65%);
+  opacity: 0;
+  transform: translateX(-65%) rotate(12deg);
+  pointer-events: none;
+}
+
+.roundwood-metric-card:hover .roundwood-metric-icon,
+.roundwood-metric-card:focus-within .roundwood-metric-icon {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 12px 20px color-mix(in oklch, var(--metric-color) 18%, transparent);
+}
+
+.roundwood-metric-card:hover .roundwood-metric-icon::after,
+.roundwood-metric-card:focus-within .roundwood-metric-icon::after {
+  animation: roundwoodMetricGlisten 0.9s ease;
+  opacity: 1;
+}
+
+@keyframes roundwoodMetricGlisten {
+  from {
+    transform: translateX(-70%) rotate(12deg);
+  }
+  to {
+    transform: translateX(70%) rotate(12deg);
+  }
+}
+
+@keyframes roundwoodMetricFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes roundwoodMetricRise {
+  from {
+    transform: translateY(6px) scale(0.96);
+    opacity: 0.72;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .roundwood-metric-icon {
+    animation: roundwoodMetricFloat 4.8s ease-in-out infinite;
+  }
+
+  @supports (animation-timeline: view()) {
+    .roundwood-metric-icon {
+      animation: roundwoodMetricRise both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 38%;
+    }
+  }
+}
+
 .investor-card {
   border-width: 1px;
   border-style: solid;

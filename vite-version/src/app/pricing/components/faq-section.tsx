@@ -17,7 +17,7 @@ export function FAQSection({ faqs }: FAQSectionProps) {
       <CardHeader className="text-center">
         <CardTitle className="text-2xl">Frequently Asked Questions</CardTitle>
         <CardDescription>
-          Get answers to the most common questions about our pricing and plans
+          Answers to the questions investors and operators ask about forestry plans, services, and payments.
         </CardDescription>
       </CardHeader>
       <CardContent className="mt-6 sm:mt-8">

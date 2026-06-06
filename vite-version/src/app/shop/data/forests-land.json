@@ -12,11 +12,24 @@
     "description": "Conventional, professionally structured forestry investments with proven species, clear rotation planning, and conservative underwriting for first-time investors.",
     "image": "/eucalyptus.jpg",
     "imageGallery": [
-      { "url": "https://i.pinimg.com/1200x/33/24/af/3324af132934c56eeeade5bf6026e0bf.jpg", "title": "Core forests overview" },
-      { "url": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80", "title": "Managed plantation block" },
-      { "url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80", "title": "Field access and management lanes" }
+      {
+        "url": "https://i.pinimg.com/1200x/33/24/af/3324af132934c56eeeade5bf6026e0bf.jpg",
+        "title": "Core forests overview"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80",
+        "title": "Managed plantation block"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+        "title": "Field access and management lanes"
+      }
     ],
-    "tags": ["featured", "timber", "new"],
+    "tags": [
+      "featured",
+      "timber",
+      "new"
+    ],
     "stockStatus": "quote",
     "domain": "timber",
     "featured": true,
@@ -110,11 +123,24 @@
     "description": "Advanced forest investment structures built around elite genetics, active monitoring, and technical silviculture for return-focused capital.",
     "image": "/about.webp",
     "imageGallery": [
-      { "url": "/about.webp", "title": "High-performance forests overview" },
-      { "url": "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=1200&q=80", "title": "High-vigour planting stock" },
-      { "url": "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1200&q=80", "title": "Field growth monitoring" }
+      {
+        "url": "/about.webp",
+        "title": "High-performance forests overview"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=1200&q=80",
+        "title": "High-vigour planting stock"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1200&q=80",
+        "title": "Field growth monitoring"
+      }
     ],
-    "tags": ["featured", "popular", "timber"],
+    "tags": [
+      "featured",
+      "popular",
+      "timber"
+    ],
     "stockStatus": "quote",
     "domain": "timber",
     "featured": true,
@@ -211,11 +237,24 @@
     "description": "Featured frontier forestry systems for water-limited and marginal sites, combining resilient genetics, site analytics, and asymmetric upside.",
     "image": "/drylands.webp",
     "imageGallery": [
-      { "url": "/drylands.webp", "title": "Dryland and frontier forests" },
-      { "url": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80", "title": "Frontier site conditions" },
-      { "url": "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=1200&q=80", "title": "Resilience field operations" }
+      {
+        "url": "/drylands.webp",
+        "title": "Dryland and frontier forests"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+        "title": "Frontier site conditions"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=1200&q=80",
+        "title": "Resilience field operations"
+      }
     ],
-    "tags": ["featured", "new", "restoration"],
+    "tags": [
+      "featured",
+      "new",
+      "restoration"
+    ],
     "stockStatus": "quote",
     "domain": "restoration",
     "featured": true,
@@ -296,313 +335,54 @@
     ]
   },
   {
-    "id": "uganda-concessions-004",
-    "slug": "uganda-concessions",
+    "id": "land-uganda-masindi-001",
+    "slug": "masindi-expansion-parcel",
     "shop": "forests-land",
-    "name": "Uganda Concessions",
-    "subtitle": "Government-linked concession opportunities with map-based site review",
-    "kind": "asset",
-    "unitLabel": "starting diligence package",
-    "price": 18000,
-    "currency": "USD",
-    "description": "A featured map-driven page of concession opportunities where investors can explore available Uganda land offerings, compare site context, and open each concession for a focused diligence view.",
-    "image": "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80",
-    "imageGallery": [
-      { "url": "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80", "title": "Uganda concessions overview" },
-      { "url": "https://images.unsplash.com/photo-1473773508845-188df298d2d1?auto=format&fit=crop&w=1200&q=80", "title": "Regional landscape" },
-      { "url": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80", "title": "Access and terrain context" }
-    ],
-    "tags": ["featured", "new", "timber"],
-    "stockStatus": "quote",
-    "domain": "timber",
-    "featured": true,
-    "ctaLabel": "Review Uganda concessions",
-    "featuredLabel": "Featured",
-    "minimumPriceLabel": "Starting diligence package from $18,000",
-    "highlights": [
-      "Map-first review of available concession points",
-      "Rich marker popups with quick diligence context",
-      "Detailed site descriptions when a marker is selected",
-      "Built for investors comparing multiple concession pathways"
-    ],
-    "mapTitle": "Current concession offerings",
-    "mapDescription": "Select a marker to turn the page into a focused description of that concession site.",
-    "mapPoints": [
-      {
-        "id": "ug-concession-westnile",
-        "name": "West Nile Commercial Concession",
-        "label": "Concession",
-        "category": "Government concession",
-        "summary": "A large-format concession corridor with strong access potential and staged establishment sequencing.",
-        "image": "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=600&q=80",
-        "latitude": 2.778,
-        "longitude": 31.467,
-        "details": [
-          "Targeted for phased commercial planting with room for processing-linked expansion.",
-          "Road access and labour draw radius are attractive relative to comparable frontier blocks.",
-          "Best suited to investors wanting a flagship Uganda concession platform."
-        ],
-        "metrics": [
-          { "label": "Indicative area", "value": "12,400 ha" },
-          { "label": "Access status", "value": "Primary road within 18 km" },
-          { "label": "Starting diligence", "value": "$18,000" }
-        ],
-        "ctaLabel": "Open concession profile"
-      },
-      {
-        "id": "ug-concession-bunyoro",
-        "name": "Bunyoro Mixed-Terrain Concession",
-        "label": "Concession",
-        "category": "Government concession",
-        "summary": "Mixed-terrain opportunity with corridor planting potential and strong optionality across conventional and high-performance programmes.",
-        "image": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80",
-        "latitude": 1.495,
-        "longitude": 31.355,
-        "details": [
-          "Well suited to a blended strategy that starts conventional and upgrades select blocks into higher-yield genetics.",
-          "Landscape diversity supports differentiated land-use planning and resilience modelling."
-        ],
-        "metrics": [
-          { "label": "Indicative area", "value": "8,900 ha" },
-          { "label": "Priority use", "value": "Mixed timber platform" },
-          { "label": "Starting diligence", "value": "$21,500" }
-        ],
-        "ctaLabel": "View site diligence"
-      },
-      {
-        "id": "ug-concession-busoga",
-        "name": "Busoga Growth Corridor Concession",
-        "label": "Concession",
-        "category": "Government concession",
-        "summary": "A more market-connected concession profile aimed at investors prioritising logistics and ramp speed.",
-        "image": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=600&q=80",
-        "latitude": 0.533,
-        "longitude": 33.211,
-        "details": [
-          "Closer to consumption corridors and easier to stage around transport planning.",
-          "Useful for investors wanting faster diligence-to-deployment transitions."
-        ],
-        "metrics": [
-          { "label": "Indicative area", "value": "6,300 ha" },
-          { "label": "Logistics", "value": "High-connectivity corridor" },
-          { "label": "Starting diligence", "value": "$24,000" }
-        ],
-        "ctaLabel": "Assess corridor fit"
-      }
-    ],
-    "detailSections": [
-      {
-        "title": "How to use this page",
-        "items": [
-          "Start with the map to compare concession geography and site labels.",
-          "Click a marker or popup action to swap the right-hand panel into a full site description.",
-          "Use the metrics to shortlist the concessions that fit your mandate before moving into diligence."
-        ]
-      }
-    ]
-  },
-  {
-    "id": "kenya-concessions-005b",
-    "slug": "kenya-concessions",
-    "shop": "forests-land",
-    "name": "Kenya Concessions",
-    "subtitle": "Kenya concession pathways with a draft country map experience",
-    "kind": "asset",
-    "unitLabel": "starting diligence package",
-    "price": 22000,
-    "currency": "USD",
-    "description": "A draft Kenya concession map page where investors can compare early-stage concession pathways, open each marker, and move into a more focused country-level review.",
-    "image": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80",
-    "imageGallery": [
-      { "url": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80", "title": "Kenya concessions overview" },
-      { "url": "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=1200&q=80", "title": "Landscape corridor" },
-      { "url": "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1200&q=80", "title": "Access terrain view" }
-    ],
-    "tags": ["featured", "new", "timber"],
-    "stockStatus": "quote",
-    "domain": "timber",
-    "featured": true,
-    "ctaLabel": "Review Kenya concessions",
-    "featuredLabel": "Featured",
-    "minimumPriceLabel": "Starting diligence package from $22,000",
-    "highlights": [
-      "Country map placeholder for Kenya concession review",
-      "Marker-led comparison of investor-ready pathways",
-      "Built for later enrichment with deeper diligence layers"
-    ],
-    "mapTitle": "Current Kenya concession offerings",
-    "mapDescription": "Select a marker to switch the page into that concession profile.",
-    "mapPoints": [
-      {
-        "id": "ke-concession-laikipia",
-        "name": "Laikipia Upland Concession",
-        "label": "Concession",
-        "category": "Government concession",
-        "summary": "A higher-elevation concession corridor suited to phased timber development and resilience-oriented planning.",
-        "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
-        "latitude": 0.3602,
-        "longitude": 36.7822,
-        "details": [
-          "Positioned for phased entry with a stronger infrastructure story than more remote alternatives.",
-          "Useful for investors comparing cooler upland forestry conditions in Kenya."
-        ],
-        "metrics": [
-          { "label": "Indicative area", "value": "7,800 ha" },
-          { "label": "Access status", "value": "Primary road within 24 km" },
-          { "label": "Starting diligence", "value": "$22,000" }
-        ],
-        "ctaLabel": "Open concession profile"
-      },
-      {
-        "id": "ke-concession-kericho",
-        "name": "Kericho Growth Belt Concession",
-        "label": "Concession",
-        "category": "Government concession",
-        "summary": "A greener corridor with stronger rainfall profile and room for more conventional timber establishment.",
-        "image": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80",
-        "latitude": -0.367,
-        "longitude": 35.2831,
-        "details": [
-          "Designed as a draft placeholder for investors who want a more conservative Kenya concession story.",
-          "Useful for comparing access, rainfall, and logistics against the upland option."
-        ],
-        "metrics": [
-          { "label": "Indicative area", "value": "5,900 ha" },
-          { "label": "Priority use", "value": "Conventional timber platform" },
-          { "label": "Starting diligence", "value": "$24,500" }
-        ],
-        "ctaLabel": "View site diligence"
-      }
-    ],
-    "detailSections": [
-      {
-        "title": "How to use this page",
-        "items": [
-          "Use the country map to compare draft Kenya concession pathways.",
-          "Click a marker to switch the right-hand panel into that site profile.",
-          "This is a placeholder structure that we can enrich with deeper diligence content next."
-        ]
-      }
-    ]
-  },
-  {
-    "id": "tanzania-concessions-006b",
-    "slug": "tanzania-concessions",
-    "shop": "forests-land",
-    "name": "Tanzania Concessions",
-    "subtitle": "Tanzania concession pathways with a draft country map experience",
-    "kind": "asset",
-    "unitLabel": "starting diligence package",
-    "price": 23500,
-    "currency": "USD",
-    "description": "A draft Tanzania concession map page for comparing larger-format concession pathways before we layer in fuller diligence and market context.",
-    "image": "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=1200&q=80",
-    "imageGallery": [
-      { "url": "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=1200&q=80", "title": "Tanzania concessions overview" },
-      { "url": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80", "title": "Field corridor context" },
-      { "url": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80", "title": "Terrain access" }
-    ],
-    "tags": ["featured", "new", "timber"],
-    "stockStatus": "quote",
-    "domain": "timber",
-    "featured": true,
-    "ctaLabel": "Review Tanzania concessions",
-    "featuredLabel": "Featured",
-    "minimumPriceLabel": "Starting diligence package from $23,500",
-    "highlights": [
-      "Country map placeholder for Tanzania concession review",
-      "Marker-led comparison of larger concession corridors",
-      "Structured to grow into a richer Tanzania diligence page later"
-    ],
-    "mapTitle": "Current Tanzania concession offerings",
-    "mapDescription": "Select a marker to switch the page into that concession profile.",
-    "mapPoints": [
-      {
-        "id": "tz-concession-iringa",
-        "name": "Iringa Highland Concession",
-        "label": "Concession",
-        "category": "Government concession",
-        "summary": "A highland concession corridor designed as a first draft for larger-format commercial timber comparison.",
-        "image": "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=600&q=80",
-        "latitude": -7.7689,
-        "longitude": 35.6996,
-        "details": [
-          "Placeholder corridor with a strong fit for future timber and processing-linked analysis.",
-          "Useful as a Tanzania benchmark against other East African concession structures."
-        ],
-        "metrics": [
-          { "label": "Indicative area", "value": "14,200 ha" },
-          { "label": "Access status", "value": "Regional corridor access" },
-          { "label": "Starting diligence", "value": "$23,500" }
-        ],
-        "ctaLabel": "Open concession profile"
-      },
-      {
-        "id": "tz-concession-morogoro",
-        "name": "Morogoro Expansion Concession",
-        "label": "Concession",
-        "category": "Government concession",
-        "summary": "A more expansion-led pathway suited to investors comparing logistics and scale-up sequencing in Tanzania.",
-        "image": "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=600&q=80",
-        "latitude": -6.8235,
-        "longitude": 37.6613,
-        "details": [
-          "Useful placeholder for corridor-led review with easier commercial narrative around staged expansion.",
-          "Designed for later enrichment with deeper land, access, and market layers."
-        ],
-        "metrics": [
-          { "label": "Indicative area", "value": "9,600 ha" },
-          { "label": "Priority use", "value": "Expansion platform" },
-          { "label": "Starting diligence", "value": "$26,000" }
-        ],
-        "ctaLabel": "View site diligence"
-      }
-    ],
-    "detailSections": [
-      {
-        "title": "How to use this page",
-        "items": [
-          "Use the country map to compare draft Tanzania concession pathways.",
-          "Click a marker to switch the right-hand panel into that site profile.",
-          "This is a placeholder structure that we can enrich with deeper diligence content next."
-        ]
-      }
-    ]
-  },
-  {
-    "id": "land-listings-005",
-    "slug": "land-listings",
-    "shop": "forests-land",
-    "name": "Land Listings",
-    "subtitle": "Current land offerings with map-linked site descriptions and minimum starting prices",
+    "name": "Masindi Expansion Parcel",
+    "subtitle": "Uganda land listing",
     "kind": "asset",
     "unitLabel": "minimum starting price",
     "price": 9400,
     "currency": "USD",
-    "description": "Browse current land offerings on a live map, compare minimum starting prices, and click each site to turn the product page into a detailed land-offering description.",
+    "description": "A compact commercial parcel in western Uganda with simple access, open terrain, and room for phased core forestry establishment.",
     "image": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
     "imageGallery": [
-      { "url": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80", "title": "Land listing overview" },
-      { "url": "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1200&q=80", "title": "Open planting landscape" },
-      { "url": "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80", "title": "Field preparation context" }
+      {
+        "url": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
+        "title": "Masindi parcel overview"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1200&q=80",
+        "title": "Open planting terrain"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80",
+        "title": "Field preparation context"
+      }
     ],
-    "tags": ["land", "featured", "pipeline"],
+    "tags": [
+      "land",
+      "uganda",
+      "featured",
+      "timber",
+      "dummy-land-generated"
+    ],
     "stockStatus": "quote",
     "domain": "timber",
     "featured": true,
-    "ctaLabel": "Explore land listings",
-    "featuredLabel": "Map-based listings",
-    "minimumPriceLabel": "Minimum starting prices from $9,400",
+    "ctaLabel": "Review parcel",
+    "featuredLabel": "Uganda land",
+    "minimumPriceLabel": "Minimum starting price from $9,400",
     "highlights": [
-      "Shows minimum starting price before diligence",
-      "Marker selection updates the page into the chosen site description",
-      "Useful for investors comparing current entry points across several listings"
+      "420 ha with room for phased block design",
+      "Suitable for core forests or mixed-strategy establishment",
+      "Simple initial access and site preparation story"
     ],
-    "mapTitle": "Current land offerings",
-    "mapDescription": "Click any site marker to switch the page focus to that land offering.",
+    "mapTitle": "Masindi land location",
+    "mapDescription": "Review the active land point and site context for this listing.",
     "mapPoints": [
       {
-        "id": "land-masindi",
+        "id": "land-masindi-point",
         "name": "Masindi Expansion Parcel",
         "label": "Land",
         "category": "Commercial parcel",
@@ -611,63 +391,467 @@
         "latitude": 1.674,
         "longitude": 31.724,
         "details": [
-          "Open terrain with room for phased block design and internal access planning.",
-          "Suited to core forestry or mixed-strategy establishment."
+          "Open terrain supports phased block design.",
+          "Useful for core forestry or mixed-strategy establishment."
         ],
         "metrics": [
-          { "label": "Listing size", "value": "420 ha" },
-          { "label": "Minimum start", "value": "$9,400" },
-          { "label": "Use case", "value": "Core forests" }
+          {
+            "label": "Listing size",
+            "value": "420 ha"
+          },
+          {
+            "label": "Minimum start",
+            "value": "$9,400"
+          },
+          {
+            "label": "Country",
+            "value": "Uganda"
+          }
         ],
         "ctaLabel": "Open parcel description"
-      },
-      {
-        "id": "land-mubende",
-        "name": "Mubende Ridge Site",
-        "label": "Land",
-        "category": "Managed entry site",
-        "summary": "A ridgeline site with good visibility, suitable for performance-oriented planting and disciplined water planning.",
-        "image": "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=600&q=80",
-        "latitude": 0.559,
-        "longitude": 31.394,
-        "details": [
-          "Requires tighter establishment sequencing but offers stronger positioning for premium forestry programmes.",
-          "Good candidate for high-performance forest structures."
-        ],
-        "metrics": [
-          { "label": "Listing size", "value": "610 ha" },
-          { "label": "Minimum start", "value": "$13,800" },
-          { "label": "Use case", "value": "High-performance" }
-        ],
-        "ctaLabel": "Review ridge site"
-      },
-      {
-        "id": "land-moroto",
-        "name": "Moroto Frontier Plot",
-        "label": "Land",
-        "category": "Dryland opportunity",
-        "summary": "A frontier dryland plot positioned for resilient forestry experiments and climate-focused investment theses.",
-        "image": "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=600&q=80",
-        "latitude": 2.539,
-        "longitude": 34.651,
-        "details": [
-          "Higher execution complexity with strong relevance for frontier and dryland systems.",
-          "Appeals to capital looking for innovation exposure rather than pure convention."
-        ],
-        "metrics": [
-          { "label": "Listing size", "value": "1,150 ha" },
-          { "label": "Minimum start", "value": "$17,250" },
-          { "label": "Use case", "value": "Dryland & frontier" }
-        ],
-        "ctaLabel": "Inspect frontier plot"
       }
     ],
     "detailSections": [
       {
         "title": "Listing workflow",
         "items": [
-          "Use minimum starting price as the first screen, then click through each marker for site-specific detail.",
-          "The selected site panel is the main product description state for the active land offering."
+          "Use the listing price as the first screen before diligence.",
+          "Shortlist this site if core forest establishment is the target use case."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "land-uganda-mubende-002",
+    "slug": "mubende-ridge-site",
+    "shop": "forests-land",
+    "name": "Mubende Ridge Site",
+    "subtitle": "Uganda land listing",
+    "kind": "asset",
+    "unitLabel": "minimum starting price",
+    "price": 13800,
+    "currency": "USD",
+    "description": "A ridgeline Uganda site with stronger positioning for high-performance planting, disciplined water planning, and managed establishment.",
+    "image": "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1200&q=80",
+    "imageGallery": [
+      {
+        "url": "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1200&q=80",
+        "title": "Mubende ridge overview"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80",
+        "title": "Managed plantation analogue"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=1200&q=80",
+        "title": "Ridge access context"
+      }
+    ],
+    "tags": [
+      "land",
+      "uganda",
+      "high-performance",
+      "timber",
+      "dummy-land-generated"
+    ],
+    "stockStatus": "quote",
+    "domain": "timber",
+    "featured": false,
+    "ctaLabel": "Review ridge site",
+    "featuredLabel": "Performance site",
+    "minimumPriceLabel": "Minimum starting price from $13,800",
+    "highlights": [
+      "610 ha with good visibility and ridge structure",
+      "Strong fit for high-performance forest planning",
+      "Benefits from disciplined water and access design"
+    ],
+    "mapTitle": "Mubende land location",
+    "mapDescription": "Review the active ridge site and its diligence context.",
+    "mapPoints": [
+      {
+        "id": "land-mubende-point",
+        "name": "Mubende Ridge Site",
+        "label": "Land",
+        "category": "Managed entry site",
+        "summary": "A ridgeline site suitable for performance-oriented planting and disciplined water planning.",
+        "image": "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=600&q=80",
+        "latitude": 0.559,
+        "longitude": 31.394,
+        "details": [
+          "Requires tighter establishment sequencing.",
+          "Good candidate for high-performance forest structures."
+        ],
+        "metrics": [
+          {
+            "label": "Listing size",
+            "value": "610 ha"
+          },
+          {
+            "label": "Minimum start",
+            "value": "$13,800"
+          },
+          {
+            "label": "Country",
+            "value": "Uganda"
+          }
+        ],
+        "ctaLabel": "Review ridge site"
+      }
+    ],
+    "detailSections": [
+      {
+        "title": "Listing workflow",
+        "items": [
+          "Best reviewed alongside water and road-access planning.",
+          "Useful for investors comparing higher-management land profiles."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "land-kenya-laikipia-003",
+    "slug": "laikipia-timber-holding",
+    "shop": "forests-land",
+    "name": "Laikipia Timber Holding",
+    "subtitle": "Kenya land listing",
+    "kind": "asset",
+    "unitLabel": "minimum starting price",
+    "price": 16400,
+    "currency": "USD",
+    "description": "A Kenyan upland land holding suited to pine, cypress, and mixed timber systems where cooler conditions support a longer rotation thesis.",
+    "image": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80",
+    "imageGallery": [
+      {
+        "url": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80",
+        "title": "Laikipia holding overview"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=1200&q=80",
+        "title": "Upland landscape"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
+        "title": "Diligence mapping context"
+      }
+    ],
+    "tags": [
+      "land",
+      "kenya",
+      "timber",
+      "featured",
+      "dummy-land-generated"
+    ],
+    "stockStatus": "quote",
+    "domain": "timber",
+    "featured": true,
+    "ctaLabel": "Review holding",
+    "featuredLabel": "Kenya land",
+    "minimumPriceLabel": "Minimum starting price from $16,400",
+    "highlights": [
+      "760 ha upland site with mixed timber optionality",
+      "Cooler conditions support longer rotation planning",
+      "Useful for cypress, pine, and resilient timber comparisons"
+    ],
+    "mapTitle": "Laikipia land location",
+    "mapDescription": "Review the active Kenyan upland land point.",
+    "mapPoints": [
+      {
+        "id": "land-laikipia-point",
+        "name": "Laikipia Timber Holding",
+        "label": "Land",
+        "category": "Upland timber parcel",
+        "summary": "A higher-elevation land holding suited to mixed timber development.",
+        "image": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=600&q=80",
+        "latitude": 0.3602,
+        "longitude": 36.7822,
+        "details": [
+          "Strong fit for mixed timber establishment.",
+          "Useful for longer-rotation forestry comparisons."
+        ],
+        "metrics": [
+          {
+            "label": "Listing size",
+            "value": "760 ha"
+          },
+          {
+            "label": "Minimum start",
+            "value": "$16,400"
+          },
+          {
+            "label": "Country",
+            "value": "Kenya"
+          }
+        ],
+        "ctaLabel": "Open holding profile"
+      }
+    ],
+    "detailSections": [
+      {
+        "title": "Listing workflow",
+        "items": [
+          "Review with site-species matching before committing to planting design.",
+          "Best suited to upland timber planning and institutional diligence."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "land-kenya-kitui-004",
+    "slug": "kitui-dryland-parcel",
+    "shop": "forests-land",
+    "name": "Kitui Dryland Parcel",
+    "subtitle": "Kenya land listing",
+    "kind": "asset",
+    "unitLabel": "minimum starting price",
+    "price": 11200,
+    "currency": "USD",
+    "description": "A dryland Kenya parcel positioned for frontier forestry, agroforestry trials, and water-aware establishment planning.",
+    "image": "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=1200&q=80",
+    "imageGallery": [
+      {
+        "url": "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=1200&q=80",
+        "title": "Kitui dryland parcel"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+        "title": "Frontier terrain"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80",
+        "title": "Dryland establishment context"
+      }
+    ],
+    "tags": [
+      "land",
+      "kenya",
+      "dryland",
+      "restoration",
+      "dummy-land-generated"
+    ],
+    "stockStatus": "quote",
+    "domain": "restoration",
+    "featured": false,
+    "ctaLabel": "Inspect parcel",
+    "featuredLabel": "Dryland parcel",
+    "minimumPriceLabel": "Minimum starting price from $11,200",
+    "highlights": [
+      "980 ha dryland parcel with frontier upside",
+      "Relevant for agroforestry and resilient species trials",
+      "Requires careful water harvesting and grazing-transition planning"
+    ],
+    "mapTitle": "Kitui land location",
+    "mapDescription": "Review the active dryland parcel and its site context.",
+    "mapPoints": [
+      {
+        "id": "land-kitui-point",
+        "name": "Kitui Dryland Parcel",
+        "label": "Land",
+        "category": "Dryland opportunity",
+        "summary": "A frontier dryland parcel for resilient forestry and agroforestry trials.",
+        "image": "https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=600&q=80",
+        "latitude": -1.367,
+        "longitude": 38.01,
+        "details": [
+          "Best reviewed with water-harvesting assumptions.",
+          "Suitable for dryland and frontier forestry experiments."
+        ],
+        "metrics": [
+          {
+            "label": "Listing size",
+            "value": "980 ha"
+          },
+          {
+            "label": "Minimum start",
+            "value": "$11,200"
+          },
+          {
+            "label": "Country",
+            "value": "Kenya"
+          }
+        ],
+        "ctaLabel": "Inspect parcel"
+      }
+    ],
+    "detailSections": [
+      {
+        "title": "Listing workflow",
+        "items": [
+          "Pair with dryland establishment and management services.",
+          "Shortlist if innovation exposure is part of the mandate."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "land-tanzania-iringa-005",
+    "slug": "iringa-highland-block",
+    "shop": "forests-land",
+    "name": "Iringa Highland Block",
+    "subtitle": "Tanzania land listing",
+    "kind": "asset",
+    "unitLabel": "minimum starting price",
+    "price": 17800,
+    "currency": "USD",
+    "description": "A larger Tanzanian highland block suitable for staged commercial forestry, processor-linked planning, and structured access diligence.",
+    "image": "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1200&q=80",
+    "imageGallery": [
+      {
+        "url": "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1200&q=80",
+        "title": "Iringa highland block"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=1200&q=80",
+        "title": "Highland field context"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=80",
+        "title": "Commercial forest analogue"
+      }
+    ],
+    "tags": [
+      "land",
+      "tanzania",
+      "timber",
+      "featured",
+      "dummy-land-generated"
+    ],
+    "stockStatus": "quote",
+    "domain": "timber",
+    "featured": true,
+    "ctaLabel": "Review block",
+    "featuredLabel": "Tanzania land",
+    "minimumPriceLabel": "Minimum starting price from $17,800",
+    "highlights": [
+      "1,240 ha highland block with staged establishment potential",
+      "Suitable for commercial timber development",
+      "Useful for processor-linked planning and access review"
+    ],
+    "mapTitle": "Iringa land location",
+    "mapDescription": "Review the active Tanzanian highland land point.",
+    "mapPoints": [
+      {
+        "id": "land-iringa-point",
+        "name": "Iringa Highland Block",
+        "label": "Land",
+        "category": "Highland timber block",
+        "summary": "A larger-format block for staged commercial forestry and processing-linked planning.",
+        "image": "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=600&q=80",
+        "latitude": -7.7689,
+        "longitude": 35.6996,
+        "details": [
+          "Strong fit for staged commercial timber development.",
+          "Useful for processor-linked access and logistics diligence."
+        ],
+        "metrics": [
+          {
+            "label": "Listing size",
+            "value": "1,240 ha"
+          },
+          {
+            "label": "Minimum start",
+            "value": "$17,800"
+          },
+          {
+            "label": "Country",
+            "value": "Tanzania"
+          }
+        ],
+        "ctaLabel": "Review block"
+      }
+    ],
+    "detailSections": [
+      {
+        "title": "Listing workflow",
+        "items": [
+          "Review logistics alongside market-map processor context.",
+          "Best suited to capital seeking larger staged commercial forestry exposure."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "land-tanzania-morogoro-006",
+    "slug": "morogoro-corridor-parcel",
+    "shop": "forests-land",
+    "name": "Morogoro Corridor Parcel",
+    "subtitle": "Tanzania land listing",
+    "kind": "asset",
+    "unitLabel": "minimum starting price",
+    "price": 15100,
+    "currency": "USD",
+    "description": "A corridor-linked Tanzanian parcel with practical access logic, moderate scale, and room for establishment plus services bundling.",
+    "image": "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80",
+    "imageGallery": [
+      {
+        "url": "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80",
+        "title": "Morogoro corridor parcel"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80",
+        "title": "Open establishment terrain"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1200&q=80",
+        "title": "Corridor access context"
+      }
+    ],
+    "tags": [
+      "land",
+      "tanzania",
+      "pipeline",
+      "timber",
+      "dummy-land-generated"
+    ],
+    "stockStatus": "quote",
+    "domain": "timber",
+    "featured": false,
+    "ctaLabel": "Review parcel",
+    "featuredLabel": "Corridor parcel",
+    "minimumPriceLabel": "Minimum starting price from $15,100",
+    "highlights": [
+      "840 ha corridor-linked parcel",
+      "Practical access story for establishment and management services",
+      "Useful for bundled land plus field operations planning"
+    ],
+    "mapTitle": "Morogoro land location",
+    "mapDescription": "Review the active corridor parcel and site context.",
+    "mapPoints": [
+      {
+        "id": "land-morogoro-point",
+        "name": "Morogoro Corridor Parcel",
+        "label": "Land",
+        "category": "Corridor parcel",
+        "summary": "A corridor-linked parcel with practical access logic and moderate scale.",
+        "image": "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=600&q=80",
+        "latitude": -6.8235,
+        "longitude": 37.6613,
+        "details": [
+          "Good fit for land plus field-operations bundling.",
+          "Moderate scale keeps initial diligence manageable."
+        ],
+        "metrics": [
+          {
+            "label": "Listing size",
+            "value": "840 ha"
+          },
+          {
+            "label": "Minimum start",
+            "value": "$15,100"
+          },
+          {
+            "label": "Country",
+            "value": "Tanzania"
+          }
+        ],
+        "ctaLabel": "Review parcel"
+      }
+    ],
+    "detailSections": [
+      {
+        "title": "Listing workflow",
+        "items": [
+          "Review alongside establishment and maintenance services.",
+          "Useful for investors wanting a more practical corridor-led entry."
         ]
       }
     ]

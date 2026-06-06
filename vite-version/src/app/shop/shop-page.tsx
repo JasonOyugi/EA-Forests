@@ -1,33 +1,10 @@
-import * as React from "react"
 import { Navigate, useParams } from "react-router-dom"
 import { BaseLayout } from "@/components/layouts/base-layout"
-import { tweakcnThemes } from "@/config/theme-data"
-import { useThemeManager } from "@/hooks/use-theme-manager"
 import { shopPageComponents } from "./components/shops"
 import { isValidShopSlug, shopDefinitions, shopInventoryMap } from "./config/shops"
 
 export default function ShopPage() {
   const { shopSlug } = useParams()
-  const { applyTweakcnTheme, isDarkMode } = useThemeManager()
-  const lastAppliedNatureThemeRef = React.useRef<string | null>(null)
-  const isNatureThemeShop =
-    shopSlug === "seedlings" ||
-    shopSlug === "forests-land" ||
-    shopSlug === "forestry-services" ||
-    shopSlug === "roundwood"
-
-  React.useInsertionEffect(() => {
-    if (!isNatureThemeShop || !shopSlug) return
-
-    const themeKey = `${shopSlug}-${isDarkMode ? "dark" : "light"}`
-    if (lastAppliedNatureThemeRef.current === themeKey) return
-
-    const natureTheme = tweakcnThemes.find((theme) => theme.value === "nature")?.preset
-    if (!natureTheme) return
-
-    applyTweakcnTheme(natureTheme, isDarkMode)
-    lastAppliedNatureThemeRef.current = themeKey
-  }, [applyTweakcnTheme, isDarkMode, isNatureThemeShop, shopSlug])
 
   if (!shopSlug) {
     return <Navigate to="/shop/seedlings" replace />

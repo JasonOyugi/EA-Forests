@@ -1,38 +1,38 @@
 [
   {
     "id": 1,
-    "name": "Fast Performance",
-    "description": "Lightning-fast response times and optimized performance for all your business needs.",
+    "name": "Land Intelligence",
+    "description": "Site-fit maps, land analytics, and forestry models tailored for East African landscapes.",
     "icon": "Rocket"
   },
   {
     "id": 2,
-    "name": "Enterprise Security",
-    "description": "Bank-level security with end-to-end encryption and advanced threat protection.",
+    "name": "Verified Supply Chain",
+    "description": "Access vetted nurseries, contractors, and buyers across timber, carbon, and restoration value chains.",
     "icon": "Shield"
   },
   {
     "id": 3,
-    "name": "Instant Setup",
-    "description": "Get up and running in minutes with our streamlined onboarding process.",
+    "name": "Project Monitoring",
+    "description": "Track planting progress, growth projections, and field performance in one dashboard.",
     "icon": "Zap"
   },
   {
     "id": 4,
-    "name": "Team Collaboration",
-    "description": "Seamless collaboration tools to keep your team connected and productive.",
+    "name": "Market Access",
+    "description": "Connect to timber and carbon markets with structured pricing, demand signals, and buyer engagement.",
     "icon": "Users"
   },
   {
     "id": 5,
-    "name": "24/7 Support",
-    "description": "Round-the-clock expert support whenever you need help or have questions.",
+    "name": "Clear Economics",
+    "description": "Transparent return assumptions, cost breakdowns, and financial visibility for every forestry asset.",
     "icon": "Headphones"
   },
   {
     "id": 6,
-    "name": "Real-time Analytics",
-    "description": "Monitor your business performance with real-time insights and detailed analytics.",
+    "name": "Service Coordination",
+    "description": "Bundle land diligence, establishment, maintenance, and harvest execution from a single platform.",
     "icon": "Clock"
   }
 ]

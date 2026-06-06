@@ -159,6 +159,38 @@ export const agreementFamilyOptions: AgreementFamily[] = [
   "soil_water",
 ]
 
+export type AgreementFamilyCategory =
+  | "temperature"
+  | "water"
+  | "soil"
+  | "radiation"
+  | "wind"
+
+export const agreementFamilyCategoryOptions: AgreementFamilyCategory[] = [
+  "temperature",
+  "water",
+  "soil",
+  "radiation",
+  "wind",
+]
+
+export const agreementFamilyCategoryMap: Record<
+  AgreementFamilyCategory,
+  AgreementFamily[]
+> = {
+  temperature: ["mean_temperature", "minimum_temperature", "maximum_temperature"],
+  water: [
+    "precipitation",
+    "potential_evapotranspiration",
+    "actual_evapotranspiration",
+    "water_deficit",
+    "vpd",
+  ],
+  soil: ["soil_water"],
+  radiation: ["radiation"],
+  wind: ["wind"],
+}
+
 export const defaultSiteClassificationForm: SiteClassificationForm = {
   startYear: 2015,
   endYear: 2024,

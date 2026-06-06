@@ -1,10 +1,8 @@
 [
-  { "name": "All", "count": 46 },
-  { "name": "General", "count": 8 },
-  { "name": "Account", "count": 6 },
-  { "name": "Billing", "count": 8 },
-  { "name": "Technical", "count": 9 },
-  { "name": "Privacy", "count": 5 },
-  { "name": "Security", "count": 4 },
-  { "name": "Support", "count": 6 }
+  { "name": "All", "count": 12 },
+  { "name": "General", "count": 3 },
+  { "name": "Platform", "count": 4 },
+  { "name": "Billing", "count": 3 },
+  { "name": "Account", "count": 1 },
+  { "name": "Support", "count": 1 }
 ]

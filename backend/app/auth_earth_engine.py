@@ -1,10 +1,11 @@
-import os
-
 import ee
+
+from app.earth_engine import configure_earth_engine_network, earth_engine_project
 
 
 def main() -> None:
-    project = os.getenv("EARTH_ENGINE_PROJECT") or os.getenv("GOOGLE_CLOUD_PROJECT")
+    configure_earth_engine_network()
+    project = earth_engine_project()
     ee.Authenticate()
     if project:
         ee.Initialize(project=project)

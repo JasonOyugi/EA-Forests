@@ -49,7 +49,7 @@ export default function AppearanceSettings() {
         <div>
           <h1 className="text-3xl font-bold">Appearance</h1>
           <p className="text-muted-foreground">
-            Customize the appearance of the application.
+            Adjust colors, layout, and typography to suit your workflow.
           </p>
         </div>
 

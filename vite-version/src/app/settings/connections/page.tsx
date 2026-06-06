@@ -24,7 +24,7 @@ export default function ConnectionSettings() {
         <div>
           <h1 className="text-3xl font-bold">Connections</h1>
           <p className="text-muted-foreground">
-            Connect your account with third-party services and integrations.
+            Link services and integrations to keep your account connected.
           </p>
         </div>
 
@@ -33,7 +33,7 @@ export default function ConnectionSettings() {
             <CardHeader>
               <CardTitle>Connected Accounts</CardTitle>
               <CardDescription>
-                Display content from your connected accounts on your site
+                Manage which services are connected to your account.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -105,7 +105,7 @@ export default function ConnectionSettings() {
             <CardHeader>
               <CardTitle>Social Accounts</CardTitle>
               <CardDescription>
-                Display content from your connected accounts on your site
+                Connect your social accounts to share updates and activity.
               </CardDescription>
             </CardHeader>
             <CardContent>

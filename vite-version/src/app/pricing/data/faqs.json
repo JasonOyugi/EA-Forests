@@ -1,32 +1,38 @@
 [
   {
     "id": 1,
-    "question": "Can I change my plan anytime?",
-    "answer": "Yes, you can upgrade or downgrade your plan at any time. Changes will be reflected in your next billing cycle, and you'll be charged or credited accordingly."
+    "question": "Can I switch plans as my forestry portfolio grows?",
+    "answer": "Yes, you can move between plans at any time. Upgrades take effect immediately, while downgrades apply from the next billing cycle so your ongoing forest projects stay supported.",
+    "category": "Pricing"
   },
   {
     "id": 2,
-    "question": "Is there a free trial available?",
-    "answer": "Yes, all plans come with a 14-day free trial. No credit card is required to start your trial, and you can explore all features during this period."
+    "question": "Is there a trial or pilot period?",
+    "answer": "Yes, we offer a 14-day trial and pilot support to evaluate the platform for your land, service coordination, and market access needs.",
+    "category": "Pricing"
   },
   {
     "id": 3,
-    "question": "What payment methods do you accept?",
-    "answer": "We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and bank transfers for enterprise customers. All payments are processed securely."
+    "question": "How are platform and service fees structured?",
+    "answer": "Subscription fees cover platform access, analytics, and basic coordination. Specialized forestry services and transaction facilitation may incur additional fees depending on the project.",
+    "category": "Pricing"
   },
   {
     "id": 4,
-    "question": "Do you offer discounts for annual plans?",
-    "answer": "Yes, save 20% when you choose annual billing on any plan. You can switch to annual billing from your account settings at any time."
+    "question": "Can I get dedicated support for complex forest portfolios?",
+    "answer": "Yes, the Portfolio Growth plan includes priority support, custom advisory, and tailored reporting for higher-value forest assets.",
+    "category": "Support"
   },
   {
     "id": 5,
-    "question": "What happens if I exceed my plan limits?",
-    "answer": "If you exceed your plan limits, we'll notify you in advance. You can either upgrade your plan or purchase additional resources as needed."
+    "question": "Does the platform help with timber and carbon market readiness?",
+    "answer": "Yes, platform tools surface offtake channels, pricing context, and buyer-ready documentation so you can move from site planning to sale faster.",
+    "category": "Platform"
   },
   {
     "id": 6,
-    "question": "Can I cancel my subscription anytime?",
-    "answer": "Yes, you can cancel your subscription at any time from your account settings. You'll continue to have access to all features until the end of your current billing period."
+    "question": "What if a project changes operators mid-cycle?",
+    "answer": "We support handovers by preserving project history, roles, and communication records, so a new operator can take on the project without losing critical context.",
+    "category": "Support"
   }
 ]

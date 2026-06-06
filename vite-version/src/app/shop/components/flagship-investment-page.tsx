@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, type CSSProperties } from "react"
+import { useEffect, useState, type CSSProperties } from "react"
+import useEmblaCarousel from "embla-carousel-react"
 import {
   ArrowLeft,
   ArrowRight,
@@ -9,6 +10,8 @@ import {
   BookOpen,
   CheckCircle2,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Coins,
   Handshake,
   LineChart,
@@ -28,8 +31,11 @@ import type { ShopItem } from "@/app/shop/types"
 import { BentoTilt } from "@/components/ui/bento-tilt"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
 import { cn } from "@/lib/utils"
+import { useEmblaWheelNavigation } from "@/app/landing/components/use-embla-wheel-navigation"
 
 interface FlagshipInvestmentPageProps {
   item: ShopItem
@@ -76,6 +82,13 @@ type ResourceLink = {
   icon: LucideIcon
 }
 
+type FlagshipTestimonial = {
+  name: string
+  role: string
+  image: string
+  quote: string
+}
+
 type FlagshipConfig = {
   eyebrow: string
   headline: string
@@ -99,12 +112,112 @@ type FlagshipConfig = {
   managedStages: ManagedStage[]
   productivityCards: ProductivityCard[]
   resourceLinks: ResourceLink[]
+  testimonials: FlagshipTestimonial[]
 }
 
 const resourceLinks: ResourceLink[] = [
   { label: "Analysis", href: "#", icon: BarChart3 },
   { label: "Further reading", href: "#", icon: BookOpen },
   { label: "Blog + videos", href: "#", icon: Video },
+]
+
+const coreForestTestimonials: FlagshipTestimonial[] = [
+  {
+    name: "Lydia Okello",
+    role: "Family Office Principal, Uganda",
+    image: "https://notion-avatars.netlify.app/api/avatar?preset=female-1",
+    quote: "Core Forests gave us the discipline we needed: clear land checks, practical establishment budgets, and a conservative yield case we could defend.",
+  },
+  {
+    name: "Peter Mwangi",
+    role: "Commercial Landowner, Kenya",
+    image: "https://notion-avatars.netlify.app/api/avatar?preset=male-1",
+    quote: "The value was in the sequencing. We could see what happened before planting, during establishment, and through the first maintenance cycle.",
+  },
+  {
+    name: "Hannah Reed",
+    role: "Forestry Analyst, UK",
+    image: "https://notion-avatars.netlify.app/api/avatar?preset=female-2",
+    quote: "It reads like a forestry product built for investment committees, with enough biological caution to make the return assumptions credible.",
+  },
+  {
+    name: "Samuel Nyerere",
+    role: "Operations Advisor, Tanzania",
+    image: "https://notion-avatars.netlify.app/api/avatar?preset=male-2",
+    quote: "The strongest part is the operating cadence. Contractors, seedling quality, and survival monitoring are not treated as afterthoughts.",
+  },
+  {
+    name: "Miriam Kato",
+    role: "Portfolio Manager, Uganda",
+    image: "https://notion-avatars.netlify.app/api/avatar?preset=female-3",
+    quote: "For first exposure to commercial forestry, this is the right level of ambition. It is measured, investable, and refreshingly concrete.",
+  },
+]
+
+const highPerformanceTestimonials: FlagshipTestimonial[] = [
+  {
+    name: "Dr. Victor Mensah",
+    role: "Forest Genetics Specialist, Ghana",
+    image: "https://notion-avatars.netlify.app/api/avatar?preset=male-3",
+    quote: "The genetics-led approach is exactly where higher forestry returns begin. Site matching and nursery discipline make the upside more credible.",
+  },
+  {
+    name: "Asha Njau",
+    role: "Impact Investment Lead, Tanzania",
+    image: "https://notion-avatars.netlify.app/api/avatar?preset=female-4",
+    quote: "This flagship turns technical forestry into a product investors can actually review. The growth thesis is clear without hiding execution risk.",
+  },
+  {
+    name: "Elena Fischer",
+    role: "Timber Fund Analyst, Germany",
+    image: "https://notion-avatars.netlify.app/api/avatar?preset=female-5",
+    quote: "The premium case is persuasive because it connects genetics, field oversight, and market intelligence instead of treating them separately.",
+  },
+  {
+    name: "Brian Otieno",
+    role: "Plantation Operations Director, Kenya",
+    image: "https://notion-avatars.netlify.app/api/avatar?preset=male-4",
+    quote: "High performance forestry only works when the field teams are precise. This structure puts that precision into the product design.",
+  },
+  {
+    name: "Nuru Hamisi",
+    role: "Private Markets Advisor, Tanzania",
+    image: "https://notion-avatars.netlify.app/api/avatar?preset=female-6",
+    quote: "For capital looking beyond standard rotations, the monitoring and genotype story makes the opportunity feel sharper and more accountable.",
+  },
+]
+
+const drylandFrontierTestimonials: FlagshipTestimonial[] = [
+  {
+    name: "Fatima Abdalla",
+    role: "Restoration Finance Partner, Kenya",
+    image: "https://notion-avatars.netlify.app/api/avatar?preset=female-7",
+    quote: "Dryland forestry needs humility and technical care. This flagship frames the opportunity with the climate risk and the upside in view.",
+  },
+  {
+    name: "Joseph Kariuki",
+    role: "Dryland Landowner, Kenya",
+    image: "https://notion-avatars.netlify.app/api/avatar?preset=male-5",
+    quote: "The plan finally makes marginal land feel investable. It starts with survival, water stress, and species fit before talking about returns.",
+  },
+  {
+    name: "Clara Bennett",
+    role: "Nature Based Assets Researcher, UK",
+    image: "https://notion-avatars.netlify.app/api/avatar?preset=female-8",
+    quote: "The frontier thesis is exciting because it is not generic restoration. It is a commercial pathway built around harsher site realities.",
+  },
+  {
+    name: "Elias Mtei",
+    role: "Agroforestry Specialist, Tanzania",
+    image: "https://notion-avatars.netlify.app/api/avatar?preset=male-6",
+    quote: "Pairing resilient hardwood systems with adaptive management is the right instinct. The monitoring layer gives the model real credibility.",
+  },
+  {
+    name: "Norah Wambui",
+    role: "Climate Investor, Kenya",
+    image: "https://notion-avatars.netlify.app/api/avatar?preset=female-9",
+    quote: "This is the kind of dryland thesis we want to see: brave, but grounded in operations, climate checks, and practical downside controls.",
+  },
 ]
 
 const productivityDisclaimer =
@@ -120,7 +233,7 @@ function createLocateSiteStep(image: string): FlagshipStep {
     description,
     longDescription: description,
     cta1: { label: "Site-species matching tool", href: "/shop/seedlings" },
-    cta2: { label: "Find verified land", href: "/shop/forests-land/land-listings" },
+    cta2: { label: "Find verified land", href: "/shop/forests-land#products-section" },
     image,
     icon: MapPinned,
   }
@@ -259,6 +372,7 @@ const flagshipConfigs: Record<string, FlagshipConfig> = {
       ]
     ),
     resourceLinks,
+    testimonials: coreForestTestimonials,
   },
   "high-performance-forests": {
     eyebrow: "High-performance strategy",
@@ -344,6 +458,7 @@ const flagshipConfigs: Record<string, FlagshipConfig> = {
       ]
     ),
     resourceLinks,
+    testimonials: highPerformanceTestimonials,
   },
   "dryland-frontier-forests": {
     eyebrow: "Frontier strategy",
@@ -429,7 +544,236 @@ const flagshipConfigs: Record<string, FlagshipConfig> = {
       ]
     ),
     resourceLinks,
+    testimonials: drylandFrontierTestimonials,
   },
+}
+
+function getInitials(name: string) {
+  return name
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+}
+
+function FlagshipMarketsMapAd() {
+  const marketSignals = [
+    { label: "Carbon", value: "Buyer demand" },
+    { label: "Roundwood", value: "Processor lanes" },
+    { label: "Wood chips", value: "Export pull" },
+  ]
+
+  return (
+    <section className="px-4 pt-12 sm:px-6 md:px-8 md:pt-16">
+      <div className="mx-auto max-w-7xl">
+        <ScrollReveal distance={24}>
+          <BentoTilt maxTilt={4}>
+            <Card className="group relative overflow-hidden border-primary/15 bg-card/95 p-0 shadow-none">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,hsl(var(--primary)/0.28),transparent_28%),radial-gradient(circle_at_80%_18%,rgba(14,165,233,0.18),transparent_26%),linear-gradient(135deg,hsl(var(--card))_0%,hsl(var(--primary)/0.08)_48%,hsl(var(--card))_100%)]" />
+              <div className="absolute inset-0 opacity-[0.22] [background-image:linear-gradient(hsl(var(--primary)/0.22)_1px,transparent_1px),linear-gradient(90deg,hsl(var(--primary)/0.2)_1px,transparent_1px)] [background-size:42px_42px]" />
+
+              <CardContent className="relative grid gap-8 p-6 sm:p-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,1.05fr)] lg:p-10">
+                <div className="flex min-h-[22rem] flex-col justify-between gap-8">
+                  <div className="space-y-5">
+                    <Badge variant="outline" className="flagship-badge rounded-full bg-primary text-primary-foreground px-3 py-1 text-xs uppercase tracking-[0.2em]">
+                      Market intelligence
+                    </Badge>
+                    <div className="space-y-3">
+                      <h2 className="max-w-2xl text-3xl font-semibold leading-tight text-primary-foreground sm:text-4xl md:text-5xl">
+                        What do you do with the forest?
+                      </h2>
+                      <p className="max-w-2xl text-sm leading-7 text-primary/80 sm:text-base">
+                        Forest markets are accelerating across carbon offtake, roundwood demand, wood chips, and processor-linked supply. Get a snapshot of the markets near your site before deciding what the forest should become.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-3">
+                    {marketSignals.map((signal) => (
+                      <div key={signal.label} className="rounded-xl border border-primary/15 bg-background/70 px-4 py-3">
+                        <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">{signal.label}</div>
+                        <div className="mt-1 text-sm font-semibold text-foreground">{signal.value}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Button className="w-fit rounded-full px-5" asChild>
+                    <a href="/shop/roundwood">
+                      Open markets map
+                      <ArrowRight className="h-4 w-4" />
+                    </a>
+                  </Button>
+                </div>
+
+                <div className="relative min-h-[22rem] overflow-hidden rounded-[1.5rem] border border-primary/15 bg-background/65">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_78%,rgba(34,197,94,0.18),transparent_24%),radial-gradient(circle_at_72%_25%,rgba(245,158,11,0.2),transparent_25%),linear-gradient(135deg,rgba(15,23,42,0.04),transparent)]" />
+                  <div className="absolute left-[10%] top-[18%] h-28 w-36 rounded-[48%] border border-primary/25 bg-primary/10 blur-[1px]" />
+                  <div className="absolute bottom-[13%] right-[11%] h-32 w-44 rounded-[45%] border border-amber-400/35 bg-amber-400/10 blur-[1px]" />
+                  <div className="absolute left-[26%] top-[33%] h-[2px] w-[52%] origin-left rotate-[18deg] rounded-full bg-gradient-to-r from-primary via-amber-400 to-cyan-400 shadow-[0_0_20px_hsl(var(--primary)/0.25)]" />
+                  <div className="absolute left-[20%] top-[61%] h-[2px] w-[58%] origin-left -rotate-[14deg] rounded-full bg-gradient-to-r from-cyan-400 via-primary to-emerald-400 opacity-85 shadow-[0_0_18px_rgba(34,197,94,0.22)]" />
+
+                  {[
+                    { label: "CO2", top: "24%", left: "18%", className: "bg-emerald-500" },
+                    { label: "RW", top: "43%", left: "55%", className: "bg-primary" },
+                    { label: "CH", top: "67%", left: "34%", className: "bg-amber-500" },
+                    { label: "MKT", top: "58%", left: "76%", className: "bg-cyan-500" },
+                  ].map((node) => (
+                    <div
+                      key={node.label}
+                      className="absolute flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-full border border-white/50 bg-background/90 px-2.5 py-2 text-xs font-semibold shadow-lg"
+                      style={{ top: node.top, left: node.left }}
+                    >
+                      <span className={cn("h-2.5 w-2.5 rounded-full", node.className)} />
+                      {node.label}
+                    </div>
+                  ))}
+
+                  <div className="absolute bottom-5 left-5 right-5 rounded-2xl border border-primary/15 bg-background/85 p-4 shadow-sm backdrop-blur">
+                    <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                      <MapPinned className="h-4 w-4 text-primary" />
+                      Nearby market snapshot
+                    </div>
+                    <div className="mt-3 grid gap-2 sm:grid-cols-3">
+                      <div className="rounded-lg bg-primary/10 px-3 py-2 text-xs text-primary">3 processors</div>
+                      <div className="rounded-lg bg-emerald-500/10 px-3 py-2 text-xs text-emerald-700">2 carbon lanes</div>
+                      <div className="rounded-lg bg-amber-500/10 px-3 py-2 text-xs text-amber-700">wood chip pull</div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </BentoTilt>
+        </ScrollReveal>
+      </div>
+    </section>
+  )
+}
+
+function FlagshipTestimonialsCarousel({ testimonials }: { testimonials: FlagshipTestimonial[] }) {
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "start",
+    dragFree: false,
+    loop: true,
+    skipSnaps: false,
+  })
+  const handleWheel = useEmblaWheelNavigation(emblaApi)
+
+  useEffect(() => {
+    if (!emblaApi) return
+
+    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap())
+    onSelect()
+    emblaApi.on("select", onSelect)
+    emblaApi.on("reInit", onSelect)
+
+    return () => {
+      emblaApi.off("select", onSelect)
+      emblaApi.off("reInit", onSelect)
+    }
+  }, [emblaApi])
+
+  if (!testimonials.length) return null
+
+  return (
+    <section id="flagship-testimonials" className="flagship-testimonials-section px-4 py-12 sm:px-6 md:px-8 md:py-16">
+      <div className="mx-auto max-w-7xl space-y-6">
+        <ScrollReveal distance={24}>
+          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-3xl space-y-3">
+              <Badge variant="outline" className="flagship-badge rounded-full bg-primary text-primary-foreground px-3 py-1 text-xs uppercase tracking-[0.2em]">
+                Testimonials
+              </Badge>
+              <h2 className="text-3xl font-semibold text-primary-foreground sm:text-4xl md:text-5xl">
+                What the investors and experts are saying
+              </h2>
+              <p className="text-sm leading-7 text-primary/75 sm:text-base">
+                Practical notes from investors, operators, and forestry specialists reviewing this flagship pathway.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                aria-label="Previous testimonial"
+                onClick={() => emblaApi?.scrollPrev()}
+                className="theme-primary-border-hover rounded-full border-primary/25 bg-transparent text-primary transition-all duration-300 hover:bg-primary/10"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                aria-label="Next testimonial"
+                onClick={() => emblaApi?.scrollNext()}
+                className="theme-primary-border-hover rounded-full border-primary/25 bg-transparent text-primary transition-all duration-300 hover:bg-primary/10"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal delay={90} distance={24}>
+          <div className="relative">
+            <div ref={emblaRef} className="overflow-hidden" onWheel={handleWheel}>
+              <div className="-ml-4 flex py-2 sm:-ml-5">
+                {testimonials.map((testimonial, index) => (
+                  <div key={`${testimonial.name}-${index}`} className="min-w-0 flex-[0_0_88%] pl-4 sm:flex-[0_0_62%] sm:pl-5 lg:flex-[0_0_36%]">
+                    <BentoTilt className="h-full" maxTilt={3}>
+                      <Card className="h-full border-primary/15 bg-card/95 shadow-none">
+                        <CardContent className="flex h-full flex-col">
+                          <div className="flex items-start gap-4">
+                            <Avatar className="size-12 shrink-0 bg-muted">
+                              <AvatarImage
+                                alt={testimonial.name}
+                                src={testimonial.image}
+                                loading="lazy"
+                                width="120"
+                                height="120"
+                              />
+                              <AvatarFallback>{getInitials(testimonial.name)}</AvatarFallback>
+                            </Avatar>
+
+                            <div className="min-w-0 flex-1">
+                              <h3 className="font-medium text-foreground">{testimonial.name}</h3>
+                              <span className="block text-sm tracking-wide text-muted-foreground">{testimonial.role}</span>
+                            </div>
+                          </div>
+
+                          <blockquote className="mt-5 flex-1">
+                            <p className="text-sm leading-7 text-muted-foreground">{testimonial.quote}</p>
+                          </blockquote>
+                        </CardContent>
+                      </Card>
+                    </BentoTilt>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-4 flex justify-center gap-2">
+              {testimonials.map((testimonial, index) => (
+                <button
+                  key={`${testimonial.name}-dot`}
+                  type="button"
+                  aria-label={`Show testimonial ${index + 1}`}
+                  onClick={() => emblaApi?.scrollTo(index)}
+                  className={cn(
+                    "h-2.5 rounded-full transition-all duration-300",
+                    selectedIndex === index ? "w-8 bg-primary" : "w-2.5 bg-primary/25 hover:bg-primary/45"
+                  )}
+                />
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  )
 }
 
 export function FlagshipInvestmentPage({ item, onBack }: FlagshipInvestmentPageProps) {
@@ -877,6 +1221,9 @@ export function FlagshipInvestmentPage({ item, onBack }: FlagshipInvestmentPageP
           </div>
         </div>
       </section>
+
+      <FlagshipMarketsMapAd />
+      <FlagshipTestimonialsCarousel testimonials={config.testimonials} />
 
       <section id="diy-path" className="diy-path-section border-t border-primary/10 px-4 py-12 sm:px-6 md:px-8 md:py-16">
         <div className="mx-auto max-w-7xl space-y-8">

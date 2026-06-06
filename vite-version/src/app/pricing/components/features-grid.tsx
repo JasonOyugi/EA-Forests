@@ -28,7 +28,7 @@ export function FeaturesGrid({ features }: FeaturesGridProps) {
       <CardHeader className="text-center">
         <CardTitle className="text-2xl">All Plans Include</CardTitle>
         <CardDescription>
-          Every plan comes with these essential features to help your team succeed
+          Every plan includes the forestry tools and support needed to manage land, service delivery, and market access.
         </CardDescription>
       </CardHeader>
       <CardContent>

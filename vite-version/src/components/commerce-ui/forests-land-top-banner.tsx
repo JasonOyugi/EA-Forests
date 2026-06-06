@@ -6,12 +6,16 @@ import { BentoTilt } from "@/components/ui/bento-tilt"
 interface ForestsLandTopBannerProps {
   rightIconSrc?: string
   rightIconAlt?: string
+  targetId?: string
+  linkLabel?: string
   onVisibilityChange?: (isVisible: boolean) => void
 }
 
 export function ForestsLandTopBanner({
   rightIconSrc = "https://images.seeklogo.com/logo-png/55/1/uganda-government-crested-crane-logo-png_seeklogo-556491.png",
   rightIconAlt = "Crested crane",
+  targetId = "featured-products",
+  linkLabel = "View featured opportunities",
   onVisibilityChange,
 }: ForestsLandTopBannerProps) {
   const [isVisible, setIsVisible] = useState(true)
@@ -116,14 +120,14 @@ export function ForestsLandTopBanner({
               <span>
                 <span className="font-bold">Ugandan Concessions</span> are now available for review and acquisition.
                 <a
-                  href="#featured-products"
+                  href={`#${targetId}`}
                   className="ml-1.5 whitespace-nowrap underline hover:text-yellow-200"
                   onClick={(event) => {
                     event.preventDefault()
-                    document.getElementById("featured-products")?.scrollIntoView({ behavior: "smooth" })
+                    document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" })
                   }}
                 >
-                  View featured opportunities
+                  {linkLabel}
                 </a>
               </span>
             </p>

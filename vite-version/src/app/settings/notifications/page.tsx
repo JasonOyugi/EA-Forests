@@ -95,7 +95,7 @@ export default function NotificationSettings() {
         <div>
           <h1 className="text-3xl font-bold">Notifications</h1>
           <p className="text-muted-foreground">
-            Configure how you receive notifications.
+            Control alerts for forestry projects, service updates, and account activity.
           </p>
         </div>
 
@@ -143,9 +143,9 @@ export default function NotificationSettings() {
                             />
                           </FormControl>
                           <div className="space-y-1">
-                            <FormLabel>Product updates</FormLabel>
+                            <FormLabel>Project updates</FormLabel>
                             <p className="text-sm text-muted-foreground">
-                              Receive updates about new features and improvements.
+                              Receive alerts about forestry project milestones, service progress, and platform improvements.
                             </p>
                           </div>
                         </FormItem>

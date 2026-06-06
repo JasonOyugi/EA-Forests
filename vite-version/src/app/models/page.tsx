@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight, Clock3, MapPinned, Workflow } from "lucide-react"
+import { ArrowRight, MapPinned, Trees, Workflow } from "lucide-react"
 import { Link } from "react-router-dom"
 
 import { BaseLayout } from "@/components/layouts/base-layout"
@@ -24,19 +24,19 @@ const modelCards = [
     icon: MapPinned,
   },
   {
-    title: "Model 2: TBD",
+    title: "Silvicultural models",
     description:
-      "Reserved page for the second model. The route and navigation are in place so the next notebook can drop straight in.",
+      "Silviculture costs, thinning revenue, final-harvest revenue, and rotation cashflow metrics for commercial screening.",
     href: "/models/model-2",
-    badge: "TBD",
-    icon: Clock3,
+    badge: "Ready",
+    icon: Trees,
   },
   {
-    title: "Model 3: TBD",
+    title: "Roundwood production",
     description:
-      "Reserved page for the third model with the same structure, ready for the next workflow definition.",
+      "Map-driven harvesting and haulage model with processor buyer specs, grade yields, and factory-gate cashflow comparison.",
     href: "/models/model-3",
-    badge: "TBD",
+    badge: "Ready",
     icon: Workflow,
   },
 ]

@@ -14,6 +14,11 @@ out/
 .turbo/
 dist-ssr/
 
+# Python generated files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
 # Environment variables
 .env
 .env.local

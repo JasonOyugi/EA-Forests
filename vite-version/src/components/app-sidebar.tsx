@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import {
-  LayoutPanelLeft,
   LayoutDashboard,
   Shield,
   AlertTriangle,
@@ -10,7 +9,7 @@ import {
   HelpCircle,
   CreditCard,
   ShoppingCart,
-  Trees
+  Trees,
 } from "lucide-react"
 import { Link } from "react-router-dom"
 import { Logo } from "@/components/logo"
@@ -44,11 +43,6 @@ const data = {
           icon: LayoutDashboard,
         },
         {
-          title: "Contractor Dashboard (under construction)",
-          url: "/dashboard-2",
-          icon: LayoutPanelLeft,
-        },
-        {
           title: "Shops",
           url: "#",
           icon: ShoppingCart,
@@ -69,19 +63,19 @@ const data = {
         },
         {
           title: "Models",
-          url: "/models",
+          url: "#",
           icon: Trees,
           items: [
             {
-              title: "Model 1: Site classification",
+              title: "Site Classification",
               url: "/models/site-classification",
             },
             {
-              title: "Model 2: TBD",
+              title: "Silvicultural Models",
               url: "/models/model-2",
             },
             {
-              title: "Model 3: TBD",
+              title: "Roundwood Production",
               url: "/models/model-3",
             },
           ],

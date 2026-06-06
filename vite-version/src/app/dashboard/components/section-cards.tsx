@@ -1,6 +1,5 @@
 import {
   Rocket,
-  Sprout,
   TrendingDown,
   TrendingUp,
   TriangleAlert,
@@ -46,7 +45,8 @@ type SummaryCard = {
   trendLabel: string
   trendUp: boolean
   summary: string
-  icon: LucideIcon
+  positiveIcon: LucideIcon
+  negativeIcon?: LucideIcon
   onClick: () => void
   toneClassName: string
 }
@@ -57,10 +57,13 @@ function DashboardSummaryCard({
   trendLabel,
   trendUp,
   summary,
-  icon: Icon,
+  positiveIcon,
+  negativeIcon,
   onClick,
   toneClassName,
 }: SummaryCard) {
+  const Icon = trendUp ? positiveIcon : negativeIcon ?? positiveIcon
+
   return (
     <BentoTilt className="h-full">
       <Card
@@ -118,7 +121,8 @@ export function SectionCards({
       trendLabel: portfolioTrendLabel,
       trendUp: portfolioTrendUp,
       summary: portfolioSummary,
-      icon: TriangleAlert,
+      positiveIcon: Rocket,
+      negativeIcon: TriangleAlert,
       onClick: () => onMetricCardClick("portfolioValue"),
       toneClassName: portfolioTrendUp
         ? "bg-emerald-400 investor-card-emerald"
@@ -130,7 +134,8 @@ export function SectionCards({
       trendLabel: landTrendLabel,
       trendUp: landTrendUp,
       summary: landSummary,
-      icon: Rocket,
+      positiveIcon: Rocket,
+      negativeIcon: TriangleAlert,
       onClick: () => onMetricCardClick("landManaged"),
       toneClassName: landTrendUp
         ? "bg-emerald-400 investor-card-emerald"
@@ -142,7 +147,8 @@ export function SectionCards({
       trendLabel: volumeTrendLabel,
       trendUp: volumeTrendUp,
       summary: volumeSummary,
-      icon: Sprout,
+      positiveIcon: Rocket,
+      negativeIcon: TriangleAlert,
       onClick: () => onMetricCardClick("expectedVolume"),
       toneClassName: volumeTrendUp
         ? "bg-emerald-400 investor-card-emerald"
@@ -154,7 +160,8 @@ export function SectionCards({
       trendLabel: pendingInvoicesLabel,
       trendUp: true,
       summary: pendingSummary,
-      icon: Wallet,
+      positiveIcon: Wallet,
+      negativeIcon: Wallet,
       onClick: onPaymentsCardClick,
       toneClassName: "bg-lime-200 dark:bg-yellow-300 investor-card-lime",
     },
