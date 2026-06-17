@@ -122,6 +122,141 @@ CHINESE_PROCESSORS = {
 }
 
 
+def copy_processor_db() -> dict[str, Any]:
+    return {
+        name: {
+            "lon": float(data["lon"]),
+            "lat": float(data["lat"]),
+            "buyer_specs": {
+                species: {
+                    "grades": {
+                        grade: dict(values)
+                        for grade, values in spec["grades"].items()
+                    },
+                    "price_mode": spec["price_mode"],
+                    "prices": dict(spec["prices"]),
+                }
+                for species, spec in data["buyer_specs"].items()
+            },
+        }
+        for name, data in CHINESE_PROCESSORS.items()
+    }
+
+
+def buyer_specs_to_rows(processor_db: dict[str, Any]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for processor_name, data in processor_db.items():
+        for species, spec in data["buyer_specs"].items():
+            for grade in ["g1", "g2", "g3"]:
+                rows.append(
+                    {
+                        "processor": processor_name,
+                        "species": species,
+                        "price_mode": spec["price_mode"],
+                        "grade": grade,
+                        "dbh_min": float(spec["grades"][grade]["dbh_min"]),
+                        "h_min": float(spec["grades"][grade]["h_min"]),
+                        "price": float(spec["prices"][grade]),
+                    }
+                )
+            rows.append(
+                {
+                    "processor": processor_name,
+                    "species": species,
+                    "price_mode": spec["price_mode"],
+                    "grade": "reject",
+                    "dbh_min": 0.0,
+                    "h_min": 0.0,
+                    "price": float(spec["prices"].get("reject", 0)),
+                }
+            )
+    return rows
+
+
+def processor_db_from_buyer_specs(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    processor_db = copy_processor_db()
+    if not rows:
+        return processor_db
+
+    for row in rows:
+        processor_name = str(row.get("processor", "")).strip()
+        species = str(row.get("species", "")).strip()
+        grade = str(row.get("grade", "")).strip().lower()
+        if processor_name not in processor_db or species not in {"euc", "pine"} or grade not in {"g1", "g2", "g3", "reject"}:
+            continue
+        spec = processor_db[processor_name]["buyer_specs"].setdefault(
+            species,
+            {"grades": {}, "price_mode": "per_tonne", "prices": {"g1": 0, "g2": 0, "g3": 0, "reject": 0}},
+        )
+        price_mode = str(row.get("price_mode", spec["price_mode"]))
+        if price_mode in {"per_m3", "per_tonne"}:
+            spec["price_mode"] = price_mode
+        spec["prices"][grade] = float(row.get("price", 0) or 0)
+        if grade != "reject":
+            spec["grades"][grade] = {
+                "dbh_min": float(row.get("dbh_min", 0) or 0),
+                "h_min": float(row.get("h_min", 0) or 0),
+            }
+    return processor_db
+
+
+def quantity_library_to_rows(qty_lib: dict[str, Any]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+
+    def walk(section: str, node: dict[str, Any], prefix: list[str]) -> None:
+        for key, value in node.items():
+            if isinstance(value, tuple):
+                rows.append(
+                    {
+                        "section": section,
+                        "path": ".".join(prefix + [key]),
+                        "qty_min": float(value[0]),
+                        "qty_max": float(value[1]),
+                    }
+                )
+            elif isinstance(value, dict):
+                walk(section, value, prefix + [key])
+
+    for section, node in qty_lib.items():
+        walk(section, node, [])
+    return rows
+
+
+def quantity_library_from_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    qty_lib = retail_quantity_library()
+    if not rows:
+        return qty_lib
+    for row in rows:
+        section = str(row.get("section", "")).strip()
+        path = str(row.get("path", "")).strip()
+        if section not in qty_lib or not path:
+            continue
+        parts = path.split(".")
+        cursor = qty_lib[section]
+        for part in parts[:-1]:
+            if part not in cursor or not isinstance(cursor[part], dict):
+                cursor[part] = {}
+            cursor = cursor[part]
+        cursor[parts[-1]] = (float(row.get("qty_min", 0) or 0), float(row.get("qty_max", 0) or 0))
+    return qty_lib
+
+
+def coerce_retail_library_df(rows: list[dict[str, Any]], default: pd.DataFrame, key: str, numeric_columns: list[str]) -> pd.DataFrame:
+    if not rows:
+        return default.copy()
+    df = pd.DataFrame(rows)
+    missing = set(default.columns) - set(df.columns)
+    if missing:
+        raise ValueError(f"{key} library is missing required column(s): {sorted(missing)}")
+    df = df[list(default.columns)].copy()
+    for column in numeric_columns:
+        df[column] = pd.to_numeric(df[column], errors="raise")
+    if df.duplicated(key).any():
+        duplicates = df[df.duplicated(key, keep=False)][key].tolist()
+        raise ValueError(f"Duplicate {key}(s): {duplicates}")
+    return df
+
+
 def external_get(url: str, **kwargs: Any) -> requests.Response:
     with requests.Session() as session:
         session.trust_env = False
@@ -734,9 +869,10 @@ def haversine_km(lon1: float, lat1: float, lon2: float, lat2: float) -> float:
     return earth_radius_km * 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
 
-def processor_catalog() -> list[dict[str, Any]]:
+def processor_catalog(processor_db: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+    db = processor_db or CHINESE_PROCESSORS
     rows = []
-    for name, data in CHINESE_PROCESSORS.items():
+    for name, data in db.items():
         rows.append(
             {
                 "name": name,
@@ -779,15 +915,19 @@ def osrm_route(
     }
 
 
-def nearest_processors(payload: RoundwoodProductionRequest) -> tuple[list[dict[str, Any]], list[str]]:
+def nearest_processors(
+    payload: RoundwoodProductionRequest,
+    processor_db: dict[str, Any] | None = None,
+) -> tuple[list[dict[str, Any]], list[str]]:
+    db = processor_db or CHINESE_PROCESSORS
     lon, lat = validate_lon_lat(payload.lon, payload.lat)
     requested_names = [name for name in payload.processor_names if name]
-    unknown = [name for name in requested_names if name not in CHINESE_PROCESSORS]
+    unknown = [name for name in requested_names if name not in db]
     warnings = [f"Unknown processor skipped: {name}" for name in unknown]
-    allowed_names = set(requested_names) - set(unknown) if requested_names else set(CHINESE_PROCESSORS.keys())
+    allowed_names = set(requested_names) - set(unknown) if requested_names else set(db.keys())
 
     straight_line_candidates = []
-    for name, data in CHINESE_PROCESSORS.items():
+    for name, data in db.items():
         if name not in allowed_names:
             continue
         straight_km = haversine_km(lon, lat, data["lon"], data["lat"])
@@ -1070,10 +1210,21 @@ def build_assumptions(payload: RoundwoodProductionRequest) -> list[str]:
 
 def run_roundwood_production(payload: RoundwoodProductionRequest) -> dict[str, Any]:
     lon, lat = validate_lon_lat(payload.lon, payload.lat)
-    processors, warnings = nearest_processors(payload)
-    labour_df = retail_labour_categories()
-    nonlab_df = retail_nonlab_items()
-    qty_lib = retail_quantity_library()
+    processor_db = processor_db_from_buyer_specs(payload.buyer_specs)
+    processors, warnings = nearest_processors(payload, processor_db)
+    labour_df = coerce_retail_library_df(
+        payload.labour_categories,
+        retail_labour_categories(),
+        "labour_code",
+        ["wage_min", "wage_max"],
+    )
+    nonlab_df = coerce_retail_library_df(
+        payload.non_labour_items,
+        retail_nonlab_items(),
+        "item_code",
+        ["price_min", "price_max"],
+    )
+    qty_lib = quantity_library_from_rows(payload.quantity_library)
 
     processor_results = []
     for index, processor_row in enumerate(processors, start=1):
@@ -1111,9 +1262,11 @@ def run_roundwood_production(payload: RoundwoodProductionRequest) -> dict[str, A
         "rankings": rankings,
         "processors": processor_results,
         "library": {
-            "processor_catalog": processor_catalog(),
+            "processor_catalog": processor_catalog(processor_db),
+            "buyer_specs": buyer_specs_to_rows(processor_db),
             "labour_categories": dataframe_to_records(labour_df),
             "non_labour_items": dataframe_to_records(nonlab_df),
+            "quantity_library": quantity_library_to_rows(qty_lib),
             "section_order": SECTION_ORDER,
         },
     }

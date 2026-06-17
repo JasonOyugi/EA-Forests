@@ -17,6 +17,7 @@ import {
   getGridColumns,
   getScaleOption,
   summarizeCompartmentStatuses,
+  type CompartmentCell,
   type CompartmentStatus,
 } from "../components/dashboard-grid"
 import { compactNumber, clamp } from "../components/dashboard-shared"
@@ -107,22 +108,6 @@ export default function DashboardAssetsMapPage() {
   const selectedCompartment =
     compartments.find((compartment) => compartment.id === selectedCompartmentId) ??
     compartments[0]
-  const selectedTone = selectedCompartment
-    ? getCompartmentTone(selectedCompartment)
-    : compartmentStatusMeta.steady
-  const selectedStatusSummary = selectedCompartment
-    ? summarizeCompartmentStatuses(selectedCompartment)
-    : null
-
-  const highConfidenceCompartments = selectedStatusSummary
-    ? selectedStatusSummary.thriving +
-      selectedStatusSummary.steady +
-      selectedStatusSummary.stable
-    : 0
-  const cautionCompartments = selectedStatusSummary
-    ? selectedStatusSummary.caution + selectedStatusSummary.critical
-    : 0
-  const lostCompartments = selectedStatusSummary?.dead ?? 0
 
   const tooltipCompartment = tooltipState
     ? compartments.find((compartment) => compartment.id === tooltipState.compartmentId)
@@ -213,6 +198,85 @@ export default function DashboardAssetsMapPage() {
     rangeExpandedIds,
     selectedCompartmentId,
   ])
+  const selectedDetailCompartments = React.useMemo<CompartmentCell[]>(() => {
+    const selectedIds = expandedCompartmentIds.size
+      ? expandedCompartmentIds
+      : new Set(selectedCompartment ? [selectedCompartment.id] : [])
+
+    return compartments.filter((compartment) => selectedIds.has(compartment.id))
+  }, [compartments, expandedCompartmentIds, selectedCompartment])
+  const hasMultipleSelectedBlocks = selectedDetailCompartments.length > 1
+  const selectedStatusSummary = React.useMemo(
+    () =>
+      selectedDetailCompartments.reduce(
+        (summary, compartment) => {
+          const compartmentSummary = summarizeCompartmentStatuses(compartment)
+          statusOrder.forEach((status) => {
+            summary[status] += compartmentSummary[status]
+          })
+          return summary
+        },
+        {
+          thriving: 0,
+          steady: 0,
+          stable: 0,
+          caution: 0,
+          critical: 0,
+          dead: 0,
+        } satisfies Record<CompartmentStatus, number>
+      ),
+    [selectedDetailCompartments]
+  )
+  const selectedSubCompartmentCount = selectedDetailCompartments.length * 16
+  const selectedMetricSummary = React.useMemo(() => {
+    const totalArea = selectedDetailCompartments.reduce(
+      (sum, compartment) => sum + compartment.representedArea,
+      0
+    )
+    const totals = selectedDetailCompartments.reduce(
+      (summary, compartment) => {
+        summary.totalTrees += compartment.metrics.totalTrees
+        summary.estimatedVolume += compartment.metrics.estimatedVolume
+        summary.averageHeight += compartment.metrics.averageHeight * compartment.representedArea
+        summary.averageDbh += compartment.metrics.averageDbh * compartment.representedArea
+        summary.survivalRate += compartment.metrics.survivalRate * compartment.representedArea
+        return summary
+      },
+      {
+        totalTrees: 0,
+        estimatedVolume: 0,
+        averageHeight: 0,
+        averageDbh: 0,
+        survivalRate: 0,
+      }
+    )
+
+    return {
+      representedArea: totalArea,
+      totalTrees: totals.totalTrees,
+      estimatedVolume: totals.estimatedVolume,
+      averageHeight: totalArea > 0 ? totals.averageHeight / totalArea : 0,
+      averageDbh: totalArea > 0 ? totals.averageDbh / totalArea : 0,
+      survivalRate: totalArea > 0 ? totals.survivalRate / totalArea : 0,
+    }
+  }, [selectedDetailCompartments])
+  const selectedDominantStatus = (
+    Object.entries(selectedStatusSummary) as Array<[CompartmentStatus, number]>
+  ).sort((left, right) => right[1] - left[1])[0]?.[0]
+  const selectedTone =
+    !hasMultipleSelectedBlocks && selectedCompartment
+      ? getCompartmentTone(selectedCompartment)
+      : selectedDominantStatus
+        ? compartmentStatusMeta[selectedDominantStatus]
+        : compartmentStatusMeta.steady
+
+  const highConfidenceCompartments =
+    selectedStatusSummary.thriving +
+    selectedStatusSummary.steady +
+    selectedStatusSummary.stable
+  const cautionCompartments =
+    selectedStatusSummary.caution + selectedStatusSummary.critical
+  const lostCompartments = selectedStatusSummary.dead
 
   const handleCompartmentHover = (
     compartmentId: string,
@@ -311,32 +375,37 @@ export default function DashboardAssetsMapPage() {
 
   return (
     <BaseLayout
-      title="Asset Map"
-      description="Drill into hectare-level block health, then inspect sub-compartment performance for the selected site."
     >
       <div className="@container/main px-4 lg:px-6">
-        <div className="space-y-8">
-          <div className="border-b border-border/60 pb-4">
-            <Button
-              variant="ghost"
-              onClick={() => navigate("/dashboard")}
-              className="-ml-3 h-auto px-3 py-2 text-foreground transition-colors hover:text-emerald-300"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to dashboard
-            </Button>
+        <div className="space-y-5">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex min-w-0 items-center gap-3">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => navigate("/dashboard")}
+                className="-ml-2 shrink-0 text-foreground transition-colors hover:text-emerald-300"
+                aria-label="Back to dashboard"
+                title="Back to dashboard"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </Button>
+              <h1 className="truncate text-2xl font-semibold tracking-tight">
+                Asset Map
+              </h1>
+            </div>
           </div>
-
           <DashboardAssetMap
             selectedGroupId={selectedGroup.id}
             onSelectGroup={handleSelectGroup}
             showOpenFullMapButton={false}
             showHeaderCopy={false}
+            disableBoundaryEffect
           />
 
           <div className="grid gap-8 xl:grid-cols-[minmax(0,1.25fr)_360px]">
             <section className="space-y-5">
-              <div className="rounded-[32px] border border-border/70 bg-background/35 p-4 backdrop-blur-sm">
+              <div className="rounded-[32px] bg-background/35 p-4 backdrop-blur-sm">
                 <div className="mb-4 flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
                   <div className="min-w-0 space-y-3">
                     <div className="flex items-center gap-2">
@@ -537,22 +606,25 @@ export default function DashboardAssetsMapPage() {
             </section>
 
             <aside className="space-y-5">
-              {selectedCompartment ? (
+              {selectedDetailCompartments.length ? (
                 <>
-                  <div className="rounded-[32px] border border-border/70 bg-background/35 p-5 backdrop-blur-sm">
+                  <div className="rounded-[32px] bg-background/35 p-5 backdrop-blur-sm">
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-                          Selected block
+                          {hasMultipleSelectedBlocks ? "Selected blocks" : "Selected block"}
                         </div>
                         <h3 className="mt-2 text-xl font-semibold">
-                          {formatVarietyLabel(selectedCompartment.variety)}{" "}
-                          {selectedCompartment.subBlock}
+                          {hasMultipleSelectedBlocks
+                            ? `${selectedDetailCompartments.length} blocks selected`
+                            : selectedCompartment
+                              ? `${formatVarietyLabel(selectedCompartment.variety)} ${selectedCompartment.subBlock}`
+                              : "No block selected"}
                         </h3>
                         <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                          This block expands into sixteen sub-compartments so an investor can read
-                          condition, stocking, and risk at a much more intimate level before the
-                          next field report arrives.
+                          {hasMultipleSelectedBlocks
+                            ? `${selectedMetricSummary.representedArea.toFixed(0)} ha are shown together, scaled into the same condition view so the selection can be read as one field unit.`
+                            : "This block expands into sixteen sub-compartments so an investor can read condition, stocking, and risk at a much more intimate level before the next field report arrives."}
                         </p>
                       </div>
 
@@ -568,17 +640,49 @@ export default function DashboardAssetsMapPage() {
                       </div>
                     </div>
 
-                    <div className="mt-5 grid grid-cols-4 gap-1.5 rounded-[24px] border border-border/70 bg-slate-950/[0.04] p-3">
-                      {selectedCompartment.subCompartments.map((sample) => (
-                        <div
-                          key={sample.id}
-                          className="aspect-square rounded-[6px] border border-white/10"
-                          style={{
-                            backgroundColor:
-                              compartmentStatusMeta[sample.status].background,
-                          }}
-                        />
-                      ))}
+                    <div className="mt-5 rounded-[24px] bg-slate-950/[0.04] p-3">
+                      {hasMultipleSelectedBlocks ? (
+                        <div className="overflow-x-auto rounded-[18px] border border-border/70 bg-slate-950/20 p-[2px]">
+                          <div
+                            className="grid gap-px"
+                            style={{
+                              gridTemplateColumns: `repeat(${Math.min(selectedDetailCompartments.length, 10)}, minmax(84px, 1fr))`,
+                            }}
+                          >
+                            {selectedDetailCompartments.map((compartment) => (
+                              <div
+                                key={compartment.id}
+                                className="grid aspect-square min-w-[84px] grid-cols-4 grid-rows-4 gap-px bg-slate-950/25"
+                                title={`${compartment.subBlock} block ${compartment.sequence}`}
+                              >
+                                {compartment.subCompartments.map((sample) => (
+                                  <div
+                                    key={sample.id}
+                                    className="border border-white/10"
+                                    style={{
+                                      backgroundColor:
+                                        compartmentStatusMeta[sample.status].background,
+                                    }}
+                                  />
+                                ))}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-4 gap-1.5">
+                          {selectedCompartment?.subCompartments.map((sample) => (
+                            <div
+                              key={sample.id}
+                              className="aspect-square rounded-[6px] border border-white/10"
+                              style={{
+                                backgroundColor:
+                                  compartmentStatusMeta[sample.status].background,
+                              }}
+                            />
+                          ))}
+                        </div>
+                      )}
                     </div>
 
                     <div className="mt-4 grid gap-2">
@@ -600,17 +704,17 @@ export default function DashboardAssetsMapPage() {
                             </span>
                           </div>
                           <span className="text-sm text-muted-foreground">
-                            {selectedStatusSummary?.[status] ?? 0} / 16
+                            {selectedStatusSummary[status]} / {selectedSubCompartmentCount}
                           </span>
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="rounded-[32px] border border-border/70 bg-background/35 p-5 backdrop-blur-sm">
+                  <div className="rounded-[32px] bg-background/35 p-5 backdrop-blur-sm">
                     <div className="mb-4">
                       <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-                        Block analytics
+                        {hasMultipleSelectedBlocks ? "Selection analytics" : "Block analytics"}
                       </div>
                       <h3 className="mt-2 text-lg font-semibold">
                         Remote snapshot
@@ -623,7 +727,7 @@ export default function DashboardAssetsMapPage() {
                           Estimated trees
                         </div>
                         <div className="mt-2 text-lg font-semibold">
-                          {compactNumber(selectedCompartment.metrics.totalTrees, 0)}
+                          {compactNumber(selectedMetricSummary.totalTrees, 0)}
                         </div>
                       </div>
                       <div className="rounded-2xl border border-border/70 bg-background/60 px-4 py-3">
@@ -631,7 +735,7 @@ export default function DashboardAssetsMapPage() {
                           Estimated volume
                         </div>
                         <div className="mt-2 text-lg font-semibold">
-                          {compactNumber(selectedCompartment.metrics.estimatedVolume)} m3
+                          {compactNumber(selectedMetricSummary.estimatedVolume)} m3
                         </div>
                       </div>
                       <div className="rounded-2xl border border-border/70 bg-background/60 px-4 py-3">
@@ -639,7 +743,7 @@ export default function DashboardAssetsMapPage() {
                           Average height
                         </div>
                         <div className="mt-2 text-lg font-semibold">
-                          {selectedCompartment.metrics.averageHeight.toFixed(1)} m
+                          {selectedMetricSummary.averageHeight.toFixed(1)} m
                         </div>
                       </div>
                       <div className="rounded-2xl border border-border/70 bg-background/60 px-4 py-3">
@@ -647,7 +751,7 @@ export default function DashboardAssetsMapPage() {
                           Average DBH
                         </div>
                         <div className="mt-2 text-lg font-semibold">
-                          {selectedCompartment.metrics.averageDbh.toFixed(1)} cm
+                          {selectedMetricSummary.averageDbh.toFixed(1)} cm
                         </div>
                       </div>
                     </div>
@@ -665,7 +769,7 @@ export default function DashboardAssetsMapPage() {
                           </div>
                         </div>
                         <div className="text-right text-sm font-semibold">
-                          {(selectedCompartment.metrics.survivalRate * 100).toFixed(0)}% survival
+                          {(selectedMetricSummary.survivalRate * 100).toFixed(0)}% survival
                         </div>
                       </div>
 
@@ -673,19 +777,19 @@ export default function DashboardAssetsMapPage() {
                         <div className="flex h-full w-full">
                           <div
                             style={{
-                              width: `${(highConfidenceCompartments / 16) * 100}%`,
+                              width: `${(highConfidenceCompartments / selectedSubCompartmentCount) * 100}%`,
                               backgroundColor: compartmentStatusMeta.thriving.background,
                             }}
                           />
                           <div
                             style={{
-                              width: `${(cautionCompartments / 16) * 100}%`,
+                              width: `${(cautionCompartments / selectedSubCompartmentCount) * 100}%`,
                               backgroundColor: compartmentStatusMeta.caution.background,
                             }}
                           />
                           <div
                             style={{
-                              width: `${(lostCompartments / 16) * 100}%`,
+                              width: `${(lostCompartments / selectedSubCompartmentCount) * 100}%`,
                               backgroundColor: compartmentStatusMeta.dead.background,
                             }}
                           />
@@ -695,15 +799,15 @@ export default function DashboardAssetsMapPage() {
                       <div className="mt-4 grid gap-2 text-sm text-muted-foreground">
                         <div className="flex items-center justify-between">
                           <span>Strong to stable compartments</span>
-                          <span>{highConfidenceCompartments} / 16</span>
+                          <span>{highConfidenceCompartments} / {selectedSubCompartmentCount}</span>
                         </div>
                         <div className="flex items-center justify-between">
                           <span>Alert compartments</span>
-                          <span>{cautionCompartments} / 16</span>
+                          <span>{cautionCompartments} / {selectedSubCompartmentCount}</span>
                         </div>
                         <div className="flex items-center justify-between">
                           <span>Failed compartments</span>
-                          <span>{lostCompartments} / 16</span>
+                          <span>{lostCompartments} / {selectedSubCompartmentCount}</span>
                         </div>
                       </div>
                     </div>

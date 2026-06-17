@@ -6,7 +6,7 @@ from app.earth_engine import configure_earth_engine_network, earth_engine_projec
 def main() -> None:
     configure_earth_engine_network()
     project = earth_engine_project()
-    ee.Authenticate()
+    ee.Authenticate(auth_mode="localhost")
     if project:
         ee.Initialize(project=project)
     else:

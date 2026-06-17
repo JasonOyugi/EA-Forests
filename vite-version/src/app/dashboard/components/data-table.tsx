@@ -171,23 +171,52 @@ function scalePolygon(
   ])
 }
 
-export function createPolygon(center: [number, number], index: number, totalArea: number, plantedArea: number) {
-  const ring = Math.floor(index / 3)
-  const spoke = index % 3
-  const scale = Math.max(0.012, Math.sqrt(totalArea) * 0.0044)
-  const latOffset = 0.02 + ring * 0.018 + spoke * 0.008 + scale * 0.18
-  const lngOffset = 0.03 + ring * 0.022 + spoke * 0.012 + scale * 0.24
+function kmToLatitudeDegrees(kilometers: number) {
+  return kilometers / 110.574
+}
+
+function kmToLongitudeDegrees(kilometers: number, latitude: number) {
+  const kilometersPerDegree = 111.32 * Math.max(Math.cos((latitude * Math.PI) / 180), 0.12)
+  return kilometers / kilometersPerDegree
+}
+
+export function createPolygon(
+  center: [number, number],
+  index: number,
+  totalArea: number,
+  plantedArea: number,
+  layoutCount = 1,
+  layoutMaxArea = totalArea
+) {
+  const columns = Math.min(3, Math.max(1, layoutCount))
+  const rows = Math.ceil(layoutCount / columns)
+  const row = Math.floor(index / columns)
+  const column = index % columns
+  const rowItemCount = Math.min(columns, Math.max(layoutCount - row * columns, 1))
+  const maxSideKm = Math.sqrt(Math.max(layoutMaxArea, 0.25) * 0.01)
+  const pitchKm = Math.max(maxSideKm * 1.9, 0.85)
+  const latitudeCenter =
+    center[0] + kmToLatitudeDegrees((rows - 1) / 2 * pitchKm - row * pitchKm)
+  const longitudeCenter =
+    center[1] +
+    kmToLongitudeDegrees((column - (rowItemCount - 1) / 2) * pitchKm, center[0])
+  const areaKm2 = Math.max(totalArea, 0.25) * 0.01
+  const aspectRatio = 0.82 + (index % 3) * 0.16
+  const widthKm = Math.sqrt(areaKm2 * aspectRatio)
+  const heightKm = Math.sqrt(areaKm2 / aspectRatio)
+  const halfHeight = kmToLatitudeDegrees(heightKm / 2)
+  const halfWidth = kmToLongitudeDegrees(widthKm / 2, latitudeCenter)
 
   const outer = [
-    [center[0] + latOffset, center[1] - lngOffset],
-    [center[0] + latOffset + scale * 0.95, center[1] - lngOffset + scale * 0.28],
-    [center[0] + latOffset + scale * 0.68, center[1] - lngOffset + scale * 1.02],
-    [center[0] + latOffset - scale * 0.14, center[1] - lngOffset + scale * 1.14],
-    [center[0] + latOffset - scale * 0.38, center[1] - lngOffset + scale * 0.42],
+    [latitudeCenter + halfHeight, longitudeCenter - halfWidth],
+    [latitudeCenter + halfHeight, longitudeCenter + halfWidth],
+    [latitudeCenter - halfHeight, longitudeCenter + halfWidth],
+    [latitudeCenter - halfHeight, longitudeCenter - halfWidth],
   ] as [number, number][]
 
-  const plantedRatio = totalArea > 0 ? Math.sqrt(plantedArea / totalArea) * 0.9 : 0.52
-  const inner = scalePolygon(outer, Math.min(Math.max(plantedRatio, 0.25), 0.94))
+  const plantedRatio =
+    totalArea > 0 ? Math.sqrt(Math.max(plantedArea, 0.01) / totalArea) : 0.52
+  const inner = scalePolygon(outer, Math.min(Math.max(plantedRatio, 0.12), 0.96))
 
   return { outer, inner }
 }

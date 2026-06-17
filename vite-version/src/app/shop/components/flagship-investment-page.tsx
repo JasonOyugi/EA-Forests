@@ -556,11 +556,15 @@ function getInitials(name: string) {
     .slice(0, 2)
 }
 
-function FlagshipMarketsMapAd() {
+function FlagshipMarketsMapAd({
+  config,
+}: {
+  config: FlagshipConfig
+}) {
   const marketSignals = [
-    { label: "Carbon", value: "Buyer demand" },
-    { label: "Roundwood", value: "Processor lanes" },
-    { label: "Wood chips", value: "Export pull" },
+    { label: "Carbon", value: "Buyer demand", icon: TrendingUp },
+    { label: "Roundwood", value: "Processor lanes", icon: Trees },
+    { label: "Wood chips", value: "Export pull", icon: Tractor },
   ]
 
   return (
@@ -569,11 +573,20 @@ function FlagshipMarketsMapAd() {
         <ScrollReveal distance={24}>
           <BentoTilt maxTilt={4}>
             <Card className="group relative overflow-hidden border-primary/15 bg-card/95 p-0 shadow-none">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,hsl(var(--primary)/0.28),transparent_28%),radial-gradient(circle_at_80%_18%,rgba(14,165,233,0.18),transparent_26%),linear-gradient(135deg,hsl(var(--card))_0%,hsl(var(--primary)/0.08)_48%,hsl(var(--card))_100%)]" />
-              <div className="absolute inset-0 opacity-[0.22] [background-image:linear-gradient(hsl(var(--primary)/0.22)_1px,transparent_1px),linear-gradient(90deg,hsl(var(--primary)/0.2)_1px,transparent_1px)] [background-size:42px_42px]" />
+              <video
+                aria-hidden="true"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 h-full w-full object-cover opacity-70"
+                src="/feature-3.mp4"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(3,8,15,0.9),rgba(3,8,15,0.68)_42%,rgba(3,8,15,0.9)),radial-gradient(circle_at_16%_18%,hsl(var(--primary)/0.36),transparent_34%)]" />
+              <div className="absolute inset-0 opacity-[0.16] [background-image:linear-gradient(hsl(var(--primary)/0.28)_1px,transparent_1px),linear-gradient(90deg,hsl(var(--primary)/0.24)_1px,transparent_1px)] [background-size:42px_42px]" />
 
-              <CardContent className="relative grid gap-8 p-6 sm:p-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,1.05fr)] lg:p-10">
-                <div className="flex min-h-[22rem] flex-col justify-between gap-8">
+              <CardContent className="relative p-6 sm:p-8 lg:p-10">
+                <div className="flex min-h-[24rem] max-w-4xl flex-col justify-between gap-8">
                   <div className="space-y-5">
                     <Badge variant="outline" className="flagship-badge rounded-full bg-primary text-primary-foreground px-3 py-1 text-xs uppercase tracking-[0.2em]">
                       Market intelligence
@@ -583,62 +596,41 @@ function FlagshipMarketsMapAd() {
                         What do you do with the forest?
                       </h2>
                       <p className="max-w-2xl text-sm leading-7 text-primary/80 sm:text-base">
-                        Forest markets are accelerating across carbon offtake, roundwood demand, wood chips, and processor-linked supply. Get a snapshot of the markets near your site before deciding what the forest should become.
+                        Forest markets are accelerating across carbon offtake, roundwood demand, wood chips, and processor-linked supply. Get a market read before deciding how {config.eyebrow.toLowerCase()} should be positioned.
                       </p>
                     </div>
                   </div>
 
                   <div className="flex flex-wrap gap-3">
-                    {marketSignals.map((signal) => (
-                      <div key={signal.label} className="rounded-xl border border-primary/15 bg-background/70 px-4 py-3">
-                        <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">{signal.label}</div>
-                        <div className="mt-1 text-sm font-semibold text-foreground">{signal.value}</div>
-                      </div>
-                    ))}
+                    {marketSignals.map((signal) => {
+                      const Icon = signal.icon
+
+                      return (
+                        <div key={signal.label} className="flagship-premium-hover-card flagship-metric-card flex min-w-[10.5rem] flex-1 flex-col rounded-[1.25rem] p-4">
+                          <div className="flagship-card-icon mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/15 text-primary">
+                            <Icon className="h-5 w-5" />
+                          </div>
+                          <div className="text-[0.65rem] uppercase tracking-[0.15em] text-primary/60 sm:text-xs sm:tracking-[0.2em]">
+                            {signal.label}
+                          </div>
+                          <div className="mt-2 text-sm font-semibold leading-6 text-primary">{signal.value}</div>
+                        </div>
+                      )
+                    })}
                   </div>
 
-                  <Button className="w-fit rounded-full px-5" asChild>
-                    <a href="/shop/roundwood">
-                      Open markets map
-                      <ArrowRight className="h-4 w-4" />
+                  <Button className="h-auto w-fit cursor-pointer rounded-full p-0 text-sm" asChild>
+                    <a
+                      href="/shop/roundwood"
+                      className="group relative flex min-h-[46px] items-center justify-center overflow-hidden rounded-full px-5 py-3"
+                    >
+                      <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
+                      <span className="relative z-10 inline-flex items-center group-hover:text-emerald-100">
+                        Open markets map
+                        <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      </span>
                     </a>
                   </Button>
-                </div>
-
-                <div className="relative min-h-[22rem] overflow-hidden rounded-[1.5rem] border border-primary/15 bg-background/65">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_78%,rgba(34,197,94,0.18),transparent_24%),radial-gradient(circle_at_72%_25%,rgba(245,158,11,0.2),transparent_25%),linear-gradient(135deg,rgba(15,23,42,0.04),transparent)]" />
-                  <div className="absolute left-[10%] top-[18%] h-28 w-36 rounded-[48%] border border-primary/25 bg-primary/10 blur-[1px]" />
-                  <div className="absolute bottom-[13%] right-[11%] h-32 w-44 rounded-[45%] border border-amber-400/35 bg-amber-400/10 blur-[1px]" />
-                  <div className="absolute left-[26%] top-[33%] h-[2px] w-[52%] origin-left rotate-[18deg] rounded-full bg-gradient-to-r from-primary via-amber-400 to-cyan-400 shadow-[0_0_20px_hsl(var(--primary)/0.25)]" />
-                  <div className="absolute left-[20%] top-[61%] h-[2px] w-[58%] origin-left -rotate-[14deg] rounded-full bg-gradient-to-r from-cyan-400 via-primary to-emerald-400 opacity-85 shadow-[0_0_18px_rgba(34,197,94,0.22)]" />
-
-                  {[
-                    { label: "CO2", top: "24%", left: "18%", className: "bg-emerald-500" },
-                    { label: "RW", top: "43%", left: "55%", className: "bg-primary" },
-                    { label: "CH", top: "67%", left: "34%", className: "bg-amber-500" },
-                    { label: "MKT", top: "58%", left: "76%", className: "bg-cyan-500" },
-                  ].map((node) => (
-                    <div
-                      key={node.label}
-                      className="absolute flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-full border border-white/50 bg-background/90 px-2.5 py-2 text-xs font-semibold shadow-lg"
-                      style={{ top: node.top, left: node.left }}
-                    >
-                      <span className={cn("h-2.5 w-2.5 rounded-full", node.className)} />
-                      {node.label}
-                    </div>
-                  ))}
-
-                  <div className="absolute bottom-5 left-5 right-5 rounded-2xl border border-primary/15 bg-background/85 p-4 shadow-sm backdrop-blur">
-                    <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                      <MapPinned className="h-4 w-4 text-primary" />
-                      Nearby market snapshot
-                    </div>
-                    <div className="mt-3 grid gap-2 sm:grid-cols-3">
-                      <div className="rounded-lg bg-primary/10 px-3 py-2 text-xs text-primary">3 processors</div>
-                      <div className="rounded-lg bg-emerald-500/10 px-3 py-2 text-xs text-emerald-700">2 carbon lanes</div>
-                      <div className="rounded-lg bg-amber-500/10 px-3 py-2 text-xs text-amber-700">wood chip pull</div>
-                    </div>
-                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -1069,7 +1061,7 @@ export function FlagshipInvestmentPage({ item, onBack }: FlagshipInvestmentPageP
           src={heroImage}
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-86 [filter:brightness(0.2)_saturate(0.6)]"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-95 [filter:brightness(0.4)_saturate(0.9)]"
         />
         <div
           aria-hidden="true"
@@ -1222,7 +1214,7 @@ export function FlagshipInvestmentPage({ item, onBack }: FlagshipInvestmentPageP
         </div>
       </section>
 
-      <FlagshipMarketsMapAd />
+      <FlagshipMarketsMapAd config={config} />
       <FlagshipTestimonialsCarousel testimonials={config.testimonials} />
 
       <section id="diy-path" className="diy-path-section border-t border-primary/10 px-4 py-12 sm:px-6 md:px-8 md:py-16">

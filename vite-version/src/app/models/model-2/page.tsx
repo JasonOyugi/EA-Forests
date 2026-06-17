@@ -25,7 +25,6 @@ import {
 } from "recharts"
 
 import { BaseLayout } from "@/components/layouts/base-layout"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -63,6 +62,13 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import {
+  convertMoney,
+  CurrencySelect,
+  type CurrencyCode,
+  formatMoney as formatCurrencyMoney,
+  useCurrencyRates,
+} from "@/app/models/currency"
 
 type LabourMix = "unskilled" | "skilled"
 type ValueMode = "perHa" | "total"
@@ -105,8 +111,15 @@ interface ViabilityResponse {
   library: {
     labour_categories: TableRowRecord[]
     non_labour_items: TableRowRecord[]
+    operation_recipes: TableRowRecord[]
     section_order: string[]
   }
+}
+
+interface ViabilityLibraries {
+  labour_categories: TableRowRecord[]
+  non_labour_items: TableRowRecord[]
+  operation_recipes: TableRowRecord[]
 }
 
 interface CashflowChartRow {
@@ -176,15 +189,6 @@ const sectionColors = [
   "#0891b2",
 ]
 
-function formatMoney(value: number | null | undefined) {
-  if (value === null || value === undefined || Number.isNaN(value)) return "n/a"
-  return new Intl.NumberFormat("en-UG", {
-    style: "currency",
-    currency: "UGX",
-    maximumFractionDigits: 0,
-  }).format(value)
-}
-
 function formatNumber(value: number | null | undefined, digits = 0) {
   if (value === null || value === undefined || Number.isNaN(value)) return "n/a"
   return new Intl.NumberFormat("en-US", {
@@ -252,7 +256,7 @@ function downloadCSV(rows: TableRowRecord[], filename: string) {
   URL.revokeObjectURL(url)
 }
 
-function buildPayload(form: ViabilityForm) {
+function buildPayload(form: ViabilityForm, libraries: ViabilityLibraries | null) {
   const enabledThinnings = form.thinning
     ? form.thinnings.filter((item) => item.enabled)
     : []
@@ -277,6 +281,13 @@ function buildPayload(form: ViabilityForm) {
     final_harvest_year: form.rotationYear,
     price_final_tree: form.priceFinalTree,
     discount_rate: form.discountRate,
+    ...(libraries
+      ? {
+          labour_categories: libraries.labour_categories,
+          non_labour_items: libraries.non_labour_items,
+          operation_recipes: libraries.operation_recipes,
+        }
+      : {}),
   }
 }
 
@@ -457,18 +468,98 @@ function DataTableCard({
   )
 }
 
+function EditableTableCard({
+  title,
+  description,
+  rows,
+  columns,
+  onCellChange,
+}: {
+  title: string
+  description: string
+  rows: TableRowRecord[]
+  columns: string[]
+  onCellChange: (rowIndex: number, column: string, value: TableRowValue) => void
+}) {
+  return (
+    <Card className="min-w-0 gap-4 overflow-hidden border-border/70 bg-background/75 py-5">
+      <CardHeader className="px-5">
+        <CardTitle className="text-base">{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
+      </CardHeader>
+      <CardContent className="min-w-0 px-0">
+        <div className="max-h-[460px] max-w-full overflow-auto">
+          <Table className="w-max min-w-full">
+            <TableHeader>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableHead key={column} className="whitespace-nowrap px-4 capitalize">
+                    {column.replaceAll("_", " ")}
+                  </TableHead>
+                ))}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {rows.map((row, rowIndex) => (
+                <TableRow key={`${title}-${rowIndex}`}>
+                  {columns.map((column) => {
+                    const value = row[column]
+                    const isNumber = typeof value === "number"
+                    return (
+                      <TableCell key={`${title}-${rowIndex}-${column}`} className="min-w-32 px-3">
+                        <Input
+                          type={isNumber ? "number" : "text"}
+                          value={value === null || value === undefined ? "" : String(value)}
+                          step={isNumber ? "any" : undefined}
+                          onChange={(event) => {
+                            const next = isNumber ? Number(event.target.value) : event.target.value
+                            onCellChange(
+                              rowIndex,
+                              column,
+                              isNumber && Number.isFinite(next as number) ? (next as number) : event.target.value
+                            )
+                          }}
+                        />
+                      </TableCell>
+                    )
+                  })}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 export default function ModelTwoPage() {
   const [form, setForm] = React.useState<ViabilityForm>(defaultForm)
   const [result, setResult] = React.useState<ViabilityResponse | null>(null)
   const [isRunning, setIsRunning] = React.useState(false)
   const [runError, setRunError] = React.useState<string | null>(null)
   const [valueMode, setValueMode] = React.useState<ValueMode>("perHa")
+  const [currency, setCurrency] = React.useState<CurrencyCode>("UGX")
   const [selectedYear, setSelectedYear] = React.useState(2)
+  const [libraries, setLibraries] = React.useState<ViabilityLibraries | null>(null)
   const hasAutoRun = React.useRef(false)
 
   const apiBaseUrl = React.useMemo(
     () => (import.meta.env.VITE_API_URL?.replace(/\/$/, "") || "/api"),
     []
+  )
+  const currencyRates = useCurrencyRates(apiBaseUrl)
+
+  const toSelectedCurrency = React.useCallback(
+    (value: number | null | undefined) =>
+      convertMoney(value, "UGX", currency, currencyRates.rates),
+    [currency, currencyRates.rates]
+  )
+
+  const formatMoney = React.useCallback(
+    (value: number | null | undefined) =>
+      formatCurrencyMoney(toSelectedCurrency(value), currency),
+    [currency, toSelectedCurrency]
   )
 
   const updateForm = React.useCallback(
@@ -491,7 +582,7 @@ export default function ModelTwoPage() {
   )
 
   const runModel = React.useCallback(
-    async (nextForm = form) => {
+    async (nextForm = form, nextLibraries: ViabilityLibraries | null = libraries) => {
       setIsRunning(true)
       setRunError(null)
 
@@ -501,7 +592,7 @@ export default function ModelTwoPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(buildPayload(nextForm)),
+          body: JSON.stringify(buildPayload(nextForm, nextLibraries)),
         })
         const responseText = await response.text()
         const parsed = responseText ? JSON.parse(responseText) : null
@@ -523,7 +614,31 @@ export default function ModelTwoPage() {
         setIsRunning(false)
       }
     },
-    [apiBaseUrl, form]
+    [apiBaseUrl, form, libraries]
+  )
+
+  React.useEffect(() => {
+    if (!result || libraries) return
+    setLibraries({
+      labour_categories: result.library.labour_categories,
+      non_labour_items: result.library.non_labour_items,
+      operation_recipes: result.library.operation_recipes,
+    })
+  }, [libraries, result])
+
+  const updateLibraryCell = React.useCallback(
+    (table: keyof ViabilityLibraries, rowIndex: number, column: string, value: TableRowValue) => {
+      setLibraries((current) => {
+        if (!current) return current
+        return {
+          ...current,
+          [table]: current[table].map((row, index) =>
+            index === rowIndex ? { ...row, [column]: value } : row
+          ),
+        }
+      })
+    },
+    []
   )
 
   React.useEffect(() => {
@@ -550,10 +665,11 @@ export default function ModelTwoPage() {
     () =>
       cashflowRows.map((row) => ({
         year: getNumeric(row, "year"),
-        net: getNumeric(row, `net_cashflow${valueSuffix}`),
-        cumulative: getNumeric(row, `cumulative_cashflow${valueSuffix}`),
+        net: toSelectedCurrency(getNumeric(row, `net_cashflow${valueSuffix}`)) ?? 0,
+        cumulative:
+          toSelectedCurrency(getNumeric(row, `cumulative_cashflow${valueSuffix}`)) ?? 0,
       })),
-    [cashflowRows, valueSuffix]
+    [cashflowRows, toSelectedCurrency, valueSuffix]
   )
 
   const waterfallRows = React.useMemo<WaterfallRow[]>(() => {
@@ -566,7 +682,7 @@ export default function ModelTwoPage() {
     let cumulative = 0
     return rows.map((row, index) => {
       const section = String(row.section)
-      const cost = getNumeric(row, `cost${valueSuffix}`)
+      const cost = toSelectedCurrency(getNumeric(row, `cost${valueSuffix}`)) ?? 0
       const base = cumulative
       cumulative += cost
       return {
@@ -578,7 +694,7 @@ export default function ModelTwoPage() {
         fill: sectionColors[index % sectionColors.length],
       }
     })
-  }, [sectionRows, selectedYear, valueSuffix])
+  }, [sectionRows, selectedYear, toSelectedCurrency, valueSuffix])
 
   const selectedYearCostRows = React.useMemo(
     () => costRows.filter((row) => getNumeric(row, "year") === selectedYear),
@@ -597,13 +713,17 @@ export default function ModelTwoPage() {
   const resetForm = () => {
     setForm(defaultForm)
     setSelectedYear(2)
-    void runModel(defaultForm)
+    setLibraries(null)
+    void runModel(defaultForm, null)
   }
 
   return (
     <BaseLayout
       title="Silvicultural models"
-      description="Silviculture costs, thinning revenue, final-harvest revenue, and investment metrics for a rotation scenario."
+      description="Simulate silvicultural scenarios and analyze their economic outcomes
+      (note: quantity and wage weights move assumptions from low to high input/cost cases; 
+      labour mix switches between standard and skilled crews; Discount 1 and Discount 2 reduce later maintenance costs after thinning;
+      thinning controls set removal year, share, and price; and final-harvest price, area, stocking density, rotation age, and discount rate drive the investment outputs)"
     >
       <div className="@container/main min-w-0 max-w-full overflow-hidden px-4 lg:px-6">
         <div className="grid min-w-0 max-w-full gap-4 xl:grid-cols-[minmax(0,380px)_minmax(0,1fr)]">
@@ -613,13 +733,18 @@ export default function ModelTwoPage() {
                 <div>
                   <CardTitle>Scenario inputs</CardTitle>
                   <CardDescription>
-                    Costs and revenues are modeled in UGX.
+                    Base calculations are in UGX.
                   </CardDescription>
                 </div>
-                <Badge variant="outline">Model 2</Badge>
               </div>
             </CardHeader>
             <CardContent className="space-y-5 px-5">
+              <CurrencySelect
+                value={currency}
+                onChange={setCurrency}
+                rateSource={currencyRates.source}
+              />
+
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
                 <NumberField
                   label="Rotation year"
@@ -699,7 +824,7 @@ export default function ModelTwoPage() {
                   <div className="mt-4 space-y-4">
                     <div className="grid gap-4">
                       <RangeField
-                        label="Discount d1"
+                        label="Maintenance discount after thinning 1"
                         value={form.d1}
                         step={0.05}
                         onChange={(value) =>
@@ -707,7 +832,7 @@ export default function ModelTwoPage() {
                         }
                       />
                       <RangeField
-                        label="Discount d2"
+                        label="Maintenance discount after thinning 2"
                         value={form.d2}
                         step={0.05}
                         onChange={(value) =>
@@ -979,7 +1104,7 @@ export default function ModelTwoPage() {
                 <TabsTrigger value="cashflow">Cashflow table</TabsTrigger>
                 <TabsTrigger value="costs">Cost details</TabsTrigger>
                 <TabsTrigger value="revenues">Revenues</TabsTrigger>
-                <TabsTrigger value="libraries">Libraries</TabsTrigger>
+                <TabsTrigger value="libraries">Assumptions</TabsTrigger>
                 </TabsList>
               </div>
 
@@ -1142,19 +1267,41 @@ export default function ModelTwoPage() {
               </TabsContent>
 
               <TabsContent value="libraries" className="space-y-4">
-                <DataTableCard
+                <EditableTableCard
                   title="Labour wage library"
-                  description="Daily wage ranges used by the backend cost engine."
-                  rows={result?.library.labour_categories ?? []}
+                  description="Editable daily wage ranges used by the backend cost engine."
+                  rows={libraries?.labour_categories ?? result?.library.labour_categories ?? []}
                   columns={["labour_code", "desc", "wage_min", "wage_max"]}
-                  filename="commercial-forest-labour-library.csv"
+                  onCellChange={(rowIndex, column, value) =>
+                    updateLibraryCell("labour_categories", rowIndex, column, value)
+                  }
                 />
-                <DataTableCard
+                <EditableTableCard
                   title="Non-labour price library"
-                  description="Input price ranges used by the backend cost engine."
-                  rows={result?.library.non_labour_items ?? []}
+                  description="Editable input price ranges used by the backend cost engine."
+                  rows={libraries?.non_labour_items ?? result?.library.non_labour_items ?? []}
                   columns={["item_code", "desc", "unit", "price_min", "price_max"]}
-                  filename="commercial-forest-non-labour-library.csv"
+                  onCellChange={(rowIndex, column, value) =>
+                    updateLibraryCell("non_labour_items", rowIndex, column, value)
+                  }
+                />
+                <EditableTableCard
+                  title="Operation recipe library"
+                  description="Editable operation, labour manday, and non-labour quantity ranges used to build yearly costs."
+                  rows={libraries?.operation_recipes ?? result?.library.operation_recipes ?? []}
+                  columns={[
+                    "operation_id",
+                    "year",
+                    "section",
+                    "sub_item",
+                    "input_type",
+                    "code",
+                    "qty_min",
+                    "qty_max",
+                  ]}
+                  onCellChange={(rowIndex, column, value) =>
+                    updateLibraryCell("operation_recipes", rowIndex, column, value)
+                  }
                 />
               </TabsContent>
             </Tabs>

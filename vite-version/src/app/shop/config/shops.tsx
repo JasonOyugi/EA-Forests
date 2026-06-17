@@ -8,10 +8,10 @@ import type { ShopDefinition, ShopItem, ShopSlug } from "../types"
 export const shopDefinitions: Record<ShopSlug, ShopDefinition> = {
   seedlings: {
     slug: "seedlings",
-    name: "Seedlings",
-    shortName: "Seedlings",
+    name: "Seed and Seedlings",
+    shortName: "Seed and Seedlings",
     description: "The best planting material at the right price for forestry and agroforestry establishment.",
-    heroTitle: "Seedling marketplace",
+    heroTitle: "Seed/Seedling marketplace",
     heroDescription:
       "Source nursery-raised planting material for commercial forestry, grower outreach, and field establishment programs.",
     heroBadge: "Nursery commerce",

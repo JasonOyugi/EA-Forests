@@ -501,7 +501,7 @@ html {
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  opacity: 0;
+  opacity: 30;
   transition: opacity 240ms ease;
   background:
     linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
@@ -521,12 +521,12 @@ html {
   background:
     linear-gradient(
       180deg,
-      color-mix(in oklch, var(--primary) 26%, transparent),
-      color-mix(in oklch, var(--primary) 14%, transparent)
+      color-mix(in oklch, var(--primary) 20%, transparent),
+      color-mix(in oklch, var(--primary) 20%, transparent)
     ),
     linear-gradient(
       135deg,
-      color-mix(in oklch, var(--primary) 36%, transparent),
+      color-mix(in oklch, var(--primary) 10%, transparent),
       rgb(15 23 42 / 0.38)
     );
   transition: background 280ms ease;

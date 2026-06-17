@@ -72,6 +72,13 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import { marketActors, marketTileLayers } from "@/app/shop/data/market-map"
+import {
+  convertMoney,
+  CurrencySelect,
+  type CurrencyCode,
+  formatMoney as formatCurrencyMoney,
+  useCurrencyRates,
+} from "@/app/models/currency"
 
 type Species = "euc" | "pine"
 type FellingMethod = "chainsaw" | "harvester"
@@ -171,10 +178,19 @@ interface RoundwoodResponse {
   processors: RoundwoodProcessorResult[]
   library: {
     processor_catalog: TableRowRecord[]
+    buyer_specs: TableRowRecord[]
     labour_categories: TableRowRecord[]
     non_labour_items: TableRowRecord[]
+    quantity_library: TableRowRecord[]
     section_order: string[]
   }
+}
+
+interface RoundwoodLibraries {
+  labour_categories: TableRowRecord[]
+  non_labour_items: TableRowRecord[]
+  quantity_library: TableRowRecord[]
+  buyer_specs: TableRowRecord[]
 }
 
 const defaultForm: RoundwoodForm = {
@@ -229,110 +245,6 @@ const defaultForm: RoundwoodForm = {
   nDraws: 30000,
 }
 
-const scenarioPresets: Record<
-  string,
-  {
-    label: string
-    origin: string
-    summary: string
-    values: Partial<RoundwoodForm>
-  }
-> = {
-  "managed-euc": {
-    label: "Notebook hh_scenario",
-    origin: "Upstream_Models.ipynb",
-    summary:
-      "Managed eucalyptus final-harvest scenario from the upstream mapped workflow. This follows the notebook pattern of routed road distance plus processor-specific buyer specs.",
-    values: {
-      species: "euc",
-      useProcessorSpecs: true,
-      fellingMethod: "chainsaw",
-      extractionMethod: "tractor",
-      loadingMethod: "manual",
-      equipmentRegime: "rented",
-      harvestAreaHa: 1,
-      stemsPerHa: 545,
-      meanTreeDbh: 35,
-      stdTreeDbh: 5,
-      meanTreeH: 10,
-      stdTreeH: 3,
-      meanTreeDensity: 0.7,
-      stdTreeDensity: 0.05,
-      lossG1: 0.1,
-      lossG2: 0.1,
-      lossG3: 0.1,
-      lossReject: 0,
-      haulageMode: "aggregation",
-      forestToNodeKm: 7,
-      payloadDirectM3: 10,
-      payloadForestToNodeM3: 8,
-      payloadNodeToFactoryM3: 12,
-    },
-  },
-  "basic-euc": {
-    label: "Notebook cashflow example",
-    origin: "Forest_to_Roundwood_Basic_Cashflow (1).ipynb",
-    summary:
-      "Standalone roundwood cashflow example adapted to the mapped processor workflow. It keeps the notebook grade thresholds and per-m3 prices unless you switch back to processor buyer specs.",
-    values: {
-      species: "euc",
-      useProcessorSpecs: false,
-      fellingMethod: "chainsaw",
-      extractionMethod: "tractor",
-      loadingMethod: "manual",
-      equipmentRegime: "rented",
-      harvestAreaHa: 1,
-      stemsPerHa: 1100,
-      meanTreeDbh: 16,
-      stdTreeDbh: 3,
-      meanTreeH: 19,
-      stdTreeH: 2.5,
-      meanTreeDensity: 0.75,
-      stdTreeDensity: 0.05,
-      g1DbhMin: 18,
-      g1HMin: 20,
-      g2DbhMin: 14,
-      g2HMin: 18,
-      g3DbhMin: 10,
-      g3HMin: 14,
-      lossG1: 0.02,
-      lossG2: 0.03,
-      lossG3: 0.05,
-      lossReject: 0,
-      priceMode: "per_m3",
-      priceG1: 120000,
-      priceG2: 90000,
-      priceG3: 60000,
-      priceReject: 0,
-      vMisc: 0.3,
-      haulageMode: "aggregation",
-      forestToNodeKm: 15,
-      payloadForestToNodeM3: 8,
-      payloadNodeToFactoryM3: 12,
-    },
-  },
-  "pine-sawlog": {
-    label: "Pine screening template",
-    origin: "Website template",
-    summary:
-      "A non-notebook pine scenario for quick processor screening. It still uses routed road distance, but the stand and economics here are a website template rather than a notebook preset.",
-    values: {
-      species: "pine",
-      useProcessorSpecs: true,
-      stemsPerHa: 600,
-      meanTreeDbh: 30,
-      stdTreeDbh: 5,
-      meanTreeH: 16,
-      stdTreeH: 3,
-      meanTreeDensity: 0.55,
-      stdTreeDensity: 0.05,
-      lossG1: 0.08,
-      lossG2: 0.08,
-      lossG3: 0.1,
-    },
-  },
-}
-
 const processorActors = marketActors.filter((actor) => actor.layer === "processor")
 const defaultTileLayer = marketTileLayers[0]
 
@@ -360,15 +272,6 @@ const waterfallChartConfig = {
     color: "#2563eb",
   },
 } satisfies ChartConfig
-
-function formatMoney(value: number | null | undefined) {
-  if (value === null || value === undefined || Number.isNaN(value)) return "n/a"
-  return new Intl.NumberFormat("en-UG", {
-    style: "currency",
-    currency: "UGX",
-    maximumFractionDigits: 0,
-  }).format(value)
-}
 
 function formatNumber(value: number | null | undefined, digits = 0) {
   if (value === null || value === undefined || Number.isNaN(value)) return "n/a"
@@ -423,7 +326,11 @@ function downloadCSV(rows: TableRowRecord[], filename: string) {
   URL.revokeObjectURL(url)
 }
 
-function buildPayload(form: RoundwoodForm, coordinate: LockedCoordinate) {
+function buildPayload(
+  form: RoundwoodForm,
+  coordinate: LockedCoordinate,
+  libraries: RoundwoodLibraries | null
+) {
   return {
     lon: coordinate.lon,
     lat: coordinate.lat,
@@ -476,6 +383,14 @@ function buildPayload(form: RoundwoodForm, coordinate: LockedCoordinate) {
     payload_forest_to_node_m3: form.payloadForestToNodeM3,
     payload_node_to_factory_m3: form.payloadNodeToFactoryM3,
     n_draws: form.nDraws,
+    ...(libraries
+      ? {
+          labour_categories: libraries.labour_categories,
+          non_labour_items: libraries.non_labour_items,
+          quantity_library: libraries.quantity_library,
+          buyer_specs: libraries.buyer_specs,
+        }
+      : {}),
   }
 }
 
@@ -684,19 +599,98 @@ function DataTableCard({
   )
 }
 
+function EditableTableCard({
+  title,
+  description,
+  rows,
+  columns,
+  onCellChange,
+}: {
+  title: string
+  description: string
+  rows: TableRowRecord[]
+  columns: string[]
+  onCellChange: (rowIndex: number, column: string, value: TableRowValue) => void
+}) {
+  return (
+    <Card className="min-w-0 gap-4 overflow-hidden border-border/70 bg-background/75 py-5">
+      <CardHeader className="px-5">
+        <CardTitle className="text-base">{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
+      </CardHeader>
+      <CardContent className="min-w-0 px-0">
+        <div className="max-h-[430px] max-w-full overflow-auto">
+          <Table className="w-max min-w-full">
+            <TableHeader>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableHead key={column} className="whitespace-nowrap px-4 capitalize">
+                    {column.replaceAll("_", " ")}
+                  </TableHead>
+                ))}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {rows.map((row, rowIndex) => (
+                <TableRow key={`${title}-${rowIndex}`}>
+                  {columns.map((column) => {
+                    const value = row[column]
+                    const isNumber = typeof value === "number"
+                    return (
+                      <TableCell key={`${title}-${rowIndex}-${column}`} className="min-w-32 px-3">
+                        <Input
+                          type={isNumber ? "number" : "text"}
+                          value={value === null || value === undefined ? "" : String(value)}
+                          step={isNumber ? "any" : undefined}
+                          onChange={(event) => {
+                            const parsed = Number(event.target.value)
+                            onCellChange(
+                              rowIndex,
+                              column,
+                              isNumber && Number.isFinite(parsed) ? parsed : event.target.value
+                            )
+                          }}
+                        />
+                      </TableCell>
+                    )
+                  })}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 export default function ModelThreePage() {
   const [form, setForm] = React.useState<RoundwoodForm>(defaultForm)
-  const [preset, setPreset] = React.useState("managed-euc")
   const [lockedCoordinate, setLockedCoordinate] =
     React.useState<LockedCoordinate | null>(null)
   const [result, setResult] = React.useState<RoundwoodResponse | null>(null)
   const [selectedProcessor, setSelectedProcessor] = React.useState("")
   const [isRunning, setIsRunning] = React.useState(false)
   const [runError, setRunError] = React.useState<string | null>(null)
+  const [currency, setCurrency] = React.useState<CurrencyCode>("UGX")
+  const [libraries, setLibraries] = React.useState<RoundwoodLibraries | null>(null)
 
   const apiBaseUrl = React.useMemo(
     () => (import.meta.env.VITE_API_URL?.replace(/\/$/, "") || "/api"),
     []
+  )
+  const currencyRates = useCurrencyRates(apiBaseUrl)
+
+  const toSelectedCurrency = React.useCallback(
+    (value: number | null | undefined) =>
+      convertMoney(value, "UGX", currency, currencyRates.rates),
+    [currency, currencyRates.rates]
+  )
+
+  const formatMoney = React.useCallback(
+    (value: number | null | undefined) =>
+      formatCurrencyMoney(toSelectedCurrency(value), currency),
+    [currency, toSelectedCurrency]
   )
 
   const updateForm = React.useCallback(
@@ -705,16 +699,6 @@ export default function ModelThreePage() {
     },
     []
   )
-
-  const applyPreset = React.useCallback((presetId: string) => {
-    setPreset(presetId)
-    const nextPreset = scenarioPresets[presetId]
-    if (!nextPreset) return
-    setForm({ ...defaultForm, ...nextPreset.values })
-    setResult(null)
-    setSelectedProcessor("")
-    setRunError(null)
-  }, [])
 
   const runModel = React.useCallback(
     async (
@@ -735,7 +719,7 @@ export default function ModelThreePage() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(buildPayload(nextForm, coordinate)),
+          body: JSON.stringify(buildPayload(nextForm, coordinate, libraries)),
         })
         const responseText = await response.text()
         const parsed = responseText ? JSON.parse(responseText) : null
@@ -759,7 +743,32 @@ export default function ModelThreePage() {
         setIsRunning(false)
       }
     },
-    [apiBaseUrl, form, lockedCoordinate]
+    [apiBaseUrl, form, libraries, lockedCoordinate]
+  )
+
+  React.useEffect(() => {
+    if (!result || libraries) return
+    setLibraries({
+      labour_categories: result.library.labour_categories,
+      non_labour_items: result.library.non_labour_items,
+      quantity_library: result.library.quantity_library,
+      buyer_specs: result.library.buyer_specs,
+    })
+  }, [libraries, result])
+
+  const updateLibraryCell = React.useCallback(
+    (table: keyof RoundwoodLibraries, rowIndex: number, column: string, value: TableRowValue) => {
+      setLibraries((current) => {
+        if (!current) return current
+        return {
+          ...current,
+          [table]: current[table].map((row, index) =>
+            index === rowIndex ? { ...row, [column]: value } : row
+          ),
+        }
+      })
+    },
+    []
   )
 
   const handleCoordinateLock = React.useCallback(
@@ -778,7 +787,6 @@ export default function ModelThreePage() {
     [result, selectedProcessor]
   )
 
-  const selectedPreset = scenarioPresets[preset] ?? scenarioPresets["managed-euc"]
   const rankingRows = result?.rankings ?? []
   const bestResult = result?.processors[0] ?? null
   const bestMetrics = bestResult?.metrics
@@ -788,29 +796,29 @@ export default function ModelThreePage() {
     () =>
       rankingRows.map((row) => ({
         processor: String(row.processor ?? ""),
-        profit_ugx: getNumeric(row, "profit_ugx"),
+        profit_ugx: toSelectedCurrency(getNumeric(row, "profit_ugx")) ?? 0,
         road_km: getNumeric(row, "road_km"),
       })),
-    [rankingRows]
+    [rankingRows, toSelectedCurrency]
   )
 
   const gradeChartRows = React.useMemo(
     () =>
       selectedResult?.grade_rows.map((row) => ({
         grade: String(row.grade ?? ""),
-        revenue: getNumeric(row, "revenue"),
+        revenue: toSelectedCurrency(getNumeric(row, "revenue")) ?? 0,
         delivered_m3: getNumeric(row, "delivered_m3"),
       })) ?? [],
-    [selectedResult]
+    [selectedResult, toSelectedCurrency]
   )
 
   const waterfallRows = React.useMemo(
     () =>
       selectedResult?.section_summary.map((row) => ({
         section: String(row.section ?? ""),
-        cashflow: getNumeric(row, "cashflow"),
+        cashflow: toSelectedCurrency(getNumeric(row, "cashflow")) ?? 0,
       })) ?? [],
-    [selectedResult]
+    [selectedResult, toSelectedCurrency]
   )
 
   return (
@@ -826,29 +834,20 @@ export default function ModelThreePage() {
                 <div>
                   <CardTitle>Scenario inputs</CardTitle>
                   <CardDescription>
-                    Notebook presets, routed processor screening, and the full roundwood cashflow input stack.
+                    Routed processor screening and the full roundwood cashflow input stack.
                   </CardDescription>
                 </div>
                 <Badge variant="outline">Model 3</Badge>
               </div>
             </CardHeader>
             <CardContent className="space-y-5 px-5">
+              <CurrencySelect
+                value={currency}
+                onChange={setCurrency}
+                rateSource={currencyRates.source}
+              />
+
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
-                <label className="space-y-2 text-sm">
-                  <span className="font-medium">Preset</span>
-                  <Select value={preset} onValueChange={applyPreset}>
-                    <SelectTrigger className="w-full">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {Object.entries(scenarioPresets).map(([id, item]) => (
-                        <SelectItem key={id} value={id}>
-                          {item.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </label>
                 <label className="space-y-2 text-sm">
                   <span className="font-medium">Species</span>
                   <Select
@@ -864,23 +863,6 @@ export default function ModelThreePage() {
                     </SelectContent>
                   </Select>
                 </label>
-              </div>
-
-              <div className="rounded-lg border border-border/70 bg-background/70 px-4 py-3">
-                <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div className="space-y-1">
-                    <div className="text-sm font-medium">{selectedPreset.label}</div>
-                    <div className="text-xs text-muted-foreground">
-                      Source: {selectedPreset.origin}
-                    </div>
-                  </div>
-                  <Badge variant="secondary">
-                    {form.useProcessorSpecs ? "Processor specs" : "Scenario specs"}
-                  </Badge>
-                </div>
-                <p className="mt-3 text-sm text-muted-foreground">
-                  {selectedPreset.summary}
-                </p>
               </div>
 
               <Tabs defaultValue="ops" className="space-y-4">
@@ -1079,7 +1061,8 @@ export default function ModelThreePage() {
                   className="w-full gap-2"
                   disabled={isRunning}
                   onClick={() => {
-                    applyPreset(preset)
+                    setForm(defaultForm)
+                    setLibraries(null)
                     setResult(null)
                     setSelectedProcessor("")
                     setRunError(null)
@@ -1399,7 +1382,7 @@ export default function ModelThreePage() {
                   <TabsTrigger value="grades">Grades</TabsTrigger>
                   <TabsTrigger value="costs">Cost rows</TabsTrigger>
                   <TabsTrigger value="cashflow">Cashflow</TabsTrigger>
-                  <TabsTrigger value="library">Libraries</TabsTrigger>
+                  <TabsTrigger value="library">Assumptions</TabsTrigger>
                 </TabsList>
               </div>
               <TabsContent value="grades">
@@ -1437,19 +1420,49 @@ export default function ModelThreePage() {
                   columns={["name", "lat", "lon", "species"]}
                   filename="roundwood-processor-catalog.csv"
                 />
-                <DataTableCard
-                  title="Labour library"
-                  description="Wage ranges used by the roundwood operation model."
-                  rows={result?.library.labour_categories ?? []}
-                  columns={["labour_code", "desc", "wage_min", "wage_max"]}
-                  filename="roundwood-labour-library.csv"
+                <EditableTableCard
+                  title="Buyer specs"
+                  description="Editable processor/species grade thresholds and prices used when processor buyer specs are enabled."
+                  rows={libraries?.buyer_specs ?? result?.library.buyer_specs ?? []}
+                  columns={[
+                    "processor",
+                    "species",
+                    "price_mode",
+                    "grade",
+                    "dbh_min",
+                    "h_min",
+                    "price",
+                  ]}
+                  onCellChange={(rowIndex, column, value) =>
+                    updateLibraryCell("buyer_specs", rowIndex, column, value)
+                  }
                 />
-                <DataTableCard
+                <EditableTableCard
+                  title="Labour library"
+                  description="Editable wage ranges used by the roundwood operation model."
+                  rows={libraries?.labour_categories ?? result?.library.labour_categories ?? []}
+                  columns={["labour_code", "desc", "wage_min", "wage_max"]}
+                  onCellChange={(rowIndex, column, value) =>
+                    updateLibraryCell("labour_categories", rowIndex, column, value)
+                  }
+                />
+                <EditableTableCard
                   title="Non-labour library"
-                  description="Equipment, fuel, permit, and miscellaneous price ranges."
-                  rows={result?.library.non_labour_items ?? []}
+                  description="Editable equipment, fuel, permit, and miscellaneous price ranges."
+                  rows={libraries?.non_labour_items ?? result?.library.non_labour_items ?? []}
                   columns={["item_code", "desc", "unit", "price_min", "price_max"]}
-                  filename="roundwood-nonlabour-library.csv"
+                  onCellChange={(rowIndex, column, value) =>
+                    updateLibraryCell("non_labour_items", rowIndex, column, value)
+                  }
+                />
+                <EditableTableCard
+                  title="Quantity library"
+                  description="Editable operation productivity and input-use ranges used by Ops, Costs, and Haulage calculations."
+                  rows={libraries?.quantity_library ?? result?.library.quantity_library ?? []}
+                  columns={["section", "path", "qty_min", "qty_max"]}
+                  onCellChange={(rowIndex, column, value) =>
+                    updateLibraryCell("quantity_library", rowIndex, column, value)
+                  }
                 />
               </TabsContent>
             </Tabs>

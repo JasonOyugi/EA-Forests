@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight, MapPinned, Trees, Workflow } from "lucide-react"
+import { ArrowRight, MapPinned, Sprout, Trees, Workflow } from "lucide-react"
 import { Link } from "react-router-dom"
 
 import { BaseLayout } from "@/components/layouts/base-layout"
@@ -39,6 +39,14 @@ const modelCards = [
     badge: "Ready",
     icon: Workflow,
   },
+  {
+    title: "Clonal Eucalyptus Nursery Model",
+    description:
+      "Nursery production, OPEX, CAPEX, investment metrics, and one-way sensitivity for a pragmatic rural clonal eucalyptus nursery.",
+    href: "/models/clonal-eucalyptus-nursery",
+    badge: "Ready",
+    icon: Sprout,
+  },
 ]
 
 export default function ModelsPage() {
@@ -48,7 +56,7 @@ export default function ModelsPage() {
       description="Central home for notebook-driven model pages in the app."
     >
       <div className="@container/main px-4 lg:px-6">
-        <div className="grid gap-4 xl:grid-cols-3">
+        <div className="grid gap-4 xl:grid-cols-4">
           {modelCards.map((model) => (
             <Card key={model.title} className="border-border/70 bg-background/75">
               <CardHeader>

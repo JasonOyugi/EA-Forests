@@ -6,9 +6,14 @@ import {
   ArrowUpRight,
   BarChart3,
   Building2,
+  CalendarDays,
+  ChevronDown,
   CircleDollarSign,
   FlaskConical,
+  Gavel,
+  Landmark,
   Leaf,
+  ListChecks,
   MapPin,
   MapPinned,
   MousePointerClick,
@@ -23,21 +28,26 @@ import {
 import { useMapEvents } from "react-leaflet"
 
 import type { ShopDefinition, ShopItem } from "@/app/shop/types"
+import { marketConcessions, type MarketConcession } from "@/app/shop/data/concessions"
 import {
   marketActorLayerMeta,
   marketActors,
   marketCountryFilters,
   marketRegions,
   marketTileLayers,
-  regionalCommercialAnalytics,
+  getRegionBoundaries,
+  pointInMarketRegion,
   stakeholderAnalyticsLayers,
   type MarketCountry,
   type MarketCountryFilter,
   type MarketActor,
   type MarketActorLayer,
   type MarketRegion,
-  type SpeciesCommercialArea,
 } from "@/app/shop/data/market-map"
+import {
+  getCentralForestReserveAreaHa,
+  getCentralForestReserveRecord,
+} from "@/app/shop/data/market-databases"
 import { ugandaCfrs, type LatLngTuple } from "@/app/shop/data/generated-boundaries"
 import { ForestsLandTopBanner } from "@/components/commerce-ui/forests-land-top-banner"
 import { Badge } from "@/components/ui/badge"
@@ -128,13 +138,15 @@ const countryFlagClasses: Record<MarketCountryFilter, string> = {
   All: "",
 }
 
-const defaultMapLayerGroups = [
-  "Regional boundaries",
-  marketActorLayerMeta.processor.label,
-  marketActorLayerMeta.nursery.label,
-  marketActorLayerMeta.commercialForest.label,
-  marketActorLayerMeta.forestReserve.label,
-]
+const countryStrips: Record<MarketCountry, string[]> = {
+  Uganda: ["#111111", "#facc15", "#dc2626"],
+  Kenya: ["#111111", "#dc2626", "#15803d"],
+  Tanzania: ["#16a34a", "#111111", "#2563eb"],
+}
+
+const defaultMapLayerGroups: string[] = []
+
+const concessionLayerName = "PPP concessions"
 
 const actorLayerIcons: Record<MarketActorLayer, LucideIcon> = {
   processor: Building2,
@@ -157,6 +169,87 @@ function formatCoordinate(value: number) {
 function formatArea(value?: number) {
   if (!value) return "Not recorded"
   return `${Math.round(value).toLocaleString()} ha`
+}
+
+function formatConcessionHa(value: number) {
+  return `${Math.round(value).toLocaleString()} ha`
+}
+
+function getCountryStripColors(country: MarketCountryFilter) {
+  if (country === "All") {
+    return (["Uganda", "Kenya", "Tanzania"] as MarketCountry[]).flatMap(
+      (marketCountry) => countryStrips[marketCountry]
+    )
+  }
+
+  return countryStrips[country]
+}
+
+function getCountryAccentColor(country: MarketCountryFilter) {
+  if (country === "All") return "#d97706"
+  return countryStrips[country][1]
+}
+
+function CountryStripeBadge({
+  country,
+  className,
+}: {
+  country: MarketCountryFilter
+  className?: string
+}) {
+  const colors = getCountryStripColors(country)
+
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center gap-1 rounded-md border border-border/70 bg-background/90 px-2 py-1",
+        className
+      )}
+      title={country}
+      aria-label={country}
+    >
+      {colors.map((color, index) => (
+        <span
+          key={`${country}-${color}-${index}`}
+          className="h-2.5 w-4 rounded-[2px]"
+          style={{ backgroundColor: color }}
+        />
+      ))}
+    </span>
+  )
+}
+
+function getConcessionAreaPolygon(concession: MarketConcession): LatLngTuple[] {
+  const seed = Array.from(concession.id).reduce(
+    (total, char) => total + char.charCodeAt(0),
+    0
+  )
+  const areaKm2 = concession.ha / 100
+  const radiusKm = Math.max(2.2, Math.sqrt(areaKm2 / Math.PI))
+  const latitudeKm = 110.574
+  const longitudeKm =
+    111.32 * Math.max(0.25, Math.cos((concession.latitude * Math.PI) / 180))
+
+  return Array.from({ length: 14 }, (_, index) => {
+    const angle = (Math.PI * 2 * index) / 14 + seed * 0.011
+    const wobble =
+      0.78 +
+      (((seed + index * 37) % 9) / 20) +
+      Math.sin(index * 1.7 + seed) * 0.08
+    const latOffset = (Math.sin(angle) * radiusKm * wobble) / latitudeKm
+    const lngOffset = (Math.cos(angle) * radiusKm * wobble) / longitudeKm
+
+    return [
+      Number((concession.latitude + latOffset).toFixed(5)),
+      Number((concession.longitude + lngOffset).toFixed(5)),
+    ] as LatLngTuple
+  })
+}
+
+function getConcessionsForCountry(country: MarketCountryFilter) {
+  return country === "All"
+    ? marketConcessions
+    : marketConcessions.filter((concession) => concession.country === country)
 }
 
 function haversineKm(
@@ -337,41 +430,6 @@ function countActorsByLayer(actors: MarketActor[]) {
   }, {} as Record<MarketActorLayer, number>)
 }
 
-function getRegionBoundaries(region: MarketRegion) {
-  return region.boundaries?.length ? region.boundaries : [region.boundary]
-}
-
-function pointInBoundary(
-  latitude: number,
-  longitude: number,
-  boundary: LatLngTuple[]
-) {
-  let inside = false
-
-  for (let i = 0, j = boundary.length - 1; i < boundary.length; j = i++) {
-    const [latI, lngI] = boundary[i]
-    const [latJ, lngJ] = boundary[j]
-    const intersects =
-      latI > latitude !== latJ > latitude &&
-      longitude <
-        ((lngJ - lngI) * (latitude - latI)) / (latJ - latI || 1) + lngI
-
-    if (intersects) inside = !inside
-  }
-
-  return inside
-}
-
-function pointInMarketRegion(
-  latitude: number,
-  longitude: number,
-  region: MarketRegion
-) {
-  return getRegionBoundaries(region).some((boundary) =>
-    pointInBoundary(latitude, longitude, boundary)
-  )
-}
-
 function countForestReservesForRegion(region: MarketRegion) {
   if (region.country !== "Uganda") return 0
 
@@ -473,6 +531,72 @@ function ActorPin({
           {highlight.rank}
         </span>
       ) : null}
+    </div>
+  )
+}
+
+function ConcessionPin({ active }: { active: boolean }) {
+  return (
+    <div className="relative flex h-11 w-11 items-center justify-center">
+      <div
+        className={cn(
+          "absolute inset-1 rounded-full bg-amber-300/30 blur-md transition-opacity",
+          active ? "opacity-100" : "opacity-70"
+        )}
+      />
+      <div
+        className={cn(
+          "relative flex h-9 w-9 items-center justify-center rounded-md border-2 border-white bg-amber-600 text-white shadow-md transition-transform",
+          active && "scale-110 ring-2 ring-amber-300 ring-offset-2 ring-offset-background"
+        )}
+      >
+        <Landmark className="h-4 w-4" />
+      </div>
+    </div>
+  )
+}
+
+function ConcessionPopup({
+  concession,
+  active,
+  onSelectConcession,
+}: {
+  concession: MarketConcession
+  active: boolean
+  onSelectConcession: (concession: MarketConcession) => void
+}) {
+  return (
+    <div className="w-80 bg-background">
+      <div className="border-b p-4">
+        <Badge variant="secondary" className="mb-2 text-amber-700">
+          PPP concession
+        </Badge>
+        <h3 className="text-base font-semibold leading-tight">{concession.name}</h3>
+        <p className="mt-2 text-sm leading-5 text-muted-foreground">
+          Land dedicated for public-private partnership forestry development.
+        </p>
+      </div>
+      <div className="space-y-3 p-4">
+        <DetailRows
+          rows={[
+            { label: "Country", value: concession.country },
+            { label: "Area", value: formatConcessionHa(concession.ha) },
+            { label: "Lease term", value: concession.leaseTerm },
+            { label: "Bid window", value: concession.bidWindow },
+            { label: "Current bid", value: concession.currentBid },
+            { label: "Conditions", value: concession.conditions.join("; ") },
+          ]}
+        />
+        <Button
+          size="sm"
+          variant={active ? "default" : "outline"}
+          className="w-full"
+          onClick={() => onSelectConcession(concession)}
+        >
+          <Gavel className="h-4 w-4" />
+          {active ? "Selected" : "Select concession"}
+        </Button>
+      </div>
     </div>
   )
 }
@@ -793,6 +917,70 @@ function RegionalBoundariesLayer({
   )
 }
 
+function ConcessionsLayer({
+  concessions,
+  selectedConcessionId,
+  onSelectConcession,
+}: {
+  concessions: MarketConcession[]
+  selectedConcessionId: string | null
+  onSelectConcession: (concession: MarketConcession) => void
+}) {
+  return (
+    <MapLayerGroup name={concessionLayerName}>
+      {concessions.map((concession) => {
+        const active = concession.id === selectedConcessionId
+        const accentColor = getCountryAccentColor(concession.country)
+        const areaPolygon = getConcessionAreaPolygon(concession)
+
+        return [
+          <MapPolygon
+            key={`${concession.id}-area`}
+            positions={areaPolygon}
+            bubblingMouseEvents={false}
+            eventHandlers={{ click: () => onSelectConcession(concession) }}
+            pathOptions={{
+              color: accentColor,
+              fillColor: accentColor,
+              fillOpacity: active ? 0.28 : 0.16,
+              opacity: active ? 0.95 : 0.72,
+              weight: active ? 3 : 2,
+              dashArray: active ? undefined : "6 5",
+            }}
+          >
+            <MapPopup className="w-80 p-0">
+              <ConcessionPopup
+                concession={concession}
+                active={active}
+                onSelectConcession={onSelectConcession}
+              />
+            </MapPopup>
+          </MapPolygon>,
+          <MapMarker
+            key={`${concession.id}-marker`}
+            position={[concession.latitude, concession.longitude]}
+            icon={<ConcessionPin active={active} />}
+            iconAnchor={[22, 22]}
+            bubblingMouseEvents={false}
+            eventHandlers={{ click: () => onSelectConcession(concession) }}
+          >
+            <MapPopup className="w-80 p-0">
+              <ConcessionPopup
+                concession={concession}
+                active={active}
+                onSelectConcession={onSelectConcession}
+              />
+            </MapPopup>
+            <MapTooltip side="top">
+              {concession.name}
+            </MapTooltip>
+          </MapMarker>,
+        ]
+      })}
+    </MapLayerGroup>
+  )
+}
+
 function ActorLayerGroup({
   layer,
   actors,
@@ -811,8 +999,15 @@ function ActorLayerGroup({
   if (layer === "forestReserve") {
     return (
       <MapLayerGroup name={meta.label}>
-        {ugandaCfrs.flatMap((cfr) =>
-          cfr.polygons.map((boundary, index) => (
+        {ugandaCfrs.flatMap((cfr) => {
+          const record = getCentralForestReserveRecord(
+            cfr.name,
+            cfr.center[0],
+            cfr.center[1]
+          )
+          const recordedAreaHa = record ? getCentralForestReserveAreaHa(record) : null
+
+          return cfr.polygons.map((boundary, index) => (
             <MapPolygon
               key={`${cfr.id}-${index}`}
               positions={boundary}
@@ -834,9 +1029,45 @@ function ActorLayerGroup({
                   </div>
                   <DetailRows
                     rows={[
-                      { label: "Area", value: formatArea(cfr.areaHa) },
-                      { label: "Source", value: "Ugandabmap.kml" },
+                      { label: "Area", value: formatArea(recordedAreaHa ?? cfr.areaHa) },
+                      {
+                        label: "Legal status",
+                        value:
+                          record?.reserve_profile.reserve_status.legal_status ??
+                          "Central Forest Reserve",
+                      },
+                      {
+                        label: "PPP availability",
+                        value:
+                          String(record?.reserve_profile.reserve_status.ppp_availability || "") ||
+                          "Not recorded",
+                      },
+                      {
+                        label: "Authority",
+                        value:
+                          String(record?.reserve_profile.reserve_status.management_authority || "") ||
+                          "Not recorded",
+                      },
+                      {
+                        label: "Concession status",
+                        value:
+                          String(record?.reserve_profile.reserve_status.overall_concession_status || "") ||
+                          "Not recorded",
+                      },
+                      {
+                        label: "Verification",
+                        value:
+                          String(
+                            record?.reserve_profile.reserve_status.verification ||
+                              record?.verification ||
+                              ""
+                          ) || "Not recorded",
+                      },
+                      { label: "Source", value: String(record?.["Data source"] ?? "Ugandabmap.kml") },
                       { label: "Footprints", value: String(cfr.polygons.length) },
+                      ...(record?.Comments
+                        ? [{ label: "Descriptor", value: String(record.Comments) }]
+                        : []),
                     ]}
                   />
                 </div>
@@ -846,7 +1077,7 @@ function ActorLayerGroup({
               </MapTooltip>
             </MapPolygon>
           ))
-        )}
+        })}
       </MapLayerGroup>
     )
   }
@@ -966,11 +1197,13 @@ function MetricPanel({
   label,
   value,
   color,
+  note,
 }: {
   icon: ComponentType<{ className?: string }>
   label: string
   value: string
   color: string
+  note?: string
 }) {
   return (
     <div
@@ -986,6 +1219,9 @@ function MetricPanel({
           <div className="mt-1 text-sm text-muted-foreground">{label}</div>
         </div>
       </div>
+      {note ? (
+        <p className="mt-3 text-xs leading-5 text-muted-foreground">{note}</p>
+      ) : null}
     </div>
   )
 }
@@ -1012,10 +1248,10 @@ function average(values: number[]) {
   return values.reduce((sum, value) => sum + value, 0) / values.length
 }
 
-function formatUsdPrice(value: number | null) {
+function formatSeedlingPrice(value: number | null) {
   if (value == null) return "No price data"
 
-  return `$${value.toFixed(2)} / seedling`
+  return `UGX ${Math.round(value).toLocaleString()} / seedling`
 }
 
 function formatUgxPrice(value: number | null) {
@@ -1024,56 +1260,127 @@ function formatUgxPrice(value: number | null) {
   return `UGX ${Math.round(value).toLocaleString()} / t`
 }
 
-function getCommercialRecords(scope: MarketAnalyticsScope) {
-  if (scope.regionId) {
-    return regionalCommercialAnalytics.filter((record) => record.regionId === scope.regionId)
-  }
-  if (scope.country === "All") {
-    return regionalCommercialAnalytics
-  }
-
-  return regionalCommercialAnalytics.filter((record) => record.country === scope.country)
-}
-
-function getCommercialSummary(scope: MarketAnalyticsScope) {
-  const records = getCommercialRecords(scope)
-  const speciesByName = new globalThis.Map<string, SpeciesCommercialArea>()
-  const totalCommercialHa = records.reduce(
-    (sum, record) => sum + record.totalCommercialHa,
-    0
+function getAverageSeedlingPrice(actors: MarketActor[]) {
+  const nurseryRecords = actors.filter((actor) => actor.layer === "nursery")
+  const pricedRecords = nurseryRecords.filter(
+    (actor) => actor.seedlingPriceUgxPerSeedling != null
   )
-
-  records.forEach((record) => {
-    record.species.forEach((species) => {
-      const current = speciesByName.get(species.species)
-      speciesByName.set(species.species, {
-        species: species.species,
-        hectares: (current?.hectares ?? 0) + species.hectares,
-        color: species.color,
-      })
-    })
-  })
 
   return {
-    totalCommercialHa,
-    species: [...speciesByName.values()].sort((a, b) => b.hectares - a.hectares),
+    value: average(
+      pricedRecords.map((actor) => actor.seedlingPriceUgxPerSeedling ?? 0)
+    ),
+    pricedCount: pricedRecords.length,
+    totalCount: nurseryRecords.length,
   }
-}
-
-function getAverageSeedlingPrice(actors: MarketActor[]) {
-  return average(
-    actors
-      .filter((actor) => actor.layer === "nursery" && actor.seedlingPriceUsd)
-      .map((actor) => actor.seedlingPriceUsd ?? 0)
-  )
 }
 
 function getAverageG1RoundwoodPrice(actors: MarketActor[]) {
-  return average(
-    actors
-      .filter((actor) => actor.layer === "processor" && actor.g1RoundwoodPriceUgxPerTonne)
-      .map((actor) => actor.g1RoundwoodPriceUgxPerTonne ?? 0)
+  const processorRecords = actors.filter((actor) => actor.layer === "processor")
+  const pricedRecords = processorRecords.filter(
+    (actor) => actor.g1RoundwoodPriceUgxPerTonne != null
   )
+
+  return {
+    value: average(
+      pricedRecords.map((actor) => actor.g1RoundwoodPriceUgxPerTonne ?? 0)
+    ),
+    pricedCount: pricedRecords.length,
+    totalCount: processorRecords.length,
+  }
+}
+
+function formatRecordCoverage(
+  recordedCount: number,
+  totalCount: number,
+  recordedLabel: string,
+  missingLabel: string
+) {
+  if (totalCount === 0) return missingLabel
+
+  return `${recordedCount} of ${totalCount} ${recordedLabel}`
+}
+
+function getForestReservesForScope(scope: MarketAnalyticsScope) {
+  if (scope.country !== "All" && scope.country !== "Uganda") return []
+  if (!scope.regionId) return ugandaCfrs
+
+  const region = marketRegions.find((item) => item.id === scope.regionId)
+  if (!region || region.country !== "Uganda") return []
+
+  return ugandaCfrs.filter((cfr) =>
+    pointInMarketRegion(cfr.center[0], cfr.center[1], region)
+  )
+}
+
+function getCommercialForestActorsForScope(scope: MarketAnalyticsScope) {
+  const region = scope.regionId
+    ? marketRegions.find((item) => item.id === scope.regionId)
+    : null
+
+  return marketActors.filter((actor) => {
+    if (actor.layer !== "commercialForest") return false
+    if (scope.country !== "All" && actor.country !== scope.country) return false
+    if (region && (actor.country !== region.country || actor.region !== region.name)) {
+      return false
+    }
+
+    return true
+  })
+}
+
+function getForestCoverSummary(scope: MarketAnalyticsScope) {
+  const forestReserves = getForestReservesForScope(scope)
+  const commercialForests = getCommercialForestActorsForScope(scope)
+  const commercialForestsWithArea = commercialForests.filter(
+    (actor) => actor.sizeHa != null
+  )
+  const forestReserveHa = forestReserves.reduce(
+    (sum, cfr) =>
+      sum +
+      (getCentralForestReserveAreaHa(
+        getCentralForestReserveRecord(cfr.name, cfr.center[0], cfr.center[1])
+      ) ??
+        cfr.areaHa),
+    0
+  )
+  const commercialForestHa = commercialForestsWithArea.reduce(
+    (sum, actor) => sum + (actor.sizeHa ?? 0),
+    0
+  )
+
+  return {
+    forestReserveHa,
+    commercialForestHa,
+    commercialForestAreaCount: commercialForestsWithArea.length,
+    commercialForestTotalCount: commercialForests.length,
+    totalForestCoverHa: forestReserveHa + commercialForestHa,
+  }
+}
+
+type CommercialSpeciesArea = {
+  species: string
+  hectares: number
+  color: string
+}
+
+function getCommercialSpeciesSummary(actors: MarketActor[]) {
+  const totals = new globalThis.Map<string, CommercialSpeciesArea>()
+
+  actors
+    .filter((actor) => actor.layer === "commercialForest")
+    .forEach((actor) => {
+      actor.commercialSpeciesAreas?.forEach((item) => {
+        const current = totals.get(item.species)
+        totals.set(item.species, {
+          species: item.species,
+          hectares: (current?.hectares ?? 0) + item.hectares,
+          color: item.color,
+        })
+      })
+    })
+
+  return [...totals.values()].sort((a, b) => b.hectares - a.hectares)
 }
 
 function ToggleGroup<T extends string>({
@@ -1102,55 +1409,66 @@ function ToggleGroup<T extends string>({
   )
 }
 
-function SpeciesPie({
-  species,
-  totalCommercialHa,
+function SpeciesDataNotice({
+  speciesAreas,
+  commercialForestAreaCount,
+  commercialForestTotalCount,
 }: {
-  species: SpeciesCommercialArea[]
-  totalCommercialHa: number
+  speciesAreas: CommercialSpeciesArea[]
+  commercialForestAreaCount: number
+  commercialForestTotalCount: number
 }) {
-  let cursor = 0
-  const gradient =
-    totalCommercialHa > 0 && species.length > 0
-      ? species
-          .map((item) => {
-            const start = cursor
-            const end = cursor + (item.hectares / totalCommercialHa) * 100
-            cursor = end
-            return `${item.color} ${start}% ${end}%`
-          })
-          .join(", ")
-      : "#e5e7eb 0% 100%"
+  if (speciesAreas.length > 0) {
+    const totalHa = speciesAreas.reduce((sum, item) => sum + item.hectares, 0)
+
+    return (
+      <div className="rounded-md border bg-background/75 p-4">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <h3 className="text-sm font-semibold">Commercial forest species split</h3>
+          <span className="text-xs text-muted-foreground">
+            {Math.round(totalHa).toLocaleString()} ha recorded
+          </span>
+        </div>
+        <div className="space-y-2">
+          {speciesAreas.map((item) => {
+            const share = totalHa > 0 ? (item.hectares / totalHa) * 100 : 0
+
+            return (
+              <div key={item.species} className="space-y-1">
+                <div className="flex items-center justify-between gap-3 text-sm">
+                  <span className="flex items-center gap-2">
+                    <span
+                      className="h-2.5 w-2.5 rounded-full"
+                      style={{ backgroundColor: item.color }}
+                    />
+                    {item.species}
+                  </span>
+                  <span className="text-muted-foreground">
+                    {Math.round(item.hectares).toLocaleString()} ha ({share.toFixed(0)}%)
+                  </span>
+                </div>
+                <div className="h-2 overflow-hidden rounded-full bg-muted">
+                  <div
+                    className="h-full rounded-full"
+                    style={{
+                      width: `${Math.max(2, share)}%`,
+                      backgroundColor: item.color,
+                    }}
+                  />
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <div className="grid gap-4 md:grid-cols-[9rem_minmax(0,1fr)]">
-      <div
-        className="aspect-square rounded-full border shadow-inner"
-        style={{ background: `conic-gradient(${gradient})` }}
-      />
-      <div className="space-y-2">
-        {species.map((item) => {
-          const share = totalCommercialHa > 0 ? (item.hectares / totalCommercialHa) * 100 : 0
-
-          return (
-            <div key={item.species} className="flex items-center justify-between gap-3 text-sm">
-              <span className="flex min-w-0 items-center gap-2">
-                <span
-                  className="h-2.5 w-2.5 shrink-0 rounded-full"
-                  style={{ backgroundColor: item.color }}
-                />
-                <span className="truncate">{item.species}</span>
-              </span>
-              <span className="text-right text-muted-foreground">
-                {Math.round(item.hectares).toLocaleString()} ha ({share.toFixed(0)}%)
-              </span>
-            </div>
-          )
-        })}
-        {species.length === 0 ? (
-          <p className="text-sm text-muted-foreground">No species split recorded.</p>
-        ) : null}
-      </div>
+    <div className="rounded-md border border-dashed bg-muted/25 p-4 text-sm leading-6 text-muted-foreground">
+      No species-area split is recorded for this scope. Commercial forest area
+      coverage: {commercialForestAreaCount} of {commercialForestTotalCount} mapped
+      large commercial forest records include hectares.
     </div>
   )
 }
@@ -1199,9 +1517,10 @@ function MarketAnalysis({
     ? { country: selectedRegion.country, regionId: selectedRegion.id }
     : { country: selectedCountry, regionId: null }
   const summaryActors = getActorsForScope(summaryScope)
-  const summaryCommercial = getCommercialSummary(summaryScope)
+  const forestCover = getForestCoverSummary(summaryScope)
   const avgSeedlingPrice = getAverageSeedlingPrice(summaryActors)
   const avgG1RoundwoodPrice = getAverageG1RoundwoodPrice(summaryActors)
+  const commercialSpeciesAreas = getCommercialSpeciesSummary(summaryActors)
   const countryFlagClass = countryFlagClasses[selectedCountry]
   const countryMetricCards = [
     {
@@ -1283,20 +1602,39 @@ function MarketAnalysis({
     {
       icon: CircleDollarSign,
       label: "Avg. seedling price",
-      value: formatUsdPrice(avgSeedlingPrice),
+      value: formatSeedlingPrice(avgSeedlingPrice.value),
       color: marketActorLayerMeta.nursery.color,
+      note: formatRecordCoverage(
+        avgSeedlingPrice.pricedCount,
+        avgSeedlingPrice.totalCount,
+        "nursery records include price",
+        "No nursery records in this scope"
+      ),
     },
     {
       icon: Route,
       label: "Avg. G1 roundwood",
-      value: formatUgxPrice(avgG1RoundwoodPrice),
+      value: formatUgxPrice(avgG1RoundwoodPrice.value),
       color: marketActorLayerMeta.processor.color,
+      note: formatRecordCoverage(
+        avgG1RoundwoodPrice.pricedCount,
+        avgG1RoundwoodPrice.totalCount,
+        "processor records include G1 UGX/t",
+        "No processor records in this scope"
+      ),
     },
     {
       icon: Trees,
-      label: "Total commercial ha",
-      value: `${Math.round(summaryCommercial.totalCommercialHa).toLocaleString()} ha`,
+      label: "Forest cover area",
+      value:
+        forestCover.totalForestCoverHa > 0
+          ? formatArea(forestCover.totalForestCoverHa)
+          : "Not recorded",
       color: marketActorLayerMeta.commercialForest.color,
+      note:
+        `CFR footprints: ${formatArea(forestCover.forestReserveHa)}. ` +
+        `Large commercial forests: ${formatArea(forestCover.commercialForestHa)} ` +
+        `(${forestCover.commercialForestAreaCount} of ${forestCover.commercialForestTotalCount} records).`,
     },
   ]
 
@@ -1304,8 +1642,7 @@ function MarketAnalysis({
     <section
       className={cn(
         "roundwood-analysis-shell flag-row space-y-4 rounded-[28px] border bg-background/70 p-4 backdrop-blur-sm sm:p-5",
-        selectedCountry !== "All" && countryFlagClass,
-        selectedCountry !== "All" && "flag-row-active"
+        selectedCountry !== "All" && countryFlagClass
       )}
     >
       <div className="rounded-[24px] border-0 bg-background/75 p-4">
@@ -1355,10 +1692,173 @@ function MarketAnalysis({
               <MetricPanel key={metric.label} {...metric} />
             ))}
           </div>
-          <SpeciesPie
-            species={summaryCommercial.species}
-            totalCommercialHa={summaryCommercial.totalCommercialHa}
+          <SpeciesDataNotice
+            speciesAreas={commercialSpeciesAreas}
+            commercialForestAreaCount={forestCover.commercialForestAreaCount}
+            commercialForestTotalCount={forestCover.commercialForestTotalCount}
           />
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function ConcessionsDatabase({
+  selectedCountry,
+  selectedConcessionId,
+  onSelectConcession,
+}: {
+  selectedCountry: MarketCountryFilter
+  selectedConcessionId: string | null
+  onSelectConcession: (concession: MarketConcession) => void
+}) {
+  const [isDatabasePinned, setIsDatabasePinned] = useState(false)
+  const [isDatabaseHovered, setIsDatabaseHovered] = useState(false)
+  const concessions = getConcessionsForCountry(selectedCountry)
+  const totalHa = concessions.reduce((sum, concession) => sum + concession.ha, 0)
+  const isDatabaseExpanded = isDatabasePinned || isDatabaseHovered
+  const metricCards = [
+    {
+      icon: Landmark,
+      label: "PPP concessions",
+      value: String(concessions.length),
+      color: "#d97706",
+    },
+    {
+      icon: ListChecks,
+      label: "Dedicated land",
+      value: formatConcessionHa(totalHa),
+      color: "#16a34a",
+    },
+    {
+      icon: CalendarDays,
+      label: "Bid windows",
+      value: `${concessions.length} active`,
+      color: "#2563eb",
+    },
+  ]
+
+  return (
+    <section id="market-concessions">
+      <div
+        className={cn(
+          "flag-row rounded-[1.75rem] border bg-card p-4 shadow-sm transition-all duration-300 sm:p-5",
+          selectedCountry !== "All" && countryFlagClasses[selectedCountry]
+        )}
+        onMouseEnter={() => setIsDatabaseHovered(true)}
+        onMouseLeave={() => setIsDatabaseHovered(false)}
+      >
+        <Button
+          type="button"
+          variant="ghost"
+          aria-expanded={isDatabaseExpanded}
+          onClick={() => setIsDatabasePinned(true)}
+          onDoubleClick={(event) => {
+            event.preventDefault()
+            setIsDatabasePinned(false)
+            setIsDatabaseHovered(false)
+          }}
+          className="block h-auto w-full cursor-pointer rounded-[1.25rem] bg-transparent p-0 text-left text-foreground hover:bg-transparent focus-visible:bg-transparent"
+        >
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div className="flex items-start gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-amber-50 text-amber-800">
+                <Landmark className="h-5 w-5" />
+              </span>
+              <div className="space-y-1">
+                <h2 className="text-lg font-semibold">PPP concessions database</h2>
+                <p className="text-sm text-muted-foreground">
+                  Areas of land dedicated for public-private partnerships
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <CountryStripeBadge country={selectedCountry} />
+              <span
+                className={cn(
+                  "flex h-9 w-9 items-center justify-center rounded-full border border-amber-200 bg-amber-50 text-amber-800 transition-transform duration-300",
+                  isDatabaseExpanded ? "rotate-180" : "rotate-0"
+                )}
+              >
+                <ChevronDown className="h-4 w-4" />
+              </span>
+            </div>
+          </div>
+        </Button>
+
+        <div
+          className={cn(
+            "grid overflow-hidden transition-all duration-300",
+            isDatabaseExpanded ? "mt-5 grid-rows-[1fr] opacity-100" : "mt-2 grid-rows-[0fr] opacity-80"
+          )}
+        >
+          <div className="overflow-hidden">
+            <div className="space-y-4 pt-1">
+              <div className="grid gap-3 sm:grid-cols-3">
+                {metricCards.map((metric) => (
+                  <MetricPanel key={metric.label} {...metric} />
+                ))}
+              </div>
+
+              <div className="overflow-hidden rounded-md border bg-background">
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[920px] text-left text-sm">
+                    <thead className="border-b bg-muted/70 text-xs uppercase tracking-normal text-muted-foreground">
+                      <tr>
+                        <th className="px-4 py-3 font-semibold">Concession</th>
+                        <th className="px-4 py-3 font-semibold">Country</th>
+                        <th className="px-4 py-3 font-semibold">Ha</th>
+                        <th className="px-4 py-3 font-semibold">Lease term</th>
+                        <th className="px-4 py-3 font-semibold">Bid window</th>
+                        <th className="px-4 py-3 font-semibold">Current bid</th>
+                        <th className="px-4 py-3 font-semibold">Conditions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {concessions.map((concession) => {
+                        const active = concession.id === selectedConcessionId
+
+                        return (
+                          <tr
+                            key={concession.id}
+                            className={cn(
+                              "border-b last:border-b-0",
+                              active ? "bg-primary/10" : "hover:bg-muted/35"
+                            )}
+                          >
+                            <td className="px-4 py-3">
+                              <button
+                                type="button"
+                                className="inline-flex items-center gap-2 font-medium text-foreground hover:text-primary"
+                                onClick={() => onSelectConcession(concession)}
+                              >
+                                <Gavel
+                                  className="h-4 w-4"
+                                  style={{ color: getCountryAccentColor(concession.country) }}
+                                />
+                                {concession.name}
+                              </button>
+                            </td>
+                            <td className="px-4 py-3">
+                              <CountryStripeBadge country={concession.country} />
+                            </td>
+                            <td className="px-4 py-3 font-medium">{formatConcessionHa(concession.ha)}</td>
+                            <td className="px-4 py-3 text-muted-foreground">{concession.leaseTerm}</td>
+                            <td className="px-4 py-3 text-muted-foreground">{concession.bidWindow}</td>
+                            <td className="px-4 py-3 font-medium">{concession.currentBid}</td>
+                            <td className="px-4 py-3 text-muted-foreground">
+                              {concession.conditions.join("; ")}
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1369,11 +1869,9 @@ export function RoundwoodShop({ shop, inventory }: RoundwoodShopProps) {
   const navigate = useNavigate()
   const fallbackItem = inventory[0]
   const firstProcessor = marketActors.find((actor) => actor.layer === "processor")
-  const [selectedActorId, setSelectedActorId] = useState<string | null>(
-    firstProcessor?.id ?? null
-  )
+  const [selectedActorId, setSelectedActorId] = useState<string | null>(null)
   const [clickedPoint, setClickedPoint] = useState<SelectedPoint | null>(null)
-  const [isTableOpen, setIsTableOpen] = useState(true)
+  const [isTableOpen, setIsTableOpen] = useState(false)
   const [selectedCountry, setSelectedCountry] =
     useState<MarketCountryFilter>("Uganda")
   const [selectedRegionId, setSelectedRegionId] = useState<string | null>(
@@ -1383,7 +1881,8 @@ export function RoundwoodShop({ shop, inventory }: RoundwoodShopProps) {
     () => createEmptyNearestFeatureGroups()
   )
   const [isRouting, setIsRouting] = useState(false)
-  const [showRoadAnalysis, setShowRoadAnalysis] = useState(true)
+  const [showRoadAnalysis, setShowRoadAnalysis] = useState(false)
+  const [selectedConcessionId, setSelectedConcessionId] = useState<string | null>(null)
 
   const actorGroups = useMemo(
     () =>
@@ -1456,6 +1955,17 @@ export function RoundwoodShop({ shop, inventory }: RoundwoodShopProps) {
     return () => controller.abort()
   }, [selectedPointKey])
 
+  useEffect(() => {
+    if (!selectedConcessionId) return
+
+    const concessionIsVisible = getConcessionsForCountry(selectedCountry).some(
+      (concession) => concession.id === selectedConcessionId
+    )
+    if (!concessionIsVisible) {
+      setSelectedConcessionId(null)
+    }
+  }, [selectedCountry, selectedConcessionId])
+
   const regionAnalytics = useMemo(() => getRegionAnalytics(), [])
   const maxRegionCount = Math.max(...regionAnalytics.map((region) => region.count), 1)
   const nearestHighlights = useMemo(
@@ -1488,9 +1998,19 @@ export function RoundwoodShop({ shop, inventory }: RoundwoodShopProps) {
     setIsTableOpen(true)
   }
 
+  const selectConcession = (concession: MarketConcession) => {
+    setSelectedConcessionId(concession.id)
+    if (selectedCountry !== "All" && selectedCountry !== concession.country) {
+      setSelectedCountry(concession.country)
+    }
+  }
+
   return (
     <div className="space-y-8">
-      <ForestsLandTopBanner />
+      <ForestsLandTopBanner
+        targetId="market-concessions"
+        linkLabel="Review concessions"
+      />
 
       <section className="space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -1501,7 +2021,7 @@ export function RoundwoodShop({ shop, inventory }: RoundwoodShopProps) {
             <div>
               <h2 className="text-lg font-semibold">Markets map</h2>
               <p className="text-sm text-muted-foreground">
-                Sector actors, regional boundaries, CFR footprints, and processor road proximity.
+                Sector actors, PPP concessions, regional boundaries, CFR footprints, and processor road proximity.
               </p>
             </div>
           </div>
@@ -1542,6 +2062,12 @@ export function RoundwoodShop({ shop, inventory }: RoundwoodShopProps) {
               ))}
 
               <RegionalBoundariesLayer regions={regionAnalytics} maxCount={maxRegionCount} />
+
+              <ConcessionsLayer
+                concessions={marketConcessions}
+                selectedConcessionId={selectedConcessionId}
+                onSelectConcession={selectConcession}
+              />
 
               {actorLayerOrder.map((layer) => (
                 <ActorLayerGroup
@@ -1628,6 +2154,12 @@ export function RoundwoodShop({ shop, inventory }: RoundwoodShopProps) {
         selectedRegionId={selectedRegionId}
         onCountryChange={setSelectedCountry}
         onRegionChange={setSelectedRegionId}
+      />
+
+      <ConcessionsDatabase
+        selectedCountry={selectedCountry}
+        selectedConcessionId={selectedConcessionId}
+        onSelectConcession={selectConcession}
       />
     </div>
   )

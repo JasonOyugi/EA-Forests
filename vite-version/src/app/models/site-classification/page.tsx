@@ -67,6 +67,7 @@ type TableRowRecord = Record<string, TableRowValue>
 
 const EARTH_ENGINE_AUTH_COMMAND = [
   "cd backend",
+  "$env:EARTH_ENGINE_PROJECT='your-google-cloud-project-id'",
   "$env:UV_CACHE_DIR='c:\\Users\\JasonOyugi\\Downloads\\EA_Forests\\.uv-cache'",
   "uv run python -m app.auth_earth_engine",
 ].join("\n")
@@ -814,7 +815,7 @@ export default function SiteClassificationPage() {
   return (
     <BaseLayout
       title="Site classification"
-      description="Double-click anywhere on the map to lock coordinates, choose the model parameters, then run the Python backend and review the returned tables below."
+      description="Double-click anywhere on the map to lock coordinates, choose the model parameters, then run the model to fully classify your site."
     >
       <div className="@container/main px-4 lg:px-6">
         <div className="space-y-6">

@@ -1,5 +1,18 @@
 import { adminLevelOneRegions } from "./generated-admin-boundaries"
 import type { LatLngTuple } from "./generated-boundaries"
+import {
+  centralForestReserveDatabase,
+  getCentralForestReserveAreaHa,
+  largeCommercialForestDatabase,
+  nurseryDatabase,
+  processorDatabase,
+  type CentralForestReserveRecord,
+  type DataValue,
+  type LargeCommercialForestRecord,
+  type NurseryRecord,
+  type ProcessorRecord,
+  type ProcessorSpeciesSpec,
+} from "./market-databases"
 
 export type MarketCountry = "Uganda" | "Kenya" | "Tanzania"
 export type MarketCountryFilter = MarketCountry | "All"
@@ -29,8 +42,13 @@ export interface MarketActor {
   details: MarketActorDetail[]
   source: string
   sizeHa?: number
-  seedlingPriceUsd?: number
+  seedlingPriceUgxPerSeedling?: number
   g1RoundwoodPriceUgxPerTonne?: number
+  commercialSpeciesAreas?: {
+    species: string
+    hectares: number
+    color: string
+  }[]
 }
 
 export interface MarketRegion {
@@ -45,19 +63,6 @@ export interface MarketRegion {
 }
 
 export type UgandaRegion = MarketRegion
-
-export interface SpeciesCommercialArea {
-  species: string
-  hectares: number
-  color: string
-}
-
-export interface RegionalCommercialAnalytics {
-  regionId: string
-  country: MarketCountry
-  totalCommercialHa: number
-  species: SpeciesCommercialArea[]
-}
 
 export interface MarketTileLayer {
   name: string
@@ -252,7 +257,11 @@ export const stakeholderAnalyticsLayers: MarketActorLayer[] = [
   "trialSite",
 ]
 
-function pointInBoundary(
+export function getRegionBoundaries(region: MarketRegion) {
+  return region.boundaries?.length ? region.boundaries : [region.boundary]
+}
+
+export function pointInBoundary(
   latitude: number,
   longitude: number,
   boundary: LatLngTuple[]
@@ -273,14 +282,14 @@ function pointInBoundary(
   return inside
 }
 
-function pointInRegion(
+export function pointInMarketRegion(
   latitude: number,
   longitude: number,
   region: MarketRegion
 ) {
-  const boundaries = region.boundaries?.length ? region.boundaries : [region.boundary]
-
-  return boundaries.some((boundary) => pointInBoundary(latitude, longitude, boundary))
+  return getRegionBoundaries(region).some((boundary) =>
+    pointInBoundary(latitude, longitude, boundary)
+  )
 }
 
 function distanceToRegionCenter(
@@ -292,14 +301,14 @@ function distanceToRegionCenter(
   return (latitude - regionLatitude) ** 2 + (longitude - regionLongitude) ** 2
 }
 
-function getCountryRegion(
+export function getCountryRegion(
   country: MarketCountry,
   latitude: number,
   longitude: number
 ) {
   const countryRegions = marketRegions.filter((region) => region.country === country)
   const containingRegion = countryRegions.find((region) =>
-    pointInRegion(latitude, longitude, region)
+    pointInMarketRegion(latitude, longitude, region)
   )
 
   return (
@@ -310,25 +319,6 @@ function getCountryRegion(
         distanceToRegionCenter(latitude, longitude, b)
     )[0]
   )?.name
-}
-
-function parseG1RoundwoodPrice(details: MarketActorDetail[]) {
-  const row = details.find((detail) => detail.label.toLowerCase().includes("g1"))
-  const match = row?.value.match(/UGX\s*([\d.]+)\s*k\/t/i)
-  if (!match) return undefined
-
-  return Number(match[1]) * 1000
-}
-
-function getDefaultSeedlingPriceUsd(name: string, country: MarketCountry) {
-  const countryBasePrice: Record<MarketCountry, number> = {
-    Uganda: 0.18,
-    Kenya: 0.21,
-    Tanzania: 0.19,
-  }
-  const hash = [...name].reduce((sum, char) => sum + char.charCodeAt(0), 0)
-
-  return Number((countryBasePrice[country] + (hash % 8) * 0.01).toFixed(2))
 }
 
 function actor(
@@ -344,19 +334,14 @@ function actor(
     details?: MarketActorDetail[]
     source?: string
     sizeHa?: number
-    seedlingPriceUsd?: number
+    seedlingPriceUgxPerSeedling?: number
     g1RoundwoodPriceUgxPerTonne?: number
+    commercialSpeciesAreas?: MarketActor["commercialSpeciesAreas"]
   } = {}
 ): MarketActor {
   const country = options.country ?? "Uganda"
   const details = options.details ?? []
   const region = options.region ?? getCountryRegion(country, latitude, longitude) ?? country
-  const seedlingPriceUsd =
-    options.seedlingPriceUsd ??
-    (layer === "nursery" ? getDefaultSeedlingPriceUsd(name, country) : undefined)
-  const g1RoundwoodPriceUgxPerTonne =
-    options.g1RoundwoodPriceUgxPerTonne ??
-    (layer === "processor" ? parseG1RoundwoodPrice(details) : undefined)
 
   return {
     id: `${layer}-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`,
@@ -372,276 +357,286 @@ function actor(
     longitude,
     details,
     source: options.source ?? "Upstream_Models.ipynb",
-    ...(options.sizeHa ? { sizeHa: options.sizeHa } : {}),
-    ...(seedlingPriceUsd ? { seedlingPriceUsd } : {}),
-    ...(g1RoundwoodPriceUgxPerTonne ? { g1RoundwoodPriceUgxPerTonne } : {}),
+    ...(options.sizeHa != null ? { sizeHa: options.sizeHa } : {}),
+    ...(options.seedlingPriceUgxPerSeedling != null
+      ? { seedlingPriceUgxPerSeedling: options.seedlingPriceUgxPerSeedling }
+      : {}),
+    ...(options.g1RoundwoodPriceUgxPerTonne != null
+      ? { g1RoundwoodPriceUgxPerTonne: options.g1RoundwoodPriceUgxPerTonne }
+      : {}),
+    ...(options.commercialSpeciesAreas?.length
+      ? { commercialSpeciesAreas: options.commercialSpeciesAreas }
+      : {}),
   }
 }
-
-const speciesColors = {
-  eucalyptus: "#16a34a",
-  pine: "#2563eb",
-  cypress: "#0891b2",
-  teak: "#b45309",
-  melia: "#f59e0b",
-  indigenous: "#65a30d",
-  mixed: "#64748b",
-}
-
-function speciesSplit(
-  totalCommercialHa: number,
-  split: { species: string; share: number; color: string }[]
-) {
-  return split.map((item, index) => {
-    const isLast = index === split.length - 1
-    const allocated = split
-      .slice(0, index)
-      .reduce((sum, previous) => sum + Math.round(totalCommercialHa * previous.share), 0)
-
-    return {
-      species: item.species,
-      hectares: isLast
-        ? Math.max(0, Math.round(totalCommercialHa - allocated))
-        : Math.round(totalCommercialHa * item.share),
-      color: item.color,
-    }
-  })
-}
-
-function commercialRecord(
-  regionId: string,
-  country: MarketCountry,
-  totalCommercialHa: number,
-  split: { species: string; share: number; color: string }[]
-): RegionalCommercialAnalytics {
-  return {
-    regionId,
-    country,
-    totalCommercialHa,
-    species: speciesSplit(totalCommercialHa, split),
-  }
-}
-
-const countrySpeciesProfiles: Record<
-  MarketCountry,
-  { species: string; share: number; color: string }[]
-> = {
-  Uganda: [
-    { species: "Eucalyptus", share: 0.55, color: speciesColors.eucalyptus },
-    { species: "Pine", share: 0.31, color: speciesColors.pine },
-    { species: "Mixed hardwoods", share: 0.14, color: speciesColors.mixed },
-  ],
-  Kenya: [
-    { species: "Eucalyptus", share: 0.42, color: speciesColors.eucalyptus },
-    { species: "Cypress", share: 0.28, color: speciesColors.cypress },
-    { species: "Pine", share: 0.2, color: speciesColors.pine },
-    { species: "Melia", share: 0.1, color: speciesColors.melia },
-  ],
-  Tanzania: [
-    { species: "Pine", share: 0.36, color: speciesColors.pine },
-    { species: "Eucalyptus", share: 0.34, color: speciesColors.eucalyptus },
-    { species: "Teak", share: 0.17, color: speciesColors.teak },
-    { species: "Mixed hardwoods", share: 0.13, color: speciesColors.mixed },
-  ],
-}
-
-const countryCommercialAreaBaseHa: Record<MarketCountry, number> = {
-  Uganda: 4200,
-  Kenya: 5600,
-  Tanzania: 7400,
-}
-
-function getRegionalCommercialAreaHa(region: MarketRegion) {
-  const hash = [...`${region.country}-${region.name}`].reduce(
-    (sum, char) => sum + char.charCodeAt(0),
-    0
-  )
-  const countryBase = countryCommercialAreaBaseHa[region.country]
-  const boundaryScale = Math.min(region.boundary.length / 220, 2.2)
-  const regionScale = 0.45 + (hash % 115) / 100
-
-  return Math.round(countryBase * regionScale * (0.75 + boundaryScale * 0.18))
-}
-
-export const regionalCommercialAnalytics: RegionalCommercialAnalytics[] = marketRegions.map(
-  (region) =>
-    commercialRecord(
-      region.id,
-      region.country,
-      getRegionalCommercialAreaHa(region),
-      countrySpeciesProfiles[region.country]
-    )
-)
-const defaultProcessorDetails: MarketActorDetail[] = [
-  { label: "Eucalyptus G1", value: "30 cm DBH, 2.7 m log, UGX 125k/t" },
-  { label: "Eucalyptus G2", value: "20 cm DBH, 2.7 m log, UGX 115k/t" },
-  { label: "Pine G1", value: "25 cm DBH, 2.7 m log, UGX 135k/t" },
-  { label: "Price mode", value: "Per tonne" },
-]
-
-const premiumProcessorDetails: MarketActorDetail[] = [
-  { label: "Eucalyptus G1", value: "30 cm DBH, 2.7 m log, UGX 145k/t" },
-  { label: "Eucalyptus G2", value: "20 cm DBH, 2.7 m log, UGX 135k/t" },
-  { label: "Pine G1", value: "30 cm DBH, 2.7 m log, UGX 175k/t" },
-  { label: "Price mode", value: "Per tonne" },
-]
-
-const largeLogProcessorDetails: MarketActorDetail[] = [
-  { label: "Eucalyptus G1", value: "40 cm DBH, 2.7 m log, UGX 125k/t" },
-  { label: "Eucalyptus G2", value: "30 cm DBH, 2.7 m log, UGX 120k/t" },
-  { label: "Pine G1", value: "40 cm DBH, 2.7 m log, UGX 175k/t" },
-  { label: "Price mode", value: "Per tonne" },
-]
-
-const cfidProcessorDetails: MarketActorDetail[] = [
-  { label: "Pine G1", value: "14 cm DBH, 2.6 m log, UGX 170k/t" },
-  { label: "Pine G2", value: "9 cm DBH, 2.6 m log" },
-  { label: "Eucalyptus", value: "Large log thresholds recorded; prices pending" },
-  { label: "Price mode", value: "Per tonne" },
-]
-
-const nurseryDetails: MarketActorDetail[] = [
-  { label: "Database", value: "Nursery database" },
-  { label: "Fields tracked", value: "Capacity, species, price, transport, grower type" },
-]
-
-const commercialForestDetails: MarketActorDetail[] = [
-  { label: "Database", value: "Large commercial forest database" },
-  { label: "Fields tracked", value: "Plantation size, species area, farm-gate price, certification" },
-]
 
 const trialSiteDetails: MarketActorDetail[] = [
   { label: "Database", value: "Trial site database" },
   { label: "Fields tracked", value: "Water balance, temperature, radiation, topography, soils" },
 ]
 
-const forestReserveDetails: MarketActorDetail[] = [
-  { label: "Database", value: "Uganda forest reserve KML" },
-  { label: "Layer", value: "Reserve centroid context from KML footprints" },
-]
+function hasDatabaseValue(value: DataValue | string[] | Record<string, DataValue>) {
+  if (Array.isArray(value)) return value.length > 0
+  if (typeof value === "object") return Object.keys(value).length > 0
+  return value !== ""
+}
 
-export const marketActors: MarketActor[] = [
-  actor("processor", "Shanglong Industry Company", 1.0989088, 31.6226227, {
-    role: "Roundwood processor",
-    summary: "Processor with eucalyptus and pine per-tonne buyer specifications.",
-    details: defaultProcessorDetails,
-  }),
-  actor("processor", "Golden Homes factory", -0.138642, 31.894878, {
-    role: "Roundwood processor",
-    summary: "Processor with eucalyptus and pine grade thresholds in the buyer database.",
-    details: defaultProcessorDetails,
-  }),
-  actor("processor", "(Timber Paper) Sino-Uganda Mbale Industrial Park", 1.0758414, 34.1382243, {
-    role: "Industrial processor",
-    summary: "Eastern Uganda industrial processor with recorded eucalyptus and pine specifications.",
-    details: defaultProcessorDetails,
-  }),
-  actor("processor", "Evergreen wood", 0.258846, 32.4077845, {
-    role: "Roundwood processor",
-    summary: "Processor with stronger recorded per-tonne price bands for eucalyptus and pine.",
-    details: premiumProcessorDetails,
-  }),
-  actor("processor", "Brother wood", 0.2253216, 32.8081847, {
-    role: "Roundwood processor",
-    summary: "Central corridor processor with standard eucalyptus and pine buyer specifications.",
-    details: defaultProcessorDetails,
-  }),
-  actor("processor", "Honghai PLY", 0.3714341, 32.8245749, {
-    role: "Plywood processor",
-    summary: "Processor node in the central-eastern processing cluster.",
-    details: defaultProcessorDetails,
-  }),
-  actor("processor", "Zhong Ding Construction Materials", 0.4393071, 32.36385, {
-    role: "Construction materials processor",
-    summary: "Central Uganda processor linked to construction-material demand.",
-    details: defaultProcessorDetails,
-  }),
-  actor("processor", "Zhong Bang Wood", -0.0235833, 32.0203333, {
-    role: "Large-log processor",
-    summary: "Processor with larger DBH thresholds for both eucalyptus and pine grades.",
-    details: largeLogProcessorDetails,
-  }),
-  actor("processor", "Acacia Wood factory", 0.658842, 31.36237, {
-    role: "Roundwood processor",
-    summary: "Western-central processor with standard eucalyptus and pine buyer specifications.",
-    details: defaultProcessorDetails,
-  }),
-  actor("processor", "CFID factory", 0.7449337, 32.2329796, {
-    role: "Pine-linked processor",
-    summary: "Processor with recorded pine thresholds and pending eucalyptus price entries.",
-    details: cfidProcessorDetails,
-  }),
-  actor("processor", "Guo Hau factory", -0.582692, 30.444508, {
-    role: "Roundwood processor",
-    summary: "Western Uganda processor with eucalyptus and pine per-tonne buyer specifications.",
-    details: defaultProcessorDetails,
-  }),
+function formatDatabaseValue(value: DataValue | string[] | Record<string, DataValue>) {
+  if (!hasDatabaseValue(value)) return "Not recorded"
+  if (Array.isArray(value)) return value.join(", ")
+  if (typeof value === "object") {
+    return Object.entries(value)
+      .map(([key, item]) => `${key}: ${item}`)
+      .join(", ")
+  }
+  if (typeof value === "number") return value.toLocaleString()
+  return value
+}
 
-  actor("nursery", "UTGA Nursery", 0.3875571825107385, 32.23868953940504, { details: nurseryDetails }),
-  actor("nursery", "Bukuwa Clonal Nursery (1)", 0.5791678498035084, 34.04860188805877, { details: nurseryDetails }),
-  actor("nursery", "Bukuwa Clonal Nursery (2)", 1.06083237622832, 34.18023102486789, { details: nurseryDetails }),
-  actor("nursery", "Bukuwa Clonal Nursery (3)", 0.2057307, 32.3025383, { details: nurseryDetails }),
-  actor("nursery", "Trinity Forestry Services Nursery", 0.659157, 32.5272454, { details: nurseryDetails }),
-  actor("nursery", "Gabriel Contractors and Nurseries", 1.392919527636578, 31.39102236012505, { details: nurseryDetails }),
-  actor("nursery", "Blessed Tree Nursery", 0.8275050864107747, 33.67652703999418, { details: nurseryDetails }),
-  actor("nursery", "Erimana Nurseries", 1.574557262987188, 33.4946357787078, { details: nurseryDetails }),
-  actor("nursery", "Uganda Tree Resources Ltd Nursery (1)", 0.4528368, 32.6136146, { details: nurseryDetails }),
-  actor("nursery", "Uganda Tree Resources Ltd Nursery (2)", 0.4708029, 32.6040161, { details: nurseryDetails }),
-  actor("nursery", "Amazon Tree Nurseries Ltd", 0.5968018, 32.473121, { details: nurseryDetails }),
-  actor("nursery", "WND Forestry Services Nursery", 1.533020603606059, 31.209751701561, { details: nurseryDetails }),
-  actor("nursery", "Nile Fibre Board Nursery (1)", 1.223710039401875, 31.5438066067241, { details: nurseryDetails }),
-  actor("nursery", "Tree Growers Nursery", 0.9352719, 31.7639218, { details: nurseryDetails }),
-  actor("nursery", "Enviro Green Trust Nursery", 0.5778497, 33.0171632, { details: nurseryDetails }),
-  actor("nursery", "BFC Nursery", 0.3853952455317733, 33.38681057225901, { details: nurseryDetails }),
-  actor("nursery", "Nile Fibreboards Nursery (2)", 1.169297601435727, 32.4260868607688, { details: nurseryDetails }),
-  actor("nursery", "Tooro Botanical Gardens", 0.6668498, 30.2854466, { details: nurseryDetails }),
-  actor("nursery", "Rwenzori Clonal Nursery", 0.5887642691541177, 30.29740511054747, { details: nurseryDetails }),
-  actor("nursery", "Kasese Nurseries", 0.2828481782093561, 30.11445689120555, { details: nurseryDetails }),
-  actor("nursery", "Kisaana Forestry Nursery", 0.416078828209424, 32.19763409994905, { details: nurseryDetails }),
-  actor("nursery", "Gayaza Nurseries", 0.4931047171000906, 32.72096302780965, { details: nurseryDetails }),
-  actor("nursery", "Blue Gum Nurseries", 0.3587135222820027, 32.76203387120568, { details: nurseryDetails }),
-  actor("nursery", "Buhima Farmers Union", 1.340182855496199, 31.22286428465411, { details: nurseryDetails }),
-  actor("nursery", "Gatsby Tree Club Nursery", 0.5816765812326437, 31.38400028182261, { details: nurseryDetails }),
+function parseDatabaseNumber(value: DataValue) {
+  if (typeof value === "number") return Number.isFinite(value) ? value : null
+  const parsed = Number(value.replace(/,/g, ""))
+  return Number.isFinite(parsed) ? parsed : null
+}
 
-  actor("nursery", "Nakuru Highlands Nursery", -0.3031, 36.08, {
-    country: "Kenya",
-    role: "Nursery partner",
-    summary: "Large-format nursery with hybrid eucalyptus and pine handling for commercial buyers.",
-    details: nurseryDetails,
-    seedlingPriceUsd: 0.24,
-    source: "Seedlings product retailer map",
-  }),
-  actor("nursery", "Rift Valley Clonal Nursery", 0.5143, 35.2698, {
-    country: "Kenya",
-    role: "Nursery partner",
-    summary: "Kenya nursery focused on batch preparation for institutional planting orders.",
-    details: nurseryDetails,
-    seedlingPriceUsd: 0.26,
-    source: "Seedlings product retailer map",
-  }),
-  actor("nursery", "Athi Plains Nursery Hub", -1.3197, 36.9275, {
-    country: "Kenya",
-    role: "Nursery partner",
-    summary: "Nairobi-area nursery hub for order consolidation and contractor-linked pickup.",
-    details: nurseryDetails,
-    seedlingPriceUsd: 0.23,
-    source: "Seedlings product retailer map",
-  }),
+function formatGrade(spec: ProcessorSpeciesSpec, grade: "g1" | "g2" | "g3") {
+  const gradeSpec = spec.grades[grade]
+  const price = parseDatabaseNumber(spec.prices[grade])
+  const parts = [
+    hasDatabaseValue(gradeSpec.dbh_min) ? `${gradeSpec.dbh_min} cm DBH` : null,
+    hasDatabaseValue(gradeSpec.h_min) ? `${gradeSpec.h_min} m log` : null,
+    price != null && spec.price_mode === "per_tonne"
+      ? `UGX ${Math.round(price).toLocaleString()}/t`
+      : null,
+  ].filter(Boolean)
 
-  actor("commercialForest", "Busoga Forestry Company (BFC)", 0.4297514, 33.3960445, { details: commercialForestDetails }),
-  actor("commercialForest", "NFC Namwasa Plantation", 0.6358656915575317, 31.69638970935844, { details: commercialForestDetails }),
-  actor("commercialForest", "NFC Luwunga Plantation", 0.8616262072477974, 31.68744915034311, { details: commercialForestDetails }),
-  actor("commercialForest", "Nile Fibreboards Kikonda Plantation", 1.2081239, 31.5593048, { details: commercialForestDetails }),
-  actor("commercialForest", "Ambiance Tree Farm Gomba", 0.2410015, 32.1325096, { details: commercialForestDetails }),
-  actor("commercialForest", "Kijani Forestry", 2.7735511, 32.3071117, { details: commercialForestDetails }),
-  actor("commercialForest", "Nile Fibreboards", 1.1519925, 32.3916016, { details: commercialForestDetails }),
-  actor("commercialForest", "Critical Mass Group (U) Ltd - Sugar Plantation", 1.563344511791691, 31.46586187358334, { details: commercialForestDetails }),
-  actor("commercialForest", "Woodland Investments", 0.8076415484424228, 30.20741467274687, { details: commercialForestDetails }),
-  actor("commercialForest", "Core Woods Ltd", 1.517565182423477, 31.19950827753198, { details: commercialForestDetails }),
-  actor("commercialForest", "Nile Plywoods (U) Ltd", 0.6197506976921691, 33.10864489087399, { details: commercialForestDetails }),
-  actor("commercialForest", "NFC Achwa Plantation", 3.358177663990421, 32.32323990537162, { details: commercialForestDetails }),
-  actor("commercialForest", "Modern Laminates", 0.427939, 33.1709342, { details: commercialForestDetails }),
+  return parts.length ? parts.join(", ") : "Not recorded"
+}
 
+function numericValues(values: DataValue[]) {
+  return values
+    .map(parseDatabaseNumber)
+    .filter((value): value is number => value != null)
+}
+
+function getProcessorG1RoundwoodPrice(record: ProcessorRecord) {
+  const prices = numericValues([
+    record.buyer_specs.euc.price_mode === "per_tonne"
+      ? record.buyer_specs.euc.prices.g1
+      : "",
+    record.buyer_specs.pine.price_mode === "per_tonne"
+      ? record.buyer_specs.pine.prices.g1
+      : "",
+  ])
+
+  if (prices.length === 0) return undefined
+
+  return prices.reduce((sum, price) => sum + price, 0) / prices.length
+}
+
+function getNurserySeedlingPrice(record: NurseryRecord) {
+  const prices = Object.values(record.supply_specs).flatMap((spec) =>
+    ["per_seedling", "UGX", "ugx"].includes(spec.price_mode)
+      ? numericValues(Object.values(spec.prices))
+      : []
+  )
+
+  if (prices.length === 0) return undefined
+
+  return prices.reduce((sum, price) => sum + price, 0) / prices.length
+}
+
+function getCommercialForestArea(record: LargeCommercialForestRecord) {
+  const explicitArea = parseDatabaseNumber(record["Plantation size (ha)"])
+  if (explicitArea != null) return explicitArea
+
+  const speciesAreas = numericValues([
+    record.forest_specs.euc.area_ha,
+    record.forest_specs.pine.area_ha,
+    record.forest_specs.other.area_ha,
+  ])
+
+  if (speciesAreas.length === 0) return undefined
+
+  return speciesAreas.reduce((sum, value) => sum + value, 0)
+}
+
+function getCommercialForestSpeciesAreas(record: LargeCommercialForestRecord) {
+  const eucArea = parseDatabaseNumber(record.forest_specs.euc.area_ha)
+  const pineArea = parseDatabaseNumber(record.forest_specs.pine.area_ha)
+  const otherArea = parseDatabaseNumber(record.forest_specs.other.area_ha)
+  const areas = [
+    eucArea != null
+      ? { species: "Eucalyptus", hectares: eucArea, color: "#16a34a" }
+      : null,
+    pineArea != null
+      ? { species: "Pine", hectares: pineArea, color: "#2563eb" }
+      : null,
+    otherArea != null
+      ? { species: "Other", hectares: otherArea, color: "#d97706" }
+      : null,
+  ]
+
+  return areas.filter((item): item is NonNullable<typeof item> => item != null)
+}
+
+function processorDetails(record: ProcessorRecord): MarketActorDetail[] {
+  return [
+    { label: "Database", value: "Processor database" },
+    { label: "Eucalyptus G1", value: formatGrade(record.buyer_specs.euc, "g1") },
+    { label: "Pine G1", value: formatGrade(record.buyer_specs.pine, "g1") },
+    { label: "Capacity", value: formatDatabaseValue(record["Roundwood input capacity"]) },
+    { label: "Products", value: formatDatabaseValue(record.Products) },
+    { label: "Certification", value: formatDatabaseValue(record.Certification) },
+  ]
+}
+
+function nurseryDetails(record: NurseryRecord): MarketActorDetail[] {
+  return [
+    { label: "Database", value: "Nursery database" },
+    { label: "Eucalyptus prices", value: formatDatabaseValue(record.supply_specs.euc.prices) },
+    { label: "Pine prices", value: formatDatabaseValue(record.supply_specs.pine.prices) },
+    { label: "Indigenous prices", value: formatDatabaseValue(record.supply_specs.indigenous.prices) },
+    { label: "Species or clones", value: formatDatabaseValue([
+      ...record.supply_specs.euc.species_or_clones,
+      ...record.supply_specs.pine.species_or_clones,
+      ...record.supply_specs.indigenous.species_or_clones,
+    ]) },
+    { label: "Total capacity", value: formatDatabaseValue(record["Total capacity"]) },
+    { label: "Certification", value: formatDatabaseValue(record.Certification) },
+  ]
+}
+
+function commercialForestDetails(
+  record: LargeCommercialForestRecord
+): MarketActorDetail[] {
+  return [
+    { label: "Database", value: "Large commercial forest database" },
+    { label: "Plantation size", value: formatDatabaseValue(record["Plantation size (ha)"]) },
+    { label: "Eucalyptus area", value: formatDatabaseValue(record.forest_specs.euc.area_ha) },
+    { label: "Pine area", value: formatDatabaseValue(record.forest_specs.pine.area_ha) },
+    { label: "Other species", value: formatDatabaseValue(record.forest_specs.other.species) },
+    { label: "Products", value: formatDatabaseValue(record.Products) },
+    { label: "Certification", value: formatDatabaseValue(record.Certification) },
+  ]
+}
+
+function forestReserveDetails(record: CentralForestReserveRecord): MarketActorDetail[] {
+  const recordedAreaHa = getCentralForestReserveAreaHa(record)
+
+  return [
+    { label: "Database", value: "Central forest reserve database" },
+    { label: "Legal status", value: record.reserve_profile.reserve_status.legal_status },
+    {
+      label: "Recorded area",
+      value: recordedAreaHa == null
+        ? "Not recorded"
+        : `${Math.round(recordedAreaHa).toLocaleString()} ha`,
+    },
+    {
+      label: "Authority",
+      value: formatDatabaseValue(record.reserve_profile.reserve_status.management_authority),
+    },
+    {
+      label: "Concession status",
+      value: formatDatabaseValue(
+        record.reserve_profile.reserve_status.overall_concession_status
+      ),
+    },
+    {
+      label: "Verification",
+      value: formatDatabaseValue(
+        record.reserve_profile.reserve_status.verification ?? record.verification ?? ""
+      ),
+    },
+    { label: "PPP availability", value: formatDatabaseValue(record.reserve_profile.reserve_status.ppp_availability) },
+    { label: "Source", value: formatDatabaseValue(record["Data source"]) },
+  ]
+}
+
+function getRecordComment(value: DataValue) {
+  return typeof value === "string" && value.trim() ? value.trim() : null
+}
+
+function summarizeProcessorRecord(name: string, record: ProcessorRecord) {
+  return (
+    getRecordComment(record.Comments) ??
+    `${name} is a processor record from processors.json. Buyer specs, products, input capacity, target markets, certification, and comments are editable in that database; blank fields are treated as not recorded.`
+  )
+}
+
+function summarizeNurseryRecord(name: string, record: NurseryRecord) {
+  return (
+    getRecordComment(record.Comments) ??
+    `${name} is a nursery record from nurseries.json with its own coordinate point. Supply specs, species or clones, seedling prices, capacity, availability, traceability, transport, certification, contact, and comments are editable in that database; blank fields are treated as not recorded.`
+  )
+}
+
+function summarizeCommercialForestRecord(
+  name: string,
+  record: LargeCommercialForestRecord
+) {
+  return (
+    getRecordComment(record.Comments) ??
+    `${name} is a large commercial forest record from large-commercial-forests.json with its own coordinate point. Species areas, standing volume, age classes, prices, marketable products, harvest status, supply reliability, sale status, and certification are editable in that database; blank fields are treated as not recorded.`
+  )
+}
+
+function summarizeCentralForestReserveRecord(
+  name: string,
+  record: CentralForestReserveRecord
+) {
+  const areaHa = getCentralForestReserveAreaHa(record)
+  const area = areaHa == null ? "area not recorded" : `${Math.round(areaHa).toLocaleString()} ha recorded area`
+  const authority = formatDatabaseValue(
+    record.reserve_profile.reserve_status.management_authority
+  )
+  const concession = formatDatabaseValue(
+    record.reserve_profile.reserve_status.overall_concession_status
+  )
+  const verification = formatDatabaseValue(
+    record.reserve_profile.reserve_status.verification ?? record.verification ?? ""
+  )
+
+  return (
+    getRecordComment(record.Comments) ??
+    `${name} CFR is a central forest reserve database record from central-forest-reserves.json with ${area}, authority ${authority}, concession status ${concession}, and verification ${verification}. PPP, allocation, biophysical, opportunity, risk, and analytics fields remain editable where blank.`
+  )
+}
+
+const processorActors = Object.entries(processorDatabase).map(([name, record]) =>
+  actor("processor", name, Number(record.lat), Number(record.lon), {
+    role: "Roundwood processor",
+    summary: summarizeProcessorRecord(name, record),
+    details: processorDetails(record),
+    source: "Processor database",
+    g1RoundwoodPriceUgxPerTonne: getProcessorG1RoundwoodPrice(record),
+  })
+)
+
+const nurseryActors = Object.entries(nurseryDatabase).map(([name, record]) =>
+  actor("nursery", name, Number(record.lat), Number(record.lon), {
+    role: "Nursery",
+    summary: summarizeNurseryRecord(name, record),
+    details: nurseryDetails(record),
+    source: "Nursery database",
+    seedlingPriceUgxPerSeedling: getNurserySeedlingPrice(record),
+  })
+)
+
+const commercialForestActors = Object.entries(largeCommercialForestDatabase).map(
+  ([name, record]) =>
+    actor("commercialForest", name, Number(record.lat), Number(record.lon), {
+      role: "Large commercial forest",
+      summary: summarizeCommercialForestRecord(name, record),
+      details: commercialForestDetails(record),
+      source: "Large commercial forest database",
+      sizeHa: getCommercialForestArea(record),
+      commercialSpeciesAreas: getCommercialForestSpeciesAreas(record),
+    })
+)
+
+const trialSiteActors = [
   actor("trialSite", "Kisolanza", -8.15151, 35.4027, { country: "Tanzania", details: trialSiteDetails }),
   actor("trialSite", "Lwangu", -9.48099, 34.986, { country: "Tanzania", details: trialSiteDetails }),
   actor("trialSite", "Tanwat", -9.24236, 34.8536, { country: "Tanzania", details: trialSiteDetails }),
@@ -658,27 +653,25 @@ export const marketActors: MarketActor[] = [
   actor("trialSite", "Korogwe", -5.15, 38.45, { country: "Tanzania", details: trialSiteDetails }),
   actor("trialSite", "Tabora", -5.0167, 32.8, { country: "Tanzania", details: trialSiteDetails }),
   actor("trialSite", "SFI (Handeni)", -5.4167, 38.0167, { country: "Tanzania", details: trialSiteDetails }),
+]
 
-  actor("forestReserve", "Zulia", 3.9185, 33.94456, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 93635 }),
-  actor("forestReserve", "Budongo", 1.80286, 31.5571, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 82421.5 }),
-  actor("forestReserve", "Moroto", 2.53096, 34.7673, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 48758 }),
-  actor("forestReserve", "Nyangea - Napore", 3.54428, 33.66537, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 42760.4 }),
-  actor("forestReserve", "Kadam", 1.80923, 34.7112, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 41188.9 }),
-  actor("forestReserve", "Bugoma", 1.17206, 30.92035, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 40262.4 }),
-  actor("forestReserve", "Kasyoha - Kitomi", -0.28781, 30.2353, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 38721.1 }),
-  actor("forestReserve", "Mabira", 0.47031, 32.97273, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 31243 }),
-  actor("forestReserve", "Kagombe", 0.81027, 30.78314, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 30271.8 }),
-  actor("forestReserve", "North Maramagambo", -0.38409, 29.97089, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 29662.1 }),
-  actor("forestReserve", "Agoro - Agu", 3.75757, 32.90908, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 26640.4 }),
-  actor("forestReserve", "Napak", 2.08751, 34.32099, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 22139.7 }),
-  actor("forestReserve", "Nangolibwel", 2.56851, 33.86178, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 19961.7 }),
-  actor("forestReserve", "Atiya", 3.68347, 31.84786, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 18982.7 }),
-  actor("forestReserve", "Lopeichubei", 3.81978, 33.9518, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 16849.4 }),
-  actor("forestReserve", "South Busoga", 0.23381, 33.55897, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 16241.8 }),
-  actor("forestReserve", "Buyaga Dam", -0.3156, 31.27014, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 15978.2 }),
-  actor("forestReserve", "South Maramagambo", -0.54866, 29.87768, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 14879.8 }),
-  actor("forestReserve", "Kalinzu", -0.39623, 30.0507, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 14160.5 }),
-  actor("forestReserve", "Kikonda", 1.23164, 31.51927, { details: forestReserveDetails, source: "Ugandabmap.kml", sizeHa: 13769.1 }),
+const forestReserveActors = Object.entries(centralForestReserveDatabase).map(
+  ([name, record]) =>
+    actor("forestReserve", name, Number(record.lat), Number(record.lon), {
+      role: "Central Forest Reserve",
+      summary: summarizeCentralForestReserveRecord(name, record),
+      details: forestReserveDetails(record),
+      source: String(record["Data source"]),
+      sizeHa: getCentralForestReserveAreaHa(record) ?? undefined,
+    })
+)
+
+export const marketActors: MarketActor[] = [
+  ...processorActors,
+  ...nurseryActors,
+  ...commercialForestActors,
+  ...trialSiteActors,
+  ...forestReserveActors,
 ]
 
 export const stakeholderLayers: MarketActorLayer[] = [

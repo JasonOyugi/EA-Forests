@@ -14,6 +14,7 @@ uv sync
 
 ```powershell
 cd backend
+$env:EARTH_ENGINE_PROJECT='ee-oyugijason'
 $env:UV_CACHE_DIR='c:\Users\JasonOyugi\Downloads\EA_Forests\.uv-cache'
 uv run uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
@@ -45,15 +46,41 @@ If you want TerraClimate, CHIRPS, ERA5-Land, or SRTM-backed static topography, a
 
 ```powershell
 cd backend
+$env:EARTH_ENGINE_PROJECT='ee-oyugijason'
 $env:UV_CACHE_DIR='c:\Users\JasonOyugi\Downloads\EA_Forests\.uv-cache'
 uv run python -m app.auth_earth_engine
 ```
 
-That should open the normal browser-based Google flow. If your Earth Engine access is tied to a Cloud project, set `EARTH_ENGINE_PROJECT` before running the command.
+Keep `EARTH_ENGINE_PROJECT` set when starting the backend too, or set it permanently for your Windows user:
+
+```powershell
+[Environment]::SetEnvironmentVariable('EARTH_ENGINE_PROJECT', 'ee-oyugijason', 'User')
+```
 
 The auth helper and backend ignore `HTTP_PROXY`, `HTTPS_PROXY`, and `ALL_PROXY` for Earth Engine by default because stale local proxies can block Google OAuth token refresh. If you intentionally need those proxy variables for Google API calls, set `EA_FORESTS_USE_SYSTEM_PROXY=1` before authenticating or running the backend.
 
-After the browser authentication finishes, stop and restart the backend server so the running process picks up the Earth Engine credentials.
+After the browser authentication finishes, stop and restart the backend server so the running process picks up the Earth Engine credentials and `EARTH_ENGINE_PROJECT`.
+
+To confirm the current terminal is ready before starting the backend:
+
+```powershell
+echo $env:EARTH_ENGINE_PROJECT
+```
+
+It should print:
+
+```text
+ee-oyugijason
+```
+
+To check Earth Engine from the backend without starting the server:
+
+```powershell
+cd backend
+$env:EARTH_ENGINE_PROJECT='ee-oyugijason'
+$env:UV_CACHE_DIR='c:\Users\JasonOyugi\Downloads\EA_Forests\.uv-cache'
+uv run python -c "from app.services.site_classification import get_earth_engine_status; import json; print(json.dumps(get_earth_engine_status(), indent=2))"
+```
 
 The site-classification page checks `GET /api/earth-engine/status`. That endpoint now performs a small live Earth Engine probe, so a green badge means the backend can make an authenticated EE request, not just that `ee.Initialize()` returned. When you select TerraClimate, CHIRPS, ERA5-Land, or static topography and Earth Engine is not authenticated, the page shows this command and a status recheck button before you run the model.
 
@@ -83,6 +110,7 @@ After authenticating Earth Engine, require the EE-backed TerraClimate model to p
 
 ```powershell
 cd backend
+$env:EARTH_ENGINE_PROJECT='ee-oyugijason'
 $env:UV_CACHE_DIR='c:\Users\JasonOyugi\Downloads\EA_Forests\.uv-cache'
 uv run python -m app.check_backend --require-ee
 ```

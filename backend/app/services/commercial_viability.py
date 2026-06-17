@@ -504,6 +504,56 @@ def build_operation_recipes(rotation_year: int) -> list[dict[str, Any]]:
     return ops
 
 
+def operation_recipes_to_rows(ops: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for index, op in enumerate(ops):
+        base = {
+            "operation_id": index,
+            "year": int(op["year"]),
+            "section": str(op["section"]),
+            "sub_item": str(op["sub_item"]),
+        }
+        if not op.get("labour_mandays") and not op.get("non_labour_items"):
+            rows.append({**base, "input_type": "operation", "code": "", "qty_min": 0.0, "qty_max": 0.0})
+        for code, values in op.get("labour_mandays", {}).items():
+            rows.append({**base, "input_type": "labour", "code": code, "qty_min": float(values[0]), "qty_max": float(values[1])})
+        for code, values in op.get("non_labour_items", {}).items():
+            rows.append({**base, "input_type": "non_labour", "code": code, "qty_min": float(values[0]), "qty_max": float(values[1])})
+    return rows
+
+
+def operation_recipes_from_rows(rows: list[dict[str, Any]], rotation_year: int) -> list[dict[str, Any]]:
+    if not rows:
+        return build_operation_recipes(rotation_year)
+
+    grouped: dict[tuple[int, str, str], dict[str, Any]] = {}
+    for row in rows:
+        year = int(row.get("year", 0))
+        if year < 1 or year > rotation_year:
+            continue
+        section = str(row.get("section", "")).strip()
+        sub_item = str(row.get("sub_item", "")).strip()
+        if not section or not sub_item:
+            continue
+        key = (year, section, sub_item)
+        op = grouped.setdefault(
+            key,
+            {"year": year, "section": section, "sub_item": sub_item, "labour_mandays": {}, "non_labour_items": {}},
+        )
+        input_type = str(row.get("input_type", "")).strip()
+        code = str(row.get("code", "")).strip()
+        if input_type == "operation" or not code:
+            continue
+        qty_min = float(row.get("qty_min", 0) or 0)
+        qty_max = float(row.get("qty_max", 0) or 0)
+        if input_type == "labour":
+            op["labour_mandays"][code] = (qty_min, qty_max)
+        elif input_type == "non_labour":
+            op["non_labour_items"][code] = (qty_min, qty_max)
+
+    return sorted(grouped.values(), key=lambda op: (int(op["year"]), str(op["section"]), str(op["sub_item"])))
+
+
 def thinning_discount_factor(
     year: int,
     rotation_year: int,
@@ -532,23 +582,50 @@ def is_maintenance_row(year: int, section: str) -> bool:
     return section in {"Labour welfare & ops", "Tools, PPE and others"}
 
 
-def _index_libs() -> tuple[pd.DataFrame, pd.DataFrame]:
-    labour = LABOUR_CATEGORIES.set_index("labour_code")[
+def _coerce_library_df(rows: list[dict[str, Any]], default: pd.DataFrame, key: str, numeric_columns: list[str]) -> pd.DataFrame:
+    if not rows:
+        return default.copy()
+    df = pd.DataFrame(rows)
+    required = set(default.columns)
+    missing = required - set(df.columns)
+    if missing:
+        raise ValueError(f"{key} is missing required column(s): {sorted(missing)}")
+    df = df[list(default.columns)].copy()
+    for column in numeric_columns:
+        df[column] = pd.to_numeric(df[column], errors="raise")
+    if df.duplicated(key).any():
+        duplicates = df[df.duplicated(key, keep=False)][key].tolist()
+        raise ValueError(f"Duplicate {key}(s): {duplicates}")
+    return df
+
+
+def _index_libs(
+    labour_df: pd.DataFrame | None = None,
+    non_labour_df: pd.DataFrame | None = None,
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    labour_source = labour_df if labour_df is not None else LABOUR_CATEGORIES
+    non_labour_source = non_labour_df if non_labour_df is not None else NON_LABOUR_ITEMS
+    labour = labour_source.set_index("labour_code")[
         ["wage_min", "wage_max", "desc"]
     ].copy()
-    non_labour = NON_LABOUR_ITEMS.set_index("item_code")[
+    non_labour = non_labour_source.set_index("item_code")[
         ["price_min", "price_max", "desc", "unit"]
     ].copy()
     return labour, non_labour
 
 
-def compute_costs(payload: CommercialForestViabilityRequest) -> pd.DataFrame:
+def compute_costs(
+    payload: CommercialForestViabilityRequest,
+    labour_df: pd.DataFrame | None = None,
+    non_labour_df: pd.DataFrame | None = None,
+    operation_recipes: list[dict[str, Any]] | None = None,
+) -> pd.DataFrame:
     if payload.labour_mix not in {"unskilled", "skilled"}:
         raise ValueError("labour_mix must be one of {'unskilled','skilled'}")
     if payload.thinning not in {"yes", "no"}:
         raise ValueError("thinning must be one of {'yes','no'}")
 
-    labour_index, non_labour_index = _index_libs()
+    labour_index, non_labour_index = _index_libs(labour_df, non_labour_df)
     allowance_price = convex(
         non_labour_index.loc["N_CREW_DAYALLOW", "price_min"],
         non_labour_index.loc["N_CREW_DAYALLOW", "price_max"],
@@ -556,7 +633,7 @@ def compute_costs(payload: CommercialForestViabilityRequest) -> pd.DataFrame:
     )
 
     rows: list[dict[str, Any]] = []
-    for op in build_operation_recipes(payload.rotation_year):
+    for op in operation_recipes or build_operation_recipes(payload.rotation_year):
         year = int(op["year"])
         section = str(op["section"])
         sub_item = str(op["sub_item"])
@@ -901,7 +978,10 @@ def build_assumptions(payload: CommercialForestViabilityRequest) -> list[str]:
 def run_commercial_forest_viability(
     payload: CommercialForestViabilityRequest,
 ) -> dict[str, Any]:
-    cost_df = compute_costs(payload)
+    labour_df = _coerce_library_df(payload.labour_categories, LABOUR_CATEGORIES, "labour_code", ["wage_min", "wage_max"])
+    non_labour_df = _coerce_library_df(payload.non_labour_items, NON_LABOUR_ITEMS, "item_code", ["price_min", "price_max"])
+    operation_recipes = operation_recipes_from_rows(payload.operation_recipes, payload.rotation_year)
+    cost_df = compute_costs(payload, labour_df, non_labour_df, operation_recipes)
     revenue_df, revenue_warnings = compute_revenues(payload)
     cashflow_df = build_cashflow(
         cost_df=cost_df,
@@ -930,8 +1010,9 @@ def run_commercial_forest_viability(
             for key, value in metrics.items()
         },
         "library": {
-            "labour_categories": dataframe_to_records(LABOUR_CATEGORIES),
-            "non_labour_items": dataframe_to_records(NON_LABOUR_ITEMS),
+            "labour_categories": dataframe_to_records(labour_df),
+            "non_labour_items": dataframe_to_records(non_labour_df),
+            "operation_recipes": operation_recipes_to_rows(operation_recipes),
             "section_order": SECTION_ORDER,
         },
     }

@@ -22,6 +22,7 @@ const Models = lazy(() => import('@/app/models/page'))
 const SiteClassification = lazy(() => import('@/app/models/site-classification/page'))
 const Model2 = lazy(() => import('@/app/models/model-2/page'))
 const Model3 = lazy(() => import('@/app/models/model-3/page'))
+const ClonalEucalyptusNursery = lazy(() => import('@/app/models/clonal-eucalyptus-nursery/page'))
 
 // Auth pages
 const SignIn = lazy(() => import('@/app/auth/sign-in/page'))
@@ -153,6 +154,10 @@ export const routes: RouteConfig[] = [
   {
     path: "/models/model-3",
     element: <Model3 />
+  },
+  {
+    path: "/models/clonal-eucalyptus-nursery",
+    element: <ClonalEucalyptusNursery />
   },
 
   // Authentication Routes

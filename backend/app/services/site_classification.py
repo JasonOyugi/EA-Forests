@@ -140,7 +140,10 @@ class EarthEngineAuthenticationError(RuntimeError):
 
 EARTH_ENGINE_DYNAMIC_SOURCES = {"terraclimate", "chirps", "era5_land_ee"}
 EARTH_ENGINE_STATIC_GROUPS = {"topography"}
-EARTH_ENGINE_AUTH_COMMAND = "`uv run python -m app.auth_earth_engine`"
+EARTH_ENGINE_AUTH_COMMAND = (
+    "`$env:EARTH_ENGINE_PROJECT='ee-oyugijason'; "
+    "uv run python -m app.auth_earth_engine`"
+)
 
 
 def external_get(url: str, **kwargs: Any) -> requests.Response:
@@ -249,10 +252,17 @@ def ensure_earth_engine_initialized() -> bool:
             ee.Initialize()
         return True
     except Exception as exc:  # pragma: no cover - interactive/auth driven
+        project_hint = (
+            " Set EARTH_ENGINE_PROJECT to the Google Cloud project with Earth Engine "
+            "access before authenticating and before running the backend."
+            if not earth_engine_project()
+            else ""
+        )
         raise EarthEngineAuthenticationError(
             "Earth Engine is not authenticated for the backend yet. Run "
             f"{EARTH_ENGINE_AUTH_COMMAND} in the backend folder, "
-            "complete the browser popup, then retry."
+            f"complete the browser popup, then restart the backend and retry.{project_hint} "
+            f"Details: {exc}"
         ) from exc
 
 

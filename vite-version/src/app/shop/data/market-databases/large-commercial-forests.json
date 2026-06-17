@@ -1,0 +1,587 @@
+{
+    "Busoga Forestry Company (BFC)": {
+        "lon": 33.3960445,
+        "lat": 0.4297514,
+        "forest_specs": {
+            "euc": {
+                "area_ha": 7200,
+                "standing_volume_m3": 540000,
+                "age_classes": {"0-3": 1800, "4-7": 2600, "8+": 2800},
+                "rotation_age": 8,
+                "price_mode": "per_m3",
+                "prices": {"sawlogs": 180000, "poles": 95000},
+                "marketable_products": ["poles", "sawlogs", "fuelwood"],
+                "harvest_status": "active",
+                "supply_reliability": "high"
+            },
+            "pine": {
+                "area_ha": 1800,
+                "standing_volume_m3": 135000,
+                "age_classes": {"0-5": 600, "6-12": 800, "13+": 400},
+                "rotation_age": 18,
+                "price_mode": "per_m3",
+                "prices": {"sawlogs": 220000},
+                "marketable_products": ["sawlogs", "pulpwood"],
+                "harvest_status": "periodic",
+                "supply_reliability": "medium"
+            },
+            "other": {
+                "area_ha": 500,
+                "species": ["mixed indigenous buffer"],
+                "standing_volume_m3": 12000,
+                "marketable_products": ["fuelwood"],
+                "notes": "Dummy conservation and buffer compartment test data."
+            }
+        },
+        "Plantation size (ha)": 9500,
+        "Products": "Poles, sawlogs, pulpwood, fuelwood",
+        "Target markets": "Domestic industrial buyers and construction timber users",
+        "Vertical integration": "Partial",
+        "Processing assets": "Test sawmill intake yard",
+        "Outgrower or third-party sourcing": "Limited third-party top-up",
+        "Certification": "Test record",
+        "Commercial sale status": "active",
+        "Contact": "",
+        "Comments": "Dummy functional test data for regional LCF analytics; replace with verified commercial forest database values."
+    },
+    "NFC Namwasa Plantation": {
+        "lon": 31.69638970935844,
+        "lat": 0.6358656915575317,
+        "forest_specs": {
+            "euc": {
+                "area_ha": 5200,
+                "standing_volume_m3": 390000,
+                "age_classes": {"0-3": 1500, "4-7": 2100, "8+": 1600},
+                "rotation_age": 8,
+                "price_mode": "per_m3",
+                "prices": {"poles": 90000, "sawlogs": 170000},
+                "marketable_products": ["poles", "sawlogs"],
+                "harvest_status": "active",
+                "supply_reliability": "high"
+            },
+            "pine": {
+                "area_ha": 2800,
+                "standing_volume_m3": 240000,
+                "age_classes": {"0-5": 900, "6-12": 1100, "13+": 800},
+                "rotation_age": 18,
+                "price_mode": "per_m3",
+                "prices": {"sawlogs": 215000, "pulpwood": 85000},
+                "marketable_products": ["sawlogs", "pulpwood"],
+                "harvest_status": "periodic",
+                "supply_reliability": "medium"
+            },
+            "other": {
+                "area_ha": 400,
+                "species": ["maesopsis", "mixed riparian buffer"],
+                "standing_volume_m3": 9000,
+                "marketable_products": ["fuelwood"],
+                "notes": "Dummy mixed-species compartment test data."
+            }
+        },
+        "Plantation size (ha)": 8400,
+        "Products": "Poles, sawlogs, pulpwood",
+        "Target markets": "Processor offtake and wholesale timber markets",
+        "Vertical integration": "No",
+        "Processing assets": "Test log yard",
+        "Outgrower or third-party sourcing": "Outgrower trials",
+        "Certification": "Test record",
+        "Commercial sale status": "active",
+        "Contact": "",
+        "Comments": "Dummy functional test data for regional LCF analytics; replace with verified commercial forest database values."
+    },
+    "NFC Luwunga Plantation": {
+        "lon": 31.68744915034311,
+        "lat": 0.8616262072477974,
+        "forest_specs": {
+            "euc": {
+                "area_ha": 4100,
+                "standing_volume_m3": 280000,
+                "age_classes": {"0-3": 1200, "4-7": 1700, "8+": 1200},
+                "rotation_age": 8,
+                "price_mode": "per_m3",
+                "prices": {"poles": 88000, "sawlogs": 165000},
+                "marketable_products": ["poles", "sawlogs"],
+                "harvest_status": "active",
+                "supply_reliability": "medium"
+            },
+            "pine": {
+                "area_ha": 3600,
+                "standing_volume_m3": 310000,
+                "age_classes": {"0-5": 1000, "6-12": 1600, "13+": 1000},
+                "rotation_age": 18,
+                "price_mode": "per_m3",
+                "prices": {"sawlogs": 210000},
+                "marketable_products": ["sawlogs"],
+                "harvest_status": "periodic",
+                "supply_reliability": "medium"
+            },
+            "other": {
+                "area_ha": 300,
+                "species": ["bamboo trial block"],
+                "standing_volume_m3": 3500,
+                "marketable_products": ["fuelwood"],
+                "notes": "Dummy bamboo and other species test data."
+            }
+        },
+        "Plantation size (ha)": 8000,
+        "Products": "Poles, sawlogs",
+        "Target markets": "Sawlog buyers and local pole markets",
+        "Vertical integration": "No",
+        "Processing assets": "None recorded",
+        "Outgrower or third-party sourcing": "None recorded",
+        "Certification": "Test record",
+        "Commercial sale status": "active",
+        "Contact": "",
+        "Comments": "Dummy functional test data for regional LCF analytics; replace with verified commercial forest database values."
+    },
+    "Nile Fibreboards Kikonda Plantation": {
+        "lon": 31.5593048,
+        "lat": 1.2081239,
+        "forest_specs": {
+            "euc": {
+                "area_ha": 6400,
+                "standing_volume_m3": 450000,
+                "age_classes": {"0-3": 1900, "4-7": 2300, "8+": 2200},
+                "rotation_age": 8,
+                "price_mode": "per_m3",
+                "prices": {"poles": 92000, "sawlogs": 175000},
+                "marketable_products": ["poles", "sawlogs", "pulpwood"],
+                "harvest_status": "active",
+                "supply_reliability": "high"
+            },
+            "pine": {
+                "area_ha": 2200,
+                "standing_volume_m3": 170000,
+                "age_classes": {"0-5": 700, "6-12": 900, "13+": 600},
+                "rotation_age": 18,
+                "price_mode": "per_m3",
+                "prices": {"sawlogs": 205000},
+                "marketable_products": ["sawlogs", "pulpwood"],
+                "harvest_status": "periodic",
+                "supply_reliability": "medium"
+            },
+            "other": {
+                "area_ha": 250,
+                "species": ["mixed indigenous buffer"],
+                "standing_volume_m3": 5000,
+                "marketable_products": ["fuelwood"],
+                "notes": "Dummy non-core plantation compartment test data."
+            }
+        },
+        "Plantation size (ha)": 8850,
+        "Products": "Poles, sawlogs, pulpwood",
+        "Target markets": "Panel board and roundwood processors",
+        "Vertical integration": "Partial",
+        "Processing assets": "Test board intake",
+        "Outgrower or third-party sourcing": "Third-party sourcing allowed",
+        "Certification": "Test record",
+        "Commercial sale status": "active",
+        "Contact": "",
+        "Comments": "Dummy functional test data for regional LCF analytics; replace with verified commercial forest database values."
+    },
+    "Ambiance Tree Farm Gomba": {
+        "lon": 32.1325096,
+        "lat": 0.2410015,
+        "forest_specs": {
+            "euc": {
+                "area_ha": 1300,
+                "standing_volume_m3": 76000,
+                "age_classes": {"0-3": 500, "4-7": 500, "8+": 300},
+                "rotation_age": 8,
+                "price_mode": "per_m3",
+                "prices": {"poles": 87000},
+                "marketable_products": ["poles", "fuelwood"],
+                "harvest_status": "periodic",
+                "supply_reliability": "low"
+            },
+            "pine": {
+                "area_ha": 600,
+                "standing_volume_m3": 42000,
+                "age_classes": {"0-5": 300, "6-12": 200, "13+": 100},
+                "rotation_age": 18,
+                "price_mode": "per_m3",
+                "prices": {"sawlogs": 190000},
+                "marketable_products": ["sawlogs"],
+                "harvest_status": "not_selling",
+                "supply_reliability": "low"
+            },
+            "other": {
+                "area_ha": 100,
+                "species": ["fruit and boundary trees"],
+                "standing_volume_m3": 1000,
+                "marketable_products": ["fuelwood"],
+                "notes": "Dummy small mixed block test data."
+            }
+        },
+        "Plantation size (ha)": 2000,
+        "Products": "Poles, fuelwood, small sawlogs",
+        "Target markets": "Local farm forestry buyers",
+        "Vertical integration": "No",
+        "Processing assets": "None recorded",
+        "Outgrower or third-party sourcing": "None recorded",
+        "Certification": "Test record",
+        "Commercial sale status": "periodic",
+        "Contact": "",
+        "Comments": "Dummy functional test data for regional LCF analytics; replace with verified commercial forest database values."
+    },
+    "Kijani Forestry": {
+        "lon": 32.3071117,
+        "lat": 2.7735511,
+        "forest_specs": {
+            "euc": {
+                "area_ha": "",
+                "standing_volume_m3": "",
+                "age_classes": {},
+                "rotation_age": "",
+                "price_mode": "",
+                "prices": {},
+                "marketable_products": [],
+                "harvest_status": "",
+                "supply_reliability": ""
+            },
+            "pine": {
+                "area_ha": "",
+                "standing_volume_m3": "",
+                "age_classes": {},
+                "rotation_age": "",
+                "price_mode": "",
+                "prices": {},
+                "marketable_products": [],
+                "harvest_status": "",
+                "supply_reliability": ""
+            },
+            "other": {
+                "area_ha": "",
+                "species": [],
+                "standing_volume_m3": "",
+                "marketable_products": [],
+                "notes": ""
+            }
+        },
+        "Plantation size (ha)": "",
+        "Products": "",
+        "Target markets": "",
+        "Vertical integration": "",
+        "Processing assets": "",
+        "Outgrower or third-party sourcing": "",
+        "Certification": "",
+        "Commercial sale status": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "Nile Fibreboards": {
+        "lon": 32.3916016,
+        "lat": 1.1519925,
+        "forest_specs": {
+            "euc": {
+                "area_ha": "",
+                "standing_volume_m3": "",
+                "age_classes": {},
+                "rotation_age": "",
+                "price_mode": "",
+                "prices": {},
+                "marketable_products": [],
+                "harvest_status": "",
+                "supply_reliability": ""
+            },
+            "pine": {
+                "area_ha": "",
+                "standing_volume_m3": "",
+                "age_classes": {},
+                "rotation_age": "",
+                "price_mode": "",
+                "prices": {},
+                "marketable_products": [],
+                "harvest_status": "",
+                "supply_reliability": ""
+            },
+            "other": {
+                "area_ha": "",
+                "species": [],
+                "standing_volume_m3": "",
+                "marketable_products": [],
+                "notes": ""
+            }
+        },
+        "Plantation size (ha)": "",
+        "Products": "",
+        "Target markets": "",
+        "Vertical integration": "",
+        "Processing assets": "",
+        "Outgrower or third-party sourcing": "",
+        "Certification": "",
+        "Commercial sale status": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "Critical Mass Group (U) Ltd - Sugar Plantation": {
+        "lon": 31.46586187358334,
+        "lat": 1.563344511791691,
+        "forest_specs": {
+            "euc": {
+                "area_ha": "",
+                "standing_volume_m3": "",
+                "age_classes": {},
+                "rotation_age": "",
+                "price_mode": "",
+                "prices": {},
+                "marketable_products": [],
+                "harvest_status": "",
+                "supply_reliability": ""
+            },
+            "pine": {
+                "area_ha": "",
+                "standing_volume_m3": "",
+                "age_classes": {},
+                "rotation_age": "",
+                "price_mode": "",
+                "prices": {},
+                "marketable_products": [],
+                "harvest_status": "",
+                "supply_reliability": ""
+            },
+            "other": {
+                "area_ha": "",
+                "species": [],
+                "standing_volume_m3": "",
+                "marketable_products": [],
+                "notes": ""
+            }
+        },
+        "Plantation size (ha)": "",
+        "Products": "",
+        "Target markets": "",
+        "Vertical integration": "",
+        "Processing assets": "",
+        "Outgrower or third-party sourcing": "",
+        "Certification": "",
+        "Commercial sale status": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "Woodland Investments": {
+        "lon": 30.20741467274687,
+        "lat": 0.8076415484424228,
+        "forest_specs": {
+            "euc": {
+                "area_ha": "",
+                "standing_volume_m3": "",
+                "age_classes": {},
+                "rotation_age": "",
+                "price_mode": "",
+                "prices": {},
+                "marketable_products": [],
+                "harvest_status": "",
+                "supply_reliability": ""
+            },
+            "pine": {
+                "area_ha": "",
+                "standing_volume_m3": "",
+                "age_classes": {},
+                "rotation_age": "",
+                "price_mode": "",
+                "prices": {},
+                "marketable_products": [],
+                "harvest_status": "",
+                "supply_reliability": ""
+            },
+            "other": {
+                "area_ha": "",
+                "species": [],
+                "standing_volume_m3": "",
+                "marketable_products": [],
+                "notes": ""
+            }
+        },
+        "Plantation size (ha)": "",
+        "Products": "",
+        "Target markets": "",
+        "Vertical integration": "",
+        "Processing assets": "",
+        "Outgrower or third-party sourcing": "",
+        "Certification": "",
+        "Commercial sale status": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "Core Woods Ltd": {
+        "lon": 31.19950827753198,
+        "lat": 1.517565182423477,
+        "forest_specs": {
+            "euc": {
+                "area_ha": "",
+                "standing_volume_m3": "",
+                "age_classes": {},
+                "rotation_age": "",
+                "price_mode": "",
+                "prices": {},
+                "marketable_products": [],
+                "harvest_status": "",
+                "supply_reliability": ""
+            },
+            "pine": {
+                "area_ha": "",
+                "standing_volume_m3": "",
+                "age_classes": {},
+                "rotation_age": "",
+                "price_mode": "",
+                "prices": {},
+                "marketable_products": [],
+                "harvest_status": "",
+                "supply_reliability": ""
+            },
+            "other": {
+                "area_ha": "",
+                "species": [],
+                "standing_volume_m3": "",
+                "marketable_products": [],
+                "notes": ""
+            }
+        },
+        "Plantation size (ha)": "",
+        "Products": "",
+        "Target markets": "",
+        "Vertical integration": "",
+        "Processing assets": "",
+        "Outgrower or third-party sourcing": "",
+        "Certification": "",
+        "Commercial sale status": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "Nile Plywoods (U) Ltd": {
+        "lon": 33.10864489087399,
+        "lat": 0.6197506976921691,
+        "forest_specs": {
+            "euc": {
+                "area_ha": "",
+                "standing_volume_m3": "",
+                "age_classes": {},
+                "rotation_age": "",
+                "price_mode": "",
+                "prices": {},
+                "marketable_products": [],
+                "harvest_status": "",
+                "supply_reliability": ""
+            },
+            "pine": {
+                "area_ha": "",
+                "standing_volume_m3": "",
+                "age_classes": {},
+                "rotation_age": "",
+                "price_mode": "",
+                "prices": {},
+                "marketable_products": [],
+                "harvest_status": "",
+                "supply_reliability": ""
+            },
+            "other": {
+                "area_ha": "",
+                "species": [],
+                "standing_volume_m3": "",
+                "marketable_products": [],
+                "notes": ""
+            }
+        },
+        "Plantation size (ha)": "",
+        "Products": "",
+        "Target markets": "",
+        "Vertical integration": "",
+        "Processing assets": "",
+        "Outgrower or third-party sourcing": "",
+        "Certification": "",
+        "Commercial sale status": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "NFC Achwa Plantation": {
+        "lon": 32.32323990537162,
+        "lat": 3.358177663990421,
+        "forest_specs": {
+            "euc": {
+                "area_ha": "",
+                "standing_volume_m3": "",
+                "age_classes": {},
+                "rotation_age": "",
+                "price_mode": "",
+                "prices": {},
+                "marketable_products": [],
+                "harvest_status": "",
+                "supply_reliability": ""
+            },
+            "pine": {
+                "area_ha": "",
+                "standing_volume_m3": "",
+                "age_classes": {},
+                "rotation_age": "",
+                "price_mode": "",
+                "prices": {},
+                "marketable_products": [],
+                "harvest_status": "",
+                "supply_reliability": ""
+            },
+            "other": {
+                "area_ha": "",
+                "species": [],
+                "standing_volume_m3": "",
+                "marketable_products": [],
+                "notes": ""
+            }
+        },
+        "Plantation size (ha)": "",
+        "Products": "",
+        "Target markets": "",
+        "Vertical integration": "",
+        "Processing assets": "",
+        "Outgrower or third-party sourcing": "",
+        "Certification": "",
+        "Commercial sale status": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "Modern Laminates": {
+        "lon": 33.1709342,
+        "lat": 0.427939,
+        "forest_specs": {
+            "euc": {
+                "area_ha": "",
+                "standing_volume_m3": "",
+                "age_classes": {},
+                "rotation_age": "",
+                "price_mode": "",
+                "prices": {},
+                "marketable_products": [],
+                "harvest_status": "",
+                "supply_reliability": ""
+            },
+            "pine": {
+                "area_ha": "",
+                "standing_volume_m3": "",
+                "age_classes": {},
+                "rotation_age": "",
+                "price_mode": "",
+                "prices": {},
+                "marketable_products": [],
+                "harvest_status": "",
+                "supply_reliability": ""
+            },
+            "other": {
+                "area_ha": "",
+                "species": [],
+                "standing_volume_m3": "",
+                "marketable_products": [],
+                "notes": ""
+            }
+        },
+        "Plantation size (ha)": "",
+        "Products": "",
+        "Target markets": "",
+        "Vertical integration": "",
+        "Processing assets": "",
+        "Outgrower or third-party sourcing": "",
+        "Certification": "",
+        "Commercial sale status": "",
+        "Contact": "",
+        "Comments": ""
+    }
+}

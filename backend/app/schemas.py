@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
@@ -70,6 +70,9 @@ class CommercialForestViabilityRequest(BaseModel):
     final_harvest_year: int | None = Field(default=None, ge=1, le=15)
     price_final_tree: float = Field(default=35_000, ge=0)
     discount_rate: float = Field(default=0.15, ge=0, le=1)
+    labour_categories: list[dict[str, Any]] = Field(default_factory=list)
+    non_labour_items: list[dict[str, Any]] = Field(default_factory=list)
+    operation_recipes: list[dict[str, Any]] = Field(default_factory=list)
 
 
 class RoundwoodProductionRequest(BaseModel):
@@ -133,3 +136,48 @@ class RoundwoodProductionRequest(BaseModel):
 
     n_draws: int = Field(default=30_000, ge=1_000, le=200_000)
     rng_seed: int = Field(default=7, ge=0)
+    labour_categories: list[dict[str, Any]] = Field(default_factory=list)
+    non_labour_items: list[dict[str, Any]] = Field(default_factory=list)
+    quantity_library: list[dict[str, Any]] = Field(default_factory=list)
+    buyer_specs: list[dict[str, Any]] = Field(default_factory=list)
+
+
+class ClonalEucalyptusNurseryRequest(BaseModel):
+    model_years: int = Field(default=10, ge=1, le=30)
+    discount_rate: float = Field(default=0.15, ge=0, le=1)
+    inflation_rate: float = Field(default=0.04, ge=0, le=1)
+    tax_rate: float = Field(default=0.0, ge=0, le=1)
+    working_capital_pct_revenue: float = Field(default=0.05, ge=0, le=1)
+
+    mother_plants: float = Field(default=2_500, ge=0)
+    shoots_per_mother_per_harvest: float = Field(default=4.0, ge=0)
+    harvests_per_year: float = Field(default=8.0, ge=0)
+    cutting_selection_rate: float = Field(default=0.80, ge=0, le=1)
+    rooting_success_rate: float = Field(default=0.68, ge=0, le=1)
+    acclimatisation_survival_rate: float = Field(default=0.90, ge=0, le=1)
+    hardening_survival_rate: float = Field(default=0.93, ge=0, le=1)
+    saleable_grade_acceptance_rate: float = Field(default=0.95, ge=0, le=1)
+
+    rooting_trays: float = Field(default=420, ge=0)
+    cells_per_rooting_tray: float = Field(default=98, ge=0)
+    rooting_cycles_per_year: float = Field(default=3.0, ge=0)
+    base_capacity_utilisation_y1: float = Field(default=0.55, ge=0, le=1)
+    steady_state_capacity_utilisation: float = Field(default=0.82, ge=0, le=1)
+    ramp_up_years: int = Field(default=4, ge=1, le=30)
+    market_sales_rate: float = Field(default=0.96, ge=0, le=1)
+
+    family_labour_days_per_year: float = Field(default=180, ge=0)
+    family_labour_cash_cost_per_day: float = Field(default=0.0, ge=0)
+    family_labour_opportunity_cost_per_day: float = Field(default=4.0, ge=0)
+    permanent_workers: float = Field(default=1, ge=0)
+    permanent_worker_monthly_wage: float = Field(default=120, ge=0)
+    manager_monthly_allowance: float = Field(default=80, ge=0)
+    seasonal_daily_wage: float = Field(default=3.5, ge=0)
+
+    selling_price_per_plant_y1: float = Field(default=0.30, ge=0)
+    annual_genetic_access_fee: float = Field(default=0, ge=0)
+    royalty_per_sold_plant: float = Field(default=0, ge=0)
+    annual_certification_fee: float = Field(default=0, ge=0)
+    technical_support_fee_per_year: float = Field(default=0, ge=0)
+    assumptions: list[dict[str, Any]] = Field(default_factory=list)
+    capex_assets: list[dict[str, Any]] = Field(default_factory=list)
