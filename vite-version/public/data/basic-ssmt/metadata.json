@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "generated_at": null,
+  "generated": false,
+  "source_layers": {
+    "KEN": "KCFP_SSMT_Kenya",
+    "TZA": "FDT_SSMT_Tanzania",
+    "UGA": "SWIFT_SSMT_Uganda"
+  },
+  "countries": [
+    {
+      "code": "KEN",
+      "name": "Kenya"
+    },
+    {
+      "code": "TZA",
+      "name": "Tanzania"
+    },
+    {
+      "code": "UGA",
+      "name": "Uganda"
+    }
+  ],
+  "genera": [
+    "Eucalyptus",
+    "Pinus",
+    "Acacia",
+    "Unknown/Other"
+  ],
+  "species": [],
+  "suitability": [
+    {
+      "name": "Very suitable",
+      "rank": 1,
+      "color": "#166534"
+    },
+    {
+      "name": "Moderately suitable",
+      "rank": 2,
+      "color": "#65a30d"
+    },
+    {
+      "name": "Marginally suitable",
+      "rank": 3,
+      "color": "#d97706"
+    },
+    {
+      "name": "Not suitable",
+      "rank": 4,
+      "color": "#991b1b"
+    },
+    {
+      "name": "Unknown",
+      "rank": 99,
+      "color": "#64748b"
+    }
+  ],
+  "chunks": [],
+  "notes": [
+    "Placeholder manifest. Run scripts/preprocess-basic-ssmt.mjs with GDAL/ogr2ogr installed to generate chunked GeoJSON assets.",
+    "Dominant Limitation datasets are intentionally excluded from the Basic SSMT layer."
+  ]
+}

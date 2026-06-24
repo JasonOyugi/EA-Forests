@@ -12,9 +12,15 @@ from app.services.clonal_nursery import (
     clonal_nursery_default_library,
     run_clonal_eucalyptus_nursery,
 )
-from app.services.commercial_viability import run_commercial_forest_viability
+from app.services.commercial_viability import (
+    commercial_forest_viability_default_library,
+    run_commercial_forest_viability,
+)
 from app.services.currency import get_currency_rates
-from app.services.roundwood_production import run_roundwood_production
+from app.services.roundwood_production import (
+    roundwood_production_default_library,
+    run_roundwood_production,
+)
 from app.services.site_classification import (
     EarthEngineAuthenticationError,
     get_earth_engine_status,
@@ -76,6 +82,14 @@ def commercial_forest_viability(payload: CommercialForestViabilityRequest) -> di
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 
 
+@app.get("/api/models/commercial-forest-viability/defaults")
+def commercial_forest_viability_defaults(rotation_year: int = 8) -> dict:
+    try:
+        return commercial_forest_viability_default_library(rotation_year)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
 @app.post("/api/models/roundwood-production")
 def roundwood_production(payload: RoundwoodProductionRequest) -> dict:
     try:
@@ -84,6 +98,11 @@ def roundwood_production(payload: RoundwoodProductionRequest) -> dict:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+@app.get("/api/models/roundwood-production/defaults")
+def roundwood_production_defaults() -> dict:
+    return roundwood_production_default_library()
 
 
 @app.post("/api/models/clonal-eucalyptus-nursery")

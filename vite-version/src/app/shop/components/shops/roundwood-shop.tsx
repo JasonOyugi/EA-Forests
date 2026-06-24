@@ -29,6 +29,7 @@ import { useMapEvents } from "react-leaflet"
 
 import type { ShopDefinition, ShopItem } from "@/app/shop/types"
 import { marketConcessions, type MarketConcession } from "@/app/shop/data/concessions"
+import { BasicSsmtLayerControl } from "@/app/maps/basic-ssmt-layer"
 import {
   marketActorLayerMeta,
   marketActors,
@@ -479,7 +480,7 @@ function MarketMapClickHandler({
   onSelectPoint: (point: SelectedPoint) => void
 }) {
   useMapEvents({
-    click(event) {
+    dblclick(event) {
       onSelectPoint({
         latitude: event.latlng.lat,
         longitude: event.latlng.lng,
@@ -2018,12 +2019,6 @@ export function RoundwoodShop({ shop, inventory }: RoundwoodShopProps) {
             <span className="flex h-10 w-10 items-center justify-center rounded-md bg-cyan-50 text-cyan-800">
               <MapPinned className="h-5 w-5" />
             </span>
-            <div>
-              <h2 className="text-lg font-semibold">Markets map</h2>
-              <p className="text-sm text-muted-foreground">
-                Sector actors, PPP concessions, regional boundaries, CFR footprints, and processor road proximity.
-              </p>
-            </div>
           </div>
           <div className="flex flex-wrap gap-2">
             <Button
@@ -2104,7 +2099,7 @@ export function RoundwoodShop({ shop, inventory }: RoundwoodShopProps) {
                 tileLayersLabel="Base map"
                 layerGroupsLabel="Map overlays"
               />
-
+              <BasicSsmtLayerControl position="top-3 left-15"/>
               <MapControlContainer className="right-16 top-3">
                 <div className="flex gap-2">
                   <Button

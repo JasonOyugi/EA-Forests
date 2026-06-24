@@ -71,6 +71,10 @@ const data = {
               url: "/models/site-classification",
             },
             {
+              title: "Trial-site Classifier",
+              url: "/models/trial-site-classifier",
+            },
+            {
               title: "Silvicultural Models",
               url: "/models/model-2",
             },

@@ -1208,21 +1208,73 @@ html {
   box-shadow: 0 0 24px rgb(15 23 42 / 0.12);
 }
 
+.flagship-section {
+  position: relative;
+  background: transparent;
+}
+
+.flagship-section--foreground {
+  background: var(--primary-foreground);
+}
+
+.flagship-section--transparent {
+  background: transparent;
+}
+
 .flagship-investment-page {
+  --flagship-map-image: url("/ke.jpg");
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
   background: hsl(var(--primary));
 }
 
 .flagship-investment-page::before {
-  display: none;
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  pointer-events: none;
+  background-image:
+    linear-gradient(135deg, rgba(3, 8, 15, 0.28), rgba(3, 8, 15, 0.68)),
+    var(--flagship-map-image);
+  background-position: center;
+  background-size: cover;
+  opacity: 0.9;
+  filter: saturate(0.8) contrast(1.08);
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .flagship-investment-page::after {
-  display: none;
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 8%, hsl(var(--primary) / 0.16), transparent 34%),
+    linear-gradient(180deg, hsl(var(--primary) / 0.92), hsl(var(--primary) / 0.78) 18%, hsl(var(--primary) / 0.86) 100%);
 }
 
 .flagship-investment-page > * {
   position: relative;
   z-index: 1;
+}
+
+.flagship-map-reveal-section {
+  background: var(--primary-foreground);
+}
+
+.flagship-map-reveal-header {
+  background: var(--primary-foreground);
+  min-height: 3.25rem;
+}
+
+.flagship-map-reveal-footer {
+  background: var(--primary-foreground);
 }
 
 .flagship-hero-shell {
@@ -1594,7 +1646,7 @@ html {
 
 /* Premium Mandate Card */
 .flagship-premium-section {
-  background: linear-gradient(135deg, hsl(var(--primary) / 0.02), hsl(var(--primary) / 0.01));
+  background: var(--primary-foreground);
 }
 
 .flagship-metric-card {
@@ -1610,9 +1662,7 @@ html {
 }
 
 .flagship-hero-section {
-  background:
-    radial-gradient(circle at top right, rgb(16 185 129 / 0.08), transparent 32%),
-    linear-gradient(180deg, hsl(var(--primary) / 0.03), transparent);
+  background: var(--primary-foreground)
 }
 
 .flagship-premium-hover-card {
@@ -1781,7 +1831,7 @@ html {
 
 /* Investment Steps Section */
 .investment-steps-section {
-  background: linear-gradient(180deg, transparent, hsl(var(--primary) / 0.01));
+  background: var(--primary-foreground);
 }
 
 .investment-step-row {
@@ -1797,6 +1847,12 @@ html {
 /* Managed Path Section */
 .managed-path-section {
   background: linear-gradient(135deg, hsl(var(--primary) / 0.01), hsl(var(--primary) / 0.005));
+}
+
+.managed-path-section.flagship-map-reveal-section {
+  background:
+    linear-gradient(135deg, rgba(3, 8, 15, 0.46), rgba(3, 8, 15, 0.18)),
+    radial-gradient(circle at top right, hsl(var(--primary) / 0.14), transparent 38%);
 }
 
 .managed-path-hover-border {
@@ -1879,12 +1935,22 @@ html {
 
 /* DIY Path Section */
 .diy-path-section {
-  background: linear-gradient(135deg, hsl(var(--primary) / 0.005), hsl(var(--primary) / 0.01));
+  background: var(--primary-foreground);
 }
 
 /* Highlights & CTA Section */
 .highlights-cta-section {
-  background: linear-gradient(180deg, hsl(var(--primary) / 0.01), transparent);
+  background: var(--primary-foreground);
+}
+
+.highlights-cta-section.flagship-map-reveal-section {
+  background:
+    linear-gradient(135deg, rgba(3, 8, 15, 0.5), rgba(3, 8, 15, 0.22)),
+    radial-gradient(circle at 78% 12%, hsl(var(--primary) / 0.16), transparent 34%);
+}
+
+.flagship-map-reveal-footer {
+  background: var(--primary-foreground);
 }
 
 /* ============================================
@@ -2320,11 +2386,15 @@ html {
 }
 
 .dark .flagship-investment-page::before {
-  display: none;
+  display: block;
+  opacity: 0.26;
 }
 
 .dark .flagship-investment-page::after {
-  display: none;
+  display: block;
+  background:
+    radial-gradient(circle at 18% 8%, hsl(var(--primary) / 0.12), transparent 34%),
+    linear-gradient(180deg, hsl(var(--primary) / 0.94), hsl(var(--primary) / 0.8) 18%, hsl(var(--primary) / 0.88) 100%);
 }
 
 /* ============================================
@@ -2362,12 +2432,24 @@ html {
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.05));
 }
 
+.dark .managed-path-section.flagship-map-reveal-section {
+  background:
+    linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.24)),
+    radial-gradient(circle at top right, hsl(var(--primary) / 0.12), transparent 38%);
+}
+
 .dark .diy-path-section {
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.15));
+  background: var(--primary-foreground);
 }
 
 .dark .highlights-cta-section {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.1), transparent);
+}
+
+.dark .highlights-cta-section.flagship-map-reveal-section {
+  background:
+    linear-gradient(135deg, rgba(0, 0, 0, 0.54), rgba(0, 0, 0, 0.26)),
+    radial-gradient(circle at 78% 12%, hsl(var(--primary) / 0.12), transparent 34%);
 }
 
 .dark .flagship-investment-page .rounded-full,

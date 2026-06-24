@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "preprocess:ssmt": "node scripts/preprocess-basic-ssmt.mjs",
+    "preprocess:ssmt:self-test": "node scripts/preprocess-basic-ssmt.mjs --self-test",
     "preview": "vite preview"
   },
   "dependencies": {

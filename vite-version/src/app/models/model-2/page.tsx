@@ -69,6 +69,7 @@ import {
   formatMoney as formatCurrencyMoney,
   useCurrencyRates,
 } from "@/app/models/currency"
+import { ModelAssumptionsDisclosure } from "@/app/models/components/model-assumptions-disclosure"
 
 type LabourMix = "unskilled" | "skilled"
 type ValueMode = "perHa" | "total"
@@ -256,7 +257,10 @@ function downloadCSV(rows: TableRowRecord[], filename: string) {
   URL.revokeObjectURL(url)
 }
 
-function buildPayload(form: ViabilityForm, libraries: ViabilityLibraries | null) {
+function buildPayload(
+  form: ViabilityForm,
+  libraries: ViabilityLibraries | null
+) {
   const enabledThinnings = form.thinning
     ? form.thinnings.filter((item) => item.enabled)
     : []
@@ -435,7 +439,7 @@ function DataTableCard({
             <TableBody>
               {rows.length ? (
                 rows.map((row, rowIndex) => (
-                  <TableRow key={`${title}-${rowIndex}`}>
+                  <TableRow key={`${rowIndex}`}>
                     {columns.map((column) => (
                       <TableCell
                         key={`${title}-${rowIndex}-${column}`}
@@ -469,24 +473,20 @@ function DataTableCard({
 }
 
 function EditableTableCard({
-  title,
-  description,
   rows,
   columns,
+  editableColumns,
   onCellChange,
 }: {
-  title: string
-  description: string
   rows: TableRowRecord[]
   columns: string[]
+  editableColumns: string[]
   onCellChange: (rowIndex: number, column: string, value: TableRowValue) => void
 }) {
+  const editableColumnSet = new Set(editableColumns)
+
   return (
     <Card className="min-w-0 gap-4 overflow-hidden border-border/70 bg-background/75 py-5">
-      <CardHeader className="px-5">
-        <CardTitle className="text-base">{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
-      </CardHeader>
       <CardContent className="min-w-0 px-0">
         <div className="max-h-[460px] max-w-full overflow-auto">
           <Table className="w-max min-w-full">
@@ -501,25 +501,32 @@ function EditableTableCard({
             </TableHeader>
             <TableBody>
               {rows.map((row, rowIndex) => (
-                <TableRow key={`${title}-${rowIndex}`}>
+                <TableRow key={`${rowIndex}`}>
                   {columns.map((column) => {
                     const value = row[column]
                     const isNumber = typeof value === "number"
+                    const isEditable = editableColumnSet.has(column)
                     return (
-                      <TableCell key={`${title}-${rowIndex}-${column}`} className="min-w-32 px-3">
-                        <Input
-                          type={isNumber ? "number" : "text"}
-                          value={value === null || value === undefined ? "" : String(value)}
-                          step={isNumber ? "any" : undefined}
-                          onChange={(event) => {
-                            const next = isNumber ? Number(event.target.value) : event.target.value
-                            onCellChange(
-                              rowIndex,
-                              column,
-                              isNumber && Number.isFinite(next as number) ? (next as number) : event.target.value
-                            )
-                          }}
-                        />
+                      <TableCell key={`${rowIndex}-${column}`} className="min-w-32 px-3">
+                        {isEditable ? (
+                          <Input
+                            type={isNumber ? "number" : "text"}
+                            value={value === null || value === undefined ? "" : String(value)}
+                            step={isNumber ? "any" : undefined}
+                            onChange={(event) => {
+                              const parsed = Number(event.target.value)
+                              onCellChange(
+                                rowIndex,
+                                column,
+                                isNumber && Number.isFinite(parsed) ? parsed : event.target.value
+                              )
+                            }}
+                          />
+                        ) : (
+                          <div className="max-w-[260px] whitespace-normal text-sm text-muted-foreground">
+                            {value === null || value === undefined ? "n/a" : String(value)}
+                          </div>
+                        )}
                       </TableCell>
                     )
                   })}
@@ -539,7 +546,7 @@ export default function ModelTwoPage() {
   const [isRunning, setIsRunning] = React.useState(false)
   const [runError, setRunError] = React.useState<string | null>(null)
   const [valueMode, setValueMode] = React.useState<ValueMode>("perHa")
-  const [currency, setCurrency] = React.useState<CurrencyCode>("UGX")
+  const [currency, setCurrency] = React.useState<CurrencyCode>("USD")
   const [selectedYear, setSelectedYear] = React.useState(2)
   const [libraries, setLibraries] = React.useState<ViabilityLibraries | null>(null)
   const hasAutoRun = React.useRef(false)
@@ -582,7 +589,10 @@ export default function ModelTwoPage() {
   )
 
   const runModel = React.useCallback(
-    async (nextForm = form, nextLibraries: ViabilityLibraries | null = libraries) => {
+    async (
+      nextForm = form,
+      nextLibraries: ViabilityLibraries | null = libraries
+    ) => {
       setIsRunning(true)
       setRunError(null)
 
@@ -615,6 +625,27 @@ export default function ModelTwoPage() {
       }
     },
     [apiBaseUrl, form, libraries]
+  )
+
+  const loadDefaultLibraries = React.useCallback(
+    async (rotationYear = defaultForm.rotationYear) => {
+      const response = await fetch(
+        `${apiBaseUrl}/models/commercial-forest-viability/defaults?rotation_year=${rotationYear}`
+      )
+      const responseText = await response.text()
+      const parsed = responseText ? JSON.parse(responseText) : null
+
+      if (!response.ok) {
+        throw new Error(
+          parsed?.detail ||
+            parsed?.message ||
+            `Backend defaults request failed with status ${response.status}.`
+        )
+      }
+
+      return (parsed as { library: ViabilityLibraries }).library
+    },
+    [apiBaseUrl]
   )
 
   React.useEffect(() => {
@@ -650,14 +681,23 @@ export default function ModelTwoPage() {
   React.useEffect(() => {
     if (hasAutoRun.current) return
     hasAutoRun.current = true
-    void runModel(defaultForm)
-  }, [runModel])
+    void (async () => {
+      try {
+        const defaults = await loadDefaultLibraries(defaultForm.rotationYear)
+        setLibraries(defaults)
+        await runModel(defaultForm, defaults)
+      } catch {
+        await runModel(defaultForm, null)
+      }
+    })()
+  }, [loadDefaultLibraries, runModel])
 
   const metricSource = result?.metrics ?? {}
   const cashflowRows = result?.cashflow_rows ?? []
   const costRows = result?.cost_rows ?? []
   const revenueRows = result?.revenue_rows ?? []
   const sectionRows = result?.cost_section_summary ?? []
+  const activeLibraries = libraries ?? result?.library ?? null
   const valueSuffix = valueMode === "perHa" ? "_per_ha" : ""
   const valueLabel = valueMode === "perHa" ? "per ha" : "total"
 
@@ -726,14 +766,14 @@ export default function ModelTwoPage() {
       thinning controls set removal year, share, and price; and final-harvest price, area, stocking density, rotation age, and discount rate drive the investment outputs)"
     >
       <div className="@container/main min-w-0 max-w-full overflow-hidden px-4 lg:px-6">
-        <div className="grid min-w-0 max-w-full gap-4 xl:grid-cols-[minmax(0,380px)_minmax(0,1fr)]">
+        <div className="grid min-w-0 max-w-full gap-4">
           <Card className="min-w-0 gap-4 border-border/70 bg-background/75 py-5">
             <CardHeader className="px-5">
               <div className="flex items-center justify-between gap-3">
                 <div>
                   <CardTitle>Scenario inputs</CardTitle>
                   <CardDescription>
-                    Base calculations are in UGX.
+                    Display currency defaults to USD. TODO: migrate stored backend defaults that are still UGX-denominated before treating raw editable values as USD.
                   </CardDescription>
                 </div>
               </div>
@@ -766,7 +806,7 @@ export default function ModelTwoPage() {
 
               <div className="grid gap-4">
                 <RangeField
-                  label="Quantity weight"
+                  label="Quantity weight "
                   value={form.qtyWeight}
                   onChange={(value) => updateForm("qtyWeight", value)}
                 />
@@ -986,6 +1026,72 @@ export default function ModelTwoPage() {
               </Card>
             ) : null}
 
+            <ModelAssumptionsDisclosure
+              description="Display currency is USD; raw editable library defaults are pending a backend USD migration."
+              actions={
+                <Button
+                  className="gap-2"
+                  disabled={isRunning || !activeLibraries}
+                  onClick={() => void runModel(form, activeLibraries)}
+                >
+                  {isRunning ? (
+                    <LoaderCircle className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Play className="h-4 w-4" />
+                  )}
+                  Apply changes
+                </Button>
+              }
+            >
+              <Tabs defaultValue="labour" className="min-w-0 space-y-4">
+                <div className="max-w-full overflow-x-auto">
+                  <TabsList className="w-max min-w-full justify-start">
+                    <TabsTrigger value="labour">Labour</TabsTrigger>
+                    <TabsTrigger value="non-labour">Non-labour</TabsTrigger>
+                    <TabsTrigger value="recipes">Operations</TabsTrigger>
+                  </TabsList>
+                </div>
+                <TabsContent value="labour">
+                  <EditableTableCard
+                    rows={activeLibraries?.labour_categories ?? []}
+                    columns={["labour_code", "wage_min", "wage_max"]}
+                    editableColumns={["wage_min", "wage_max"]}
+                    onCellChange={(rowIndex, column, value) =>
+                      updateLibraryCell("labour_categories", rowIndex, column, value)
+                    }
+                  />
+                </TabsContent>
+                <TabsContent value="non-labour">
+                  <EditableTableCard
+                    rows={activeLibraries?.non_labour_items ?? []}
+                    columns={["item_code", "desc", "unit", "price_min", "price_max"]}
+                    editableColumns={["price_min", "price_max"]}
+                    onCellChange={(rowIndex, column, value) =>
+                      updateLibraryCell("non_labour_items", rowIndex, column, value)
+                    }
+                  />
+                </TabsContent>
+                <TabsContent value="recipes">
+                  <EditableTableCard
+                    rows={activeLibraries?.operation_recipes ?? []}
+                    columns={[
+                      "year",
+                      "section",
+                      "sub_item",
+                      "input_type",
+                      "code",
+                      "qty_min",
+                      "qty_max",
+                    ]}
+                    editableColumns={["qty_min", "qty_max"]}
+                    onCellChange={(rowIndex, column, value) =>
+                      updateLibraryCell("operation_recipes", rowIndex, column, value)
+                    }
+                  />
+                </TabsContent>
+              </Tabs>
+            </ModelAssumptionsDisclosure>
+
             <div className="grid min-w-0 gap-4 md:grid-cols-2 2xl:grid-cols-4">
               <MetricCard
                 title="NPV per ha"
@@ -1104,7 +1210,7 @@ export default function ModelTwoPage() {
                 <TabsTrigger value="cashflow">Cashflow table</TabsTrigger>
                 <TabsTrigger value="costs">Cost details</TabsTrigger>
                 <TabsTrigger value="revenues">Revenues</TabsTrigger>
-                <TabsTrigger value="libraries">Assumptions</TabsTrigger>
+                <TabsTrigger value="libraries">Libraries</TabsTrigger>
                 </TabsList>
               </div>
 
@@ -1267,30 +1373,45 @@ export default function ModelTwoPage() {
               </TabsContent>
 
               <TabsContent value="libraries" className="space-y-4">
+                <div className="flex min-w-0 flex-wrap items-start justify-between gap-4">
+                  <div className="min-w-0">
+                    <h2 className="text-lg font-semibold">Backend input dataframes</h2>
+                    <p className="text-sm text-muted-foreground">
+                      Only dataframe value columns are editable; codes, labels, and descriptions are fixed.
+                    </p>
+                  </div>
+                  <Button
+                    className="gap-2"
+                    disabled={isRunning || !activeLibraries}
+                    onClick={() => void runModel(form, activeLibraries)}
+                  >
+                    {isRunning ? (
+                      <LoaderCircle className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Play className="h-4 w-4" />
+                    )}
+                    Apply dataframe changes
+                  </Button>
+                </div>
                 <EditableTableCard
-                  title="Labour wage library"
-                  description="Editable daily wage ranges used by the backend cost engine."
-                  rows={libraries?.labour_categories ?? result?.library.labour_categories ?? []}
-                  columns={["labour_code", "desc", "wage_min", "wage_max"]}
+                  rows={activeLibraries?.labour_categories ?? []}
+                  columns={["labour_code", "wage_min", "wage_max"]}
+                  editableColumns={["wage_min", "wage_max"]}
                   onCellChange={(rowIndex, column, value) =>
                     updateLibraryCell("labour_categories", rowIndex, column, value)
                   }
                 />
                 <EditableTableCard
-                  title="Non-labour price library"
-                  description="Editable input price ranges used by the backend cost engine."
-                  rows={libraries?.non_labour_items ?? result?.library.non_labour_items ?? []}
+                  rows={activeLibraries?.non_labour_items ?? []}
                   columns={["item_code", "desc", "unit", "price_min", "price_max"]}
+                  editableColumns={["price_min", "price_max"]}
                   onCellChange={(rowIndex, column, value) =>
                     updateLibraryCell("non_labour_items", rowIndex, column, value)
                   }
                 />
                 <EditableTableCard
-                  title="Operation recipe library"
-                  description="Editable operation, labour manday, and non-labour quantity ranges used to build yearly costs."
-                  rows={libraries?.operation_recipes ?? result?.library.operation_recipes ?? []}
+                  rows={activeLibraries?.operation_recipes ?? []}
                   columns={[
-                    "operation_id",
                     "year",
                     "section",
                     "sub_item",
@@ -1299,6 +1420,7 @@ export default function ModelTwoPage() {
                     "qty_min",
                     "qty_max",
                   ]}
+                  editableColumns={["qty_min", "qty_max"]}
                   onCellChange={(rowIndex, column, value) =>
                     updateLibraryCell("operation_recipes", rowIndex, column, value)
                   }

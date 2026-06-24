@@ -1,0 +1,73 @@
+{
+  "climate_profile_status": "available_site_classifier_earthengine",
+  "source": "terraclimate",
+  "start_year": 2015,
+  "end_year": 2024,
+  "climate_buffer_m": 5000,
+  "scaler": {
+    "aet_pet_ratio": {
+      "mean": 0.62205338,
+      "std": 0.06881858
+    },
+    "annual_aet_mm": {
+      "mean": 816.97895015,
+      "std": 86.41816886
+    },
+    "annual_pet_mm": {
+      "mean": 1319.17223208,
+      "std": 118.46667767
+    },
+    "annual_ppt_mm": {
+      "mean": 1265.19793377,
+      "std": 253.03367796
+    },
+    "annual_runoff_mm": {
+      "mean": 451.180068,
+      "std": 218.44320525
+    },
+    "annual_water_deficit_mm": {
+      "mean": 502.18868608,
+      "std": 123.5725438
+    },
+    "def_pet_ratio": {
+      "mean": 0.37794331,
+      "std": 0.06881515
+    },
+    "mean_pdsi": {
+      "mean": -1.39108377,
+      "std": 0.46665844
+    },
+    "mean_soil_water_mm": {
+      "mean": 130.72973538,
+      "std": 94.79810471
+    },
+    "mean_solar_radiation_w_m2": {
+      "mean": 191.59719669,
+      "std": 11.66261975
+    },
+    "mean_tmax_c": {
+      "mean": 26.44439869,
+      "std": 2.95439308
+    },
+    "mean_tmean_c": {
+      "mean": 21.23019238,
+      "std": 3.20716173
+    },
+    "mean_tmin_c": {
+      "mean": 16.01598615,
+      "std": 3.53299015
+    },
+    "mean_vapor_pressure_kpa": {
+      "mean": 1.87681138,
+      "std": 0.381056
+    },
+    "mean_vpd_kpa": {
+      "mean": 0.83364423,
+      "std": 0.20321649
+    },
+    "mean_wind_10m_ms": {
+      "mean": 2.21789662,
+      "std": 0.19039237
+    }
+  }
+}

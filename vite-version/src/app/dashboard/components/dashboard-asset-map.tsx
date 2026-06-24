@@ -32,6 +32,7 @@ import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { BasicSsmtLayerControl } from "@/app/maps/basic-ssmt-layer"
 import {
   Card,
   CardContent,
@@ -187,7 +188,7 @@ const nearestFeatureLabels: Record<NearestFeatureLayer, string> = {
   commercialForest: "Nearest commercial forests",
 }
 
-const defaultMarketMapLayerGroups: string[] = []
+const defaultMarketMapLayerGroups: string[] = ["Asset blocks"]
 
 const actorLayerIcons: Record<MarketActorLayer, LucideIcon> = {
   processor: Building2,
@@ -547,7 +548,7 @@ function MarketMapClickHandler({
   onSelectPoint: (point: SelectedPoint) => void
 }) {
   useMapEvents({
-    click(event) {
+    dblclick(event) {
       onSelectPoint({
         latitude: event.latlng.lat,
         longitude: event.latlng.lng,
@@ -1310,12 +1311,12 @@ export function DashboardAssetMap({
   const [focusVersion, setFocusVersion] = React.useState(0)
   const [selectedActorId, setSelectedActorId] = React.useState<string | null>(null)
   const [clickedPoint, setClickedPoint] = React.useState<SelectedPoint | null>(null)
-  const [isTableOpen, setIsTableOpen] = React.useState(() => !showHeaderCopy)
+  const [isTableOpen, setIsTableOpen] = React.useState(false)
   const [nearestFeatures, setNearestFeatures] = React.useState<NearestFeatureGroups>(
     () => createEmptyNearestFeatureGroups()
   )
   const [isRouting, setIsRouting] = React.useState(false)
-  const [showRoadAnalysis, setShowRoadAnalysis] = React.useState(true)
+  const [showRoadAnalysis, setShowRoadAnalysis] = React.useState(false)
 
   const selectedGroup =
     initialAssetGroups.find((group) => group.id === selectedGroupId) ??
@@ -1679,6 +1680,7 @@ export function DashboardAssetMap({
                       tileLayersLabel="Base map"
                       layerGroupsLabel="Map overlays"
                     />
+                    <BasicSsmtLayerControl />
 
                     <MapControlContainer className="right-16 top-3">
                       <div className="flex gap-2">

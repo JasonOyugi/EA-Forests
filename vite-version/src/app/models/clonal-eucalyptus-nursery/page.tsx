@@ -31,6 +31,7 @@ import {
   formatMoney as formatCurrencyMoney,
   useCurrencyRates,
 } from "@/app/models/currency"
+import { ModelAssumptionsDisclosure } from "@/app/models/components/model-assumptions-disclosure"
 import { BaseLayout } from "@/components/layouts/base-layout"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -159,13 +160,25 @@ const financialChartConfig = {
     label: "OPEX",
     color: "#d97706",
   },
+  ebitda: {
+    label: "EBITDA",
+    color: "#0f766e",
+  },
   freeCashflow: {
     label: "Free cashflow",
     color: "#16a34a",
   },
+  cumulativeFreeCashflow: {
+    label: "Cumulative FCF",
+    color: "#7c3aed",
+  },
 } satisfies ChartConfig
 
 const productionChartConfig = {
+  cuttingsStuck: {
+    label: "Cuttings stuck",
+    color: "#d97706",
+  },
   soldPlants: {
     label: "Sold plants",
     color: "#0f766e",
@@ -173,6 +186,65 @@ const productionChartConfig = {
   saleablePlants: {
     label: "Saleable plants",
     color: "#2563eb",
+  },
+} satisfies ChartConfig
+
+const segmentedCashflowChartConfig = {
+  revenue: {
+    label: "Revenue",
+    color: "#16a34a",
+  },
+  opex: {
+    label: "OPEX",
+    color: "#d97706",
+  },
+  tax: {
+    label: "Tax",
+    color: "#be123c",
+  },
+  capex: {
+    label: "CAPEX",
+    color: "#2563eb",
+  },
+  workingCapitalChange: {
+    label: "Working capital",
+    color: "#7c3aed",
+  },
+} satisfies ChartConfig
+
+const compositionChartConfig = {
+  value: {
+    label: "Value",
+    color: "#2563eb",
+  },
+} satisfies ChartConfig
+
+const unitEconomicsChartConfig = {
+  revenuePerSoldPlant: {
+    label: "Revenue / sold plant",
+    color: "#16a34a",
+  },
+  cashCostPerSoldPlant: {
+    label: "Cash OPEX / sold plant",
+    color: "#d97706",
+  },
+} satisfies ChartConfig
+
+const npvProfileChartConfig = {
+  npv: {
+    label: "NPV",
+    color: "#2563eb",
+  },
+} satisfies ChartConfig
+
+const paybackChartConfig = {
+  cumulativeFreeCashflow: {
+    label: "Cumulative FCF",
+    color: "#16a34a",
+  },
+  cumulativeDiscountedFcf: {
+    label: "Cumulative discounted FCF",
+    color: "#7c3aed",
   },
 } satisfies ChartConfig
 
@@ -230,6 +302,13 @@ function formatNumber(value: number | null | undefined, digits = 0) {
 function formatPercent(value: number | null | undefined) {
   if (value === null || value === undefined || Number.isNaN(value)) return "n/a"
   return `${formatNumber(value * 100, 1)}%`
+}
+
+function npvAtRate(rate: number, cashflows: number[]) {
+  return cashflows.reduce(
+    (total, cashflow, year) => total + cashflow / (1 + rate) ** year,
+    0
+  )
 }
 
 function downloadCSV(rows: TableRowRecord[], filename: string) {
@@ -446,24 +525,20 @@ function DataTableCard({
 }
 
 function EditableTableCard({
-  title,
-  description,
   rows,
   columns,
+  editableColumns,
   onCellChange,
 }: {
-  title: string
-  description: string
   rows: TableRowRecord[]
   columns: string[]
+  editableColumns: string[]
   onCellChange: (rowIndex: number, column: string, value: TableRowValue) => void
 }) {
+  const editableColumnSet = new Set(editableColumns)
+
   return (
     <Card className="min-w-0 gap-4 overflow-hidden border-border/70 bg-background/75 py-5">
-      <CardHeader className="px-5">
-        <CardTitle className="text-base">{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
-      </CardHeader>
       <CardContent className="min-w-0 px-0">
         <div className="max-h-[460px] max-w-full overflow-auto">
           <Table className="w-max min-w-full">
@@ -478,25 +553,32 @@ function EditableTableCard({
             </TableHeader>
             <TableBody>
               {rows.map((row, rowIndex) => (
-                <TableRow key={`${title}-${rowIndex}`}>
+                <TableRow key={`${rowIndex}`}>
                   {columns.map((column) => {
                     const value = row[column]
                     const isNumber = typeof value === "number"
+                    const isEditable = editableColumnSet.has(column)
                     return (
-                      <TableCell key={`${title}-${rowIndex}-${column}`} className="min-w-32 px-3">
-                        <Input
-                          type={isNumber ? "number" : "text"}
-                          value={value === null || value === undefined ? "" : String(value)}
-                          step={isNumber ? "any" : undefined}
-                          onChange={(event) => {
-                            const parsed = Number(event.target.value)
-                            onCellChange(
-                              rowIndex,
-                              column,
-                              isNumber && Number.isFinite(parsed) ? parsed : event.target.value
-                            )
-                          }}
-                        />
+                      <TableCell key={`${rowIndex}-${column}`} className="min-w-32 px-3">
+                        {isEditable ? (
+                          <Input
+                            type={isNumber ? "number" : "text"}
+                            value={value === null || value === undefined ? "" : String(value)}
+                            step={isNumber ? "any" : undefined}
+                            onChange={(event) => {
+                              const parsed = Number(event.target.value)
+                              onCellChange(
+                                rowIndex,
+                                column,
+                                isNumber && Number.isFinite(parsed) ? parsed : event.target.value
+                              )
+                            }}
+                          />
+                        ) : (
+                          <div className="max-w-[260px] whitespace-normal text-sm text-muted-foreground">
+                            {value === null || value === undefined ? "n/a" : String(value)}
+                          </div>
+                        )}
                       </TableCell>
                     )
                   })}
@@ -673,7 +755,11 @@ export default function ClonalEucalyptusNurseryPage() {
         year: getNumeric(row, "year"),
         revenue: toSelectedCurrency(getNumeric(row, "revenue")),
         opex: toSelectedCurrency(getNumeric(row, "opex")),
+        ebitda: toSelectedCurrency(getNumeric(row, "ebitda")),
         freeCashflow: toSelectedCurrency(getNumeric(row, "free_cashflow")),
+        cumulativeFreeCashflow: toSelectedCurrency(
+          getNumeric(row, "cumulative_free_cashflow")
+        ),
       })),
     [financialRows, toSelectedCurrency]
   )
@@ -682,10 +768,99 @@ export default function ClonalEucalyptusNurseryPage() {
     () =>
       productionRows.map((row) => ({
         year: getNumeric(row, "year"),
+        cuttingsStuck: getNumeric(row, "cuttings_stuck"),
         soldPlants: getNumeric(row, "sold_plants"),
         saleablePlants: getNumeric(row, "total_saleable_plants"),
       })),
     [productionRows]
+  )
+
+  const segmentedCashflowRows = React.useMemo(
+    () =>
+      financialRows.map((row) => ({
+        year: getNumeric(row, "year"),
+        revenue: toSelectedCurrency(getNumeric(row, "revenue")),
+        opex: toSelectedCurrency(-getNumeric(row, "opex")),
+        tax: toSelectedCurrency(-getNumeric(row, "tax")),
+        capex: toSelectedCurrency(-getNumeric(row, "capex")),
+        workingCapitalChange: toSelectedCurrency(
+          -getNumeric(row, "working_capital_change")
+        ),
+      })),
+    [financialRows, toSelectedCurrency]
+  )
+
+  const capexCategoryRows = React.useMemo(
+    () =>
+      (result?.capex_summary ?? [])
+        .map((row) => ({
+          category: String(row.category ?? ""),
+          value: toSelectedCurrency(getNumeric(row, "initial_cost")) ?? 0,
+        }))
+        .sort((left, right) => left.value - right.value),
+    [result?.capex_summary, toSelectedCurrency]
+  )
+
+  const opexCompositionRows = React.useMemo(() => {
+    const finalYear = financialRows.reduce(
+      (maxYear, row) => Math.max(maxYear, getNumeric(row, "year")),
+      0
+    )
+    const rows = opexRows
+      .filter((row) => getNumeric(row, "year") === finalYear)
+      .map((row) => ({
+        item: String(row.cost_item ?? ""),
+        value: toSelectedCurrency(getNumeric(row, "cost")) ?? 0,
+      }))
+      .sort((left, right) => right.value - left.value)
+    const topRows = rows.slice(0, 12)
+    const otherValue = rows
+      .slice(12)
+      .reduce((total, row) => total + row.value, 0)
+    const chartRows = otherValue > 0 ? [...topRows, { item: "Other", value: otherValue }] : topRows
+    return chartRows.sort((left, right) => left.value - right.value)
+  }, [financialRows, opexRows, toSelectedCurrency])
+
+  const unitEconomicsRows = React.useMemo(
+    () =>
+      financialRows
+        .filter((row) => getNumeric(row, "year") > 0)
+        .map((row) => ({
+          year: getNumeric(row, "year"),
+          revenuePerSoldPlant: toSelectedCurrency(
+            getNumeric(row, "revenue_per_sold_plant")
+          ),
+          cashCostPerSoldPlant: toSelectedCurrency(
+            getNumeric(row, "cash_cost_per_sold_plant")
+          ),
+        })),
+    [financialRows, toSelectedCurrency]
+  )
+
+  const npvProfileRows = React.useMemo(() => {
+    const cashflows = financialRows.map((row) => getNumeric(row, "free_cashflow"))
+    return Array.from({ length: 41 }, (_, index) => {
+      const rate = index / 100
+      return {
+        rate,
+        rateLabel: `${formatNumber(rate * 100, 0)}%`,
+        npv: toSelectedCurrency(npvAtRate(rate, cashflows)),
+      }
+    })
+  }, [financialRows, toSelectedCurrency])
+
+  const paybackChartRows = React.useMemo(
+    () =>
+      financialRows.map((row) => ({
+        year: getNumeric(row, "year"),
+        cumulativeFreeCashflow: toSelectedCurrency(
+          getNumeric(row, "cumulative_free_cashflow")
+        ),
+        cumulativeDiscountedFcf: toSelectedCurrency(
+          getNumeric(row, "cumulative_discounted_fcf")
+        ),
+      })),
+    [financialRows, toSelectedCurrency]
   )
 
   const sensitivityChartRows = React.useMemo(
@@ -707,10 +882,9 @@ export default function ClonalEucalyptusNurseryPage() {
   return (
     <BaseLayout
       title="Clonal Eucalyptus Nursery Model"
-      description="Investment model for a pragmatic rural clonal eucalyptus nursery, adapted from the notebook production, OPEX, CAPEX, financial, and sensitivity engines."
     >
       <div className="@container/main min-w-0 max-w-full overflow-hidden px-4 lg:px-6">
-        <div className="grid min-w-0 max-w-full gap-4 xl:grid-cols-[minmax(0,380px)_minmax(0,1fr)]">
+        <div className="grid min-w-0 max-w-full gap-4">
           <Card className="min-w-0 gap-4 border-border/70 bg-background/75 py-5">
             <CardHeader className="px-5">
               <div className="flex items-center justify-between gap-3">
@@ -957,14 +1131,9 @@ export default function ClonalEucalyptusNurseryPage() {
               </Card>
             ) : null}
 
-            <div className="min-w-0 space-y-4">
-              <div className="flex min-w-0 flex-wrap items-start justify-between gap-4">
-                <div className="min-w-0">
-                  <h2 className="text-lg font-semibold">Backend input dataframes</h2>
-                  <p className="text-sm text-muted-foreground">
-                    These are the active pandas dataframe rows from the Python clonal nursery model. Editing values here changes the payload used for the next model run.
-                  </p>
-                </div>
+            <ModelAssumptionsDisclosure
+              description="Base calculations and editable assumption libraries are in USD."
+              actions={
                 <Button
                   className="gap-2"
                   disabled={isRunning || !activeLibraries}
@@ -975,29 +1144,26 @@ export default function ClonalEucalyptusNurseryPage() {
                   ) : (
                     <Play className="h-4 w-4" />
                   )}
-                  Apply dataframe changes
+                  Apply changes
                 </Button>
-              </div>
+              }
+            >
               <Tabs defaultValue="assumptions" className="min-w-0 space-y-4">
                 <div className="max-w-full overflow-x-auto">
                   <TabsList className="w-max min-w-full justify-start">
-                    <TabsTrigger value="assumptions">Assumptions dataframe</TabsTrigger>
-                    <TabsTrigger value="capex">CAPEX dataframe</TabsTrigger>
+                    <TabsTrigger value="assumptions">General</TabsTrigger>
+                    <TabsTrigger value="capex">CAPEX</TabsTrigger>
                   </TabsList>
                 </div>
                 <TabsContent value="assumptions">
                   <EditableTableCard
-                    title="default_assumptions()"
-                    description="Every assumption row from the backend dataframe, including the values used by production, OPEX, finance, capacity, labour, input, overhead, and market calculations."
                     rows={activeLibraries?.assumptions ?? []}
                     columns={[
-                      "category",
                       "assumption",
                       "value",
                       "unit",
-                      "economic_behaviour",
-                      "notes",
                     ]}
+                    editableColumns={["value"]}
                     onCellChange={(rowIndex, column, value) =>
                       updateLibraryCell("assumptions", rowIndex, column, value)
                     }
@@ -1005,8 +1171,6 @@ export default function ClonalEucalyptusNurseryPage() {
                 </TabsContent>
                 <TabsContent value="capex">
                   <EditableTableCard
-                    title="default_capex_assets()"
-                    description="CAPEX asset rows used by initial investment, replacement CAPEX, depreciation, and maintenance calculations."
                     rows={activeLibraries?.capex_assets ?? []}
                     columns={[
                       "category",
@@ -1014,16 +1178,15 @@ export default function ClonalEucalyptusNurseryPage() {
                       "qty",
                       "unit_cost",
                       "life_years",
-                      "replacement_rule",
-                      "notes",
                     ]}
+                    editableColumns={["qty", "unit_cost", "life_years", "replacement_rule"]}
                     onCellChange={(rowIndex, column, value) =>
                       updateLibraryCell("capex_assets", rowIndex, column, value)
                     }
                   />
                 </TabsContent>
               </Tabs>
-            </div>
+            </ModelAssumptionsDisclosure>
 
             <div className="grid min-w-0 gap-4 md:grid-cols-2 2xl:grid-cols-4">
               <MetricCard
@@ -1055,9 +1218,9 @@ export default function ClonalEucalyptusNurseryPage() {
             <div className="grid min-w-0 gap-4 2xl:grid-cols-2">
               <Card className="min-w-0 overflow-hidden gap-4 border-border/70 bg-background/75 py-5">
                 <CardHeader className="px-5">
-                  <CardTitle>Financial projection</CardTitle>
+                  <CardTitle>Revenue, OPEX and EBITDA</CardTitle>
                   <CardDescription>
-                    Revenue, OPEX, and free cashflow across the projection.
+                    Operating lines from the notebook financial projection.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="min-w-0 px-5">
@@ -1073,7 +1236,7 @@ export default function ClonalEucalyptusNurseryPage() {
                           <Legend />
                           <Bar dataKey="revenue" fill="#2563eb" radius={[4, 4, 0, 0]} />
                           <Bar dataKey="opex" fill="#d97706" radius={[4, 4, 0, 0]} />
-                          <Line type="monotone" dataKey="freeCashflow" stroke="#16a34a" strokeWidth={2} dot={{ r: 3 }} />
+                          <Line type="monotone" dataKey="ebitda" stroke="#0f766e" strokeWidth={2} dot={{ r: 3 }} />
                         </ComposedChart>
                       </ChartContainer>
                     </div>
@@ -1087,9 +1250,9 @@ export default function ClonalEucalyptusNurseryPage() {
 
               <Card className="min-w-0 overflow-hidden gap-4 border-border/70 bg-background/75 py-5">
                 <CardHeader className="px-5">
-                  <CardTitle>Nursery production</CardTitle>
+                  <CardTitle>Production build-up</CardTitle>
                   <CardDescription>
-                    Saleable and sold plants after ramp-up and biological losses.
+                    Cuttings stuck, saleable plants, and sold plants.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="min-w-0 px-5">
@@ -1102,6 +1265,7 @@ export default function ClonalEucalyptusNurseryPage() {
                           <YAxis tickLine={false} axisLine={false} tickFormatter={(value) => new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 }).format(Number(value))} />
                           <ChartTooltip content={<ChartTooltipContent />} />
                           <Legend />
+                          <Bar dataKey="cuttingsStuck" fill="#d97706" radius={[4, 4, 0, 0]} />
                           <Bar dataKey="saleablePlants" fill="#2563eb" radius={[4, 4, 0, 0]} />
                           <Bar dataKey="soldPlants" fill="#0f766e" radius={[4, 4, 0, 0]} />
                         </BarChart>
@@ -1115,6 +1279,223 @@ export default function ClonalEucalyptusNurseryPage() {
                 </CardContent>
               </Card>
             </div>
+
+            <div className="grid min-w-0 gap-4 2xl:grid-cols-2">
+              <Card className="min-w-0 overflow-hidden gap-4 border-border/70 bg-background/75 py-5">
+                <CardHeader className="px-5">
+                  <CardTitle>Free cashflow and cumulative cashflow</CardTitle>
+                  <CardDescription>
+                    Annual free cashflow bars with cumulative free cashflow.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="min-w-0 px-5">
+                  {financialChartRows.length ? (
+                    <div className="h-[360px] w-full min-w-0 overflow-hidden">
+                      <ChartContainer config={financialChartConfig} className="h-full w-full">
+                        <ComposedChart data={financialChartRows} margin={{ left: 8, right: 8, top: 8, bottom: 20 }}>
+                          <CartesianGrid vertical={false} strokeDasharray="3 3" />
+                          <XAxis dataKey="year" tickLine={false} axisLine={false} />
+                          <YAxis tickLine={false} axisLine={false} tickFormatter={(value) => new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 }).format(Number(value))} />
+                          <ReferenceLine y={0} stroke="hsl(var(--border))" />
+                          <ChartTooltip content={<ChartTooltipContent />} />
+                          <Legend />
+                          <Bar dataKey="freeCashflow" fill="#16a34a" radius={[4, 4, 0, 0]} />
+                          <Line type="monotone" dataKey="cumulativeFreeCashflow" stroke="#7c3aed" strokeWidth={2} dot={{ r: 3 }} />
+                        </ComposedChart>
+                      </ChartContainer>
+                    </div>
+                  ) : (
+                    <div className="rounded-lg border border-border/70 bg-background/70 px-4 py-12 text-center text-sm text-muted-foreground">
+                      Run the model to populate cashflow.
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              <Card className="min-w-0 overflow-hidden gap-4 border-border/70 bg-background/75 py-5">
+                <CardHeader className="px-5">
+                  <CardTitle>Segmented annual cashflow bars</CardTitle>
+                  <CardDescription>
+                    Revenue is positive; OPEX, tax, CAPEX, and working capital are negative.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="min-w-0 px-5">
+                  {segmentedCashflowRows.length ? (
+                    <div className="h-[360px] w-full min-w-0 overflow-hidden">
+                      <ChartContainer config={segmentedCashflowChartConfig} className="h-full w-full">
+                        <BarChart data={segmentedCashflowRows} stackOffset="sign" margin={{ left: 8, right: 8, top: 8, bottom: 20 }}>
+                          <CartesianGrid vertical={false} strokeDasharray="3 3" />
+                          <XAxis dataKey="year" tickLine={false} axisLine={false} />
+                          <YAxis tickLine={false} axisLine={false} tickFormatter={(value) => new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 }).format(Number(value))} />
+                          <ReferenceLine y={0} stroke="hsl(var(--border))" />
+                          <ChartTooltip content={<ChartTooltipContent />} />
+                          <Legend />
+                          <Bar dataKey="revenue" stackId="cashflow" fill="#16a34a" />
+                          <Bar dataKey="opex" stackId="cashflow" fill="#d97706" />
+                          <Bar dataKey="tax" stackId="cashflow" fill="#be123c" />
+                          <Bar dataKey="capex" stackId="cashflow" fill="#2563eb" />
+                          <Bar dataKey="workingCapitalChange" stackId="cashflow" fill="#7c3aed" />
+                        </BarChart>
+                      </ChartContainer>
+                    </div>
+                  ) : (
+                    <div className="rounded-lg border border-border/70 bg-background/70 px-4 py-12 text-center text-sm text-muted-foreground">
+                      Run the model to populate segmented cashflow.
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="grid min-w-0 gap-4 2xl:grid-cols-2">
+              <Card className="min-w-0 overflow-hidden gap-4 border-border/70 bg-background/75 py-5">
+                <CardHeader className="px-5">
+                  <CardTitle>Initial CAPEX by category</CardTitle>
+                  <CardDescription>
+                    Category totals from the active CAPEX dataframe.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="min-w-0 px-5">
+                  {capexCategoryRows.length ? (
+                    <div className="h-[360px] w-full min-w-0 overflow-hidden">
+                      <ChartContainer config={compositionChartConfig} className="h-full w-full">
+                        <BarChart data={capexCategoryRows} layout="vertical" margin={{ left: 132, right: 12, top: 8, bottom: 20 }}>
+                          <CartesianGrid horizontal={false} strokeDasharray="3 3" />
+                          <XAxis type="number" tickLine={false} axisLine={false} tickFormatter={(value) => new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 }).format(Number(value))} />
+                          <YAxis dataKey="category" type="category" tickLine={false} axisLine={false} width={128} tick={{ fontSize: 11 }} />
+                          <ChartTooltip content={<ChartTooltipContent />} />
+                          <Bar dataKey="value" fill="#2563eb" radius={[0, 4, 4, 0]} />
+                        </BarChart>
+                      </ChartContainer>
+                    </div>
+                  ) : (
+                    <div className="rounded-lg border border-border/70 bg-background/70 px-4 py-12 text-center text-sm text-muted-foreground">
+                      Run the model to populate CAPEX categories.
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              <Card className="min-w-0 overflow-hidden gap-4 border-border/70 bg-background/75 py-5">
+                <CardHeader className="px-5">
+                  <CardTitle>OPEX composition</CardTitle>
+                  <CardDescription>
+                    Final-year operating cost composition.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="min-w-0 px-5">
+                  {opexCompositionRows.length ? (
+                    <div className="h-[360px] w-full min-w-0 overflow-hidden">
+                      <ChartContainer config={compositionChartConfig} className="h-full w-full">
+                        <BarChart data={opexCompositionRows} layout="vertical" margin={{ left: 150, right: 12, top: 8, bottom: 20 }}>
+                          <CartesianGrid horizontal={false} strokeDasharray="3 3" />
+                          <XAxis type="number" tickLine={false} axisLine={false} tickFormatter={(value) => new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 }).format(Number(value))} />
+                          <YAxis dataKey="item" type="category" tickLine={false} axisLine={false} width={146} tick={{ fontSize: 11 }} />
+                          <ChartTooltip content={<ChartTooltipContent />} />
+                          <Bar dataKey="value" fill="#d97706" radius={[0, 4, 4, 0]} />
+                        </BarChart>
+                      </ChartContainer>
+                    </div>
+                  ) : (
+                    <div className="rounded-lg border border-border/70 bg-background/70 px-4 py-12 text-center text-sm text-muted-foreground">
+                      Run the model to populate OPEX composition.
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="grid min-w-0 gap-4 2xl:grid-cols-2">
+              <Card className="min-w-0 overflow-hidden gap-4 border-border/70 bg-background/75 py-5">
+                <CardHeader className="px-5">
+                  <CardTitle>Unit economics</CardTitle>
+                  <CardDescription>
+                    Revenue and cash OPEX per sold plant.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="min-w-0 px-5">
+                  {unitEconomicsRows.length ? (
+                    <div className="h-[340px] w-full min-w-0 overflow-hidden">
+                      <ChartContainer config={unitEconomicsChartConfig} className="h-full w-full">
+                        <ComposedChart data={unitEconomicsRows} margin={{ left: 8, right: 8, top: 8, bottom: 20 }}>
+                          <CartesianGrid vertical={false} strokeDasharray="3 3" />
+                          <XAxis dataKey="year" tickLine={false} axisLine={false} />
+                          <YAxis tickLine={false} axisLine={false} tickFormatter={(value) => formatCurrencyMoney(Number(value), currency, 2)} />
+                          <ChartTooltip content={<ChartTooltipContent />} />
+                          <Legend />
+                          <Line type="monotone" dataKey="revenuePerSoldPlant" stroke="#16a34a" strokeWidth={2} dot={{ r: 3 }} />
+                          <Line type="monotone" dataKey="cashCostPerSoldPlant" stroke="#d97706" strokeWidth={2} dot={{ r: 3 }} />
+                        </ComposedChart>
+                      </ChartContainer>
+                    </div>
+                  ) : (
+                    <div className="rounded-lg border border-border/70 bg-background/70 px-4 py-12 text-center text-sm text-muted-foreground">
+                      Run the model to populate unit economics.
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              <Card className="min-w-0 overflow-hidden gap-4 border-border/70 bg-background/75 py-5">
+                <CardHeader className="px-5">
+                  <CardTitle>NPV profile across discount rates</CardTitle>
+                  <CardDescription>
+                    Discount-rate sweep from 0% to 40%.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="min-w-0 px-5">
+                  {npvProfileRows.length ? (
+                    <div className="h-[340px] w-full min-w-0 overflow-hidden">
+                      <ChartContainer config={npvProfileChartConfig} className="h-full w-full">
+                        <ComposedChart data={npvProfileRows} margin={{ left: 8, right: 8, top: 8, bottom: 20 }}>
+                          <CartesianGrid vertical={false} strokeDasharray="3 3" />
+                          <XAxis dataKey="rateLabel" tickLine={false} axisLine={false} interval={4} />
+                          <YAxis tickLine={false} axisLine={false} tickFormatter={(value) => new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 }).format(Number(value))} />
+                          <ReferenceLine y={0} stroke="hsl(var(--border))" />
+                          <ChartTooltip content={<ChartTooltipContent />} />
+                          <Line type="monotone" dataKey="npv" stroke="#2563eb" strokeWidth={2} dot={false} />
+                        </ComposedChart>
+                      </ChartContainer>
+                    </div>
+                  ) : (
+                    <div className="rounded-lg border border-border/70 bg-background/70 px-4 py-12 text-center text-sm text-muted-foreground">
+                      Run the model to populate NPV profile.
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+
+            <Card className="min-w-0 overflow-hidden gap-4 border-border/70 bg-background/75 py-5">
+              <CardHeader className="px-5">
+                <CardTitle>Payback curve</CardTitle>
+                <CardDescription>
+                  Cumulative free cashflow and cumulative discounted free cashflow.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="min-w-0 px-5">
+                {paybackChartRows.length ? (
+                  <div className="h-[340px] w-full min-w-0 overflow-hidden">
+                    <ChartContainer config={paybackChartConfig} className="h-full w-full">
+                      <ComposedChart data={paybackChartRows} margin={{ left: 8, right: 8, top: 8, bottom: 20 }}>
+                        <CartesianGrid vertical={false} strokeDasharray="3 3" />
+                        <XAxis dataKey="year" tickLine={false} axisLine={false} />
+                        <YAxis tickLine={false} axisLine={false} tickFormatter={(value) => new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 }).format(Number(value))} />
+                        <ReferenceLine y={0} stroke="hsl(var(--border))" />
+                        <ChartTooltip content={<ChartTooltipContent />} />
+                        <Legend />
+                        <Line type="monotone" dataKey="cumulativeFreeCashflow" stroke="#16a34a" strokeWidth={2} dot={{ r: 3 }} />
+                        <Line type="monotone" dataKey="cumulativeDiscountedFcf" stroke="#7c3aed" strokeWidth={2} dot={{ r: 3 }} />
+                      </ComposedChart>
+                    </ChartContainer>
+                  </div>
+                ) : (
+                  <div className="rounded-lg border border-border/70 bg-background/70 px-4 py-12 text-center text-sm text-muted-foreground">
+                    Run the model to populate payback.
+                  </div>
+                )}
+              </CardContent>
+            </Card>
 
             <Card className="min-w-0 overflow-hidden gap-4 border-border/70 bg-background/75 py-5">
               <CardHeader className="px-5">

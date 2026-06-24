@@ -32,7 +32,7 @@ export default function ShopProductPage() {
 
   return (
     <BaseLayout>
-      <div className="px-4 lg:px-6">
+      <div className="mx-auto">
         {isFlagshipInvestment ? (
           <FlagshipInvestmentPage item={product} onBack={() => window.history.back()} />
         ) : (

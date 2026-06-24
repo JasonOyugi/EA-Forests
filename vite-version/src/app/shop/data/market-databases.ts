@@ -207,7 +207,10 @@ export function parseDatabaseNumber(value: DataValue | undefined) {
   if (value == null) return null
   if (typeof value === "number") return Number.isFinite(value) ? value : null
 
-  const parsed = Number(value.replace(/,/g, ""))
+  const normalized = value.replace(/,/g, "").trim()
+  if (!normalized) return null
+
+  const parsed = Number(normalized)
   return Number.isFinite(parsed) ? parsed : null
 }
 

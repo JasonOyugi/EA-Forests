@@ -819,208 +819,203 @@ export default function SiteClassificationPage() {
     >
       <div className="@container/main px-4 lg:px-6">
         <div className="space-y-6">
-          <div className="grid gap-4 xl:grid-cols-[minmax(0,1.15fr)_380px]">
-            <Card className="gap-4 py-0">
-              <CardHeader className="p-3">
-                <div className="flex flex-wrap items-center gap-3">
-                  {lockedCoordinate ? (
-                    <Badge variant="outline">
-                      {lockedCoordinate.lat.toFixed(4)}, {lockedCoordinate.lon.toFixed(4)}
-                    </Badge>
-                  ) : null}
-                  {result?.earth_engine ? (
-                    <Badge
-                      variant="outline"
-                      className={earthEngineBadgeClass(result.earth_engine)}
-                    >
-                      {earthEngineBadgeText(result.earth_engine)}
-                    </Badge>
-                  ) : null}
-                  {displayedEarthEngineStatus && !result?.earth_engine ? (
-                    <Badge
-                      variant="outline"
-                      className={earthEngineBadgeClass(displayedEarthEngineStatus)}
-                    >
-                      {earthEngineBadgeText(displayedEarthEngineStatus)}
-                    </Badge>
-                  ) : null}
-                </div>
-              </CardHeader>
-              <CardContent className="p-0">
-                <Map
-                  center={[0.6, 33.2]}
-                  zoom={6}
-                  doubleClickZoom={false}
-                  className="h-[520px] w-full rounded-none"
-                >
-                  <MapTileLayer
-                    url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
-                    attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>'
-                  />
-                  <CoordinateMapEvents onCoordinateLock={setLockedCoordinate} />
-                  <CoordinateFocus coordinate={lockedCoordinate} />
-                  {lockedCoordinate ? (
-                    <MapMarker
-                      position={[lockedCoordinate.lat, lockedCoordinate.lon]}
-                      icon={
-                        <div className="rounded-full text-emerald-700 shadow-lg">
-                          <MapPinned className="h-4 w-4" />
-                        </div>
-                      }
-                    >
-                      <MapPopup className="w-[min(20rem,calc(100vw-3rem))] p-0">
-                        <div className="space-y-3 rounded-[18px] border bg-background p-4">
-                          <div>
-                            <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
-                              Locked coordinate
-                            </div>
-                            <div className="mt-1 text-sm font-medium">
-                              Latitude: {lockedCoordinate.lat.toFixed(6)}
-                            </div>
-                            <div className="text-sm font-medium">
-                              Longitude: {lockedCoordinate.lon.toFixed(6)}
-                            </div>
+          <Card className="gap-4 py-0">
+            <CardHeader className="p-3">
+              <div className="flex flex-wrap items-center gap-3">
+                {lockedCoordinate ? (
+                  <Badge variant="outline">
+                    {lockedCoordinate.lat.toFixed(4)}, {lockedCoordinate.lon.toFixed(4)}
+                  </Badge>
+                ) : null}
+                {result?.earth_engine ? (
+                  <Badge
+                    variant="outline"
+                    className={earthEngineBadgeClass(result.earth_engine)}
+                  >
+                    {earthEngineBadgeText(result.earth_engine)}
+                  </Badge>
+                ) : null}
+                {displayedEarthEngineStatus && !result?.earth_engine ? (
+                  <Badge
+                    variant="outline"
+                    className={earthEngineBadgeClass(displayedEarthEngineStatus)}
+                  >
+                    {earthEngineBadgeText(displayedEarthEngineStatus)}
+                  </Badge>
+                ) : null}
+              </div>
+            </CardHeader>
+            <CardContent className="p-0">
+              <Map
+                center={[0.6, 33.2]}
+                zoom={6}
+                doubleClickZoom={false}
+                className="h-[520px] w-full rounded-none"
+              >
+                <MapTileLayer
+                  url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
+                  attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>'
+                />
+                <CoordinateMapEvents onCoordinateLock={setLockedCoordinate} />
+                <CoordinateFocus coordinate={lockedCoordinate} />
+                {lockedCoordinate ? (
+                  <MapMarker
+                    position={[lockedCoordinate.lat, lockedCoordinate.lon]}
+                    icon={
+                      <div className="rounded-full text-emerald-700 shadow-lg">
+                        <MapPinned className="h-4 w-4" />
+                      </div>
+                    }
+                  >
+                    <MapPopup className="w-[min(20rem,calc(100vw-3rem))] p-0">
+                      <div className="space-y-3 rounded-[18px] border bg-background p-4">
+                        <div>
+                          <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                            Locked coordinate
                           </div>
-                          <p className="text-sm text-muted-foreground">
-                            Change this by double-clicking a new point on the map.
-                          </p>
+                          <div className="mt-1 text-sm font-medium">
+                            Latitude: {lockedCoordinate.lat.toFixed(6)}
+                          </div>
+                          <div className="text-sm font-medium">
+                            Longitude: {lockedCoordinate.lon.toFixed(6)}
+                          </div>
                         </div>
-                      </MapPopup>
-                    </MapMarker>
+                        <p className="text-sm text-muted-foreground">
+                          Change this by double-clicking a new point on the map.
+                        </p>
+                      </div>
+                    </MapPopup>
+                  </MapMarker>
+                ) : null}
+              </Map>
+            </CardContent>
+          </Card>
+          <Card className="gap-4 border-border/70 bg-background/75 py-5">
+            <CardHeader className="px-5">
+              <div className="flex items-center gap-2">
+                <Settings className="h-5 w-5 text-emerald-700" />
+                <CardTitle className="text-base">Run configuration</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4 px-5">
+              <div className="grid gap-3 sm:grid-cols-2">
+                <label className="space-y-2 text-sm">
+                  <span className="font-medium">Latitude</span>
+                  <Input
+                    type="number"
+                    step="0.000001"
+                    value={lockedCoordinate?.lat ?? ""}
+                    placeholder="Double-click map"
+                    onChange={updateCoordinate("lat")}
+                  />
+                </label>
+                <label className="space-y-2 text-sm">
+                  <span className="font-medium">Longitude</span>
+                  <Input
+                    type="number"
+                    step="0.000001"
+                    value={lockedCoordinate?.lon ?? ""}
+                    placeholder="Double-click map"
+                    onChange={updateCoordinate("lon")}
+                  />
+                </label>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-2">
+                <label className="space-y-2 text-sm">
+                  <span className="font-medium">Start year</span>
+                  <Input
+                    type="number"
+                    value={draftForm.startYear}
+                    min={1981}
+                    max={draftForm.endYear}
+                    onChange={updateYear("startYear")}
+                  />
+                </label>
+                <label className="space-y-2 text-sm">
+                  <span className="font-medium">End year</span>
+                  <Input
+                    type="number"
+                    value={draftForm.endYear}
+                    min={draftForm.startYear}
+                    max={2035}
+                    onChange={updateYear("endYear")}
+                  />
+                </label>
+              </div>
+
+              <div className="grid gap-2 sm:grid-cols-2">
+                <Button
+                  className="w-full gap-2"
+                  onClick={() => void runSiteClassification()}
+                  disabled={
+                    isRunning ||
+                    !lockedCoordinate ||
+                    (needsEarthEngine && !earthEngineReady)
+                  }
+                >
+                  {isRunning ? (
+                    <LoaderCircle className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Play className="h-4 w-4" />
+                  )}
+                  {isRunning ? "Running model..." : "Run model"}
+                </Button>
+                <Button
+                  variant="outline"
+                  className="w-full gap-2"
+                  onClick={() => {
+                    setLockedCoordinate(null)
+                    setRunError(null)
+                  }}
+                >
+                  <RotateCcw className="h-4 w-4" />
+                  Clear coordinate
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {needsEarthEngine && !earthEngineReady ? (
+            <Card className="gap-4 border-amber-300/70 bg-amber-50/80 py-5">
+              <CardHeader className="px-5">
+                <CardTitle className="flex items-center gap-2 text-base text-amber-900">
+                  <AlertTriangle className="h-4 w-4" />
+                  Google Earth Engine authentication required
+                </CardTitle>
+                <CardDescription className="text-amber-900/80">
+                  Selected Earth Engine inputs:{" "}
+                  {formatSourceList([
+                    ...selectedEarthEngineSources,
+                    ...selectedEarthEngineStaticGroups,
+                  ])}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4 px-5">
+                <pre className="max-w-full overflow-x-auto rounded-lg border border-amber-300/70 bg-background/80 p-3 text-xs text-foreground">
+                  <code>{EARTH_ENGINE_AUTH_COMMAND}</code>
+                </pre>
+                {displayedEarthEngineStatus?.message ? (
+                  <p className="text-sm text-amber-900">
+                    {displayedEarthEngineStatus.message}
+                  </p>
+                ) : null}
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => void refreshEarthEngineStatus()}
+                  disabled={isCheckingEarthEngine}
+                >
+                  {isCheckingEarthEngine ? (
+                    <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
                   ) : null}
-                </Map>
+                  Recheck Earth Engine status
+                </Button>
               </CardContent>
             </Card>
+          ) : null}
 
-            <div className="space-y-4">
-              <Card className="gap-4 border-border/70 bg-background/75 py-5">
-                <CardHeader className="px-5">
-                  <div className="flex items-center gap-2">
-                    <Settings className="h-5 w-5 text-emerald-700" />
-                    <CardTitle className="text-base">Run configuration</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4 px-5">
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    <label className="space-y-2 text-sm">
-                      <span className="font-medium">Latitude</span>
-                      <Input
-                        type="number"
-                        step="0.000001"
-                        value={lockedCoordinate?.lat ?? ""}
-                        placeholder="Double-click map"
-                        onChange={updateCoordinate("lat")}
-                      />
-                    </label>
-                    <label className="space-y-2 text-sm">
-                      <span className="font-medium">Longitude</span>
-                      <Input
-                        type="number"
-                        step="0.000001"
-                        value={lockedCoordinate?.lon ?? ""}
-                        placeholder="Double-click map"
-                        onChange={updateCoordinate("lon")}
-                      />
-                    </label>
-                  </div>
-
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    <label className="space-y-2 text-sm">
-                      <span className="font-medium">Start year</span>
-                      <Input
-                        type="number"
-                        value={draftForm.startYear}
-                        min={1981}
-                        max={draftForm.endYear}
-                        onChange={updateYear("startYear")}
-                      />
-                    </label>
-                    <label className="space-y-2 text-sm">
-                      <span className="font-medium">End year</span>
-                      <Input
-                        type="number"
-                        value={draftForm.endYear}
-                        min={draftForm.startYear}
-                        max={2035}
-                        onChange={updateYear("endYear")}
-                      />
-                    </label>
-                  </div>
-
-                  <div className="grid gap-2 sm:grid-cols-2">
-                    <Button
-                      className="w-full gap-2"
-                      onClick={() => void runSiteClassification()}
-                      disabled={
-                        isRunning ||
-                        !lockedCoordinate ||
-                        (needsEarthEngine && !earthEngineReady)
-                      }
-                    >
-                      {isRunning ? (
-                        <LoaderCircle className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <Play className="h-4 w-4" />
-                      )}
-                      {isRunning ? "Running model..." : "Run model"}
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="w-full gap-2"
-                      onClick={() => {
-                        setLockedCoordinate(null)
-                        setRunError(null)
-                      }}
-                    >
-                      <RotateCcw className="h-4 w-4" />
-                      Clear coordinate
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {needsEarthEngine && !earthEngineReady ? (
-                <Card className="gap-4 border-amber-300/70 bg-amber-50/80 py-5">
-                  <CardHeader className="px-5">
-                    <CardTitle className="flex items-center gap-2 text-base text-amber-900">
-                      <AlertTriangle className="h-4 w-4" />
-                      Google Earth Engine authentication required
-                    </CardTitle>
-                    <CardDescription className="text-amber-900/80">
-                      Selected Earth Engine inputs:{" "}
-                      {formatSourceList([
-                        ...selectedEarthEngineSources,
-                        ...selectedEarthEngineStaticGroups,
-                      ])}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4 px-5">
-                    <pre className="max-w-full overflow-x-auto rounded-lg border border-amber-300/70 bg-background/80 p-3 text-xs text-foreground">
-                      <code>{EARTH_ENGINE_AUTH_COMMAND}</code>
-                    </pre>
-                    {displayedEarthEngineStatus?.message ? (
-                      <p className="text-sm text-amber-900">
-                        {displayedEarthEngineStatus.message}
-                      </p>
-                    ) : null}
-                    <Button
-                      variant="outline"
-                      className="w-full"
-                      onClick={() => void refreshEarthEngineStatus()}
-                      disabled={isCheckingEarthEngine}
-                    >
-                      {isCheckingEarthEngine ? (
-                        <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
-                      ) : null}
-                      Recheck Earth Engine status
-                    </Button>
-                  </CardContent>
-                </Card>
-              ) : null}
-            </div>
-          </div>
-
-          <div className="grid gap-4 grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3">
+          <div className="grid gap-4 grid-cols-1 xl:grid-cols-2 2xl:grid-cols-4">
             <SelectionGroup
               title="Sources"
               options={sourceOptions}
@@ -1051,7 +1046,7 @@ export default function SiteClassificationPage() {
               onToggle={setStaticMetricGroups}
               showSelectAll
             />
-            <div className="xl:col-span-2 2xl:col-span-3">
+            <div className="xl:col-span-2 2xl:col-span-4">
               <SelectionGroup
                 title="Agreement families"
                 options={agreementFamilyCategoryOptions}

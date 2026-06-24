@@ -1,0 +1,55 @@
+{
+  "version": "2026-06-23-v1",
+  "default_weights": {
+    "survival_adjusted_volume": 0.4,
+    "dbh": 0.25,
+    "stem_form": 0.2,
+    "survival": 0.15
+  },
+  "available_metrics": [
+    {
+      "key": "survival_adjusted_volume",
+      "label": "Survival-adjusted volume",
+      "component_column": "component_survival_adjusted_volume_z",
+      "direction": "higher_is_better"
+    },
+    {
+      "key": "dbh",
+      "label": "Mean DBH",
+      "component_column": "component_dbh_z",
+      "direction": "higher_is_better"
+    },
+    {
+      "key": "stem_form",
+      "label": "Mean stem form score",
+      "component_column": "component_stem_form_z",
+      "direction": "higher_is_better",
+      "assumption": "Assumes higher Stem (1-8) score is better. Verify with trial codebook."
+    },
+    {
+      "key": "survival",
+      "label": "Survival rate",
+      "component_column": "component_survival_z",
+      "direction": "higher_is_better"
+    },
+    {
+      "key": "height",
+      "label": "Mean height",
+      "component_column": "component_height_z",
+      "direction": "higher_is_better",
+      "optional": true
+    },
+    {
+      "key": "live_volume",
+      "label": "Mean live-tree volume proxy",
+      "component_column": "component_live_volume_z",
+      "direction": "higher_is_better",
+      "optional": true
+    }
+  ],
+  "recommended_runtime_formula": "score = sum(user_weight[metric] * component_z[metric]) / sum(abs(weights))",
+  "ranking_scope": "within site_id + genus_group + latest measurement age",
+  "do_not_compare": "Do not directly rank eucalyptus clonal/hybrid, eucalyptus pure species, pine, and corymbia together; do not directly compare different ages unless age-normalized.",
+  "volume_proxy": "pi * (dbh_cm / 200)^2 * height_m * 0.45",
+  "minimum_n_for_default_ranking": 5
+}

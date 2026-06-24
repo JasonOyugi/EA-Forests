@@ -79,6 +79,7 @@ import {
   formatMoney as formatCurrencyMoney,
   useCurrencyRates,
 } from "@/app/models/currency"
+import { ModelAssumptionsDisclosure } from "@/app/models/components/model-assumptions-disclosure"
 
 type Species = "euc" | "pine"
 type FellingMethod = "chainsaw" | "harvester"
@@ -604,14 +605,18 @@ function EditableTableCard({
   description,
   rows,
   columns,
+  editableColumns,
   onCellChange,
 }: {
   title: string
   description: string
   rows: TableRowRecord[]
   columns: string[]
+  editableColumns: string[]
   onCellChange: (rowIndex: number, column: string, value: TableRowValue) => void
 }) {
+  const editableColumnSet = new Set(editableColumns)
+
   return (
     <Card className="min-w-0 gap-4 overflow-hidden border-border/70 bg-background/75 py-5">
       <CardHeader className="px-5">
@@ -636,21 +641,28 @@ function EditableTableCard({
                   {columns.map((column) => {
                     const value = row[column]
                     const isNumber = typeof value === "number"
+                    const isEditable = editableColumnSet.has(column)
                     return (
                       <TableCell key={`${title}-${rowIndex}-${column}`} className="min-w-32 px-3">
-                        <Input
-                          type={isNumber ? "number" : "text"}
-                          value={value === null || value === undefined ? "" : String(value)}
-                          step={isNumber ? "any" : undefined}
-                          onChange={(event) => {
-                            const parsed = Number(event.target.value)
-                            onCellChange(
-                              rowIndex,
-                              column,
-                              isNumber && Number.isFinite(parsed) ? parsed : event.target.value
-                            )
-                          }}
-                        />
+                        {isEditable ? (
+                          <Input
+                            type={isNumber ? "number" : "text"}
+                            value={value === null || value === undefined ? "" : String(value)}
+                            step={isNumber ? "any" : undefined}
+                            onChange={(event) => {
+                              const parsed = Number(event.target.value)
+                              onCellChange(
+                                rowIndex,
+                                column,
+                                isNumber && Number.isFinite(parsed) ? parsed : event.target.value
+                              )
+                            }}
+                          />
+                        ) : (
+                          <div className="max-w-[260px] whitespace-normal text-sm text-muted-foreground">
+                            {value === null || value === undefined ? "n/a" : String(value)}
+                          </div>
+                        )}
                       </TableCell>
                     )
                   })}
@@ -672,7 +684,7 @@ export default function ModelThreePage() {
   const [selectedProcessor, setSelectedProcessor] = React.useState("")
   const [isRunning, setIsRunning] = React.useState(false)
   const [runError, setRunError] = React.useState<string | null>(null)
-  const [currency, setCurrency] = React.useState<CurrencyCode>("UGX")
+  const [currency, setCurrency] = React.useState<CurrencyCode>("USD")
   const [libraries, setLibraries] = React.useState<RoundwoodLibraries | null>(null)
 
   const apiBaseUrl = React.useMemo(
@@ -746,6 +758,39 @@ export default function ModelThreePage() {
     [apiBaseUrl, form, libraries, lockedCoordinate]
   )
 
+  const loadDefaultLibraries = React.useCallback(async () => {
+    const response = await fetch(`${apiBaseUrl}/models/roundwood-production/defaults`)
+    const responseText = await response.text()
+    const parsed = responseText ? JSON.parse(responseText) : null
+
+    if (!response.ok) {
+      throw new Error(
+        parsed?.detail ||
+          parsed?.message ||
+          `Backend defaults request failed with status ${response.status}.`
+      )
+    }
+
+    return (parsed as { library: RoundwoodResponse["library"] }).library
+  }, [apiBaseUrl])
+
+  React.useEffect(() => {
+    if (libraries) return
+    void (async () => {
+      try {
+        const defaults = await loadDefaultLibraries()
+        setLibraries({
+          labour_categories: defaults.labour_categories,
+          non_labour_items: defaults.non_labour_items,
+          quantity_library: defaults.quantity_library,
+          buyer_specs: defaults.buyer_specs,
+        })
+      } catch {
+        // The model can still run and hydrate libraries from the response.
+      }
+    })()
+  }, [libraries, loadDefaultLibraries])
+
   React.useEffect(() => {
     if (!result || libraries) return
     setLibraries({
@@ -791,6 +836,7 @@ export default function ModelThreePage() {
   const bestResult = result?.processors[0] ?? null
   const bestMetrics = bestResult?.metrics
   const bestProcessor = bestResult?.processor
+  const activeLibraries = libraries ?? result?.library ?? null
 
   const processorChartRows = React.useMemo(
     () =>
@@ -827,7 +873,7 @@ export default function ModelThreePage() {
       description="Harvesting, haulage, processor buyer specs, grade yields, and factory-gate cashflow from a selected map coordinate."
     >
       <div className="@container/main min-w-0 max-w-full overflow-hidden px-4 lg:px-6">
-        <div className="grid min-w-0 max-w-full gap-4 xl:grid-cols-[minmax(0,420px)_minmax(0,1fr)]">
+        <div className="grid min-w-0 max-w-full gap-4">
           <Card className="min-w-0 gap-4 border-border/70 bg-background/75 py-5">
             <CardHeader className="px-5">
               <div className="flex items-start justify-between gap-3">
@@ -837,7 +883,6 @@ export default function ModelThreePage() {
                     Routed processor screening and the full roundwood cashflow input stack.
                   </CardDescription>
                 </div>
-                <Badge variant="outline">Model 3</Badge>
               </div>
             </CardHeader>
             <CardContent className="space-y-5 px-5">
@@ -1187,6 +1232,91 @@ export default function ModelThreePage() {
               </Card>
             ) : null}
 
+            <ModelAssumptionsDisclosure
+              description="Display currency is USD; raw processor, wage, and cost library defaults are pending a backend USD migration."
+              actions={
+                <Button
+                  className="gap-2"
+                  disabled={isRunning || !activeLibraries || !lockedCoordinate}
+                  onClick={() => void runModel(lockedCoordinate, form)}
+                >
+                  {isRunning ? (
+                    <LoaderCircle className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Play className="h-4 w-4" />
+                  )}
+                  Apply changes
+                </Button>
+              }
+            >
+              <Tabs defaultValue="buyer-specs" className="min-w-0 space-y-4">
+                <div className="max-w-full overflow-x-auto">
+                  <TabsList className="w-max min-w-full justify-start">
+                    <TabsTrigger value="buyer-specs">Buyer specs</TabsTrigger>
+                    <TabsTrigger value="labour">Labour</TabsTrigger>
+                    <TabsTrigger value="non-labour">Non-labour</TabsTrigger>
+                    <TabsTrigger value="quantities">Quantity library</TabsTrigger>
+                  </TabsList>
+                </div>
+                <TabsContent value="buyer-specs">
+                  <EditableTableCard
+                    title="Buyer specs"
+                    description="Processor/species grade thresholds and prices used when processor buyer specs are enabled."
+                    rows={activeLibraries?.buyer_specs ?? []}
+                    columns={[
+                      "processor",
+                      "species",
+                      "price_mode",
+                      "grade",
+                      "dbh_min",
+                      "h_min",
+                      "price",
+                    ]}
+                    editableColumns={["price_mode", "dbh_min", "h_min", "price"]}
+                    onCellChange={(rowIndex, column, value) =>
+                      updateLibraryCell("buyer_specs", rowIndex, column, value)
+                    }
+                  />
+                </TabsContent>
+                <TabsContent value="labour">
+                  <EditableTableCard
+                    title="Labour library"
+                    description="Wage ranges used by the roundwood operation model."
+                    rows={activeLibraries?.labour_categories ?? []}
+                    columns={["labour_code", "desc", "wage_min", "wage_max"]}
+                    editableColumns={["wage_min", "wage_max"]}
+                    onCellChange={(rowIndex, column, value) =>
+                      updateLibraryCell("labour_categories", rowIndex, column, value)
+                    }
+                  />
+                </TabsContent>
+                <TabsContent value="non-labour">
+                  <EditableTableCard
+                    title="Non-labour library"
+                    description="Equipment, fuel, permit, and miscellaneous price ranges."
+                    rows={activeLibraries?.non_labour_items ?? []}
+                    columns={["item_code", "desc", "unit", "price_min", "price_max"]}
+                    editableColumns={["price_min", "price_max"]}
+                    onCellChange={(rowIndex, column, value) =>
+                      updateLibraryCell("non_labour_items", rowIndex, column, value)
+                    }
+                  />
+                </TabsContent>
+                <TabsContent value="quantities">
+                  <EditableTableCard
+                    title="Quantity library"
+                    description="Operation productivity and input-use ranges used by Ops, Costs, and Haulage calculations."
+                    rows={activeLibraries?.quantity_library ?? []}
+                    columns={["section", "path", "qty_min", "qty_max"]}
+                    editableColumns={["qty_min", "qty_max"]}
+                    onCellChange={(rowIndex, column, value) =>
+                      updateLibraryCell("quantity_library", rowIndex, column, value)
+                    }
+                  />
+                </TabsContent>
+              </Tabs>
+            </ModelAssumptionsDisclosure>
+
             <div className="grid min-w-0 gap-4 md:grid-cols-2 2xl:grid-cols-4">
               <MetricCard
                 title="Best processor"
@@ -1433,6 +1563,7 @@ export default function ModelThreePage() {
                     "h_min",
                     "price",
                   ]}
+                  editableColumns={["price_mode", "dbh_min", "h_min", "price"]}
                   onCellChange={(rowIndex, column, value) =>
                     updateLibraryCell("buyer_specs", rowIndex, column, value)
                   }
@@ -1442,6 +1573,7 @@ export default function ModelThreePage() {
                   description="Editable wage ranges used by the roundwood operation model."
                   rows={libraries?.labour_categories ?? result?.library.labour_categories ?? []}
                   columns={["labour_code", "desc", "wage_min", "wage_max"]}
+                  editableColumns={["wage_min", "wage_max"]}
                   onCellChange={(rowIndex, column, value) =>
                     updateLibraryCell("labour_categories", rowIndex, column, value)
                   }
@@ -1451,6 +1583,7 @@ export default function ModelThreePage() {
                   description="Editable equipment, fuel, permit, and miscellaneous price ranges."
                   rows={libraries?.non_labour_items ?? result?.library.non_labour_items ?? []}
                   columns={["item_code", "desc", "unit", "price_min", "price_max"]}
+                  editableColumns={["price_min", "price_max"]}
                   onCellChange={(rowIndex, column, value) =>
                     updateLibraryCell("non_labour_items", rowIndex, column, value)
                   }
@@ -1460,6 +1593,7 @@ export default function ModelThreePage() {
                   description="Editable operation productivity and input-use ranges used by Ops, Costs, and Haulage calculations."
                   rows={libraries?.quantity_library ?? result?.library.quantity_library ?? []}
                   columns={["section", "path", "qty_min", "qty_max"]}
+                  editableColumns={["qty_min", "qty_max"]}
                   onCellChange={(rowIndex, column, value) =>
                     updateLibraryCell("quantity_library", rowIndex, column, value)
                   }

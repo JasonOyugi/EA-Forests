@@ -20,6 +20,11 @@ import {
   Bell,
   Link2,
   Palette,
+  Trees,
+  MapPinned,
+  BarChart3,
+  Sprout,
+  Workflow,
   type LucideIcon,
 } from "lucide-react"
 
@@ -136,6 +141,14 @@ export function CommandSearch({ open, onOpenChange }: CommandSearchProps) {
     { title: "Tasks", url: "/tasks", group: "Apps", icon: CheckSquare },
     { title: "Chat", url: "/chat", group: "Apps", icon: MessageCircle },
     { title: "Calendar", url: "/calendar", group: "Apps", icon: Calendar },
+
+    // Models
+    { title: "Models", url: "/models", group: "Models", icon: Trees },
+    { title: "Site Classification", url: "/models/site-classification", group: "Models", icon: MapPinned },
+    { title: "Trial-site Classifier", url: "/models/trial-site-classifier", group: "Models", icon: BarChart3 },
+    { title: "Silvicultural Models", url: "/models/model-2", group: "Models", icon: Trees },
+    { title: "Roundwood Production", url: "/models/model-3", group: "Models", icon: Workflow },
+    { title: "Clonal Nursery", url: "/models/clonal-eucalyptus-nursery", group: "Models", icon: Sprout },
 
     // Auth Pages
     { title: "Sign In 1", url: "/auth/sign-in", group: "Auth Pages", icon: Shield },

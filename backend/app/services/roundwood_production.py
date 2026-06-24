@@ -859,6 +859,20 @@ def dataframe_to_records(df: pd.DataFrame | None, digits: int = 2) -> list[dict[
     return out.to_dict(orient="records")
 
 
+def roundwood_production_default_library() -> dict[str, Any]:
+    processor_db = copy_processor_db()
+    return {
+        "library": {
+            "processor_catalog": processor_catalog(processor_db),
+            "buyer_specs": buyer_specs_to_rows(processor_db),
+            "labour_categories": dataframe_to_records(retail_labour_categories()),
+            "non_labour_items": dataframe_to_records(retail_nonlab_items()),
+            "quantity_library": quantity_library_to_rows(retail_quantity_library()),
+            "section_order": SECTION_ORDER,
+        },
+    }
+
+
 def haversine_km(lon1: float, lat1: float, lon2: float, lat2: float) -> float:
     earth_radius_km = 6371.0088
     phi1 = math.radians(lat1)

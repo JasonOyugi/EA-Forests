@@ -960,6 +960,17 @@ def dataframe_to_records(df: pd.DataFrame | None, digits: int = 2) -> list[dict[
     return out.to_dict(orient="records")
 
 
+def commercial_forest_viability_default_library(rotation_year: int = 8) -> dict[str, Any]:
+    return {
+        "library": {
+            "labour_categories": dataframe_to_records(LABOUR_CATEGORIES),
+            "non_labour_items": dataframe_to_records(NON_LABOUR_ITEMS),
+            "operation_recipes": operation_recipes_to_rows(build_operation_recipes(rotation_year)),
+            "section_order": SECTION_ORDER,
+        },
+    }
+
+
 def build_assumptions(payload: CommercialForestViabilityRequest) -> list[str]:
     final_harvest_year = payload.final_harvest_year or payload.rotation_year
     thinning_text = (

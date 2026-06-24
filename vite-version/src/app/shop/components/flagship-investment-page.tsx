@@ -3,7 +3,6 @@
 import { useEffect, useState, type CSSProperties } from "react"
 import useEmblaCarousel from "embla-carousel-react"
 import {
-  ArrowLeft,
   ArrowRight,
   BarChart3,
   Banknote,
@@ -14,7 +13,6 @@ import {
   ChevronRight,
   Coins,
   Handshake,
-  LineChart,
   MapPinned,
   PhoneCall,
   Play,
@@ -98,6 +96,7 @@ type FlagshipConfig = {
   stepOverlayClass: string
   managedOverlayClass: string
   premiumLabel: string
+  investorType: string
   premiumSummary: string
   monthlyPrice: number
   yearlyPrice: number
@@ -298,6 +297,7 @@ const flagshipConfigs: Record<string, FlagshipConfig> = {
     stepOverlayClass: "bg-[linear-gradient(135deg,rgba(4,10,18,0.82),rgba(6,14,24,0.72)),radial-gradient(circle_at_top_right,rgba(16,185,129,0.28),transparent_42%)]",
     managedOverlayClass: "bg-[linear-gradient(135deg,rgba(4,10,18,0.8),rgba(6,14,24,0.66)),radial-gradient(circle_at_top_right,rgba(16,185,129,0.26),transparent_40%)]",
     premiumLabel: "A stress-free, profitable forestry investment",
+    investorType: "Conservative/new forestry investors",
     premiumSummary:
       "Invest, sit back and enjoy the ride. We structure everything: the land, genetics, nursery, contractors, and operating workflow for you, then run the program with conservative assumptions, regular reporting, and predictable outcomes.",
     monthlyPrice: 200,
@@ -384,6 +384,7 @@ const flagshipConfigs: Record<string, FlagshipConfig> = {
     stepOverlayClass: "bg-[linear-gradient(135deg,rgba(5,12,24,0.84),rgba(7,16,28,0.74)),radial-gradient(circle_at_top_right,rgba(56,189,248,0.28),transparent_42%)]",
     managedOverlayClass: "bg-[linear-gradient(135deg,rgba(5,12,24,0.8),rgba(7,16,28,0.68)),radial-gradient(circle_at_top_right,rgba(56,189,248,0.26),transparent_40%)]",
     premiumLabel: "Ready for premium, optimised forestry assets?",
+    investorType: "Optimisation-focused investors",
     premiumSummary:
       "We leverage our deep connections to build the asset premium genetics, deeper monitoring, tighter contractor control, and advanced asset modelling built for sophisticated investors.",
     monthlyPrice: 500,
@@ -470,6 +471,7 @@ const flagshipConfigs: Record<string, FlagshipConfig> = {
     stepOverlayClass: "bg-[linear-gradient(135deg,rgba(24,12,4,0.84),rgba(30,16,6,0.76)),radial-gradient(circle_at_top_right,rgba(245,158,11,0.3),transparent_42%)]",
     managedOverlayClass: "bg-[linear-gradient(135deg,rgba(24,12,4,0.82),rgba(30,16,6,0.7)),radial-gradient(circle_at_top_right,rgba(245,158,11,0.28),transparent_40%)]",
     premiumLabel: "The most innovative and profitable forestry asset",
+    investorType: "Impact/innovative finance",
     premiumSummary:
       "We enable investors to participate in advanced forestry asset development - produce mahogany like hardwoods while participating in the fight against climate change.",
     monthlyPrice: 720,
@@ -562,79 +564,92 @@ function FlagshipMarketsMapAd({
   config: FlagshipConfig
 }) {
   const marketSignals = [
-    { label: "Carbon", value: "Buyer demand", icon: TrendingUp },
-    { label: "Roundwood", value: "Processor lanes", icon: Trees },
-    { label: "Wood chips", value: "Export pull", icon: Tractor },
+    {
+      label: "Carbon",
+      value: "Buyer demand",
+      icon: TrendingUp,
+      image: "https://images.unsplash.com/photo-1473773508845-188df298d2d1?w=640&h=420&fit=crop",
+    },
+    {
+      label: "Roundwood",
+      value: "Processor lanes",
+      icon: Trees,
+      image: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=640&h=420&fit=crop",
+    },
+    {
+      label: "Wood chips",
+      value: "Export pull",
+      icon: Tractor,
+      image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=640&h=420&fit=crop",
+    },
   ]
 
   return (
     <section className="px-4 pt-12 sm:px-6 md:px-8 md:pt-16">
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto">
         <ScrollReveal distance={24}>
-          <BentoTilt maxTilt={4}>
-            <Card className="group relative overflow-hidden border-primary/15 bg-card/95 p-0 shadow-none">
-              <video
-                aria-hidden="true"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="absolute inset-0 h-full w-full object-cover opacity-70"
-                src="/feature-3.mp4"
-              />
-              <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(3,8,15,0.9),rgba(3,8,15,0.68)_42%,rgba(3,8,15,0.9)),radial-gradient(circle_at_16%_18%,hsl(var(--primary)/0.36),transparent_34%)]" />
-              <div className="absolute inset-0 opacity-[0.16] [background-image:linear-gradient(hsl(var(--primary)/0.28)_1px,transparent_1px),linear-gradient(90deg,hsl(var(--primary)/0.24)_1px,transparent_1px)] [background-size:42px_42px]" />
+          <Card className="bg-transparent group relative overflow-hidden p-0 shadow-none">
+            <div className="absolute inset-0" />
+            <div className="absolute inset-0 opacity-[0.16]" />
 
-              <CardContent className="relative p-6 sm:p-8 lg:p-10">
-                <div className="flex min-h-[24rem] max-w-4xl flex-col justify-between gap-8">
-                  <div className="space-y-5">
-                    <Badge variant="outline" className="flagship-badge rounded-full bg-primary text-primary-foreground px-3 py-1 text-xs uppercase tracking-[0.2em]">
-                      Market intelligence
-                    </Badge>
-                    <div className="space-y-3">
-                      <h2 className="max-w-2xl text-3xl font-semibold leading-tight text-primary-foreground sm:text-4xl md:text-5xl">
-                        What do you do with the forest?
-                      </h2>
-                      <p className="max-w-2xl text-sm leading-7 text-primary/80 sm:text-base">
-                        Forest markets are accelerating across carbon offtake, roundwood demand, wood chips, and processor-linked supply. Get a market read before deciding how {config.eyebrow.toLowerCase()} should be positioned.
-                      </p>
-                    </div>
+            <CardContent className="relative p-6 sm:p-8 lg:p-10">
+              <div className="flex min-h-[24rem] flex-col justify-between gap-8">
+                <div className="space-y-5">
+                  <Badge variant="outline" className="flagship-badge rounded-full bg-primary text-primary-foreground px-3 py-1 text-xs uppercase tracking-[0.2em]">
+                    Market intelligence
+                  </Badge>
+                  <div className="space-y-3">
+                    <h2 className="text-3xl font-semibold leading-tight text-primary-foreground sm:text-4xl md:text-5xl">
+                      What do you do with the forest?
+                    </h2>
+                    <p className="text-sm leading-7 text-primary/80 sm:text-base">
+                      Forest markets are accelerating across carbon offtake, roundwood demand, wood chips, and processor-linked supply. Get a market read before deciding how {config.eyebrow.toLowerCase()} should be positioned.
+                    </p>
                   </div>
+                </div>
 
-                  <div className="flex flex-wrap gap-3">
-                    {marketSignals.map((signal) => {
-                      const Icon = signal.icon
+                <div className="flex flex-wrap gap-3">
+                  {marketSignals.map((signal) => {
+                    const Icon = signal.icon
 
-                      return (
-                        <div key={signal.label} className="flagship-premium-hover-card flagship-metric-card flex min-w-[10.5rem] flex-1 flex-col rounded-[1.25rem] p-4">
-                          <div className="flagship-card-icon mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/15 text-primary">
+                    return (
+                      <div key={signal.label} className="flagship-premium-hover-card flagship-metric-card group/signal relative flex min-w-[10.5rem] flex-1 overflow-hidden rounded-[1.25rem] p-0">
+                        <img
+                          src={signal.image}
+                          alt=""
+                          aria-hidden="true"
+                          className="absolute inset-0 h-full w-full object-cover opacity-70 transition-transform duration-700 group-hover/signal:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(3,8,15,0.2),rgba(3,8,15,0.82))]" />
+                        <div className="relative z-10 flex min-h-[9.5rem] w-full flex-col justify-end p-4">
+                          <div className="flagship-card-icon mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-black/30 text-white backdrop-blur">
                             <Icon className="h-5 w-5" />
                           </div>
-                          <div className="text-[0.65rem] uppercase tracking-[0.15em] text-primary/60 sm:text-xs sm:tracking-[0.2em]">
+                          <div className="text-[0.65rem] uppercase tracking-[0.15em] text-white/70 sm:text-xs sm:tracking-[0.2em]">
                             {signal.label}
                           </div>
-                          <div className="mt-2 text-sm font-semibold leading-6 text-primary">{signal.value}</div>
+                          <div className="mt-2 text-sm font-semibold leading-6 text-white">{signal.value}</div>
                         </div>
-                      )
-                    })}
-                  </div>
-
-                  <Button className="h-auto w-fit cursor-pointer rounded-full p-0 text-sm" asChild>
-                    <a
-                      href="/shop/roundwood"
-                      className="group relative flex min-h-[46px] items-center justify-center overflow-hidden rounded-full px-5 py-3"
-                    >
-                      <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
-                      <span className="relative z-10 inline-flex items-center group-hover:text-emerald-100">
-                        Open markets map
-                        <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                      </span>
-                    </a>
-                  </Button>
+                      </div>
+                    )
+                  })}
                 </div>
-              </CardContent>
-            </Card>
-          </BentoTilt>
+
+                <Button className="h-auto cursor-pointer rounded-full p-0 text-sm" asChild>
+                  <a
+                    href="/shop/roundwood"
+                    className="group relative flex min-h-[46px] items-center justify-center overflow-hidden rounded-full px-5 py-3"
+                  >
+                    <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
+                    <span className="relative z-10 inline-flex items-center group-hover:text-emerald-100">
+                      Open markets map
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </span>
+                  </a>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </ScrollReveal>
       </div>
     </section>
@@ -642,6 +657,7 @@ function FlagshipMarketsMapAd({
 }
 
 function FlagshipTestimonialsCarousel({ testimonials }: { testimonials: FlagshipTestimonial[] }) {
+  const [isExpanded, setIsExpanded] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
@@ -668,107 +684,132 @@ function FlagshipTestimonialsCarousel({ testimonials }: { testimonials: Flagship
   if (!testimonials.length) return null
 
   return (
-    <section id="flagship-testimonials" className="flagship-testimonials-section px-4 py-12 sm:px-6 md:px-8 md:py-16">
-      <div className="mx-auto max-w-7xl space-y-6">
+    <section id="flagship-testimonials" className="bg-primary-foreground px-4 py-12 sm:px-6 md:px-8 md:py-16">
+      <div className="mx-auto space-y-6">
         <ScrollReveal distance={24}>
-          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-            <div className="max-w-3xl space-y-3">
-              <Badge variant="outline" className="flagship-badge rounded-full bg-primary text-primary-foreground px-3 py-1 text-xs uppercase tracking-[0.2em]">
-                Testimonials
-              </Badge>
-              <h2 className="text-3xl font-semibold text-primary-foreground sm:text-4xl md:text-5xl">
-                What the investors and experts are saying
-              </h2>
-              <p className="text-sm leading-7 text-primary/75 sm:text-base">
-                Practical notes from investors, operators, and forestry specialists reviewing this flagship pathway.
-              </p>
-            </div>
+          <Button
+            type="button"
+            aria-expanded={isExpanded}
+            onClick={() => setIsExpanded((value) => !value)}
+            className="flagship-premium-hover-card group block h-auto w-full rounded-[1.75rem] p-6 text-left text-primary sm:p-7"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div className="max-w-3xl space-y-3">
+                <Badge variant="outline" className="flagship-badge rounded-full bg-primary text-primary-foreground px-3 py-1 text-xs uppercase tracking-[0.2em]">
+                  Testimonials
+                </Badge>
+                <h2 className="text-3xl font-semibold text-primary-foreground sm:text-4xl md:text-5xl">
+                  What the investors and experts are saying
+                </h2>
+                <p className="text-sm leading-7 text-primary/75 sm:text-base">
+                  Practical notes from investors, operators, and forestry specialists reviewing this flagship pathway.
+                </p>
+              </div>
 
-            <div className="flex items-center gap-2">
-              <Button
-                type="button"
-                variant="outline"
-                size="icon"
-                aria-label="Previous testimonial"
-                onClick={() => emblaApi?.scrollPrev()}
-                className="theme-primary-border-hover rounded-full border-primary/25 bg-transparent text-primary transition-all duration-300 hover:bg-primary/10"
+              <div
+                className={cn(
+                  "flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-primary/15 bg-primary/5 text-primary transition-transform duration-300",
+                  isExpanded ? "rotate-180" : "rotate-0"
+                )}
               >
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                size="icon"
-                aria-label="Next testimonial"
-                onClick={() => emblaApi?.scrollNext()}
-                className="theme-primary-border-hover rounded-full border-primary/25 bg-transparent text-primary transition-all duration-300 hover:bg-primary/10"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </ScrollReveal>
-
-        <ScrollReveal delay={90} distance={24}>
-          <div className="relative">
-            <div ref={emblaRef} className="overflow-hidden" onWheel={handleWheel}>
-              <div className="-ml-4 flex py-2 sm:-ml-5">
-                {testimonials.map((testimonial, index) => (
-                  <div key={`${testimonial.name}-${index}`} className="min-w-0 flex-[0_0_88%] pl-4 sm:flex-[0_0_62%] sm:pl-5 lg:flex-[0_0_36%]">
-                    <BentoTilt className="h-full" maxTilt={3}>
-                      <Card className="h-full border-primary/15 bg-card/95 shadow-none">
-                        <CardContent className="flex h-full flex-col">
-                          <div className="flex items-start gap-4">
-                            <Avatar className="size-12 shrink-0 bg-muted">
-                              <AvatarImage
-                                alt={testimonial.name}
-                                src={testimonial.image}
-                                loading="lazy"
-                                width="120"
-                                height="120"
-                              />
-                              <AvatarFallback>{getInitials(testimonial.name)}</AvatarFallback>
-                            </Avatar>
-
-                            <div className="min-w-0 flex-1">
-                              <h3 className="font-medium text-foreground">{testimonial.name}</h3>
-                              <span className="block text-sm tracking-wide text-muted-foreground">{testimonial.role}</span>
-                            </div>
-                          </div>
-
-                          <blockquote className="mt-5 flex-1">
-                            <p className="text-sm leading-7 text-muted-foreground">{testimonial.quote}</p>
-                          </blockquote>
-                        </CardContent>
-                      </Card>
-                    </BentoTilt>
-                  </div>
-                ))}
+                <ChevronDown className="h-5 w-5" />
               </div>
             </div>
-
-            <div className="mt-4 flex justify-center gap-2">
-              {testimonials.map((testimonial, index) => (
-                <button
-                  key={`${testimonial.name}-dot`}
-                  type="button"
-                  aria-label={`Show testimonial ${index + 1}`}
-                  onClick={() => emblaApi?.scrollTo(index)}
-                  className={cn(
-                    "h-2.5 rounded-full transition-all duration-300",
-                    selectedIndex === index ? "w-8 bg-primary" : "w-2.5 bg-primary/25 hover:bg-primary/45"
-                  )}
-                />
-              ))}
-            </div>
-          </div>
+          </Button>
         </ScrollReveal>
+
+        <div
+          className={cn(
+            "grid overflow-hidden transition-all duration-300",
+            isExpanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+          )}
+        >
+          <div className="overflow-hidden">
+            <ScrollReveal delay={90} distance={24}>
+              <div className="relative pt-2">
+                <div className="mb-4 flex justify-end gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    aria-label="Previous testimonial"
+                    onClick={() => emblaApi?.scrollPrev()}
+                    className="theme-primary-border-hover rounded-full border-primary/25 bg-transparent text-primary transition-all duration-300 hover:bg-primary/10"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    aria-label="Next testimonial"
+                    onClick={() => emblaApi?.scrollNext()}
+                    className="theme-primary-border-hover rounded-full border-primary/25 bg-transparent text-primary transition-all duration-300 hover:bg-primary/10"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </div>
+
+                <div ref={emblaRef} className="overflow-hidden" onWheel={handleWheel}>
+                  <div className="-ml-4 flex py-2 sm:-ml-5">
+                    {testimonials.map((testimonial, index) => (
+                      <div key={`${testimonial.name}-${index}`} className="min-w-0 flex-[0_0_88%] pl-4 sm:flex-[0_0_62%] sm:pl-5 lg:flex-[0_0_36%]">
+                        <BentoTilt className="h-full" maxTilt={3}>
+                          <Card className="h-full border-primary/15 bg-card/95 shadow-none">
+                            <CardContent className="flex h-full flex-col">
+                              <div className="flex items-start gap-4">
+                                <Avatar className="size-12 shrink-0 bg-muted">
+                                  <AvatarImage
+                                    alt={testimonial.name}
+                                    src={testimonial.image}
+                                    loading="lazy"
+                                    width="120"
+                                    height="120"
+                                  />
+                                  <AvatarFallback>{getInitials(testimonial.name)}</AvatarFallback>
+                                </Avatar>
+
+                                <div className="min-w-0 flex-1">
+                                  <h3 className="font-medium text-foreground">{testimonial.name}</h3>
+                                  <span className="block text-sm tracking-wide text-muted-foreground">{testimonial.role}</span>
+                                </div>
+                              </div>
+
+                              <blockquote className="mt-5 flex-1">
+                                <p className="text-sm leading-7 text-muted-foreground">{testimonial.quote}</p>
+                              </blockquote>
+                            </CardContent>
+                          </Card>
+                        </BentoTilt>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-4 flex justify-center gap-2">
+                  {testimonials.map((testimonial, index) => (
+                    <button
+                      key={`${testimonial.name}-dot`}
+                      type="button"
+                      aria-label={`Show testimonial ${index + 1}`}
+                      onClick={() => emblaApi?.scrollTo(index)}
+                      className={cn(
+                        "h-2.5 rounded-full transition-all duration-300",
+                        selectedIndex === index ? "w-8 bg-primary" : "w-2.5 bg-primary/25 hover:bg-primary/45"
+                      )}
+                    />
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
       </div>
     </section>
   )
 }
 
-export function FlagshipInvestmentPage({ item, onBack }: FlagshipInvestmentPageProps) {
+export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
   const config = flagshipConfigs[item.slug]
   const pricing = getFlagshipPricing(item.slug)
   const strategyHighlights = item.highlights?.slice(0, 5) ?? []
@@ -779,36 +820,24 @@ export function FlagshipInvestmentPage({ item, onBack }: FlagshipInvestmentPageP
     item.imageGallery?.[1]?.url ??
     item.image ??
     "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&h=900&fit=crop"
+  const mapBackgroundImage =
+    item.slug === "high-performance-forests"
+      ? "/ug.jpg"
+      : item.slug === "dryland-frontier-forests"
+        ? "/tz.jpg"
+        : "/ke.jpg"
 
-  const [isAttentionPinned, setIsAttentionPinned] = useState(false)
-  const [isAttentionHovered, setIsAttentionHovered] = useState(false)
+  const [isDiyExpanded, setIsDiyExpanded] = useState(false)
 
-  const isAttentionExpanded = isAttentionPinned || isAttentionHovered
   const heroImageOverlayStyle = {
     background:
       "linear-gradient(135deg, hsl(var(--primary) / 0.34), rgba(4,10,18,0.74) 52%, rgba(4,10,18,0.9) 100%), radial-gradient(circle at top right, hsl(var(--primary) / 0.22), transparent 42%)",
   } satisfies CSSProperties
-  const stepImageOverlayStyle = {
-    background:
-      "linear-gradient(135deg, rgba(4,10,18,0.82), rgba(6,14,24,0.72)), radial-gradient(circle at top right, hsl(var(--primary) / 0.24), transparent 42%)",
-  } satisfies CSSProperties
-  const managedImageOverlayStyle = {
-    background:
-      "linear-gradient(135deg, rgba(4,10,18,0.8), rgba(6,14,24,0.7)), radial-gradient(circle at top right, hsl(var(--primary) / 0.22), transparent 40%)",
-  } satisfies CSSProperties
-  const managedStageSubtitles = pricing
-    ? [
-        `Establishment: ${pricing.yearlyLabel}`,
-        `Maintenance: ${pricing.maintenanceYearlyLabel}`,
-        "Package exclusive",
-      ]
-    : ["", "", "Package exclusive"]
-
   const heroMetrics = [
     {
-      label: "Starting point",
-      value: pricing?.startingMonthlyLabel ?? item.minimumPriceLabel ?? "",
-      icon: LineChart,
+      label: "Suited for",
+      value: config.investorType,
+      icon: Banknote,
     },
     {
       label: "Average IRR range",
@@ -823,17 +852,13 @@ export function FlagshipInvestmentPage({ item, onBack }: FlagshipInvestmentPageP
   ]
 
   return (
-    <div className={`flagship-investment-page ${config.moodClassName} space-y-0 rounded-[2.5rem] pb-12 text-primary sm:pb-12 md:pb-16`}>
-      <div className="border-b border-white/10 backdrop-blur">
-        <Button variant="ghost" onClick={onBack} className="text-primary hover:text-emerald-300">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to investments
-        </Button>
-      </div>
-
-      <section className="flagship-hero-section relative space-y-0 py-6">
-        <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] lg:items-stretch">
-          <div className="space-y-6">
+    <div
+      className={`flagship-investment-page ${config.moodClassName} rounded-[2.5rem]`}
+      style={{ ["--flagship-map-image" as string]: `url(${mapBackgroundImage})` }}
+    >
+      <section className="flagship-hero-section relative">
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] lg:items-stretch">
+          <div className="px-4 py-6 sm:px-6 md:px-8 space-y-6">
             <ScrollReveal distance={24}>
               <div className="space-y-4 sm:space-y-6">
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3">
@@ -846,7 +871,7 @@ export function FlagshipInvestmentPage({ item, onBack }: FlagshipInvestmentPageP
                   <h1 className="max-w-3xl text-2xl font-semibold tracking-tight text-primary sm:text-3xl md:text-5xl lg:text-6xl">
                     {config.headline}
                   </h1>
-                  <p className="max-w-2xl text-sm leading-7 text-primary sm:text-base sm:leading-8 md:text-lg">
+                  <p className="text-sm leading-7 text-primary sm:text-base sm:leading-8 md:text-lg">
                     {config.summary}
                   </p>
                 </div>
@@ -891,7 +916,7 @@ export function FlagshipInvestmentPage({ item, onBack }: FlagshipInvestmentPageP
 
       <section className="flagship-premium-section px-4 py-6 sm:px-6 md:px-8">
         <ScrollReveal delay={150} distance={24}>
-          <div className="flagship-managed-shell emerald-border-hover mx-auto max-w-7xl overflow-hidden rounded-[2rem]">
+          <div className="flagship-managed-shell emerald-border-hover overflow-hidden rounded-[2rem]">
             <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)] lg:p-10">
               <div className="space-y-6">
                 <div className="space-y-4">
@@ -972,80 +997,71 @@ export function FlagshipInvestmentPage({ item, onBack }: FlagshipInvestmentPageP
       </section>
 
       <section className="investment-steps-section px-4 py-8 sm:px-6 md:px-8 md:py-12">
-        <div className="mx-auto max-w-7xl space-y-6">
+        <div className="space-y-6">
           {config.stepCards.map((step, stepIndex) => {
             const StepIcon = step.icon
 
             return (
               <ScrollReveal key={step.stepNumber} delay={180 + stepIndex * 80} distance={24}>
-                <BentoTilt className="h-full" maxTilt={5}>
-                  <div className="flagship-premium-hover-card emerald-border-hover group relative overflow-hidden rounded-[2rem] p-6 text-secondary sm:p-8 lg:p-10">
-                    <img
-                      src={step.image}
-                      alt={step.title}
-                      className="absolute inset-0 h-full w-full object-cover opacity-88 transition-transform duration-700 group-hover:scale-105 [filter:brightness(0.46)_saturate(0.78)]"
-                    />
-                    <div aria-hidden="true" className="absolute inset-0" style={stepImageOverlayStyle} />
+                <div className="flagship-premium-hover-card emerald-border-hover relative overflow-hidden rounded-[2rem] p-6 text-primary sm:p-8 lg:p-10">
+                  <div className="relative z-10 flex items-start gap-4">
+                    <div className="flagship-card-icon flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/15 text-primary-foreground">
+                      <StepIcon className="h-7 w-7" />
+                    </div>
 
-                    <div className="relative z-10 flex items-start gap-4">
-                      <div className="flagship-card-icon flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/18 text-primary-foreground">
-                        <StepIcon className="h-7 w-7" />
-                      </div>
-
-                      <div className="min-w-0 flex-1">
-                        <div className="grid gap-6 xl:grid-cols-[minmax(0,1.18fr)_minmax(260px,0.62fr)] xl:items-center">
-                          <div className="space-y-5">
-                            <div>
-                              <div className="flex items-center gap-3">
-                                <div className="text-xs font-bold tracking-[0.3em] text-secondary/80">{step.stepNumber}</div>
-                                <div className="h-px flex-1 bg-gradient-to-r from-secondary/50 to-transparent" />
-                              </div>
-
-                              <h3 className="mt-1 text-2xl font-semibold text-secondary sm:text-3xl md:text-4xl">
-                                {step.title}
-                              </h3>
+                    <div className="min-w-0 flex-1">
+                      <div className="grid gap-6 xl:grid-cols-[minmax(0,1.18fr)_minmax(260px,0.62fr)] xl:items-center">
+                        <div className="space-y-5">
+                          <div>
+                            <div className="flex items-center gap-3">
+                              <div className="text-xs font-bold tracking-[0.3em] text-primary/60">{step.stepNumber}</div>
+                              <div className="h-px flex-1 bg-gradient-to-r from-primary/35 to-transparent" />
                             </div>
 
-                            <p className="text-sm leading-7 text-secondary/80 sm:text-base">
-                              {step.longDescription}
-                            </p>
+                            <h3 className="mt-1 text-2xl font-semibold text-primary-foreground sm:text-3xl md:text-4xl">
+                              {step.title}
+                            </h3>
                           </div>
 
-                          <div className="flex flex-col gap-3 xl:justify-center">
-                            <Button className="h-auto w-full cursor-pointer rounded-full p-0 text-sm" asChild>
+                          <p className="text-sm leading-7 text-primary/80 sm:text-base">
+                            {step.longDescription}
+                          </p>
+                        </div>
+
+                        <div className="flex flex-col gap-3 xl:justify-center">
+                          <Button className="h-auto w-full cursor-pointer rounded-full p-0 text-sm" asChild>
+                            <a
+                              href={step.cta1.href}
+                              className="group relative flex min-h-[46px] items-center justify-center overflow-hidden rounded-full px-4 py-3"
+                            >
+                              <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
+                              <span className="relative z-10 inline-flex items-center group-hover:text-emerald-100">
+                                {step.cta1.label}
+                                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                              </span>
+                            </a>
+                          </Button>
+
+                          {step.cta2 ? (
+                            <Button
+                              variant="outline"
+                              asChild
+                              className="emerald-border-hover h-auto w-full cursor-pointer rounded-full p-0 text-sm text-primary transition-all duration-300 hover:bg-secondary/20 hover:text-emerald-400 hover:shadow-[0_0_24px_rgba(16,185,129,0.35)]"
+                            >
                               <a
-                                href={step.cta1.href}
-                                className="group relative flex min-h-[46px] items-center justify-center overflow-hidden rounded-full px-4 py-3"
+                                href={step.cta2.href}
+                                className="flex min-h-[46px] items-center justify-center rounded-full px-4 py-3"
                               >
-                                <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
-                                <span className="relative z-10 inline-flex items-center group-hover:text-emerald-100">
-                                  {step.cta1.label}
-                                  <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                                </span>
+                                <Play className="mr-2 h-4 w-4" />
+                                {step.cta2.label}
                               </a>
                             </Button>
-
-                            {step.cta2 ? (
-                              <Button
-                                variant="outline"
-                                asChild
-                                className="emerald-border-hover h-auto w-full cursor-pointer rounded-full p-0 text-sm text-primary transition-all duration-300 hover:bg-secondary/20 hover:text-emerald-400 hover:shadow-[0_0_24px_rgba(16,185,129,0.35)]"
-                              >
-                                <a
-                                  href={step.cta2.href}
-                                  className="flex min-h-[46px] items-center justify-center rounded-full px-4 py-3"
-                                >
-                                  <Play className="mr-2 h-4 w-4" />
-                                  {step.cta2.label}
-                                </a>
-                              </Button>
-                            ) : null}
-                          </div>
+                          ) : null}
                         </div>
                       </div>
                     </div>
                   </div>
-                </BentoTilt>
+                </div>
               </ScrollReveal>
             )
           })}
@@ -1054,24 +1070,17 @@ export function FlagshipInvestmentPage({ item, onBack }: FlagshipInvestmentPageP
 
       <section
         id="managed-path"
-        className="managed-path-section relative isolate w-full overflow-hidden rounded-[2rem] px-4 py-12 sm:px-6 md:px-8 md:py-16"
+        className="managed-path-section flagship-map-reveal-section relative isolate w-full overflow-hidden rounded-[2rem] px-4 py-12 sm:px-6 md:px-8 md:py-16"
       >
         <div aria-hidden="true" className="managed-path-hover-border absolute inset-0 rounded-[2rem]" />
-        <img
-          src={heroImage}
-          alt=""
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-95 [filter:brightness(0.4)_saturate(0.9)]"
-        />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
-          style={managedImageOverlayStyle}
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(4,10,18,0.62),rgba(6,14,24,0.48)),radial-gradient(circle_at_top_right,hsl(var(--primary)/0.2),transparent_42%)]"
         />
 
-        <div className="relative z-10 mx-auto max-w-7xl space-y-12 text-secondary">
+        <div className="relative z-10 mx-auto space-y-12 text-primary">
           <ScrollReveal distance={24}>
-            <div className="max-w-3xl space-y-4">
+            <div className="space-y-4">
               <Badge className="flagship-badge flagship-premium-badge rounded-full px-3 py-1 text-xs uppercase tracking-[0.2em]">
                 Premium investment
               </Badge>
@@ -1093,53 +1102,37 @@ export function FlagshipInvestmentPage({ item, onBack }: FlagshipInvestmentPageP
                 {config.managedStages.map((stage, index) => {
                   const StageIcon = stage.icon
                   const HoverStageIcon = stage.hoverIcon
-                  const stageSubtitle = managedStageSubtitles[index] ?? stage.subtitle
-
                   return (
                     <div key={stage.title} className="contents">
-                      <BentoTilt className="h-full min-w-[18.5rem] flex-1 basis-[18.5rem]" maxTilt={4}>
+                      <BentoTilt className="min-w-[18.5rem] flex-1 basis-[18.5rem]" maxTilt={4}>
                         <div
                           className={cn(
-                            "flagship-premium-hover-card group/stage relative flex h-full min-h-[18.5rem] flex-col rounded-[1.75rem] p-6",
-                            index === 0 && "border-slate-900/8 bg-[linear-gradient(135deg,rgba(248,250,252,0.96)_0%,rgba(209,250,229,0.84)_52%,rgba(5,150,105,0.84)_100%)] text-white shadow-[0_18px_44px_rgba(255,255,255,0.08)]",
-                            index === 1 && "border-emerald-300/35 bg-[linear-gradient(135deg,rgba(240,253,244,0.9)_0%,rgba(52,211,153,0.7)_48%,rgba(5,150,105,0.96)_100%)] text-white",
-                            index === 2 && "border-emerald-300/30 bg-[linear-gradient(135deg,rgba(5,150,105,0.96),rgba(16,185,129,0.92))] text-white shadow-[0_24px_54px_rgba(5,150,105,0.28)]"
+                            "flagship-premium-hover-card group/stage relative rounded-[1.75rem] p-5 sm:p-6",
+                            index === 0 && "border-slate-900/8 bg-[linear-gradient(135deg,rgba(248,250,252,0.96)_0%,rgba(209,250,229,0.84)_52%,rgba(5,150,105,0.84)_100%)] shadow-[0_18px_44px_rgba(255,255,255,0.08)]",
+                            index === 1 && "border-emerald-300/35 bg-[linear-gradient(135deg,rgba(240,253,244,0.9)_0%,rgba(52,211,153,0.7)_48%,rgba(5,150,105,0.96)_100%)]",
+                            index === 2 && "border-emerald-300/30 bg-[linear-gradient(135deg,rgba(5,150,105,0.96),rgba(16,185,129,0.92))] shadow-[0_24px_54px_rgba(5,150,105,0.28)]"
                           )}
                         >
-                          <div className="relative z-10 flex h-full flex-col">
-                            <div
-                              className={cn(
-                                "flagship-card-icon absolute right-0 top-0 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl overflow-hidden",
-                                "bg-white/14 text-white"
-                              )}
-                            >
-                              <StageIcon className="absolute h-5 w-5 transition-all duration-500 [transform:rotateY(0deg)_scale(1)] group-hover/stage:[transform:rotateY(180deg)_scale(0.75)] group-hover/stage:opacity-0" />
-                              <HoverStageIcon className="absolute h-5 w-5 scale-75 opacity-0 transition-all duration-500 [transform:rotateY(180deg)_scale(0.75)] group-hover/stage:[transform:rotateY(0deg)_scale(1)] group-hover/stage:opacity-100" />
+                          <div className="relative z-10 space-y-4">
+                            <div className="flex items-start justify-between gap-4">
+                              <h4 className="text-xl font-semibold leading-tight">{stage.title}</h4>
+                              <div className="flagship-card-icon relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white/14">
+                                <StageIcon className="absolute h-5 w-5 transition-all duration-500 [transform:rotateY(0deg)_scale(1)] group-hover/stage:[transform:rotateY(180deg)_scale(0.75)] group-hover/stage:opacity-0" />
+                                <HoverStageIcon className="absolute h-5 w-5 scale-75 opacity-0 transition-all duration-500 [transform:rotateY(180deg)_scale(0.75)] group-hover/stage:[transform:rotateY(0deg)_scale(1)] group-hover/stage:opacity-100" />
+                              </div>
                             </div>
 
-                            <div className="w-full space-y-4">
-                              <p
-                                className={cn(
-                                  "pr-14 text-[0.7rem] uppercase tracking-[0.24em]",
-                                  "text-emerald-50/90"
-                                )}
-                              >
-                                {stageSubtitle}
-                              </p>
-                              <h4 className="text-xl font-semibold text-white">{stage.title}</h4>
-
-                              <ul className="space-y-3">
-                                {stage.bullets.map((bullet) => (
-                                  <li
-                                    key={bullet}
-                                    className="flex gap-3 text-sm leading-6 text-white/88"
-                                  >
-                                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-white/80" />
-                                    <span>{bullet}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
+                            <ul className="space-y-3">
+                              {stage.bullets.map((bullet) => (
+                                <li
+                                  key={bullet}
+                                  className="flex gap-3 text-sm leading-6"
+                                >
+                                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-white/80" />
+                                  <span>{bullet}</span>
+                                </li>
+                              ))}
+                            </ul>
                           </div>
                         </div>
                       </BentoTilt>
@@ -1217,133 +1210,9 @@ export function FlagshipInvestmentPage({ item, onBack }: FlagshipInvestmentPageP
       <FlagshipMarketsMapAd config={config} />
       <FlagshipTestimonialsCarousel testimonials={config.testimonials} />
 
-      <section id="diy-path" className="diy-path-section border-t border-primary/10 px-4 py-12 sm:px-6 md:px-8 md:py-16">
-        <div className="mx-auto max-w-7xl space-y-8">
-          <ScrollReveal distance={24}>
-            <div className="space-y-3">
-              <Badge variant="outline" className="flagship-badge bg-primary text-primary-foreground rounded-full px-3 py-1 text-xs uppercase tracking-[0.2em]">
-                Prefer to try it yourself?
-              </Badge>
-              <h2 className="text-3xl font-semibold text-primary-foreground sm:text-4xl md:text-5xl">Consider a few steps</h2>
-            </div>
-          </ScrollReveal>
-
-          <div className="grid gap-6 md:grid-cols-3">
-            {diySteps.map((step, index) => {
-              const Icon = step.icon
-
-              return (
-                <ScrollReveal key={step.title} className="h-full" delay={80 + index * 70}>
-                  <BentoTilt className="h-full" maxTilt={3}>
-                    <div className="flagship-premium-hover-card h-full rounded-[1.5rem] p-6">
-                      <div className="flex items-center gap-3">
-                        <span className="text-xs font-bold tracking-[0.3em] text-primary">{step.stepNumber}</span>
-                        <div className="h-px flex-1 bg-gradient-to-r from-primary-foreground/35 to-transparent" />
-                        <div className="flagship-card-icon flex h-10 w-10 items-center justify-center rounded-lg bg-primary/20">
-                          <Icon className="h-5 w-5 text-primary-foreground" />
-                        </div>
-                      </div>
-
-                      <div className="mt-5 flex-1">
-                        <h3 className="text-lg font-semibold text-primary-foreground">{step.title}</h3>
-                        <p className="mt-2 text-sm leading-6 text-primary">{step.description}</p>
-                      </div>
-
-                      {"links" in step ? (
-                        <div className="mt-6 space-y-3">
-                          {step.links.map((link) => {
-                            const LinkIcon = link.icon
-
-                            return (
-                              <Button
-                                key={link.label}
-                                asChild
-                                variant="outline"
-                                className="emerald-border-hover w-full rounded-full border-primary/25 bg-transparent text-primary transition-all duration-300 group-hover:border-primary/35 group-hover:bg-primary/15 group-hover:text-emerald-300 group-hover:shadow-[0_0_24px_rgba(16,185,129,0.28)]"
-                              >
-                                <a href={link.href} className="justify-between">
-                                  <span className="inline-flex items-center gap-2">
-                                    <LinkIcon className="h-4 w-4" />
-                                    {link.label}
-                                  </span>
-                                  <ArrowRight className="h-4 w-4" />
-                                </a>
-                              </Button>
-                            )
-                          })}
-                        </div>
-                      ) : (
-                        <Button
-                          asChild
-                          variant="outline"
-                          className="emerald-border-hover mt-6 w-full rounded-full border-primary/25 bg-transparent text-primary transition-all duration-300 hover:border-primary/35 hover:bg-primary/15 hover:text-emerald-300 hover:shadow-[0_0_24px_rgba(16,185,129,0.28)]"
-                        >
-                          <a href={step.href}>
-                            {step.cta}
-                            <ArrowRight className="ml-2 h-4 w-4" />
-                          </a>
-                        </Button>
-                      )}
-                    </div>
-                  </BentoTilt>
-                </ScrollReveal>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section className="highlights-cta-section border-t border-primary/10 px-4 py-12 sm:px-6 md:px-8 md:py-16">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)]">
-            <ScrollReveal distance={24}>
-              <Button
-                type="button"
-                aria-expanded={isAttentionExpanded}
-                onClick={() => setIsAttentionPinned((value) => !value)}
-                onMouseEnter={() => setIsAttentionHovered(true)}
-                onMouseLeave={() => setIsAttentionHovered(false)}
-                className="flagship-premium-hover-card group block h-full w-full rounded-[1.75rem] p-6 text-left text-primary sm:p-7"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="space-y-3">
-                    <h2 className="text-2xl font-semibold text-primary sm:text-3xl">
-                      What investors should pay attention to
-                    </h2>
-                  </div>
-
-                  <div
-                    className={cn(
-                      "flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-primary/15 bg-primary/5 text-primary transition-transform duration-300",
-                      isAttentionExpanded ? "rotate-180" : "rotate-0"
-                    )}
-                  >
-                    <ChevronDown className="h-5 w-5" />
-                  </div>
-                </div>
-
-                <div
-                  className={cn(
-                    "grid overflow-hidden transition-all duration-300",
-                    isAttentionExpanded ? "mt-6 grid-rows-[1fr] opacity-100" : "mt-2 grid-rows-[0fr] opacity-80"
-                  )}
-                >
-                  <div className="overflow-hidden">
-                    <div className="space-y-3 pt-1">
-                      {attentionItems.map((entry) => (
-                        <div key={entry} className="rounded-[1.1rem] border border-primary/10 bg-primary/5 p-4">
-                          <div className="flex gap-3">
-                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary/75" />
-                            <p className="text-sm leading-6 text-primary">{entry}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </Button>
-            </ScrollReveal>
-
+      <section className="highlights-cta-section flagship-map-reveal-section border-t border-primary/10 px-4 py-12 sm:px-6 md:px-8 md:py-16">
+        <div className="mx-auto">
+          <div className="grid gap-8">
             <ScrollReveal delay={100} distance={24}>
               <div className="flagship-premium-hover-card h-full rounded-[1.75rem] p-6 sm:p-7">
                 <div className="space-y-3">
@@ -1400,7 +1269,128 @@ export function FlagshipInvestmentPage({ item, onBack }: FlagshipInvestmentPageP
         </div>
       </section>
 
-      <section className="border-t border-primary/10 px-4 py-6 text-sm text-primary/70 sm:px-6 md:px-8">
+      <section id="diy-path" className="diy-path-section border-t border-primary/10 px-4 py-12 sm:px-6 md:px-8 md:py-16">
+        <div className="mx-auto space-y-6">
+          <ScrollReveal distance={24}>
+            <Button
+              type="button"
+              aria-expanded={isDiyExpanded}
+              onClick={() => setIsDiyExpanded((value) => !value)}
+              className="flagship-premium-hover-card group block h-auto w-full rounded-[1.75rem] p-6 text-left text-primary sm:p-7"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="space-y-3">
+                  <Badge variant="outline" className="flagship-badge bg-primary text-primary-foreground rounded-full px-3 py-1 text-xs uppercase tracking-[0.2em]">
+                    Prefer to try it yourself?
+                  </Badge>
+                  <h2 className="text-3xl font-semibold text-primary-foreground sm:text-4xl md:text-5xl">Consider a few steps</h2>
+                </div>
+
+                <div
+                  className={cn(
+                    "flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-primary/15 bg-primary/5 text-primary transition-transform duration-300",
+                    isDiyExpanded ? "rotate-180" : "rotate-0"
+                  )}
+                >
+                  <ChevronDown className="h-5 w-5" />
+                </div>
+              </div>
+            </Button>
+          </ScrollReveal>
+
+          <div
+            className={cn(
+              "grid overflow-hidden transition-all duration-300",
+              isDiyExpanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+            )}
+          >
+            <div className="overflow-hidden">
+              <div className="grid gap-6 pt-2 md:grid-cols-3">
+                {diySteps.map((step, index) => {
+                  const Icon = step.icon
+
+                  return (
+                    <ScrollReveal key={step.title} className="h-full" delay={80 + index * 70}>
+                      <BentoTilt className="h-full" maxTilt={3}>
+                        <div className="flagship-premium-hover-card h-full rounded-[1.5rem] p-6">
+                          <div className="flex items-center gap-3">
+                            <div className="h-px flex-1 bg-gradient-to-r from-primary-foreground/35 to-transparent" />
+                            <div className="flagship-card-icon flex h-10 w-10 items-center justify-center rounded-lg bg-primary/20">
+                              <Icon className="h-5 w-5 text-primary-foreground" />
+                            </div>
+                          </div>
+
+                          <div className="mt-5 flex-1">
+                            <h3 className="text-lg font-semibold text-primary-foreground">{step.title}</h3>
+                            <p className="mt-2 text-sm leading-6 text-primary">{step.description}</p>
+                          </div>
+
+                          {"links" in step ? (
+                            <div className="mt-6 space-y-3">
+                              {step.links.map((link) => {
+                                const LinkIcon = link.icon
+
+                                return (
+                                  <Button
+                                    key={link.label}
+                                    asChild
+                                    variant="outline"
+                                    className="emerald-border-hover w-full rounded-full border-primary/25 bg-transparent text-primary transition-all duration-300 group-hover:border-primary/35 group-hover:bg-primary/15 group-hover:text-emerald-300 group-hover:shadow-[0_0_24px_rgba(16,185,129,0.28)]"
+                                  >
+                                    <a href={link.href} className="justify-between">
+                                      <span className="inline-flex items-center gap-2">
+                                        <LinkIcon className="h-4 w-4" />
+                                        {link.label}
+                                      </span>
+                                      <ArrowRight className="h-4 w-4" />
+                                    </a>
+                                  </Button>
+                                )
+                              })}
+                            </div>
+                          ) : (
+                            <Button
+                              asChild
+                              variant="outline"
+                              className="emerald-border-hover mt-6 w-full rounded-full border-primary/25 bg-transparent text-primary transition-all duration-300 hover:border-primary/35 hover:bg-primary/15 hover:text-emerald-300 hover:shadow-[0_0_24px_rgba(16,185,129,0.28)]"
+                            >
+                              <a href={step.href}>
+                                {step.cta}
+                                <ArrowRight className="ml-2 h-4 w-4" />
+                              </a>
+                            </Button>
+                          )}
+                        </div>
+                      </BentoTilt>
+                    </ScrollReveal>
+                  )
+                })}
+              </div>
+
+              <div className="flagship-premium-hover-card mt-6 rounded-[1.75rem] p-6 sm:p-7">
+                <div className="space-y-3">
+                  <h2 className="text-2xl font-semibold text-primary sm:text-3xl">
+                    What investors should pay attention to
+                  </h2>
+                </div>
+
+                <div className="mt-6 space-y-3">
+                  {attentionItems.map((entry) => (
+                    <div key={entry} className="rounded-[1.1rem] border border-primary/10 bg-primary/5 p-4">
+                      <div className="flex gap-3">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary/75" />
+                        <p className="text-sm leading-6 text-primary">{entry}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="flagship-map-reveal-footer bg-primary-foreground border-t border-primary/10 px-4 py-6 text-sm text-primary/70 sm:px-6 md:px-8">
         <div className="mx-auto max-w-7xl">
           * Actual numbers depend highly on site and species and are averaged over ideal rotation lengths.
         </div>
