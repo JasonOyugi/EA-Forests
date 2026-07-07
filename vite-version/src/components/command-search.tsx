@@ -22,7 +22,6 @@ import {
   Palette,
   Trees,
   MapPinned,
-  BarChart3,
   Sprout,
   Workflow,
   type LucideIcon,
@@ -144,8 +143,7 @@ export function CommandSearch({ open, onOpenChange }: CommandSearchProps) {
 
     // Models
     { title: "Models", url: "/models", group: "Models", icon: Trees },
-    { title: "Site Classification", url: "/models/site-classification", group: "Models", icon: MapPinned },
-    { title: "Trial-site Classifier", url: "/models/trial-site-classifier", group: "Models", icon: BarChart3 },
+    { title: "Site-species Analysis", url: "/models/site-species-analysis", group: "Models", icon: MapPinned },
     { title: "Silvicultural Models", url: "/models/model-2", group: "Models", icon: Trees },
     { title: "Roundwood Production", url: "/models/model-3", group: "Models", icon: Workflow },
     { title: "Clonal Nursery", url: "/models/clonal-eucalyptus-nursery", group: "Models", icon: Sprout },

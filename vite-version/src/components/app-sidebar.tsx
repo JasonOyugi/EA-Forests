@@ -67,12 +67,8 @@ const data = {
           icon: Trees,
           items: [
             {
-              title: "Site Classification",
-              url: "/models/site-classification",
-            },
-            {
-              title: "Trial-site Classifier",
-              url: "/models/trial-site-classifier",
+              title: "Site-species Analysis",
+              url: "/models/site-species-analysis",
             },
             {
               title: "Silvicultural Models",

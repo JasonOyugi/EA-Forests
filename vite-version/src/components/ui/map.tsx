@@ -6,8 +6,6 @@ import {
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
     DropdownMenuLabel,
-    DropdownMenuRadioGroup,
-    DropdownMenuRadioItem,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
@@ -503,17 +501,19 @@ function MapLayersControl({
                 {showTileLayersDropdown && (
                     <>
                         <DropdownMenuLabel>{tileLayersLabel}</DropdownMenuLabel>
-                        <DropdownMenuRadioGroup
-                            value={selectedTileLayer}
-                            onValueChange={setSelectedTileLayer}>
-                            {tileLayers.map((tileLayer) => (
-                                <DropdownMenuRadioItem
-                                    key={tileLayer.name}
-                                    value={tileLayer.name}>
-                                    {tileLayer.name}
-                                </DropdownMenuRadioItem>
-                            ))}
-                        </DropdownMenuRadioGroup>
+                        {tileLayers.map((tileLayer) => (
+                            <DropdownMenuCheckboxItem
+                                key={tileLayer.name}
+                                checked={selectedTileLayer === tileLayer.name}
+                                onSelect={(event) => event.preventDefault()}
+                                onCheckedChange={(checked) => {
+                                    if (checked) {
+                                        setSelectedTileLayer(tileLayer.name)
+                                    }
+                                }}>
+                                {tileLayer.name}
+                            </DropdownMenuCheckboxItem>
+                        ))}
                     </>
                 )}
                 {showTileLayersDropdown && showLayerGroupsDropdown && (
@@ -531,6 +531,7 @@ function MapLayersControl({
                                     layerGroup.name
                                 )}
                                 disabled={layerGroup.disabled}
+                                onSelect={(event) => event.preventDefault()}
                                 onCheckedChange={(checked) =>
                                     handleLayerGroupToggle(
                                         layerGroup.name,

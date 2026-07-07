@@ -172,6 +172,7 @@ interface RoundwoodProcessorResult {
 
 interface RoundwoodResponse {
   request: Record<string, unknown>
+  base_currency?: CurrencyCode
   coordinate: LockedCoordinate
   assumptions: string[]
   warnings: string[]
@@ -193,6 +194,8 @@ interface RoundwoodLibraries {
   quantity_library: TableRowRecord[]
   buyer_specs: TableRowRecord[]
 }
+
+const UGX_PER_USD = 3700
 
 const defaultForm: RoundwoodForm = {
   species: "euc",
@@ -222,9 +225,9 @@ const defaultForm: RoundwoodForm = {
   g2HMin: 2.7,
   g3DbhMin: 15,
   g3HMin: 2.7,
-  priceG1: 125000,
-  priceG2: 115000,
-  priceG3: 105000,
+  priceG1: 125000 / UGX_PER_USD,
+  priceG2: 115000 / UGX_PER_USD,
+  priceG3: 105000 / UGX_PER_USD,
   priceReject: 0,
   vMensuration: 0.5,
   vFelling: 0.5,
@@ -250,7 +253,7 @@ const processorActors = marketActors.filter((actor) => actor.layer === "processo
 const defaultTileLayer = marketTileLayers[0]
 
 const processorChartConfig = {
-  profit_ugx: {
+  profit_usd: {
     label: "Profit",
     color: "#15803d",
   },
@@ -692,11 +695,12 @@ export default function ModelThreePage() {
     []
   )
   const currencyRates = useCurrencyRates(apiBaseUrl)
+  const baseCurrency = result?.base_currency ?? "USD"
 
   const toSelectedCurrency = React.useCallback(
     (value: number | null | undefined) =>
-      convertMoney(value, "UGX", currency, currencyRates.rates),
-    [currency, currencyRates.rates]
+      convertMoney(value, baseCurrency, currency, currencyRates.rates),
+    [baseCurrency, currency, currencyRates.rates]
   )
 
   const formatMoney = React.useCallback(
@@ -842,7 +846,7 @@ export default function ModelThreePage() {
     () =>
       rankingRows.map((row) => ({
         processor: String(row.processor ?? ""),
-        profit_ugx: toSelectedCurrency(getNumeric(row, "profit_ugx")) ?? 0,
+        profit_usd: toSelectedCurrency(getNumeric(row, "profit_usd")) ?? 0,
         road_km: getNumeric(row, "road_km"),
       })),
     [rankingRows, toSelectedCurrency]
@@ -1037,10 +1041,10 @@ export default function ModelThreePage() {
                         <NumberField label="G2 minimum height" value={form.g2HMin} min={0} step={0.1} onChange={(value) => updateForm("g2HMin", Math.max(0, value))} />
                         <NumberField label="G3 minimum DBH" value={form.g3DbhMin} min={0} step={0.5} onChange={(value) => updateForm("g3DbhMin", Math.max(0, value))} />
                         <NumberField label="G3 minimum height" value={form.g3HMin} min={0} step={0.1} onChange={(value) => updateForm("g3HMin", Math.max(0, value))} />
-                        <NumberField label="G1 price" value={form.priceG1} min={0} step={1000} onChange={(value) => updateForm("priceG1", Math.max(0, value))} />
-                        <NumberField label="G2 price" value={form.priceG2} min={0} step={1000} onChange={(value) => updateForm("priceG2", Math.max(0, value))} />
-                        <NumberField label="G3 price" value={form.priceG3} min={0} step={1000} onChange={(value) => updateForm("priceG3", Math.max(0, value))} />
-                        <NumberField label="Reject price" value={form.priceReject} min={0} step={1000} onChange={(value) => updateForm("priceReject", Math.max(0, value))} />
+                        <NumberField label="G1 price" value={form.priceG1} min={0} step={0.25} onChange={(value) => updateForm("priceG1", Math.max(0, value))} />
+                        <NumberField label="G2 price" value={form.priceG2} min={0} step={0.25} onChange={(value) => updateForm("priceG2", Math.max(0, value))} />
+                        <NumberField label="G3 price" value={form.priceG3} min={0} step={0.25} onChange={(value) => updateForm("priceG3", Math.max(0, value))} />
+                        <NumberField label="Reject price" value={form.priceReject} min={0} step={0.25} onChange={(value) => updateForm("priceReject", Math.max(0, value))} />
                       </div>
                     </div>
                   )}
@@ -1233,7 +1237,7 @@ export default function ModelThreePage() {
             ) : null}
 
             <ModelAssumptionsDisclosure
-              description="Display currency is USD; raw processor, wage, and cost library defaults are pending a backend USD migration."
+              description="Base calculations, processor prices, wages, and editable libraries are in USD."
               actions={
                 <Button
                   className="gap-2"
@@ -1326,8 +1330,8 @@ export default function ModelThreePage() {
               />
               <MetricCard
                 title="Profit"
-                value={formatMoney(bestMetrics?.profit_ugx)}
-                description={`${formatMoney(bestMetrics?.total_revenue_ugx)} revenue`}
+                value={formatMoney(bestMetrics?.profit_usd)}
+                description={`${formatMoney(bestMetrics?.total_revenue_usd)} revenue`}
                 icon={TrendingUp}
               />
               <MetricCard
@@ -1338,7 +1342,7 @@ export default function ModelThreePage() {
               />
               <MetricCard
                 title="Total cost"
-                value={formatMoney(bestMetrics?.total_cost_ugx)}
+                value={formatMoney(bestMetrics?.total_cost_usd)}
                 description={`${formatNumber(bestMetrics?.total_stems, 0)} harvested stems`}
                 icon={Truck}
               />
@@ -1372,9 +1376,9 @@ export default function ModelThreePage() {
                         <XAxis dataKey="processor" tickLine={false} axisLine={false} interval={0} angle={-28} textAnchor="end" height={88} tick={{ fontSize: 11 }} />
                         <YAxis tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(value) => new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 }).format(Number(value))} />
                         <ChartTooltip content={<ChartTooltipContent />} />
-                        <Bar dataKey="profit_ugx" name="Profit" radius={[4, 4, 0, 0]}>
+                        <Bar dataKey="profit_usd" name="Profit" radius={[4, 4, 0, 0]}>
                           {processorChartRows.map((row) => (
-                            <Cell key={row.processor} fill={row.profit_ugx < 0 ? "#dc2626" : "#15803d"} />
+                            <Cell key={row.processor} fill={row.profit_usd < 0 ? "#dc2626" : "#15803d"} />
                           ))}
                         </Bar>
                       </BarChart>

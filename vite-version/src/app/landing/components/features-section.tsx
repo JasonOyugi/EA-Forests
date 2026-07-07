@@ -1,5 +1,7 @@
 "use client"
 
+import { useState } from "react"
+import { LoaderCircle } from "lucide-react"
 import { TiLocationArrow } from "react-icons/ti"
 
 import { BentoTilt } from "@/components/ui/bento-tilt"
@@ -22,9 +24,23 @@ type BentoCardProps = {
 }
 
 function BentoCard({ src, title, description, isComingSoon, href }: BentoCardProps) {
+  const [loading, setLoading] = useState(true)
   const isExternal = href?.startsWith("http")
   const content = (
     <div className="relative size-full overflow-hidden">
+      {loading ? (
+        <div
+          role="status"
+          aria-live="polite"
+          className="absolute inset-0 z-20 grid place-items-center bg-black/35 backdrop-blur-sm"
+        >
+          <div className="flex items-center gap-2 rounded-lg bg-black/50 px-3 py-2 text-sm font-medium text-white shadow-sm">
+            <LoaderCircle className="h-4 w-4 animate-spin" />
+            Loading video
+          </div>
+        </div>
+      ) : null}
+
       <video
         src={src}
         loop
@@ -33,6 +49,12 @@ function BentoCard({ src, title, description, isComingSoon, href }: BentoCardPro
         playsInline
         preload="metadata"
         className="absolute left-0 top-0 size-full object-cover object-center"
+        onLoadStart={() => setLoading(true)}
+        onLoadedData={() => setLoading(false)}
+        onCanPlay={() => setLoading(false)}
+        onPlaying={() => setLoading(false)}
+        onWaiting={() => setLoading(true)}
+        onError={() => setLoading(false)}
       />
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />

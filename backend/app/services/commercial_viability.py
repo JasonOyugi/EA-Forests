@@ -10,6 +10,21 @@ import pandas as pd
 from app.schemas import CommercialForestViabilityRequest
 
 
+BASE_CURRENCY = "USD"
+UGX_PER_USD = 3_700.0
+
+
+def usd_from_ugx(value: float) -> float:
+    return round(float(value) / UGX_PER_USD, 4)
+
+
+def money_columns_to_usd(df: pd.DataFrame, columns: list[str]) -> pd.DataFrame:
+    out = df.copy()
+    for column in columns:
+        out[column] = out[column].astype(float).map(usd_from_ugx)
+    return out
+
+
 LABOUR_CATEGORIES = pd.DataFrame(
     [
         {
@@ -43,6 +58,10 @@ LABOUR_CATEGORIES = pd.DataFrame(
             "wage_max": 90_000,
         },
     ]
+)
+LABOUR_CATEGORIES = money_columns_to_usd(
+    LABOUR_CATEGORIES,
+    ["wage_min", "wage_max"],
 )
 
 NON_LABOUR_ITEMS = pd.DataFrame(
@@ -139,6 +158,10 @@ NON_LABOUR_ITEMS = pd.DataFrame(
             "price_max": 20_000,
         },
     ]
+)
+NON_LABOUR_ITEMS = money_columns_to_usd(
+    NON_LABOUR_ITEMS,
+    ["price_min", "price_max"],
 )
 
 SECTION_ORDER = [
@@ -962,6 +985,7 @@ def dataframe_to_records(df: pd.DataFrame | None, digits: int = 2) -> list[dict[
 
 def commercial_forest_viability_default_library(rotation_year: int = 8) -> dict[str, Any]:
     return {
+        "base_currency": BASE_CURRENCY,
         "library": {
             "labour_categories": dataframe_to_records(LABOUR_CATEGORIES),
             "non_labour_items": dataframe_to_records(NON_LABOUR_ITEMS),
@@ -979,7 +1003,7 @@ def build_assumptions(payload: CommercialForestViabilityRequest) -> list[str]:
         else "Thinning discounts and thinning revenues are disabled."
     )
     return [
-        "Silviculture costs are computed per hectare from the notebook operation library.",
+        "Silviculture costs are computed per hectare from the notebook operation library in USD.",
         thinning_text,
         f"Final harvest occurs in year {final_harvest_year}.",
         "NPV discounts annual net cashflow from year 1 through the rotation year.",
@@ -1006,6 +1030,7 @@ def run_commercial_forest_viability(
 
     return {
         "request": payload.model_dump(),
+        "base_currency": BASE_CURRENCY,
         "assumptions": build_assumptions(payload),
         "warnings": revenue_warnings,
         "cost_rows": dataframe_to_records(total_cost_df),

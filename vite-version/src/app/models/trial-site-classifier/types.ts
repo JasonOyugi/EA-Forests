@@ -11,6 +11,12 @@ export interface TrialSiteRegistryRow {
 
 export interface TrialSiteClimateProfile extends TrialSiteRegistryRow {
   climate_profile_status?: string
+  climate_profile_source?: string
+  climate_profile_year_range?: {
+    start_year: number
+    end_year: number
+  }
+  climate_buffer_m?: number
   long_term_climate?: Record<string, number | null> | null
   trial_period_climate?: Record<string, number | null> | null
   trial_period_anomaly?: Record<string, number | null> | null

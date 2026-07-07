@@ -1,0 +1,8305 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.734721063,
+              2.5243355794
+            ],
+            [
+              34.7347708198,
+              2.5326861117
+            ],
+            [
+              34.7264678871,
+              2.5327362112
+            ],
+            [
+              34.726418182,
+              2.5243855132
+            ],
+            [
+              34.734721063,
+              2.5243355794
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7783770835,
+              2.5157221885
+            ],
+            [
+              34.7725655476,
+              2.5246047461
+            ],
+            [
+              34.7679697327,
+              2.5306219899
+            ],
+            [
+              34.7678811307,
+              2.5157854481
+            ],
+            [
+              34.7783770835,
+              2.5157221885
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7927232299,
+              2.5239852634
+            ],
+            [
+              34.7928365946,
+              2.5239845762
+            ],
+            [
+              34.7928584472,
+              2.5276283305
+            ],
+            [
+              34.7927432779,
+              2.5273284285
+            ],
+            [
+              34.7927232299,
+              2.5239852634
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S2",
+        "soil_type": "Ferruginous Soils",
+        "soil_description": "On crystalline acid rock - freely drained",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7679697327,
+              2.5306219899
+            ],
+            [
+              34.7665400133,
+              2.5324939247
+            ],
+            [
+              34.7596786247,
+              2.5325354986
+            ],
+            [
+              34.759628712,
+              2.524185463
+            ],
+            [
+              34.7507499014,
+              2.5242390291
+            ],
+            [
+              34.7520332245,
+              2.5218826109
+            ],
+            [
+              34.756902825,
+              2.5079784638
+            ],
+            [
+              34.7568733338,
+              2.5029979432
+            ],
+            [
+              34.7542336034,
+              2.4991666888
+            ],
+            [
+              34.7677820281,
+              2.4990856983
+            ],
+            [
+              34.7678314973,
+              2.507435574
+            ],
+            [
+              34.7831205978,
+              2.5073437035
+            ],
+            [
+              34.7816789455,
+              2.5106756216
+            ],
+            [
+              34.7783770835,
+              2.5157221885
+            ],
+            [
+              34.7678811307,
+              2.5157854481
+            ],
+            [
+              34.7679697327,
+              2.5306219899
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7542336034,
+              2.4991666888
+            ],
+            [
+              34.7568733338,
+              2.5029979432
+            ],
+            [
+              34.756902825,
+              2.5079784638
+            ],
+            [
+              34.7520332245,
+              2.5218826109
+            ],
+            [
+              34.7507499014,
+              2.5242390291
+            ],
+            [
+              34.734721063,
+              2.5243355794
+            ],
+            [
+              34.7346714706,
+              2.5159850437
+            ],
+            [
+              34.742974133,
+              2.5159352231
+            ],
+            [
+              34.7429246536,
+              2.5075848518
+            ],
+            [
+              34.7346220434,
+              2.5076345065
+            ],
+            [
+              34.7345727806,
+              2.4992839677
+            ],
+            [
+              34.7542336034,
+              2.4991666888
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.8010881433,
+              2.5155850181
+            ],
+            [
+              34.8012694104,
+              2.5457186702
+            ],
+            [
+              34.7966958897,
+              2.5376206098
+            ],
+            [
+              34.7928584472,
+              2.5276283305
+            ],
+            [
+              34.7928365946,
+              2.5239845762
+            ],
+            [
+              34.7927232299,
+              2.5239852634
+            ],
+            [
+              34.7926814989,
+              2.5170125271
+            ],
+            [
+              34.7930706563,
+              2.5156334875
+            ],
+            [
+              34.8010881433,
+              2.5155850181
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S2",
+        "soil_type": "Ferruginous Soils",
+        "soil_description": "On crystalline acid rock - freely drained",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7974804693,
+              1.8142450555
+            ],
+            [
+              34.7975165299,
+              1.8225944102
+            ],
+            [
+              34.7809207688,
+              1.8226670718
+            ],
+            [
+              34.7808847823,
+              1.8143173833
+            ],
+            [
+              34.7667281056,
+              1.8143789618
+            ],
+            [
+              34.7756100216,
+              1.8084682579
+            ],
+            [
+              34.7808386402,
+              1.8035545288
+            ],
+            [
+              34.7808489625,
+              1.8059676948
+            ],
+            [
+              34.7891468504,
+              1.8059317153
+            ],
+            [
+              34.7891827088,
+              1.814281238
+            ],
+            [
+              34.7974804693,
+              1.8142450555
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7975165299,
+              1.8225944102
+            ],
+            [
+              34.7975527567,
+              1.830943763
+            ],
+            [
+              34.7809569212,
+              1.8310167584
+            ],
+            [
+              34.7809207688,
+              1.8226670718
+            ],
+            [
+              34.7975165299,
+              1.8225944102
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7974804693,
+              1.8142450555
+            ],
+            [
+              34.8057780628,
+              1.814208834
+            ],
+            [
+              34.8058141622,
+              1.8225580224
+            ],
+            [
+              34.7975165299,
+              1.8225944102
+            ],
+            [
+              34.7974804693,
+              1.8142450555
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7725866908,
+              1.8143534924
+            ],
+            [
+              34.7808847823,
+              1.8143173833
+            ],
+            [
+              34.7809207688,
+              1.8226670718
+            ],
+            [
+              34.7726226403,
+              1.8227033466
+            ],
+            [
+              34.7725866908,
+              1.8143534924
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7974804693,
+              1.8142450555
+            ],
+            [
+              34.7891827088,
+              1.814281238
+            ],
+            [
+              34.7891468504,
+              1.8059317153
+            ],
+            [
+              34.7974445732,
+              1.8058956988
+            ],
+            [
+              34.7974804693,
+              1.8142450555
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7891468504,
+              1.8059317153
+            ],
+            [
+              34.7808489625,
+              1.8059676948
+            ],
+            [
+              34.7808386402,
+              1.8035545288
+            ],
+            [
+              34.7851173325,
+              1.7995335726
+            ],
+            [
+              34.7857160678,
+              1.7975968484
+            ],
+            [
+              34.7891111588,
+              1.7975821898
+            ],
+            [
+              34.7891468504,
+              1.8059317153
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.6580199429,
+              1.1884283445
+            ],
+            [
+              34.6542034042,
+              1.1884390553
+            ],
+            [
+              34.6543451301,
+              1.2385525711
+            ],
+            [
+              34.6211506241,
+              1.2386494293
+            ],
+            [
+              34.6212479481,
+              1.2720610335
+            ],
+            [
+              34.6295469217,
+              1.2720362055
+            ],
+            [
+              34.6295966082,
+              1.288741675
+            ],
+            [
+              34.6212975821,
+              1.2887668293
+            ],
+            [
+              34.6213226422,
+              1.2971197258
+            ],
+            [
+              34.6130234285,
+              1.2971450174
+            ],
+            [
+              34.6130486231,
+              1.3054980748
+            ],
+            [
+              34.6047492199,
+              1.3055235015
+            ],
+            [
+              34.6048000419,
+              1.3222299402
+            ],
+            [
+              34.5965004221,
+              1.3222556651
+            ],
+            [
+              34.5965260489,
+              1.3306090453
+            ],
+            [
+              34.5882262403,
+              1.3306349053
+            ],
+            [
+              34.5882520004,
+              1.3389884467
+            ],
+            [
+              34.5799520039,
+              1.3390144405
+            ],
+            [
+              34.5799778977,
+              1.347368144
+            ],
+            [
+              34.5301743712,
+              1.3475244947
+            ],
+            [
+              34.5301486431,
+              1.3391698218
+            ],
+            [
+              34.5218475213,
+              1.3391956207
+            ],
+            [
+              34.5217713812,
+              1.314131114
+            ],
+            [
+              34.4968673033,
+              1.3142068994
+            ],
+            [
+              34.4968423241,
+              1.3058515792
+            ],
+            [
+              34.4885406725,
+              1.3058766274
+            ],
+            [
+              34.4885158794,
+              1.297521145
+            ],
+            [
+              34.4636100506,
+              1.2975956435
+            ],
+            [
+              34.4635854972,
+              1.2892396822
+            ],
+            [
+              34.4552832633,
+              1.2892643007
+            ],
+            [
+              34.4551867418,
+              1.2558398036
+            ],
+            [
+              34.446884454,
+              1.2558637584
+            ],
+            [
+              34.4468607467,
+              1.2475074726
+            ],
+            [
+              34.4302557479,
+              1.2475549856
+            ],
+            [
+              34.4302089093,
+              1.2308417728
+            ],
+            [
+              34.4219062247,
+              1.2308651728
+            ],
+            [
+              34.4218600685,
+              1.2141516388
+            ],
+            [
+              34.4301627031,
+              1.2141285579
+            ],
+            [
+              34.4301398371,
+              1.2057719483
+            ],
+            [
+              34.4384422882,
+              1.2057490005
+            ],
+            [
+              34.4383969809,
+              1.1890360963
+            ],
+            [
+              34.4217920179,
+              1.1890813311
+            ],
+            [
+              34.4217253897,
+              1.1640110154
+            ],
+            [
+              34.4300278768,
+              1.1639888868
+            ],
+            [
+              34.4300059587,
+              1.1556322718
+            ],
+            [
+              34.4378208284,
+              1.1556115701
+            ],
+            [
+              34.4366523769,
+              1.1664576402
+            ],
+            [
+              34.4393573826,
+              1.1860317312
+            ],
+            [
+              34.4479593026,
+              1.2058859384
+            ],
+            [
+              34.4568469365,
+              1.2221784305
+            ],
+            [
+              34.4698565789,
+              1.2366784768
+            ],
+            [
+              34.4800631389,
+              1.2454028737
+            ],
+            [
+              34.4800688406,
+              1.2474121361
+            ],
+            [
+              34.4824059564,
+              1.2474054102
+            ],
+            [
+              34.4840386526,
+              1.2488009534
+            ],
+            [
+              34.4883782929,
+              1.2501373102
+            ],
+            [
+              34.4883943045,
+              1.2557437244
+            ],
+            [
+              34.4966957976,
+              1.2557196392
+            ],
+            [
+              34.4967440015,
+              1.2724302896
+            ],
+            [
+              34.5133466131,
+              1.2723813988
+            ],
+            [
+              34.5133223795,
+              1.2640263956
+            ],
+            [
+              34.5382250189,
+              1.2639533429
+            ],
+            [
+              34.5382493323,
+              1.2723078643
+            ],
+            [
+              34.5548503433,
+              1.2722587092
+            ],
+            [
+              34.5548259779,
+              1.2639045115
+            ],
+            [
+              34.5714262945,
+              1.263855575
+            ],
+            [
+              34.5714507118,
+              1.2722094483
+            ],
+            [
+              34.5880504364,
+              1.2721600825
+            ],
+            [
+              34.5880259663,
+              1.2638065325
+            ],
+            [
+              34.5963255612,
+              1.2637819718
+            ],
+            [
+              34.5963012276,
+              1.2554285839
+            ],
+            [
+              34.5880016594,
+              1.2554529814
+            ],
+            [
+              34.5879535268,
+              1.2387458764
+            ],
+            [
+              34.5962530431,
+              1.2387218029
+            ],
+            [
+              34.5962291931,
+              1.2303684105
+            ],
+            [
+              34.6045285236,
+              1.2303444749
+            ],
+            [
+              34.6044812583,
+              1.2136380136
+            ],
+            [
+              34.6293781265,
+              1.2135670292
+            ],
+            [
+              34.6293082181,
+              1.1885087962
+            ],
+            [
+              34.6376067766,
+              1.1884855733
+            ],
+            [
+              34.6375627674,
+              1.1724534685
+            ],
+            [
+              34.6399700007,
+              1.1749400005
+            ],
+            [
+              34.6404799999,
+              1.1757700001
+            ],
+            [
+              34.6418299999,
+              1.1762899999
+            ],
+            [
+              34.6435800012,
+              1.1774299997
+            ],
+            [
+              34.6468600003,
+              1.1782899998
+            ],
+            [
+              34.6488200006,
+              1.1791
+            ],
+            [
+              34.6508,
+              1.1817400008
+            ],
+            [
+              34.6521400001,
+              1.1825
+            ],
+            [
+              34.6545200009,
+              1.1833299998
+            ],
+            [
+              34.6553800011,
+              1.1843
+            ],
+            [
+              34.655930001,
+              1.1855099997
+            ],
+            [
+              34.6565200003,
+              1.1874900001
+            ],
+            [
+              34.6569300007,
+              1.1878700004
+            ],
+            [
+              34.6580199429,
+              1.1884283445
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Humic ferrallitic - Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "7",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.4387248132,
+              1.1472526687
+            ],
+            [
+              34.4386667418,
+              1.1477609563
+            ],
+            [
+              34.4382967344,
+              1.1511947067
+            ],
+            [
+              34.4382864806,
+              1.1472538217
+            ],
+            [
+              34.4387248132,
+              1.1472526687
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Humic ferrallitic - Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "7",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.4381981126,
+              1.1127108642
+            ],
+            [
+              34.4409728275,
+              1.1275802605
+            ],
+            [
+              34.4406351617,
+              1.1305347025
+            ],
+            [
+              34.4382433881,
+              1.1305409051
+            ],
+            [
+              34.4381981126,
+              1.1127108642
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Humic ferrallitic - Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "7",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.4880936789,
+              0.989037685
+            ],
+            [
+              34.4827915752,
+              0.9910095525
+            ],
+            [
+              34.4724892002,
+              0.9966697121
+            ],
+            [
+              34.4554152296,
+              1.0056091514
+            ],
+            [
+              34.4442301131,
+              1.0121620227
+            ],
+            [
+              34.4436873455,
+              1.0135370737
+            ],
+            [
+              34.4379594555,
+              1.013550395
+            ],
+            [
+              34.4379026465,
+              0.9884809786
+            ],
+            [
+              34.4296007841,
+              0.9884997906
+            ],
+            [
+              34.4295454581,
+              0.9634298906
+            ],
+            [
+              34.4378472607,
+              0.963411556
+            ],
+            [
+              34.4378655647,
+              0.9717680312
+            ],
+            [
+              34.454468734,
+              0.9717309827
+            ],
+            [
+              34.4544503912,
+              0.9633748257
+            ],
+            [
+              34.4710528875,
+              0.9633380159
+            ],
+            [
+              34.4710346628,
+              0.9549821775
+            ],
+            [
+              34.4793356529,
+              0.9549639036
+            ],
+            [
+              34.4793538978,
+              0.9633195804
+            ],
+            [
+              34.4836224378,
+              0.9633100932
+            ],
+            [
+              34.4839,
+              0.9640600003
+            ],
+            [
+              34.4848300005,
+              0.9653099993
+            ],
+            [
+              34.4849,
+              0.9660299998
+            ],
+            [
+              34.48519,
+              0.9667100002
+            ],
+            [
+              34.4852200005,
+              0.9686200001
+            ],
+            [
+              34.4853700006,
+              0.9690500006
+            ],
+            [
+              34.4859400001,
+              0.9694400001
+            ],
+            [
+              34.48629,
+              0.9706499998
+            ],
+            [
+              34.4860500011,
+              0.9717900005
+            ],
+            [
+              34.4864699996,
+              0.9724700001
+            ],
+            [
+              34.4867900006,
+              0.9735100002
+            ],
+            [
+              34.4873300007,
+              0.9740499999
+            ],
+            [
+              34.4874700003,
+              0.9744199997
+            ],
+            [
+              34.4872600008,
+              0.9754899996
+            ],
+            [
+              34.4873700006,
+              0.9760599992
+            ],
+            [
+              34.4877600009,
+              0.9765700009
+            ],
+            [
+              34.4882600011,
+              0.9809300001
+            ],
+            [
+              34.4890099998,
+              0.9820399998
+            ],
+            [
+              34.4893300009,
+              0.9827900004
+            ],
+            [
+              34.489370001,
+              0.9832600001
+            ],
+            [
+              34.4888,
+              0.9844799998
+            ],
+            [
+              34.4889400002,
+              0.9855899995
+            ],
+            [
+              34.4887600006,
+              0.9868500003
+            ],
+            [
+              34.4885500006,
+              0.9876
+            ],
+            [
+              34.4882599999,
+              0.9880400007
+            ],
+            [
+              34.4883,
+              0.9884299998
+            ],
+            [
+              34.4880936789,
+              0.989037685
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Humic ferrallitic - Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "7",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.6869456948,
+              1.2885671065
+            ],
+            [
+              34.6876852406,
+              1.288564846
+            ],
+            [
+              34.6877105135,
+              1.2969164332
+            ],
+            [
+              34.6960082637,
+              1.2968909
+            ],
+            [
+              34.6959829635,
+              1.2885394784
+            ],
+            [
+              34.7042805235,
+              1.2885140833
+            ],
+            [
+              34.7043313407,
+              1.3052165976
+            ],
+            [
+              34.6960337267,
+              1.3052423223
+            ],
+            [
+              34.696085144,
+              1.3219451614
+            ],
+            [
+              34.6794893191,
+              1.3219971863
+            ],
+            [
+              34.6795152181,
+              1.3303489341
+            ],
+            [
+              34.6712170332,
+              1.3303750689
+            ],
+            [
+              34.6712117461,
+              1.3286727096
+            ],
+            [
+              34.6752271789,
+              1.3280079127
+            ],
+            [
+              34.67727112,
+              1.3220710328
+            ],
+            [
+              34.6766544924,
+              1.3131772703
+            ],
+            [
+              34.6766218589,
+              1.3025025412
+            ],
+            [
+              34.678669719,
+              1.2977518796
+            ],
+            [
+              34.6854277366,
+              1.29180076
+            ],
+            [
+              34.6869456948,
+              1.2885671065
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.6792498167,
+              1.2421052751
+            ],
+            [
+              34.6792635682,
+              1.2468314163
+            ],
+            [
+              34.687561325,
+              1.2468068964
+            ],
+            [
+              34.687585781,
+              1.2551584879
+            ],
+            [
+              34.6958833999,
+              1.2551337778
+            ],
+            [
+              34.6959080452,
+              1.2634852052
+            ],
+            [
+              34.6876104006,
+              1.2635100799
+            ],
+            [
+              34.6876349657,
+              1.2717885167
+            ],
+            [
+              34.6800406421,
+              1.263647793
+            ],
+            [
+              34.6756023198,
+              1.2571375545
+            ],
+            [
+              34.6729196192,
+              1.246470616
+            ],
+            [
+              34.6758536221,
+              1.2423106299
+            ],
+            [
+              34.6792498167,
+              1.2421052751
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.6712117461,
+              1.3286727096
+            ],
+            [
+              34.6711911615,
+              1.3220231578
+            ],
+            [
+              34.654594356,
+              1.3220750181
+            ],
+            [
+              34.6545687005,
+              1.3137227779
+            ],
+            [
+              34.6379713004,
+              1.3137742009
+            ],
+            [
+              34.6380485883,
+              1.3388318988
+            ],
+            [
+              34.6214503742,
+              1.3388841927
+            ],
+            [
+              34.6215026008,
+              1.3555899724
+            ],
+            [
+              34.6049036266,
+              1.3556428063
+            ],
+            [
+              34.604983013,
+              1.3807024435
+            ],
+            [
+              34.5966831988,
+              1.3807293057
+            ],
+            [
+              34.5967099565,
+              1.3890826788
+            ],
+            [
+              34.5635089706,
+              1.3891904902
+            ],
+            [
+              34.5634823288,
+              1.3808364685
+            ],
+            [
+              34.5219776217,
+              1.3809697789
+            ],
+            [
+              34.5219512816,
+              1.3726149495
+            ],
+            [
+              34.5136498883,
+              1.3726413647
+            ],
+            [
+              34.513597744,
+              1.3559313811
+            ],
+            [
+              34.5052962471,
+              1.3559574467
+            ],
+            [
+              34.5052704424,
+              1.3476022926
+            ],
+            [
+              34.4969688137,
+              1.3476281687
+            ],
+            [
+              34.4969945897,
+              1.3559834832
+            ],
+            [
+              34.4803907989,
+              1.356035473
+            ],
+            [
+              34.4803650777,
+              1.3476798374
+            ],
+            [
+              34.4720629715,
+              1.3477056307
+            ],
+            [
+              34.472088664,
+              1.3560614262
+            ],
+            [
+              34.4554839179,
+              1.3561132464
+            ],
+            [
+              34.455458282,
+              1.3477571318
+            ],
+            [
+              34.4471556981,
+              1.3477828404
+            ],
+            [
+              34.4471302475,
+              1.3394265654
+            ],
+            [
+              34.4388275339,
+              1.339452087
+            ],
+            [
+              34.4387771621,
+              1.3227392155
+            ],
+            [
+              34.4304743462,
+              1.3227643906
+            ],
+            [
+              34.4304000575,
+              1.297694598
+            ],
+            [
+              34.4220971636,
+              1.2977192686
+            ],
+            [
+              34.422048481,
+              1.2810057514
+            ],
+            [
+              34.4303513219,
+              1.2809813973
+            ],
+            [
+              34.4303271914,
+              1.2726247961
+            ],
+            [
+              34.4220243776,
+              1.2726489906
+            ],
+            [
+              34.4220004309,
+              1.2642922295
+            ],
+            [
+              34.4136974846,
+              1.2643162383
+            ],
+            [
+              34.4136737224,
+              1.2559593175
+            ],
+            [
+              34.4053706444,
+              1.255983141
+            ],
+            [
+              34.4053470653,
+              1.2476260598
+            ],
+            [
+              34.3970438566,
+              1.2476497001
+            ],
+            [
+              34.3970204603,
+              1.2392924605
+            ],
+            [
+              34.3887171191,
+              1.2393159161
+            ],
+            [
+              34.388693907,
+              1.2309585165
+            ],
+            [
+              34.3969972221,
+              1.2309352189
+            ],
+            [
+              34.3969741418,
+              1.2225779761
+            ],
+            [
+              34.4052772746,
+              1.2225548121
+            ],
+            [
+              34.4052543257,
+              1.2141977281
+            ],
+            [
+              34.4135572763,
+              1.2141746955
+            ],
+            [
+              34.4134893002,
+              1.1891039114
+            ],
+            [
+              34.4051864251,
+              1.1891264682
+            ],
+            [
+              34.405119941,
+              1.1640552002
+            ],
+            [
+              34.4134227441,
+              1.1640331193
+            ],
+            [
+              34.4134008742,
+              1.1556761871
+            ],
+            [
+              34.4217034953,
+              1.1556542408
+            ],
+            [
+              34.4216817594,
+              1.1472974668
+            ],
+            [
+              34.4299841993,
+              1.1472756565
+            ],
+            [
+              34.42989874,
+              1.113849183
+            ],
+            [
+              34.4132938892,
+              1.1138915105
+            ],
+            [
+              34.4132729648,
+              1.1055345719
+            ],
+            [
+              34.4049703261,
+              1.1055555428
+            ],
+            [
+              34.4049289961,
+              1.088841347
+            ],
+            [
+              34.4132315902,
+              1.0888206937
+            ],
+            [
+              34.4132111391,
+              1.0804637531
+            ],
+            [
+              34.4215135529,
+              1.080443237
+            ],
+            [
+              34.421534027,
+              1.088800019
+            ],
+            [
+              34.4298363043,
+              1.0887793194
+            ],
+            [
+              34.4298158091,
+              1.080422697
+            ],
+            [
+              34.4330543847,
+              1.0804146791
+            ],
+            [
+              34.4326046829,
+              1.0816147527
+            ],
+            [
+              34.4320546577,
+              1.0976374634
+            ],
+            [
+              34.4379846571,
+              1.1115668582
+            ],
+            [
+              34.4381981126,
+              1.1127108642
+            ],
+            [
+              34.4382433881,
+              1.1305409051
+            ],
+            [
+              34.4406351617,
+              1.1305347025
+            ],
+            [
+              34.4387248132,
+              1.1472526687
+            ],
+            [
+              34.4382864806,
+              1.1472538217
+            ],
+            [
+              34.4382967344,
+              1.1511947067
+            ],
+            [
+              34.4378208284,
+              1.1556115701
+            ],
+            [
+              34.4300059587,
+              1.1556322718
+            ],
+            [
+              34.4300278768,
+              1.1639888868
+            ],
+            [
+              34.4217253897,
+              1.1640110154
+            ],
+            [
+              34.4217920179,
+              1.1890813311
+            ],
+            [
+              34.4383969809,
+              1.1890360963
+            ],
+            [
+              34.4384422882,
+              1.2057490005
+            ],
+            [
+              34.4301398371,
+              1.2057719483
+            ],
+            [
+              34.4301627031,
+              1.2141285579
+            ],
+            [
+              34.4218600685,
+              1.2141516388
+            ],
+            [
+              34.4219062247,
+              1.2308651728
+            ],
+            [
+              34.4302089093,
+              1.2308417728
+            ],
+            [
+              34.4302557479,
+              1.2475549856
+            ],
+            [
+              34.4468607467,
+              1.2475074726
+            ],
+            [
+              34.446884454,
+              1.2558637584
+            ],
+            [
+              34.4551867418,
+              1.2558398036
+            ],
+            [
+              34.4552832633,
+              1.2892643007
+            ],
+            [
+              34.4635854972,
+              1.2892396822
+            ],
+            [
+              34.4636100506,
+              1.2975956435
+            ],
+            [
+              34.4885158794,
+              1.297521145
+            ],
+            [
+              34.4885406725,
+              1.3058766274
+            ],
+            [
+              34.4968423241,
+              1.3058515792
+            ],
+            [
+              34.4968673033,
+              1.3142068994
+            ],
+            [
+              34.5217713812,
+              1.314131114
+            ],
+            [
+              34.5218475213,
+              1.3391956207
+            ],
+            [
+              34.5301486431,
+              1.3391698218
+            ],
+            [
+              34.5301743712,
+              1.3475244947
+            ],
+            [
+              34.5799778977,
+              1.347368144
+            ],
+            [
+              34.5799520039,
+              1.3390144405
+            ],
+            [
+              34.5882520004,
+              1.3389884467
+            ],
+            [
+              34.5882262403,
+              1.3306349053
+            ],
+            [
+              34.5965260489,
+              1.3306090453
+            ],
+            [
+              34.5965004221,
+              1.3222556651
+            ],
+            [
+              34.6048000419,
+              1.3222299402
+            ],
+            [
+              34.6047492199,
+              1.3055235015
+            ],
+            [
+              34.6130486231,
+              1.3054980748
+            ],
+            [
+              34.6130234285,
+              1.2971450174
+            ],
+            [
+              34.6213226422,
+              1.2971197258
+            ],
+            [
+              34.6212975821,
+              1.2887668293
+            ],
+            [
+              34.6295966082,
+              1.288741675
+            ],
+            [
+              34.6295469217,
+              1.2720362055
+            ],
+            [
+              34.6212479481,
+              1.2720610335
+            ],
+            [
+              34.6211506241,
+              1.2386494293
+            ],
+            [
+              34.6543451301,
+              1.2385525711
+            ],
+            [
+              34.6542034042,
+              1.1884390553
+            ],
+            [
+              34.6580199429,
+              1.1884283445
+            ],
+            [
+              34.6602500006,
+              1.1896099998
+            ],
+            [
+              34.66142,
+              1.1906899998
+            ],
+            [
+              34.6628399999,
+              1.1916599999
+            ],
+            [
+              34.6633900004,
+              1.1922800003
+            ],
+            [
+              34.6646300004,
+              1.1949500005
+            ],
+            [
+              34.6650700003,
+              1.1963400005
+            ],
+            [
+              34.6655400004,
+              1.1989900004
+            ],
+            [
+              34.6665700013,
+              1.2014899998
+            ],
+            [
+              34.6674700003,
+              1.2049100001
+            ],
+            [
+              34.6683899998,
+              1.2072700004
+            ],
+            [
+              34.6687700001,
+              1.2076900003
+            ],
+            [
+              34.6695700008,
+              1.2080700004
+            ],
+            [
+              34.6718600001,
+              1.20843
+            ],
+            [
+              34.6748900001,
+              1.2093899989
+            ],
+            [
+              34.677130001,
+              1.2095399997
+            ],
+            [
+              34.6774,
+              1.2097699997
+            ],
+            [
+              34.6786400004,
+              1.2102600004
+            ],
+            [
+              34.6793599996,
+              1.2102599995
+            ],
+            [
+              34.6812900007,
+              1.21092
+            ],
+            [
+              34.6894699992,
+              1.2120100001
+            ],
+            [
+              34.69553,
+              1.2133100007
+            ],
+            [
+              34.6962200003,
+              1.21377
+            ],
+            [
+              34.6975300004,
+              1.2139
+            ],
+            [
+              34.6980800005,
+              1.2141399993
+            ],
+            [
+              34.7007200007,
+              1.2158600001
+            ],
+            [
+              34.703347678,
+              1.2159
+            ],
+            [
+              34.7042076767,
+              1.21551
+            ],
+            [
+              34.7055736514,
+              1.2152737806
+            ],
+            [
+              34.7071200001,
+              1.2154400001
+            ],
+            [
+              34.7095176777,
+              1.2154400003
+            ],
+            [
+              34.7108436386,
+              1.2152345462
+            ],
+            [
+              34.7117400009,
+              1.2156500004
+            ],
+            [
+              34.7123639031,
+              1.2157075913
+            ],
+            [
+              34.7124050376,
+              1.2300309816
+            ],
+            [
+              34.6875129025,
+              1.2301037099
+            ],
+            [
+              34.6875370324,
+              1.2384553029
+            ],
+            [
+              34.6792393019,
+              1.2384796592
+            ],
+            [
+              34.6792498167,
+              1.2421052751
+            ],
+            [
+              34.6758536221,
+              1.2423106299
+            ],
+            [
+              34.6729196192,
+              1.246470616
+            ],
+            [
+              34.6756023198,
+              1.2571375545
+            ],
+            [
+              34.6800406421,
+              1.263647793
+            ],
+            [
+              34.6876349657,
+              1.2717885167
+            ],
+            [
+              34.6793373489,
+              1.271886682
+            ],
+            [
+              34.6793125926,
+              1.2635349277
+            ],
+            [
+              34.6627164874,
+              1.2635845462
+            ],
+            [
+              34.6627411919,
+              1.2719366288
+            ],
+            [
+              34.6544428675,
+              1.2719615625
+            ],
+            [
+              34.6544677088,
+              1.2803138078
+            ],
+            [
+              34.6710642451,
+              1.2802635854
+            ],
+            [
+              34.6710893027,
+              1.2886155025
+            ],
+            [
+              34.6869456948,
+              1.2885671065
+            ],
+            [
+              34.6854277366,
+              1.29180076
+            ],
+            [
+              34.678669719,
+              1.2977518796
+            ],
+            [
+              34.6766218589,
+              1.3025025412
+            ],
+            [
+              34.6766544924,
+              1.3131772703
+            ],
+            [
+              34.67727112,
+              1.3220710328
+            ],
+            [
+              34.6752271789,
+              1.3280079127
+            ],
+            [
+              34.6712117461,
+              1.3286727096
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Humic ferrallitic - Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.4436873455,
+              1.0135370737
+            ],
+            [
+              34.4389555196,
+              1.025525182
+            ],
+            [
+              34.438120684,
+              1.0465919526
+            ],
+            [
+              34.4381689463,
+              1.066766581
+            ],
+            [
+              34.4361888222,
+              1.0720503632
+            ],
+            [
+              34.4297954709,
+              1.0720660732
+            ],
+            [
+              34.4297552695,
+              1.0553528229
+            ],
+            [
+              34.4380573013,
+              1.0553327383
+            ],
+            [
+              34.4379981194,
+              1.030263334
+            ],
+            [
+              34.4296961527,
+              1.030282942
+            ],
+            [
+              34.429619541,
+              0.9968564226
+            ],
+            [
+              34.4213174991,
+              0.9968753732
+            ],
+            [
+              34.4212801837,
+              0.9801617907
+            ],
+            [
+              34.4129780249,
+              0.9801804033
+            ],
+            [
+              34.412905364,
+              0.9467525942
+            ],
+            [
+              34.4212074428,
+              0.9467346172
+            ],
+            [
+              34.42117202,
+              0.9300210262
+            ],
+            [
+              34.4294739018,
+              0.9300033457
+            ],
+            [
+              34.4294564087,
+              0.9216467086
+            ],
+            [
+              34.4211545453,
+              0.9216642287
+            ],
+            [
+              34.4211200687,
+              0.9049506333
+            ],
+            [
+              34.4460250715,
+              0.9048989687
+            ],
+            [
+              34.4460422872,
+              0.9132552896
+            ],
+            [
+              34.4543436567,
+              0.9132378714
+            ],
+            [
+              34.4543264219,
+              0.9048817096
+            ],
+            [
+              34.4574975568,
+              0.9048751121
+            ],
+            [
+              34.4583500004,
+              0.9075099996
+            ],
+            [
+              34.4586300009,
+              0.9079400001
+            ],
+            [
+              34.4598700007,
+              0.9087399995
+            ],
+            [
+              34.46104,
+              0.9100900006
+            ],
+            [
+              34.4623900011,
+              0.9103900002
+            ],
+            [
+              34.4639400004,
+              0.9113099994
+            ],
+            [
+              34.4650100008,
+              0.9127900005
+            ],
+            [
+              34.4658400011,
+              0.9146200001
+            ],
+            [
+              34.4662400007,
+              0.9163199997
+            ],
+            [
+              34.4675300007,
+              0.9172900006
+            ],
+            [
+              34.4687700008,
+              0.9193300011
+            ],
+            [
+              34.4707400011,
+              0.9213499998
+            ],
+            [
+              34.4718600001,
+              0.9257300002
+            ],
+            [
+              34.4739500012,
+              0.9283500001
+            ],
+            [
+              34.4745,
+              0.9301099996
+            ],
+            [
+              34.4759,
+              0.9322900004
+            ],
+            [
+              34.4772900003,
+              0.9356100005
+            ],
+            [
+              34.4791500003,
+              0.93752
+            ],
+            [
+              34.4793300008,
+              0.9385200005
+            ],
+            [
+              34.4799,
+              0.9399900005
+            ],
+            [
+              34.4798300004,
+              0.9422
+            ],
+            [
+              34.4794,
+              0.9439599992
+            ],
+            [
+              34.4793300009,
+              0.9448200004
+            ],
+            [
+              34.4807599997,
+              0.9479500003
+            ],
+            [
+              34.4806200015,
+              0.9506499997
+            ],
+            [
+              34.48104,
+              0.9520200002
+            ],
+            [
+              34.4817600003,
+              0.9529499998
+            ],
+            [
+              34.4825400007,
+              0.9548900002
+            ],
+            [
+              34.4824700004,
+              0.9557199997
+            ],
+            [
+              34.4827900013,
+              0.9577599996
+            ],
+            [
+              34.4825500003,
+              0.9592299998
+            ],
+            [
+              34.4827200011,
+              0.9610400005
+            ],
+            [
+              34.4831900003,
+              0.9616600002
+            ],
+            [
+              34.4834699997,
+              0.9623400003
+            ],
+            [
+              34.4836224378,
+              0.9633100932
+            ],
+            [
+              34.4793538978,
+              0.9633195804
+            ],
+            [
+              34.4793356529,
+              0.9549639036
+            ],
+            [
+              34.4710346628,
+              0.9549821775
+            ],
+            [
+              34.4710528875,
+              0.9633380159
+            ],
+            [
+              34.4544503912,
+              0.9633748257
+            ],
+            [
+              34.454468734,
+              0.9717309827
+            ],
+            [
+              34.4378655647,
+              0.9717680312
+            ],
+            [
+              34.4378472607,
+              0.963411556
+            ],
+            [
+              34.4295454581,
+              0.9634298906
+            ],
+            [
+              34.4296007841,
+              0.9884997906
+            ],
+            [
+              34.4379026465,
+              0.9884809786
+            ],
+            [
+              34.4379594555,
+              1.013550395
+            ],
+            [
+              34.4436873455,
+              1.0135370737
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Humic ferrallitic - Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.1122634463,
+              0.6504144412
+            ],
+            [
+              30.1185483576,
+              0.6612680832
+            ],
+            [
+              30.1331598987,
+              0.6759583512
+            ],
+            [
+              30.1648892609,
+              0.7243370438
+            ],
+            [
+              30.1712403106,
+              0.7429412444
+            ],
+            [
+              30.1619912346,
+              0.7429479239
+            ],
+            [
+              30.1619852801,
+              0.7345329638
+            ],
+            [
+              30.1536259231,
+              0.734538915
+            ],
+            [
+              30.1536142491,
+              0.7177088562
+            ],
+            [
+              30.1452548544,
+              0.717714656
+            ],
+            [
+              30.1452434813,
+              0.700884459
+            ],
+            [
+              30.1368840493,
+              0.7008901082
+            ],
+            [
+              30.1368784785,
+              0.6924749413
+            ],
+            [
+              30.1285189937,
+              0.6924805071
+            ],
+            [
+              30.1285135056,
+              0.6840652727
+            ],
+            [
+              30.1201539689,
+              0.6840707573
+            ],
+            [
+              30.1201432212,
+              0.6672401515
+            ],
+            [
+              30.1117836462,
+              0.6672454865
+            ],
+            [
+              30.1117783869,
+              0.6588301161
+            ],
+            [
+              30.095059064,
+              0.6588406095
+            ],
+            [
+              30.0950539002,
+              0.650425104
+            ],
+            [
+              30.0866941533,
+              0.650430263
+            ],
+            [
+              30.0866840503,
+              0.633599119
+            ],
+            [
+              30.0783242643,
+              0.6336041299
+            ],
+            [
+              30.0783193255,
+              0.6251884907
+            ],
+            [
+              30.0699594866,
+              0.6251934228
+            ],
+            [
+              30.0699546275,
+              0.6167777166
+            ],
+            [
+              30.0615947357,
+              0.6167825695
+            ],
+            [
+              30.0615899551,
+              0.6083667975
+            ],
+            [
+              30.0532300121,
+              0.6083715697
+            ],
+            [
+              30.0532253088,
+              0.5999557311
+            ],
+            [
+              30.0365052504,
+              0.5999651056
+            ],
+            [
+              30.0364916121,
+              0.5747171937
+            ],
+            [
+              30.0281315226,
+              0.5747216658
+            ],
+            [
+              30.0281271194,
+              0.5663056283
+            ],
+            [
+              30.0114067683,
+              0.5663144054
+            ],
+            [
+              30.0114024544,
+              0.5578982375
+            ],
+            [
+              29.9946818693,
+              0.5579068365
+            ],
+            [
+              29.994677643,
+              0.5494905389
+            ],
+            [
+              29.9863172658,
+              0.5494947565
+            ],
+            [
+              29.9863131156,
+              0.5410783929
+            ],
+            [
+              29.9779526857,
+              0.5410825341
+            ],
+            [
+              29.9779504126,
+              0.536403495
+            ],
+            [
+              29.9794500738,
+              0.5353099993
+            ],
+            [
+              29.979590075,
+              0.53423
+            ],
+            [
+              29.9787000749,
+              0.5336899989
+            ],
+            [
+              29.9779487645,
+              0.5329887774
+            ],
+            [
+              29.9779445983,
+              0.5242496795
+            ],
+            [
+              29.9863050056,
+              0.5242456678
+            ],
+            [
+              29.986309028,
+              0.5326620309
+            ],
+            [
+              29.9946693822,
+              0.5326579422
+            ],
+            [
+              29.9946734812,
+              0.5410742411
+            ],
+            [
+              30.0197541909,
+              0.5410617153
+            ],
+            [
+              30.0197583875,
+              0.5494778182
+            ],
+            [
+              30.0364785606,
+              0.5494692789
+            ],
+            [
+              30.0364828459,
+              0.557885251
+            ],
+            [
+              30.0448428466,
+              0.5578808976
+            ],
+            [
+              30.0448561302,
+              0.5831286146
+            ],
+            [
+              30.0532161026,
+              0.5831240523
+            ],
+            [
+              30.0532206732,
+              0.5915398922
+            ],
+            [
+              30.078300231,
+              0.5915259314
+            ],
+            [
+              30.0783096462,
+              0.6083572118
+            ],
+            [
+              30.086669393,
+              0.6083524002
+            ],
+            [
+              30.0866790987,
+              0.6251835459
+            ],
+            [
+              30.0980499468,
+              0.6251767986
+            ],
+            [
+              30.1034042559,
+              0.6349848348
+            ],
+            [
+              30.1034084693,
+              0.6420044937
+            ],
+            [
+              30.1073922935,
+              0.6420020559
+            ],
+            [
+              30.1117726748,
+              0.6495668961
+            ],
+            [
+              30.1117731949,
+              0.6504147456
+            ],
+            [
+              30.1122634463,
+              0.6504144412
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.1678714704,
+              0.7008690917
+            ],
+            [
+              30.1703213712,
+              0.7008674225
+            ],
+            [
+              30.1703251333,
+              0.7064337791
+            ],
+            [
+              30.1687923321,
+              0.7031820367
+            ],
+            [
+              30.1678714704,
+              0.7008690917
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.1571354825,
+              0.6756313792
+            ],
+            [
+              30.1619455012,
+              0.6756282271
+            ],
+            [
+              30.1619522646,
+              0.6860013141
+            ],
+            [
+              30.160944136,
+              0.6834690362
+            ],
+            [
+              30.1571354825,
+              0.6756313792
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.1468831239,
+              0.6588079004
+            ],
+            [
+              30.1535755221,
+              0.6588036372
+            ],
+            [
+              30.153581552,
+              0.6683177463
+            ],
+            [
+              30.1534551951,
+              0.6680577122
+            ],
+            [
+              30.1468831239,
+              0.6588079004
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.1395341831,
+              0.6167368198
+            ],
+            [
+              30.1451906642,
+              0.6167334548
+            ],
+            [
+              30.1452006876,
+              0.6335636585
+            ],
+            [
+              30.1535599384,
+              0.633558538
+            ],
+            [
+              30.1535702596,
+              0.650388604
+            ],
+            [
+              30.1452109821,
+              0.6503938607
+            ],
+            [
+              30.1452147575,
+              0.6564597365
+            ],
+            [
+              30.144543683,
+              0.6555152193
+            ],
+            [
+              30.1395501155,
+              0.643328591
+            ],
+            [
+              30.1395341831,
+              0.6167368198
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.1351490362,
+              0.591493864
+            ],
+            [
+              30.1368168812,
+              0.5914929144
+            ],
+            [
+              30.1368198439,
+              0.5967417124
+            ],
+            [
+              30.1363159261,
+              0.5942127725
+            ],
+            [
+              30.1351490362,
+              0.591493864
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.1280378913,
+              0.5746674181
+            ],
+            [
+              30.1284482615,
+              0.5746671917
+            ],
+            [
+              30.1284489164,
+              0.5758689788
+            ],
+            [
+              30.1280378913,
+              0.5746674181
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.0865924805,
+              0.4533820384
+            ],
+            [
+              30.0865939652,
+              0.4568720352
+            ],
+            [
+              30.0849165074,
+              0.4568727612
+            ],
+            [
+              30.0865924805,
+              0.4533820384
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.1117726748,
+              0.6495668961
+            ],
+            [
+              30.1122634463,
+              0.6504144412
+            ],
+            [
+              30.1117731949,
+              0.6504147456
+            ],
+            [
+              30.1117726748,
+              0.6495668961
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "7",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.1034042559,
+              0.6349848348
+            ],
+            [
+              30.1046435901,
+              0.637255015
+            ],
+            [
+              30.1073922935,
+              0.6420020559
+            ],
+            [
+              30.1034084693,
+              0.6420044937
+            ],
+            [
+              30.1034042559,
+              0.6349848348
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "7",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.070647272,
+              0.5746987956
+            ],
+            [
+              30.0814666119,
+              0.5910169884
+            ],
+            [
+              30.0885992754,
+              0.6078644059
+            ],
+            [
+              30.0980499468,
+              0.6251767986
+            ],
+            [
+              30.0866790987,
+              0.6251835459
+            ],
+            [
+              30.086669393,
+              0.6083524002
+            ],
+            [
+              30.0783096462,
+              0.6083572118
+            ],
+            [
+              30.078300231,
+              0.5915259314
+            ],
+            [
+              30.0532206732,
+              0.5915398922
+            ],
+            [
+              30.0532161026,
+              0.5831240523
+            ],
+            [
+              30.0448561302,
+              0.5831286146
+            ],
+            [
+              30.0448428466,
+              0.5578808976
+            ],
+            [
+              30.0364828459,
+              0.557885251
+            ],
+            [
+              30.0364785606,
+              0.5494692789
+            ],
+            [
+              30.0197583875,
+              0.5494778182
+            ],
+            [
+              30.0197541909,
+              0.5410617153
+            ],
+            [
+              29.9946734812,
+              0.5410742411
+            ],
+            [
+              29.9946693822,
+              0.5326579422
+            ],
+            [
+              29.986309028,
+              0.5326620309
+            ],
+            [
+              29.9863050056,
+              0.5242456678
+            ],
+            [
+              29.9863010476,
+              0.5158293043
+            ],
+            [
+              29.9779406513,
+              0.5158332515
+            ],
+            [
+              29.9779367676,
+              0.507416824
+            ],
+            [
+              29.9695763189,
+              0.5074206956
+            ],
+            [
+              29.9695725099,
+              0.4990042034
+            ],
+            [
+              29.9739997815,
+              0.4990021888
+            ],
+            [
+              29.9813357323,
+              0.5003522051
+            ],
+            [
+              29.9862946301,
+              0.5018857528
+            ],
+            [
+              29.9862971521,
+              0.5074129406
+            ],
+            [
+              29.9946574732,
+              0.5074090465
+            ],
+            [
+              29.9946613786,
+              0.5158253462
+            ],
+            [
+              30.003021646,
+              0.5158213762
+            ],
+            [
+              30.003025627,
+              0.5242376097
+            ],
+            [
+              30.0277705553,
+              0.5242256034
+            ],
+            [
+              30.0281061997,
+              0.5244841554
+            ],
+            [
+              30.0281101543,
+              0.5326414787
+            ],
+            [
+              30.0364701848,
+              0.5326373339
+            ],
+            [
+              30.0364743408,
+              0.5410533065
+            ],
+            [
+              30.0448343172,
+              0.5410490852
+            ],
+            [
+              30.0448335388,
+              0.5394850046
+            ],
+            [
+              30.047605187,
+              0.5422724045
+            ],
+            [
+              30.0615642743,
+              0.5609989227
+            ],
+            [
+              30.0615670382,
+              0.5662879309
+            ],
+            [
+              30.0650696069,
+              0.566286065
+            ],
+            [
+              30.0699307413,
+              0.5736180701
+            ],
+            [
+              30.0699313191,
+              0.5746991841
+            ],
+            [
+              30.070647272,
+              0.5746987956
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "7",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.8381019996,
+              0.1286934228
+            ],
+            [
+              29.8376816079,
+              0.1296005958
+            ],
+            [
+              29.8356972326,
+              0.129691627
+            ],
+            [
+              29.8356971222,
+              0.1286936922
+            ],
+            [
+              29.8381019996,
+              0.1286934228
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "7",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.0305278428,
+              0.2549115068
+            ],
+            [
+              30.0363696102,
+              0.2549101198
+            ],
+            [
+              30.0363707945,
+              0.2599090242
+            ],
+            [
+              30.0305278428,
+              0.2549115068
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.0201149651,
+              0.2464978652
+            ],
+            [
+              30.0280079207,
+              0.2464960591
+            ],
+            [
+              30.0280093627,
+              0.2527929265
+            ],
+            [
+              30.0201149651,
+              0.2464978652
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.0096082327,
+              0.2380840731
+            ],
+            [
+              30.0196462406,
+              0.2380818617
+            ],
+            [
+              30.0196480219,
+              0.2461255182
+            ],
+            [
+              30.0097423061,
+              0.2382264852
+            ],
+            [
+              30.0096082327,
+              0.2380840731
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.7931674583,
+              0.1371162319
+            ],
+            [
+              29.7917290456,
+              0.1392889387
+            ],
+            [
+              29.7855306084,
+              0.142800032
+            ],
+            [
+              29.7855299372,
+              0.1371171285
+            ],
+            [
+              29.7931674583,
+              0.1371162319
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.799594395,
+              0.1286977103
+            ],
+            [
+              29.7974278426,
+              0.1306810136
+            ],
+            [
+              29.7938913192,
+              0.1360228501
+            ],
+            [
+              29.7938904992,
+              0.1286983402
+            ],
+            [
+              29.799594395,
+              0.1286977103
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.8356972326,
+              0.129691627
+            ],
+            [
+              29.8298447181,
+              0.1299601048
+            ],
+            [
+              29.8173763346,
+              0.1260165894
+            ],
+            [
+              29.8106128895,
+              0.1246154968
+            ],
+            [
+              29.8106116057,
+              0.1118611184
+            ],
+            [
+              29.8479843118,
+              0.1118574875
+            ],
+            [
+              29.8444484521,
+              0.1166894901
+            ],
+            [
+              29.8401745782,
+              0.1242209859
+            ],
+            [
+              29.8381019996,
+              0.1286934228
+            ],
+            [
+              29.8356971222,
+              0.1286936922
+            ],
+            [
+              29.8356972326,
+              0.129691627
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.0535847192,
+              -1.0663807921
+            ],
+            [
+              30.0535764515,
+              -1.0579649756
+            ],
+            [
+              30.0452154961,
+              -1.0579732539
+            ],
+            [
+              30.0452073167,
+              -1.0495573706
+            ],
+            [
+              30.0368463179,
+              -1.0495655611
+            ],
+            [
+              30.0368382265,
+              -1.0411496121
+            ],
+            [
+              30.0284771852,
+              -1.0411577135
+            ],
+            [
+              30.0284933917,
+              -1.0579897428
+            ],
+            [
+              30.0201322422,
+              -1.0579979524
+            ],
+            [
+              30.0201404187,
+              -1.066414031
+            ],
+            [
+              30.0285015925,
+              -1.0664057557
+            ],
+            [
+              30.0285098579,
+              -1.0748217691
+            ],
+            [
+              30.0368709882,
+              -1.0748134051
+            ],
+            [
+              30.0368627001,
+              -1.0663974576
+            ],
+            [
+              30.0535847192,
+              -1.0663807921
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Dark horizons - not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.0535847192,
+              -1.0663807921
+            ],
+            [
+              30.0535930528,
+              -1.074796608
+            ],
+            [
+              30.0619539875,
+              -1.0747881751
+            ],
+            [
+              30.0619456303,
+              -1.0663724256
+            ],
+            [
+              30.0535847192,
+              -1.0663807921
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Dark horizons - not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.7992534919,
+              -1.0413711409
+            ],
+            [
+              29.7943423117,
+              -1.0413755294
+            ],
+            [
+              29.7943349239,
+              -1.0329577534
+            ],
+            [
+              29.7859720922,
+              -1.0329651494
+            ],
+            [
+              29.7859647853,
+              -1.0245473135
+            ],
+            [
+              29.7776019156,
+              -1.0245546256
+            ],
+            [
+              29.7775946911,
+              -1.0161367291
+            ],
+            [
+              29.7608688182,
+              -1.0161511709
+            ],
+            [
+              29.7608832409,
+              -1.0329872043
+            ],
+            [
+              29.7525201713,
+              -1.032994512
+            ],
+            [
+              29.7525274498,
+              -1.0414125883
+            ],
+            [
+              29.7308763444,
+              -1.0414315565
+            ],
+            [
+              29.7411759328,
+              -1.0439352895
+            ],
+            [
+              29.7557861194,
+              -1.0457156613
+            ],
+            [
+              29.7725333244,
+              -1.0467767333
+            ],
+            [
+              29.7878548019,
+              -1.0474803248
+            ],
+            [
+              29.7992534919,
+              -1.0413711409
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Humic ferrallitic - Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.7183471361,
+              -1.1087890387
+            ],
+            [
+              29.7070204567,
+              -1.1017096124
+            ],
+            [
+              29.6923991125,
+              -1.0884523175
+            ],
+            [
+              29.6763481668,
+              -1.0701745016
+            ],
+            [
+              29.6689086678,
+              -1.0595654671
+            ],
+            [
+              29.6689148343,
+              -1.066741014
+            ],
+            [
+              29.6521871789,
+              -1.0667555803
+            ],
+            [
+              29.652201719,
+              -1.0835931291
+            ],
+            [
+              29.660565621,
+              -1.0835857418
+            ],
+            [
+              29.6605730002,
+              -1.0920044575
+            ],
+            [
+              29.6689368667,
+              -1.0919969905
+            ],
+            [
+              29.6689518428,
+              -1.108834305
+            ],
+            [
+              29.7183471361,
+              -1.1087890387
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Humic ferrallitic - Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.7944165907,
+              -1.1224978523
+            ],
+            [
+              29.7921980993,
+              -1.1213554122
+            ],
+            [
+              29.7843587123,
+              -1.1206456571
+            ],
+            [
+              29.7701070595,
+              -1.1213765523
+            ],
+            [
+              29.7609628605,
+              -1.121385253
+            ],
+            [
+              29.7609668056,
+              -1.1255853528
+            ],
+            [
+              29.7776932713,
+              -1.1255693552
+            ],
+            [
+              29.7777012724,
+              -1.1339872456
+            ],
+            [
+              29.7944275471,
+              -1.1339710308
+            ],
+            [
+              29.7944165907,
+              -1.1224978523
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Humic ferrallitic - Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.7308763444,
+              -1.0414315565
+            ],
+            [
+              29.7274378223,
+              -1.0414345554
+            ],
+            [
+              29.7274450932,
+              -1.0498528084
+            ],
+            [
+              29.7190817444,
+              -1.0498601444
+            ],
+            [
+              29.7190890513,
+              -1.0582784556
+            ],
+            [
+              29.7107256209,
+              -1.0582858284
+            ],
+            [
+              29.7107183364,
+              -1.0498674596
+            ],
+            [
+              29.6939913484,
+              -1.0498820199
+            ],
+            [
+              29.6939841665,
+              -1.0414635342
+            ],
+            [
+              29.6856206072,
+              -1.0414707223
+            ],
+            [
+              29.685613505,
+              -1.0330521763
+            ],
+            [
+              29.6772499103,
+              -1.0330592853
+            ],
+            [
+              29.6772428882,
+              -1.0246406811
+            ],
+            [
+              29.6605155692,
+              -1.0246547161
+            ],
+            [
+              29.6605295846,
+              -1.0414921546
+            ],
+            [
+              29.6688933156,
+              -1.0414850334
+            ],
+            [
+              29.6689086678,
+              -1.0595654671
+            ],
+            [
+              29.6763481668,
+              -1.0701745016
+            ],
+            [
+              29.6923991125,
+              -1.0884523175
+            ],
+            [
+              29.7070204567,
+              -1.1017096124
+            ],
+            [
+              29.7183471361,
+              -1.1087890387
+            ],
+            [
+              29.7274976291,
+              -1.1087805618
+            ],
+            [
+              29.7274899474,
+              -1.1003623138
+            ],
+            [
+              29.7442167444,
+              -1.1003468631
+            ],
+            [
+              29.7442322583,
+              -1.1171831235
+            ],
+            [
+              29.7609589121,
+              -1.1171673416
+            ],
+            [
+              29.7609628605,
+              -1.121385253
+            ],
+            [
+              29.7701070595,
+              -1.1213765523
+            ],
+            [
+              29.7843587123,
+              -1.1206456571
+            ],
+            [
+              29.7921980993,
+              -1.1213554122
+            ],
+            [
+              29.7944165907,
+              -1.1224978523
+            ],
+            [
+              29.7944115092,
+              -1.1171354894
+            ],
+            [
+              29.8362259034,
+              -1.1170951378
+            ],
+            [
+              29.836217856,
+              -1.1086776703
+            ],
+            [
+              29.8445805301,
+              -1.1086695899
+            ],
+            [
+              29.8445725193,
+              -1.1002521833
+            ],
+            [
+              29.8612976366,
+              -1.1002360746
+            ],
+            [
+              29.8613056928,
+              -1.1086533568
+            ],
+            [
+              29.8780306094,
+              -1.1086370294
+            ],
+            [
+              29.8780064844,
+              -1.0833855512
+            ],
+            [
+              29.869644127,
+              -1.0833935402
+            ],
+            [
+              29.8696362325,
+              -1.0749763168
+            ],
+            [
+              29.8612738355,
+              -1.0749842215
+            ],
+            [
+              29.8612660246,
+              -1.0665669365
+            ],
+            [
+              29.8529035889,
+              -1.0665747554
+            ],
+            [
+              29.8528958629,
+              -1.0581574081
+            ],
+            [
+              29.8445333894,
+              -1.0581651435
+            ],
+            [
+              29.8445257463,
+              -1.0497477349
+            ],
+            [
+              29.836163234,
+              -1.0497553853
+            ],
+            [
+              29.8361556733,
+              -1.0413379148
+            ],
+            [
+              29.8110678373,
+              -1.04136055
+            ],
+            [
+              29.8110753304,
+              -1.0497782054
+            ],
+            [
+              29.8027125755,
+              -1.049785766
+            ],
+            [
+              29.8027051046,
+              -1.0413680509
+            ],
+            [
+              29.7992534919,
+              -1.0413711409
+            ],
+            [
+              29.7878548019,
+              -1.0474803248
+            ],
+            [
+              29.7725333244,
+              -1.0467767333
+            ],
+            [
+              29.7557861194,
+              -1.0457156613
+            ],
+            [
+              29.7411759328,
+              -1.0439352895
+            ],
+            [
+              29.7308763444,
+              -1.0414315565
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Dark horizons - not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.0285660159,
+              -1.1303437155
+            ],
+            [
+              30.0285608155,
+              -1.1253178343
+            ],
+            [
+              30.020199481,
+              -1.1253265678
+            ],
+            [
+              30.0201908489,
+              -1.1169104925
+            ],
+            [
+              30.0118294714,
+              -1.1169191363
+            ],
+            [
+              30.0118124492,
+              -1.1000868543
+            ],
+            [
+              29.9867280735,
+              -1.1001122537
+            ],
+            [
+              29.9867197304,
+              -1.0916959171
+            ],
+            [
+              29.9616348466,
+              -1.0917209115
+            ],
+            [
+              29.9616266365,
+              -1.0833043826
+            ],
+            [
+              29.9532649043,
+              -1.0833126037
+            ],
+            [
+              29.9532567801,
+              -1.0748960102
+            ],
+            [
+              29.9448950072,
+              -1.0749041441
+            ],
+            [
+              29.9448789942,
+              -1.0580708277
+            ],
+            [
+              29.9365172041,
+              -1.058078812
+            ],
+            [
+              29.9365093147,
+              -1.0496620892
+            ],
+            [
+              29.9197855898,
+              -1.0496778631
+            ],
+            [
+              29.919777808,
+              -1.0412610138
+            ],
+            [
+              29.9114158733,
+              -1.0412688031
+            ],
+            [
+              29.9114081764,
+              -1.0328518909
+            ],
+            [
+              29.9030462019,
+              -1.0328595958
+            ],
+            [
+              29.9030385886,
+              -1.0244426193
+            ],
+            [
+              29.886314496,
+              -1.0244578394
+            ],
+            [
+              29.8863069893,
+              -1.016040737
+            ],
+            [
+              29.8695826916,
+              -1.0160557433
+            ],
+            [
+              29.8695752899,
+              -1.0076385175
+            ],
+            [
+              29.8612130706,
+              -1.0076459261
+            ],
+            [
+              29.861205751,
+              -0.9992286369
+            ],
+            [
+              29.8528434915,
+              -0.9992359631
+            ],
+            [
+              29.8528290795,
+              -0.9824012593
+            ],
+            [
+              29.8611912971,
+              -0.9823940566
+            ],
+            [
+              29.8611841619,
+              -0.9739767656
+            ],
+            [
+              29.8695462974,
+              -0.973969605
+            ],
+            [
+              29.8695321718,
+              -0.957135146
+            ],
+            [
+              29.8611700762,
+              -0.9571421836
+            ],
+            [
+              29.8611631265,
+              -0.9487248916
+            ],
+            [
+              29.8528009904,
+              -0.9487318471
+            ],
+            [
+              29.8528079209,
+              -0.9571492008
+            ],
+            [
+              29.8360834256,
+              -0.9571631744
+            ],
+            [
+              29.8360903769,
+              -0.9655806497
+            ],
+            [
+              29.8277280171,
+              -0.9655876672
+            ],
+            [
+              29.8277420604,
+              -0.9824227401
+            ],
+            [
+              29.8193795987,
+              -0.9824298583
+            ],
+            [
+              29.8193866902,
+              -0.9908474558
+            ],
+            [
+              29.8110241471,
+              -0.990854613
+            ],
+            [
+              29.811031278,
+              -0.9992722707
+            ],
+            [
+              29.8193938413,
+              -0.9992650526
+            ],
+            [
+              29.8194010539,
+              -1.0076826481
+            ],
+            [
+              29.8444884469,
+              -1.0076606799
+            ],
+            [
+              29.8445181643,
+              -1.0413303241
+            ],
+            [
+              29.8528805933,
+              -1.0413227119
+            ],
+            [
+              29.8528881974,
+              -1.0497400612
+            ],
+            [
+              29.8696129165,
+              -1.0497246454
+            ],
+            [
+              29.8696206268,
+              -1.0581418703
+            ],
+            [
+              29.8790303965,
+              -1.0581330876
+            ],
+            [
+              29.880444592,
+              -1.0516992833
+            ],
+            [
+              29.891842918,
+              -1.0492979676
+            ],
+            [
+              29.9027722827,
+              -1.0535909862
+            ],
+            [
+              29.908960868,
+              -1.0679291432
+            ],
+            [
+              29.9118231846,
+              -1.080835953
+            ],
+            [
+              29.9180070823,
+              -1.0899144148
+            ],
+            [
+              29.9281874599,
+              -1.0917672356
+            ],
+            [
+              29.9365493917,
+              -1.0917456971
+            ],
+            [
+              29.9365412501,
+              -1.0833289764
+            ],
+            [
+              29.9449031085,
+              -1.0833208016
+            ],
+            [
+              29.9449195014,
+              -1.1001541152
+            ],
+            [
+              29.9365575965,
+              -1.1001624174
+            ],
+            [
+              29.9365658638,
+              -1.1085791364
+            ],
+            [
+              29.9348479085,
+              -1.1085808522
+            ],
+            [
+              29.9370356712,
+              -1.118582996
+            ],
+            [
+              29.9436929761,
+              -1.125748036
+            ],
+            [
+              29.954621988,
+              -1.1295618028
+            ],
+            [
+              29.969817193,
+              -1.1247651408
+            ],
+            [
+              29.9797911269,
+              -1.1237986966
+            ],
+            [
+              29.9926192799,
+              -1.1271321567
+            ],
+            [
+              30.0030842607,
+              -1.1419421387
+            ],
+            [
+              30.0118640146,
+              -1.1503197647
+            ],
+            [
+              30.0118554891,
+              -1.1421675545
+            ],
+            [
+              30.0034939769,
+              -1.1421763694
+            ],
+            [
+              30.0034766149,
+              -1.1253439612
+            ],
+            [
+              30.0118380804,
+              -1.1253352761
+            ],
+            [
+              30.0118467527,
+              -1.1337514156
+            ],
+            [
+              30.0202081774,
+              -1.1337426417
+            ],
+            [
+              30.0202169381,
+              -1.1421587151
+            ],
+            [
+              30.025096829,
+              -1.1421535451
+            ],
+            [
+              30.021603566,
+              -1.1371417584
+            ],
+            [
+              30.0230205579,
+              -1.1294909431
+            ],
+            [
+              30.0285660159,
+              -1.1303437155
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Dark horizons - not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.0369311851,
+              -1.1340639661
+            ],
+            [
+              30.0369308309,
+              -1.1337250217
+            ],
+            [
+              30.0362092385,
+              -1.1337257831
+            ],
+            [
+              30.0369311851,
+              -1.1340639661
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Dark horizons - not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.03070232,
+              -1.1505635977
+            ],
+            [
+              30.0285836297,
+              -1.1472043291
+            ],
+            [
+              30.0285871731,
+              -1.1505658594
+            ],
+            [
+              30.03070232,
+              -1.1505635977
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Dark horizons - not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.0370283366,
+              -1.223648701
+            ],
+            [
+              30.0370218624,
+              -1.217884425
+            ],
+            [
+              30.0453833416,
+              -1.2178749215
+            ],
+            [
+              30.0453928305,
+              -1.2262907925
+            ],
+            [
+              30.0537542691,
+              -1.2262811973
+            ],
+            [
+              30.0537353076,
+              -1.2094495857
+            ],
+            [
+              30.0453739194,
+              -1.2094590492
+            ],
+            [
+              30.045364563,
+              -1.2010431766
+            ],
+            [
+              30.0370031357,
+              -1.2010525488
+            ],
+            [
+              30.0369664616,
+              -1.1673887893
+            ],
+            [
+              30.0286050692,
+              -1.1673978738
+            ],
+            [
+              30.0285960889,
+              -1.1589818672
+            ],
+            [
+              30.020234656,
+              -1.1589908608
+            ],
+            [
+              30.020225764,
+              -1.1505747891
+            ],
+            [
+              30.0121403078,
+              -1.1505833997
+            ],
+            [
+              30.0125934406,
+              -1.151015772
+            ],
+            [
+              30.0154539363,
+              -1.1610525296
+            ],
+            [
+              30.0116616798,
+              -1.1682279142
+            ],
+            [
+              30.0035213652,
+              -1.1682366916
+            ],
+            [
+              30.0035294736,
+              -1.1758411798
+            ],
+            [
+              29.9865352831,
+              -1.1758595455
+            ],
+            [
+              29.9884008185,
+              -1.1811615704
+            ],
+            [
+              29.996957446,
+              -1.1873675092
+            ],
+            [
+              30.0097864146,
+              -1.1911781777
+            ],
+            [
+              30.0230949813,
+              -1.1992909034
+            ],
+            [
+              30.0302308571,
+              -1.2093226178
+            ],
+            [
+              30.0370283366,
+              -1.223648701
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Dark horizons - not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.9281874599,
+              -1.0917672356
+            ],
+            [
+              29.9180070823,
+              -1.0899144148
+            ],
+            [
+              29.9118231846,
+              -1.080835953
+            ],
+            [
+              29.908960868,
+              -1.0679291432
+            ],
+            [
+              29.9027722827,
+              -1.0535909862
+            ],
+            [
+              29.891842918,
+              -1.0492979676
+            ],
+            [
+              29.880444592,
+              -1.0516992833
+            ],
+            [
+              29.8790303965,
+              -1.0581330876
+            ],
+            [
+              29.8863451437,
+              -1.0581262411
+            ],
+            [
+              29.8863608402,
+              -1.0749604393
+            ],
+            [
+              29.9030852003,
+              -1.0749444706
+            ],
+            [
+              29.9031093471,
+              -1.1001953877
+            ],
+            [
+              29.9114715031,
+              -1.1001871808
+            ],
+            [
+              29.9114797005,
+              -1.1086040898
+            ],
+            [
+              29.9282038721,
+              -1.1085874777
+            ],
+            [
+              29.9281874599,
+              -1.0917672356
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S2",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Yellow soils - Sandy clay loams",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.0118640146,
+              -1.1503197647
+            ],
+            [
+              30.0030842607,
+              -1.1419421387
+            ],
+            [
+              29.9926192799,
+              -1.1271321567
+            ],
+            [
+              29.9797911269,
+              -1.1237986966
+            ],
+            [
+              29.969817193,
+              -1.1247651408
+            ],
+            [
+              29.954621988,
+              -1.1295618028
+            ],
+            [
+              29.9436929761,
+              -1.125748036
+            ],
+            [
+              29.9370356712,
+              -1.118582996
+            ],
+            [
+              29.9348479085,
+              -1.1085808522
+            ],
+            [
+              29.9282038721,
+              -1.1085874777
+            ],
+            [
+              29.9282121788,
+              -1.1170042606
+            ],
+            [
+              29.9198501012,
+              -1.1170126406
+            ],
+            [
+              29.9198668559,
+              -1.1338463301
+            ],
+            [
+              29.9282289816,
+              -1.1338378234
+            ],
+            [
+              29.9282374776,
+              -1.1422546033
+            ],
+            [
+              29.9365995645,
+              -1.1422460086
+            ],
+            [
+              29.9365910442,
+              -1.1338292905
+            ],
+            [
+              29.9449530453,
+              -1.133820735
+            ],
+            [
+              29.944961589,
+              -1.1422373893
+            ],
+            [
+              29.9700472809,
+              -1.1422113841
+            ],
+            [
+              29.9700559608,
+              -1.1506278456
+            ],
+            [
+              29.9784177547,
+              -1.1506190644
+            ],
+            [
+              29.9784265233,
+              -1.1590354609
+            ],
+            [
+              30.0035115965,
+              -1.159008775
+            ],
+            [
+              30.0035213652,
+              -1.1682366916
+            ],
+            [
+              30.0116616798,
+              -1.1682279142
+            ],
+            [
+              30.0154539363,
+              -1.1610525296
+            ],
+            [
+              30.0125934406,
+              -1.151015772
+            ],
+            [
+              30.0121403078,
+              -1.1505833997
+            ],
+            [
+              30.0118642923,
+              -1.1505836931
+            ],
+            [
+              30.0118640146,
+              -1.1503197647
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S2",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Yellow soils - Sandy clay loams",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.0285660159,
+              -1.1303437155
+            ],
+            [
+              30.0230205579,
+              -1.1294909431
+            ],
+            [
+              30.021603566,
+              -1.1371417584
+            ],
+            [
+              30.025096829,
+              -1.1421535451
+            ],
+            [
+              30.0285783218,
+              -1.1421498521
+            ],
+            [
+              30.0285836297,
+              -1.1472043291
+            ],
+            [
+              30.03070232,
+              -1.1505635977
+            ],
+            [
+              30.0369485159,
+              -1.1505569059
+            ],
+            [
+              30.0369311851,
+              -1.1340639661
+            ],
+            [
+              30.0362092385,
+              -1.1337257831
+            ],
+            [
+              30.0285695359,
+              -1.1337338434
+            ],
+            [
+              30.0285660159,
+              -1.1303437155
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S2",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Yellow soils - Sandy clay loams",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.0370283366,
+              -1.223648701
+            ],
+            [
+              30.0302308571,
+              -1.2093226178
+            ],
+            [
+              30.0230949813,
+              -1.1992909034
+            ],
+            [
+              30.0097864146,
+              -1.1911781777
+            ],
+            [
+              29.996957446,
+              -1.1873675092
+            ],
+            [
+              29.9884008185,
+              -1.1811615704
+            ],
+            [
+              29.9865352831,
+              -1.1758595455
+            ],
+            [
+              29.9784442523,
+              -1.1758682526
+            ],
+            [
+              29.9784532137,
+              -1.1842846471
+            ],
+            [
+              29.9868150433,
+              -1.184275584
+            ],
+            [
+              29.9868332063,
+              -1.2011082431
+            ],
+            [
+              29.9617473733,
+              -1.2011357431
+            ],
+            [
+              29.9617383356,
+              -1.1927192214
+            ],
+            [
+              29.9533762901,
+              -1.192728273
+            ],
+            [
+              29.9533673409,
+              -1.1843116867
+            ],
+            [
+              29.9366431092,
+              -1.1843295858
+            ],
+            [
+              29.9366609681,
+              -1.2011630134
+            ],
+            [
+              29.9450231664,
+              -1.2011539486
+            ],
+            [
+              29.9450322162,
+              -1.2095705981
+            ],
+            [
+              29.9701185079,
+              -1.2095430594
+            ],
+            [
+              29.9701276985,
+              -1.217959516
+            ],
+            [
+              29.9784896936,
+              -1.2179502211
+            ],
+            [
+              29.9784989744,
+              -1.2263666129
+            ],
+            [
+              29.9868609315,
+              -1.226357227
+            ],
+            [
+              29.9868516262,
+              -1.2179409
+            ],
+            [
+              30.003575297,
+              -1.2179221787
+            ],
+            [
+              30.0035660023,
+              -1.2095059805
+            ],
+            [
+              30.0202893643,
+              -1.2094872849
+            ],
+            [
+              30.0202987093,
+              -1.217903354
+            ],
+            [
+              30.0286603186,
+              -1.2178939031
+            ],
+            [
+              30.0286697541,
+              -1.2263099043
+            ],
+            [
+              30.0370313242,
+              -1.2263003621
+            ],
+            [
+              30.0370283366,
+              -1.223648701
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S2",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Yellow soils - Sandy clay loams",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.0538632483,
+              -1.318855018
+            ],
+            [
+              30.0455015111,
+              -1.3188653381
+            ],
+            [
+              30.0455117836,
+              -1.3272812023
+            ],
+            [
+              30.037149953,
+              -1.3272915599
+            ],
+            [
+              30.0371706379,
+              -1.3441234172
+            ],
+            [
+              30.0538943459,
+              -1.3441024108
+            ],
+            [
+              30.0538839146,
+              -1.3356866134
+            ],
+            [
+              30.062245642,
+              -1.3356761325
+            ],
+            [
+              30.062235248,
+              -1.3272604014
+            ],
+            [
+              30.0538735484,
+              -1.3272708158
+            ],
+            [
+              30.0538632483,
+              -1.318855018
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S2",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Yellow soils - Sandy clay loams",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.7026280995,
+              -1.3303781269
+            ],
+            [
+              29.7026251674,
+              -1.3276825896
+            ],
+            [
+              29.6942608101,
+              -1.3276917837
+            ],
+            [
+              29.6942629747,
+              -1.3296885283
+            ],
+            [
+              29.6966762506,
+              -1.3301882869
+            ],
+            [
+              29.7026280995,
+              -1.3303781269
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.6357131004,
+              -1.3319038613
+            ],
+            [
+              29.6357086968,
+              -1.3277553426
+            ],
+            [
+              29.6273438814,
+              -1.327764309
+            ],
+            [
+              29.6273501783,
+              -1.3337111004
+            ],
+            [
+              29.6349075239,
+              -1.3320488956
+            ],
+            [
+              29.6357131004,
+              -1.3319038613
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.602261118,
+              -1.3392292208
+            ],
+            [
+              29.6160550907,
+              -1.336195377
+            ],
+            [
+              29.6023362029,
+              -1.3362100513
+            ],
+            [
+              29.602261118,
+              -1.3392292208
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.095739384,
+              -1.3730254244
+            ],
+            [
+              30.0957238154,
+              -1.3608803177
+            ],
+            [
+              30.0873622658,
+              -1.3608911129
+            ],
+            [
+              30.0873753914,
+              -1.3711645583
+            ],
+            [
+              30.0881877445,
+              -1.3718399993
+            ],
+            [
+              30.0884577442,
+              -1.3725399995
+            ],
+            [
+              30.0895977444,
+              -1.3737
+            ],
+            [
+              30.090521795,
+              -1.3738774919
+            ],
+            [
+              30.0939400682,
+              -1.372879999
+            ],
+            [
+              30.0946088365,
+              -1.3731416922
+            ],
+            [
+              30.0953677444,
+              -1.3728799994
+            ],
+            [
+              30.095739384,
+              -1.3730254244
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S2",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Yellow soils - Sandy clay loams",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.8858326332,
+              -1.2180517622
+            ],
+            [
+              29.8788685706,
+              -1.2116402344
+            ],
+            [
+              29.8588998076,
+              -1.1958824778
+            ],
+            [
+              29.8517661816,
+              -1.1883589922
+            ],
+            [
+              29.8478388855,
+              -1.1804734697
+            ],
+            [
+              29.8482378859,
+              -1.1760051325
+            ],
+            [
+              29.8362839363,
+              -1.1760173913
+            ],
+            [
+              29.8363010656,
+              -1.1928523171
+            ],
+            [
+              29.8446639833,
+              -1.1928436224
+            ],
+            [
+              29.844688586,
+              -1.2165467658
+            ],
+            [
+              29.8449345367,
+              -1.2164517939
+            ],
+            [
+              29.8455010721,
+              -1.2155106693
+            ],
+            [
+              29.8460210783,
+              -1.2149499806
+            ],
+            [
+              29.8468326147,
+              -1.2144749627
+            ],
+            [
+              29.8488468044,
+              -1.2143308433
+            ],
+            [
+              29.8493927425,
+              -1.2144461946
+            ],
+            [
+              29.8499236262,
+              -1.2152456558
+            ],
+            [
+              29.8496316376,
+              -1.216247824
+            ],
+            [
+              29.8498103892,
+              -1.217675262
+            ],
+            [
+              29.8500886091,
+              -1.2180900767
+            ],
+            [
+              29.8513956511,
+              -1.2180886832
+            ],
+            [
+              29.8524007643,
+              -1.2175214595
+            ],
+            [
+              29.8532268291,
+              -1.2174011974
+            ],
+            [
+              29.8537984168,
+              -1.2176122538
+            ],
+            [
+              29.8541051637,
+              -1.2180857943
+            ],
+            [
+              29.8858326332,
+              -1.2180517622
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Humic ferrallitic - Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.9018495083,
+              -1.234868406
+            ],
+            [
+              29.8948765182,
+              -1.2270250498
+            ],
+            [
+              29.8948849924,
+              -1.2348760551
+            ],
+            [
+              29.9018495083,
+              -1.234868406
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Humic ferrallitic - Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.9093252768,
+              -1.2432771028
+            ],
+            [
+              29.9032493201,
+              -1.2364429212
+            ],
+            [
+              29.9032567788,
+              -1.2432838313
+            ],
+            [
+              29.9093252768,
+              -1.2432771028
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Humic ferrallitic - Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.9154568115,
+              -1.2516871714
+            ],
+            [
+              29.9116227821,
+              -1.246393485
+            ],
+            [
+              29.9116286177,
+              -1.2516914545
+            ],
+            [
+              29.9154568115,
+              -1.2516871714
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Humic ferrallitic - Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.9208499402,
+              -1.2600979664
+            ],
+            [
+              29.9199988674,
+              -1.2586235954
+            ],
+            [
+              29.9200005104,
+              -1.2600989258
+            ],
+            [
+              29.9208499402,
+              -1.2600979664
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Humic ferrallitic - Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.9428493703,
+              -1.3358230674
+            ],
+            [
+              29.9368129231,
+              -1.3358303413
+            ],
+            [
+              29.9368029531,
+              -1.3274136382
+            ],
+            [
+              29.9256916562,
+              -1.3274269035
+            ],
+            [
+              29.9256444061,
+              -1.3280912225
+            ],
+            [
+              29.924880767,
+              -1.3285843217
+            ],
+            [
+              29.9246738391,
+              -1.3283731347
+            ],
+            [
+              29.9244067436,
+              -1.3274284343
+            ],
+            [
+              29.920077562,
+              -1.3274335876
+            ],
+            [
+              29.9201074911,
+              -1.3526840747
+            ],
+            [
+              29.9284703037,
+              -1.3526739251
+            ],
+            [
+              29.9284906265,
+              -1.3695074528
+            ],
+            [
+              29.9368534348,
+              -1.3694971483
+            ],
+            [
+              29.9368637207,
+              -1.3779138479
+            ],
+            [
+              29.9452264936,
+              -1.377903449
+            ],
+            [
+              29.9452368718,
+              -1.3863200855
+            ],
+            [
+              29.9368740689,
+              -1.3863305474
+            ],
+            [
+              29.9368949564,
+              -1.4031639442
+            ],
+            [
+              29.9452578179,
+              -1.4031533547
+            ],
+            [
+              29.9452683858,
+              -1.4115699882
+            ],
+            [
+              29.9619939798,
+              -1.4115485928
+            ],
+            [
+              29.9619833527,
+              -1.4031320866
+            ],
+            [
+              29.9703460239,
+              -1.403121408
+            ],
+            [
+              29.9703385443,
+              -1.397183943
+            ],
+            [
+              29.9664723318,
+              -1.3813447397
+            ],
+            [
+              29.9618655684,
+              -1.3694661498
+            ],
+            [
+              29.9535788605,
+              -1.3694764482
+            ],
+            [
+              29.9535708771,
+              -1.3629453294
+            ],
+            [
+              29.9533778875,
+              -1.3633050823
+            ],
+            [
+              29.9530417212,
+              -1.3632334472
+            ],
+            [
+              29.9529724881,
+              -1.3628136747
+            ],
+            [
+              29.9525119969,
+              -1.3620447091
+            ],
+            [
+              29.9525071542,
+              -1.3614511462
+            ],
+            [
+              29.9521436873,
+              -1.3610309513
+            ],
+            [
+              29.9522152015,
+              -1.3607682684
+            ],
+            [
+              29.9529172209,
+              -1.3600433647
+            ],
+            [
+              29.953208787,
+              -1.3593496114
+            ],
+            [
+              29.9532839859,
+              -1.3585017839
+            ],
+            [
+              29.9535648112,
+              -1.3579610886
+            ],
+            [
+              29.9535617799,
+              -1.3554642453
+            ],
+            [
+              29.9521935864,
+              -1.3550930724
+            ],
+            [
+              29.9521521093,
+              -1.3548376844
+            ],
+            [
+              29.9525518939,
+              -1.3545155041
+            ],
+            [
+              29.9528846911,
+              -1.3539874007
+            ],
+            [
+              29.9528965879,
+              -1.3533295674
+            ],
+            [
+              29.9535589142,
+              -1.3530995264
+            ],
+            [
+              29.9535583629,
+              -1.3526433015
+            ],
+            [
+              29.9451957394,
+              -1.3526535385
+            ],
+            [
+              29.945182437,
+              -1.3415842946
+            ],
+            [
+              29.9442917108,
+              -1.342354
+            ],
+            [
+              29.9437740212,
+              -1.3426074943
+            ],
+            [
+              29.943461611,
+              -1.3426756204
+            ],
+            [
+              29.9431978004,
+              -1.3423767327
+            ],
+            [
+              29.9437953918,
+              -1.3414677178
+            ],
+            [
+              29.9438971884,
+              -1.3408995493
+            ],
+            [
+              29.943562917,
+              -1.3407084984
+            ],
+            [
+              29.9431122502,
+              -1.3398688742
+            ],
+            [
+              29.9430682815,
+              -1.3385851953
+            ],
+            [
+              29.9426653382,
+              -1.3379970297
+            ],
+            [
+              29.943103337,
+              -1.3374614852
+            ],
+            [
+              29.9432979495,
+              -1.3367868798
+            ],
+            [
+              29.9428371052,
+              -1.3360315878
+            ],
+            [
+              29.9428493703,
+              -1.3358230674
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Humic ferrallitic - Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.8697171261,
+              -1.1583260942
+            ],
+            [
+              29.8748449507,
+              -1.1564186137
+            ],
+            [
+              29.8814921635,
+              -1.1530648202
+            ],
+            [
+              29.8867132593,
+              -1.1487562166
+            ],
+            [
+              29.8914588187,
+              -1.1439699888
+            ],
+            [
+              29.8914402891,
+              -1.125322561
+            ],
+            [
+              29.8882472138,
+              -1.1170440993
+            ],
+            [
+              29.8780387746,
+              -1.1170541879
+            ],
+            [
+              29.8780470008,
+              -1.1254713459
+            ],
+            [
+              29.8696845266,
+              -1.1254796459
+            ],
+            [
+              29.8697171261,
+              -1.1583260942
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Dark horizons - not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.9703385443,
+              -1.397183943
+            ],
+            [
+              29.9703354305,
+              -1.3947049652
+            ],
+            [
+              29.978698009,
+              -1.3946943206
+            ],
+            [
+              29.9786874496,
+              -1.3862779413
+            ],
+            [
+              29.9870499347,
+              -1.3862673312
+            ],
+            [
+              29.9870394096,
+              -1.3778510165
+            ],
+            [
+              30.003764128,
+              -1.3778298366
+            ],
+            [
+              30.0037327637,
+              -1.3525812743
+            ],
+            [
+              29.9953705245,
+              -1.3525916842
+            ],
+            [
+              29.995349995,
+              -1.3357591772
+            ],
+            [
+              29.9869877474,
+              -1.3357694287
+            ],
+            [
+              29.9869575204,
+              -1.3105204688
+            ],
+            [
+              29.978595293,
+              -1.3105304987
+            ],
+            [
+              29.9785755181,
+              -1.2936977266
+            ],
+            [
+              29.9702132817,
+              -1.2937076008
+            ],
+            [
+              29.9702035171,
+              -1.2852911494
+            ],
+            [
+              29.9785657266,
+              -1.2852813398
+            ],
+            [
+              29.9785559985,
+              -1.2768649519
+            ],
+            [
+              29.9701938175,
+              -1.2768746969
+            ],
+            [
+              29.970174607,
+              -1.2600417919
+            ],
+            [
+              29.9618124156,
+              -1.2600513814
+            ],
+            [
+              29.9617935143,
+              -1.2432183448
+            ],
+            [
+              29.9534313129,
+              -1.2432277796
+            ],
+            [
+              29.9534219834,
+              -1.2348111962
+            ],
+            [
+              29.9450597448,
+              -1.234820541
+            ],
+            [
+              29.9450505054,
+              -1.2264038943
+            ],
+            [
+              29.9366882308,
+              -1.2264131486
+            ],
+            [
+              29.9366790802,
+              -1.2179964378
+            ],
+            [
+              29.9199543909,
+              -1.2180147416
+            ],
+            [
+              29.9199098398,
+              -1.1759305432
+            ],
+            [
+              29.9282720881,
+              -1.1759217196
+            ],
+            [
+              29.9282633415,
+              -1.1675049422
+            ],
+            [
+              29.9199011174,
+              -1.1675137016
+            ],
+            [
+              29.9198924588,
+              -1.1590968595
+            ],
+            [
+              29.9115301967,
+              -1.1591055314
+            ],
+            [
+              29.9115131148,
+              -1.1422717198
+            ],
+            [
+              29.9031508401,
+              -1.1422802417
+            ],
+            [
+              29.9031424161,
+              -1.1338632714
+            ],
+            [
+              29.8947801032,
+              -1.1338717068
+            ],
+            [
+              29.8947634927,
+              -1.1170376402
+            ],
+            [
+              29.8882472138,
+              -1.1170440993
+            ],
+            [
+              29.8914402891,
+              -1.125322561
+            ],
+            [
+              29.8914588187,
+              -1.1439699888
+            ],
+            [
+              29.8867132593,
+              -1.1487562166
+            ],
+            [
+              29.8814921635,
+              -1.1530648202
+            ],
+            [
+              29.8748449507,
+              -1.1564186137
+            ],
+            [
+              29.8697171261,
+              -1.1583260942
+            ],
+            [
+              29.8697350386,
+              -1.1759829544
+            ],
+            [
+              29.8482378859,
+              -1.1760051325
+            ],
+            [
+              29.8478388855,
+              -1.1804734697
+            ],
+            [
+              29.8517661816,
+              -1.1883589922
+            ],
+            [
+              29.8588998076,
+              -1.1958824778
+            ],
+            [
+              29.8788685706,
+              -1.2116402344
+            ],
+            [
+              29.8858326332,
+              -1.2180517622
+            ],
+            [
+              29.8948668888,
+              -1.2180420027
+            ],
+            [
+              29.8948765182,
+              -1.2270250498
+            ],
+            [
+              29.9018495083,
+              -1.234868406
+            ],
+            [
+              29.9032476081,
+              -1.2348668679
+            ],
+            [
+              29.9032493201,
+              -1.2364429212
+            ],
+            [
+              29.9093252768,
+              -1.2432771028
+            ],
+            [
+              29.9116193577,
+              -1.2432745562
+            ],
+            [
+              29.9116227821,
+              -1.246393485
+            ],
+            [
+              29.9154568115,
+              -1.2516871714
+            ],
+            [
+              29.9199911607,
+              -1.2516820901
+            ],
+            [
+              29.9199988674,
+              -1.2586235954
+            ],
+            [
+              29.9208499402,
+              -1.2600979664
+            ],
+            [
+              29.9367254615,
+              -1.2600799889
+            ],
+            [
+              29.9367320508,
+              -1.2659450382
+            ],
+            [
+              29.9374413901,
+              -1.2663872407
+            ],
+            [
+              29.9378609661,
+              -1.2664562817
+            ],
+            [
+              29.93821531,
+              -1.2659093559
+            ],
+            [
+              29.9387011011,
+              -1.2658500671
+            ],
+            [
+              29.9393123418,
+              -1.2663887148
+            ],
+            [
+              29.9393869447,
+              -1.2666497228
+            ],
+            [
+              29.9392566536,
+              -1.2669229415
+            ],
+            [
+              29.9384343437,
+              -1.2675177901
+            ],
+            [
+              29.9377352481,
+              -1.2684955531
+            ],
+            [
+              29.9450973356,
+              -1.268487125
+            ],
+            [
+              29.9451238404,
+              -1.2916977639
+            ],
+            [
+              29.9466761757,
+              -1.2925464652
+            ],
+            [
+              29.9470323791,
+              -1.292461287
+            ],
+            [
+              29.9477580492,
+              -1.2925985967
+            ],
+            [
+              29.9486313797,
+              -1.2924475354
+            ],
+            [
+              29.9493903513,
+              -1.2930392201
+            ],
+            [
+              29.9493379604,
+              -1.2934482711
+            ],
+            [
+              29.9488994182,
+              -1.2937326412
+            ],
+            [
+              29.9534886195,
+              -1.2937272649
+            ],
+            [
+              29.9534983923,
+              -1.3021438437
+            ],
+            [
+              29.9618607828,
+              -1.3021339615
+            ],
+            [
+              29.9618706474,
+              -1.3105504759
+            ],
+            [
+              29.9535082287,
+              -1.3105604214
+            ],
+            [
+              29.9535181288,
+              -1.3189769989
+            ],
+            [
+              29.961880575,
+              -1.3189669892
+            ],
+            [
+              29.9618944426,
+              -1.3306344065
+            ],
+            [
+              29.9622188193,
+              -1.3308513269
+            ],
+            [
+              29.9624748042,
+              -1.3312625451
+            ],
+            [
+              29.9625094735,
+              -1.3319364506
+            ],
+            [
+              29.9624080615,
+              -1.3325089715
+            ],
+            [
+              29.9618974009,
+              -1.3331095364
+            ],
+            [
+              29.9619107395,
+              -1.3442165252
+            ],
+            [
+              29.970273208,
+              -1.3442062947
+            ],
+            [
+              29.9702834186,
+              -1.352622741
+            ],
+            [
+              29.9786458513,
+              -1.3526124184
+            ],
+            [
+              29.9786769536,
+              -1.3778615611
+            ],
+            [
+              29.970314435,
+              -1.3778720774
+            ],
+            [
+              29.9703040321,
+              -1.3694556333
+            ],
+            [
+              29.9618655684,
+              -1.3694661498
+            ],
+            [
+              29.9664723318,
+              -1.3813447397
+            ],
+            [
+              29.9703385443,
+              -1.397183943
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S2",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Yellow soils - Sandy clay loams",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.04563811,
+              -1.4267192992
+            ],
+            [
+              30.0456290974,
+              -1.4198556613
+            ],
+            [
+              30.0372669464,
+              -1.4198667411
+            ],
+            [
+              30.037957747,
+              -1.4226599991
+            ],
+            [
+              30.0384877471,
+              -1.4230499998
+            ],
+            [
+              30.0405577476,
+              -1.4232299988
+            ],
+            [
+              30.0423477475,
+              -1.4254099992
+            ],
+            [
+              30.0432077471,
+              -1.4260399996
+            ],
+            [
+              30.04563811,
+              -1.4267192992
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S2",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Yellow soils - Sandy clay loams",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.9202634122,
+              -1.4772603737
+            ],
+            [
+              29.9202546232,
+              -1.4705196033
+            ],
+            [
+              29.9118913281,
+              -1.470530606
+            ],
+            [
+              29.9118968544,
+              -1.4747847913
+            ],
+            [
+              29.914370078,
+              -1.4786799985
+            ],
+            [
+              29.9147000782,
+              -1.4787899979
+            ],
+            [
+              29.9179600779,
+              -1.4775199996
+            ],
+            [
+              29.9202634122,
+              -1.4772603737
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Humic ferrallitic - Not differentiated",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.8229000841,
+              -1.3064199998
+            ],
+            [
+              29.81696448,
+              -1.2974178386
+            ],
+            [
+              29.8137418287,
+              -1.2830762984
+            ],
+            [
+              29.8058822324,
+              -1.2640775358
+            ],
+            [
+              29.8005194991,
+              -1.2472276189
+            ],
+            [
+              29.7933803285,
+              -1.2350416639
+            ],
+            [
+              29.7844701114,
+              -1.2328992536
+            ],
+            [
+              29.7702224186,
+              -1.2379352136
+            ],
+            [
+              29.7694415689,
+              -1.2380630138
+            ],
+            [
+              29.7694559628,
+              -1.251846564
+            ],
+            [
+              29.7778195441,
+              -1.2518376535
+            ],
+            [
+              29.7778464093,
+              -1.2770912976
+            ],
+            [
+              29.7862100127,
+              -1.2770821806
+            ],
+            [
+              29.7862191138,
+              -1.2855
+            ],
+            [
+              29.7945826842,
+              -1.2854907958
+            ],
+            [
+              29.7945918738,
+              -1.2939085555
+            ],
+            [
+              29.802955411,
+              -1.2938992629
+            ],
+            [
+              29.8029646869,
+              -1.3023169611
+            ],
+            [
+              29.7946011217,
+              -1.3023263141
+            ],
+            [
+              29.7946104314,
+              -1.3107440716
+            ],
+            [
+              29.8029740239,
+              -1.3107346581
+            ],
+            [
+              29.8029834212,
+              -1.319152355
+            ],
+            [
+              29.8113469819,
+              -1.3191428532
+            ],
+            [
+              29.8113550347,
+              -1.3262929401
+            ],
+            [
+              29.813160084,
+              -1.325889999
+            ],
+            [
+              29.8140600851,
+              -1.3258599988
+            ],
+            [
+              29.8149300845,
+              -1.3253599997
+            ],
+            [
+              29.8158500852,
+              -1.3252099994
+            ],
+            [
+              29.8191900843,
+              -1.3253499996
+            ],
+            [
+              29.8190600836,
+              -1.3215599986
+            ],
+            [
+              29.8193800848,
+              -1.3196399989
+            ],
+            [
+              29.8197101711,
+              -1.3188572212
+            ],
+            [
+              29.8197033538,
+              -1.3127906566
+            ],
+            [
+              29.8189200839,
+              -1.3124699989
+            ],
+            [
+              29.8197800842,
+              -1.3100799993
+            ],
+            [
+              29.820630084,
+              -1.3084199994
+            ],
+            [
+              29.8214700843,
+              -1.3075599996
+            ],
+            [
+              29.8229000841,
+              -1.3064199998
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.7610405147,
+              -1.2013474246
+            ],
+            [
+              29.769403999,
+              -1.2013389003
+            ],
+            [
+              29.7694125108,
+              -1.2097568456
+            ],
+            [
+              29.7777759615,
+              -1.2097482354
+            ],
+            [
+              29.7777845587,
+              -1.2181661205
+            ],
+            [
+              29.7694210819,
+              -1.2181747905
+            ],
+            [
+              29.7694125108,
+              -1.2097568456
+            ],
+            [
+              29.7610489997,
+              -1.2097654305
+            ],
+            [
+              29.7610405147,
+              -1.2013474246
+            ],
+            [
+              29.7526769695,
+              -1.2013559229
+            ],
+            [
+              29.7526685686,
+              -1.1929378582
+            ],
+            [
+              29.7359413534,
+              -1.1929546603
+            ],
+            [
+              29.7359330626,
+              -1.184536475
+            ],
+            [
+              29.727569392,
+              -1.1845447794
+            ],
+            [
+              29.7275859838,
+              -1.2013812658
+            ],
+            [
+              29.7359497047,
+              -1.2013728435
+            ],
+            [
+              29.7359581137,
+              -1.2097910273
+            ],
+            [
+              29.7443218019,
+              -1.2097825209
+            ],
+            [
+              29.7443302957,
+              -1.2182006444
+            ],
+            [
+              29.7526939502,
+              -1.2181920525
+            ],
+            [
+              29.7527025292,
+              -1.2266101164
+            ],
+            [
+              29.7610661509,
+              -1.2266014386
+            ],
+            [
+              29.7610748145,
+              -1.2350194418
+            ],
+            [
+              29.7694384035,
+              -1.2350106787
+            ],
+            [
+              29.7694415689,
+              -1.2380630138
+            ],
+            [
+              29.7702224186,
+              -1.2379352136
+            ],
+            [
+              29.7844701114,
+              -1.2328992536
+            ],
+            [
+              29.7933803285,
+              -1.2350416639
+            ],
+            [
+              29.8005194991,
+              -1.2472276189
+            ],
+            [
+              29.8058822324,
+              -1.2640775358
+            ],
+            [
+              29.8137418287,
+              -1.2830762984
+            ],
+            [
+              29.81696448,
+              -1.2974178386
+            ],
+            [
+              29.8229000841,
+              -1.3064199998
+            ],
+            [
+              29.8239000847,
+              -1.3058199981
+            ],
+            [
+              29.8244700839,
+              -1.3062199988
+            ],
+            [
+              29.8249200835,
+              -1.3071199986
+            ],
+            [
+              29.826160085,
+              -1.3083599982
+            ],
+            [
+              29.8280593656,
+              -1.3107062546
+            ],
+            [
+              29.8364277927,
+              -1.3106967237
+            ],
+            [
+              29.8364334429,
+              -1.3157057247
+            ],
+            [
+              29.8381900834,
+              -1.3161599996
+            ],
+            [
+              29.8391600833,
+              -1.3162299988
+            ],
+            [
+              29.8415000827,
+              -1.3171699986
+            ],
+            [
+              29.8421000828,
+              -1.3177799993
+            ],
+            [
+              29.8425120218,
+              -1.3191071955
+            ],
+            [
+              29.8448006187,
+              -1.3191045619
+            ],
+            [
+              29.8448168205,
+              -1.3332824203
+            ],
+            [
+              29.8468200826,
+              -1.3341399996
+            ],
+            [
+              29.8490014767,
+              -1.3359344637
+            ],
+            [
+              29.8531831886,
+              -1.3359295767
+            ],
+            [
+              29.8531926124,
+              -1.3440664089
+            ],
+            [
+              29.8536228415,
+              -1.3443463989
+            ],
+            [
+              29.8615562176,
+              -1.3443370475
+            ],
+            [
+              29.861573016,
+              -1.3586772766
+            ],
+            [
+              29.8617000813,
+              -1.3587699986
+            ],
+            [
+              29.8628100811,
+              -1.3581199988
+            ],
+            [
+              29.8636500815,
+              -1.3571699988
+            ],
+            [
+              29.8663400809,
+              -1.355069999
+            ],
+            [
+              29.8669800815,
+              -1.3546399988
+            ],
+            [
+              29.8681400803,
+              -1.3543099993
+            ],
+            [
+              29.8699298035,
+              -1.3531684463
+            ],
+            [
+              29.8699293047,
+              -1.3527443659
+            ],
+            [
+              29.8950186772,
+              -1.3527143514
+            ],
+            [
+              29.8949695335,
+              -1.3106292592
+            ],
+            [
+              29.8866066132,
+              -1.3106389815
+            ],
+            [
+              29.886566098,
+              -1.2747933475
+            ],
+            [
+              29.8860610929,
+              -1.2744519889
+            ],
+            [
+              29.8861413447,
+              -1.2729549797
+            ],
+            [
+              29.8865635221,
+              -1.2724790976
+            ],
+            [
+              29.8865591602,
+              -1.2685535612
+            ],
+            [
+              29.8781963149,
+              -1.2685629438
+            ],
+            [
+              29.878177822,
+              -1.2517286471
+            ],
+            [
+              29.8530890745,
+              -1.2517562603
+            ],
+            [
+              29.8530982098,
+              -1.2601735945
+            ],
+            [
+              29.8363720193,
+              -1.2601919926
+            ],
+            [
+              29.8363539152,
+              -1.243357077
+            ],
+            [
+              29.8279907813,
+              -1.2433661126
+            ],
+            [
+              29.8279729734,
+              -1.2265310725
+            ],
+            [
+              29.8196098319,
+              -1.2265399609
+            ],
+            [
+              29.8196010454,
+              -1.2181223784
+            ],
+            [
+              29.8112378678,
+              -1.2181311794
+            ],
+            [
+              29.8112291679,
+              -1.2097135358
+            ],
+            [
+              29.8195923186,
+              -1.2097047957
+            ],
+            [
+              29.8195836524,
+              -1.2012872127
+            ],
+            [
+              29.8112205276,
+              -1.2012958919
+            ],
+            [
+              29.811203429,
+              -1.1844606022
+            ],
+            [
+              29.8028402942,
+              -1.1844691341
+            ],
+            [
+              29.8028234867,
+              -1.1676337209
+            ],
+            [
+              29.7944603403,
+              -1.1676421054
+            ],
+            [
+              29.7944520518,
+              -1.1592243387
+            ],
+            [
+              29.7860888721,
+              -1.1592326377
+            ],
+            [
+              29.7860806674,
+              -1.1508148095
+            ],
+            [
+              29.7777174517,
+              -1.1508230252
+            ],
+            [
+              29.7777093323,
+              -1.1424051347
+            ],
+            [
+              29.7609827705,
+              -1.1424213724
+            ],
+            [
+              29.7609747584,
+              -1.1340033628
+            ],
+            [
+              29.7526114134,
+              -1.1340113843
+            ],
+            [
+              29.7526194002,
+              -1.1424294542
+            ],
+            [
+              29.7442559718,
+              -1.1424375115
+            ],
+            [
+              29.7442480085,
+              -1.1340193823
+            ],
+            [
+              29.7191574414,
+              -1.1340432316
+            ],
+            [
+              29.719173281,
+              -1.1508798422
+            ],
+            [
+              29.7275369117,
+              -1.1508718
+            ],
+            [
+              29.7275449432,
+              -1.1592900456
+            ],
+            [
+              29.7359085393,
+              -1.159281918
+            ],
+            [
+              29.7359166542,
+              -1.1677001052
+            ],
+            [
+              29.7442802165,
+              -1.1676918943
+            ],
+            [
+              29.7442884152,
+              -1.1761100212
+            ],
+            [
+              29.752651943,
+              -1.1761017258
+            ],
+            [
+              29.7526602258,
+              -1.1845197931
+            ],
+            [
+              29.7610237199,
+              -1.1845114119
+            ],
+            [
+              29.7610405147,
+              -1.2013474246
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Humic ferrallitic - Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.950425359,
+              -1.4620630422
+            ],
+            [
+              29.9286069071,
+              -1.4620918123
+            ],
+            [
+              29.9285851994,
+              -1.4452582991
+            ],
+            [
+              29.9202220597,
+              -1.4452691437
+            ],
+            [
+              29.9202113305,
+              -1.4368523232
+            ],
+            [
+              29.9118481591,
+              -1.4368630738
+            ],
+            [
+              29.9118269507,
+              -1.4200293043
+            ],
+            [
+              29.895100541,
+              -1.4200504624
+            ],
+            [
+              29.8950797017,
+              -1.4032164382
+            ],
+            [
+              29.9034428771,
+              -1.4032059999
+            ],
+            [
+              29.9034325216,
+              -1.3947890491
+            ],
+            [
+              29.8950693756,
+              -1.3947994255
+            ],
+            [
+              29.8950591119,
+              -1.3863824118
+            ],
+            [
+              29.8866959336,
+              -1.3863926961
+            ],
+            [
+              29.8867236349,
+              -1.4090592854
+            ],
+            [
+              29.8871000787,
+              -1.4101299984
+            ],
+            [
+              29.8869100788,
+              -1.410739999
+            ],
+            [
+              29.886725741,
+              -1.4107676498
+            ],
+            [
+              29.8867411958,
+              -1.4232408719
+            ],
+            [
+              29.8869700788,
+              -1.4235199993
+            ],
+            [
+              29.8877500797,
+              -1.4237499988
+            ],
+            [
+              29.8882800799,
+              -1.4240999987
+            ],
+            [
+              29.8900000792,
+              -1.4254699995
+            ],
+            [
+              29.8900100799,
+              -1.4267999988
+            ],
+            [
+              29.889490079,
+              -1.4274399997
+            ],
+            [
+              29.888936085,
+              -1.4284753
+            ],
+            [
+              29.8951110542,
+              -1.4284674731
+            ],
+            [
+              29.8951409149,
+              -1.4521090858
+            ],
+            [
+              29.8963535337,
+              -1.4537169378
+            ],
+            [
+              29.9035063233,
+              -1.4537076867
+            ],
+            [
+              29.9035157141,
+              -1.461034744
+            ],
+            [
+              29.9040403581,
+              -1.4621239507
+            ],
+            [
+              29.9118804419,
+              -1.4621137241
+            ],
+            [
+              29.9118913281,
+              -1.470530606
+            ],
+            [
+              29.9202546232,
+              -1.4705196033
+            ],
+            [
+              29.9202634122,
+              -1.4772603737
+            ],
+            [
+              29.9238000773,
+              -1.47705
+            ],
+            [
+              29.9245600776,
+              -1.4771199984
+            ],
+            [
+              29.9260700781,
+              -1.476
+            ],
+            [
+              29.9267500771,
+              -1.4751699988
+            ],
+            [
+              29.9285400772,
+              -1.4736499993
+            ],
+            [
+              29.9290700768,
+              -1.4728099991
+            ],
+            [
+              29.9324500764,
+              -1.4695799991
+            ],
+            [
+              29.9333200769,
+              -1.4689499991
+            ],
+            [
+              29.935210077,
+              -1.4680699997
+            ],
+            [
+              29.9373200766,
+              -1.4673499994
+            ],
+            [
+              29.9400600775,
+              -1.4661499988
+            ],
+            [
+              29.9411200768,
+              -1.4658599993
+            ],
+            [
+              29.9427800757,
+              -1.4650299994
+            ],
+            [
+              29.9437200753,
+              -1.4648799992
+            ],
+            [
+              29.945570076,
+              -1.4640399991
+            ],
+            [
+              29.9469400756,
+              -1.4635999984
+            ],
+            [
+              29.948000075,
+              -1.4629799992
+            ],
+            [
+              29.950425359,
+              -1.4620630422
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Humic ferrallitic - Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.9787733416,
+              -1.45332341
+            ],
+            [
+              29.9787627091,
+              -1.4451925806
+            ],
+            [
+              29.9703999503,
+              -1.445203611
+            ],
+            [
+              29.9703890372,
+              -1.4367871721
+            ],
+            [
+              29.9620262447,
+              -1.4367981074
+            ],
+            [
+              29.9620480724,
+              -1.4536311129
+            ],
+            [
+              29.953685155,
+              -1.4536421453
+            ],
+            [
+              29.9536946096,
+              -1.4608933505
+            ],
+            [
+              29.9587200752,
+              -1.4589899992
+            ],
+            [
+              29.9599100749,
+              -1.4587499995
+            ],
+            [
+              29.9613000751,
+              -1.4591099993
+            ],
+            [
+              29.9630300745,
+              -1.4591499987
+            ],
+            [
+              29.9701400744,
+              -1.4567399994
+            ],
+            [
+              29.9733300748,
+              -1.4559299989
+            ],
+            [
+              29.9766577504,
+              -1.4558700002
+            ],
+            [
+              29.9778436363,
+              -1.4562186799
+            ],
+            [
+              29.9778800746,
+              -1.4550800001
+            ],
+            [
+              29.978260074,
+              -1.4539299992
+            ],
+            [
+              29.9787733416,
+              -1.45332341
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Eucalyptus_globulus",
+        "genus": "Eucalyptus",
+        "species": "globulus",
+        "suitability_name": "Very suitable",
+        "suitability_rank": 1,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Humic ferrallitic - Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    }
+  ]
+}

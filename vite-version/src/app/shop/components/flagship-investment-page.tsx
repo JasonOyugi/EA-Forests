@@ -585,74 +585,65 @@ function FlagshipMarketsMapAd({
   ]
 
   return (
-    <section className="px-4 pt-12 sm:px-6 md:px-8 md:pt-16">
-      <div className="mx-auto">
-        <ScrollReveal distance={24}>
-          <Card className="bg-transparent group relative overflow-hidden p-0 shadow-none">
-            <div className="absolute inset-0" />
-            <div className="absolute inset-0 opacity-[0.16]" />
+    <ScrollReveal distance={24}>
+      <section className="px-6 py-8 sm:px-8 md:px-12 md:py-12">            
+        <div className="flex min-h-[24rem] flex-col justify-between gap-8">
+          <div className="space-y-5">
+            <Badge variant="outline" className="flagship-badge flagship-premium-badge rounded-full px-3 py-1 text-xs uppercase tracking-[0.2em]">
+              Market intelligence
+            </Badge>
+            <div className="space-y-3 text-primary-foreground">
+              <h2 className="text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
+                What do you do with the forest?
+              </h2>
+              <p className="text-sm leading-7 sm:text-base">
+                Forest markets are accelerating across carbon offtake, roundwood demand, wood chips, and processor-linked supply. Get a market read before deciding how {config.eyebrow.toLowerCase()} should be positioned.
+              </p>
+            </div>
+          </div>
 
-            <CardContent className="relative p-6 sm:p-8 lg:p-10">
-              <div className="flex min-h-[24rem] flex-col justify-between gap-8">
-                <div className="space-y-5">
-                  <Badge variant="outline" className="flagship-badge rounded-full bg-primary text-primary-foreground px-3 py-1 text-xs uppercase tracking-[0.2em]">
-                    Market intelligence
-                  </Badge>
-                  <div className="space-y-3">
-                    <h2 className="text-3xl font-semibold leading-tight text-primary-foreground sm:text-4xl md:text-5xl">
-                      What do you do with the forest?
-                    </h2>
-                    <p className="text-sm leading-7 text-primary/80 sm:text-base">
-                      Forest markets are accelerating across carbon offtake, roundwood demand, wood chips, and processor-linked supply. Get a market read before deciding how {config.eyebrow.toLowerCase()} should be positioned.
-                    </p>
+          <div className="flex flex-wrap gap-3">
+            {marketSignals.map((signal) => {
+              const Icon = signal.icon
+
+              return (
+                <div key={signal.label} className="flagship-premium-hover-card flagship-metric-card group/signal relative flex min-w-[10.5rem] flex-1 overflow-hidden rounded-[1.25rem] p-0">
+                  <img
+                    src={signal.image}
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute inset-0 h-full w-full object-cover opacity-70 transition-transform duration-700 group-hover/signal:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(3,8,15,0.2),rgba(3,8,15,0.82))]" />
+                  <div className="relative z-10 flex min-h-[9.5rem] w-full flex-col justify-end p-4">
+                    <div className="flagship-card-icon mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-black/30 text-white backdrop-blur">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <div className="text-[0.65rem] uppercase tracking-[0.15em] text-white/70 sm:text-xs sm:tracking-[0.2em]">
+                      {signal.label}
+                    </div>
+                    <div className="mt-2 text-sm font-semibold leading-6 text-white">{signal.value}</div>
                   </div>
                 </div>
+              )
+            })}
+          </div>
 
-                <div className="flex flex-wrap gap-3">
-                  {marketSignals.map((signal) => {
-                    const Icon = signal.icon
-
-                    return (
-                      <div key={signal.label} className="flagship-premium-hover-card flagship-metric-card group/signal relative flex min-w-[10.5rem] flex-1 overflow-hidden rounded-[1.25rem] p-0">
-                        <img
-                          src={signal.image}
-                          alt=""
-                          aria-hidden="true"
-                          className="absolute inset-0 h-full w-full object-cover opacity-70 transition-transform duration-700 group-hover/signal:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(3,8,15,0.2),rgba(3,8,15,0.82))]" />
-                        <div className="relative z-10 flex min-h-[9.5rem] w-full flex-col justify-end p-4">
-                          <div className="flagship-card-icon mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-black/30 text-white backdrop-blur">
-                            <Icon className="h-5 w-5" />
-                          </div>
-                          <div className="text-[0.65rem] uppercase tracking-[0.15em] text-white/70 sm:text-xs sm:tracking-[0.2em]">
-                            {signal.label}
-                          </div>
-                          <div className="mt-2 text-sm font-semibold leading-6 text-white">{signal.value}</div>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-
-                <Button className="h-auto cursor-pointer rounded-full p-0 text-sm" asChild>
-                  <a
-                    href="/shop/roundwood"
-                    className="group relative flex min-h-[46px] items-center justify-center overflow-hidden rounded-full px-5 py-3"
-                  >
-                    <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
-                    <span className="relative z-10 inline-flex items-center group-hover:text-emerald-100">
-                      Open markets map
-                      <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </span>
-                  </a>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </ScrollReveal>
-      </div>
-    </section>
+          <Button className="h-auto cursor-pointer rounded-full p-0 text-sm" asChild>
+            <a
+              href="/shop/roundwood"
+              className="group relative flex min-h-[46px] items-center justify-center overflow-hidden rounded-full px-5 py-3"
+            >
+              <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
+              <span className="relative z-10 inline-flex items-center group-hover:text-emerald-100">
+                Open markets map
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </span>
+            </a>
+          </Button>
+        </div>
+      </section>
+    </ScrollReveal>
   )
 }
 
@@ -691,7 +682,7 @@ function FlagshipTestimonialsCarousel({ testimonials }: { testimonials: Flagship
             type="button"
             aria-expanded={isExpanded}
             onClick={() => setIsExpanded((value) => !value)}
-            className="flagship-premium-hover-card group block h-auto w-full rounded-[1.75rem] p-6 text-left text-primary sm:p-7"
+            className="flagship-premium-section group block h-auto w-full rounded-[1.75rem] p-6 text-left text-primary sm:p-7"
           >
             <div className="flex items-start justify-between gap-4">
               <div className="max-w-3xl space-y-3">
@@ -1003,7 +994,7 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
 
             return (
               <ScrollReveal key={step.stepNumber} delay={180 + stepIndex * 80} distance={24}>
-                <div className="flagship-premium-hover-card emerald-border-hover relative overflow-hidden rounded-[2rem] p-6 text-primary sm:p-8 lg:p-10">
+                <div className="relative overflow-hidden rounded-[2rem] p-6 text-primary sm:p-8 lg:p-10">
                   <div className="relative z-10 flex items-start gap-4">
                     <div className="flagship-card-icon flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/15 text-primary-foreground">
                       <StepIcon className="h-7 w-7" />
@@ -1013,11 +1004,6 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
                       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.18fr)_minmax(260px,0.62fr)] xl:items-center">
                         <div className="space-y-5">
                           <div>
-                            <div className="flex items-center gap-3">
-                              <div className="text-xs font-bold tracking-[0.3em] text-primary/60">{step.stepNumber}</div>
-                              <div className="h-px flex-1 bg-gradient-to-r from-primary/35 to-transparent" />
-                            </div>
-
                             <h3 className="mt-1 text-2xl font-semibold text-primary-foreground sm:text-3xl md:text-4xl">
                               {step.title}
                             </h3>
@@ -1078,7 +1064,7 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
           className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(4,10,18,0.62),rgba(6,14,24,0.48)),radial-gradient(circle_at_top_right,hsl(var(--primary)/0.2),transparent_42%)]"
         />
 
-        <div className="relative z-10 mx-auto space-y-12 text-primary">
+        <div className="relative z-10 mx-auto space-y-12 text-primary-foreground">
           <ScrollReveal distance={24}>
             <div className="space-y-4">
               <Badge className="flagship-badge flagship-premium-badge rounded-full px-3 py-1 text-xs uppercase tracking-[0.2em]">
@@ -1214,9 +1200,9 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
         <div className="mx-auto">
           <div className="grid gap-8">
             <ScrollReveal delay={100} distance={24}>
-              <div className="flagship-premium-hover-card h-full rounded-[1.75rem] p-6 sm:p-7">
-                <div className="space-y-3">
-                  <h2 className="text-2xl font-semibold text-primary-foreground sm:text-3xl">Ready to invest? Have more questions?</h2>
+              <div className="h-full rounded-[1.75rem] p-6 sm:p-7">
+                <div className="space-y-3 text-primary-foreground">
+                  <h2 className="text-2xl font-semibold sm:text-3xl">Ready to invest? Have more questions?</h2>
                   <p className="text-sm leading-6 text-primary/85 sm:text-base">
                     Choose the fastest route from interest to action, whether you want to move capital now or talk through the mandate first.
                   </p>

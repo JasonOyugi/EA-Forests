@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import L from "leaflet"
-import { Filter, Layers3, LoaderCircle } from "lucide-react"
+import { Filter, Layers3, LoaderCircle, Power } from "lucide-react"
 import { useMap } from "react-leaflet"
 
 import {
@@ -29,7 +29,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
 import { cn } from "@/lib/utils"
 
 function escapeHtml(value: unknown) {
@@ -178,7 +177,7 @@ export function BasicSsmtLayerControl({
   position?: string
   className?: string
 }) {
-  const [enabled, setEnabled] = React.useState(false)
+  const [enabled, setEnabled] = React.useState(true)
   const [open, setOpen] = React.useState(false)
   const [metadata, setMetadata] = React.useState<BasicSsmtMetadata | null>(null)
   const [filters, setFilters] = React.useState<BasicSsmtFilters>(() =>
@@ -282,39 +281,43 @@ export function BasicSsmtLayerControl({
 
       <MapControlContainer className={cn(position, className)}>
         <div className="flex max-w-[calc(100vw-1.5rem)] flex-col items-start gap-2">
-          <Button
-            type="button"
-            variant={enabled ? "default" : "secondary"}
-            className="border shadow-sm"
-            aria-expanded={open}
-            aria-label="Basic SSMT controls"
-            title="Basic SSMT"
-            onClick={() => {
-              setOpen((value) => !value)
-              if (!enabled) setEnabled(true)
-            }}
-          >
-            <Layers3 className="h-4 w-4" />
-            Basic SSMT
-          </Button>
+          <div className="flex items-center gap-1.5">
+            <Button
+              type="button"
+              variant={enabled ? "default" : "secondary"}
+              className="min-w-[9.5rem] border shadow-sm"
+              aria-pressed={enabled}
+              aria-label={enabled ? "Turn Basic SSMT off" : "Turn Basic SSMT on"}
+              title={enabled ? "Turn Basic SSMT off" : "Turn Basic SSMT on"}
+              onClick={() => setEnabled((value) => !value)}
+            >
+              <Power className="h-4 w-4" />
+              Basic SSMT {enabled ? "On" : "Off"}
+            </Button>
+            <Button
+              type="button"
+              variant="secondary"
+              size="icon"
+              className="border shadow-sm"
+              aria-expanded={open}
+              aria-label="Basic SSMT filters"
+              title="Basic SSMT filters"
+              onClick={() => setOpen((value) => !value)}
+            >
+              <Filter className="h-4 w-4" />
+            </Button>
+          </div>
 
           {open ? (
             <div className="w-[min(22rem,calc(100vw-1.5rem))] rounded-md border bg-background/96 p-3 shadow-xl backdrop-blur">
               <div className="mb-3 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
-                  <Filter className="h-4 w-4 text-muted-foreground" />
+                  <Layers3 className="h-4 w-4 text-muted-foreground" />
                   <div className="text-sm font-semibold">Basic SSMT</div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Label htmlFor="basic-ssmt-enabled" className="text-xs">
-                    Layer
-                  </Label>
-                  <Switch
-                    id="basic-ssmt-enabled"
-                    checked={enabled}
-                    onCheckedChange={setEnabled}
-                  />
-                </div>
+                <Badge variant={enabled ? "default" : "secondary"}>
+                  {enabled ? "On" : "Off"}
+                </Badge>
               </div>
 
               <div className="grid gap-3">

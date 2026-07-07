@@ -10,6 +10,21 @@ import requests
 from app.schemas import RoundwoodProductionRequest
 
 
+BASE_CURRENCY = "USD"
+UGX_PER_USD = 3_700.0
+
+
+def usd_from_ugx(value: float) -> float:
+    return round(float(value) / UGX_PER_USD, 4)
+
+
+def money_columns_to_usd(df: pd.DataFrame, columns: list[str]) -> pd.DataFrame:
+    out = df.copy()
+    for column in columns:
+        out[column] = out[column].astype(float).map(usd_from_ugx)
+    return out
+
+
 SECTION_ORDER = [
     "Mensuration",
     "Felling",
@@ -120,6 +135,32 @@ CHINESE_PROCESSORS = {
     "CFID factory": processor(32.2329796, 0.7449337, CFID_EUC_SPEC, CFID_PINE_SPEC),
     "Guo Hau factory": processor(30.444508, -0.582692, STANDARD_EUC_SPEC, STANDARD_PINE_SPEC),
 }
+
+
+def processor_prices_to_usd(processor_db: dict[str, Any]) -> dict[str, Any]:
+    out: dict[str, Any] = {}
+    for name, data in processor_db.items():
+        out[name] = {
+            "lon": data["lon"],
+            "lat": data["lat"],
+            "buyer_specs": {},
+        }
+        for species, spec in data["buyer_specs"].items():
+            out[name]["buyer_specs"][species] = {
+                "grades": {
+                    grade: dict(values)
+                    for grade, values in spec["grades"].items()
+                },
+                "price_mode": spec["price_mode"],
+                "prices": {
+                    grade: usd_from_ugx(price)
+                    for grade, price in spec["prices"].items()
+                },
+            }
+    return out
+
+
+CHINESE_PROCESSORS = processor_prices_to_usd(CHINESE_PROCESSORS)
 
 
 def copy_processor_db() -> dict[str, Any]:
@@ -325,7 +366,8 @@ def validate_lon_lat(lon: float, lat: float) -> tuple[float, float]:
 
 
 def retail_labour_categories() -> pd.DataFrame:
-    return pd.DataFrame(
+    return money_columns_to_usd(
+        pd.DataFrame(
         [
             {"labour_code": "L_CHAINSAW_OPERATOR", "desc": "Chainsaw operator", "wage_min": 10_000, "wage_max": 18_000},
             {"labour_code": "L_CHAINSAW_ASSIST", "desc": "Chainsaw assistant", "wage_min": 5_000, "wage_max": 12_000},
@@ -337,11 +379,14 @@ def retail_labour_categories() -> pd.DataFrame:
             {"labour_code": "L_MENSURATION_ASSIST", "desc": "Mensuration assistant", "wage_min": 5_000, "wage_max": 12_000},
             {"labour_code": "L_SUPERVISOR", "desc": "Harvest supervisor/clerk", "wage_min": 20_000, "wage_max": 50_000},
         ]
+        ),
+        ["wage_min", "wage_max"],
     )
 
 
 def retail_nonlab_items() -> pd.DataFrame:
-    return pd.DataFrame(
+    return money_columns_to_usd(
+        pd.DataFrame(
         [
             {"item_code": "N_NFA_PERMIT", "desc": "Quarterly NFA permit", "unit": "permit", "price_min": 200_000, "price_max": 200_000},
             {"item_code": "N_FUEL_L", "desc": "Diesel/petrol fuel", "unit": "litre", "price_min": 4_500, "price_max": 5_500},
@@ -361,6 +406,8 @@ def retail_nonlab_items() -> pd.DataFrame:
             {"item_code": "N_MAINT_TRUCK", "desc": "Truck maintenance", "unit": "day", "price_min": 20_000, "price_max": 80_000},
             {"item_code": "N_MISC_LUMPSUM", "desc": "Miscellaneous lump sum", "unit": "lump", "price_min": 0, "price_max": 500_000},
         ]
+        ),
+        ["price_min", "price_max"],
     )
 
 
@@ -722,7 +769,7 @@ def compute_grade_revenue_breakdown(scenario: dict[str, Any], sim: dict[str, Any
 
     qty_by = sim["V_del_by_grade"] if price_mode == "per_m3" else sim["T_del_by_grade"]
     unit = "m3" if price_mode == "per_m3" else "tonne"
-    price_col = "price_ugx_per_m3" if price_mode == "per_m3" else "price_ugx_per_tonne"
+    price_col = "price_usd_per_m3" if price_mode == "per_m3" else "price_usd_per_tonne"
 
     rows = []
     for grade in ["G1", "G2", "G3", "Reject"]:
@@ -841,7 +888,7 @@ def compute_hh_grade_cashflow(
         "revenue_df": revenue_df,
         "cashflow_df": cashflow_df,
         "sim": sim,
-        "profit_ugx": float(cashflow_df["cashflow"].sum()),
+        "profit_usd": float(cashflow_df["cashflow"].sum()),
     }
 
 
@@ -862,6 +909,7 @@ def dataframe_to_records(df: pd.DataFrame | None, digits: int = 2) -> list[dict[
 def roundwood_production_default_library() -> dict[str, Any]:
     processor_db = copy_processor_db()
     return {
+        "base_currency": BASE_CURRENCY,
         "library": {
             "processor_catalog": processor_catalog(processor_db),
             "buyer_specs": buyer_specs_to_rows(processor_db),
@@ -1167,7 +1215,7 @@ def _result_for_processor(
     sim = out["sim"]
     total_cost = float(cost_df["cost"].sum())
     total_revenue = float(revenue_df["cashflow"].sum())
-    profit = float(out["profit_ugx"])
+    profit = float(out["profit_usd"])
 
     return {
         "processor": processor_row["name"],
@@ -1190,9 +1238,9 @@ def _result_for_processor(
         "buyer_spec": spec,
         "scenario": scenario,
         "metrics": {
-            "profit_ugx": round(profit, 2),
-            "total_cost_ugx": round(total_cost, 2),
-            "total_revenue_ugx": round(total_revenue, 2),
+            "profit_usd": round(profit, 2),
+            "total_cost_usd": round(total_cost, 2),
+            "total_revenue_usd": round(total_revenue, 2),
             "margin_pct": round((profit / total_revenue) * 100, 2) if total_revenue else None,
             "delivered_volume_m3": round(float(sim["V_tot_del"]), 2),
             "delivered_tonnes": round(float(sim["T_tot_del"]), 2),
@@ -1216,7 +1264,7 @@ def build_assumptions(payload: RoundwoodProductionRequest) -> list[str]:
     return [
         "Roundwood costs follow the notebook H&H operation library: mensuration, felling, extraction, loading, haulage, regulatory/admin, and miscellaneous blocks.",
         "Merchantable volume and tonnes are simulated from DBH, height, and density distributions, then assigned to buyer grades by DBH and height thresholds.",
-        "Processor-specific buyer specs override grade thresholds and prices when enabled.",
+        "Processor-specific buyer specs override grade thresholds and USD prices when enabled.",
         distance_text,
         "Road distance and route geometry are requested from OSRM first; the fallback road factor is only used if routing is unavailable.",
     ]
@@ -1250,7 +1298,7 @@ def run_roundwood_production(payload: RoundwoodProductionRequest) -> dict[str, A
             warnings.append(f"{processor_row['name']}: {result['warning']}")
         processor_results.append(result)
 
-    processor_results.sort(key=lambda row: row["metrics"]["profit_ugx"], reverse=True)
+    processor_results.sort(key=lambda row: row["metrics"]["profit_usd"], reverse=True)
     if not processor_results:
         raise ValueError("No processor scenarios could be run with the selected species and inputs.")
 
@@ -1259,9 +1307,9 @@ def run_roundwood_production(payload: RoundwoodProductionRequest) -> dict[str, A
             "rank": index,
             "processor": row["processor"],
             "road_km": row["road_km"],
-            "profit_ugx": row["metrics"]["profit_ugx"],
-            "total_revenue_ugx": row["metrics"]["total_revenue_ugx"],
-            "total_cost_ugx": row["metrics"]["total_cost_ugx"],
+            "profit_usd": row["metrics"]["profit_usd"],
+            "total_revenue_usd": row["metrics"]["total_revenue_usd"],
+            "total_cost_usd": row["metrics"]["total_cost_usd"],
             "delivered_volume_m3": row["metrics"]["delivered_volume_m3"],
             "delivered_tonnes": row["metrics"]["delivered_tonnes"],
         }
@@ -1270,6 +1318,7 @@ def run_roundwood_production(payload: RoundwoodProductionRequest) -> dict[str, A
 
     return {
         "request": payload.model_dump(),
+        "base_currency": BASE_CURRENCY,
         "coordinate": {"lon": lon, "lat": lat},
         "assumptions": build_assumptions(payload),
         "warnings": warnings,

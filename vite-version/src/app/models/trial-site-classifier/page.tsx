@@ -46,6 +46,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {
   Map,
+  MapLayers,
+  MapLayersControl,
   MapMarker,
   MapPopup,
   MapTileLayer,
@@ -85,6 +87,7 @@ import type {
   RankedTrialPerformanceRow,
   SelectedClimateProfile,
   TrialClassifierArtifacts,
+  TrialSiteClimateProfile,
   TrialSiteRegistryRow,
   VarietyCrossSiteSummary,
   VarietyDistribution,
@@ -103,7 +106,34 @@ const genusGroups = [
   { key: "corymbia", label: "Corymbia" },
 ]
 
-interface SelectedPoint {
+const siteAnalysisTileLayers = [
+  {
+    name: "Street",
+    url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+    attribution:
+      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  },
+  {
+    name: "Satellite",
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    attribution:
+      "Tiles &copy; Esri, Maxar, Earthstar Geographics, and the GIS User Community",
+  },
+  {
+    name: "Topographic",
+    url: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+    attribution:
+      'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, SRTM | Map style &copy; <a href="https://opentopomap.org">OpenTopoMap</a>',
+  },
+  {
+    name: "Dark",
+    url: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
+    attribution:
+      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  },
+]
+
+export interface SelectedPoint {
   latitude: number
   longitude: number
 }
@@ -112,6 +142,17 @@ interface SelectedVariety {
   row: RankedTrialPerformanceRow
   match: ClimateMatch
 }
+
+export interface TrialArtifactsState {
+  artifacts: TrialClassifierArtifacts | null
+  loading: boolean
+  error: string | null
+}
+
+type RankingMetricConfig =
+  TrialClassifierArtifacts["rankingConfig"]["available_metrics"][number]
+
+const rankingWeightEpsilon = 0.000001
 
 function formatNumber(value: number | null | undefined, digits = 2) {
   if (value === null || value === undefined || !Number.isFinite(value)) {
@@ -155,6 +196,89 @@ function getVectorKeys(artifacts: TrialClassifierArtifacts | null) {
   return Object.keys(firstVector)
 }
 
+function getRankingWeightTotal(
+  weights: RankingWeights,
+  metrics: RankingMetricConfig[]
+) {
+  return metrics.reduce(
+    (total, metric) => total + Math.max(0, weights[metric.key] ?? 0),
+    0
+  )
+}
+
+function normalizeRankingWeights(
+  weights: RankingWeights,
+  metrics: RankingMetricConfig[],
+  fallbackWeights: RankingWeights
+) {
+  const total = getRankingWeightTotal(weights, metrics)
+  if (total <= rankingWeightEpsilon) return fallbackWeights
+
+  return Object.fromEntries(
+    metrics.map((metric) => [
+      metric.key,
+      Math.max(0, weights[metric.key] ?? 0) / total,
+    ])
+  )
+}
+
+function rebalanceRankingWeights({
+  current,
+  metrics,
+  changedKey,
+  nextValue,
+  fallbackWeights,
+}: {
+  current: RankingWeights
+  metrics: RankingMetricConfig[]
+  changedKey: string
+  nextValue: number
+  fallbackWeights: RankingWeights
+}) {
+  const clampedValue = Math.min(1, Math.max(0, nextValue))
+  const remainingWeight = Math.max(0, 1 - clampedValue)
+  const changedMetric = metrics.find((metric) => metric.key === changedKey)
+  const activeOtherMetrics = metrics.filter((metric) => {
+    if (metric.key === changedKey) return false
+    return !metric.optional || (current[metric.key] ?? 0) > rankingWeightEpsilon
+  })
+  const otherTotal = getRankingWeightTotal(current, activeOtherMetrics)
+
+  if (!changedMetric) return normalizeRankingWeights(current, metrics, fallbackWeights)
+  if (remainingWeight <= rankingWeightEpsilon) {
+    return Object.fromEntries(
+      metrics.map((metric) => [metric.key, metric.key === changedKey ? 1 : 0])
+    )
+  }
+
+  if (otherTotal <= rankingWeightEpsilon) {
+    const otherShare = activeOtherMetrics.length
+      ? remainingWeight / activeOtherMetrics.length
+      : 0
+    return Object.fromEntries(
+      metrics.map((metric) => [
+        metric.key,
+        metric.key === changedKey
+          ? clampedValue
+          : activeOtherMetrics.some((item) => item.key === metric.key)
+            ? otherShare
+            : 0,
+      ])
+    )
+  }
+
+  return Object.fromEntries(
+    metrics.map((metric) => [
+      metric.key,
+      metric.key === changedKey
+        ? clampedValue
+        : activeOtherMetrics.some((item) => item.key === metric.key)
+          ? ((current[metric.key] ?? 0) / otherTotal) * remainingWeight
+          : 0,
+    ])
+  )
+}
+
 function createTrialMarkerIcon(isSelected: boolean) {
   return (
     <span
@@ -166,30 +290,360 @@ function createTrialMarkerIcon(isSelected: boolean) {
   )
 }
 
-function ClickCapture({
+function formatClimateMetric(
+  profile: TrialSiteClimateProfile | undefined,
+  key: string,
+  suffix: string,
+  digits = 1
+) {
+  const value = profile?.long_term_climate?.[key]
+  if (typeof value !== "number" || !Number.isFinite(value)) return "-"
+  return `${formatNumber(value, digits)}${suffix}`
+}
+
+function getClimateProfile(
+  artifacts: TrialClassifierArtifacts,
+  site: TrialSiteRegistryRow
+) {
+  return (
+    artifacts.climateProfiles.find((profile) => profile.site_id === site.site_id) ??
+    undefined
+  )
+}
+
+function getTopRowsForSiteGroup({
+  artifacts,
+  siteId,
+  genusGroup,
+  limit = 5,
+}: {
+  artifacts: TrialClassifierArtifacts
+  siteId: string
+  genusGroup: string
+  limit?: number
+}) {
+  return artifacts.defaultTopRows
+    .filter((row) => row.site_id === siteId && row.genus_group === genusGroup)
+    .sort(
+      (a, b) =>
+        (a.rank_default_within_site_group ?? Number.MAX_SAFE_INTEGER) -
+        (b.rank_default_within_site_group ?? Number.MAX_SAFE_INTEGER)
+    )
+    .slice(0, limit)
+}
+
+function DetailRows({ rows }: { rows: { label: string; value: string }[] }) {
+  return (
+    <div className="overflow-hidden rounded-md border">
+      {rows.map((row) => (
+        <div
+          key={`${row.label}-${row.value}`}
+          className="grid grid-cols-[8.25rem_minmax(0,1fr)] border-b text-sm last:border-b-0"
+        >
+          <div className="bg-muted/70 px-3 py-2 font-medium text-muted-foreground">
+            {row.label}
+          </div>
+          <div className="px-3 py-2 leading-5">{row.value}</div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function TrialSiteTopRows({
+  artifacts,
+  siteId,
+}: {
+  artifacts: TrialClassifierArtifacts
+  siteId: string
+}) {
+  return (
+    <div className="space-y-3">
+      {genusGroups.map((group) => {
+        const rows = getTopRowsForSiteGroup({
+          artifacts,
+          siteId,
+          genusGroup: group.key,
+        })
+
+        return (
+          <div key={group.key} className="rounded-md border bg-background/70 p-3">
+            <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              Top 5 {group.label}
+            </div>
+            {rows.length ? (
+              <ol className="mt-2 space-y-1.5">
+                {rows.map((row, index) => (
+                  <li
+                    key={`${row.site_id}-${row.genus_group}-${row.entry}-${row.age_months}`}
+                    className="grid grid-cols-[1.25rem_minmax(0,1fr)_auto] items-start gap-2 text-xs"
+                  >
+                    <span className="font-semibold text-muted-foreground">
+                      {index + 1}
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block truncate font-medium text-foreground">
+                        {row.entry}
+                      </span>
+                      <span className="text-muted-foreground">
+                        {row.age_months} mo, survival {formatPercent(row.survival_rate)}
+                      </span>
+                    </span>
+                    <span className="font-medium">
+                      {formatNumber(row.default_composite_score, 2)}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <div className="mt-2 text-xs text-muted-foreground">
+                No ranked entries for this group.
+              </div>
+            )}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+function TrialSitePopup({
+  site,
+  artifacts,
+}: {
+  site: TrialSiteRegistryRow
+  artifacts: TrialClassifierArtifacts
+}) {
+  const profile = getClimateProfile(artifacts, site)
+  const yearRange = profile?.climate_profile_year_range
+  const climateYears = yearRange
+    ? `${yearRange.start_year}-${yearRange.end_year}`
+    : "Current artifact"
+  const summary = profile
+    ? `Site-classification profile: ${formatClimateMetric(
+        profile,
+        "annual_ppt_mm",
+        " mm"
+      )} annual rainfall, ${formatClimateMetric(
+        profile,
+        "mean_tmean_c",
+        " C"
+      )} mean temperature, and ${formatClimateMetric(
+        profile,
+        "annual_water_deficit_mm",
+        " mm"
+      )} annual water deficit.`
+    : "Site-classification profile is not available for this trial site."
+
+  return (
+    <div className="max-h-[34rem] w-[26rem] overflow-y-auto bg-background">
+      <div className="border-b p-4">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <Badge variant="secondary" className="mb-2 text-emerald-700">
+              Trial site
+            </Badge>
+            <h3 className="text-base font-semibold leading-tight">
+              {site.site_name}
+            </h3>
+          </div>
+          <span className="mt-1 h-2.5 w-2.5 rounded-full bg-sky-700" />
+        </div>
+        <p className="mt-2 text-sm leading-5 text-muted-foreground">
+          {summary}
+        </p>
+      </div>
+      <div className="space-y-3 p-4">
+        <DetailRows
+          rows={[
+            {
+              label: "Coordinates",
+              value: `${site.latitude.toFixed(5)}, ${site.longitude.toFixed(5)}`,
+            },
+            {
+              label: "Climate source",
+              value: profile?.climate_profile_source
+                ? startCase(profile.climate_profile_source)
+                : "-",
+            },
+            { label: "Climate years", value: climateYears },
+            {
+              label: "Rainfall",
+              value: formatClimateMetric(profile, "annual_ppt_mm", " mm"),
+            },
+            {
+              label: "Mean temp",
+              value: formatClimateMetric(profile, "mean_tmean_c", " C"),
+            },
+            {
+              label: "Water deficit",
+              value: formatClimateMetric(
+                profile,
+                "annual_water_deficit_mm",
+                " mm"
+              ),
+            },
+            {
+              label: "Trial groups",
+              value: site.available_genus_groups.map(startCase).join(", "),
+            },
+          ]}
+        />
+        <TrialSiteTopRows artifacts={artifacts} siteId={site.site_id} />
+      </div>
+    </div>
+  )
+}
+
+export function TrialSiteClassifierMap({
+  artifacts,
+  loading,
+  error,
+  selectedPoint,
+  matches = [],
   onPointSelected,
+  selectOn = "click",
+}: TrialArtifactsState & {
+  selectedPoint: SelectedPoint | null
+  matches?: ClimateMatch[]
+  onPointSelected: (point: SelectedPoint) => void
+  selectOn?: "click" | "doubleClick"
+  title?: string
+  description?: string
+}) {
+  if (loading) {
+    return (
+      <Card className="border-border/70 bg-background/75">
+        <CardContent className="flex items-center gap-3 p-6 text-sm text-muted-foreground">
+          <LoaderCircle className="h-4 w-4 animate-spin" />
+          Loading trial classifier artifacts.
+        </CardContent>
+      </Card>
+    )
+  }
+
+  if (error) {
+    return (
+      <Card className="border-red-300/70 bg-red-50/80">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-base text-red-800">
+            <AlertTriangle className="h-4 w-4" />
+            Trial artifacts unavailable
+          </CardTitle>
+          <CardDescription className="text-red-800/80">{error}</CardDescription>
+        </CardHeader>
+      </Card>
+    )
+  }
+
+  if (!artifacts) return null
+
+  return (
+    <Card className="overflow-hidden border-border/70 bg-background/75">
+      <CardContent className="p-0">
+        <div className="h-[520px]">
+          <Map
+            center={[
+              selectedPoint?.latitude ?? -6.4,
+              selectedPoint?.longitude ?? 36.2,
+            ]}
+            zoom={6}
+            maxZoom={15}
+            doubleClickZoom={selectOn !== "doubleClick"}
+            className="min-h-0 rounded-none"
+          >
+            <MapLayers defaultTileLayer="Street">
+              {siteAnalysisTileLayers.map((tileLayer) => (
+                <MapTileLayer
+                  key={tileLayer.name}
+                  name={tileLayer.name}
+                  url={tileLayer.url}
+                  attribution={tileLayer.attribution}
+                />
+              ))}
+              <MapLayersControl tileLayersLabel="Map type" position="top-3 right-3" />
+              <MapZoomControl position="top-3 left-3" />
+              <PointSelectionEvents
+                onPointSelected={onPointSelected}
+                selectOn={selectOn}
+              />
+              {artifacts.sites.map((site) => (
+                <MapMarker
+                  key={site.site_id}
+                  position={[site.latitude, site.longitude]}
+                  icon={createTrialMarkerIcon(
+                    matches.some((match) => match.site.site_id === site.site_id)
+                  )}
+                >
+                  <MapPopup className="w-[min(28rem,calc(100vw-3rem))] p-0">
+                    <TrialSitePopup site={site} artifacts={artifacts} />
+                  </MapPopup>
+                </MapMarker>
+              ))}
+              {selectedPoint ? (
+                <MapMarker
+                  position={[selectedPoint.latitude, selectedPoint.longitude]}
+                  icon={
+                    <span className="block size-5 rounded-full border-2 border-white bg-emerald-500 shadow ring-4 ring-emerald-500/25" />
+                  }
+                >
+                  <MapPopup>
+                    <div className="space-y-1">
+                      <div className="font-semibold">Selected point</div>
+                      <div className="text-xs text-muted-foreground">
+                        {selectedPoint.latitude.toFixed(5)},{" "}
+                        {selectedPoint.longitude.toFixed(5)}
+                      </div>
+                    </div>
+                  </MapPopup>
+                </MapMarker>
+              ) : null}
+            </MapLayers>
+          </Map>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
+function PointSelectionEvents({
+  onPointSelected,
+  selectOn = "click",
 }: {
   onPointSelected: (point: SelectedPoint) => void
+  selectOn?: "click" | "doubleClick"
 }) {
-  useMapEvents({
-    click(event) {
+  const handlePointSelected = React.useCallback(
+    (event: { latlng: { lat: number; lng: number } }) => {
       onPointSelected({
         latitude: Number(event.latlng.lat.toFixed(6)),
         longitude: Number(event.latlng.lng.toFixed(6)),
       })
     },
-  })
+    [onPointSelected]
+  )
+
+  useMapEvents(
+    selectOn === "doubleClick"
+      ? { dblclick: handlePointSelected }
+      : { click: handlePointSelected }
+  )
 
   return null
 }
 
-function useTrialArtifacts() {
+export function useTrialArtifacts(enabled = true): TrialArtifactsState {
   const [artifacts, setArtifacts] =
     React.useState<TrialClassifierArtifacts | null>(null)
   const [loading, setLoading] = React.useState(true)
   const [error, setError] = React.useState<string | null>(null)
 
   React.useEffect(() => {
+    if (!enabled) {
+      setLoading(false)
+      return
+    }
+
     const controller = new AbortController()
     setLoading(true)
     setError(null)
@@ -223,6 +677,7 @@ function PointPanel({
   placeholderActive,
   isLoadingClimateProfile,
   climateProfileError,
+  mapActionLabel = "Click",
 }: {
   sites: TrialSiteRegistryRow[]
   selectedPoint: SelectedPoint | null
@@ -230,6 +685,7 @@ function PointPanel({
   placeholderActive: boolean
   isLoadingClimateProfile: boolean
   climateProfileError: string | null
+  mapActionLabel?: string
 }) {
   return (
     <Card className="border-border/70 bg-background/75">
@@ -239,7 +695,7 @@ function PointPanel({
           Site selection
         </CardTitle>
         <CardDescription>
-          Click the map, type coordinates, or choose a trial site as the selected point.
+          {mapActionLabel} the map, type coordinates, or choose a trial site as the selected point.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -400,6 +856,13 @@ function RankingControls({
   climateVariableWeights: RankingWeights
   setClimateVariableWeights: React.Dispatch<React.SetStateAction<RankingWeights>>
 }) {
+  const rankingMetrics = artifacts.rankingConfig.available_metrics
+  const fallbackWeights = React.useMemo(
+    () => buildInitialRankingWeights(artifacts.rankingConfig),
+    [artifacts.rankingConfig]
+  )
+  const rankingWeightTotal = getRankingWeightTotal(weights, rankingMetrics)
+
   return (
     <Card className="border-border/70 bg-background/75">
       <CardHeader>
@@ -407,12 +870,15 @@ function RankingControls({
           <SlidersHorizontal className="h-4 w-4" />
           Ranking priorities
         </CardTitle>
-        <CardDescription>
-          Scores are recalculated from precomputed component z-score columns.
+        <CardDescription className="flex items-center justify-between gap-3">
+          <span>Scores are recalculated from precomputed component z-score columns.</span>
+          <Badge variant="outline">
+            Total {Math.round(rankingWeightTotal * 100)}%
+          </Badge>
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-5">
-        {artifacts.rankingConfig.available_metrics.map((metric) => {
+        {rankingMetrics.map((metric) => {
           const value = weights[metric.key] ?? 0
 
           return (
@@ -426,31 +892,41 @@ function RankingControls({
                     </div>
                   ) : null}
                 </div>
-                <Badge variant="secondary">{value.toFixed(2)}</Badge>
+                <Badge variant="secondary">{Math.round(value * 100)}%</Badge>
               </div>
               <div className="flex items-center gap-3">
                 {metric.optional ? (
                   <Checkbox
                     checked={value > 0}
                     onCheckedChange={(checked) =>
-                      setWeights((current) => ({
-                        ...current,
-                        [metric.key]: checked === true ? 0.15 : 0,
-                      }))
+                      setWeights((current) =>
+                        rebalanceRankingWeights({
+                          current,
+                          metrics: rankingMetrics,
+                          changedKey: metric.key,
+                          nextValue: checked === true ? 0.15 : 0,
+                          fallbackWeights,
+                        })
+                      )
                     }
                   />
                 ) : null}
-                <input
+                <Input
                   type="range"
                   min="0"
                   max="1"
                   step="0.05"
                   value={value}
                   onChange={(event) =>
-                    setWeights((current) => ({
-                      ...current,
-                      [metric.key]: Number(event.target.value),
-                    }))
+                    setWeights((current) =>
+                      rebalanceRankingWeights({
+                        current,
+                        metrics: rankingMetrics,
+                        changedKey: metric.key,
+                        nextValue: Number(event.target.value),
+                        fallbackWeights,
+                      })
+                    )
                   }
                   className="w-full accent-primary"
                 />
@@ -463,7 +939,11 @@ function RankingControls({
           type="button"
           variant="outline"
           className="w-full gap-2"
-          onClick={() => setWeights(buildInitialRankingWeights(artifacts.rankingConfig))}
+          onClick={() =>
+            setWeights(
+              normalizeRankingWeights(fallbackWeights, rankingMetrics, fallbackWeights)
+            )
+          }
         >
           <RotateCcw className="h-4 w-4" />
           Reset default weights
@@ -480,7 +960,7 @@ function RankingControls({
             {climateVariableKeys.slice(0, 8).map((key) => (
               <div key={key} className="flex items-center gap-3">
                 <Label className="w-28 truncate text-xs">{startCase(key)}</Label>
-                <input
+                <Input
                   type="range"
                   min="0"
                   max="3"
@@ -896,9 +1376,24 @@ function CaveatsPanel() {
   )
 }
 
-export default function TrialSiteClassifierPage() {
-  const { artifacts, loading, error } = useTrialArtifacts()
-  const [selectedPoint, setSelectedPoint] = React.useState<SelectedPoint | null>({
+interface TrialSiteClassifierAnalysisProps {
+  selectedPoint?: SelectedPoint | null
+  onSelectedPointChange?: (point: SelectedPoint) => void
+  hideMap?: boolean
+  selectionMode?: "click" | "doubleClick"
+  artifactsState?: TrialArtifactsState
+}
+
+export function TrialSiteClassifierAnalysis({
+  selectedPoint: controlledSelectedPoint,
+  onSelectedPointChange,
+  hideMap = false,
+  selectionMode = "click",
+  artifactsState,
+}: TrialSiteClassifierAnalysisProps = {}) {
+  const internalArtifactsState = useTrialArtifacts(!artifactsState)
+  const { artifacts, loading, error } = artifactsState ?? internalArtifactsState
+  const [internalSelectedPoint, setInternalSelectedPoint] = React.useState<SelectedPoint | null>({
     latitude: -8.15151,
     longitude: 35.4027,
   })
@@ -913,6 +1408,19 @@ export default function TrialSiteClassifierPage() {
     React.useState(false)
   const [climateProfileError, setClimateProfileError] =
     React.useState<string | null>(null)
+  const isSelectedPointControlled = controlledSelectedPoint !== undefined
+  const selectedPoint = isSelectedPointControlled
+    ? controlledSelectedPoint
+    : internalSelectedPoint
+  const setSelectedPoint = React.useCallback(
+    (point: SelectedPoint) => {
+      if (!isSelectedPointControlled) {
+        setInternalSelectedPoint(point)
+      }
+      onSelectedPointChange?.(point)
+    },
+    [isSelectedPointControlled, onSelectedPointChange]
+  )
 
   const apiBaseUrl = React.useMemo(
     () => (import.meta.env.VITE_API_URL?.replace(/\/$/, "") || "/api"),
@@ -921,7 +1429,14 @@ export default function TrialSiteClassifierPage() {
 
   React.useEffect(() => {
     if (!artifacts) return
-    setRankingWeights(buildInitialRankingWeights(artifacts.rankingConfig))
+    const initialWeights = buildInitialRankingWeights(artifacts.rankingConfig)
+    setRankingWeights(
+      normalizeRankingWeights(
+        initialWeights,
+        artifacts.rankingConfig.available_metrics,
+        initialWeights
+      )
+    )
   }, [artifacts])
 
   const climateVariableKeys = React.useMemo(
@@ -993,10 +1508,6 @@ export default function TrialSiteClassifierPage() {
   )
 
   return (
-    <BaseLayout
-      title="Trial-site classifier"
-      description="Match selected sites to analogue trials and rank varieties using precomputed performance evidence."
-    >
       <div className="@container/main space-y-5 px-4 lg:px-6">
         {loading ? (
           <Card className="border-border/70 bg-background/75">
@@ -1023,73 +1534,18 @@ export default function TrialSiteClassifierPage() {
 
         {artifacts ? (
           <>
-            <div className="grid gap-5 xl:grid-cols-[minmax(0,1.25fr)_minmax(23rem,0.75fr)]">
-              <Card className="overflow-hidden border-border/70 bg-background/75">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-base">Clicked-point map</CardTitle>
-                  <CardDescription>
-                    Trial site markers are shown for orientation. Click anywhere to classify that point.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="p-0">
-                  <div className="h-[520px]">
-                    <Map
-                      center={[
-                        selectedPoint?.latitude ?? -6.4,
-                        selectedPoint?.longitude ?? 36.2,
-                      ]}
-                      zoom={6}
-                      maxZoom={15}
-                      className="min-h-0 rounded-none"
-                    >
-                      <MapTileLayer />
-                      <MapZoomControl position="top-3 left-3" />
-                      <ClickCapture onPointSelected={setSelectedPoint} />
-                      {artifacts.sites.map((site) => (
-                        <MapMarker
-                          key={site.site_id}
-                          position={[site.latitude, site.longitude]}
-                          icon={createTrialMarkerIcon(
-                            matches.some(
-                              (match) => match.site.site_id === site.site_id
-                            )
-                          )}
-                        >
-                          <MapPopup>
-                            <div className="space-y-2">
-                              <div className="font-semibold">{site.site_name}</div>
-                              <div className="text-xs text-muted-foreground">
-                                {site.available_genus_groups.map(startCase).join(", ")}
-                              </div>
-                            </div>
-                          </MapPopup>
-                        </MapMarker>
-                      ))}
-                      {selectedPoint ? (
-                        <MapMarker
-                          position={[
-                            selectedPoint.latitude,
-                            selectedPoint.longitude,
-                          ]}
-                          icon={
-                            <span className="block size-5 rounded-full border-2 border-white bg-emerald-500 shadow ring-4 ring-emerald-500/25" />
-                          }
-                        >
-                          <MapPopup>
-                            <div className="space-y-1">
-                              <div className="font-semibold">Selected point</div>
-                              <div className="text-xs text-muted-foreground">
-                                {selectedPoint.latitude.toFixed(5)},{" "}
-                                {selectedPoint.longitude.toFixed(5)}
-                              </div>
-                            </div>
-                          </MapPopup>
-                        </MapMarker>
-                      ) : null}
-                    </Map>
-                  </div>
-                </CardContent>
-              </Card>
+            <div className="grid gap-5">
+              {!hideMap ? (
+                <TrialSiteClassifierMap
+                  artifacts={artifacts}
+                  loading={loading}
+                  error={error}
+                  selectedPoint={selectedPoint}
+                  matches={matches}
+                  onPointSelected={setSelectedPoint}
+                  selectOn={selectionMode}
+                />
+              ) : null}
 
               <div className="space-y-5">
                 <PointPanel
@@ -1099,6 +1555,9 @@ export default function TrialSiteClassifierPage() {
                   placeholderActive={placeholderActive}
                   isLoadingClimateProfile={isLoadingClimateProfile}
                   climateProfileError={climateProfileError}
+                  mapActionLabel={
+                    selectionMode === "doubleClick" ? "Double-click" : "Click"
+                  }
                 />
                 <ClimateMatchPanel matches={matches} />
               </div>
@@ -1146,6 +1605,16 @@ export default function TrialSiteClassifierPage() {
           </>
         ) : null}
       </div>
+  )
+}
+
+export default function TrialSiteClassifierPage() {
+  return (
+    <BaseLayout
+      title="Trial-site classifier"
+      description="Match selected sites to analogue trials and rank varieties using precomputed performance evidence."
+    >
+      <TrialSiteClassifierAnalysis />
     </BaseLayout>
   )
 }

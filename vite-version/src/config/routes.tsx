@@ -19,8 +19,7 @@ const Users = lazy(() => import('@/app/users/page'))
 const FAQs = lazy(() => import('@/app/faqs/page'))
 const Pricing = lazy(() => import('@/app/pricing/page'))
 const Models = lazy(() => import('@/app/models/page'))
-const SiteClassification = lazy(() => import('@/app/models/site-classification/page'))
-const TrialSiteClassifier = lazy(() => import('@/app/models/trial-site-classifier/page'))
+const SiteSpeciesAnalysis = lazy(() => import('@/app/models/site-species-analysis/page'))
 const Model2 = lazy(() => import('@/app/models/model-2/page'))
 const Model3 = lazy(() => import('@/app/models/model-3/page'))
 const ClonalEucalyptusNursery = lazy(() => import('@/app/models/clonal-eucalyptus-nursery/page'))
@@ -146,11 +145,15 @@ export const routes: RouteConfig[] = [
   },
   {
     path: "/models/site-classification",
-    element: <SiteClassification />
+    element: <Navigate to="/models/site-species-analysis" replace />
+  },
+  {
+    path: "/models/site-species-analysis",
+    element: <SiteSpeciesAnalysis />
   },
   {
     path: "/models/trial-site-classifier",
-    element: <TrialSiteClassifier />
+    element: <Navigate to="/models/site-species-analysis" replace />
   },
   {
     path: "/models/model-2",

@@ -89,6 +89,11 @@ const suitabilityFallbacks: Record<string, BasicSsmtSuitabilityMetadata> = {
     color: "#d97706",
   },
   "Not suitable": { name: "Not suitable", rank: 4, color: "#991b1b" },
+  "Possibly suitable": {
+    name: "Possibly suitable",
+    rank: 3.5,
+    color: "#ca8a04",
+  },
   Unknown: { name: "Unknown", rank: 99, color: "#64748b" },
 }
 
@@ -115,11 +120,22 @@ export function getSuitabilityStyle(
 export function getDefaultBasicSsmtFilters(
   metadata: BasicSsmtMetadata | null
 ): BasicSsmtFilters {
+  const meliaVolkensii = metadata?.species.find(
+    (item) =>
+      item.genus.toLowerCase() === "melia" &&
+      item.species.toLowerCase() === "volkensii"
+  )
+  const verySuitable = metadata?.suitability.find(
+    (item) => item.name === "Very suitable"
+  )
+
   return {
     countryCode: "all",
-    genus: "all",
-    speciesName: "all",
-    suitabilityNames: metadata?.suitability.map((item) => item.name) ?? [],
+    genus: meliaVolkensii?.genus ?? "all",
+    speciesName: meliaVolkensii?.species_name ?? "all",
+    suitabilityNames: verySuitable
+      ? [verySuitable.name]
+      : metadata?.suitability.map((item) => item.name) ?? [],
   }
 }
 
@@ -175,23 +191,57 @@ export function deriveBasicSsmtSpecies(speciesName: unknown) {
     return { genus: "Unknown/Other", species: "" }
   }
 
+  const aliases: Record<string, { genus: string; species: string }> = {
+    a_augustifolia: { genus: "Araucaria", species: "angustifolia" },
+    a_cuninghamii: { genus: "Araucaria", species: "cunninghamii" },
+    a_hunstenii: { genus: "Araucaria", species: "hunsteinii" },
+    a_crassica: { genus: "Acacia", species: "crassicarpa" },
+    a_crassicarpa: { genus: "Acacia", species: "crassicarpa" },
+    a_mangium: { genus: "Acacia", species: "mangium" },
+    a_mang_au: { genus: "Acacia", species: "mangium_auriculoformis" },
+    a_mang_auriculof: { genus: "Acacia", species: "mangium_auriculoformis" },
+    a_mearnsii: { genus: "Acacia", species: "mearnsii" },
+    a_quanzensis: { genus: "Afzelia", species: "quanzensis" },
+    c_citrio_citrio: { genus: "Corymbia", species: "citriodora_citriodora" },
+    c_citrio_varieg: { genus: "Corymbia", species: "citriodora_variegata" },
+    c_citriodora_citriodora: {
+      genus: "Corymbia",
+      species: "citriodora_citriodora",
+    },
+    c_citriodora_variegata: {
+      genus: "Corymbia",
+      species: "citriodora_variegata",
+    },
+    c_cunninghamiana: { genus: "Casuarina", species: "cunninghamiana" },
+    c_equisetifolia: { genus: "Casuarina", species: "equisetifolia" },
+    c_henryi: { genus: "Corymbia", species: "henryi" },
+    c_henryi_torreliana: { genus: "Corymbia", species: "henryi_torreliana" },
+    c_junghunhiana: { genus: "Casuarina", species: "junghunhiana" },
+    c_lusitanica: { genus: "Cupressus", species: "lusitanica" },
+    c_maculata: { genus: "Corymbia", species: "maculata" },
+    c_odorata: { genus: "Cedrella", species: "odorata" },
+    c_oligodon: { genus: "Casuarina", species: "oligodon" },
+    c_torrel_henryi: { genus: "Corymbia", species: "torreliana_henryi" },
+    c_torreliana: { genus: "Corymbia", species: "torreliana" },
+    g_arborea: { genus: "Gmelina", species: "arborea" },
+    g_robusta: { genus: "Grevillea", species: "robusta" },
+    k_anthotheca: { genus: "Khaya", species: "anthotheca" },
+    m_eminii: { genus: "Maesopsis", species: "eminii" },
+    m_excelsa: { genus: "Milicia", species: "excelsa" },
+    m_volkensi: { genus: "Melia", species: "volkensii" },
+    m_volkensii: { genus: "Melia", species: "volkensii" },
+    t_grandis: { genus: "Tectona", species: "grandis" },
+  }
+
+  const alias = aliases[raw.toLowerCase()]
+  if (alias) return alias
+
   const [prefix = "", ...rest] = raw.split(/[_\s]+/).filter(Boolean)
   const normalizedPrefix = prefix.replace(/\.$/, "")
-  const lowerRest = rest.join("_").toLowerCase()
   const genusByInitial: Record<string, string> = {
     E: "Eucalyptus",
     P: "Pinus",
-  }
-
-  if (normalizedPrefix === "A") {
-    if (lowerRest.includes("araucaria")) {
-      return { genus: "Araucaria", species: rest.join("_") }
-    }
-    if (lowerRest.includes("crassicarpa") || lowerRest.includes("mangium")) {
-      return { genus: "Acacia", species: rest.join("_") }
-    }
-
-    return { genus: "A", species: rest.join("_") }
+    Grevillia: "Grevillea",
   }
 
   const genus = genusByInitial[normalizedPrefix] ?? normalizedPrefix

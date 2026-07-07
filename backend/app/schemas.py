@@ -4,6 +4,13 @@ from pydantic import BaseModel, Field
 
 
 SourceName = Literal["terraclimate", "chirps", "nasa_power", "era5_land_ee"]
+UGX_PER_USD = 3_700.0
+
+
+def usd_from_ugx(value: float) -> float:
+    return round(float(value) / UGX_PER_USD, 4)
+
+
 DataType = Literal["dynamic", "static"]
 DynamicMetricGroup = Literal[
     "temperature",
@@ -65,10 +72,10 @@ class CommercialForestViabilityRequest(BaseModel):
     area_ha: float = Field(default=1, gt=0)
     thinnings: dict[int, float] = Field(default_factory=lambda: {4: 0.30, 7: 0.30})
     price_thinning_tree: dict[int, float] = Field(
-        default_factory=lambda: {4: 5_000, 7: 8_000}
+        default_factory=lambda: {4: usd_from_ugx(5_000), 7: usd_from_ugx(8_000)}
     )
     final_harvest_year: int | None = Field(default=None, ge=1, le=15)
-    price_final_tree: float = Field(default=35_000, ge=0)
+    price_final_tree: float = Field(default=usd_from_ugx(35_000), ge=0)
     discount_rate: float = Field(default=0.15, ge=0, le=1)
     labour_categories: list[dict[str, Any]] = Field(default_factory=list)
     non_labour_items: list[dict[str, Any]] = Field(default_factory=list)
@@ -110,9 +117,9 @@ class RoundwoodProductionRequest(BaseModel):
     loss_reject: float = Field(default=0.0, ge=0, le=1)
 
     price_mode: Literal["per_m3", "per_tonne"] = "per_tonne"
-    price_g1: float = Field(default=125_000, ge=0)
-    price_g2: float = Field(default=115_000, ge=0)
-    price_g3: float = Field(default=105_000, ge=0)
+    price_g1: float = Field(default=usd_from_ugx(125_000), ge=0)
+    price_g2: float = Field(default=usd_from_ugx(115_000), ge=0)
+    price_g3: float = Field(default=usd_from_ugx(105_000), ge=0)
     price_reject: float = Field(default=0, ge=0)
 
     v_mensuration: float = Field(default=0.5, ge=0, le=1)
@@ -147,24 +154,24 @@ class ClonalEucalyptusNurseryRequest(BaseModel):
     discount_rate: float = Field(default=0.15, ge=0, le=1)
     inflation_rate: float = Field(default=0.04, ge=0, le=1)
     tax_rate: float = Field(default=0.0, ge=0, le=1)
-    working_capital_pct_revenue: float = Field(default=0.05, ge=0, le=1)
+    working_capital_pct_revenue: float = Field(default=0.02, ge=0, le=1)
 
-    mother_plants: float = Field(default=2_500, ge=0)
-    shoots_per_mother_per_harvest: float = Field(default=4.0, ge=0)
-    harvests_per_year: float = Field(default=8.0, ge=0)
+    mother_plants: float = Field(default=26_666, ge=0)
+    shoots_per_mother_per_harvest: float = Field(default=6.0, ge=0)
+    harvests_per_year: float = Field(default=4.0, ge=0)
     cutting_selection_rate: float = Field(default=0.80, ge=0, le=1)
-    rooting_success_rate: float = Field(default=0.68, ge=0, le=1)
-    acclimatisation_survival_rate: float = Field(default=0.90, ge=0, le=1)
-    hardening_survival_rate: float = Field(default=0.93, ge=0, le=1)
-    saleable_grade_acceptance_rate: float = Field(default=0.95, ge=0, le=1)
+    rooting_success_rate: float = Field(default=0.50, ge=0, le=1)
+    acclimatisation_survival_rate: float = Field(default=0.85, ge=0, le=1)
+    hardening_survival_rate: float = Field(default=0.88, ge=0, le=1)
+    saleable_grade_acceptance_rate: float = Field(default=0.85, ge=0, le=1)
 
-    rooting_trays: float = Field(default=420, ge=0)
-    cells_per_rooting_tray: float = Field(default=98, ge=0)
-    rooting_cycles_per_year: float = Field(default=3.0, ge=0)
-    base_capacity_utilisation_y1: float = Field(default=0.55, ge=0, le=1)
-    steady_state_capacity_utilisation: float = Field(default=0.82, ge=0, le=1)
+    rooting_trays: float = Field(default=1_600, ge=0)
+    cells_per_rooting_tray: float = Field(default=72, ge=0)
+    rooting_cycles_per_year: float = Field(default=5.4857, ge=0)
+    base_capacity_utilisation_y1: float = Field(default=0.40, ge=0, le=1)
+    steady_state_capacity_utilisation: float = Field(default=0.70, ge=0, le=1)
     ramp_up_years: int = Field(default=4, ge=1, le=30)
-    market_sales_rate: float = Field(default=0.96, ge=0, le=1)
+    market_sales_rate: float = Field(default=0.85, ge=0, le=1)
 
     family_labour_days_per_year: float = Field(default=180, ge=0)
     family_labour_cash_cost_per_day: float = Field(default=0.0, ge=0)
@@ -174,7 +181,7 @@ class ClonalEucalyptusNurseryRequest(BaseModel):
     manager_monthly_allowance: float = Field(default=80, ge=0)
     seasonal_daily_wage: float = Field(default=3.5, ge=0)
 
-    selling_price_per_plant_y1: float = Field(default=0.30, ge=0)
+    selling_price_per_plant_y1: float = Field(default=0.14, ge=0)
     annual_genetic_access_fee: float = Field(default=0, ge=0)
     royalty_per_sold_plant: float = Field(default=0, ge=0)
     annual_certification_fee: float = Field(default=0, ge=0)

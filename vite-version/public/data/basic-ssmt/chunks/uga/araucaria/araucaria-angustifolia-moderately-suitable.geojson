@@ -1,0 +1,2265 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              33.037373817,
+              3.8827525957
+            ],
+            [
+              33.0374000199,
+              3.8864254587
+            ],
+            [
+              33.0310967529,
+              3.8911787044
+            ],
+            [
+              33.0249181307,
+              3.8912231787
+            ],
+            [
+              33.0228276812,
+              3.8900600002
+            ],
+            [
+              33.0207268471,
+              3.8886050802
+            ],
+            [
+              33.0206860517,
+              3.8828724798
+            ],
+            [
+              33.037373817,
+              3.8827525957
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              33.0456982509,
+              3.8799951622
+            ],
+            [
+              33.0422166479,
+              3.882717744
+            ],
+            [
+              33.0123419733,
+              3.8829322996
+            ],
+            [
+              33.0122825219,
+              3.8745514601
+            ],
+            [
+              33.0289703843,
+              3.8744319993
+            ],
+            [
+              33.0289108994,
+              3.8660514179
+            ],
+            [
+              33.0372545554,
+              3.8659916948
+            ],
+            [
+              33.0373141215,
+              3.8743721469
+            ],
+            [
+              33.0456577274,
+              3.8743122129
+            ],
+            [
+              33.0456982509,
+              3.8799951622
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              32.8949911313,
+              3.808317396
+            ],
+            [
+              32.903336279,
+              3.8082598648
+            ],
+            [
+              32.9033898728,
+              3.8160902279
+            ],
+            [
+              32.9025876808,
+              3.8156
+            ],
+            [
+              32.900727681,
+              3.8150199995
+            ],
+            [
+              32.8990176813,
+              3.8147
+            ],
+            [
+              32.8950266446,
+              3.8135152544
+            ],
+            [
+              32.8949911313,
+              3.808317396
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              32.9451757885,
+              3.8247347801
+            ],
+            [
+              32.9452919834,
+              3.8414985443
+            ],
+            [
+              32.9442279243,
+              3.841506001
+            ],
+            [
+              32.9369147697,
+              3.8368858758
+            ],
+            [
+              32.9368890711,
+              3.8331749795
+            ],
+            [
+              32.9310988218,
+              3.8332153956
+            ],
+            [
+              32.9285326492,
+              3.8315626862
+            ],
+            [
+              32.9284863196,
+              3.8248510755
+            ],
+            [
+              32.9175388632,
+              3.8249271831
+            ],
+            [
+              32.9117715207,
+              3.8213562407
+            ],
+            [
+              32.9117387572,
+              3.8165846531
+            ],
+            [
+              32.9042615768,
+              3.8166363907
+            ],
+            [
+              32.9033898728,
+              3.8160902279
+            ],
+            [
+              32.903336279,
+              3.8082598648
+            ],
+            [
+              32.8949911313,
+              3.808317396
+            ],
+            [
+              32.8949339605,
+              3.7999347413
+            ],
+            [
+              32.9116239682,
+              3.7998198529
+            ],
+            [
+              32.9116812986,
+              3.8082022542
+            ],
+            [
+              32.9200261927,
+              3.8081445625
+            ],
+            [
+              32.9200837295,
+              3.8165268339
+            ],
+            [
+              32.9367732929,
+              3.8164109543
+            ],
+            [
+              32.9367155962,
+              3.8080289384
+            ],
+            [
+              32.9450601062,
+              3.807971006
+            ],
+            [
+              32.9451178837,
+              3.8163528948
+            ],
+            [
+              32.9451757885,
+              3.8247347801
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.0372234602,
+              3.824781676
+            ],
+            [
+              34.0290369955,
+              3.8248493564
+            ],
+            [
+              34.0262426972,
+              3.8235479751
+            ],
+            [
+              34.0205643414,
+              3.8241854257
+            ],
+            [
+              34.0204338231,
+              3.8081914527
+            ],
+            [
+              34.0037804208,
+              3.8083281237
+            ],
+            [
+              34.003644819,
+              3.7915996941
+            ],
+            [
+              34.0202979059,
+              3.7914636252
+            ],
+            [
+              34.0203657888,
+              3.7998275401
+            ],
+            [
+              34.0370184298,
+              3.7996908529
+            ],
+            [
+              34.0369503881,
+              3.7913272393
+            ],
+            [
+              34.0536022678,
+              3.7911905366
+            ],
+            [
+              34.0538073194,
+              3.8162804612
+            ],
+            [
+              34.0371549659,
+              3.8164180712
+            ],
+            [
+              34.0372234602,
+              3.824781676
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.0288969779,
+              3.8248505132
+            ],
+            [
+              34.028965543,
+              3.8332142656
+            ],
+            [
+              34.0206388299,
+              3.8332831731
+            ],
+            [
+              34.0205703432,
+              3.8249192692
+            ],
+            [
+              34.0288969779,
+              3.8248505132
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S2",
+        "soil_type": "Ferruginous Soils",
+        "soil_description": "On crystalline acid rock - freely drained",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.0205643414,
+              3.8241854257
+            ],
+            [
+              34.0205703432,
+              3.8249192692
+            ],
+            [
+              34.0156605658,
+              3.8249597732
+            ],
+            [
+              34.0159635635,
+              3.824701884
+            ],
+            [
+              34.0205643414,
+              3.8241854257
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S2",
+        "soil_type": "Ferruginous Soils",
+        "soil_description": "On crystalline acid rock - freely drained",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              33.6174945166,
+              3.3844622104
+            ],
+            [
+              33.61766632,
+              3.4095754171
+            ],
+            [
+              33.6010061003,
+              3.409690803
+            ],
+            [
+              33.6009488321,
+              3.401319453
+            ],
+            [
+              33.5926185813,
+              3.4013768974
+            ],
+            [
+              33.5925615257,
+              3.3930054025
+            ],
+            [
+              33.5842312035,
+              3.3930626339
+            ],
+            [
+              33.5841743601,
+              3.3846909952
+            ],
+            [
+              33.6174945166,
+              3.3844622104
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.8013248494,
+              2.554863404
+            ],
+            [
+              34.801214018,
+              2.5573317993
+            ],
+            [
+              34.7930380779,
+              2.5573820453
+            ],
+            [
+              34.7929874571,
+              2.5490326806
+            ],
+            [
+              34.8012891701,
+              2.5489818281
+            ],
+            [
+              34.8013248494,
+              2.554863404
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7845348724,
+              2.5240348759
+            ],
+            [
+              34.784584942,
+              2.5323844133
+            ],
+            [
+              34.7762830017,
+              2.5324348281
+            ],
+            [
+              34.7762329847,
+              2.5240851238
+            ],
+            [
+              34.7845348724,
+              2.5240348759
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "7",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7928584472,
+              2.5276283305
+            ],
+            [
+              34.7929370036,
+              2.5406833152
+            ],
+            [
+              34.7763331849,
+              2.5407845289
+            ],
+            [
+              34.7762830017,
+              2.5324348281
+            ],
+            [
+              34.784584942,
+              2.5323844133
+            ],
+            [
+              34.7845348724,
+              2.5240348759
+            ],
+            [
+              34.7927232299,
+              2.5239852634
+            ],
+            [
+              34.7927432779,
+              2.5273284285
+            ],
+            [
+              34.7928584472,
+              2.5276283305
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7845348724,
+              2.5240348759
+            ],
+            [
+              34.7762329847,
+              2.5240851238
+            ],
+            [
+              34.7762830017,
+              2.5324348281
+            ],
+            [
+              34.7679808962,
+              2.5324851889
+            ],
+            [
+              34.7679697327,
+              2.5306219899
+            ],
+            [
+              34.7725655476,
+              2.5246047461
+            ],
+            [
+              34.7783770835,
+              2.5157221885
+            ],
+            [
+              34.7844849692,
+              2.515685337
+            ],
+            [
+              34.7845348724,
+              2.5240348759
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7930380779,
+              2.5573820453
+            ],
+            [
+              34.7764340489,
+              2.5574839251
+            ],
+            [
+              34.7763331849,
+              2.5407845289
+            ],
+            [
+              34.7929370036,
+              2.5406833152
+            ],
+            [
+              34.7928584472,
+              2.5276283305
+            ],
+            [
+              34.7966958897,
+              2.5376206098
+            ],
+            [
+              34.8012694104,
+              2.5457186702
+            ],
+            [
+              34.8012891701,
+              2.5489818281
+            ],
+            [
+              34.7929874571,
+              2.5490326806
+            ],
+            [
+              34.7930380779,
+              2.5573820453
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7762830017,
+              2.5324348281
+            ],
+            [
+              34.7763331849,
+              2.5407845289
+            ],
+            [
+              34.7680310275,
+              2.5408350565
+            ],
+            [
+              34.7679808962,
+              2.5324851889
+            ],
+            [
+              34.7762830017,
+              2.5324348281
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7679697327,
+              2.5306219899
+            ],
+            [
+              34.7679808962,
+              2.5324851889
+            ],
+            [
+              34.7665400133,
+              2.5324939247
+            ],
+            [
+              34.7679697327,
+              2.5306219899
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7930706563,
+              2.5156334875
+            ],
+            [
+              34.7926814989,
+              2.5170125271
+            ],
+            [
+              34.7927232299,
+              2.5239852634
+            ],
+            [
+              34.7845348724,
+              2.5240348759
+            ],
+            [
+              34.7844849692,
+              2.515685337
+            ],
+            [
+              34.7783770835,
+              2.5157221885
+            ],
+            [
+              34.7816789455,
+              2.5106756216
+            ],
+            [
+              34.7831205978,
+              2.5073437035
+            ],
+            [
+              34.79273685,
+              2.507285829
+            ],
+            [
+              34.792786639,
+              2.5156352034
+            ],
+            [
+              34.7930706563,
+              2.5156334875
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "6",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7764847288,
+              2.5658336204
+            ],
+            [
+              34.7764340489,
+              2.5574839251
+            ],
+            [
+              34.7930380779,
+              2.5573820453
+            ],
+            [
+              34.793076471,
+              2.563696519
+            ],
+            [
+              34.7881171932,
+              2.5657620355
+            ],
+            [
+              34.7764847288,
+              2.5658336204
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7764340489,
+              2.5574839251
+            ],
+            [
+              34.7681317855,
+              2.5575347861
+            ],
+            [
+              34.7680813231,
+              2.5491849226
+            ],
+            [
+              34.7680310275,
+              2.5408350565
+            ],
+            [
+              34.7763331849,
+              2.5407845289
+            ],
+            [
+              34.7764340489,
+              2.5574839251
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7680310275,
+              2.5408350565
+            ],
+            [
+              34.7601905189,
+              2.540882726
+            ],
+            [
+              34.7665400133,
+              2.5324939247
+            ],
+            [
+              34.7679808962,
+              2.5324851889
+            ],
+            [
+              34.7680310275,
+              2.5408350565
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7954309794,
+              2.5072696014
+            ],
+            [
+              34.7930706563,
+              2.5156334875
+            ],
+            [
+              34.792786639,
+              2.5156352034
+            ],
+            [
+              34.79273685,
+              2.507285829
+            ],
+            [
+              34.7954309794,
+              2.5072696014
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7844174641,
+              2.5043464574
+            ],
+            [
+              34.7844352305,
+              2.5073357964
+            ],
+            [
+              34.7831205978,
+              2.5073437035
+            ],
+            [
+              34.7844174641,
+              2.5043464574
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7431736996,
+              2.549336689
+            ],
+            [
+              34.7432744728,
+              2.566037409
+            ],
+            [
+              34.7349714958,
+              2.5660882236
+            ],
+            [
+              34.7350220771,
+              2.5744387455
+            ],
+            [
+              34.7267188822,
+              2.5744896713
+            ],
+            [
+              34.7266683544,
+              2.5661389836
+            ],
+            [
+              34.718365047,
+              2.5661896917
+            ],
+            [
+              34.7183226524,
+              2.5591544911
+            ],
+            [
+              34.7265962742,
+              2.5541791565
+            ],
+            [
+              34.7266179899,
+              2.5577882944
+            ],
+            [
+              34.7349210798,
+              2.5577376984
+            ],
+            [
+              34.7348708281,
+              2.5493871717
+            ],
+            [
+              34.7431736996,
+              2.549336689
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7562700104,
+              2.5492569512
+            ],
+            [
+              34.7431736996,
+              2.549336689
+            ],
+            [
+              34.7431073023,
+              2.5382727017
+            ],
+            [
+              34.7461872165,
+              2.5326171386
+            ],
+            [
+              34.7596786247,
+              2.5325354986
+            ],
+            [
+              34.7597287033,
+              2.5408855328
+            ],
+            [
+              34.7601905189,
+              2.540882726
+            ],
+            [
+              34.7562700104,
+              2.5492569512
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.789789692,
+              2.4906041075
+            ],
+            [
+              34.7897039833,
+              2.4921289934
+            ],
+            [
+              34.7844174641,
+              2.5043464574
+            ],
+            [
+              34.784385659,
+              2.4989862534
+            ],
+            [
+              34.7760839262,
+              2.4990360015
+            ],
+            [
+              34.776034572,
+              2.49068629
+            ],
+            [
+              34.7594307117,
+              2.4907852991
+            ],
+            [
+              34.7593327044,
+              2.474085205
+            ],
+            [
+              34.7427283883,
+              2.4741833447
+            ],
+            [
+              34.7427971376,
+              2.4859347593
+            ],
+            [
+              34.7390577566,
+              2.4810461249
+            ],
+            [
+              34.7344245793,
+              2.4739917185
+            ],
+            [
+              34.7343773787,
+              2.4658817905
+            ],
+            [
+              34.7426797332,
+              2.4658329637
+            ],
+            [
+              34.7426312452,
+              2.4574825793
+            ],
+            [
+              34.7509333841,
+              2.4574338663
+            ],
+            [
+              34.750981924,
+              2.4657840845
+            ],
+            [
+              34.7758875025,
+              2.4656371424
+            ],
+            [
+              34.775985383,
+              2.482336576
+            ],
+            [
+              34.7842870133,
+              2.4822871607
+            ],
+            [
+              34.784336253,
+              2.4906367069
+            ],
+            [
+              34.789789692,
+              2.4906041075
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7265962742,
+              2.5541791565
+            ],
+            [
+              34.7183226524,
+              2.5591544911
+            ],
+            [
+              34.7183147359,
+              2.557838836
+            ],
+            [
+              34.7100113179,
+              2.5578893258
+            ],
+            [
+              34.7097132213,
+              2.5077831603
+            ],
+            [
+              34.7180163266,
+              2.5077336612
+            ],
+            [
+              34.717967167,
+              2.4993827919
+            ],
+            [
+              34.7262700563,
+              2.499333405
+            ],
+            [
+              34.7262210106,
+              2.4909826989
+            ],
+            [
+              34.734523683,
+              2.4909334255
+            ],
+            [
+              34.7345727806,
+              2.4992839677
+            ],
+            [
+              34.7346220434,
+              2.5076345065
+            ],
+            [
+              34.7263192671,
+              2.5076841096
+            ],
+            [
+              34.726368642,
+              2.5160348126
+            ],
+            [
+              34.7180656502,
+              2.5160845289
+            ],
+            [
+              34.7182645906,
+              2.5494879796
+            ],
+            [
+              34.7265677915,
+              2.5494376019
+            ],
+            [
+              34.7265962742,
+              2.5541791565
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7461872165,
+              2.5326171386
+            ],
+            [
+              34.7431073023,
+              2.5382727017
+            ],
+            [
+              34.7430735863,
+              2.53263596
+            ],
+            [
+              34.7461872165,
+              2.5326171386
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7427971376,
+              2.4859347593
+            ],
+            [
+              34.742826191,
+              2.4908841018
+            ],
+            [
+              34.734523683,
+              2.4909334255
+            ],
+            [
+              34.7344245793,
+              2.4739917185
+            ],
+            [
+              34.7390577566,
+              2.4810461249
+            ],
+            [
+              34.7427971376,
+              2.4859347593
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7847951736,
+              2.5671449952
+            ],
+            [
+              34.7848377781,
+              2.5741320667
+            ],
+            [
+              34.7698756026,
+              2.5742243838
+            ],
+            [
+              34.770735274,
+              2.5729981528
+            ],
+            [
+              34.7847951736,
+              2.5671449952
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S2",
+        "soil_type": "Ferruginous Soils",
+        "soil_description": "On crystalline acid rock - freely drained",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.809540158,
+              2.5405818899
+            ],
+            [
+              34.8095907172,
+              2.5489309223
+            ],
+            [
+              34.8015890704,
+              2.5489799906
+            ],
+            [
+              34.8017012231,
+              2.5464832303
+            ],
+            [
+              34.8012694104,
+              2.5457186702
+            ],
+            [
+              34.8010881433,
+              2.5155850181
+            ],
+            [
+              34.801038302,
+              2.507235811
+            ],
+            [
+              34.7954309794,
+              2.5072696014
+            ],
+            [
+              34.7957988694,
+              2.5059660169
+            ],
+            [
+              34.8007034617,
+              2.4988883142
+            ],
+            [
+              34.8092898617,
+              2.4988366965
+            ],
+            [
+              34.809540158,
+              2.5405818899
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S2",
+        "soil_type": "Ferruginous Soils",
+        "soil_description": "On crystalline acid rock - freely drained",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.8172563763,
+              1.8308568987
+            ],
+            [
+              34.8153988056,
+              1.8340665642
+            ],
+            [
+              34.8141782097,
+              1.8378058419
+            ],
+            [
+              34.8141479301,
+              1.8308706166
+            ],
+            [
+              34.8172563763,
+              1.8308568987
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.8234000856,
+              1.7974338007
+            ],
+            [
+              34.8238231247,
+              1.8141299305
+            ],
+            [
+              34.8223727539,
+              1.8141362796
+            ],
+            [
+              34.8223009065,
+              1.7974385675
+            ],
+            [
+              34.8234000856,
+              1.7974338007
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.0535204088,
+              -0.9990542473
+            ],
+            [
+              30.0618811458,
+              -0.999046409
+            ],
+            [
+              30.0618733804,
+              -0.9906306544
+            ],
+            [
+              30.0535126652,
+              -0.9906384272
+            ],
+            [
+              30.0535204088,
+              -0.9990542473
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.8527535514,
+              -0.8889755348
+            ],
+            [
+              29.8527477523,
+              -0.8813930005
+            ],
+            [
+              29.8467197778,
+              -0.8813976472
+            ],
+            [
+              29.8465773306,
+              -0.8838968124
+            ],
+            [
+              29.8527535514,
+              -0.8889755348
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              29.8611197659,
+              -0.8944269208
+            ],
+            [
+              29.8611161907,
+              -0.8898038349
+            ],
+            [
+              29.8537678244,
+              -0.8898095682
+            ],
+            [
+              29.8570342301,
+              -0.8924955073
+            ],
+            [
+              29.8611197659,
+              -0.8944269208
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.011700537,
+              -0.9822608234
+            ],
+            [
+              30.0117157481,
+              -0.9990931195
+            ],
+            [
+              29.9782708559,
+              -0.9991238327
+            ],
+            [
+              29.9782784736,
+              -1.007540239
+            ],
+            [
+              29.9531940687,
+              -1.0075632413
+            ],
+            [
+              29.9531704082,
+              -0.9809583789
+            ],
+            [
+              29.9459331164,
+              -0.9823108098
+            ],
+            [
+              29.9459411151,
+              -0.9913950182
+            ],
+            [
+              29.9397747422,
+              -1.0009629253
+            ],
+            [
+              29.9307566881,
+              -1.0086210272
+            ],
+            [
+              29.9293372766,
+              -1.0148379214
+            ],
+            [
+              29.929341591,
+              -1.0196191558
+            ],
+            [
+              29.9340972186,
+              -1.0258303753
+            ],
+            [
+              29.9421717119,
+              -1.0253447882
+            ],
+            [
+              29.9592691729,
+              -1.0229383601
+            ],
+            [
+              29.9725634441,
+              -1.0171887227
+            ],
+            [
+              29.9901344781,
+              -1.0138256884
+            ],
+            [
+              30.0077127146,
+              -1.018590182
+            ],
+            [
+              30.028141828,
+              -1.0247859577
+            ],
+            [
+              30.0490501796,
+              -1.0357616148
+            ],
+            [
+              30.0628342322,
+              -1.0467437198
+            ],
+            [
+              30.0699747927,
+              -1.0634688472
+            ],
+            [
+              30.0718869382,
+              -1.075896514
+            ],
+            [
+              30.0744670141,
+              -1.0495285332
+            ],
+            [
+              30.0702899161,
+              -1.0495326663
+            ],
+            [
+              30.0702655696,
+              -1.0242856104
+            ],
+            [
+              30.0619048346,
+              -1.0242936691
+            ],
+            [
+              30.0618968725,
+              -1.0158779163
+            ],
+            [
+              30.0535360938,
+              -1.0158858867
+            ],
+            [
+              30.0535440343,
+              -1.0243017059
+            ],
+            [
+              30.045183168,
+              -1.0243097201
+            ],
+            [
+              30.045167395,
+              -1.0074779502
+            ],
+            [
+              30.0535282183,
+              -1.0074700669
+            ],
+            [
+              30.0535204088,
+              -0.9990542473
+            ],
+            [
+              30.0535126652,
+              -0.9906384272
+            ],
+            [
+              30.0535049868,
+              -0.9822226064
+            ],
+            [
+              30.011700537,
+              -0.9822608234
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Araucaria_angustifolia",
+        "genus": "Araucaria",
+        "species": "angustifolia",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S4",
+        "soil_type": "Lithosols",
+        "soil_description": "Not differentiated",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    }
+  ]
+}

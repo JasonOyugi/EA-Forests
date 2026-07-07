@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
 import { AiFillYoutube } from "react-icons/ai"
-import { ArrowRight, Play, Star } from "lucide-react"
+import { ArrowRight, LoaderCircle, Play, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import VideoPreview from "@/components/VideoPreview"
@@ -24,6 +24,8 @@ export function HeroSection() {
   const [currentIndex, setCurrentIndex] = useState(1)
   const [hasClicked, setHasClicked] = useState(false)
   const [bgReady, setBgReady] = useState(false)
+  const [nextReady, setNextReady] = useState(false)
+  const [previewLoading, setPreviewLoading] = useState(false)
   const [forceHideLoader, setForceHideLoader] = useState(false)
 
   const rootRef = useRef<HTMLDivElement | null>(null)
@@ -35,11 +37,17 @@ export function HeroSection() {
   const backgroundVideoIndex = currentIndex === TOTAL_HERO_VIDEOS - 1 ? 1 : currentIndex
 
   useEffect(() => {
+    setBgReady(false)
+    setForceHideLoader(false)
     const timeoutId = window.setTimeout(() => setForceHideLoader(true), 3500)
     return () => window.clearTimeout(timeoutId)
-  }, [])
+  }, [backgroundVideoIndex])
 
-  const loading = !bgReady && !forceHideLoader
+  useEffect(() => {
+    setNextReady(false)
+  }, [currentIndex])
+
+  const loading = (!bgReady || (hasClicked && !nextReady)) && !forceHideLoader
 
   const handleMiniVdClick = () => {
     setHasClicked(true)
@@ -48,6 +56,7 @@ export function HeroSection() {
 
   const handleHoverStart = () => {
     if (!previewVideoRef.current) return
+    setPreviewLoading(previewVideoRef.current.readyState < HTMLMediaElement.HAVE_CURRENT_DATA)
     previewVideoRef.current.currentTime = 0
     previewVideoRef.current.play().catch(() => {})
   }
@@ -161,8 +170,15 @@ export function HeroSection() {
 
             <div className="relative overflow-hidden rounded-xl border bg-card shadow-2xl">
               {loading && (
-                <div className="absolute inset-0 z-[100] grid place-items-center bg-background/80 backdrop-blur-sm">
-                  <div className="h-8 w-8 animate-spin rounded-full border-2 border-foreground/30 border-t-foreground" />
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className="absolute inset-0 z-[100] grid place-items-center bg-background/80 backdrop-blur-sm"
+                >
+                  <div className="flex items-center gap-2 rounded-lg border bg-background/90 px-3 py-2 text-sm font-medium text-foreground shadow-sm">
+                    <LoaderCircle className="h-4 w-4 animate-spin" />
+                    Loading video
+                  </div>
                 </div>
               )}
 
@@ -175,8 +191,17 @@ export function HeroSection() {
                   <VideoPreview>
                     <div
                       onClick={handleMiniVdClick}
-                      className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
+                      className="relative origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
                     >
+                      {previewLoading ? (
+                        <div
+                          role="status"
+                          aria-live="polite"
+                          className="absolute inset-0 z-10 grid place-items-center bg-black/35 backdrop-blur-sm"
+                        >
+                          <LoaderCircle className="h-5 w-5 animate-spin text-white" />
+                        </div>
+                      ) : null}
                       <video
                         ref={previewVideoRef}
                         data-current-video="true"
@@ -187,6 +212,12 @@ export function HeroSection() {
                         playsInline
                         preload="none"
                         className="h-full w-full origin-center scale-150 object-cover object-center"
+                        onLoadStart={() => setPreviewLoading(true)}
+                        onLoadedData={() => setPreviewLoading(false)}
+                        onCanPlay={() => setPreviewLoading(false)}
+                        onPlaying={() => setPreviewLoading(false)}
+                        onWaiting={() => setPreviewLoading(true)}
+                        onError={() => setPreviewLoading(false)}
                       />
                     </div>
                   </VideoPreview>
@@ -202,6 +233,12 @@ export function HeroSection() {
                   playsInline
                   preload="none"
                   className="absolute left-1/2 top-1/2 invisible z-20 h-36 w-52 -translate-x-1/2 -translate-y-1/2 object-cover object-center sm:h-44 sm:w-60 lg:h-48 lg:w-64"
+                  onLoadStart={() => setNextReady(false)}
+                  onLoadedData={() => setNextReady(true)}
+                  onCanPlay={() => setNextReady(true)}
+                  onPlaying={() => setNextReady(true)}
+                  onWaiting={() => setNextReady(false)}
+                  onError={() => setNextReady(true)}
                 />
 
                 <video
@@ -213,7 +250,14 @@ export function HeroSection() {
                   playsInline
                   preload="metadata"
                   className="absolute left-0 top-0 size-full object-cover object-center"
-                  onCanPlayThrough={() => setBgReady(true)}
+                  onLoadStart={() => {
+                    setBgReady(false)
+                    setForceHideLoader(false)
+                  }}
+                  onLoadedData={() => setBgReady(true)}
+                  onCanPlay={() => setBgReady(true)}
+                  onPlaying={() => setBgReady(true)}
+                  onWaiting={() => setBgReady(false)}
                   onError={() => setForceHideLoader(true)}
                 />
 

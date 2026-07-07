@@ -1048,7 +1048,7 @@ function MapSideTable({
                       ? [{ label: "Area", value: formatArea(selectedActor.sizeHa) }]
                       : []),
                   ]
-                : [{ label: "Point", value: "Selected asset or map location" }]),
+                : []),
               {
                 label: "Latitude",
                 value: formatCoordinate(selectedPoint.latitude),
@@ -1488,7 +1488,7 @@ export function DashboardAssetMap({
         ) : null}
 
         <CardContent className={showHeaderCopy || showOpenFullMapButton ? "p-4 xl:p-5" : "p-0"}>
-          <div className="grid gap-5 xl:grid-cols-[minmax(0,1.2fr)_340px]">
+          <div className="grid gap-5">
             <div className="space-y-5">
               <div
                 className={cn(
@@ -1680,7 +1680,7 @@ export function DashboardAssetMap({
                       tileLayersLabel="Base map"
                       layerGroupsLabel="Map overlays"
                     />
-                    <BasicSsmtLayerControl />
+                    <BasicSsmtLayerControl position="top-3 left-15"/>
 
                     <MapControlContainer className="right-16 top-3">
                       <div className="flex gap-2">

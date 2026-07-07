@@ -33,6 +33,8 @@ import {
 } from "@/components/ui/table"
 import {
   Map,
+  MapLayers,
+  MapLayersControl,
   MapMarker,
   MapPopup,
   MapTileLayer,
@@ -64,6 +66,33 @@ import {
 
 type TableRowValue = string | number | boolean | null
 type TableRowRecord = Record<string, TableRowValue>
+
+const siteAnalysisTileLayers = [
+  {
+    name: "Street",
+    url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+    attribution:
+      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  },
+  {
+    name: "Satellite",
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    attribution:
+      "Tiles &copy; Esri, Maxar, Earthstar Geographics, and the GIS User Community",
+  },
+  {
+    name: "Topographic",
+    url: "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+    attribution:
+      'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, SRTM | Map style &copy; <a href="https://opentopomap.org">OpenTopoMap</a>',
+  },
+  {
+    name: "Dark",
+    url: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
+    attribution:
+      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  },
+]
 
 const EARTH_ENGINE_AUTH_COMMAND = [
   "cd backend",
@@ -125,9 +154,16 @@ interface BackendSiteClassificationResponse {
   earth_engine: BackendEarthEngineStatus
 }
 
-interface LockedCoordinate {
+export interface LockedCoordinate {
   lat: number
   lon: number
+}
+
+interface SiteClassificationAnalysisProps {
+  coordinate?: LockedCoordinate | null
+  onCoordinateChange?: (coordinate: LockedCoordinate | null) => void
+  autoRunKey?: number
+  hideMap?: boolean
 }
 
 function startCase(value: string) {
@@ -437,11 +473,16 @@ function ModelTableCard({
   )
 }
 
-export default function SiteClassificationPage() {
+export function SiteClassificationAnalysis({
+  coordinate,
+  onCoordinateChange,
+  autoRunKey,
+  hideMap = false,
+}: SiteClassificationAnalysisProps = {}) {
   const [draftForm, setDraftForm] = React.useState<SiteClassificationForm>(
     defaultSiteClassificationForm
   )
-  const [lockedCoordinate, setLockedCoordinate] =
+  const [internalLockedCoordinate, setInternalLockedCoordinate] =
     React.useState<LockedCoordinate | null>(null)
   const [isRunning, setIsRunning] = React.useState(false)
   const [runError, setRunError] = React.useState<string | null>(null)
@@ -456,6 +497,19 @@ export default function SiteClassificationPage() {
   const [earthEngineStatus, setEarthEngineStatus] =
     React.useState<BackendEarthEngineStatus | null>(null)
   const [isCheckingEarthEngine, setIsCheckingEarthEngine] = React.useState(false)
+  const isCoordinateControlled = coordinate !== undefined
+  const lockedCoordinate = isCoordinateControlled
+    ? coordinate
+    : internalLockedCoordinate
+  const setLockedCoordinate = React.useCallback(
+    (nextCoordinate: LockedCoordinate | null) => {
+      if (!isCoordinateControlled) {
+        setInternalLockedCoordinate(nextCoordinate)
+      }
+      onCoordinateChange?.(nextCoordinate)
+    },
+    [isCoordinateControlled, onCoordinateChange]
+  )
 
   const apiBaseUrl = React.useMemo(
     () => (import.meta.env.VITE_API_URL?.replace(/\/$/, "") || "/api"),
@@ -621,6 +675,19 @@ export default function SiteClassificationPage() {
     refreshEarthEngineStatus,
   ])
 
+  const lastAutoRunKey = React.useRef(autoRunKey)
+
+  React.useEffect(() => {
+    if (autoRunKey === undefined || autoRunKey === lastAutoRunKey.current) {
+      return
+    }
+
+    lastAutoRunKey.current = autoRunKey
+    if (lockedCoordinate) {
+      void runSiteClassification()
+    }
+  }, [autoRunKey, lockedCoordinate, runSiteClassification])
+
   const updateYear =
     (field: "startYear" | "endYear") =>
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -635,10 +702,10 @@ export default function SiteClassificationPage() {
     (field: "lat" | "lon") =>
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const nextValue = Number(event.target.value)
-      setLockedCoordinate((current) => ({
-        lat: field === "lat" ? nextValue : current?.lat ?? 0,
-        lon: field === "lon" ? nextValue : current?.lon ?? 0,
-      }))
+      setLockedCoordinate({
+        lat: field === "lat" ? nextValue : lockedCoordinate?.lat ?? 0,
+        lon: field === "lon" ? nextValue : lockedCoordinate?.lon ?? 0,
+      })
     }
 
   const setSources = (sources: SiteModelSource[]) => {
@@ -813,83 +880,88 @@ export default function SiteClassificationPage() {
   }, [selectedDynamicMetrics, selectedDynamicSources])
 
   return (
-    <BaseLayout
-      title="Site classification"
-      description="Double-click anywhere on the map to lock coordinates, choose the model parameters, then run the model to fully classify your site."
-    >
       <div className="@container/main px-4 lg:px-6">
         <div className="space-y-6">
-          <Card className="gap-4 py-0">
-            <CardHeader className="p-3">
-              <div className="flex flex-wrap items-center gap-3">
-                {lockedCoordinate ? (
-                  <Badge variant="outline">
-                    {lockedCoordinate.lat.toFixed(4)}, {lockedCoordinate.lon.toFixed(4)}
-                  </Badge>
-                ) : null}
-                {result?.earth_engine ? (
-                  <Badge
-                    variant="outline"
-                    className={earthEngineBadgeClass(result.earth_engine)}
-                  >
-                    {earthEngineBadgeText(result.earth_engine)}
-                  </Badge>
-                ) : null}
-                {displayedEarthEngineStatus && !result?.earth_engine ? (
-                  <Badge
-                    variant="outline"
-                    className={earthEngineBadgeClass(displayedEarthEngineStatus)}
-                  >
-                    {earthEngineBadgeText(displayedEarthEngineStatus)}
-                  </Badge>
-                ) : null}
-              </div>
-            </CardHeader>
-            <CardContent className="p-0">
-              <Map
-                center={[0.6, 33.2]}
-                zoom={6}
-                doubleClickZoom={false}
-                className="h-[520px] w-full rounded-none"
-              >
-                <MapTileLayer
-                  url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
-                  attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>'
-                />
-                <CoordinateMapEvents onCoordinateLock={setLockedCoordinate} />
-                <CoordinateFocus coordinate={lockedCoordinate} />
-                {lockedCoordinate ? (
-                  <MapMarker
-                    position={[lockedCoordinate.lat, lockedCoordinate.lon]}
-                    icon={
-                      <div className="rounded-full text-emerald-700 shadow-lg">
-                        <MapPinned className="h-4 w-4" />
-                      </div>
-                    }
-                  >
-                    <MapPopup className="w-[min(20rem,calc(100vw-3rem))] p-0">
-                      <div className="space-y-3 rounded-[18px] border bg-background p-4">
-                        <div>
-                          <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
-                            Locked coordinate
+          {!hideMap ? (
+            <Card className="gap-4 py-0">
+              <CardHeader className="p-3">
+                <div className="flex flex-wrap items-center gap-3">
+                  {lockedCoordinate ? (
+                    <Badge variant="outline">
+                      {lockedCoordinate.lat.toFixed(4)}, {lockedCoordinate.lon.toFixed(4)}
+                    </Badge>
+                  ) : null}
+                  {result?.earth_engine ? (
+                    <Badge
+                      variant="outline"
+                      className={earthEngineBadgeClass(result.earth_engine)}
+                    >
+                      {earthEngineBadgeText(result.earth_engine)}
+                    </Badge>
+                  ) : null}
+                  {displayedEarthEngineStatus && !result?.earth_engine ? (
+                    <Badge
+                      variant="outline"
+                      className={earthEngineBadgeClass(displayedEarthEngineStatus)}
+                    >
+                      {earthEngineBadgeText(displayedEarthEngineStatus)}
+                    </Badge>
+                  ) : null}
+                </div>
+              </CardHeader>
+              <CardContent className="p-0">
+                <Map
+                  center={[0.6, 33.2]}
+                  zoom={6}
+                  doubleClickZoom={false}
+                  className="h-[520px] w-full rounded-none"
+                >
+                  <MapLayers defaultTileLayer="Street">
+                    {siteAnalysisTileLayers.map((tileLayer) => (
+                      <MapTileLayer
+                        key={tileLayer.name}
+                        name={tileLayer.name}
+                        url={tileLayer.url}
+                        attribution={tileLayer.attribution}
+                      />
+                    ))}
+                    <MapLayersControl tileLayersLabel="Map type" position="top-3 right-3" />
+                    <CoordinateMapEvents onCoordinateLock={setLockedCoordinate} />
+                    <CoordinateFocus coordinate={lockedCoordinate} />
+                    {lockedCoordinate ? (
+                      <MapMarker
+                        position={[lockedCoordinate.lat, lockedCoordinate.lon]}
+                        icon={
+                          <div className="rounded-full text-emerald-700 shadow-lg">
+                            <MapPinned className="h-4 w-4" />
                           </div>
-                          <div className="mt-1 text-sm font-medium">
-                            Latitude: {lockedCoordinate.lat.toFixed(6)}
+                        }
+                      >
+                        <MapPopup className="w-[min(20rem,calc(100vw-3rem))] p-0">
+                          <div className="space-y-3 rounded-[18px] border bg-background p-4">
+                            <div>
+                              <div className="text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                                Locked coordinate
+                              </div>
+                              <div className="mt-1 text-sm font-medium">
+                                Latitude: {lockedCoordinate.lat.toFixed(6)}
+                              </div>
+                              <div className="text-sm font-medium">
+                                Longitude: {lockedCoordinate.lon.toFixed(6)}
+                              </div>
+                            </div>
+                            <p className="text-sm text-muted-foreground">
+                              Change this by double-clicking a new point on the map.
+                            </p>
                           </div>
-                          <div className="text-sm font-medium">
-                            Longitude: {lockedCoordinate.lon.toFixed(6)}
-                          </div>
-                        </div>
-                        <p className="text-sm text-muted-foreground">
-                          Change this by double-clicking a new point on the map.
-                        </p>
-                      </div>
-                    </MapPopup>
-                  </MapMarker>
-                ) : null}
-              </Map>
-            </CardContent>
-          </Card>
+                        </MapPopup>
+                      </MapMarker>
+                    ) : null}
+                  </MapLayers>
+                </Map>
+              </CardContent>
+            </Card>
+          ) : null}
           <Card className="gap-4 border-border/70 bg-background/75 py-5">
             <CardHeader className="px-5">
               <div className="flex items-center gap-2">
@@ -1384,6 +1456,16 @@ export default function SiteClassificationPage() {
           </div>
         </div>
       </div>
+  )
+}
+
+export default function SiteClassificationPage() {
+  return (
+    <BaseLayout
+      title="Site classification"
+      description="Double-click anywhere on the map to lock coordinates, choose the model parameters, then run the model to fully classify your site."
+    >
+      <SiteClassificationAnalysis />
     </BaseLayout>
   )
 }

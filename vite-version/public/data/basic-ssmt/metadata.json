@@ -1,10 +1,9 @@
 {
   "schema_version": 1,
-  "generated_at": null,
-  "generated": false,
+  "generated_at": "2026-07-03T05:40:26.110Z",
+  "generated": true,
   "source_layers": {
-    "KEN": "KCFP_SSMT_Kenya",
-    "TZA": "FDT_SSMT_Tanzania",
+    "KEN": "KCFP_SSMT_Kenya + Mvolkensii_Site_Suitability",
     "UGA": "SWIFT_SSMT_Uganda"
   },
   "countries": [
@@ -13,21 +12,427 @@
       "name": "Kenya"
     },
     {
-      "code": "TZA",
-      "name": "Tanzania"
-    },
-    {
       "code": "UGA",
       "name": "Uganda"
     }
   ],
   "genera": [
-    "Eucalyptus",
-    "Pinus",
     "Acacia",
-    "Unknown/Other"
+    "Afzelia",
+    "Araucaria",
+    "Casuarina",
+    "Cedrella",
+    "Corymbia",
+    "Cupressus",
+    "Eucalyptus",
+    "Gmelina",
+    "Grevillea",
+    "Khaya",
+    "Maesopsis",
+    "Melia",
+    "Milicia",
+    "Neomalarckia",
+    "Pinus",
+    "Tectona",
+    "Terminalia"
   ],
-  "species": [],
+  "species": [
+    {
+      "species_name": "Acacia_crassicarpa",
+      "genus": "Acacia",
+      "species": "crassicarpa"
+    },
+    {
+      "species_name": "Acacia_mangium",
+      "genus": "Acacia",
+      "species": "mangium"
+    },
+    {
+      "species_name": "Acacia_mangium_auriculoformis",
+      "genus": "Acacia",
+      "species": "mangium_auriculoformis"
+    },
+    {
+      "species_name": "Acacia_mearnsii",
+      "genus": "Acacia",
+      "species": "mearnsii"
+    },
+    {
+      "species_name": "Afzelia_quanzensis",
+      "genus": "Afzelia",
+      "species": "quanzensis"
+    },
+    {
+      "species_name": "Araucaria_angustifolia",
+      "genus": "Araucaria",
+      "species": "angustifolia"
+    },
+    {
+      "species_name": "Araucaria_cunninghamii",
+      "genus": "Araucaria",
+      "species": "cunninghamii"
+    },
+    {
+      "species_name": "Araucaria_hunsteinii",
+      "genus": "Araucaria",
+      "species": "hunsteinii"
+    },
+    {
+      "species_name": "Casuarina_cunninghamiana",
+      "genus": "Casuarina",
+      "species": "cunninghamiana"
+    },
+    {
+      "species_name": "Casuarina_equisetifolia",
+      "genus": "Casuarina",
+      "species": "equisetifolia"
+    },
+    {
+      "species_name": "Casuarina_junghunhiana",
+      "genus": "Casuarina",
+      "species": "junghunhiana"
+    },
+    {
+      "species_name": "Casuarina_oligodon",
+      "genus": "Casuarina",
+      "species": "oligodon"
+    },
+    {
+      "species_name": "Cedrella_odorata",
+      "genus": "Cedrella",
+      "species": "odorata"
+    },
+    {
+      "species_name": "Corymbia_citriodora_citriodora",
+      "genus": "Corymbia",
+      "species": "citriodora_citriodora"
+    },
+    {
+      "species_name": "Corymbia_citriodora_variegata",
+      "genus": "Corymbia",
+      "species": "citriodora_variegata"
+    },
+    {
+      "species_name": "Corymbia_henryi",
+      "genus": "Corymbia",
+      "species": "henryi"
+    },
+    {
+      "species_name": "Corymbia_henryi_torreliana",
+      "genus": "Corymbia",
+      "species": "henryi_torreliana"
+    },
+    {
+      "species_name": "Corymbia_maculata",
+      "genus": "Corymbia",
+      "species": "maculata"
+    },
+    {
+      "species_name": "Corymbia_torreliana",
+      "genus": "Corymbia",
+      "species": "torreliana"
+    },
+    {
+      "species_name": "Corymbia_torreliana_henryi",
+      "genus": "Corymbia",
+      "species": "torreliana_henryi"
+    },
+    {
+      "species_name": "Cupressus_lusitanica",
+      "genus": "Cupressus",
+      "species": "lusitanica"
+    },
+    {
+      "species_name": "Eucalyptus_badjensis",
+      "genus": "Eucalyptus",
+      "species": "badjensis"
+    },
+    {
+      "species_name": "Eucalyptus_benthamii",
+      "genus": "Eucalyptus",
+      "species": "benthamii"
+    },
+    {
+      "species_name": "Eucalyptus_camal_north",
+      "genus": "Eucalyptus",
+      "species": "camal_north"
+    },
+    {
+      "species_name": "Eucalyptus_camal_south",
+      "genus": "Eucalyptus",
+      "species": "camal_south"
+    },
+    {
+      "species_name": "Eucalyptus_camaldulensis_N",
+      "genus": "Eucalyptus",
+      "species": "camaldulensis_N"
+    },
+    {
+      "species_name": "Eucalyptus_camaldulensis_S",
+      "genus": "Eucalyptus",
+      "species": "camaldulensis_S"
+    },
+    {
+      "species_name": "Eucalyptus_cloeziana",
+      "genus": "Eucalyptus",
+      "species": "cloeziana"
+    },
+    {
+      "species_name": "Eucalyptus_deglupta",
+      "genus": "Eucalyptus",
+      "species": "deglupta"
+    },
+    {
+      "species_name": "Eucalyptus_dunnii",
+      "genus": "Eucalyptus",
+      "species": "dunnii"
+    },
+    {
+      "species_name": "Eucalyptus_globulus",
+      "genus": "Eucalyptus",
+      "species": "globulus"
+    },
+    {
+      "species_name": "Eucalyptus_grandis",
+      "genus": "Eucalyptus",
+      "species": "grandis"
+    },
+    {
+      "species_name": "Eucalyptus_grandis_camal",
+      "genus": "Eucalyptus",
+      "species": "grandis_camal"
+    },
+    {
+      "species_name": "Eucalyptus_grandis_camaldulensis",
+      "genus": "Eucalyptus",
+      "species": "grandis_camaldulensis"
+    },
+    {
+      "species_name": "Eucalyptus_grandis_nitens",
+      "genus": "Eucalyptus",
+      "species": "grandis_nitens"
+    },
+    {
+      "species_name": "Eucalyptus_grandis_teret",
+      "genus": "Eucalyptus",
+      "species": "grandis_teret"
+    },
+    {
+      "species_name": "Eucalyptus_grandis_tereticornis",
+      "genus": "Eucalyptus",
+      "species": "grandis_tereticornis"
+    },
+    {
+      "species_name": "Eucalyptus_grandis_uroph",
+      "genus": "Eucalyptus",
+      "species": "grandis_uroph"
+    },
+    {
+      "species_name": "Eucalyptus_grandis_urophylla",
+      "genus": "Eucalyptus",
+      "species": "grandis_urophylla"
+    },
+    {
+      "species_name": "Eucalyptus_longirostrata",
+      "genus": "Eucalyptus",
+      "species": "longirostrata"
+    },
+    {
+      "species_name": "Eucalyptus_macarthurii",
+      "genus": "Eucalyptus",
+      "species": "macarthurii"
+    },
+    {
+      "species_name": "Eucalyptus_microcorys",
+      "genus": "Eucalyptus",
+      "species": "microcorys"
+    },
+    {
+      "species_name": "Eucalyptus_nitens",
+      "genus": "Eucalyptus",
+      "species": "nitens"
+    },
+    {
+      "species_name": "Eucalyptus_pellita",
+      "genus": "Eucalyptus",
+      "species": "pellita"
+    },
+    {
+      "species_name": "Eucalyptus_saligna",
+      "genus": "Eucalyptus",
+      "species": "saligna"
+    },
+    {
+      "species_name": "Eucalyptus_saligna_uroph",
+      "genus": "Eucalyptus",
+      "species": "saligna_uroph"
+    },
+    {
+      "species_name": "Eucalyptus_smithii",
+      "genus": "Eucalyptus",
+      "species": "smithii"
+    },
+    {
+      "species_name": "Eucalyptus_tereticornis",
+      "genus": "Eucalyptus",
+      "species": "tereticornis"
+    },
+    {
+      "species_name": "Eucalyptus_urophylla",
+      "genus": "Eucalyptus",
+      "species": "urophylla"
+    },
+    {
+      "species_name": "Eucalyptus_urophylla_gran",
+      "genus": "Eucalyptus",
+      "species": "urophylla_gran"
+    },
+    {
+      "species_name": "Eucalyptus_urophylla_grandis",
+      "genus": "Eucalyptus",
+      "species": "urophylla_grandis"
+    },
+    {
+      "species_name": "Eucalyptus_viminalis",
+      "genus": "Eucalyptus",
+      "species": "viminalis"
+    },
+    {
+      "species_name": "Gmelina_arborea",
+      "genus": "Gmelina",
+      "species": "arborea"
+    },
+    {
+      "species_name": "Grevillea_robusta",
+      "genus": "Grevillea",
+      "species": "robusta"
+    },
+    {
+      "species_name": "Khaya_anthotheca",
+      "genus": "Khaya",
+      "species": "anthotheca"
+    },
+    {
+      "species_name": "Maesopsis_eminii",
+      "genus": "Maesopsis",
+      "species": "eminii"
+    },
+    {
+      "species_name": "Melia_volkensii",
+      "genus": "Melia",
+      "species": "volkensii"
+    },
+    {
+      "species_name": "Milicia_excelsa",
+      "genus": "Milicia",
+      "species": "excelsa"
+    },
+    {
+      "species_name": "Neomalarckia_cadamba",
+      "genus": "Neomalarckia",
+      "species": "cadamba"
+    },
+    {
+      "species_name": "Pinus_caribaea_baha",
+      "genus": "Pinus",
+      "species": "caribaea_baha"
+    },
+    {
+      "species_name": "Pinus_caribaea_bahamensis",
+      "genus": "Pinus",
+      "species": "caribaea_bahamensis"
+    },
+    {
+      "species_name": "Pinus_caribaea_hond",
+      "genus": "Pinus",
+      "species": "caribaea_hond"
+    },
+    {
+      "species_name": "Pinus_caribaea_hondurensis",
+      "genus": "Pinus",
+      "species": "caribaea_hondurensis"
+    },
+    {
+      "species_name": "Pinus_caribaea_tecunumanii",
+      "genus": "Pinus",
+      "species": "caribaea_tecunumanii"
+    },
+    {
+      "species_name": "Pinus_elliottii",
+      "genus": "Pinus",
+      "species": "elliottii"
+    },
+    {
+      "species_name": "Pinus_elliottii_carib",
+      "genus": "Pinus",
+      "species": "elliottii_carib"
+    },
+    {
+      "species_name": "Pinus_elliottii_caribaea",
+      "genus": "Pinus",
+      "species": "elliottii_caribaea"
+    },
+    {
+      "species_name": "Pinus_kesiya",
+      "genus": "Pinus",
+      "species": "kesiya"
+    },
+    {
+      "species_name": "Pinus_maximinoi",
+      "genus": "Pinus",
+      "species": "maximinoi"
+    },
+    {
+      "species_name": "Pinus_oocarpa",
+      "genus": "Pinus",
+      "species": "oocarpa"
+    },
+    {
+      "species_name": "Pinus_patula",
+      "genus": "Pinus",
+      "species": "patula"
+    },
+    {
+      "species_name": "Pinus_patula_tecun",
+      "genus": "Pinus",
+      "species": "patula_tecun"
+    },
+    {
+      "species_name": "Pinus_patula_tecunumanii",
+      "genus": "Pinus",
+      "species": "patula_tecunumanii"
+    },
+    {
+      "species_name": "Pinus_radiata",
+      "genus": "Pinus",
+      "species": "radiata"
+    },
+    {
+      "species_name": "Pinus_taeda",
+      "genus": "Pinus",
+      "species": "taeda"
+    },
+    {
+      "species_name": "Pinus_tecunumanii",
+      "genus": "Pinus",
+      "species": "tecunumanii"
+    },
+    {
+      "species_name": "Tectona_grandis",
+      "genus": "Tectona",
+      "species": "grandis"
+    },
+    {
+      "species_name": "Terminalia_ivorensis",
+      "genus": "Terminalia",
+      "species": "ivorensis"
+    },
+    {
+      "species_name": "Terminalia_superba",
+      "genus": "Terminalia",
+      "species": "superba"
+    }
+  ],
   "suitability": [
     {
       "name": "Very suitable",
@@ -45,19 +450,2813 @@
       "color": "#d97706"
     },
     {
+      "name": "Possibly suitable",
+      "rank": 3.5,
+      "color": "#ca8a04"
+    },
+    {
       "name": "Not suitable",
       "rank": 4,
       "color": "#991b1b"
-    },
-    {
-      "name": "Unknown",
-      "rank": 99,
-      "color": "#64748b"
     }
   ],
-  "chunks": [],
+  "chunks": [
+    {
+      "country_code": "KEN",
+      "genus": "Acacia",
+      "species_name": "Acacia_crassicarpa",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/acacia/acacia-crassicarpa-marginally-suitable.geojson",
+      "feature_count": 1569
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Acacia",
+      "species_name": "Acacia_crassicarpa",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/acacia/acacia-crassicarpa-moderately-suitable.geojson",
+      "feature_count": 946
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Acacia",
+      "species_name": "Acacia_crassicarpa",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/acacia/acacia-crassicarpa-very-suitable.geojson",
+      "feature_count": 521
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Acacia",
+      "species_name": "Acacia_mangium_auriculoformis",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/acacia/acacia-mangium-auriculoformis-marginally-suitable.geojson",
+      "feature_count": 885
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Acacia",
+      "species_name": "Acacia_mangium_auriculoformis",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/acacia/acacia-mangium-auriculoformis-moderately-suitable.geojson",
+      "feature_count": 432
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Acacia",
+      "species_name": "Acacia_mangium_auriculoformis",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/acacia/acacia-mangium-auriculoformis-very-suitable.geojson",
+      "feature_count": 208
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Acacia",
+      "species_name": "Acacia_mangium",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/acacia/acacia-mangium-marginally-suitable.geojson",
+      "feature_count": 729
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Acacia",
+      "species_name": "Acacia_mangium",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/acacia/acacia-mangium-moderately-suitable.geojson",
+      "feature_count": 326
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Acacia",
+      "species_name": "Acacia_mangium",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/acacia/acacia-mangium-very-suitable.geojson",
+      "feature_count": 145
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Acacia",
+      "species_name": "Acacia_mearnsii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/acacia/acacia-mearnsii-marginally-suitable.geojson",
+      "feature_count": 2686
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Acacia",
+      "species_name": "Acacia_mearnsii",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/acacia/acacia-mearnsii-moderately-suitable.geojson",
+      "feature_count": 1249
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Acacia",
+      "species_name": "Acacia_mearnsii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/acacia/acacia-mearnsii-very-suitable.geojson",
+      "feature_count": 1141
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Afzelia",
+      "species_name": "Afzelia_quanzensis",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/afzelia/afzelia-quanzensis-marginally-suitable.geojson",
+      "feature_count": 1691
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Afzelia",
+      "species_name": "Afzelia_quanzensis",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/afzelia/afzelia-quanzensis-moderately-suitable.geojson",
+      "feature_count": 428
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Afzelia",
+      "species_name": "Afzelia_quanzensis",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/afzelia/afzelia-quanzensis-very-suitable.geojson",
+      "feature_count": 145
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Casuarina",
+      "species_name": "Casuarina_cunninghamiana",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/casuarina/casuarina-cunninghamiana-marginally-suitable.geojson",
+      "feature_count": 5542
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Casuarina",
+      "species_name": "Casuarina_equisetifolia",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/casuarina/casuarina-equisetifolia-marginally-suitable.geojson",
+      "feature_count": 2832
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Casuarina",
+      "species_name": "Casuarina_equisetifolia",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/casuarina/casuarina-equisetifolia-moderately-suitable.geojson",
+      "feature_count": 2324
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Casuarina",
+      "species_name": "Casuarina_equisetifolia",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/casuarina/casuarina-equisetifolia-very-suitable.geojson",
+      "feature_count": 1861
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Casuarina",
+      "species_name": "Casuarina_junghunhiana",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/casuarina/casuarina-junghunhiana-marginally-suitable.geojson",
+      "feature_count": 5542
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Casuarina",
+      "species_name": "Casuarina_oligodon",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/casuarina/casuarina-oligodon-marginally-suitable.geojson",
+      "feature_count": 4385
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Cedrella",
+      "species_name": "Cedrella_odorata",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/cedrella/cedrella-odorata-marginally-suitable.geojson",
+      "feature_count": 2305
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Cedrella",
+      "species_name": "Cedrella_odorata",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/cedrella/cedrella-odorata-moderately-suitable.geojson",
+      "feature_count": 946
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Cedrella",
+      "species_name": "Cedrella_odorata",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/cedrella/cedrella-odorata-very-suitable.geojson",
+      "feature_count": 521
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_citriodora_citriodora",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/corymbia/corymbia-citriodora-citriodora-marginally-suitable.geojson",
+      "feature_count": 3047
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_citriodora_citriodora",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/corymbia/corymbia-citriodora-citriodora-moderately-suitable.geojson",
+      "feature_count": 1454
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_citriodora_citriodora",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/corymbia/corymbia-citriodora-citriodora-very-suitable.geojson",
+      "feature_count": 1099
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_citriodora_variegata",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/corymbia/corymbia-citriodora-variegata-marginally-suitable.geojson",
+      "feature_count": 2520
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_citriodora_variegata",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/corymbia/corymbia-citriodora-variegata-moderately-suitable.geojson",
+      "feature_count": 919
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_citriodora_variegata",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/corymbia/corymbia-citriodora-variegata-very-suitable.geojson",
+      "feature_count": 910
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_henryi",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/corymbia/corymbia-henryi-marginally-suitable.geojson",
+      "feature_count": 2871
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_henryi",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/corymbia/corymbia-henryi-moderately-suitable.geojson",
+      "feature_count": 1255
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_henryi",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/corymbia/corymbia-henryi-very-suitable.geojson",
+      "feature_count": 1010
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_maculata",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/corymbia/corymbia-maculata-marginally-suitable.geojson",
+      "feature_count": 2520
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_maculata",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/corymbia/corymbia-maculata-moderately-suitable.geojson",
+      "feature_count": 919
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_maculata",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/corymbia/corymbia-maculata-very-suitable.geojson",
+      "feature_count": 910
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_torreliana_henryi",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/corymbia/corymbia-torreliana-henryi-marginally-suitable.geojson",
+      "feature_count": 2726
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_torreliana_henryi",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/corymbia/corymbia-torreliana-henryi-moderately-suitable.geojson",
+      "feature_count": 1553
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_torreliana_henryi",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/corymbia/corymbia-torreliana-henryi-very-suitable.geojson",
+      "feature_count": 1090
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_torreliana",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/corymbia/corymbia-torreliana-marginally-suitable.geojson",
+      "feature_count": 2709
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_torreliana",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/corymbia/corymbia-torreliana-moderately-suitable.geojson",
+      "feature_count": 1075
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_torreliana",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/corymbia/corymbia-torreliana-very-suitable.geojson",
+      "feature_count": 720
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Cupressus",
+      "species_name": "Cupressus_lusitanica",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/cupressus/cupressus-lusitanica-marginally-suitable.geojson",
+      "feature_count": 2302
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Cupressus",
+      "species_name": "Cupressus_lusitanica",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/cupressus/cupressus-lusitanica-moderately-suitable.geojson",
+      "feature_count": 1489
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Cupressus",
+      "species_name": "Cupressus_lusitanica",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/cupressus/cupressus-lusitanica-very-suitable.geojson",
+      "feature_count": 1477
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_badjensis",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-badjensis-marginally-suitable.geojson",
+      "feature_count": 1827
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_badjensis",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-badjensis-moderately-suitable.geojson",
+      "feature_count": 496
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_badjensis",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-badjensis-very-suitable.geojson",
+      "feature_count": 561
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_benthamii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-benthamii-marginally-suitable.geojson",
+      "feature_count": 2774
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_benthamii",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-benthamii-moderately-suitable.geojson",
+      "feature_count": 1249
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_benthamii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-benthamii-very-suitable.geojson",
+      "feature_count": 1141
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_camal_north",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-camal-north-marginally-suitable.geojson",
+      "feature_count": 2709
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_camal_north",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-camal-north-moderately-suitable.geojson",
+      "feature_count": 1075
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_camal_north",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-camal-north-very-suitable.geojson",
+      "feature_count": 720
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_camal_south",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-camal-south-marginally-suitable.geojson",
+      "feature_count": 2728
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_camal_south",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-camal-south-moderately-suitable.geojson",
+      "feature_count": 1892
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_camal_south",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-camal-south-very-suitable.geojson",
+      "feature_count": 1653
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_cloeziana",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-cloeziana-marginally-suitable.geojson",
+      "feature_count": 2495
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_cloeziana",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-cloeziana-moderately-suitable.geojson",
+      "feature_count": 935
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_cloeziana",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-cloeziana-very-suitable.geojson",
+      "feature_count": 1010
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_deglupta",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-deglupta-marginally-suitable.geojson",
+      "feature_count": 1521
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_deglupta",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-deglupta-moderately-suitable.geojson",
+      "feature_count": 518
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_deglupta",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-deglupta-very-suitable.geojson",
+      "feature_count": 720
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_dunnii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-dunnii-marginally-suitable.geojson",
+      "feature_count": 2862
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_dunnii",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-dunnii-moderately-suitable.geojson",
+      "feature_count": 1489
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_dunnii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-dunnii-very-suitable.geojson",
+      "feature_count": 1477
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_globulus",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-globulus-marginally-suitable.geojson",
+      "feature_count": 1588
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_globulus",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-globulus-moderately-suitable.geojson",
+      "feature_count": 557
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_globulus",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-globulus-very-suitable.geojson",
+      "feature_count": 826
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_camal",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-grandis-camal-marginally-suitable.geojson",
+      "feature_count": 3155
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_camal",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-grandis-camal-moderately-suitable.geojson",
+      "feature_count": 1890
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_camal",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-grandis-camal-very-suitable.geojson",
+      "feature_count": 1464
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-grandis-marginally-suitable.geojson",
+      "feature_count": 2201
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-grandis-moderately-suitable.geojson",
+      "feature_count": 683
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_nitens",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-grandis-nitens-marginally-suitable.geojson",
+      "feature_count": 1477
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_nitens",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-grandis-nitens-moderately-suitable.geojson",
+      "feature_count": 422
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_nitens",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-grandis-nitens-very-suitable.geojson",
+      "feature_count": 752
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_teret",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-grandis-teret-marginally-suitable.geojson",
+      "feature_count": 3155
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_teret",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-grandis-teret-moderately-suitable.geojson",
+      "feature_count": 1890
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_teret",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-grandis-teret-very-suitable.geojson",
+      "feature_count": 1464
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_uroph",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-grandis-uroph-marginally-suitable.geojson",
+      "feature_count": 3230
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_uroph",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-grandis-uroph-moderately-suitable.geojson",
+      "feature_count": 1735
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_uroph",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-grandis-uroph-very-suitable.geojson",
+      "feature_count": 1366
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-grandis-very-suitable.geojson",
+      "feature_count": 910
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_longirostrata",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-longirostrata-marginally-suitable.geojson",
+      "feature_count": 2871
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_longirostrata",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-longirostrata-moderately-suitable.geojson",
+      "feature_count": 1255
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_longirostrata",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-longirostrata-very-suitable.geojson",
+      "feature_count": 1010
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_macarthurii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-macarthurii-marginally-suitable.geojson",
+      "feature_count": 1588
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_macarthurii",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-macarthurii-moderately-suitable.geojson",
+      "feature_count": 557
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_macarthurii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-macarthurii-very-suitable.geojson",
+      "feature_count": 826
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_microcorys",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-microcorys-marginally-suitable.geojson",
+      "feature_count": 2495
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_microcorys",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-microcorys-moderately-suitable.geojson",
+      "feature_count": 935
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_microcorys",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-microcorys-very-suitable.geojson",
+      "feature_count": 1010
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_nitens",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-nitens-marginally-suitable.geojson",
+      "feature_count": 747
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_nitens",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-nitens-moderately-suitable.geojson",
+      "feature_count": 199
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_nitens",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-nitens-very-suitable.geojson",
+      "feature_count": 541
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_pellita",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-pellita-marginally-suitable.geojson",
+      "feature_count": 1279
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_pellita",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-pellita-moderately-suitable.geojson",
+      "feature_count": 326
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_pellita",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-pellita-very-suitable.geojson",
+      "feature_count": 145
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_saligna",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-saligna-marginally-suitable.geojson",
+      "feature_count": 2424
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_saligna",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-saligna-moderately-suitable.geojson",
+      "feature_count": 971
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_saligna_uroph",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-saligna-uroph-marginally-suitable.geojson",
+      "feature_count": 2520
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_saligna_uroph",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-saligna-uroph-moderately-suitable.geojson",
+      "feature_count": 919
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_saligna_uroph",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-saligna-uroph-very-suitable.geojson",
+      "feature_count": 910
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_saligna",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-saligna-very-suitable.geojson",
+      "feature_count": 1101
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_smithii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-smithii-marginally-suitable.geojson",
+      "feature_count": 1477
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_smithii",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-smithii-moderately-suitable.geojson",
+      "feature_count": 422
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_smithii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-smithii-very-suitable.geojson",
+      "feature_count": 752
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_tereticornis",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-tereticornis-marginally-suitable.geojson",
+      "feature_count": 3037
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_tereticornis",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-tereticornis-moderately-suitable.geojson",
+      "feature_count": 2040
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_tereticornis",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-tereticornis-very-suitable.geojson",
+      "feature_count": 1539
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_urophylla_gran",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-urophylla-gran-marginally-suitable.geojson",
+      "feature_count": 3095
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_urophylla_gran",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-urophylla-gran-moderately-suitable.geojson",
+      "feature_count": 1683
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_urophylla_gran",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-urophylla-gran-very-suitable.geojson",
+      "feature_count": 1155
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_urophylla",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-urophylla-marginally-suitable.geojson",
+      "feature_count": 3095
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_urophylla",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-urophylla-moderately-suitable.geojson",
+      "feature_count": 1683
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_urophylla",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-urophylla-very-suitable.geojson",
+      "feature_count": 1155
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_viminalis",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-viminalis-marginally-suitable.geojson",
+      "feature_count": 917
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_viminalis",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-viminalis-moderately-suitable.geojson",
+      "feature_count": 243
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_viminalis",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/eucalyptus/eucalyptus-viminalis-very-suitable.geojson",
+      "feature_count": 541
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Gmelina",
+      "species_name": "Gmelina_arborea",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/gmelina/gmelina-arborea-marginally-suitable.geojson",
+      "feature_count": 1279
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Gmelina",
+      "species_name": "Gmelina_arborea",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/gmelina/gmelina-arborea-moderately-suitable.geojson",
+      "feature_count": 326
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Gmelina",
+      "species_name": "Gmelina_arborea",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/gmelina/gmelina-arborea-very-suitable.geojson",
+      "feature_count": 145
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Grevillea",
+      "species_name": "Grevillea_robusta",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/grevillea/grevillea-robusta-marginally-suitable.geojson",
+      "feature_count": 2520
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Grevillea",
+      "species_name": "Grevillea_robusta",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/grevillea/grevillea-robusta-moderately-suitable.geojson",
+      "feature_count": 919
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Grevillea",
+      "species_name": "Grevillea_robusta",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/grevillea/grevillea-robusta-very-suitable.geojson",
+      "feature_count": 910
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Khaya",
+      "species_name": "Khaya_anthotheca",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/khaya/khaya-anthotheca-marginally-suitable.geojson",
+      "feature_count": 729
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Khaya",
+      "species_name": "Khaya_anthotheca",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/khaya/khaya-anthotheca-moderately-suitable.geojson",
+      "feature_count": 326
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Khaya",
+      "species_name": "Khaya_anthotheca",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/khaya/khaya-anthotheca-very-suitable.geojson",
+      "feature_count": 145
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Maesopsis",
+      "species_name": "Maesopsis_eminii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/maesopsis/maesopsis-eminii-marginally-suitable.geojson",
+      "feature_count": 729
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Maesopsis",
+      "species_name": "Maesopsis_eminii",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/maesopsis/maesopsis-eminii-moderately-suitable.geojson",
+      "feature_count": 326
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Maesopsis",
+      "species_name": "Maesopsis_eminii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/maesopsis/maesopsis-eminii-very-suitable.geojson",
+      "feature_count": 145
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Melia",
+      "species_name": "Melia_volkensii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/melia/melia-volkensii-marginally-suitable.geojson",
+      "feature_count": 4508
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Melia",
+      "species_name": "Melia_volkensii",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/melia/melia-volkensii-moderately-suitable.geojson",
+      "feature_count": 3491
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Melia",
+      "species_name": "Melia_volkensii",
+      "suitability_name": "Not suitable",
+      "href": "/data/basic-ssmt/chunks/ken/melia/melia-volkensii-not-suitable.geojson",
+      "feature_count": 2404
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Melia",
+      "species_name": "Melia_volkensii",
+      "suitability_name": "Possibly suitable",
+      "href": "/data/basic-ssmt/chunks/ken/melia/melia-volkensii-possibly-suitable.geojson",
+      "feature_count": 463
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Melia",
+      "species_name": "Melia_volkensii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/melia/melia-volkensii-very-suitable.geojson",
+      "feature_count": 1495
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Milicia",
+      "species_name": "Milicia_excelsa",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/milicia/milicia-excelsa-marginally-suitable.geojson",
+      "feature_count": 784
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Milicia",
+      "species_name": "Milicia_excelsa",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/milicia/milicia-excelsa-moderately-suitable.geojson",
+      "feature_count": 428
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Milicia",
+      "species_name": "Milicia_excelsa",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/milicia/milicia-excelsa-very-suitable.geojson",
+      "feature_count": 145
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_caribaea_baha",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-caribaea-baha-marginally-suitable.geojson",
+      "feature_count": 1691
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_caribaea_baha",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-caribaea-baha-moderately-suitable.geojson",
+      "feature_count": 428
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_caribaea_baha",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-caribaea-baha-very-suitable.geojson",
+      "feature_count": 145
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_caribaea_hond",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-caribaea-hond-marginally-suitable.geojson",
+      "feature_count": 1691
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_caribaea_hond",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-caribaea-hond-moderately-suitable.geojson",
+      "feature_count": 428
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_caribaea_hond",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-caribaea-hond-very-suitable.geojson",
+      "feature_count": 145
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_elliottii_carib",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-elliottii-carib-marginally-suitable.geojson",
+      "feature_count": 3155
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_elliottii_carib",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-elliottii-carib-moderately-suitable.geojson",
+      "feature_count": 1890
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_elliottii_carib",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-elliottii-carib-very-suitable.geojson",
+      "feature_count": 1464
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_elliottii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-elliottii-marginally-suitable.geojson",
+      "feature_count": 2376
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_elliottii",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-elliottii-moderately-suitable.geojson",
+      "feature_count": 2258
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_elliottii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-elliottii-very-suitable.geojson",
+      "feature_count": 2000
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_kesiya",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-kesiya-marginally-suitable.geojson",
+      "feature_count": 2871
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_kesiya",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-kesiya-moderately-suitable.geojson",
+      "feature_count": 1255
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_kesiya",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-kesiya-very-suitable.geojson",
+      "feature_count": 1010
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_maximinoi",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-maximinoi-marginally-suitable.geojson",
+      "feature_count": 2495
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_maximinoi",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-maximinoi-moderately-suitable.geojson",
+      "feature_count": 935
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_maximinoi",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-maximinoi-very-suitable.geojson",
+      "feature_count": 1010
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_oocarpa",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-oocarpa-marginally-suitable.geojson",
+      "feature_count": 2433
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_oocarpa",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-oocarpa-moderately-suitable.geojson",
+      "feature_count": 737
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_oocarpa",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-oocarpa-very-suitable.geojson",
+      "feature_count": 634
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_patula",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-patula-marginally-suitable.geojson",
+      "feature_count": 1648
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_patula",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-patula-moderately-suitable.geojson",
+      "feature_count": 548
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_patula_tecun",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-patula-tecun-marginally-suitable.geojson",
+      "feature_count": 2520
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_patula_tecun",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-patula-tecun-moderately-suitable.geojson",
+      "feature_count": 919
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_patula_tecun",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-patula-tecun-very-suitable.geojson",
+      "feature_count": 910
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_patula",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-patula-very-suitable.geojson",
+      "feature_count": 752
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_radiata",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-radiata-marginally-suitable.geojson",
+      "feature_count": 915
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_radiata",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-radiata-moderately-suitable.geojson",
+      "feature_count": 431
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_radiata",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-radiata-very-suitable.geojson",
+      "feature_count": 826
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_taeda",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-taeda-marginally-suitable.geojson",
+      "feature_count": 2201
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_taeda",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-taeda-moderately-suitable.geojson",
+      "feature_count": 683
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_taeda",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-taeda-very-suitable.geojson",
+      "feature_count": 910
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_tecunumanii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-tecunumanii-marginally-suitable.geojson",
+      "feature_count": 3047
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_tecunumanii",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-tecunumanii-moderately-suitable.geojson",
+      "feature_count": 1454
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Pinus",
+      "species_name": "Pinus_tecunumanii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/pinus/pinus-tecunumanii-very-suitable.geojson",
+      "feature_count": 1099
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Tectona",
+      "species_name": "Tectona_grandis",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/ken/tectona/tectona-grandis-marginally-suitable.geojson",
+      "feature_count": 1279
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Tectona",
+      "species_name": "Tectona_grandis",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/ken/tectona/tectona-grandis-moderately-suitable.geojson",
+      "feature_count": 326
+    },
+    {
+      "country_code": "KEN",
+      "genus": "Tectona",
+      "species_name": "Tectona_grandis",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/ken/tectona/tectona-grandis-very-suitable.geojson",
+      "feature_count": 145
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Acacia",
+      "species_name": "Acacia_crassicarpa",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/acacia/acacia-crassicarpa-marginally-suitable.geojson",
+      "feature_count": 613
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Acacia",
+      "species_name": "Acacia_crassicarpa",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/acacia/acacia-crassicarpa-moderately-suitable.geojson",
+      "feature_count": 612
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Acacia",
+      "species_name": "Acacia_crassicarpa",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/acacia/acacia-crassicarpa-very-suitable.geojson",
+      "feature_count": 828
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Acacia",
+      "species_name": "Acacia_mangium_auriculoformis",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/acacia/acacia-mangium-auriculoformis-marginally-suitable.geojson",
+      "feature_count": 985
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Acacia",
+      "species_name": "Acacia_mangium_auriculoformis",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/acacia/acacia-mangium-auriculoformis-moderately-suitable.geojson",
+      "feature_count": 254
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Acacia",
+      "species_name": "Acacia_mangium_auriculoformis",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/acacia/acacia-mangium-auriculoformis-very-suitable.geojson",
+      "feature_count": 560
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Acacia",
+      "species_name": "Acacia_mangium",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/acacia/acacia-mangium-marginally-suitable.geojson",
+      "feature_count": 883
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Acacia",
+      "species_name": "Acacia_mangium",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/acacia/acacia-mangium-moderately-suitable.geojson",
+      "feature_count": 372
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Acacia",
+      "species_name": "Acacia_mangium",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/acacia/acacia-mangium-very-suitable.geojson",
+      "feature_count": 358
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Acacia",
+      "species_name": "Acacia_mearnsii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/acacia/acacia-mearnsii-marginally-suitable.geojson",
+      "feature_count": 917
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Acacia",
+      "species_name": "Acacia_mearnsii",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/acacia/acacia-mearnsii-moderately-suitable.geojson",
+      "feature_count": 155
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Acacia",
+      "species_name": "Acacia_mearnsii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/acacia/acacia-mearnsii-very-suitable.geojson",
+      "feature_count": 378
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Afzelia",
+      "species_name": "Afzelia_quanzensis",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/afzelia/afzelia-quanzensis-marginally-suitable.geojson",
+      "feature_count": 883
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Afzelia",
+      "species_name": "Afzelia_quanzensis",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/afzelia/afzelia-quanzensis-moderately-suitable.geojson",
+      "feature_count": 372
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Afzelia",
+      "species_name": "Afzelia_quanzensis",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/afzelia/afzelia-quanzensis-very-suitable.geojson",
+      "feature_count": 358
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Araucaria",
+      "species_name": "Araucaria_angustifolia",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/araucaria/araucaria-angustifolia-marginally-suitable.geojson",
+      "feature_count": 341
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Araucaria",
+      "species_name": "Araucaria_angustifolia",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/araucaria/araucaria-angustifolia-moderately-suitable.geojson",
+      "feature_count": 35
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Araucaria",
+      "species_name": "Araucaria_angustifolia",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/araucaria/araucaria-angustifolia-very-suitable.geojson",
+      "feature_count": 198
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Araucaria",
+      "species_name": "Araucaria_cunninghamii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/araucaria/araucaria-cunninghamii-marginally-suitable.geojson",
+      "feature_count": 545
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Araucaria",
+      "species_name": "Araucaria_cunninghamii",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/araucaria/araucaria-cunninghamii-moderately-suitable.geojson",
+      "feature_count": 558
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Araucaria",
+      "species_name": "Araucaria_cunninghamii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/araucaria/araucaria-cunninghamii-very-suitable.geojson",
+      "feature_count": 1055
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Araucaria",
+      "species_name": "Araucaria_hunsteinii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/araucaria/araucaria-hunsteinii-marginally-suitable.geojson",
+      "feature_count": 587
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Araucaria",
+      "species_name": "Araucaria_hunsteinii",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/araucaria/araucaria-hunsteinii-moderately-suitable.geojson",
+      "feature_count": 497
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Araucaria",
+      "species_name": "Araucaria_hunsteinii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/araucaria/araucaria-hunsteinii-very-suitable.geojson",
+      "feature_count": 828
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Casuarina",
+      "species_name": "Casuarina_cunninghamiana",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/casuarina/casuarina-cunninghamiana-marginally-suitable.geojson",
+      "feature_count": 2265
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Casuarina",
+      "species_name": "Casuarina_equisetifolia",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/casuarina/casuarina-equisetifolia-marginally-suitable.geojson",
+      "feature_count": 270
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Casuarina",
+      "species_name": "Casuarina_equisetifolia",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/casuarina/casuarina-equisetifolia-moderately-suitable.geojson",
+      "feature_count": 623
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Casuarina",
+      "species_name": "Casuarina_equisetifolia",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/casuarina/casuarina-equisetifolia-very-suitable.geojson",
+      "feature_count": 1541
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Casuarina",
+      "species_name": "Casuarina_junghunhiana",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/casuarina/casuarina-junghunhiana-marginally-suitable.geojson",
+      "feature_count": 2265
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Cedrella",
+      "species_name": "Cedrella_odorata",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/cedrella/cedrella-odorata-marginally-suitable.geojson",
+      "feature_count": 613
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Cedrella",
+      "species_name": "Cedrella_odorata",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/cedrella/cedrella-odorata-moderately-suitable.geojson",
+      "feature_count": 612
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Cedrella",
+      "species_name": "Cedrella_odorata",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/cedrella/cedrella-odorata-very-suitable.geojson",
+      "feature_count": 828
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_citriodora_citriodora",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/corymbia/corymbia-citriodora-citriodora-marginally-suitable.geojson",
+      "feature_count": 405
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_citriodora_citriodora",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/corymbia/corymbia-citriodora-citriodora-moderately-suitable.geojson",
+      "feature_count": 589
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_citriodora_citriodora",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/corymbia/corymbia-citriodora-citriodora-very-suitable.geojson",
+      "feature_count": 1351
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_citriodora_variegata",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/corymbia/corymbia-citriodora-variegata-marginally-suitable.geojson",
+      "feature_count": 848
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_citriodora_variegata",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/corymbia/corymbia-citriodora-variegata-moderately-suitable.geojson",
+      "feature_count": 384
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_citriodora_variegata",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/corymbia/corymbia-citriodora-variegata-very-suitable.geojson",
+      "feature_count": 794
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_henryi",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/corymbia/corymbia-henryi-marginally-suitable.geojson",
+      "feature_count": 896
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_henryi",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/corymbia/corymbia-henryi-moderately-suitable.geojson",
+      "feature_count": 384
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_henryi_torreliana",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/corymbia/corymbia-henryi-torreliana-marginally-suitable.geojson",
+      "feature_count": 523
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_henryi_torreliana",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/corymbia/corymbia-henryi-torreliana-moderately-suitable.geojson",
+      "feature_count": 651
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_henryi_torreliana",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/corymbia/corymbia-henryi-torreliana-very-suitable.geojson",
+      "feature_count": 937
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_henryi",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/corymbia/corymbia-henryi-very-suitable.geojson",
+      "feature_count": 731
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_maculata",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/corymbia/corymbia-maculata-marginally-suitable.geojson",
+      "feature_count": 814
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_maculata",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/corymbia/corymbia-maculata-moderately-suitable.geojson",
+      "feature_count": 144
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Corymbia",
+      "species_name": "Corymbia_maculata",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/corymbia/corymbia-maculata-very-suitable.geojson",
+      "feature_count": 324
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Cupressus",
+      "species_name": "Cupressus_lusitanica",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/cupressus/cupressus-lusitanica-marginally-suitable.geojson",
+      "feature_count": 807
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Cupressus",
+      "species_name": "Cupressus_lusitanica",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/cupressus/cupressus-lusitanica-moderately-suitable.geojson",
+      "feature_count": 144
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Cupressus",
+      "species_name": "Cupressus_lusitanica",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/cupressus/cupressus-lusitanica-very-suitable.geojson",
+      "feature_count": 332
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_camaldulensis_N",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-camaldulensis-n-marginally-suitable.geojson",
+      "feature_count": 539
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_camaldulensis_N",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-camaldulensis-n-moderately-suitable.geojson",
+      "feature_count": 468
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_camaldulensis_N",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-camaldulensis-n-very-suitable.geojson",
+      "feature_count": 1163
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_camaldulensis_S",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-camaldulensis-s-marginally-suitable.geojson",
+      "feature_count": 837
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_camaldulensis_S",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-camaldulensis-s-moderately-suitable.geojson",
+      "feature_count": 369
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_camaldulensis_S",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-camaldulensis-s-very-suitable.geojson",
+      "feature_count": 981
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_cloeziana",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-cloeziana-marginally-suitable.geojson",
+      "feature_count": 689
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_cloeziana",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-cloeziana-moderately-suitable.geojson",
+      "feature_count": 334
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_cloeziana",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-cloeziana-very-suitable.geojson",
+      "feature_count": 731
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_dunnii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-dunnii-marginally-suitable.geojson",
+      "feature_count": 814
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_dunnii",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-dunnii-moderately-suitable.geojson",
+      "feature_count": 144
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_dunnii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-dunnii-very-suitable.geojson",
+      "feature_count": 324
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_globulus",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-globulus-marginally-suitable.geojson",
+      "feature_count": 147
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_globulus",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-globulus-very-suitable.geojson",
+      "feature_count": 71
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_camaldulensis",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-grandis-camaldulensis-marginally-suitable.geojson",
+      "feature_count": 898
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_camaldulensis",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-grandis-camaldulensis-moderately-suitable.geojson",
+      "feature_count": 362
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_camaldulensis",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-grandis-camaldulensis-very-suitable.geojson",
+      "feature_count": 918
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-grandis-marginally-suitable.geojson",
+      "feature_count": 685
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-grandis-moderately-suitable.geojson",
+      "feature_count": 119
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_nitens",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-grandis-nitens-marginally-suitable.geojson",
+      "feature_count": 134
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_nitens",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-grandis-nitens-very-suitable.geojson",
+      "feature_count": 71
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_tereticornis",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-grandis-tereticornis-marginally-suitable.geojson",
+      "feature_count": 434
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_tereticornis",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-grandis-tereticornis-moderately-suitable.geojson",
+      "feature_count": 539
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_tereticornis",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-grandis-tereticornis-very-suitable.geojson",
+      "feature_count": 1408
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_urophylla",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-grandis-urophylla-marginally-suitable.geojson",
+      "feature_count": 472
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_urophylla",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-grandis-urophylla-moderately-suitable.geojson",
+      "feature_count": 672
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis_urophylla",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-grandis-urophylla-very-suitable.geojson",
+      "feature_count": 1055
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_grandis",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-grandis-very-suitable.geojson",
+      "feature_count": 261
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_longirostrata",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-longirostrata-marginally-suitable.geojson",
+      "feature_count": 947
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_longirostrata",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-longirostrata-moderately-suitable.geojson",
+      "feature_count": 363
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_longirostrata",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-longirostrata-very-suitable.geojson",
+      "feature_count": 613
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_microcorys",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-microcorys-marginally-suitable.geojson",
+      "feature_count": 689
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_microcorys",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-microcorys-moderately-suitable.geojson",
+      "feature_count": 334
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_microcorys",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-microcorys-very-suitable.geojson",
+      "feature_count": 731
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_pellita",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-pellita-marginally-suitable.geojson",
+      "feature_count": 758
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_pellita",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-pellita-moderately-suitable.geojson",
+      "feature_count": 282
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_pellita",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-pellita-very-suitable.geojson",
+      "feature_count": 358
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_saligna",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-saligna-marginally-suitable.geojson",
+      "feature_count": 862
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_saligna",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-saligna-moderately-suitable.geojson",
+      "feature_count": 144
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_saligna",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-saligna-very-suitable.geojson",
+      "feature_count": 261
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_smithii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-smithii-marginally-suitable.geojson",
+      "feature_count": 142
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_smithii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-smithii-very-suitable.geojson",
+      "feature_count": 72
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_tereticornis",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-tereticornis-marginally-suitable.geojson",
+      "feature_count": 331
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_tereticornis",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-tereticornis-moderately-suitable.geojson",
+      "feature_count": 616
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_tereticornis",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-tereticornis-very-suitable.geojson",
+      "feature_count": 1478
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_urophylla_grandis",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-urophylla-grandis-marginally-suitable.geojson",
+      "feature_count": 615
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_urophylla_grandis",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-urophylla-grandis-moderately-suitable.geojson",
+      "feature_count": 651
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_urophylla_grandis",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-urophylla-grandis-very-suitable.geojson",
+      "feature_count": 937
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_urophylla",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-urophylla-marginally-suitable.geojson",
+      "feature_count": 590
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_urophylla",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-urophylla-moderately-suitable.geojson",
+      "feature_count": 735
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Eucalyptus",
+      "species_name": "Eucalyptus_urophylla",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/eucalyptus/eucalyptus-urophylla-very-suitable.geojson",
+      "feature_count": 971
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Gmelina",
+      "species_name": "Gmelina_arborea",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/gmelina/gmelina-arborea-marginally-suitable.geojson",
+      "feature_count": 758
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Gmelina",
+      "species_name": "Gmelina_arborea",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/gmelina/gmelina-arborea-moderately-suitable.geojson",
+      "feature_count": 282
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Gmelina",
+      "species_name": "Gmelina_arborea",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/gmelina/gmelina-arborea-very-suitable.geojson",
+      "feature_count": 358
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Grevillea",
+      "species_name": "Grevillea_robusta",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/grevillea/grevillea-robusta-marginally-suitable.geojson",
+      "feature_count": 814
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Grevillea",
+      "species_name": "Grevillea_robusta",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/grevillea/grevillea-robusta-moderately-suitable.geojson",
+      "feature_count": 144
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Grevillea",
+      "species_name": "Grevillea_robusta",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/grevillea/grevillea-robusta-very-suitable.geojson",
+      "feature_count": 324
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Khaya",
+      "species_name": "Khaya_anthotheca",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/khaya/khaya-anthotheca-marginally-suitable.geojson",
+      "feature_count": 758
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Khaya",
+      "species_name": "Khaya_anthotheca",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/khaya/khaya-anthotheca-moderately-suitable.geojson",
+      "feature_count": 282
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Khaya",
+      "species_name": "Khaya_anthotheca",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/khaya/khaya-anthotheca-very-suitable.geojson",
+      "feature_count": 358
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Maesopsis",
+      "species_name": "Maesopsis_eminii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/maesopsis/maesopsis-eminii-marginally-suitable.geojson",
+      "feature_count": 758
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Maesopsis",
+      "species_name": "Maesopsis_eminii",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/maesopsis/maesopsis-eminii-moderately-suitable.geojson",
+      "feature_count": 282
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Maesopsis",
+      "species_name": "Maesopsis_eminii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/maesopsis/maesopsis-eminii-very-suitable.geojson",
+      "feature_count": 358
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Melia",
+      "species_name": "Melia_volkensii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/melia/melia-volkensii-marginally-suitable.geojson",
+      "feature_count": 434
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Melia",
+      "species_name": "Melia_volkensii",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/melia/melia-volkensii-moderately-suitable.geojson",
+      "feature_count": 539
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Melia",
+      "species_name": "Melia_volkensii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/melia/melia-volkensii-very-suitable.geojson",
+      "feature_count": 1408
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Milicia",
+      "species_name": "Milicia_excelsa",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/milicia/milicia-excelsa-marginally-suitable.geojson",
+      "feature_count": 883
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Milicia",
+      "species_name": "Milicia_excelsa",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/milicia/milicia-excelsa-moderately-suitable.geojson",
+      "feature_count": 372
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Milicia",
+      "species_name": "Milicia_excelsa",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/milicia/milicia-excelsa-very-suitable.geojson",
+      "feature_count": 358
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Neomalarckia",
+      "species_name": "Neomalarckia_cadamba",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/neomalarckia/neomalarckia-cadamba-marginally-suitable.geojson",
+      "feature_count": 758
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Neomalarckia",
+      "species_name": "Neomalarckia_cadamba",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/neomalarckia/neomalarckia-cadamba-moderately-suitable.geojson",
+      "feature_count": 282
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Neomalarckia",
+      "species_name": "Neomalarckia_cadamba",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/neomalarckia/neomalarckia-cadamba-very-suitable.geojson",
+      "feature_count": 358
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_caribaea_bahamensis",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-caribaea-bahamensis-marginally-suitable.geojson",
+      "feature_count": 883
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_caribaea_bahamensis",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-caribaea-bahamensis-moderately-suitable.geojson",
+      "feature_count": 372
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_caribaea_bahamensis",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-caribaea-bahamensis-very-suitable.geojson",
+      "feature_count": 358
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_caribaea_hondurensis",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-caribaea-hondurensis-marginally-suitable.geojson",
+      "feature_count": 883
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_caribaea_hondurensis",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-caribaea-hondurensis-moderately-suitable.geojson",
+      "feature_count": 372
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_caribaea_hondurensis",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-caribaea-hondurensis-very-suitable.geojson",
+      "feature_count": 358
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_caribaea_tecunumanii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-caribaea-tecunumanii-marginally-suitable.geojson",
+      "feature_count": 613
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_caribaea_tecunumanii",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-caribaea-tecunumanii-moderately-suitable.geojson",
+      "feature_count": 612
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_caribaea_tecunumanii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-caribaea-tecunumanii-very-suitable.geojson",
+      "feature_count": 828
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_elliottii_caribaea",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-elliottii-caribaea-marginally-suitable.geojson",
+      "feature_count": 434
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_elliottii_caribaea",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-elliottii-caribaea-moderately-suitable.geojson",
+      "feature_count": 539
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_elliottii_caribaea",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-elliottii-caribaea-very-suitable.geojson",
+      "feature_count": 1408
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_elliottii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-elliottii-marginally-suitable.geojson",
+      "feature_count": 224
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_elliottii",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-elliottii-moderately-suitable.geojson",
+      "feature_count": 546
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_elliottii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-elliottii-very-suitable.geojson",
+      "feature_count": 1471
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_kesiya",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-kesiya-marginally-suitable.geojson",
+      "feature_count": 896
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_kesiya",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-kesiya-moderately-suitable.geojson",
+      "feature_count": 384
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_kesiya",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-kesiya-very-suitable.geojson",
+      "feature_count": 731
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_maximinoi",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-maximinoi-marginally-suitable.geojson",
+      "feature_count": 689
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_maximinoi",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-maximinoi-moderately-suitable.geojson",
+      "feature_count": 334
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_maximinoi",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-maximinoi-very-suitable.geojson",
+      "feature_count": 731
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_oocarpa",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-oocarpa-marginally-suitable.geojson",
+      "feature_count": 896
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_oocarpa",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-oocarpa-moderately-suitable.geojson",
+      "feature_count": 384
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_oocarpa",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-oocarpa-very-suitable.geojson",
+      "feature_count": 731
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_patula",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-patula-marginally-suitable.geojson",
+      "feature_count": 288
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_patula",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-patula-moderately-suitable.geojson",
+      "feature_count": 21
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_patula_tecunumanii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-patula-tecunumanii-marginally-suitable.geojson",
+      "feature_count": 814
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_patula_tecunumanii",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-patula-tecunumanii-moderately-suitable.geojson",
+      "feature_count": 144
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_patula_tecunumanii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-patula-tecunumanii-very-suitable.geojson",
+      "feature_count": 324
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_patula",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-patula-very-suitable.geojson",
+      "feature_count": 181
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_radiata",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-radiata-marginally-suitable.geojson",
+      "feature_count": 203
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_radiata",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-radiata-moderately-suitable.geojson",
+      "feature_count": 21
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_radiata",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-radiata-very-suitable.geojson",
+      "feature_count": 189
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_taeda",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-taeda-marginally-suitable.geojson",
+      "feature_count": 637
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_taeda",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-taeda-moderately-suitable.geojson",
+      "feature_count": 119
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_taeda",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-taeda-very-suitable.geojson",
+      "feature_count": 324
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_tecunumanii",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-tecunumanii-marginally-suitable.geojson",
+      "feature_count": 508
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_tecunumanii",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-tecunumanii-moderately-suitable.geojson",
+      "feature_count": 512
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Pinus",
+      "species_name": "Pinus_tecunumanii",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/pinus/pinus-tecunumanii-very-suitable.geojson",
+      "feature_count": 1281
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Tectona",
+      "species_name": "Tectona_grandis",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/tectona/tectona-grandis-marginally-suitable.geojson",
+      "feature_count": 758
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Tectona",
+      "species_name": "Tectona_grandis",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/tectona/tectona-grandis-moderately-suitable.geojson",
+      "feature_count": 282
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Tectona",
+      "species_name": "Tectona_grandis",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/tectona/tectona-grandis-very-suitable.geojson",
+      "feature_count": 358
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Terminalia",
+      "species_name": "Terminalia_ivorensis",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/terminalia/terminalia-ivorensis-marginally-suitable.geojson",
+      "feature_count": 436
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Terminalia",
+      "species_name": "Terminalia_ivorensis",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/terminalia/terminalia-ivorensis-moderately-suitable.geojson",
+      "feature_count": 58
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Terminalia",
+      "species_name": "Terminalia_ivorensis",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/terminalia/terminalia-ivorensis-very-suitable.geojson",
+      "feature_count": 34
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Terminalia",
+      "species_name": "Terminalia_superba",
+      "suitability_name": "Marginally suitable",
+      "href": "/data/basic-ssmt/chunks/uga/terminalia/terminalia-superba-marginally-suitable.geojson",
+      "feature_count": 436
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Terminalia",
+      "species_name": "Terminalia_superba",
+      "suitability_name": "Moderately suitable",
+      "href": "/data/basic-ssmt/chunks/uga/terminalia/terminalia-superba-moderately-suitable.geojson",
+      "feature_count": 58
+    },
+    {
+      "country_code": "UGA",
+      "genus": "Terminalia",
+      "species_name": "Terminalia_superba",
+      "suitability_name": "Very suitable",
+      "href": "/data/basic-ssmt/chunks/uga/terminalia/terminalia-superba-very-suitable.geojson",
+      "feature_count": 34
+    }
+  ],
   "notes": [
-    "Placeholder manifest. Run scripts/preprocess-basic-ssmt.mjs with GDAL/ogr2ogr installed to generate chunked GeoJSON assets.",
-    "Dominant Limitation datasets are intentionally excluded from the Basic SSMT layer."
+    "Generated from SSMT_Kenya.zip, Mvolkensii.zip, SWIFT_SSMT_Uganda.zip.",
+    "Dominant Limitation datasets are intentionally excluded from this Basic SSMT layer.",
+    "Geometry simplified with ogr2ogr -simplify 0.001 after reprojection to EPSG:4326."
   ]
 }

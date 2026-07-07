@@ -860,13 +860,13 @@ export function ProductPage({
   const cartCount = getCartCount();
 
   return (
-    <div className={cn("space-y-6", className)}>
+    <div className={cn("space-y-6 p-4", className)}>
       <Button variant="ghost" onClick={onBack} className="mb-4">
         <ArrowLeft className="mr-2 h-4 w-4" />
         Back to products
       </Button>
 
-      <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+      <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(320px,1fr)]">
         <div className="space-y-4">
           <ImageCarouselBasic images={images} aspectRatio="square" showThumbs className="w-full" />
         </div>

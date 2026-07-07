@@ -568,7 +568,7 @@ function summarizeProcessorRecord(name: string, record: ProcessorRecord) {
 function summarizeNurseryRecord(name: string, record: NurseryRecord) {
   return (
     getRecordComment(record.Comments) ??
-    `${name} is a nursery record from nurseries.json with its own coordinate point. Supply specs, species or clones, seedling prices, capacity, availability, traceability, transport, certification, contact, and comments are editable in that database; blank fields are treated as not recorded.`
+    `${name}`
   )
 }
 

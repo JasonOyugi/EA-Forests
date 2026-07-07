@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight, BarChart3, MapPinned, Sprout, Trees, Workflow } from "lucide-react"
+import { ArrowRight, MapPinned, Sprout, Trees, Workflow } from "lucide-react"
 import { Link } from "react-router-dom"
 
 import { BaseLayout } from "@/components/layouts/base-layout"
@@ -16,20 +16,12 @@ import {
 
 const modelCards = [
   {
-    title: "Model 1: Site classification",
+    title: "Site-species analysis",
     description:
-      "Notebook-inspired map workflow where clicking a site passes its coordinate into the site-analysis function and displays the result tables below the map.",
-    href: "/models/site-classification",
+      "Classify site conditions first, then match selected context to analogue trial sites and species or variety performance evidence.",
+    href: "/models/site-species-analysis",
     badge: "Ready",
     icon: MapPinned,
-  },
-  {
-    title: "Trial-site classifier",
-    description:
-      "Match a selected point to analogue trial sites, adjust ranking priorities, and inspect variety performance evidence from precomputed artifacts.",
-    href: "/models/trial-site-classifier",
-    badge: "New",
-    icon: BarChart3,
   },
   {
     title: "Silvicultural models",

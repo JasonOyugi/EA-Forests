@@ -102,6 +102,7 @@ interface ViabilityForm {
 
 interface ViabilityResponse {
   request: Record<string, unknown>
+  base_currency?: CurrencyCode
   assumptions: string[]
   warnings: string[]
   cost_rows: TableRowRecord[]
@@ -138,6 +139,8 @@ interface WaterfallRow {
   fill: string
 }
 
+const UGX_PER_USD = 3700
+
 const defaultForm: ViabilityForm = {
   rotationYear: 8,
   thinning: true,
@@ -150,10 +153,10 @@ const defaultForm: ViabilityForm = {
   initialTreesPerHa: 1111,
   areaHa: 1,
   thinnings: [
-    { id: "first", enabled: true, year: 4, fraction: 0.3, price: 5_000 },
-    { id: "second", enabled: true, year: 7, fraction: 0.3, price: 8_000 },
+    { id: "first", enabled: true, year: 4, fraction: 0.3, price: 5_000 / UGX_PER_USD },
+    { id: "second", enabled: true, year: 7, fraction: 0.3, price: 8_000 / UGX_PER_USD },
   ],
-  priceFinalTree: 35_000,
+  priceFinalTree: 35_000 / UGX_PER_USD,
   discountRate: 0.15,
 }
 
@@ -556,11 +559,12 @@ export default function ModelTwoPage() {
     []
   )
   const currencyRates = useCurrencyRates(apiBaseUrl)
+  const baseCurrency = result?.base_currency ?? "USD"
 
   const toSelectedCurrency = React.useCallback(
     (value: number | null | undefined) =>
-      convertMoney(value, "UGX", currency, currencyRates.rates),
-    [currency, currencyRates.rates]
+      convertMoney(value, baseCurrency, currency, currencyRates.rates),
+    [baseCurrency, currency, currencyRates.rates]
   )
 
   const formatMoney = React.useCallback(
@@ -773,7 +777,7 @@ export default function ModelTwoPage() {
                 <div>
                   <CardTitle>Scenario inputs</CardTitle>
                   <CardDescription>
-                    Display currency defaults to USD. TODO: migrate stored backend defaults that are still UGX-denominated before treating raw editable values as USD.
+                    Inputs and editable libraries are in USD; outputs can be displayed in another currency.
                   </CardDescription>
                 </div>
               </div>
@@ -915,7 +919,7 @@ export default function ModelTwoPage() {
                             label="Tree price"
                             value={item.price}
                             min={0}
-                            step={500}
+                            step={0.25}
                             onChange={(value) =>
                               updateThinning(item.id, {
                                 price: Math.max(0, value),
@@ -954,7 +958,7 @@ export default function ModelTwoPage() {
                   label="Final tree price"
                   value={form.priceFinalTree}
                   min={0}
-                  step={500}
+                  step={0.25}
                   onChange={(value) =>
                     updateForm("priceFinalTree", Math.max(0, value))
                   }
@@ -1027,7 +1031,7 @@ export default function ModelTwoPage() {
             ) : null}
 
             <ModelAssumptionsDisclosure
-              description="Display currency is USD; raw editable library defaults are pending a backend USD migration."
+              description="Base calculations and editable libraries are in USD."
               actions={
                 <Button
                   className="gap-2"

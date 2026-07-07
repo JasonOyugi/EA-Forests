@@ -1,0 +1,1321 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.0288969779,
+              3.8248505132
+            ],
+            [
+              34.028965543,
+              3.8332142656
+            ],
+            [
+              34.0206388299,
+              3.8332831731
+            ],
+            [
+              34.0205703432,
+              3.8249192692
+            ],
+            [
+              34.0288969779,
+              3.8248505132
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S2",
+        "soil_type": "Ferruginous Soils",
+        "soil_description": "On crystalline acid rock - freely drained",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.0205643414,
+              3.8241854257
+            ],
+            [
+              34.0205703432,
+              3.8249192692
+            ],
+            [
+              34.0156605658,
+              3.8249597732
+            ],
+            [
+              34.0159635635,
+              3.824701884
+            ],
+            [
+              34.0205643414,
+              3.8241854257
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S2",
+        "soil_type": "Ferruginous Soils",
+        "soil_description": "On crystalline acid rock - freely drained",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7431736996,
+              2.549336689
+            ],
+            [
+              34.7432744728,
+              2.566037409
+            ],
+            [
+              34.7349714958,
+              2.5660882236
+            ],
+            [
+              34.7350220771,
+              2.5744387455
+            ],
+            [
+              34.7267188822,
+              2.5744896713
+            ],
+            [
+              34.7266683544,
+              2.5661389836
+            ],
+            [
+              34.718365047,
+              2.5661896917
+            ],
+            [
+              34.7183226524,
+              2.5591544911
+            ],
+            [
+              34.7265962742,
+              2.5541791565
+            ],
+            [
+              34.7266179899,
+              2.5577882944
+            ],
+            [
+              34.7349210798,
+              2.5577376984
+            ],
+            [
+              34.7348708281,
+              2.5493871717
+            ],
+            [
+              34.7431736996,
+              2.549336689
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7562700104,
+              2.5492569512
+            ],
+            [
+              34.7431736996,
+              2.549336689
+            ],
+            [
+              34.7431073023,
+              2.5382727017
+            ],
+            [
+              34.7461872165,
+              2.5326171386
+            ],
+            [
+              34.7596786247,
+              2.5325354986
+            ],
+            [
+              34.7597287033,
+              2.5408855328
+            ],
+            [
+              34.7601905189,
+              2.540882726
+            ],
+            [
+              34.7562700104,
+              2.5492569512
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.789789692,
+              2.4906041075
+            ],
+            [
+              34.7897039833,
+              2.4921289934
+            ],
+            [
+              34.7844174641,
+              2.5043464574
+            ],
+            [
+              34.784385659,
+              2.4989862534
+            ],
+            [
+              34.7760839262,
+              2.4990360015
+            ],
+            [
+              34.776034572,
+              2.49068629
+            ],
+            [
+              34.7594307117,
+              2.4907852991
+            ],
+            [
+              34.7593327044,
+              2.474085205
+            ],
+            [
+              34.7427283883,
+              2.4741833447
+            ],
+            [
+              34.7427971376,
+              2.4859347593
+            ],
+            [
+              34.7390577566,
+              2.4810461249
+            ],
+            [
+              34.7344245793,
+              2.4739917185
+            ],
+            [
+              34.7343773787,
+              2.4658817905
+            ],
+            [
+              34.7426797332,
+              2.4658329637
+            ],
+            [
+              34.7426312452,
+              2.4574825793
+            ],
+            [
+              34.7509333841,
+              2.4574338663
+            ],
+            [
+              34.750981924,
+              2.4657840845
+            ],
+            [
+              34.7758875025,
+              2.4656371424
+            ],
+            [
+              34.775985383,
+              2.482336576
+            ],
+            [
+              34.7842870133,
+              2.4822871607
+            ],
+            [
+              34.784336253,
+              2.4906367069
+            ],
+            [
+              34.789789692,
+              2.4906041075
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7265962742,
+              2.5541791565
+            ],
+            [
+              34.7183226524,
+              2.5591544911
+            ],
+            [
+              34.7183147359,
+              2.557838836
+            ],
+            [
+              34.7100113179,
+              2.5578893258
+            ],
+            [
+              34.7097132213,
+              2.5077831603
+            ],
+            [
+              34.7180163266,
+              2.5077336612
+            ],
+            [
+              34.717967167,
+              2.4993827919
+            ],
+            [
+              34.7262700563,
+              2.499333405
+            ],
+            [
+              34.7262210106,
+              2.4909826989
+            ],
+            [
+              34.734523683,
+              2.4909334255
+            ],
+            [
+              34.7345727806,
+              2.4992839677
+            ],
+            [
+              34.7346220434,
+              2.5076345065
+            ],
+            [
+              34.7263192671,
+              2.5076841096
+            ],
+            [
+              34.726368642,
+              2.5160348126
+            ],
+            [
+              34.7180656502,
+              2.5160845289
+            ],
+            [
+              34.7182645906,
+              2.5494879796
+            ],
+            [
+              34.7265677915,
+              2.5494376019
+            ],
+            [
+              34.7265962742,
+              2.5541791565
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7461872165,
+              2.5326171386
+            ],
+            [
+              34.7431073023,
+              2.5382727017
+            ],
+            [
+              34.7430735863,
+              2.53263596
+            ],
+            [
+              34.7461872165,
+              2.5326171386
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7427971376,
+              2.4859347593
+            ],
+            [
+              34.742826191,
+              2.4908841018
+            ],
+            [
+              34.734523683,
+              2.4909334255
+            ],
+            [
+              34.7344245793,
+              2.4739917185
+            ],
+            [
+              34.7390577566,
+              2.4810461249
+            ],
+            [
+              34.7427971376,
+              2.4859347593
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S1",
+        "soil_type": "Ferrisols",
+        "soil_description": "Humic of high altitudes",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7847951736,
+              2.5671449952
+            ],
+            [
+              34.7848377781,
+              2.5741320667
+            ],
+            [
+              34.7698756026,
+              2.5742243838
+            ],
+            [
+              34.770735274,
+              2.5729981528
+            ],
+            [
+              34.7847951736,
+              2.5671449952
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S2",
+        "soil_type": "Ferruginous Soils",
+        "soil_description": "On crystalline acid rock - freely drained",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.809540158,
+              2.5405818899
+            ],
+            [
+              34.8095907172,
+              2.5489309223
+            ],
+            [
+              34.8015890704,
+              2.5489799906
+            ],
+            [
+              34.8017012231,
+              2.5464832303
+            ],
+            [
+              34.8012694104,
+              2.5457186702
+            ],
+            [
+              34.8010881433,
+              2.5155850181
+            ],
+            [
+              34.801038302,
+              2.507235811
+            ],
+            [
+              34.7954309794,
+              2.5072696014
+            ],
+            [
+              34.7957988694,
+              2.5059660169
+            ],
+            [
+              34.8007034617,
+              2.4988883142
+            ],
+            [
+              34.8092898617,
+              2.4988366965
+            ],
+            [
+              34.809540158,
+              2.5405818899
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S2",
+        "soil_type": "Ferruginous Soils",
+        "soil_description": "On crystalline acid rock - freely drained",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.8142157589,
+              1.8463692733
+            ],
+            [
+              34.8142578321,
+              1.8559176674
+            ],
+            [
+              34.7810663679,
+              1.8560658095
+            ],
+            [
+              34.781033302,
+              1.8485338183
+            ],
+            [
+              34.7930980203,
+              1.8464554906
+            ],
+            [
+              34.8047409018,
+              1.8410679763
+            ],
+            [
+              34.8130731985,
+              1.841191113
+            ],
+            [
+              34.8142157589,
+              1.8463692733
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S3",
+        "soil_type": "Ferruginous Soils",
+        "soil_description": "On crystalline acid rock-Complex with Black clays",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.8172563763,
+              1.8308568987
+            ],
+            [
+              34.8153988056,
+              1.8340665642
+            ],
+            [
+              34.8141782097,
+              1.8378058419
+            ],
+            [
+              34.8141479301,
+              1.8308706166
+            ],
+            [
+              34.8172563763,
+              1.8308568987
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.8234000856,
+              1.7974338007
+            ],
+            [
+              34.8238231247,
+              1.8141299305
+            ],
+            [
+              34.8223727539,
+              1.8141362796
+            ],
+            [
+              34.8223009065,
+              1.7974385675
+            ],
+            [
+              34.8234000856,
+              1.7974338007
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S1",
+        "soil_type": "Eutrophic Soils",
+        "soil_description": "On volcanic ash",
+        "site_class": null,
+        "maz": "III",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7044087933,
+              1.330270362
+            ],
+            [
+              34.7044349387,
+              1.3386216137
+            ],
+            [
+              34.6952073738,
+              1.3386509521
+            ],
+            [
+              34.6979101841,
+              1.32734348
+            ],
+            [
+              34.7029100632,
+              1.3246591738
+            ],
+            [
+              34.7043929723,
+              1.3251912057
+            ],
+            [
+              34.7044087933,
+              1.330270362
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S3",
+        "soil_type": "Ferruginous Soils",
+        "soil_description": "On crystalline acid rock-Complex with Black clays",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.79575243,
+              1.3550284304
+            ],
+            [
+              34.787456463,
+              1.3550554517
+            ],
+            [
+              34.7874833792,
+              1.3634050445
+            ],
+            [
+              34.7708908932,
+              1.3634593346
+            ],
+            [
+              34.7708640328,
+              1.3551094087
+            ],
+            [
+              34.7625675699,
+              1.3551363453
+            ],
+            [
+              34.7625409026,
+              1.346786252
+            ],
+            [
+              34.7542443022,
+              1.3468129953
+            ],
+            [
+              34.7542178268,
+              1.3384627356
+            ],
+            [
+              34.7459210907,
+              1.3384892844
+            ],
+            [
+              34.7459069739,
+              1.3340106464
+            ],
+            [
+              34.7509563329,
+              1.3339945471
+            ],
+            [
+              34.7606619034,
+              1.3292201483
+            ],
+            [
+              34.7707679908,
+              1.3248228823
+            ],
+            [
+              34.7707844422,
+              1.3300596249
+            ],
+            [
+              34.7790806562,
+              1.3300331589
+            ],
+            [
+              34.7791070486,
+              1.3383829219
+            ],
+            [
+              34.7874031262,
+              1.3383562618
+            ],
+            [
+              34.7874297117,
+              1.3467058569
+            ],
+            [
+              34.795725651,
+              1.3466790033
+            ],
+            [
+              34.79575243,
+              1.3550284304
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S3",
+        "soil_type": "Ferruginous Soils",
+        "soil_description": "On crystalline acid rock-Complex with Black clays",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7044349387,
+              1.3386216137
+            ],
+            [
+              34.704461248,
+              1.3469728661
+            ],
+            [
+              34.6951686166,
+              1.3470025942
+            ],
+            [
+              34.6956128215,
+              1.3463273462
+            ],
+            [
+              34.6950021536,
+              1.3395095619
+            ],
+            [
+              34.6952073738,
+              1.3386509521
+            ],
+            [
+              34.7044349387,
+              1.3386216137
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S3",
+        "soil_type": "Ferruginous Soils",
+        "soil_description": "On crystalline acid rock-Complex with Black clays",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.7043929723,
+              1.3251912057
+            ],
+            [
+              34.710283221,
+              1.3273044517
+            ],
+            [
+              34.7170501428,
+              1.3302303659
+            ],
+            [
+              34.7044087933,
+              1.330270362
+            ],
+            [
+              34.7043929723,
+              1.3251912057
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S3",
+        "soil_type": "Ferruginous Soils",
+        "soil_description": "On crystalline acid rock-Complex with Black clays",
+        "site_class": null,
+        "maz": "II",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.5028778728,
+              -0.2835797893
+            ],
+            [
+              30.5044149464,
+              -0.2835793203
+            ],
+            [
+              30.5044146653,
+              -0.2826427283
+            ],
+            [
+              30.5028778728,
+              -0.2835797893
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S3",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Yellow soils - Sandy loams",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.4417992231,
+              -0.3508989501
+            ],
+            [
+              30.4434281177,
+              -0.3469123303
+            ],
+            [
+              30.4419979656,
+              -0.3297089909
+            ],
+            [
+              30.4268011333,
+              -0.3101206728
+            ],
+            [
+              30.4120859187,
+              -0.3120370651
+            ],
+            [
+              30.4073332372,
+              -0.317260101
+            ],
+            [
+              30.4125069321,
+              -0.3172583827
+            ],
+            [
+              30.4125097277,
+              -0.325671228
+            ],
+            [
+              30.4292229062,
+              -0.3256655104
+            ],
+            [
+              30.429228746,
+              -0.3424909046
+            ],
+            [
+              30.4375852387,
+              -0.3424878874
+            ],
+            [
+              30.4375882761,
+              -0.35090051
+            ],
+            [
+              30.4417992231,
+              -0.3508989501
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S3",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Yellow soils - Sandy loams",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.3655761139,
+              -0.3256871327
+            ],
+            [
+              30.3631928388,
+              -0.3216114211
+            ],
+            [
+              30.3623665551,
+              -0.3199491103
+            ],
+            [
+              30.3623684414,
+              -0.3256882109
+            ],
+            [
+              30.3655761139,
+              -0.3256871327
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S3",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Yellow soils - Sandy loams",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              30.3996756815,
+              -0.325675598
+            ],
+            [
+              30.4041530281,
+              -0.325674076
+            ],
+            [
+              30.404151389,
+              -0.320756871
+            ],
+            [
+              30.3996756815,
+              -0.325675598
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "country": "Uganda",
+        "country_code": "UGA",
+        "species_name": "Pinus_patula",
+        "genus": "Pinus",
+        "species": "patula",
+        "suitability_name": "Moderately suitable",
+        "suitability_rank": 2,
+        "soil_suitability": "S3",
+        "soil_type": "Ferrallitic Soils",
+        "soil_description": "Yellow soils - Sandy loams",
+        "site_class": null,
+        "maz": "I",
+        "maz_zone": null,
+        "tz": "5",
+        "frost_risk": null,
+        "source_layer": "SWIFT_SSMT_Uganda"
+      }
+    }
+  ]
+}

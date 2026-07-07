@@ -33,7 +33,6 @@ import {
 } from "@/app/models/currency"
 import { ModelAssumptionsDisclosure } from "@/app/models/components/model-assumptions-disclosure"
 import { BaseLayout } from "@/components/layouts/base-layout"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -124,27 +123,27 @@ interface NurseryLibraries {
 const defaultForm: NurseryForm = {
   modelYears: 10,
   discountRate: 0.15,
-  inflationRate: 0.04,
-  workingCapitalPctRevenue: 0.05,
-  motherPlants: 2500,
-  shootsPerMotherPerHarvest: 4,
-  harvestsPerYear: 8,
+  inflationRate: 0.05,
+  workingCapitalPctRevenue: 0.02,
+  motherPlants: 26666,
+  shootsPerMotherPerHarvest: 6,
+  harvestsPerYear: 4,
   cuttingSelectionRate: 0.8,
-  rootingSuccessRate: 0.68,
-  acclimatisationSurvivalRate: 0.9,
-  hardeningSurvivalRate: 0.93,
-  saleableGradeAcceptanceRate: 0.95,
-  rootingTrays: 420,
-  rootingCyclesPerYear: 3,
-  baseCapacityUtilisationY1: 0.55,
-  steadyStateCapacityUtilisation: 0.82,
+  rootingSuccessRate: 0.5,
+  acclimatisationSurvivalRate: 0.85,
+  hardeningSurvivalRate: 0.88,
+  saleableGradeAcceptanceRate: 0.85,
+  rootingTrays: 1600,
+  rootingCyclesPerYear: 5.4857,
+  baseCapacityUtilisationY1: 0.4,
+  steadyStateCapacityUtilisation: 0.7,
   rampUpYears: 4,
-  marketSalesRate: 0.96,
+  marketSalesRate: 0.85,
   permanentWorkers: 1,
   permanentWorkerMonthlyWage: 120,
   managerMonthlyAllowance: 80,
   seasonalDailyWage: 3.5,
-  sellingPricePerPlantY1: 0.3,
+  sellingPricePerPlantY1: 0.14,
   annualGeneticAccessFee: 0,
   royaltyPerSoldPlant: 0,
   annualCertificationFee: 0,
@@ -334,75 +333,6 @@ function downloadCSV(rows: TableRowRecord[], filename: string) {
   link.click()
   document.body.removeChild(link)
   URL.revokeObjectURL(url)
-}
-
-function NumberField({
-  label,
-  value,
-  min,
-  max,
-  step = 1,
-  onChange,
-}: {
-  label: string
-  value: number
-  min?: number
-  max?: number
-  step?: number
-  onChange: (value: number) => void
-}) {
-  return (
-    <label className="space-y-2 text-sm">
-      <span className="font-medium">{label}</span>
-      <Input
-        type="number"
-        value={value}
-        min={min}
-        max={max}
-        step={step}
-        onChange={(event) => {
-          const nextValue = Number(event.target.value)
-          if (Number.isFinite(nextValue)) onChange(nextValue)
-        }}
-      />
-    </label>
-  )
-}
-
-function RangeField({
-  label,
-  value,
-  min = 0,
-  max = 1,
-  step = 0.01,
-  onChange,
-}: {
-  label: string
-  value: number
-  min?: number
-  max?: number
-  step?: number
-  onChange: (value: number) => void
-}) {
-  return (
-    <label className="space-y-2 text-sm">
-      <div className="flex items-center justify-between gap-3">
-        <span className="font-medium">{label}</span>
-        <span className="font-mono text-xs text-muted-foreground">
-          {value.toFixed(2)}
-        </span>
-      </div>
-      <input
-        type="range"
-        value={value}
-        min={min}
-        max={max}
-        step={step}
-        className="h-2 w-full cursor-pointer accent-emerald-700"
-        onChange={(event) => onChange(Number(event.target.value))}
-      />
-    </label>
-  )
 }
 
 function MetricCard({
@@ -607,23 +537,6 @@ export default function ClonalEucalyptusNurseryPage() {
   )
   const currencyRates = useCurrencyRates(apiBaseUrl)
   const baseCurrency = result?.base_currency ?? "USD"
-
-  const updateForm = React.useCallback(
-    <K extends keyof NurseryForm>(key: K, value: NurseryForm[K]) => {
-      setForm((current) => ({ ...current, [key]: value }))
-      const assumptionKey = snakeCase(String(key))
-      setLibraries((current) => {
-        if (!current) return current
-        return {
-          ...current,
-          assumptions: current.assumptions.map((row) =>
-            row.assumption === assumptionKey ? { ...row, value } : row
-          ),
-        }
-      })
-    },
-    []
-  )
 
   const toSelectedCurrency = React.useCallback(
     (value: number | null | undefined) =>
@@ -885,238 +798,46 @@ export default function ClonalEucalyptusNurseryPage() {
     >
       <div className="@container/main min-w-0 max-w-full overflow-hidden px-4 lg:px-6">
         <div className="grid min-w-0 max-w-full gap-4">
-          <Card className="min-w-0 gap-4 border-border/70 bg-background/75 py-5">
-            <CardHeader className="px-5">
-              <div className="flex items-center justify-between gap-3">
-                <div>
-                  <CardTitle>Nursery inputs</CardTitle>
-                  <CardDescription>
-                    Base calculations are in USD.
-                  </CardDescription>
-                </div>
-                <Badge variant="outline">Model 4</Badge>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-5 px-5">
-              <CurrencySelect
-                value={currency}
-                onChange={setCurrency}
-                rateSource={currencyRates.source}
-              />
-
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
-                <NumberField
-                  label="Model years"
-                  value={form.modelYears}
-                  min={1}
-                  max={30}
-                  onChange={(value) =>
-                    updateForm("modelYears", Math.max(1, Math.min(30, Math.round(value))))
-                  }
-                />
-                <NumberField
-                  label="Ramp-up years"
-                  value={form.rampUpYears}
-                  min={1}
-                  max={form.modelYears}
-                  onChange={(value) =>
-                    updateForm("rampUpYears", Math.max(1, Math.round(value)))
-                  }
-                />
-              </div>
-
-              <div className="grid gap-4">
-                <RangeField
-                  label="Discount rate"
-                  value={form.discountRate}
-                  onChange={(value) => updateForm("discountRate", value)}
-                />
-                <RangeField
-                  label="Inflation rate"
-                  value={form.inflationRate}
-                  onChange={(value) => updateForm("inflationRate", value)}
-                />
-                <RangeField
-                  label="Working capital / revenue"
-                  value={form.workingCapitalPctRevenue}
-                  onChange={(value) => updateForm("workingCapitalPctRevenue", value)}
-                />
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
-                <NumberField
-                  label="Mother plants"
-                  value={form.motherPlants}
-                  min={0}
-                  onChange={(value) => updateForm("motherPlants", Math.max(0, value))}
-                />
-                <NumberField
-                  label="Shoots per mother harvest"
-                  value={form.shootsPerMotherPerHarvest}
-                  min={0}
-                  step={0.1}
-                  onChange={(value) =>
-                    updateForm("shootsPerMotherPerHarvest", Math.max(0, value))
-                  }
-                />
-                <NumberField
-                  label="Harvests per year"
-                  value={form.harvestsPerYear}
-                  min={0}
-                  step={0.5}
-                  onChange={(value) => updateForm("harvestsPerYear", Math.max(0, value))}
-                />
-                <NumberField
-                  label="Rooting trays"
-                  value={form.rootingTrays}
-                  min={0}
-                  onChange={(value) => updateForm("rootingTrays", Math.max(0, value))}
-                />
-                <NumberField
-                  label="Rooting cycles / year"
-                  value={form.rootingCyclesPerYear}
-                  min={0}
-                  step={0.5}
-                  onChange={(value) =>
-                    updateForm("rootingCyclesPerYear", Math.max(0, value))
-                  }
-                />
-                <NumberField
-                  label="Selling price / plant"
-                  value={form.sellingPricePerPlantY1}
-                  min={0}
-                  step={0.01}
-                  onChange={(value) =>
-                    updateForm("sellingPricePerPlantY1", Math.max(0, value))
-                  }
-                />
-              </div>
-
-              <div className="grid gap-4">
-                <RangeField
-                  label="Rooting success"
-                  value={form.rootingSuccessRate}
-                  onChange={(value) => updateForm("rootingSuccessRate", value)}
-                />
-                <RangeField
-                  label="Market sales rate"
-                  value={form.marketSalesRate}
-                  onChange={(value) => updateForm("marketSalesRate", value)}
-                />
-                <RangeField
-                  label="Steady utilisation"
-                  value={form.steadyStateCapacityUtilisation}
-                  onChange={(value) =>
-                    updateForm("steadyStateCapacityUtilisation", value)
-                  }
-                />
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
-                <NumberField
-                  label="Permanent workers"
-                  value={form.permanentWorkers}
-                  min={0}
-                  step={0.5}
-                  onChange={(value) =>
-                    updateForm("permanentWorkers", Math.max(0, value))
-                  }
-                />
-                <NumberField
-                  label="Monthly worker wage"
-                  value={form.permanentWorkerMonthlyWage}
-                  min={0}
-                  step={5}
-                  onChange={(value) =>
-                    updateForm("permanentWorkerMonthlyWage", Math.max(0, value))
-                  }
-                />
-                <NumberField
-                  label="Manager allowance"
-                  value={form.managerMonthlyAllowance}
-                  min={0}
-                  step={5}
-                  onChange={(value) =>
-                    updateForm("managerMonthlyAllowance", Math.max(0, value))
-                  }
-                />
-                <NumberField
-                  label="Seasonal daily wage"
-                  value={form.seasonalDailyWage}
-                  min={0}
-                  step={0.25}
-                  onChange={(value) =>
-                    updateForm("seasonalDailyWage", Math.max(0, value))
-                  }
-                />
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
-                <NumberField
-                  label="Annual genetic access"
-                  value={form.annualGeneticAccessFee}
-                  min={0}
-                  step={50}
-                  onChange={(value) =>
-                    updateForm("annualGeneticAccessFee", Math.max(0, value))
-                  }
-                />
-                <NumberField
-                  label="Royalty / sold plant"
-                  value={form.royaltyPerSoldPlant}
-                  min={0}
-                  step={0.01}
-                  onChange={(value) =>
-                    updateForm("royaltyPerSoldPlant", Math.max(0, value))
-                  }
-                />
-                <NumberField
-                  label="Annual certification"
-                  value={form.annualCertificationFee}
-                  min={0}
-                  step={50}
-                  onChange={(value) =>
-                    updateForm("annualCertificationFee", Math.max(0, value))
-                  }
-                />
-                <NumberField
-                  label="Technical support / year"
-                  value={form.technicalSupportFeePerYear}
-                  min={0}
-                  step={50}
-                  onChange={(value) =>
-                    updateForm("technicalSupportFeePerYear", Math.max(0, value))
-                  }
-                />
-              </div>
-
-              <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-1">
-                <Button
-                  className="w-full gap-2"
-                  disabled={isRunning}
-                  onClick={() => void runModel()}
-                >
-                  {isRunning ? (
-                    <LoaderCircle className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Play className="h-4 w-4" />
-                  )}
-                  {isRunning ? "Running..." : "Run model"}
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full gap-2"
-                  disabled={isRunning}
-                  onClick={resetForm}
-                >
-                  <RotateCcw className="h-4 w-4" />
-                  Reset example
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
           <div className="min-w-0 space-y-4">
+            <Card className="min-w-0 gap-4 border-border/70 bg-background/75 py-5">
+              <CardHeader className="px-5">
+                <CardTitle>Nursery assumptions</CardTitle>
+                <CardDescription>
+                  Edit model assumptions once in the table below. Base calculations are in USD; outputs can be displayed in another currency.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="grid gap-3 px-5 md:grid-cols-[minmax(12rem,18rem)_auto] md:items-end md:justify-between">
+                <CurrencySelect
+                  value={currency}
+                  onChange={setCurrency}
+                  rateSource={currencyRates.source}
+                />
+                <div className="grid gap-2 sm:grid-cols-2">
+                  <Button
+                    className="w-full gap-2"
+                    disabled={isRunning || !activeLibraries}
+                    onClick={() => void runModel(form, activeLibraries)}
+                  >
+                    {isRunning ? (
+                      <LoaderCircle className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Play className="h-4 w-4" />
+                    )}
+                    {isRunning ? "Running..." : "Run model"}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="w-full gap-2"
+                    disabled={isRunning}
+                    onClick={resetForm}
+                  >
+                    <RotateCcw className="h-4 w-4" />
+                    Reset example
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
             {runError ? (
               <Card className="min-w-0 gap-3 border-red-300/70 bg-red-50/70 py-5">
                 <CardHeader className="px-5">
@@ -1133,20 +854,6 @@ export default function ClonalEucalyptusNurseryPage() {
 
             <ModelAssumptionsDisclosure
               description="Base calculations and editable assumption libraries are in USD."
-              actions={
-                <Button
-                  className="gap-2"
-                  disabled={isRunning || !activeLibraries}
-                  onClick={() => void runModel(form, activeLibraries)}
-                >
-                  {isRunning ? (
-                    <LoaderCircle className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Play className="h-4 w-4" />
-                  )}
-                  Apply changes
-                </Button>
-              }
             >
               <Tabs defaultValue="assumptions" className="min-w-0 space-y-4">
                 <div className="max-w-full overflow-x-auto">
