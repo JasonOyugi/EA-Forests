@@ -551,6 +551,8 @@ function MapLayersControl({
 function MapMarker({
     icon = <MapPinIcon className="size-6" />,
     iconAnchor = [12, 12],
+    iconClassName,
+    iconSize,
     bgPos,
     popupAnchor,
     tooltipAnchor,
@@ -558,9 +560,10 @@ function MapMarker({
 }: Omit<MarkerProps, "icon"> &
     Pick<
         DivIconOptions,
-        "iconAnchor" | "bgPos" | "popupAnchor" | "tooltipAnchor"
+        "iconAnchor" | "iconSize" | "bgPos" | "popupAnchor" | "tooltipAnchor"
     > & {
         icon?: ReactNode
+        iconClassName?: string
         ref?: Ref<Marker>
     }) {
     const { L } = useLeaflet()
@@ -571,6 +574,8 @@ function MapMarker({
             icon={L.divIcon({
                 html: renderToString(icon),
                 iconAnchor,
+                ...(iconClassName ? { className: iconClassName } : {}),
+                ...(iconSize ? { iconSize } : {}),
                 ...(bgPos ? { bgPos } : {}),
                 ...(popupAnchor ? { popupAnchor } : {}),
                 ...(tooltipAnchor ? { tooltipAnchor } : {}),
@@ -589,10 +594,14 @@ function MapMarkerClusterGroup({
         className: "fill-foreground stroke-foreground stroke-2",
     },
     icon,
+    iconClassName,
+    iconSize,
     ...props
 }: Omit<MarkerClusterGroupProps, "iconCreateFunction"> & {
     children: ReactNode
     icon?: (markerCount: number) => ReactNode
+    iconClassName?: string
+    iconSize?: PointExpression
 }) {
     const { L } = useLeaflet()
     if (!L) return null
@@ -603,6 +612,8 @@ function MapMarkerClusterGroup({
               const iconNode = icon(markerCount)
               return L.divIcon({
                   html: renderToString(iconNode),
+                  ...(iconClassName ? { className: iconClassName } : {}),
+                  ...(iconSize ? { iconSize } : {}),
               })
           }
         : undefined

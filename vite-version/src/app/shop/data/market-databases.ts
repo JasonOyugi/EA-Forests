@@ -41,6 +41,29 @@ export interface ProcessorRecord {
   "Target markets": DataValue
   Certification: DataValue
   Comments: DataValue
+  Database?: DataValue
+  Source?: DataValue
+  "Source ID"?: DataValue
+  "Country source"?: DataValue
+  "Category source"?: DataValue
+  Subcategory?: DataValue
+  "Additional source URL"?: DataValue
+  "Region / county"?: DataValue
+  "District / sub-county"?: DataValue
+  "Published locality / address"?: DataValue
+  "Coordinate precision"?: DataValue
+  "Coordinate confidence"?: DataValue
+  "Coordinate audit"?: DataValue
+  "Original coordinate"?: DataValue
+  "Display offset km"?: DataValue
+  "Chinese linkage"?: DataValue
+  "Chinese-link confidence"?: DataValue
+  "Contact person"?: DataValue
+  Phone?: DataValue
+  "Status / registration"?: DataValue
+  "Evidence class"?: DataValue
+  "Data vintage"?: DataValue
+  "Coordinate map URL"?: DataValue
 }
 
 export interface NurserySpeciesSpec {
@@ -68,6 +91,29 @@ export interface NurseryRecord {
   Certification: DataValue
   Contact: DataValue
   Comments: DataValue
+  Database?: DataValue
+  Source?: DataValue
+  "Source ID"?: DataValue
+  "Country source"?: DataValue
+  "Category source"?: DataValue
+  Subcategory?: DataValue
+  "Additional source URL"?: DataValue
+  "Region / county"?: DataValue
+  "District / sub-county"?: DataValue
+  "Published locality / address"?: DataValue
+  "Coordinate precision"?: DataValue
+  "Coordinate confidence"?: DataValue
+  "Coordinate audit"?: DataValue
+  "Original coordinate"?: DataValue
+  "Display offset km"?: DataValue
+  "Chinese linkage"?: DataValue
+  "Chinese-link confidence"?: DataValue
+  "Contact person"?: DataValue
+  Phone?: DataValue
+  "Status / registration"?: DataValue
+  "Evidence class"?: DataValue
+  "Data vintage"?: DataValue
+  "Coordinate map URL"?: DataValue
 }
 
 export interface CommercialForestSpeciesSpec {

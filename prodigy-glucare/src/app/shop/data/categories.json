@@ -1,0 +1,20 @@
+[
+    {
+      "id": "seedlings",
+      "name": "Seedlings",
+      "description": "Nursery stock for farm forestry and commercial planting",
+      "blurb": "Browse quality seedlings and planting inputs."
+    },
+    {
+      "id": "forests",
+      "name": "Forests",
+      "description": "Forest investment and woodlot opportunities",
+      "blurb": "Explore managed blocks, grower plots, and standing forest offers."
+    },
+    {
+      "id": "forestry-services",
+      "name": "Forestry Services",
+      "description": "Field services for establishment, management, and support",
+      "blurb": "Book forestry operations and advisory support."
+    }
+  ]

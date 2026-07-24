@@ -1,0 +1,629 @@
+{
+    "Shanglong Industry Company": {
+        "lon": 31.6226227,
+        "lat": 1.0989088,
+        "buyer_specs": {
+            "euc": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": 30,
+                        "h_min": 2.7
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "per_tonne",
+                "prices": {
+                    "g1": 125000,
+                    "g2": 115000,
+                    "g3": "",
+                    "reject": 0
+                }
+            },
+            "pine": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "",
+                "prices": {
+                    "g1": "",
+                    "g2": "",
+                    "g3": "",
+                    "reject": 0
+                }
+            }
+        },
+        "Products": "Peeler logs and sawlogs",
+        "Roundwood input capacity": "Test capacity: 450 t/month",
+        "Target markets": "Domestic plywood and construction timber",
+        "Certification": "Test record",
+        "Comments": "Dummy functional test data for regional processor analytics; replace with verified processor database values."
+    },
+    "Golden Homes factory": {
+        "lon": 31.894878,
+        "lat": -0.138642,
+        "buyer_specs": {
+            "euc": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": 28,
+                        "h_min": 2.7
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "per_tonne",
+                "prices": {
+                    "g1": 132000,
+                    "g2": 118000,
+                    "g3": "",
+                    "reject": 0
+                }
+            },
+            "pine": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "",
+                "prices": {
+                    "g1": "",
+                    "g2": "",
+                    "g3": "",
+                    "reject": 0
+                }
+            }
+        },
+        "Products": "Sawn timber and pallet stock",
+        "Roundwood input capacity": "Test capacity: 320 t/month",
+        "Target markets": "Domestic construction and furniture workshops",
+        "Certification": "Test record",
+        "Comments": "Dummy functional test data for regional processor analytics; replace with verified processor database values."
+    },
+    "(Timber Paper) Sino-Uganda Mbale Industrial Park": {
+        "lon": 34.1382243,
+        "lat": 1.0758414,
+        "buyer_specs": {
+            "euc": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": 32,
+                        "h_min": 2.7
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "per_tonne",
+                "prices": {
+                    "g1": 140000,
+                    "g2": 124000,
+                    "g3": "",
+                    "reject": 0
+                }
+            },
+            "pine": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "",
+                "prices": {
+                    "g1": "",
+                    "g2": "",
+                    "g3": "",
+                    "reject": 0
+                }
+            }
+        },
+        "Products": "Pulpwood and veneer log intake",
+        "Roundwood input capacity": "Test capacity: 520 t/month",
+        "Target markets": "Industrial buyers and panel board users",
+        "Certification": "Test record",
+        "Comments": "Dummy functional test data for regional processor analytics; replace with verified processor database values."
+    },
+    "Evergreen wood": {
+        "lon": 32.4077845,
+        "lat": 0.258846,
+        "buyer_specs": {
+            "euc": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": 30,
+                        "h_min": 2.7
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "per_tonne",
+                "prices": {
+                    "g1": 145000,
+                    "g2": 135000,
+                    "g3": "",
+                    "reject": 0
+                }
+            },
+            "pine": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "",
+                "prices": {
+                    "g1": "",
+                    "g2": "",
+                    "g3": "",
+                    "reject": 0
+                }
+            }
+        },
+        "Products": "Premium eucalyptus logs",
+        "Roundwood input capacity": "Test capacity: 390 t/month",
+        "Target markets": "Urban construction and furniture processors",
+        "Certification": "Test record",
+        "Comments": "Dummy functional test data for regional processor analytics; replace with verified processor database values."
+    },
+    "Brother wood": {
+        "lon": 32.8081847,
+        "lat": 0.2253216,
+        "buyer_specs": {
+            "euc": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": 26,
+                        "h_min": 2.7
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "per_tonne",
+                "prices": {
+                    "g1": 128000,
+                    "g2": 112000,
+                    "g3": "",
+                    "reject": 0
+                }
+            },
+            "pine": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "",
+                "prices": {
+                    "g1": "",
+                    "g2": "",
+                    "g3": "",
+                    "reject": 0
+                }
+            }
+        },
+        "Products": "Small sawlogs and construction poles",
+        "Roundwood input capacity": "Test capacity: 280 t/month",
+        "Target markets": "Local timber yards and builders",
+        "Certification": "Test record",
+        "Comments": "Dummy functional test data for regional processor analytics; replace with verified processor database values."
+    },
+    "Honghai PLY": {
+        "lon": 32.8245749,
+        "lat": 0.3714341,
+        "buyer_specs": {
+            "euc": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "",
+                "prices": {
+                    "g1": "",
+                    "g2": "",
+                    "g3": "",
+                    "reject": 0
+                }
+            },
+            "pine": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "",
+                "prices": {
+                    "g1": "",
+                    "g2": "",
+                    "g3": "",
+                    "reject": 0
+                }
+            }
+        },
+        "Products": "",
+        "Roundwood input capacity": "",
+        "Target markets": "",
+        "Certification": "",
+        "Comments": ""
+    },
+    "Zhong Ding Construction Materials": {
+        "lon": 32.36385,
+        "lat": 0.4393071,
+        "buyer_specs": {
+            "euc": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "",
+                "prices": {
+                    "g1": "",
+                    "g2": "",
+                    "g3": "",
+                    "reject": 0
+                }
+            },
+            "pine": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "",
+                "prices": {
+                    "g1": "",
+                    "g2": "",
+                    "g3": "",
+                    "reject": 0
+                }
+            }
+        },
+        "Products": "",
+        "Roundwood input capacity": "",
+        "Target markets": "",
+        "Certification": "",
+        "Comments": ""
+    },
+    "Zhong Bang Wood": {
+        "lon": 32.0203333,
+        "lat": -0.0235833,
+        "buyer_specs": {
+            "euc": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "",
+                "prices": {
+                    "g1": "",
+                    "g2": "",
+                    "g3": "",
+                    "reject": 0
+                }
+            },
+            "pine": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "",
+                "prices": {
+                    "g1": "",
+                    "g2": "",
+                    "g3": "",
+                    "reject": 0
+                }
+            }
+        },
+        "Products": "",
+        "Roundwood input capacity": "",
+        "Target markets": "",
+        "Certification": "",
+        "Comments": ""
+    },
+    "Acacia Wood factory": {
+        "lon": 31.36237,
+        "lat": 0.658842,
+        "buyer_specs": {
+            "euc": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "",
+                "prices": {
+                    "g1": "",
+                    "g2": "",
+                    "g3": "",
+                    "reject": 0
+                }
+            },
+            "pine": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "",
+                "prices": {
+                    "g1": "",
+                    "g2": "",
+                    "g3": "",
+                    "reject": 0
+                }
+            }
+        },
+        "Products": "",
+        "Roundwood input capacity": "",
+        "Target markets": "",
+        "Certification": "",
+        "Comments": ""
+    },
+    "CFID factory": {
+        "lon": 32.2329796,
+        "lat": 0.7449337,
+        "buyer_specs": {
+            "euc": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "",
+                "prices": {
+                    "g1": "",
+                    "g2": "",
+                    "g3": "",
+                    "reject": 0
+                }
+            },
+            "pine": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "",
+                "prices": {
+                    "g1": "",
+                    "g2": "",
+                    "g3": "",
+                    "reject": 0
+                }
+            }
+        },
+        "Products": "",
+        "Roundwood input capacity": "",
+        "Target markets": "",
+        "Certification": "",
+        "Comments": ""
+    },
+    "Guo Hau factory": {
+        "lon": 30.444508,
+        "lat": -0.582692,
+        "buyer_specs": {
+            "euc": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "",
+                "prices": {
+                    "g1": "",
+                    "g2": "",
+                    "g3": "",
+                    "reject": 0
+                }
+            },
+            "pine": {
+                "grades": {
+                    "g1": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g2": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    },
+                    "g3": {
+                        "dbh_min": "",
+                        "h_min": ""
+                    }
+                },
+                "price_mode": "",
+                "prices": {
+                    "g1": "",
+                    "g2": "",
+                    "g3": "",
+                    "reject": 0
+                }
+            }
+        },
+        "Products": "",
+        "Roundwood input capacity": "",
+        "Target markets": "",
+        "Certification": "",
+        "Comments": ""
+    }
+}

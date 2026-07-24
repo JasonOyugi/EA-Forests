@@ -1,0 +1,842 @@
+{
+    "UTGA Nursery": {
+        "lon": 32.23868953940504,
+        "lat": 0.3875571825107385,
+        "supply_specs": {
+            "euc": {
+                "material_types": ["Grandis x Urophylla"],
+                "species_or_clones": ["Clones"],
+                "price_mode": "UGX",
+                "prices": {"Grandis x Urophylla": 500},
+                "capacity": 50000,
+                "availability": "available",
+                "source_traceability": "known"
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": 50000,
+        "Products": "Grandis x Urophylla clonal seedlings",
+        "Target customers": "Commercial growers and UTGA members",
+        "Transport": "Buyer pickup; delivery by arrangement",
+        "Certification": "Test record",
+        "Contact": "",
+        "Comments": "Dummy functional test data for regional nursery analytics; replace with verified nursery database values."
+    },
+    "Bukuwa Clonal Nursery (1)": {
+        "lon": 34.04860188805877,
+        "lat": 0.5791678498035084,
+        "supply_specs": {
+            "euc": {
+                "material_types": ["clonal"],
+                "species_or_clones": ["GC 550", "GU 7"],
+                "price_mode": "UGX",
+                "prices": {"GC 550": 650, "GU 7": 700},
+                "capacity": 42000,
+                "availability": "seasonal",
+                "source_traceability": "partial"
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": 42000,
+        "Products": "Eucalyptus clonal seedlings",
+        "Target customers": "Commercial growers, contractors, and institutions",
+        "Transport": "Local delivery by arrangement",
+        "Certification": "Test record",
+        "Contact": "",
+        "Comments": "Dummy functional test data for regional nursery analytics; replace with verified nursery database values."
+    },
+    "Trinity Forestry Services Nursery": {
+        "lon": 32.5272454,
+        "lat": 0.659157,
+        "supply_specs": {
+            "euc": {
+                "material_types": ["seedling"],
+                "species_or_clones": ["E. grandis", "E. camaldulensis"],
+                "price_mode": "UGX",
+                "prices": {"E. grandis": 550, "E. camaldulensis": 500},
+                "capacity": 30000,
+                "availability": "available",
+                "source_traceability": "partial"
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": 30000,
+        "Products": "Eucalyptus seedlings",
+        "Target customers": "Retail growers and landscape contractors",
+        "Transport": "Buyer pickup",
+        "Certification": "Test record",
+        "Contact": "",
+        "Comments": "Dummy functional test data for regional nursery analytics; replace with verified nursery database values."
+    },
+    "Gabriel Contractors and Nurseries": {
+        "lon": 31.39102236012505,
+        "lat": 1.392919527636578,
+        "supply_specs": {
+            "euc": {
+                "material_types": ["mixed"],
+                "species_or_clones": ["E. grandis"],
+                "price_mode": "UGX",
+                "prices": {"E. grandis": 600},
+                "capacity": 18000,
+                "availability": "order_only",
+                "source_traceability": "unknown"
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": 18000,
+        "Products": "Eucalyptus and farm forestry seedlings",
+        "Target customers": "Smallholders and farm forestry groups",
+        "Transport": "Buyer pickup",
+        "Certification": "Test record",
+        "Contact": "",
+        "Comments": "Dummy functional test data for regional nursery analytics; replace with verified nursery database values."
+    },
+    "Blessed Tree Nursery": {
+        "lon": 33.67652703999418,
+        "lat": 0.8275050864107747,
+        "supply_specs": {
+            "euc": {
+                "material_types": ["seedling"],
+                "species_or_clones": ["E. grandis"],
+                "price_mode": "UGX",
+                "prices": {"E. grandis": 520},
+                "capacity": 24000,
+                "availability": "available",
+                "source_traceability": "partial"
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": 24000,
+        "Products": "Eucalyptus seedlings",
+        "Target customers": "Smallholders, schools, and estate growers",
+        "Transport": "Local delivery by arrangement",
+        "Certification": "Test record",
+        "Contact": "",
+        "Comments": "Dummy functional test data for regional nursery analytics; replace with verified nursery database values."
+    },
+    "Erimana Nurseries": {
+        "lon": 33.4946357787078,
+        "lat": 1.574557262987188,
+        "supply_specs": {
+            "euc": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": "",
+        "Products": "",
+        "Target customers": "",
+        "Transport": "",
+        "Certification": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "Uganda Tree Resources Ltd Nursery (1)": {
+        "lon": 32.6136146,
+        "lat": 0.4528368,
+        "supply_specs": {
+            "euc": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": "",
+        "Products": "",
+        "Target customers": "",
+        "Transport": "",
+        "Certification": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "Amazon Tree Nurseries Ltd": {
+        "lon": 32.473121,
+        "lat": 0.5968018,
+        "supply_specs": {
+            "euc": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": "",
+        "Products": "",
+        "Target customers": "",
+        "Transport": "",
+        "Certification": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "WND Forestry Services Nursery": {
+        "lon": 31.209751701561,
+        "lat": 1.533020603606059,
+        "supply_specs": {
+            "euc": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": "",
+        "Products": "",
+        "Target customers": "",
+        "Transport": "",
+        "Certification": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "Nile Fibre Board Nursery (1)": {
+        "lon": 31.5438066067241,
+        "lat": 1.223710039401875,
+        "supply_specs": {
+            "euc": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": "",
+        "Products": "",
+        "Target customers": "",
+        "Transport": "",
+        "Certification": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "Tree Growers Nursery": {
+        "lon": 31.7639218,
+        "lat": 0.9352719,
+        "supply_specs": {
+            "euc": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": "",
+        "Products": "",
+        "Target customers": "",
+        "Transport": "",
+        "Certification": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "Enviro Green Trust Nursery": {
+        "lon": 33.0171632,
+        "lat": 0.5778497,
+        "supply_specs": {
+            "euc": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": "",
+        "Products": "",
+        "Target customers": "",
+        "Transport": "",
+        "Certification": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "BFC Nursery": {
+        "lon": 33.38681057225901,
+        "lat": 0.3853952455317733,
+        "supply_specs": {
+            "euc": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": "",
+        "Products": "",
+        "Target customers": "",
+        "Transport": "",
+        "Certification": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "Tooro Botanical Gardens": {
+        "lon": 30.2854466,
+        "lat": 0.6668498,
+        "supply_specs": {
+            "euc": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": "",
+        "Products": "",
+        "Target customers": "",
+        "Transport": "",
+        "Certification": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "Rwenzori Clonal Nursery": {
+        "lon": 30.29740511054747,
+        "lat": 0.5887642691541177,
+        "supply_specs": {
+            "euc": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": "",
+        "Products": "",
+        "Target customers": "",
+        "Transport": "",
+        "Certification": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "Kasese Nurseries": {
+        "lon": 30.11445689120555,
+        "lat": 0.2828481782093561,
+        "supply_specs": {
+            "euc": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": "",
+        "Products": "",
+        "Target customers": "",
+        "Transport": "",
+        "Certification": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "Kisaana Forestry Nursery": {
+        "lon": 32.19763409994905,
+        "lat": 0.416078828209424,
+        "supply_specs": {
+            "euc": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": "",
+        "Products": "",
+        "Target customers": "",
+        "Transport": "",
+        "Certification": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "Gayaza Nurseries": {
+        "lon": 32.72096302780965,
+        "lat": 0.4931047171000906,
+        "supply_specs": {
+            "euc": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": "",
+        "Products": "",
+        "Target customers": "",
+        "Transport": "",
+        "Certification": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "Blue Gum Nurseries": {
+        "lon": 32.76203387120568,
+        "lat": 0.3587135222820027,
+        "supply_specs": {
+            "euc": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": "",
+        "Products": "",
+        "Target customers": "",
+        "Transport": "",
+        "Certification": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "Buhima Farmers Union": {
+        "lon": 31.22286428465411,
+        "lat": 1.340182855496199,
+        "supply_specs": {
+            "euc": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": "",
+        "Products": "",
+        "Target customers": "",
+        "Transport": "",
+        "Certification": "",
+        "Contact": "",
+        "Comments": ""
+    },
+    "Gatsby Tree Club Nursery": {
+        "lon": 31.38400028182261,
+        "lat": 0.5816765812326437,
+        "supply_specs": {
+            "euc": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "pine": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            },
+            "indigenous": {
+                "material_types": [],
+                "species_or_clones": [],
+                "price_mode": "",
+                "prices": {},
+                "capacity": "",
+                "availability": "",
+                "source_traceability": ""
+            }
+        },
+        "Total capacity": "",
+        "Products": "",
+        "Target customers": "",
+        "Transport": "",
+        "Certification": "",
+        "Contact": "",
+        "Comments": ""
+    }
+}

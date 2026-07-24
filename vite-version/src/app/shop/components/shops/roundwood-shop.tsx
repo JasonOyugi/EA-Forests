@@ -1,10 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useState, type ComponentType, type CSSProperties } from "react"
-import { useNavigate } from "react-router-dom"
 import {
-  ArrowUpRight,
-  BarChart3,
   Building2,
   CalendarDays,
   ChevronDown,
@@ -27,7 +24,6 @@ import {
 } from "lucide-react"
 import { useMapEvents } from "react-leaflet"
 
-import type { ShopDefinition, ShopItem } from "@/app/shop/types"
 import { marketConcessions, type MarketConcession } from "@/app/shop/data/concessions"
 import { BasicSsmtLayerControl } from "@/app/maps/basic-ssmt-layer"
 import {
@@ -70,11 +66,6 @@ import {
   MapZoomControl,
 } from "@/components/ui/map"
 import { cn } from "@/lib/utils"
-
-interface RoundwoodShopProps {
-  shop: ShopDefinition
-  inventory: ShopItem[]
-}
 
 type SelectedPoint = {
   latitude: number
@@ -129,7 +120,7 @@ const nearestFeatureLayers: NearestFeatureLayer[] = [
 const nearestFeatureLabels: Record<NearestFeatureLayer, string> = {
   processor: "Nearest processors",
   nursery: "Nearest nurseries",
-  commercialForest: "Nearest commercial forests",
+  commercialForest: "Nearest large commercial forests",
 }
 
 const countryFlagClasses: Record<MarketCountryFilter, string> = {
@@ -649,7 +640,7 @@ function ActorPopup({
   const meta = marketActorLayerMeta[actor.layer]
 
   return (
-    <div className="w-80 bg-background">
+    <div className="max-h-[70vh] w-80 overflow-y-auto bg-background">
       <div className="border-b p-4">
         <div className="flex items-start justify-between gap-3">
           <div>
@@ -663,16 +654,14 @@ function ActorPopup({
             style={{ backgroundColor: meta.color }}
           />
         </div>
-        <p className="mt-2 text-sm leading-5 text-muted-foreground">{actor.summary}</p>
       </div>
       <div className="space-y-3 p-4">
         <DetailRows
           rows={[
-            { label: "Role", value: actor.role },
-            { label: "Region", value: `${actor.region}, ${actor.country}` },
+            { label: "Country", value: actor.country },
+            { label: "Market region", value: actor.region },
             { label: "Coordinates", value: `${formatCoordinate(actor.latitude)}, ${formatCoordinate(actor.longitude)}` },
-            ...(actor.sizeHa ? [{ label: "Area", value: formatArea(actor.sizeHa) }] : []),
-            ...actor.details.slice(0, 4),
+            ...actor.details,
           ]}
         />
         <div>
@@ -687,9 +676,16 @@ function ActorPopup({
 }
 
 function DetailRows({ rows }: { rows: { label: string; value: string }[] }) {
+  const visibleRows = rows.filter((row) => {
+    const value = row.value.trim()
+    return Boolean(value)
+  })
+
+  if (visibleRows.length === 0) return null
+
   return (
     <div className="overflow-hidden rounded-md border">
-      {rows.map((row) => (
+      {visibleRows.map((row) => (
         <div
           key={`${row.label}-${row.value}`}
           className="grid grid-cols-[8.25rem_minmax(0,1fr)] border-b text-sm last:border-b-0"
@@ -697,7 +693,7 @@ function DetailRows({ rows }: { rows: { label: string; value: string }[] }) {
           <div className="bg-muted/70 px-3 py-2 font-medium text-muted-foreground">
             {row.label}
           </div>
-          <div className="px-3 py-2 leading-5">{row.value}</div>
+          <div className="break-words px-3 py-2 leading-5">{row.value}</div>
         </div>
       ))}
     </div>
@@ -797,10 +793,11 @@ function MapSideTable({
             <h3 className="mt-3 truncate text-lg font-semibold">
               {selectedActor?.name ?? selectedPoint.label}
             </h3>
-            <p className="mt-1 text-sm leading-5 text-muted-foreground">
-              {selectedActor?.summary ??
-                "Nearest market actors are ranked from this selected point."}
-            </p>
+            {!selectedActor ? (
+              <p className="mt-1 text-sm leading-5 text-muted-foreground">
+                Nearest market actors are ranked from this selected point.
+              </p>
+            ) : null}
           </div>
           <Button
             type="button"
@@ -819,14 +816,10 @@ function MapSideTable({
             rows={[
               ...(selectedActor
                 ? [
-                    { label: "Role", value: selectedActor.role },
-                    { label: "Region", value: `${selectedActor.region}, ${selectedActor.country}` },
-                    { label: "Source", value: selectedActor.source },
-                    ...(selectedActor.sizeHa
-                      ? [{ label: "Area", value: formatArea(selectedActor.sizeHa) }]
-                      : []),
+                    { label: "Country", value: selectedActor.country },
+                    { label: "Market region", value: selectedActor.region },
                   ]
-                : [{ label: "Point", value: "User selected map location" }]),
+                : []),
               {
                 label: "Latitude",
                 value: formatCoordinate(selectedPoint.latitude),
@@ -901,7 +894,7 @@ function RegionalBoundariesLayer({
                     { label: "Processors", value: String(region.layerCounts.processor) },
                     { label: "Nurseries", value: String(region.layerCounts.nursery) },
                     { label: "Trial sites", value: String(region.layerCounts.trialSite) },
-                    { label: "Commercial forests", value: String(region.layerCounts.commercialForest) },
+                    { label: "Large commercial forests", value: String(region.layerCounts.commercialForest) },
                     { label: "Forest reserves", value: String(region.layerCounts.forestReserve) },
                     ...(region.source ? [{ label: "Boundary", value: region.source }] : []),
                   ]}
@@ -1111,6 +1104,7 @@ function ActorLayerGroup({
                 onFocusActor={onSelectActor}
               />
             </MapPopup>
+            <MapTooltip side="top">{actor.name}</MapTooltip>
           </MapMarker>
         ))}
       </MapMarkerClusterGroup>
@@ -1120,8 +1114,12 @@ function ActorLayerGroup({
 
 function NearestFeatureRoutes({
   nearestFeatures,
+  selectedActorId,
+  onSelectActor,
 }: {
   nearestFeatures: NearestFeatureGroups
+  selectedActorId: string | null
+  onSelectActor: (actorId: string) => void
 }) {
   return (
     <>
@@ -1171,22 +1169,35 @@ function NearestFeatureRoutes({
         const color = marketActorLayerMeta[layer].color
 
         return nearestFeatures[layer].map((feature, index) => (
-          <MapCircleMarker
-            key={`nearest-pulse-${feature.id}`}
-            center={[feature.latitude, feature.longitude]}
-            radius={index === 0 ? 12 : 9}
-            pathOptions={{
-              color,
-              fillColor: color,
-              fillOpacity: index === 0 ? 0.35 : 0.2,
-              opacity: 0.95,
-              weight: index === 0 ? 4 : 3,
-            }}
+          <MapMarker
+            key={`nearest-marker-${feature.id}`}
+            position={[feature.latitude, feature.longitude]}
+            icon={
+              <ActorPin
+                actor={feature}
+                active={feature.id === selectedActorId}
+                highlight={{
+                  color,
+                  rank: index + 1,
+                  layer,
+                }}
+              />
+            }
+            iconAnchor={[20, 20]}
+            zIndexOffset={1000 + (nearestFeatureLayers.length - index) * 10}
+            bubblingMouseEvents={false}
+            eventHandlers={{ click: () => onSelectActor(feature.id) }}
           >
+            <MapPopup className="w-80 p-0">
+              <ActorPopup
+                actor={feature}
+                onFocusActor={onSelectActor}
+              />
+            </MapPopup>
             <MapTooltip side="top">
               {nearestFeatureLabels[layer]} #{index + 1}: {feature.name}
             </MapTooltip>
-          </MapCircleMarker>
+          </MapMarker>
         ))
       })}
     </>
@@ -1425,7 +1436,7 @@ function SpeciesDataNotice({
     return (
       <div className="rounded-md border bg-background/75 p-4">
         <div className="mb-3 flex items-center justify-between gap-3">
-          <h3 className="text-sm font-semibold">Commercial forest species split</h3>
+          <h3 className="text-sm font-semibold">Large commercial forest species split</h3>
           <span className="text-xs text-muted-foreground">
             {Math.round(totalHa).toLocaleString()} ha recorded
           </span>
@@ -1467,7 +1478,7 @@ function SpeciesDataNotice({
 
   return (
     <div className="rounded-md border border-dashed bg-muted/25 p-4 text-sm leading-6 text-muted-foreground">
-      No species-area split is recorded for this scope. Commercial forest area
+      No species-area split is recorded for this scope. Large commercial forest area
       coverage: {commercialForestAreaCount} of {commercialForestTotalCount} mapped
       large commercial forest records include hectares.
     </div>
@@ -1490,7 +1501,6 @@ function MarketAnalysis({
     regionId: null,
   })
   const countryCounts = countActorsByLayer(countryActors)
-  const totalCountryStakeholders = countryActors.length
   const countryForestReserveCount = countForestReservesForScope({
     country: selectedCountry,
     regionId: null,
@@ -1525,12 +1535,6 @@ function MarketAnalysis({
   const countryFlagClass = countryFlagClasses[selectedCountry]
   const countryMetricCards = [
     {
-      icon: BarChart3,
-      label: "Total stakeholders",
-      value: String(totalCountryStakeholders),
-      color: "#0891b2",
-    },
-    {
       icon: Leaf,
       label: "Nurseries",
       value: String(countryCounts.nursery),
@@ -1550,7 +1554,7 @@ function MarketAnalysis({
     },
     {
       icon: Trees,
-      label: "Commercial forests",
+      label: "Large commercial forests",
       value: String(countryCounts.commercialForest),
       color: marketActorLayerMeta.commercialForest.color,
     },
@@ -1562,12 +1566,6 @@ function MarketAnalysis({
     },
   ]
   const regionMetricCards = [
-    {
-      icon: BarChart3,
-      label: "Total stakeholders",
-      value: String(regionActors.length),
-      color: "#0891b2",
-    },
     {
       icon: Leaf,
       label: "Nurseries",
@@ -1588,7 +1586,7 @@ function MarketAnalysis({
     },
     {
       icon: Trees,
-      label: "Commercial forests",
+      label: "Large commercial forests",
       value: String(regionCounts.commercialForest),
       color: marketActorLayerMeta.commercialForest.color,
     },
@@ -1866,9 +1864,7 @@ function ConcessionsDatabase({
   )
 }
 
-export function RoundwoodShop({ shop, inventory }: RoundwoodShopProps) {
-  const navigate = useNavigate()
-  const fallbackItem = inventory[0]
+export function RoundwoodShop() {
   const firstProcessor = marketActors.find((actor) => actor.layer === "processor")
   const [selectedActorId, setSelectedActorId] = useState<string | null>(null)
   const [clickedPoint, setClickedPoint] = useState<SelectedPoint | null>(null)
@@ -1988,11 +1984,6 @@ export function RoundwoodShop({ shop, inventory }: RoundwoodShopProps) {
     [nearestFeatures, showRoadAnalysis]
   )
 
-  const openMarket = () => {
-    if (!fallbackItem) return
-    navigate(`/shop/${shop.slug}/${fallbackItem.slug}`)
-  }
-
   const focusActor = (actorId: string) => {
     setSelectedActorId(actorId)
     setClickedPoint(null)
@@ -2031,10 +2022,6 @@ export function RoundwoodShop({ shop, inventory }: RoundwoodShopProps) {
             >
               <Sprout className="h-4 w-4" />
               Reset view
-            </Button>
-            <Button onClick={openMarket}>
-              Market listings
-              <ArrowUpRight className="h-4 w-4" />
             </Button>
           </div>
         </div>
@@ -2081,6 +2068,8 @@ export function RoundwoodShop({ shop, inventory }: RoundwoodShopProps) {
                   {showRoadAnalysis ? (
                     <NearestFeatureRoutes
                       nearestFeatures={nearestFeatures}
+                      selectedActorId={selectedActorId}
+                      onSelectActor={focusActor}
                     />
                   ) : null}
                 </>

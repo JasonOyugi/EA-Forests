@@ -13,6 +13,7 @@ import {
   ChevronDown,
   ExternalLink,
   Heart,
+  Leaf,
   Mail,
   MapPinned,
   Phone,
@@ -25,7 +26,7 @@ import {
 import { cn } from "@/lib/utils";
 import ImageCarouselBasic from "./image-carousel-basic";
 import StarRatingFractions from "./star-rating-fractions";
-import { Map, MapMarker, MapPopup, MapTileLayer } from "@/components/ui/map";
+import { Map, MapCircle, MapMarker, MapMarkerClusterGroup, MapPopup, MapTileLayer, MapTooltip } from "@/components/ui/map";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ForestryServicesCountdownBanner } from "@/components/commerce-ui/forestry-services-countdown-banner";
 import { ForestryServicesSaleBanner } from "@/components/commerce-ui/forestry-services-sale-banner";
@@ -33,6 +34,11 @@ import { FloatingCart } from "@/app/shop/components/floating-cart";
 import { useShopStore } from "@/stores/shop-store";
 import { useShallow } from "zustand/react/shallow";
 import type { ShopItem, ShopItemMapPoint } from "@/app/shop/types";
+import nurseryDatabaseJson from "@/app/shop/data/market-databases/nurseries.json";
+import type { DataValue, NurseryRecord } from "@/app/shop/data/market-databases";
+import { useMap } from "react-leaflet";
+
+const nurseryDatabase = nurseryDatabaseJson as Record<string, NurseryRecord>;
 
 type ReviewSort = "highToLow" | "lowToHigh" | "newest";
 
@@ -55,6 +61,12 @@ type RetailerLocation = {
   email: string;
   address: string;
   leadTime: string;
+  country?: string;
+  region?: string;
+  species?: string;
+  capacity?: string;
+  certification?: string;
+  locationConfidence?: string;
 };
 
 interface ProductPageProps {
@@ -116,12 +128,12 @@ function getRetailerInfo(shop: ShopItem["shop"]) {
 function getCommerceCopy(shop: ShopItem["shop"]) {
   if (shop === "seedlings") {
     return {
-      panelTitle: "Nearest retailers",
+      panelTitle: "Nursery market map",
       panelDescription:
-        "Choose a nursery marker to inspect the nearest retailer, review contact details, and place the order with that seller in mind.",
-      popupEyebrow: "Nursery partner",
-      selectedBadge: "Selected retailer",
-      quickActionLabel: "Contact retailer",
+        "Choose a nursery marker to inspect the mapped planting material, capacity, contact details, and location confidence.",
+      popupEyebrow: "Mapped nursery",
+      selectedBadge: "Selected nursery",
+      quickActionLabel: "Call nursery",
       directCallLabel: "Call nursery",
     };
   }
@@ -156,6 +168,7 @@ function getMapCenter(points: ShopItemMapPoint[]) {
 }
 
 function getRetailerMapCenter(points: RetailerLocation[]) {
+  if (points.length === 0) return [-1.5, 35.3] as [number, number];
   const latitude = points.reduce((sum, point) => sum + point.latitude, 0) / points.length;
   const longitude = points.reduce((sum, point) => sum + point.longitude, 0) / points.length;
   return [latitude, longitude] as [number, number];
@@ -194,46 +207,93 @@ function getSeedlingVariantVisual(variantId?: string) {
   };
 }
 
+function displayDatabaseValue(value: DataValue | undefined) {
+  if (value == null || String(value).trim() === "") return "N/A";
+  return String(value).trim();
+}
+
+function normalizeNurseryMaterial(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[×*]/g, "x")
+    .replace(/[().,_/\\-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getNurseryMaterials(record: NurseryRecord) {
+  return [
+    String(record.Products ?? ""),
+    ...Object.values(record.supply_specs).flatMap((spec) => [
+      ...spec.material_types,
+      ...spec.species_or_clones,
+    ]),
+  ]
+    .map(normalizeNurseryMaterial)
+    .filter(Boolean);
+}
+
+function nurseryMatchesItem(record: NurseryRecord, item: ShopItem) {
+  const aliases = item.nurseryVarietyAliases?.length
+    ? item.nurseryVarietyAliases
+    : [item.name];
+  const materials = new Set(getNurseryMaterials(record));
+  return aliases.some((alias) => materials.has(normalizeNurseryMaterial(alias)));
+}
+
+function getNurserySpecies(record: NurseryRecord) {
+  const species = Object.values(record.supply_specs).flatMap((spec) => [
+    ...spec.material_types,
+    ...spec.species_or_clones,
+  ]);
+  return species.length ? [...new Set(species)].join(", ") : "N/A";
+}
+
+function getNurseryCountry(record: NurseryRecord) {
+  const country = record["Country source"];
+  return country === "Uganda" || country === "Kenya" || country === "Tanzania"
+    ? country
+    : "Uganda";
+}
+
+function getNurseryCertification(record: NurseryRecord) {
+  if (record["Country source"] || String(record.Certification).toLowerCase().includes("test record")) {
+    return "N/A";
+  }
+  return displayDatabaseValue(record.Certification);
+}
+
 function getNearestRetailers(item: ShopItem): RetailerLocation[] {
   if (item.shop === "seedlings") {
-    return [
-      {
-        id: `${item.id}-nakuru`,
-        name: "Nakuru Highlands Nursery",
-        description: "Large-format nursery with strong hybrid eucalyptus and pine handling plus flexible tray packaging for commercial buyers.",
-        image: item.imageGallery?.[0]?.url ?? item.image,
-        latitude: -0.3031,
-        longitude: 36.08,
-        phone: "+254 700 120 440",
-        email: "orders@nakuruhighlandsnursery.co.ke",
-        address: "Lanet, Nakuru County, Kenya",
-        leadTime: "Collection or dispatch within 2-4 business days",
-      },
-      {
-        id: `${item.id}-eldoret`,
-        name: "Rift Valley Clonal Nursery",
-        description: "Focused on high-performance timber seedlings with batch preparation for larger institutional planting orders.",
-        image: item.imageGallery?.[1]?.url ?? item.image,
-        latitude: 0.5143,
-        longitude: 35.2698,
-        phone: "+254 711 305 522",
-        email: "sales@riftvalleyclonalnursery.com",
-        address: "Eldoret bypass, Uasin Gishu, Kenya",
-        leadTime: "Dispatch scheduling within 48 hours",
-      },
-      {
-        id: `${item.id}-nairobi`,
-        name: "Athi Plains Nursery Hub",
-        description: "Convenient nursery hub for coordination, order consolidation, and contractor-linked pickup near Nairobi.",
-        image: item.imageGallery?.[2]?.url ?? item.image,
-        latitude: -1.3197,
-        longitude: 36.9275,
-        phone: "+254 733 889 104",
-        email: "hello@athiplainsnursery.africa",
-        address: "Mlolongo, Machakos County, Kenya",
-        leadTime: "Same-week coordination for larger orders",
-      },
-    ];
+    return Object.entries(nurseryDatabase)
+      .filter(([, record]) => nurseryMatchesItem(record, item))
+      .map(([name, record]) => {
+        const country = getNurseryCountry(record);
+        const region = displayDatabaseValue(record["Region / county"]);
+        const address = displayDatabaseValue(record["Published locality / address"]);
+        const contact = displayDatabaseValue(record.Phone || record.Contact);
+
+        return {
+          id: `nursery-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`,
+          name,
+          description: displayDatabaseValue(record.Products),
+          image: item.image,
+          latitude: Number(record.lat),
+          longitude: Number(record.lon),
+          phone: contact,
+          email: "",
+          address: address === "N/A" ? [region, country].filter((value) => value !== "N/A").join(", ") : address,
+          leadTime: displayDatabaseValue(record.Transport),
+          country,
+          region,
+          species: getNurserySpecies(record),
+          capacity: displayDatabaseValue(record["Total capacity"]),
+          certification: getNurseryCertification(record),
+          locationConfidence: displayDatabaseValue(record["Coordinate confidence"]),
+        };
+      })
+      .filter((nursery) => Number.isFinite(nursery.latitude) && Number.isFinite(nursery.longitude))
+      .sort((a, b) => a.country.localeCompare(b.country) || a.name.localeCompare(b.name));
   }
 
   const retailer = getRetailerInfo(item.shop);
@@ -254,6 +314,51 @@ function getNearestRetailers(item: ShopItem): RetailerLocation[] {
   ];
 }
 
+function distanceKm(left: RetailerLocation, right: RetailerLocation) {
+  const earthRadiusKm = 6371;
+  const toRadians = (value: number) => (value * Math.PI) / 180;
+  const latitudeDelta = toRadians(right.latitude - left.latitude);
+  const longitudeDelta = toRadians(right.longitude - left.longitude);
+  const leftLatitude = toRadians(left.latitude);
+  const rightLatitude = toRadians(right.latitude);
+  const haversine =
+    Math.sin(latitudeDelta / 2) ** 2 +
+    Math.cos(leftLatitude) *
+      Math.cos(rightLatitude) *
+      Math.sin(longitudeDelta / 2) ** 2;
+
+  return earthRadiusKm * 2 * Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine));
+}
+
+function CatchmentViewport({
+  retailer,
+  radiusKm,
+}: {
+  retailer: RetailerLocation;
+  radiusKm: number;
+}) {
+  const map = useMap();
+
+  React.useEffect(() => {
+    const zoom = radiusKm === 100 ? 7 : radiusKm === 250 ? 6 : 5;
+    map.setView([retailer.latitude, retailer.longitude], zoom, { animate: true });
+  }, [map, radiusKm, retailer.latitude, retailer.longitude]);
+
+  return (
+    <MapCircle
+      center={[retailer.latitude, retailer.longitude]}
+      radius={radiusKm * 1000}
+      pathOptions={{
+        color: "#047857",
+        fillColor: "#10b981",
+        fillOpacity: 0.08,
+        opacity: 0.75,
+        weight: 2,
+      }}
+    />
+  );
+}
+
 function SiteMarker({ active }: { active: boolean }) {
   return (
     <div className="relative flex flex-col items-center">
@@ -272,18 +377,45 @@ function SiteMarker({ active }: { active: boolean }) {
   );
 }
 
-function RetailerMarker({ active }: { active: boolean }) {
+function RetailerMarker({
+  active,
+  markerKind = "store",
+}: {
+  active: boolean;
+  markerKind?: "nursery" | "store";
+}) {
+  const Icon = markerKind === "nursery" ? Leaf : Store;
+  const markerClassName = markerKind === "nursery"
+    ? "relative flex h-12 w-12 items-center justify-center rounded-full border-2 border-white bg-emerald-600 text-white shadow-lg transition-transform"
+    : "relative flex h-12 w-12 items-center justify-center rounded-full border-2 border-primary-foreground bg-primary text-primary-foreground shadow-lg transition-transform";
+  const glowClassName = markerKind === "nursery"
+    ? "absolute inset-0 scale-110 rounded-full bg-emerald-500/25 blur-xl transition-opacity"
+    : "absolute inset-0 scale-110 rounded-full bg-primary/25 blur-xl transition-opacity";
+
   return (
-    <div className="relative flex items-center justify-center">
-      <div className={cn("absolute inset-0 scale-110 rounded-full bg-primary/25 blur-xl transition-opacity", active ? "opacity-100" : "opacity-70")} />
+    <div className="relative flex size-12 aspect-square shrink-0 items-center justify-center">
+      <div className={cn(glowClassName, active ? "opacity-100" : "opacity-70")} />
       <div
         className={cn(
-          "relative flex h-12 w-12 items-center justify-center rounded-full border-2 border-primary-foreground bg-primary text-primary-foreground shadow-lg transition-transform",
-          active && "scale-105 ring-2 ring-primary/25"
+          markerClassName,
+          "aspect-square shrink-0",
+          active && (markerKind === "nursery" ? "scale-105 ring-2 ring-emerald-500/25" : "scale-105 ring-2 ring-primary/25")
         )}
+        style={{ width: 48, height: 48, borderRadius: "9999px" }}
       >
-        <Store className="h-5 w-5" />
+        <Icon className="h-5 w-5" />
       </div>
+    </div>
+  );
+}
+
+function NurseryClusterBadge({ count }: { count: number }) {
+  return (
+    <div
+      className="flex size-11 aspect-square shrink-0 items-center justify-center rounded-full border-2 border-white bg-emerald-700 text-sm font-semibold text-white shadow-lg"
+      style={{ width: 44, height: 44, borderRadius: "9999px" }}
+    >
+      {count}
     </div>
   );
 }
@@ -463,14 +595,99 @@ function RetailerMapPanel({
   onSelectRetailer,
   onAddToCart,
   copy,
+  markerKind = "store",
 }: {
   retailers: RetailerLocation[];
-  selectedRetailer: RetailerLocation;
+  selectedRetailer: RetailerLocation | null;
   onSelectRetailer: (retailer: RetailerLocation) => void;
   onAddToCart: () => void;
   copy: ReturnType<typeof getCommerceCopy>;
+  markerKind?: "nursery" | "store";
 }) {
-  const mapCenter = getRetailerMapCenter(retailers);
+  const [catchmentRadiusKm, setCatchmentRadiusKm] = React.useState(500);
+  const visibleRetailers =
+    markerKind === "nursery" && selectedRetailer
+      ? retailers.filter(
+          (retailer) =>
+            retailer.id === selectedRetailer.id ||
+            distanceKm(selectedRetailer, retailer) <= catchmentRadiusKm
+        )
+      : retailers;
+  const mapCenter = selectedRetailer
+    ? [selectedRetailer.latitude, selectedRetailer.longitude] as [number, number]
+    : getRetailerMapCenter(visibleRetailers);
+  const selectedNurseryRating = selectedRetailer
+    ? deriveRatingFromId(selectedRetailer.id)
+    : null;
+  const markerNodes = visibleRetailers.map((retailer) => (
+    <MapMarker
+      key={retailer.id}
+      position={[retailer.latitude, retailer.longitude]}
+      icon={<RetailerMarker active={selectedRetailer?.id === retailer.id} markerKind={markerKind} />}
+      iconAnchor={[24, 24]}
+      iconSize={[48, 48]}
+      iconClassName="nursery-map-marker"
+      eventHandlers={{ click: () => onSelectRetailer(retailer) }}
+    >
+      <MapPopup className="w-[min(28rem,calc(100vw-3rem))] border-0 p-2">
+        <div className="overflow-hidden rounded-[1rem] bg-background">
+          {markerKind === "store" ? (
+            <div className="relative h-36 overflow-hidden">
+              <img src={retailer.image} alt={retailer.name} className="h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary-foreground/85">{copy.popupEyebrow}</div>
+                <div className="mt-1 text-lg font-semibold text-white">{retailer.name}</div>
+              </div>
+            </div>
+          ) : (
+            <div className="border-b border-emerald-700/20 bg-emerald-50 p-4 text-emerald-950">
+              <div className="text-[11px] font-semibold uppercase tracking-normal text-emerald-800">{copy.popupEyebrow}</div>
+              <div className="mt-1 text-lg font-semibold">{retailer.name}</div>
+            </div>
+          )}
+          <div className="space-y-3 p-4">
+            <div className="grid gap-2 text-sm">
+              <p><span className="font-medium">Country:</span> {retailer.country ?? "N/A"}</p>
+              <p><span className="font-medium">County / region:</span> {retailer.region ?? "N/A"}</p>
+              <p><span className="font-medium">Planting material:</span> {retailer.description}</p>
+              {markerKind === "nursery" ? (
+                <>
+                  <p><span className="font-medium">Species / clones:</span> {retailer.species ?? "N/A"}</p>
+                  <p><span className="font-medium">Capacity:</span> {retailer.capacity ?? "N/A"}</p>
+                  <p><span className="font-medium">Certification:</span> {retailer.certification ?? "N/A"}</p>
+                  <p><span className="font-medium">Location confidence:</span> {retailer.locationConfidence ?? "N/A"}</p>
+                </>
+              ) : null}
+            </div>
+            <div className="space-y-1 text-xs text-muted-foreground">
+              <p>{retailer.address}</p>
+              <p>{retailer.phone}</p>
+              {retailer.email ? <p>{retailer.email}</p> : null}
+            </div>
+            <div className="grid gap-2">
+              {retailer.phone !== "N/A" ? (
+                <SweepActionButton href={`tel:${retailer.phone.replace(/\s+/g, "")}`} icon={<Phone className="h-4 w-4" />}>
+                  {copy.quickActionLabel}
+                </SweepActionButton>
+              ) : null}
+              <SweepActionButton
+                icon={<ShoppingCart className="h-4 w-4" />}
+                onClick={() => {
+                  onSelectRetailer(retailer);
+                  onAddToCart();
+                }}
+                variant="solid"
+              >
+                Add to cart
+              </SweepActionButton>
+            </div>
+          </div>
+        </div>
+      </MapPopup>
+      <MapTooltip side="top">{retailer.name}</MapTooltip>
+    </MapMarker>
+  ));
 
   return (
     <div className="theme-primary-border-hover rounded-[2rem] border border-transparent bg-transparent p-3 transition-shadow duration-300 hover:shadow-lg">
@@ -482,93 +699,147 @@ function RetailerMapPanel({
         <p className="text-sm text-muted-foreground">
           {copy.panelDescription}
         </p>
+        {markerKind === "nursery" ? (
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium">Catchment around selected nursery</span>
+              <div className="inline-flex overflow-hidden rounded-md border">
+                {[100, 250, 500].map((radius) => (
+                  <button
+                    key={radius}
+                    type="button"
+                    onClick={() => setCatchmentRadiusKm(radius)}
+                    className={cn(
+                      "h-8 border-r px-3 text-xs font-medium last:border-r-0",
+                      catchmentRadiusKm === radius
+                        ? "bg-emerald-700 text-white"
+                        : "bg-background text-foreground hover:bg-muted"
+                    )}
+                  >
+                    {radius} km
+                  </button>
+                ))}
+              </div>
+            </div>
+            <Badge variant="outline">
+              {visibleRetailers.length} of {retailers.length} nurseries
+            </Badge>
+          </div>
+        ) : null}
       </div>
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
         <div className="h-[430px] overflow-hidden rounded-2xl border border-primary/20">
-          <Map center={mapCenter} zoom={8} className="h-full w-full">
+          <Map center={mapCenter} zoom={markerKind === "nursery" ? 5 : 8} className="h-full w-full">
             <MapTileLayer
               url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
               attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>'
             />
-            {retailers.map((retailer) => (
-                <MapMarker
-                  key={retailer.id}
-                  position={[retailer.latitude, retailer.longitude]}
-                  icon={<RetailerMarker active={selectedRetailer.id === retailer.id} />}
-                  iconAnchor={[24, 24]}
-                  eventHandlers={{ click: () => onSelectRetailer(retailer) }}
-                >
-                <MapPopup className="w-[min(28rem,calc(100vw-3rem))] border-0 p-2">
-                  <div className="overflow-hidden rounded-[1rem] bg-background">
-                    <div className="relative h-36 overflow-hidden">
-                      <img src={retailer.image} alt={retailer.name} className="h-full w-full object-cover" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                      <div className="absolute bottom-4 left-4 right-4">
-                        <div className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary-foreground/85">{copy.popupEyebrow}</div>
-                        <div className="mt-1 text-lg font-semibold text-white">{retailer.name}</div>
-                      </div>
-                    </div>
-                    <div className="space-y-3 p-4">
-                      <p className="text-sm leading-6 text-muted-foreground">{retailer.description}</p>
-                      <div className="space-y-1 text-xs text-muted-foreground">
-                        <p>{retailer.address}</p>
-                        <p>{retailer.phone}</p>
-                        <p>{retailer.email}</p>
-                      </div>
-                      <div className="grid gap-2">
-                        <SweepActionButton href={`tel:${retailer.phone.replace(/\s+/g, "")}`} icon={<Phone className="h-4 w-4" />}>
-                          {copy.quickActionLabel}
-                        </SweepActionButton>
-                        <SweepActionButton
-                          icon={<ShoppingCart className="h-4 w-4" />}
-                          onClick={() => {
-                            onSelectRetailer(retailer);
-                            onAddToCart();
-                          }}
-                          variant="solid"
-                        >
-                          Add to cart
-                        </SweepActionButton>
-                      </div>
-                    </div>
-                  </div>
-                </MapPopup>
-              </MapMarker>
-            ))}
+            {markerKind === "nursery" && selectedRetailer ? (
+              <CatchmentViewport
+                retailer={selectedRetailer}
+                radiusKm={catchmentRadiusKm}
+              />
+            ) : null}
+            {markerKind === "nursery" ? (
+              <MapMarkerClusterGroup
+                icon={(count) => <NurseryClusterBadge count={count} />}
+                iconClassName="nursery-map-marker"
+                iconSize={[44, 44]}
+              >
+                {markerNodes}
+              </MapMarkerClusterGroup>
+            ) : markerNodes}
           </Map>
         </div>
 
+        {selectedRetailer ? (
         <div className="space-y-5 rounded-2xl bg-transparent p-1">
-          <div className="overflow-hidden rounded-2xl">
-            <img src={selectedRetailer.image} alt={selectedRetailer.name} className="h-44 w-full object-cover" />
-          </div>
+          {markerKind === "store" ? (
+            <div className="overflow-hidden rounded-2xl">
+              <img src={selectedRetailer.image} alt={selectedRetailer.name} className="h-44 w-full object-cover" />
+            </div>
+          ) : null}
           <div>
             <Badge className="bg-primary/10 text-primary">{copy.selectedBadge}</Badge>
             <h3 className="mt-3 text-xl font-semibold">{selectedRetailer.name}</h3>
-            <p className="mt-2 text-sm leading-6 text-muted-foreground">{selectedRetailer.description}</p>
           </div>
           <div className="grid gap-3">
+            {markerKind === "nursery" && selectedNurseryRating ? (
+              <div className="border-b border-primary/20 pb-3 text-sm">
+                <div className="font-medium">Nursery rating</div>
+                <div className="mt-1 flex items-center gap-2">
+                  <StarRatingFractions
+                    value={selectedNurseryRating.rating}
+                    readOnly
+                    iconSize={15}
+                  />
+                  <span className="text-muted-foreground">
+                    {selectedNurseryRating.rating.toFixed(2)}/5 ({selectedNurseryRating.reviewCount})
+                  </span>
+                </div>
+              </div>
+            ) : null}
             <div className="border-b border-primary/20 pb-3 text-sm">
               <div className="font-medium">Address</div>
               <div className="text-muted-foreground">{selectedRetailer.address}</div>
             </div>
-            <div className="border-b border-primary/20 pb-3 text-sm">
-              <div className="font-medium">Lead time</div>
-              <div className="text-muted-foreground">{selectedRetailer.leadTime}</div>
-            </div>
+            {markerKind === "nursery" ? (
+              <>
+                <div className="border-b border-primary/20 pb-3 text-sm">
+                  <div className="font-medium">Planting material</div>
+                  <div className="text-muted-foreground">{selectedRetailer.description}</div>
+                </div>
+                <div className="border-b border-primary/20 pb-3 text-sm">
+                  <div className="font-medium">Species / clones</div>
+                  <div className="text-muted-foreground">{selectedRetailer.species ?? "N/A"}</div>
+                </div>
+                <div className="border-b border-primary/20 pb-3 text-sm">
+                  <div className="font-medium">Capacity</div>
+                  <div className="text-muted-foreground">{selectedRetailer.capacity ?? "N/A"}</div>
+                </div>
+                <div className="border-b border-primary/20 pb-3 text-sm">
+                  <div className="font-medium">Certification</div>
+                  <div className="text-muted-foreground">{selectedRetailer.certification ?? "N/A"}</div>
+                </div>
+                <div className="border-b border-primary/20 pb-3 text-sm">
+                  <div className="font-medium">Location confidence</div>
+                  <div className="text-muted-foreground">{selectedRetailer.locationConfidence ?? "N/A"}</div>
+                </div>
+              </>
+            ) : (
+              <div className="border-b border-primary/20 pb-3 text-sm">
+                <div className="font-medium">Lead time</div>
+                <div className="text-muted-foreground">{selectedRetailer.leadTime}</div>
+              </div>
+            )}
           </div>
           <div className="grid gap-2 sm:grid-cols-2">
-            <SweepActionButton href={`mailto:${selectedRetailer.email}`} icon={<Mail className="h-4 w-4" />}>
-              Contact
-            </SweepActionButton>
-            <SweepActionButton href={`tel:${selectedRetailer.phone.replace(/\s+/g, "")}`} icon={<Phone className="h-4 w-4" />}>
-              {copy.directCallLabel}
-            </SweepActionButton>
+            {selectedRetailer.email ? (
+              <SweepActionButton href={`mailto:${selectedRetailer.email}`} icon={<Mail className="h-4 w-4" />}>
+                Contact
+              </SweepActionButton>
+            ) : null}
+            {selectedRetailer.phone !== "N/A" ? (
+              <SweepActionButton href={`tel:${selectedRetailer.phone.replace(/\s+/g, "")}`} icon={<Phone className="h-4 w-4" />}>
+                {copy.directCallLabel}
+              </SweepActionButton>
+            ) : null}
           </div>
           <SweepActionButton className="w-full" icon={<ShoppingCart className="h-4 w-4" />} onClick={onAddToCart} variant="solid">
             Add to cart
           </SweepActionButton>
         </div>
+        ) : (
+          <div className="flex min-h-[24rem] items-center justify-center rounded-md border border-dashed p-6 text-center">
+            <div>
+              <Leaf className="mx-auto h-8 w-8 text-emerald-700" />
+              <h3 className="mt-3 font-semibold">No mapped nursery supplier</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                No nursery record explicitly lists this genetic material.
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -774,7 +1045,7 @@ export function ProductPage({
   const nearestRetailers = React.useMemo(() => getNearestRetailers(item), [item]);
   const [selectedRetailerId, setSelectedRetailerId] = React.useState<string>(nearestRetailers[0]?.id ?? "");
   const selectedRetailer =
-    nearestRetailers.find((retailer) => retailer.id === selectedRetailerId) ?? nearestRetailers[0];
+    nearestRetailers.find((retailer) => retailer.id === selectedRetailerId) ?? nearestRetailers[0] ?? null;
 
   React.useEffect(() => {
     setSelectedRetailerId(nearestRetailers[0]?.id ?? "");
@@ -880,12 +1151,19 @@ export function ProductPage({
                   {item.subtitle ? <Badge variant="outline">{item.subtitle}</Badge> : null}
                 </div>
                 <h1 className="text-3xl font-bold">{item.name}</h1>
-                <div className="flex items-center gap-2">
-                  <StarRatingFractions value={rating} readOnly iconSize={16} />
-                  <span className="text-sm text-muted-foreground">
-                    {rating.toFixed(2)}/5 · {reviewCount} reviews
-                  </span>
-                </div>
+                {isSeedlingsItem ? (
+                  <div className="text-sm text-muted-foreground">
+                    {item.supplierCount ?? nearestRetailers.length} mapped nursery
+                    {(item.supplierCount ?? nearestRetailers.length) === 1 ? "" : " suppliers"}
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <StarRatingFractions value={rating} readOnly iconSize={16} />
+                    <span className="text-sm text-muted-foreground">
+                      {rating.toFixed(2)}/5 · {reviewCount} reviews
+                    </span>
+                  </div>
+                )}
               </div>
               <div className="flex gap-2">
                 <Button variant="outline" size="icon" onClick={handleAddToCart} className="relative">
@@ -916,6 +1194,11 @@ export function ProductPage({
             </div>
 
             <p className="text-base text-muted-foreground">{item.description}</p>
+            {item.evidenceNote ? (
+              <p className="text-xs leading-5 text-muted-foreground">
+                {item.evidenceNote}
+              </p>
+            ) : null}
 
             <div
               className={cn(
@@ -1071,7 +1354,7 @@ export function ProductPage({
           <div className="space-y-3">
             <div className="flex justify-between gap-3">
               <span className="text-muted-foreground">Type</span>
-              <span>{item.kind}</span>
+              <span>{item.materialType ?? item.kind}</span>
             </div>
             <div className="flex justify-between gap-3">
               <span className="text-muted-foreground">Primary unit</span>
@@ -1091,17 +1374,26 @@ export function ProductPage({
         </div>
       </div>
 
-      {isEnhancedCommerceItem && selectedRetailer ? (
+      {isEnhancedCommerceItem && (selectedRetailer || isSeedlingsItem) ? (
         <div className="space-y-6">
-          <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1.18fr)_minmax(360px,0.82fr)]">
+          <div
+            className={cn(
+              "items-start gap-6",
+              !isSeedlingsItem &&
+                "grid xl:grid-cols-[minmax(0,1.18fr)_minmax(360px,0.82fr)]"
+            )}
+          >
             <RetailerMapPanel
               retailers={nearestRetailers}
               selectedRetailer={selectedRetailer}
               onSelectRetailer={(retailer) => setSelectedRetailerId(retailer.id)}
               onAddToCart={handleAddToCart}
               copy={commerceCopy}
+              markerKind={isSeedlingsItem ? "nursery" : "store"}
             />
-            <CustomerRatingsPanel initialReviews={dummyReviews} initialAverage={rating} />
+            {!isSeedlingsItem ? (
+              <CustomerRatingsPanel initialReviews={dummyReviews} initialAverage={rating} />
+            ) : null}
           </div>
           <OtherDealsPanel item={item} />
         </div>

@@ -19,13 +19,13 @@ export function SeedlingsShop({ shop, inventory }: SeedlingsShopProps) {
       inventory={inventory}
       banner={<SeedlingsBanner />}
       featuredItems={featuredItems}
-      featuredTitle="Featured Products"
-      featuredSubtitle="Handpicked selections for quality and reliability"
+      featuredTitle="Mapped genetic material"
+      featuredSubtitle="Named varieties with at least one mapped nursery supplier"
       featuredTheme="seedlings"
       featuredSectionClassName="rounded-xl"
       newItems={newItems}
-      newTitle="New Arrivals"
-      newSubtitle="Latest additions to our catalog"
+      newTitle="Additional genetics"
+      newSubtitle="Pure species, hybrids, and clones from nursery records and trial evidence"
       newTheme="seedlings"
       newSectionClassName="rounded-xl"
       showNewArrivals={true}

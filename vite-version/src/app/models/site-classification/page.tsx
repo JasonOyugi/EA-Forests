@@ -1359,7 +1359,7 @@ export function SiteClassificationAnalysis({
               </CardContent>
             </Card>
 
-            <div className="grid gap-4 lg:grid-cols-2">
+            <div className="grid gap-4">
               {result?.static_table?.length ? (
                 result.static_table.map((row, index) => {
                   const metricRows = Object.entries(row)

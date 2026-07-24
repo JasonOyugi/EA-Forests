@@ -1,0 +1,283 @@
+[
+  {
+    "id": "hospital-dialysafe-001",
+    "slug": "dialysafe-part-a-b",
+    "shop": "hospital-services",
+    "name": "DIALYSAFE - Part A & Part B",
+    "kind": "product",
+    "unitLabel": "per 10L canister",
+    "price": 38,
+    "currency": "USD",
+    "description": "Acid concentrate (Part A) and sodium bicarbonate concentrate (Part B) for hemodialysis, formulated for consistent, reliable dialysate quality.",
+    "image": "https://ui.shadcn.com/placeholder.svg",
+    "tags": ["featured", "popular", "dialysis-consumables"],
+    "stockStatus": "in-stock",
+    "domain": "hospital",
+    "featured": true,
+    "variants": [
+      { "id": "part-a", "label": "DIALYSAFE Part A", "count": 1, "price": 18, "unitLabel": "per 10L canister", "description": "Acid concentrate for hemodialysis." },
+      { "id": "part-b", "label": "DIALYSAFE Part B", "count": 1, "price": 20, "unitLabel": "per bag", "description": "Sodium bicarbonate concentrate for hemodialysis." }
+    ],
+    "highlights": [
+      "Consistent, quality-controlled dialysate concentrate",
+      "Supplied as a matched Part A / Part B pair",
+      "Bulk pricing available for dialysis centers and hospitals"
+    ]
+  },
+  {
+    "id": "hospital-citrosafe-002",
+    "slug": "citrosafe-citric-acid-disinfectant",
+    "shop": "hospital-services",
+    "name": "CITROSAFE Citric Acid Disinfectant",
+    "kind": "product",
+    "unitLabel": "per 5L container",
+    "price": 26,
+    "currency": "USD",
+    "description": "Citric acid based descaling disinfectant for heat disinfection of hemodialysis machines, available in three strengths.",
+    "image": "https://ui.shadcn.com/placeholder.svg",
+    "tags": ["featured", "popular", "dialysis-consumables"],
+    "stockStatus": "in-stock",
+    "domain": "hospital",
+    "featured": true,
+    "variants": [
+      { "id": "citrosafe-20", "label": "CITROSAFE 20%", "count": 1, "price": 24, "unitLabel": "per 5L", "description": "Citric acid." },
+      { "id": "citrosafe-21", "label": "CITROSAFE 21%", "count": 1, "price": 26, "unitLabel": "per 5L", "description": "Citric acid, malic acid, lactic acid, corrosion inhibitor." },
+      { "id": "citrosafe-50", "label": "CITROSAFE 50%", "count": 1, "price": 34, "unitLabel": "per 5L", "description": "Citric acid with corrosion inhibitors." }
+    ],
+    "highlights": [
+      "Formulated for heat disinfection cycles on hemodialysis machines",
+      "Corrosion-inhibited formulas protect equipment",
+      "Three strengths to match your machine's disinfection protocol"
+    ]
+  },
+  {
+    "id": "hospital-purilsafe-003",
+    "slug": "purilsafe-peracetic-acid-disinfectant",
+    "shop": "hospital-services",
+    "name": "PURILSAFE Peracetic Acid Disinfectant",
+    "kind": "product",
+    "unitLabel": "per 5L container",
+    "price": 32,
+    "currency": "USD",
+    "description": "Stabilised peracetic acid concentrate for cold sterilization of dialysis machines and water purification plants.",
+    "image": "https://ui.shadcn.com/placeholder.svg",
+    "tags": ["new", "dialysis-consumables"],
+    "stockStatus": "in-stock",
+    "domain": "hospital",
+    "featured": false,
+    "variants": [
+      { "id": "purilsafe", "label": "PURILSAFE", "count": 1, "price": 32, "unitLabel": "per 5L", "description": "5% peracetic acid, 15% hydrogen peroxide, for dialysis machine cold sterilization." },
+      { "id": "purilsafe-hd", "label": "PURILSAFE HD", "count": 1, "price": 39, "unitLabel": "per 5L", "description": "15% peracetic acid, 25% hydrogen peroxide, 50% acetic acid, for water purification plant disinfection." }
+    ]
+  },
+  {
+    "id": "hospital-dialyclean-004",
+    "slug": "dialyclean-hd",
+    "shop": "hospital-services",
+    "name": "DialyClean™ HD Cold Disinfectant",
+    "kind": "product",
+    "unitLabel": "per 5L container",
+    "price": 29,
+    "currency": "USD",
+    "description": "Advanced cold disinfectant for hemodialysis systems, combining sodium hypochlorite and hydrogen peroxide for superior biofilm removal at a gentler pH than competing formulas.",
+    "image": "https://ui.shadcn.com/placeholder.svg",
+    "tags": ["new", "dialysis-consumables"],
+    "stockStatus": "in-stock",
+    "domain": "hospital",
+    "featured": false,
+    "highlights": [
+      "Sodium hypochlorite (5%) and hydrogen peroxide (2%) formula",
+      "Virucidal efficacy (EN 14476)",
+      "Gentler pH 10.5, reducing equipment and staff risk",
+      "EDTA-stabilised for extended shelf life"
+    ]
+  },
+  {
+    "id": "hospital-cvc-kits-005",
+    "slug": "central-venous-catheter-kits",
+    "shop": "hospital-services",
+    "name": "Central Venous Catheter Kits",
+    "kind": "product",
+    "unitLabel": "per kit",
+    "price": 46,
+    "currency": "USD",
+    "description": "Dual and triple lumen central venous catheter kits for vascular access in ICU and dialysis settings.",
+    "image": "https://ui.shadcn.com/placeholder.svg",
+    "tags": ["featured", "vascular-access-icu"],
+    "stockStatus": "in-stock",
+    "domain": "hospital",
+    "featured": true,
+    "variants": [
+      { "id": "dual-4fr-8cm", "label": "Dual Lumen CVC 4Fr 8cm", "count": 1, "price": 42, "unitLabel": "per kit" },
+      { "id": "dual-4fr-10cm", "label": "Dual Lumen CVC 4Fr 10cm", "count": 1, "price": 44, "unitLabel": "per kit" },
+      { "id": "dual-5fr-10cm", "label": "CVC 5Fr 10cm", "count": 1, "price": 46, "unitLabel": "per kit" },
+      { "id": "triple-5fr-13cm", "label": "Triple Lumen CVC 5Fr 13cm", "count": 1, "price": 55, "unitLabel": "per kit" }
+    ]
+  },
+  {
+    "id": "hospital-oncoera-006",
+    "slug": "oncoera-taxol-infusion-sets",
+    "shop": "hospital-services",
+    "name": "ONCOERA® Oncology Infusion Sets",
+    "kind": "product",
+    "unitLabel": "per set",
+    "price": 21,
+    "currency": "USD",
+    "description": "Chemotherapy infusion sets built for safe compounded-drug administration, protecting patients, personnel, and the environment.",
+    "image": "https://ui.shadcn.com/placeholder.svg",
+    "tags": ["new", "vascular-access-icu"],
+    "stockStatus": "in-stock",
+    "domain": "hospital",
+    "featured": false,
+    "highlights": [
+      "Needle-free connectors maintain a closed system",
+      "UV-protected options for Paclitaxel-containing drugs",
+      "0.22 and 15 micron particle filter options available",
+      "DEHP-free construction"
+    ]
+  },
+  {
+    "id": "hospital-cidesafe-007",
+    "slug": "cidesafe-opa",
+    "shop": "hospital-services",
+    "name": "CideSafe OPA High-Level Disinfectant",
+    "kind": "product",
+    "unitLabel": "per 5L container",
+    "price": 44,
+    "currency": "USD",
+    "description": "0.55% Ortho-Phthalaldehyde solution for high-level disinfection of medical instruments, endoscopes, and other heat-sensitive devices.",
+    "image": "https://ui.shadcn.com/placeholder.svg",
+    "tags": ["featured", "high-level-disinfectants"],
+    "stockStatus": "in-stock",
+    "domain": "hospital",
+    "featured": true,
+    "highlights": [
+      "Ready-to-use, broad-spectrum efficacy including M. tuberculosis",
+      "Non-corrosive and glutaraldehyde-free",
+      "Low-odour, suitable for repeated use"
+    ]
+  },
+  {
+    "id": "hospital-nicu-shield-008",
+    "slug": "nicu-shield",
+    "shop": "hospital-services",
+    "name": "NICU-Shield Incubator Disinfectant",
+    "kind": "product",
+    "unitLabel": "per bottle",
+    "price": 27,
+    "currency": "USD",
+    "description": "The only 1-minute, non-flammable disinfectant proven to protect neonatal incubators against viruses, bacteria, and fungi without compromising material integrity.",
+    "image": "https://ui.shadcn.com/placeholder.svg",
+    "tags": ["new", "high-level-disinfectants"],
+    "stockStatus": "in-stock",
+    "domain": "hospital",
+    "featured": false
+  },
+  {
+    "id": "hospital-steriderm-009",
+    "slug": "steriderm-antiseptic-wipes",
+    "shop": "hospital-services",
+    "name": "STERIDERM Antiseptic Wipes (80's)",
+    "kind": "product",
+    "unitLabel": "per pack of 80",
+    "price": 19,
+    "currency": "USD",
+    "description": "Rapid, effective pre-surgical skin antisepsis wipes, no bathing required, with long-lasting protection between uses.",
+    "image": "https://ui.shadcn.com/placeholder.svg",
+    "tags": ["popular", "hospital-disinfectant-and-antiseptic-wipes"],
+    "stockStatus": "in-stock",
+    "domain": "hospital",
+    "featured": false,
+    "highlights": [
+      "Kills 99.9% of bacteria, fungi, and many viruses",
+      "Long-lasting protection, reduces microbial regrowth",
+      "Ready-to-use, fast-drying, and gentle on skin",
+      "Helps lower risk of surgical site infections (SSI)"
+    ]
+  },
+  {
+    "id": "hospital-povisafe-010",
+    "slug": "povisafe-povidone-iodine",
+    "shop": "hospital-services",
+    "name": "POVISAFE Povidone Iodine Antiseptic",
+    "kind": "product",
+    "unitLabel": "per 500ml bottle",
+    "price": 9,
+    "currency": "USD",
+    "description": "Povidone iodine antiseptic solution and surgical scrub for skin preparation and wound antisepsis.",
+    "image": "https://ui.shadcn.com/placeholder.svg",
+    "tags": ["antiseptics"],
+    "stockStatus": "in-stock",
+    "domain": "hospital",
+    "featured": false,
+    "variants": [
+      { "id": "povisafe-10", "label": "POVISAFE 10% w/v", "count": 1, "price": 9, "unitLabel": "per 500ml" },
+      { "id": "povisafe-scrub", "label": "POVISAFE Scrub 7.5% w/v", "count": 1, "price": 11, "unitLabel": "per 500ml" }
+    ]
+  },
+  {
+    "id": "hospital-safesoap-011",
+    "slug": "safesoap-safesanitizer",
+    "shop": "hospital-services",
+    "name": "SAFESOAP Handwash & SAFESANITIZER",
+    "kind": "product",
+    "unitLabel": "per 500ml bottle",
+    "price": 7,
+    "currency": "USD",
+    "description": "Thick antibacterial handwash and 70% alcohol hand rub for everyday hospital hand hygiene.",
+    "image": "https://ui.shadcn.com/placeholder.svg",
+    "tags": ["new", "liquids-gels-soaps"],
+    "stockStatus": "in-stock",
+    "domain": "hospital",
+    "featured": false,
+    "variants": [
+      { "id": "safesoap", "label": "SAFESOAP Handwash", "count": 1, "price": 7, "unitLabel": "per 500ml" },
+      { "id": "safesanitizer", "label": "SAFESANITIZER 70% Hand Rub", "count": 1, "price": 8, "unitLabel": "per 500ml" }
+    ]
+  },
+  {
+    "id": "hospital-pharmapore-012",
+    "slug": "waterproof-post-operative-dressing",
+    "shop": "hospital-services",
+    "name": "PHARMAPORE Waterproof Post-Operative Dressing",
+    "kind": "product",
+    "unitLabel": "per dressing",
+    "price": 3,
+    "currency": "USD",
+    "description": "Waterproof, antibacterial post-surgery dressings with absorbent pads, ensuring wound protection and accelerated healing.",
+    "image": "https://ui.shadcn.com/placeholder.svg",
+    "tags": ["popular", "wound-care"],
+    "stockStatus": "in-stock",
+    "domain": "hospital",
+    "featured": false,
+    "variants": [
+      { "id": "pu-7x5", "label": "PU 7x5 cm", "count": 1, "price": 2, "unitLabel": "per dressing" },
+      { "id": "pu-10x15", "label": "PU 10x15 cm", "count": 1, "price": 3, "unitLabel": "per dressing" },
+      { "id": "pu-10x25", "label": "PU 10x25 cm", "count": 1, "price": 4, "unitLabel": "per dressing" },
+      { "id": "pu-10x35", "label": "PU 10x35 cm", "count": 1, "price": 5, "unitLabel": "per dressing" }
+    ]
+  },
+  {
+    "id": "hospital-pharmapad-013",
+    "slug": "primary-absorbent-pad-dressings",
+    "shop": "hospital-services",
+    "name": "PHARMAPAD Absorbent Pad Dressings",
+    "kind": "product",
+    "unitLabel": "per dressing",
+    "price": 2,
+    "currency": "USD",
+    "description": "Non-adherent absorbent sterile dressings for effective wound exudate management, available with silver impregnation for infection prevention.",
+    "image": "https://ui.shadcn.com/placeholder.svg",
+    "tags": ["new", "wound-care"],
+    "stockStatus": "in-stock",
+    "domain": "hospital",
+    "featured": false,
+    "variants": [
+      { "id": "pharmapad-10x10", "label": "PHARMAPAD 10x10 cm", "count": 1, "price": 2, "unitLabel": "per dressing" },
+      { "id": "pharmapad-20x20", "label": "PHARMAPAD 20x20 cm", "count": 1, "price": 4, "unitLabel": "per dressing" },
+      { "id": "pharmapad-silver-10x10", "label": "PHARMAPAD Silver 10x10 cm", "count": 1, "price": 3, "unitLabel": "per dressing", "description": "Hydrophilic 1% silver impregnated." },
+      { "id": "pharmapad-silver-20x20", "label": "PHARMAPAD Silver 20x20 cm", "count": 1, "price": 6, "unitLabel": "per dressing", "description": "Hydrophilic 1% silver impregnated." }
+    ]
+  }
+]
+

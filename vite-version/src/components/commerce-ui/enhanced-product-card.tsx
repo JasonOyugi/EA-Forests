@@ -318,37 +318,49 @@ export function EnhancedProductCard({
               </CardDescription>
             ) : null}
 
-            <div className="flex items-center gap-2">
-              <StarRatingFractions
-                value={rating}
-                readOnly
-                iconSize={featuredStyleCard ? 16 : compact ? 12 : 14}
-                className={cn("gap-x-0.5", starActiveClass)}
-              />
-              <span
+            {theme === "seedlings" ? (
+              <div
                 className={cn(
-                  "drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]",
-                  bodyClass,
-                  featuredStyleCard ? "text-sm" : compact ? "text-xs" : "text-sm"
+                  "text-sm drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]",
+                  bodyClass
                 )}
               >
-                {rating.toFixed(2)}/5
-              </span>
-              <span
-                className={cn(
-                  "drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]",
-                  metaClass,
-                  featuredStyleCard ? "text-sm" : "text-xs"
-                )}
-              >
-                ({reviewCount})
-              </span>
-            </div>
+                {item.supplierCount ?? 0} mapped nursery
+                {(item.supplierCount ?? 0) === 1 ? "" : " suppliers"}
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <StarRatingFractions
+                  value={rating}
+                  readOnly
+                  iconSize={featuredStyleCard ? 16 : compact ? 12 : 14}
+                  className={cn("gap-x-0.5", starActiveClass)}
+                />
+                <span
+                  className={cn(
+                    "drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]",
+                    bodyClass,
+                    featuredStyleCard ? "text-sm" : compact ? "text-xs" : "text-sm"
+                  )}
+                >
+                  {rating.toFixed(2)}/5
+                </span>
+                <span
+                  className={cn(
+                    "drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]",
+                    metaClass,
+                    featuredStyleCard ? "text-sm" : "text-xs"
+                  )}
+                >
+                  ({reviewCount})
+                </span>
+              </div>
+            )}
 
             {showVariants && !compact && item.variants?.length ? (
               <div className="space-y-2">
                 <span className={cn("text-sm font-medium drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]", bodyClass)}>
-                  Seedling band
+                  Package size
                 </span>
                 <div className="flex flex-wrap gap-2">
                   {item.variants.map((variant) => (

@@ -7,6 +7,7 @@ import { TiLocationArrow } from "react-icons/ti"
 import { BentoTilt } from "@/components/ui/bento-tilt"
 import { Badge } from "@/components/ui/badge"
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
+import { cn } from "@/lib/utils"
 import {
   landingBadgeClass,
   landingContainer,
@@ -19,13 +20,14 @@ type BentoCardProps = {
   src: string
   title: React.ReactNode
   description?: string
-  isComingSoon?: boolean
+  status?: "beta" | "coming-soon"
   href?: string
 }
 
-function BentoCard({ src, title, description, isComingSoon, href }: BentoCardProps) {
+function BentoCard({ src, title, description, status, href }: BentoCardProps) {
   const [loading, setLoading] = useState(true)
   const isExternal = href?.startsWith("http")
+  const statusLabel = status === "coming-soon" ? "coming soon" : status
   const content = (
     <div className="relative size-full overflow-hidden">
       {loading ? (
@@ -71,10 +73,17 @@ function BentoCard({ src, title, description, isComingSoon, href }: BentoCardPro
           ) : null}
         </div>
 
-        {isComingSoon ? (
-          <div className="w-fit rounded-full bg-white/10 px-4 py-2 text-xs uppercase text-white/70 backdrop-blur">
+        {statusLabel ? (
+          <div
+            className={cn(
+              "w-fit rounded-full px-4 py-2 text-xs uppercase text-white backdrop-blur",
+              status === "beta"
+                ? "bg-emerald-400/25 text-emerald-50 ring-1 ring-emerald-200/35"
+                : "bg-white/10 text-white/70"
+            )}
+          >
             <TiLocationArrow className="mr-1 inline" />
-            coming soon
+            {statusLabel}
           </div>
         ) : null}
       </div>
@@ -137,6 +146,7 @@ export function FeaturesSection() {
                 title={<>Market Insight Tools</>}
                 description="Forestry on steroids - introduce cutting edge, on-the-ground analysis to calculate the most profitable trades and deals in real-time"
                 href="https://github.com/JasonOyugi/EA-Forestry-Geospatial-Analysis.git"
+                status="beta"
               />
             </BentoTilt>
           </ScrollReveal>
@@ -145,9 +155,10 @@ export function FeaturesSection() {
             <BentoTilt className="h-full overflow-hidden rounded-xl border bg-card shadow-sm">
               <BentoCard
                 src="/feature-4.mp4"
-                title={<>Project Development</>}
-                description="Create, develop, execute and monitor a forestry-based project with AI"
-                isComingSoon
+                title={<>Site Species Matching</>}
+                description="Match planting sites to species and trial evidence using climate, soils, topography, and performance signals."
+                href="/models/site-species-analysis"
+                status="beta"
               />
             </BentoTilt>
           </ScrollReveal>
@@ -156,9 +167,10 @@ export function FeaturesSection() {
             <BentoTilt className="overflow-hidden rounded-xl border bg-card shadow-sm">
               <BentoCard
                 src="/feature-5.mp4"
-                title={<>More coming soon!!</>}
-                description="!!!"
-                isComingSoon
+                title={<>Forestry Modelling</>}
+                description="Model forestry viability, roundwood production, and establishment decisions with practical assumptions."
+                href="/models/model-2"
+                status="beta"
               />
             </BentoTilt>
           </ScrollReveal>

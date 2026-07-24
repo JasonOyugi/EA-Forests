@@ -81,6 +81,10 @@ export interface ShopItem {
   shop: ShopSlug
   name: string
   species?: string
+  materialType?: string
+  nurseryVarietyAliases?: string[]
+  supplierCount?: number
+  evidenceNote?: string
   kind: ShopItemKind
   unitLabel: string
   price: number

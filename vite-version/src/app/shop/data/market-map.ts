@@ -371,7 +371,6 @@ function actor(
 }
 
 const trialSiteDetails: MarketActorDetail[] = [
-  { label: "Database", value: "Trial site database" },
   { label: "Fields tracked", value: "Water balance, temperature, radiation, topography, soils" },
 ]
 
@@ -382,7 +381,7 @@ function hasDatabaseValue(value: DataValue | string[] | Record<string, DataValue
 }
 
 function formatDatabaseValue(value: DataValue | string[] | Record<string, DataValue>) {
-  if (!hasDatabaseValue(value)) return "Not recorded"
+  if (!hasDatabaseValue(value)) return "N/A"
   if (Array.isArray(value)) return value.join(", ")
   if (typeof value === "object") {
     return Object.entries(value)
@@ -391,6 +390,34 @@ function formatDatabaseValue(value: DataValue | string[] | Record<string, DataVa
   }
   if (typeof value === "number") return value.toLocaleString()
   return value
+}
+
+function getRecordSource(
+  record: Pick<ProcessorRecord | NurseryRecord, "Database" | "Source">,
+  fallbackDatabase: string
+) {
+  return formatDatabaseValue(record.Database ?? record.Source ?? fallbackDatabase)
+}
+
+function getRecordCountry(
+  record: Pick<ProcessorRecord | NurseryRecord, "Country source">,
+  latitude: number,
+  longitude: number
+): MarketCountry {
+  const explicitCountry = record["Country source"]
+  if (
+    explicitCountry === "Uganda" ||
+    explicitCountry === "Kenya" ||
+    explicitCountry === "Tanzania"
+  ) {
+    return explicitCountry
+  }
+
+  return (
+    marketRegions.find((region) =>
+      pointInMarketRegion(latitude, longitude, region)
+    )?.country ?? "Uganda"
+  )
 }
 
 function parseDatabaseNumber(value: DataValue) {
@@ -410,7 +437,66 @@ function formatGrade(spec: ProcessorSpeciesSpec, grade: "g1" | "g2" | "g3") {
       : null,
   ].filter(Boolean)
 
-  return parts.length ? parts.join(", ") : "Not recorded"
+  return parts.length ? parts.join(", ") : "N/A"
+}
+
+function formatProcessorRoundwoodPrices(record: ProcessorRecord) {
+  const prices = (["euc", "pine"] as const).flatMap((species) => {
+    const spec = record.buyer_specs[species]
+    const speciesLabel = species === "euc" ? "Eucalyptus" : "Pine"
+
+    return (["g1", "g2", "g3", "reject"] as const).flatMap((grade) => {
+      const price = parseDatabaseNumber(spec.prices[grade])
+      if (price == null) return []
+
+      const unit = spec.price_mode === "per_tonne"
+        ? "/t"
+        : spec.price_mode === "per_m3"
+          ? "/m3"
+          : spec.price_mode === "per_piece"
+            ? "/piece"
+            : ""
+      return [`${speciesLabel} ${grade.toUpperCase()}: UGX ${Math.round(price).toLocaleString()}${unit}`]
+    })
+  })
+
+  return prices.length ? prices.join("; ") : "N/A"
+}
+
+function formatNurseryPrices(record: NurseryRecord) {
+  const prices = Object.entries(record.supply_specs).flatMap(([group, spec]) =>
+    Object.entries(spec.prices).flatMap(([material, value]) => {
+      const price = parseDatabaseNumber(value)
+      if (price == null) return []
+
+      const unit = ["per_seedling", "UGX", "ugx"].includes(spec.price_mode)
+        ? "/seedling"
+        : spec.price_mode === "per_tray"
+          ? "/tray"
+          : ""
+      return [`${group === "euc" ? "Eucalyptus" : group === "pine" ? "Pine" : "Indigenous"} ${material}: UGX ${Math.round(price).toLocaleString()}${unit}`]
+    })
+  )
+
+  return prices.length ? prices.join("; ") : "N/A"
+}
+
+function formatNurseryAvailability(record: NurseryRecord) {
+  const values = Object.entries(record.supply_specs).flatMap(([group, spec]) =>
+    hasDatabaseValue(spec.availability)
+      ? [`${group === "euc" ? "Eucalyptus" : group === "pine" ? "Pine" : "Indigenous"}: ${spec.availability}`]
+      : []
+  )
+
+  return values.length ? values.join("; ") : "N/A"
+}
+
+function formatCertification(
+  record: Pick<ProcessorRecord | NurseryRecord, "Country source" | "Certification">
+) {
+  const value = String(record.Certification ?? "").trim()
+  if (record["Country source"] || !value || /test record/i.test(value)) return "N/A"
+  return value
 }
 
 function numericValues(values: DataValue[]) {
@@ -482,28 +568,36 @@ function getCommercialForestSpeciesAreas(record: LargeCommercialForestRecord) {
 
 function processorDetails(record: ProcessorRecord): MarketActorDetail[] {
   return [
-    { label: "Database", value: "Processor database" },
-    { label: "Eucalyptus G1", value: formatGrade(record.buyer_specs.euc, "g1") },
-    { label: "Pine G1", value: formatGrade(record.buyer_specs.pine, "g1") },
-    { label: "Capacity", value: formatDatabaseValue(record["Roundwood input capacity"]) },
-    { label: "Products", value: formatDatabaseValue(record.Products) },
-    { label: "Certification", value: formatDatabaseValue(record.Certification) },
+    { label: "County / region", value: formatDatabaseValue(record["Region / county"] ?? "") },
+    { label: "Address / locality", value: formatDatabaseValue(record["Published locality / address"] ?? "") },
+    { label: "Products manufactured", value: formatDatabaseValue(record.Products) },
+    { label: "Retail prices", value: "N/A" },
+    { label: "Roundwood prices", value: formatProcessorRoundwoodPrices(record) },
+    { label: "Intake capacity", value: formatDatabaseValue(record["Roundwood input capacity"]) },
+    { label: "Buyer specifications", value: `Eucalyptus G1: ${formatGrade(record.buyer_specs.euc, "g1")}; Pine G1: ${formatGrade(record.buyer_specs.pine, "g1")}` },
+    { label: "Certification", value: formatCertification(record) },
+    { label: "Location confidence", value: formatDatabaseValue(record["Coordinate confidence"] ?? "") },
+    { label: "Location basis", value: formatDatabaseValue(record["Coordinate precision"] ?? "") },
   ]
 }
 
 function nurseryDetails(record: NurseryRecord): MarketActorDetail[] {
   return [
-    { label: "Database", value: "Nursery database" },
-    { label: "Eucalyptus prices", value: formatDatabaseValue(record.supply_specs.euc.prices) },
-    { label: "Pine prices", value: formatDatabaseValue(record.supply_specs.pine.prices) },
-    { label: "Indigenous prices", value: formatDatabaseValue(record.supply_specs.indigenous.prices) },
-    { label: "Species or clones", value: formatDatabaseValue([
+    { label: "County / region", value: formatDatabaseValue(record["Region / county"] ?? "") },
+    { label: "Address / locality", value: formatDatabaseValue(record["Published locality / address"] ?? "") },
+    { label: "Planting material", value: formatDatabaseValue(record.Products) },
+    { label: "Species / clones", value: formatDatabaseValue([
       ...record.supply_specs.euc.species_or_clones,
       ...record.supply_specs.pine.species_or_clones,
       ...record.supply_specs.indigenous.species_or_clones,
     ]) },
+    { label: "Seedling prices", value: formatNurseryPrices(record) },
     { label: "Total capacity", value: formatDatabaseValue(record["Total capacity"]) },
-    { label: "Certification", value: formatDatabaseValue(record.Certification) },
+    { label: "Availability", value: formatNurseryAvailability(record) },
+    { label: "Certification", value: formatCertification(record) },
+    { label: "Contact", value: formatDatabaseValue(record.Contact || record.Phone || "") },
+    { label: "Location confidence", value: formatDatabaseValue(record["Coordinate confidence"] ?? "") },
+    { label: "Location basis", value: formatDatabaseValue(record["Coordinate precision"] ?? "") },
   ]
 }
 
@@ -511,7 +605,6 @@ function commercialForestDetails(
   record: LargeCommercialForestRecord
 ): MarketActorDetail[] {
   return [
-    { label: "Database", value: "Large commercial forest database" },
     { label: "Plantation size", value: formatDatabaseValue(record["Plantation size (ha)"]) },
     { label: "Eucalyptus area", value: formatDatabaseValue(record.forest_specs.euc.area_ha) },
     { label: "Pine area", value: formatDatabaseValue(record.forest_specs.pine.area_ha) },
@@ -525,7 +618,6 @@ function forestReserveDetails(record: CentralForestReserveRecord): MarketActorDe
   const recordedAreaHa = getCentralForestReserveAreaHa(record)
 
   return [
-    { label: "Database", value: "Central forest reserve database" },
     { label: "Legal status", value: record.reserve_profile.reserve_status.legal_status },
     {
       label: "Recorded area",
@@ -550,7 +642,6 @@ function forestReserveDetails(record: CentralForestReserveRecord): MarketActorDe
       ),
     },
     { label: "PPP availability", value: formatDatabaseValue(record.reserve_profile.reserve_status.ppp_availability) },
-    { label: "Source", value: formatDatabaseValue(record["Data source"]) },
   ]
 }
 
@@ -559,17 +650,17 @@ function getRecordComment(value: DataValue) {
 }
 
 function summarizeProcessorRecord(name: string, record: ProcessorRecord) {
-  return (
-    getRecordComment(record.Comments) ??
-    `${name} is a processor record from processors.json. Buyer specs, products, input capacity, target markets, certification, and comments are editable in that database; blank fields are treated as not recorded.`
-  )
+  const products = formatDatabaseValue(record.Products)
+  return products === "N/A"
+    ? `${name} is a mapped roundwood processor.`
+    : `${name} manufactures or processes ${products}.`
 }
 
 function summarizeNurseryRecord(name: string, record: NurseryRecord) {
-  return (
-    getRecordComment(record.Comments) ??
-    `${name}`
-  )
+  const products = formatDatabaseValue(record.Products)
+  return products === "N/A"
+    ? `${name} is a mapped tree nursery.`
+    : `${name} supplies ${products}.`
 }
 
 function summarizeCommercialForestRecord(
@@ -605,23 +696,35 @@ function summarizeCentralForestReserveRecord(
 }
 
 const processorActors = Object.entries(processorDatabase).map(([name, record]) =>
-  actor("processor", name, Number(record.lat), Number(record.lon), {
-    role: "Roundwood processor",
-    summary: summarizeProcessorRecord(name, record),
-    details: processorDetails(record),
-    source: "Processor database",
-    g1RoundwoodPriceUgxPerTonne: getProcessorG1RoundwoodPrice(record),
-  })
+  {
+    const latitude = Number(record.lat)
+    const longitude = Number(record.lon)
+
+    return actor("processor", name, latitude, longitude, {
+      role: "Roundwood processor",
+      summary: summarizeProcessorRecord(name, record),
+      country: getRecordCountry(record, latitude, longitude),
+      details: processorDetails(record),
+      source: getRecordSource(record, "Processor database"),
+      g1RoundwoodPriceUgxPerTonne: getProcessorG1RoundwoodPrice(record),
+    })
+  }
 )
 
 const nurseryActors = Object.entries(nurseryDatabase).map(([name, record]) =>
-  actor("nursery", name, Number(record.lat), Number(record.lon), {
-    role: "Nursery",
-    summary: summarizeNurseryRecord(name, record),
-    details: nurseryDetails(record),
-    source: "Nursery database",
-    seedlingPriceUgxPerSeedling: getNurserySeedlingPrice(record),
-  })
+  {
+    const latitude = Number(record.lat)
+    const longitude = Number(record.lon)
+
+    return actor("nursery", name, latitude, longitude, {
+      role: "Nursery",
+      summary: summarizeNurseryRecord(name, record),
+      country: getRecordCountry(record, latitude, longitude),
+      details: nurseryDetails(record),
+      source: getRecordSource(record, "Nursery database"),
+      seedlingPriceUgxPerSeedling: getNurserySeedlingPrice(record),
+    })
+  }
 )
 
 const commercialForestActors = Object.entries(largeCommercialForestDatabase).map(
