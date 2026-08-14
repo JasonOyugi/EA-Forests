@@ -53,7 +53,7 @@ const diabetesCards: ActionCard[] = [
     title: "Get diabetes care support",
     description: "Book consultation time for care planning, program guidance, and next steps.",
     href: "/calendar",
-    image: "/nutritionist1.jpg",
+    image: "/green.jpg",
     icon: Stethoscope,
     label: "Book support",
   },

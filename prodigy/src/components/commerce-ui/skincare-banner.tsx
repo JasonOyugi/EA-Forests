@@ -14,7 +14,7 @@ export function SkincareBanner({
 
   useEffect(() => {
     onVisibilityChange?.(isVisible)
-  }, [isVisible, onVisibilityChange])
+  }, [isVisible])
 
   if (!isVisible) return null
 

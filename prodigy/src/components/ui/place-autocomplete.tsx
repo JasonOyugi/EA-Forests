@@ -279,7 +279,7 @@ function PlaceAutocomplete({
 
     React.useEffect(() => {
         onResultsChange?.(results)
-    }, [results, onResultsChange])
+    }, [results])
 
     const hasNoResults =
         hasSearched && !isLoading && !error && results.length === 0

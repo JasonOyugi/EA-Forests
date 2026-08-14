@@ -186,7 +186,8 @@ const definitions = [
     aliases: ["Pinus caribaea", "P. caribaea"],
     description:
       "Commercial pine planting material recorded across multiple nursery registers in East Africa.",
-    image: images.pine,
+    image: images
+    .pine,
     tags: ["featured", "pure-species", "softwood", "timber"],
     domain: "timber",
     basePrice: 29.99,

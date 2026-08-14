@@ -291,43 +291,37 @@ const hospitalCategoryTeasers = [
     value: "dialysis-consumables",
     label: "Dialysis Consumables",
     description: "Concentrates, tubing, and machine-care essentials for renal units.",
-    image: assetUrl("/KNH.webp"),
+    image: assetUrl("/dialysis1.jpg"),
   },
   {
     value: "high-level-disinfectants",
     label: "High Level Disinfectants",
     description: "Validated formulas for clinical equipment and sensitive devices.",
-    image: assetUrl("/acs.jpg"),
+    image: assetUrl("/disinfect.webp"),
   },
   {
     value: "vascular-access-icu",
     label: "Vascular Access & ICU",
     description: "Access and critical-care supplies for high acuity workflows.",
-    image: assetUrl("/human-anatomy.jpg"),
+    image: assetUrl("/icu1.webp"),
   },
   {
     value: "antiseptics",
     label: "Antiseptics",
     description: "Skin-preparation and wound-antisepsis products for clinical use.",
-    image: assetUrl("/body%20cs.jpg"),
+    image: assetUrl("/antiseptic.webp"),
   },
   {
     value: "wound-care",
     label: "Wound Care",
     description: "Dressings and pads for protection, comfort, and recovery.",
-    image: assetUrl("/heal.mp4"),
+    image: assetUrl("/wound.jpg"),
   },
   {
     value: "liquids-gels-soaps",
     label: "Liquids, Gels, Soaps",
     description: "Hand hygiene liquids and rubs for daily hospital use.",
-    image: assetUrl("/healthws.jpg"),
-  },
-  {
-    value: "hospital-disinfectant-and-antiseptic-wipes",
-    label: "Disinfectant & Antiseptic Wipes",
-    description: "Ready-to-use wipes for surfaces, skin prep, and care areas.",
-    image: assetUrl("/NairobiHospital.png"),
+    image: assetUrl("/liquidsgel.png"),
   },
 ];
 
@@ -714,8 +708,7 @@ function OtherDealsPanel({ item }: { item: ShopItem }) {
   return (
     <div className="space-y-4">
       <div className="space-y-1">
-        <h3 className="text-2xl font-semibold">What next?</h3>
-        <p className="text-sm text-muted-foreground">Keep moving through the rest of the platform after you shortlist the right {noun}.</p>
+        <h3 className="text-2xl font-semibold">Continue Browsing?</h3>
       </div>
     </div>
   );
@@ -752,7 +745,7 @@ function HospitalCategoryRecommendations({ item }: { item: ShopItem }) {
             )}
             <div className="absolute inset-0 bg-gradient-to-br from-emerald-950/82 via-sky-900/62 to-black/74" />
             <div className="relative flex min-h-36 flex-col justify-between gap-8">
-              <Badge className="w-fit bg-white/16 text-white hover:bg-white/20">Hospital category</Badge>
+              <Badge className="w-fit bg-white/16 text-white hover:bg-white/20">Featured</Badge>
               <div className="space-y-2">
                 <h3 className="text-xl font-semibold">{teaser.label}</h3>
                 <p className="text-sm leading-6 text-white/84">{teaser.description}</p>
@@ -817,7 +810,7 @@ export function ProductPage({
 
   React.useEffect(() => {
     setSelectedRetailerId(nearestRetailers[0]?.id ?? "");
-  }, [nearestRetailers]);
+  }, [item.id]);
 
   const dummyReviews = React.useMemo(
     () => [

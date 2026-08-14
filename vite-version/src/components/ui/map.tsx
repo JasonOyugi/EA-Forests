@@ -343,18 +343,30 @@ function MapFeatureGroup({
 function MapLayers({
     defaultTileLayer,
     defaultLayerGroups = [],
+    activeLayerGroups: controlledActiveLayerGroups,
+    onActiveLayerGroupsChange,
     ...props
 }: Omit<React.ComponentProps<typeof MapLayersContext.Provider>, "value"> & {
     defaultTileLayer?: string
     defaultLayerGroups?: string[]
+    activeLayerGroups?: string[]
+    onActiveLayerGroupsChange?: (names: string[]) => void
 }) {
     const [tileLayers, setTileLayers] = useState<MapTileLayerOption[]>([])
     const [selectedTileLayer, setSelectedTileLayer] = useState<string>(
         defaultTileLayer || ""
     )
     const [layerGroups, setLayerGroups] = useState<MapLayerGroupOption[]>([])
-    const [activeLayerGroups, setActiveLayerGroups] =
+    const [uncontrolledActiveLayerGroups, setUncontrolledActiveLayerGroups] =
         useState<string[]>(defaultLayerGroups)
+    const activeLayerGroups =
+        controlledActiveLayerGroups ?? uncontrolledActiveLayerGroups
+    const setActiveLayerGroups = (names: string[]) => {
+        if (controlledActiveLayerGroups === undefined) {
+            setUncontrolledActiveLayerGroups(names)
+        }
+        onActiveLayerGroupsChange?.(names)
+    }
 
     function registerTileLayer(tileLayer: MapTileLayerOption) {
         setTileLayers((prevTileLayers) => {

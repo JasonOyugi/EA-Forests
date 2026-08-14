@@ -17,11 +17,11 @@ export function SiteFooter() {
               rel="noopener noreferrer"
               className="font-medium text-foreground hover:text-primary transition-colors"
             >
-              EA Forests Team
+              the Prodigy Team
             </Link>
           </div>
           <p className="text-xs text-muted-foreground">
-            Building the future of East African Forestry.
+            Building the future of East African Healthcare.
           </p>
         </div>
       </div>

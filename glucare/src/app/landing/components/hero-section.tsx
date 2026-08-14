@@ -57,7 +57,7 @@ export function HeroSection() {
 
           <div className="landing-fade-up landing-delay-4 flex flex-col gap-4 sm:flex-row">
             <Button size="lg" className="cursor-pointer text-base" asChild>
-              <a href={getAppUrl("/shop/diabetes-programs")} className="group relative overflow-hidden">
+              <a href="#pricing" className="group relative overflow-hidden">
                 <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
                 <span className="relative z-10 inline-flex items-center group-hover:text-emerald-100">
                   View Diabetes Programs

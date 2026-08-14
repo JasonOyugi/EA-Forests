@@ -31,6 +31,9 @@ export function ProductCard({
           src={item.image}
           alt={item.name}
           className="block h-full w-full object-cover object-top"
+          loading="lazy"
+          decoding="async"
+          fetchPriority="low"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">

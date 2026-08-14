@@ -5,6 +5,7 @@ from app.schemas import (
     ClonalEucalyptusNurseryRequest,
     CommercialForestViabilityRequest,
     EarthEngineStatusResponse,
+    GeneticsCatalogResponse,
     RoundwoodProductionRequest,
     SiteClassificationRequest,
 )
@@ -17,6 +18,7 @@ from app.services.commercial_viability import (
     run_commercial_forest_viability,
 )
 from app.services.currency import get_currency_rates
+from app.services.genetics import get_genetics_catalog, list_genetics_varieties
 from app.services.roundwood_production import (
     roundwood_production_default_library,
     run_roundwood_production,
@@ -58,6 +60,16 @@ def earth_engine_status() -> EarthEngineStatusResponse:
 @app.get("/api/currency/rates")
 def currency_rates() -> dict:
     return get_currency_rates()
+
+
+@app.get("/api/genetics/catalog", response_model=GeneticsCatalogResponse)
+def genetics_catalog() -> GeneticsCatalogResponse:
+    return GeneticsCatalogResponse(**get_genetics_catalog())
+
+
+@app.get("/api/genetics/varieties")
+def genetics_varieties() -> list[dict]:
+    return list_genetics_varieties()
 
 
 @app.post("/api/models/site-classification")

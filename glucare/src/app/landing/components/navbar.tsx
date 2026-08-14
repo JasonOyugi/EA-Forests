@@ -24,13 +24,13 @@ import { useTheme } from "@/hooks/use-theme"
 const navigationItems = [
   { name: "Home", href: "#hero" },
   { name: "About", href: "#about" },
-  { name: "Programs", href: "#features" },
+  { name: "Programs", href: "#pricing" },
   { name: "FAQ", href: "#faq" },
   { name: "Contact", href: "#contact" },
 ] as const
 
 const careItems = [
-  { name: "Diabetes Care", href: getAppUrl("/shop/diabetes-programs") },
+  { name: "Diabetes Care", href: "#pricing" },
   { name: "Health Tools", href: getAppUrl("/models") },
   { name: "Book Consultation", href: getAppUrl("/calendar") },
 ] as const

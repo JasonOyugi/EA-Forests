@@ -3,16 +3,9 @@
 import React from "react"
 import { LandingNavbar } from "./components/navbar"
 import { HeroSection } from "./components/hero-section"
-// import { LogoCarousel } from "./components/logo-carousel"
-import { FeaturesSection } from "./components/features-section"
-import { TestimonialsSection } from "./components/testimonials-section"
-import { BlogSection } from "./components/blog-section"
-import { PricingSection } from "./components/pricing-section"
-import { CTASection } from "./components/cta-section"
-import { ContactSection } from "./components/contact-section"
-import { FaqSection } from "./components/faq-section"
 import { LandingFooter } from "./components/footer"
-import { AboutSection } from "./components/about-section"
+import { EditorialBriefSection, SectorSearchSection } from "./components/editorial-landing-section"
+import { NewsletterSection } from "./components/newsletter-section"
 import { LandingThemeCustomizerTrigger } from "./components/landing-theme-customizer-trigger"
 
 const LandingThemeCustomizer = React.lazy(() =>
@@ -30,15 +23,9 @@ export default function LandingPage() {
 
       <main>
         <HeroSection />
-        {/* <LogoCarousel /> */}
-        <AboutSection />
-        <FeaturesSection />
-        <PricingSection />
-        <TestimonialsSection />
-        <BlogSection />
-        <FaqSection />
-        <CTASection />
-        <ContactSection />
+        <NewsletterSection />
+        <SectorSearchSection />
+        <EditorialBriefSection />
       </main>
 
       <LandingFooter />

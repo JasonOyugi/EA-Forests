@@ -41,7 +41,7 @@ const plans: {
       "Access to the health information library",
     ],
     cta: "Start Foundational Care",
-    href: "/shop/diabetes-programs/foundational-care",
+    href: "/programs/foundational-care",
   },
   {
     name: "Remission Program",
@@ -56,7 +56,7 @@ const plans: {
       "Priority booking for hospital services",
     ],
     cta: "Join Remission Program",
-    href: "/shop/diabetes-programs/remission-program",
+    href: "/programs/remission-program",
   },
   {
     name: "Complete Metabolic Care",
@@ -71,7 +71,7 @@ const plans: {
       "Direct line to your care team between visits",
     ],
     cta: "Explore Complete Care",
-    href: "/shop/diabetes-programs/complete-metabolic-care",
+    href: "/programs/complete-metabolic-care",
   },
 ]
 

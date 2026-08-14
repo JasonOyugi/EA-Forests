@@ -5,11 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { Command as CommandPrimitive } from "cmdk"
 import {
   Search,
-  LayoutPanelLeft,
   LayoutDashboard,
-  Mail,
-  CheckSquare,
-  MessageCircle,
   Calendar,
   Shield,
   AlertTriangle,
@@ -132,13 +128,9 @@ export function CommandSearch({ open, onOpenChange }: CommandSearchProps) {
 
   const searchItems: SearchItem[] = [
     // Dashboards
-    { title: "Dashboard 1", url: "/dashboard", group: "Dashboards", icon: LayoutDashboard },
-    { title: "Dashboard 2", url: "/dashboard-2", group: "Dashboards", icon: LayoutPanelLeft },
+    { title: "Dashboard", url: "/dashboard", group: "Dashboards", icon: LayoutDashboard },
 
     // Apps
-    { title: "Mail", url: "/mail", group: "Apps", icon: Mail },
-    { title: "Tasks", url: "/tasks", group: "Apps", icon: CheckSquare },
-    { title: "Chat", url: "/chat", group: "Apps", icon: MessageCircle },
     { title: "Calendar", url: "/calendar", group: "Apps", icon: Calendar },
 
     // Models
@@ -149,12 +141,9 @@ export function CommandSearch({ open, onOpenChange }: CommandSearchProps) {
     { title: "Clonal Nursery", url: "/models/clonal-eucalyptus-nursery", group: "Models", icon: Sprout },
 
     // Auth Pages
-    { title: "Sign In 1", url: "/auth/sign-in", group: "Auth Pages", icon: Shield },
-    { title: "Sign In 2", url: "/auth/sign-in-2", group: "Auth Pages", icon: Shield },
-    { title: "Sign Up 1", url: "/auth/sign-up", group: "Auth Pages", icon: Shield },
-    { title: "Sign Up 2", url: "/auth/sign-up-2", group: "Auth Pages", icon: Shield },
-    { title: "Forgot Password 1", url: "/auth/forgot-password", group: "Auth Pages", icon: Shield },
-    { title: "Forgot Password 2", url: "/auth/forgot-password-2", group: "Auth Pages", icon: Shield },
+    { title: "Sign In", url: "/auth/sign-in", group: "Auth Pages", icon: Shield },
+    { title: "Sign Up", url: "/auth/sign-up", group: "Auth Pages", icon: Shield },
+    { title: "Forgot Password", url: "/auth/forgot-password", group: "Auth Pages", icon: Shield },
 
     // Errors
     { title: "Unauthorized", url: "/errors/unauthorized", group: "Errors", icon: AlertTriangle },

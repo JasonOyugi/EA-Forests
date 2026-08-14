@@ -7,15 +7,10 @@ const Dashboard = lazy(() => import('@/app/dashboard/page'))
 const DashboardAssetsMap = lazy(() => import('@/app/dashboard/assets-map/page'))
 const Invoice = lazy(() => import('@/app/invoice/[id]/page'))
 const AddAsset = lazy(() => import('@/app/assets/add/page'))
-const Dashboard2 = lazy(() => import('@/app/dashboard-2/page'))
 const ShopIndex = lazy(() => import("@/app/shop/page"))
 const ShopPage = lazy(() => import("@/app/shop/shop-page"))
 const ShopProductPage = lazy(() => import("@/app/shop/product-page"))
-const Mail = lazy(() => import('@/app/mail/page'))
-const Tasks = lazy(() => import('@/app/tasks/page'))
-const Chat = lazy(() => import('@/app/chat/page'))
 const Calendar = lazy(() => import('@/app/calendar/page'))
-const Users = lazy(() => import('@/app/users/page'))
 const FAQs = lazy(() => import('@/app/faqs/page'))
 const Pricing = lazy(() => import('@/app/pricing/page'))
 const Models = lazy(() => import('@/app/models/page'))
@@ -23,17 +18,14 @@ const SiteSpeciesAnalysis = lazy(() => import('@/app/models/site-species-analysi
 const Model2 = lazy(() => import('@/app/models/model-2/page'))
 const Model3 = lazy(() => import('@/app/models/model-3/page'))
 const ClonalEucalyptusNursery = lazy(() => import('@/app/models/clonal-eucalyptus-nursery/page'))
+const Articles = lazy(() => import('@/app/articles/page'))
+const Article = lazy(() => import('@/app/articles/article-page'))
+const Newsletter = lazy(() => import('@/app/newsletter/page'))
 
 // Auth pages
 const SignIn = lazy(() => import('@/app/auth/sign-in/page'))
-const SignIn2 = lazy(() => import('@/app/auth/sign-in-2/page'))
-const SignIn3 = lazy(() => import('@/app/auth/sign-in-3/page'))
 const SignUp = lazy(() => import('@/app/auth/sign-up/page'))
-const SignUp2 = lazy(() => import('@/app/auth/sign-up-2/page'))
-const SignUp3 = lazy(() => import('@/app/auth/sign-up-3/page'))
 const ForgotPassword = lazy(() => import('@/app/auth/forgot-password/page'))
-const ForgotPassword2 = lazy(() => import('@/app/auth/forgot-password-2/page'))
-const ForgotPassword3 = lazy(() => import('@/app/auth/forgot-password-3/page'))
 
 // Error pages
 const Unauthorized = lazy(() => import('@/app/errors/unauthorized/page'))
@@ -57,17 +49,28 @@ export interface RouteConfig {
 }
 
 export const routes: RouteConfig[] = [
-  // Default route - redirect to dashboard
-  // Use relative path "dashboard" instead of "/dashboard" for basename compatibility
+  // Public front door
   {
     path: "/",
-    element: <Navigate to="dashboard" replace />
+    element: <Navigate to="landing" replace />
   },
 
   // Landing Page
   {
     path: "/landing",
     element: <Landing />
+  },
+  {
+    path: "/newsletter",
+    element: <Newsletter />
+  },
+  {
+    path: "/articles",
+    element: <Articles />
+  },
+  {
+    path: "/articles/:articleSlug",
+    element: <Article />
   },
 
   // Dashboard Routes
@@ -78,10 +81,6 @@ export const routes: RouteConfig[] = [
   {
     path: "/dashboard/assets-map",
     element: <DashboardAssetsMap />
-  },
-  {
-    path: "/dashboard-2",
-    element: <Dashboard2 />
   },
   {
     path: "/shop",
@@ -97,18 +96,6 @@ export const routes: RouteConfig[] = [
   },
 
   // Application Routes
-  {
-    path: "/mail",
-    element: <Mail />
-  },
-  {
-    path: "/tasks",
-    element: <Tasks />
-  },
-  {
-    path: "/chat",
-    element: <Chat />
-  },
   {
     path: "/calendar",
     element: <Calendar />
@@ -127,10 +114,6 @@ export const routes: RouteConfig[] = [
   },
 
   // Content Pages
-  {
-    path: "/users",
-    element: <Users />
-  },
   {
     path: "/faqs",
     element: <FAQs />
@@ -174,36 +157,12 @@ export const routes: RouteConfig[] = [
     element: <SignIn />
   },
   {
-    path: "/auth/sign-in-2",
-    element: <SignIn2 />
-  },
-  {
-    path: "/auth/sign-in-3",
-    element: <SignIn3 />
-  },
-  {
     path: "/auth/sign-up",
     element: <SignUp />
   },
   {
-    path: "/auth/sign-up-2",
-    element: <SignUp2 />
-  },
-  {
-    path: "/auth/sign-up-3",
-    element: <SignUp3 />
-  },
-  {
     path: "/auth/forgot-password",
     element: <ForgotPassword />
-  },
-  {
-    path: "/auth/forgot-password-2",
-    element: <ForgotPassword2 />
-  },
-  {
-    path: "/auth/forgot-password-3",
-    element: <ForgotPassword3 />
   },
 
   // Error Pages

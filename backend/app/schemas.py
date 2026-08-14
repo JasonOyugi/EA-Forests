@@ -59,6 +59,28 @@ class EarthEngineStatusResponse(BaseModel):
     message: str
 
 
+class GeneticVariety(BaseModel):
+    id: str
+    genus: str
+    species: str | None = None
+    is_hybrid: bool = False
+    parent_species: list[str] | None = None
+    scientific_name: str
+    common_name: str | None = None
+
+
+class GeneticGenus(BaseModel):
+    name: str
+    scientific_name: str
+    common_name: str | None = None
+    varieties: list[GeneticVariety]
+
+
+class GeneticsCatalogResponse(BaseModel):
+    genera: list[GeneticGenus]
+    total_varieties: int
+
+
 class CommercialForestViabilityRequest(BaseModel):
     rotation_year: int = Field(default=8, ge=4, le=15)
     thinning: Literal["yes", "no"] = "yes"

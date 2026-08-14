@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState, type ComponentType, type CSSProperties } from "react"
+import { useEffect, useMemo, useState, type ComponentType, type CSSProperties, type ReactNode } from "react"
 import {
   Building2,
   CalendarDays,
@@ -22,10 +22,14 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react"
-import { useMapEvents } from "react-leaflet"
+import { useMap, useMapEvents } from "react-leaflet"
 
 import { marketConcessions, type MarketConcession } from "@/app/shop/data/concessions"
-import { BasicSsmtLayerControl } from "@/app/maps/basic-ssmt-layer"
+import {
+  BasicSsmtControlCard,
+  BasicSsmtLayer,
+  useBasicSsmtLayerController,
+} from "@/app/maps/basic-ssmt-layer"
 import {
   marketActorLayerMeta,
   marketActors,
@@ -55,7 +59,6 @@ import {
   MapControlContainer,
   MapLayerGroup,
   MapLayers,
-  MapLayersControl,
   MapMarker,
   MapMarkerClusterGroup,
   MapPolygon,
@@ -136,8 +139,6 @@ const countryStrips: Record<MarketCountry, string[]> = {
   Tanzania: ["#16a34a", "#111111", "#2563eb"],
 }
 
-const defaultMapLayerGroups: string[] = []
-
 const concessionLayerName = "PPP concessions"
 
 const actorLayerIcons: Record<MarketActorLayer, LucideIcon> = {
@@ -147,6 +148,12 @@ const actorLayerIcons: Record<MarketActorLayer, LucideIcon> = {
   trialSite: FlaskConical,
   forestReserve: ShieldCheck,
 }
+
+const defaultMapLayerGroups = [
+  "Regional boundaries",
+  concessionLayerName,
+  ...actorLayerOrder.map((layer) => marketActorLayerMeta[layer].label),
+]
 
 function formatDistance(distanceKm: number) {
   return distanceKm >= 100
@@ -242,6 +249,21 @@ function getConcessionsForCountry(country: MarketCountryFilter) {
   return country === "All"
     ? marketConcessions
     : marketConcessions.filter((concession) => concession.country === country)
+}
+
+function getConcessionsForScope(scope: MarketAnalyticsScope) {
+  const region = scope.regionId
+    ? marketRegions.find((item) => item.id === scope.regionId)
+    : null
+
+  return getConcessionsForCountry(scope.country).filter((concession) => {
+    if (!region) return true
+
+    return (
+      concession.country === region.country &&
+      pointInMarketRegion(concession.latitude, concession.longitude, region)
+    )
+  })
 }
 
 function haversineKm(
@@ -479,6 +501,33 @@ function MarketMapClickHandler({
       })
     },
   })
+
+  return null
+}
+
+function MarketScopeFocus({
+  country,
+  regionId,
+  version,
+}: {
+  country: MarketCountryFilter
+  regionId: string | null
+  version: number
+}) {
+  const map = useMap()
+
+  useEffect(() => {
+    const regions = regionId
+      ? marketRegions.filter((region) => region.id === regionId)
+      : country === "All"
+        ? marketRegions
+        : marketRegions.filter((region) => region.country === country)
+    const bounds = regions.flatMap((region) => getRegionBoundaries(region)).flat()
+
+    if (bounds.length > 0) {
+      map.fitBounds(bounds, { padding: [36, 36], maxZoom: regionId ? 8 : 6 })
+    }
+  }, [country, map, regionId, version])
 
   return null
 }
@@ -978,12 +1027,14 @@ function ConcessionsLayer({
 function ActorLayerGroup({
   layer,
   actors,
+  forestReserves = ugandaCfrs,
   selectedActorId,
   nearestHighlights,
   onSelectActor,
 }: {
   layer: MarketActorLayer
   actors: MarketActor[]
+  forestReserves?: typeof ugandaCfrs
   selectedActorId: string | null
   nearestHighlights: Record<string, NearestHighlight>
   onSelectActor: (actorId: string) => void
@@ -993,7 +1044,7 @@ function ActorLayerGroup({
   if (layer === "forestReserve") {
     return (
       <MapLayerGroup name={meta.label}>
-        {ugandaCfrs.flatMap((cfr) => {
+        {forestReserves.flatMap((cfr) => {
           const record = getCentralForestReserveRecord(
             cfr.name,
             cfr.center[0],
@@ -1421,6 +1472,134 @@ function ToggleGroup<T extends string>({
   )
 }
 
+function MapControlCard({
+  title,
+  children,
+}: {
+  title: string
+  children: ReactNode
+}) {
+  return (
+    <div className="rounded-2xl border bg-background/80 p-3 shadow-sm">
+      <div className="mb-2 text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+        {title}
+      </div>
+      {children}
+    </div>
+  )
+}
+
+function MarketMapControls({
+  selectedCountry,
+  selectedRegionId,
+  selectedPoint,
+  showRoadAnalysis,
+  activeLayerGroups,
+  ssmtController,
+  onCountryChange,
+  onRegionChange,
+  onRoadAnalysisChange,
+  onLayerGroupsChange,
+}: {
+  selectedCountry: MarketCountryFilter
+  selectedRegionId: string | null
+  selectedPoint: SelectedPoint | null
+  showRoadAnalysis: boolean
+  activeLayerGroups: string[]
+  ssmtController: ReturnType<typeof useBasicSsmtLayerController>
+  onCountryChange: (country: MarketCountryFilter) => void
+  onRegionChange: (regionId: string) => void
+  onRoadAnalysisChange: (visible: boolean) => void
+  onLayerGroupsChange: (groups: string[]) => void
+}) {
+  const regions =
+    selectedCountry === "All"
+      ? []
+      : marketRegions.filter((region) => region.country === selectedCountry)
+  const allRegionsValue = "__all_regions__"
+
+  return (
+    <div className="grid gap-3 xl:grid-cols-2 2xl:grid-cols-4">
+      <MapControlCard title="Map area">
+        <ToggleGroup
+          options={marketCountryFilters.map((country) => ({
+            value: country,
+            label: country,
+          }))}
+          value={selectedCountry}
+          onChange={onCountryChange}
+        />
+      </MapControlCard>
+
+      <MapControlCard title="Region focus">
+        {selectedCountry === "All" ? (
+          <p className="text-sm text-muted-foreground">Showing all countries and regions.</p>
+        ) : (
+          <ToggleGroup
+            options={[
+              { value: allRegionsValue, label: "All regions" },
+              ...regions.map((region) => ({ value: region.id, label: region.name })),
+            ]}
+            value={selectedRegionId ?? allRegionsValue}
+            onChange={(value) =>
+              onRegionChange(value === allRegionsValue ? "" : value)
+            }
+          />
+        )}
+      </MapControlCard>
+
+      <BasicSsmtControlCard controller={ssmtController} />
+
+      <MapControlCard title="Road analysis">
+        <Button
+          type="button"
+          variant={showRoadAnalysis ? "default" : "outline"}
+          aria-pressed={showRoadAnalysis}
+          disabled={!selectedPoint}
+          onClick={() => onRoadAnalysisChange(!showRoadAnalysis)}
+        >
+          <Route className="h-4 w-4" />
+          {showRoadAnalysis ? "On" : "Off"}
+        </Button>
+        <p className="mt-2 text-xs leading-5 text-muted-foreground">
+          {selectedPoint
+            ? "Routes show the nearest processors, nurseries, and commercial forests."
+            : "Double-click the map or select an item to analyse travel routes."}
+        </p>
+      </MapControlCard>
+
+      <div className="rounded-2xl border bg-background/80 p-3 shadow-sm xl:col-span-2 2xl:col-span-4">
+        <div className="mb-2 text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+          Map overlays
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {defaultMapLayerGroups.map((name) => {
+            const active = activeLayerGroups.includes(name)
+            return (
+              <Button
+                key={name}
+                type="button"
+                size="sm"
+                variant={active ? "default" : "outline"}
+                aria-pressed={active}
+                onClick={() =>
+                  onLayerGroupsChange(
+                    active
+                      ? activeLayerGroups.filter((group) => group !== name)
+                      : [...activeLayerGroups, name]
+                  )
+                }
+              >
+                {name}
+              </Button>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function SpeciesDataNotice({
   speciesAreas,
   commercialForestAreaCount,
@@ -1488,13 +1667,9 @@ function SpeciesDataNotice({
 function MarketAnalysis({
   selectedCountry,
   selectedRegionId,
-  onCountryChange,
-  onRegionChange,
 }: {
   selectedCountry: MarketCountryFilter
   selectedRegionId: string | null
-  onCountryChange: (country: MarketCountryFilter) => void
-  onRegionChange: (regionId: string) => void
 }) {
   const countryActors = getActorsForScope({
     country: selectedCountry,
@@ -1509,8 +1684,9 @@ function MarketAnalysis({
     selectedCountry === "All"
       ? []
       : marketRegions.filter((region) => region.country === selectedCountry)
-  const selectedRegion =
-    countryRegions.find((region) => region.id === selectedRegionId) ?? countryRegions[0] ?? null
+  const selectedRegion = selectedRegionId
+    ? countryRegions.find((region) => region.id === selectedRegionId) ?? null
+    : null
   const regionActors = selectedRegion
     ? getActorsForScope({
         country: selectedRegion.country,
@@ -1645,14 +1821,10 @@ function MarketAnalysis({
       )}
     >
       <div className="rounded-[24px] border-0 bg-background/75 p-4">
-        <ToggleGroup
-          options={marketCountryFilters.map((country) => ({
-            value: country,
-            label: country,
-          }))}
-          value={selectedCountry}
-          onChange={onCountryChange}
-        />
+        <div className="mb-4 flex items-center gap-2 text-sm font-semibold">
+          <MapPinned className="h-4 w-4 text-muted-foreground" />
+          {selectedCountry} overview
+        </div>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {countryMetricCards.map((metric) => (
             <MetricPanel key={metric.label} {...metric} />
@@ -1666,22 +1838,21 @@ function MarketAnalysis({
             <div className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
               Select Uganda, Kenya, or Tanzania to inspect regional analytics.
             </div>
-          ) : (
+          ) : selectedRegion ? (
             <>
-              <ToggleGroup
-                options={countryRegions.map((region) => ({
-                  value: region.id,
-                  label: region.name,
-                }))}
-                value={selectedRegion?.id ?? ""}
-                onChange={onRegionChange}
-              />
+              <div className="text-sm font-semibold">
+                {selectedRegion.name}
+              </div>
               <div className="grid gap-3 sm:grid-cols-2">
                 {regionMetricCards.map((metric) => (
                   <MetricPanel key={metric.label} {...metric} />
                 ))}
               </div>
             </>
+          ) : (
+            <div className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
+              All regional overlays are visible. Select a region above the map to view its summary.
+            </div>
           )}
         </div>
 
@@ -1880,14 +2051,45 @@ export function RoundwoodShop() {
   const [isRouting, setIsRouting] = useState(false)
   const [showRoadAnalysis, setShowRoadAnalysis] = useState(false)
   const [selectedConcessionId, setSelectedConcessionId] = useState<string | null>(null)
+  const [scopeFocusVersion, setScopeFocusVersion] = useState(0)
+  const [activeLayerGroups, setActiveLayerGroups] = useState<string[]>(
+    defaultMapLayerGroups
+  )
+  const ssmtController = useBasicSsmtLayerController()
+  const regionAnalytics = useMemo(() => getRegionAnalytics(), [])
 
+  const mapScope = useMemo<MarketAnalyticsScope>(
+    () => ({ country: selectedCountry, regionId: selectedRegionId }),
+    [selectedCountry, selectedRegionId]
+  )
+  const scopedActors = useMemo(
+    () => getActorsForScope(mapScope),
+    [mapScope]
+  )
   const actorGroups = useMemo(
     () =>
       actorLayerOrder.reduce<Record<MarketActorLayer, MarketActor[]>>((groups, layer) => {
-        groups[layer] = marketActors.filter((actor) => actor.layer === layer)
+        groups[layer] = scopedActors.filter((actor) => actor.layer === layer)
         return groups
       }, {} as Record<MarketActorLayer, MarketActor[]>),
-    []
+    [scopedActors]
+  )
+  const scopedRegions = useMemo(
+    () =>
+      selectedRegionId
+        ? regionAnalytics.filter((region) => region.id === selectedRegionId)
+        : selectedCountry === "All"
+          ? regionAnalytics
+          : regionAnalytics.filter((region) => region.country === selectedCountry),
+    [regionAnalytics, selectedCountry, selectedRegionId]
+  )
+  const scopedForestReserves = useMemo(
+    () => getForestReservesForScope(mapScope),
+    [mapScope]
+  )
+  const scopedConcessions = useMemo(
+    () => getConcessionsForScope(mapScope),
+    [mapScope]
   )
   const selectedActor =
     marketActors.find((actor) => actor.id === selectedActorId) ?? null
@@ -1911,7 +2113,10 @@ export function RoundwoodShop() {
     const countryRegions = marketRegions.filter(
       (region) => region.country === selectedCountry
     )
-    if (!countryRegions.some((region) => region.id === selectedRegionId)) {
+    if (
+      selectedRegionId !== null &&
+      !countryRegions.some((region) => region.id === selectedRegionId)
+    ) {
       setSelectedRegionId(countryRegions[0]?.id ?? null)
     }
   }, [selectedCountry, selectedRegionId])
@@ -1955,15 +2160,21 @@ export function RoundwoodShop() {
   useEffect(() => {
     if (!selectedConcessionId) return
 
-    const concessionIsVisible = getConcessionsForCountry(selectedCountry).some(
+    const concessionIsVisible = scopedConcessions.some(
       (concession) => concession.id === selectedConcessionId
     )
     if (!concessionIsVisible) {
       setSelectedConcessionId(null)
     }
-  }, [selectedCountry, selectedConcessionId])
+  }, [scopedConcessions, selectedConcessionId])
 
-  const regionAnalytics = useMemo(() => getRegionAnalytics(), [])
+  useEffect(() => {
+    if (selectedActor && !scopedActors.some((actor) => actor.id === selectedActor.id)) {
+      setSelectedActorId(null)
+      setIsTableOpen(false)
+    }
+  }, [scopedActors, selectedActor])
+
   const maxRegionCount = Math.max(...regionAnalytics.map((region) => region.count), 1)
   const nearestHighlights = useMemo(
     () => {
@@ -1988,6 +2199,21 @@ export function RoundwoodShop() {
     setSelectedActorId(actorId)
     setClickedPoint(null)
     setIsTableOpen(true)
+  }
+
+  const changeCountry = (country: MarketCountryFilter) => {
+    setSelectedCountry(country)
+    setSelectedRegionId(
+      country === "All"
+        ? null
+        : marketRegions.find((region) => region.country === country)?.id ?? null
+    )
+    setScopeFocusVersion((version) => version + 1)
+  }
+
+  const changeRegion = (regionId: string) => {
+    setSelectedRegionId(regionId || null)
+    setScopeFocusVersion((version) => version + 1)
   }
 
   const selectConcession = (concession: MarketConcession) => {
@@ -2026,11 +2252,26 @@ export function RoundwoodShop() {
           </div>
         </div>
 
+        <MarketMapControls
+          selectedCountry={selectedCountry}
+          selectedRegionId={selectedRegionId}
+          selectedPoint={selectedPoint}
+          showRoadAnalysis={showRoadAnalysis}
+          activeLayerGroups={activeLayerGroups}
+          ssmtController={ssmtController}
+          onCountryChange={changeCountry}
+          onRegionChange={changeRegion}
+          onRoadAnalysisChange={setShowRoadAnalysis}
+          onLayerGroupsChange={setActiveLayerGroups}
+        />
+
         <div className="relative overflow-hidden rounded-md border bg-background">
           <Map center={[-2.2, 34.7]} zoom={6} maxZoom={18} className="h-[680px] w-full rounded-none">
             <MapLayers
               defaultTileLayer={marketTileLayers[0].name}
               defaultLayerGroups={defaultMapLayerGroups}
+              activeLayerGroups={activeLayerGroups}
+              onActiveLayerGroupsChange={setActiveLayerGroups}
             >
               {marketTileLayers.map((tileLayer) => (
                 <MapTileLayer
@@ -2043,10 +2284,17 @@ export function RoundwoodShop() {
                 />
               ))}
 
-              <RegionalBoundariesLayer regions={regionAnalytics} maxCount={maxRegionCount} />
+              <MarketScopeFocus
+                country={selectedCountry}
+                regionId={selectedRegionId}
+                version={scopeFocusVersion}
+              />
+              <BasicSsmtLayer controller={ssmtController} />
+
+              <RegionalBoundariesLayer regions={scopedRegions} maxCount={maxRegionCount} />
 
               <ConcessionsLayer
-                concessions={marketConcessions}
+                concessions={scopedConcessions}
                 selectedConcessionId={selectedConcessionId}
                 onSelectConcession={selectConcession}
               />
@@ -2056,6 +2304,7 @@ export function RoundwoodShop() {
                   key={layer}
                   layer={layer}
                   actors={actorGroups[layer]}
+                  forestReserves={scopedForestReserves}
                   selectedActorId={selectedActorId}
                   nearestHighlights={nearestHighlights}
                   onSelectActor={focusActor}
@@ -2083,26 +2332,8 @@ export function RoundwoodShop() {
                 }}
               />
               <MapZoomControl position="top-3 left-3" />
-              <MapLayersControl
-                position="top-3 right-3"
-                tileLayersLabel="Base map"
-                layerGroupsLabel="Map overlays"
-              />
-              <BasicSsmtLayerControl position="top-3 left-15"/>
               <MapControlContainer className="right-16 top-3">
                 <div className="flex gap-2">
-                  <Button
-                    type="button"
-                    size="icon"
-                    variant={showRoadAnalysis ? "default" : "secondary"}
-                    className="border shadow-sm"
-                    aria-label={showRoadAnalysis ? "Hide road analysis" : "Show road analysis"}
-                    title={showRoadAnalysis ? "Hide road analysis" : "Show road analysis"}
-                    disabled={!selectedPoint}
-                    onClick={() => setShowRoadAnalysis((value) => !value)}
-                  >
-                    <Route className="h-4 w-4" />
-                  </Button>
                   <Button
                     type="button"
                     size="icon"
@@ -2136,8 +2367,6 @@ export function RoundwoodShop() {
       <MarketAnalysis
         selectedCountry={selectedCountry}
         selectedRegionId={selectedRegionId}
-        onCountryChange={setSelectedCountry}
-        onRegionChange={setSelectedRegionId}
       />
 
       <ConcessionsDatabase

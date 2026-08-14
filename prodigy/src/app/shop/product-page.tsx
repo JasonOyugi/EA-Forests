@@ -1,3 +1,5 @@
+"use client"
+
 import { useParams, Navigate } from "react-router-dom"
 import { BaseLayout } from "@/components/layouts/base-layout"
 import { ProductPage } from "@/components/commerce-ui/product-page"
@@ -11,6 +13,10 @@ export default function ShopProductPage() {
     addItem,
     decrementItem,
   } = useShopStore()
+  if (!shopSlug || !productSlug) {
+    return <Navigate to="/shop" replace />
+  }
+
   if (!shopSlug || !productSlug) {
     return <Navigate to="/shop" replace />
   }

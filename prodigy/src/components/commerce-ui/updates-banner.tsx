@@ -22,7 +22,7 @@ export function UpdatesBanner({
 
   useEffect(() => {
     onVisibilityChange?.(isVisible)
-  }, [isVisible, onVisibilityChange])
+  }, [isVisible])
 
   if (!isVisible) return null
 

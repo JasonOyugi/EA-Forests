@@ -15,7 +15,7 @@ export function NutritionBanner({
 
   useEffect(() => {
     onVisibilityChange?.(isVisible)
-  }, [isVisible, onVisibilityChange])
+  }, [isVisible])
 
   useEffect(() => {
     const expiry = new Date()

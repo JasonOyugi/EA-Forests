@@ -62,7 +62,7 @@ export function CTASection() {
               {/* CTA Buttons */}
               <div className='flex flex-col justify-center gap-4 sm:flex-row sm:gap-6'>
                 <Button size='lg' className='cursor-pointer px-8 py-6 text-lg font-medium' asChild>
-                  <a href='/auth/sign-up-2' target='_blank' rel='noopener noreferrer' className="group relative overflow-hidden">
+                  <a href='/auth/sign-up' target='_blank' rel='noopener noreferrer' className="group relative overflow-hidden">
                     <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
                     <span className="relative z-10 inline-flex items-center group-hover:text-emerald-100">
                       <Handshake className='me-2 size-5' />

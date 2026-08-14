@@ -8,7 +8,7 @@ import { LogoCarousel } from "./components/logo-carousel"
 import { TestimonialsSection } from "./components/testimonials-section"
 // import { CTASection } from "./components/cta-section"
 import { ContactSection } from "./components/contact-section"
-import { TeamSection } from "./components/team-section"
+// import { TeamSection } from "./components/team-section"
 import { LandingFooter } from "./components/footer"
 import { AboutSection } from "./components/about-section"
 import { LandingThemeCustomizerTrigger } from "./components/landing-theme-customizer-trigger"
@@ -32,7 +32,7 @@ export default function LandingPage() {
         {/* <FeaturesSection /> */}
         <AboutSection />
         <TestimonialsSection />
-        <TeamSection />
+        {/* <TeamSection /> */}
         {/* <CTASection /> */}
         <ContactSection />
       </main>

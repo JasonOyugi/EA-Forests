@@ -34,7 +34,7 @@ const hospitalCategoryBanners: HospitalCategoryBanner[] = [
     description: "Concentrates, machine care supplies, and dialysis-center essentials.",
     icon: Waves,
     className: "from-cyan-600 to-sky-500",
-    image: assetUrl("/KNH.webp"),
+    image: assetUrl("/dialysis1.jpg"),
   },
   {
     value: "high-level-disinfectants",
@@ -42,7 +42,7 @@ const hospitalCategoryBanners: HospitalCategoryBanner[] = [
     description: "Validated formulas for heat-sensitive devices and clinical equipment.",
     icon: ShieldCheck,
     className: "from-emerald-600 to-teal-500",
-    image: assetUrl("/acs.jpg"),
+    image: assetUrl("/disinfect.webp"),
   },
   {
     value: "vascular-access-icu",
@@ -50,7 +50,7 @@ const hospitalCategoryBanners: HospitalCategoryBanner[] = [
     description: "Access kits and specialty devices for critical-care teams.",
     icon: Syringe,
     className: "from-blue-700 to-indigo-500",
-    image: assetUrl("/human-anatomy.jpg"),
+    image: assetUrl("/icu1.webp"),
   },
   {
     value: "antiseptics",
@@ -58,7 +58,7 @@ const hospitalCategoryBanners: HospitalCategoryBanner[] = [
     description: "Skin-preparation and wound-antisepsis products for clinical use.",
     icon: Sparkles,
     className: "from-amber-500 to-orange-500",
-    image: assetUrl("/body%20cs.jpg"),
+    image: assetUrl("/antiseptic.webp"),
   },
   {
     value: "wound-care",
@@ -66,7 +66,7 @@ const hospitalCategoryBanners: HospitalCategoryBanner[] = [
     description: "Dressings and pads for post-operative protection and healing.",
     icon: HeartPulse,
     className: "from-rose-600 to-pink-500",
-    image: assetUrl("/heal.mp4"),
+    image: assetUrl("/wound.jpg"),
   },
   {
     value: "liquids-gels-soaps",
@@ -74,15 +74,7 @@ const hospitalCategoryBanners: HospitalCategoryBanner[] = [
     description: "Hand hygiene liquids and rubs for everyday hospital workflows.",
     icon: Droplets,
     className: "from-lime-600 to-emerald-500",
-    image: assetUrl("/healthws.jpg"),
-  },
-  {
-    value: "hospital-disinfectant-and-antiseptic-wipes",
-    label: "Disinfectant & Antiseptic Wipes",
-    description: "Ready-to-use wipes for skin antisepsis and sensitive surfaces.",
-    icon: Layers,
-    className: "from-violet-600 to-fuchsia-500",
-    image: assetUrl("/NairobiHospital.png"),
+    image: assetUrl("/liquidsgel.png"),
   },
 ]
 

@@ -10,6 +10,7 @@ const Models = lazy(() => import('@/app/models/page'))
 const BmiCalculator = lazy(() => import('@/app/models/bmi-calculator/page'))
 const DiabetesRiskAssessment = lazy(() => import('@/app/models/diabetes-risk-assessment/page'))
 const Vitality3D = lazy(() => import('@/app/models/vitality-3d/page'))
+const ProgramPage = lazy(() => import('@/app/programs/program-page'))
 const NotFound = lazy(() => import('@/app/errors/not-found/page'))
 
 export interface RouteConfig {
@@ -38,6 +39,10 @@ export const routes: RouteConfig[] = [
   {
     path: "/shop/:shopSlug/:productSlug",
     element: <ShopProductPage />
+  },
+  {
+    path: "/programs/:programSlug",
+    element: <ProgramPage />
   },
   {
     path: "/calendar",

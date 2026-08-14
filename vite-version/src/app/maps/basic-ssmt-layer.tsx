@@ -170,13 +170,22 @@ function StatusLine({
   )
 }
 
-export function BasicSsmtLayerControl({
-  position = "left-3 top-16",
-  className,
-}: {
-  position?: string
-  className?: string
-}) {
+export interface BasicSsmtLayerController {
+  enabled: boolean
+  setEnabled: React.Dispatch<React.SetStateAction<boolean>>
+  open: boolean
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  metadata: BasicSsmtMetadata | null
+  filters: BasicSsmtFilters
+  setFilters: React.Dispatch<React.SetStateAction<BasicSsmtFilters>>
+  opacity: number
+  setOpacity: React.Dispatch<React.SetStateAction<number>>
+  collection: BasicSsmtFeatureCollection | null
+  loading: boolean
+  error: string | null
+}
+
+export function useBasicSsmtLayerController(): BasicSsmtLayerController {
   const [enabled, setEnabled] = React.useState(true)
   const [open, setOpen] = React.useState(false)
   const [metadata, setMetadata] = React.useState<BasicSsmtMetadata | null>(null)
@@ -256,6 +265,37 @@ export function BasicSsmtLayerControl({
     return () => controller.abort()
   }, [enabled, matchingChunks, metadata])
 
+  return {
+    enabled,
+    setEnabled,
+    open,
+    setOpen,
+    metadata,
+    filters,
+    setFilters,
+    opacity,
+    setOpacity,
+    collection,
+    loading,
+    error,
+  }
+}
+
+function BasicSsmtControls({ controller }: { controller: BasicSsmtLayerController }) {
+  const {
+    enabled,
+    setEnabled,
+    open,
+    setOpen,
+    metadata,
+    filters,
+    setFilters,
+    opacity,
+    setOpacity,
+    collection,
+    loading,
+    error,
+  } = controller
   const speciesOptions = React.useMemo(
     () => getSpeciesForGenus(metadata, filters.genus),
     [filters.genus, metadata]
@@ -270,18 +310,8 @@ export function BasicSsmtLayerControl({
   const empty = enabled && !loading && !statusError && featureCount === 0
 
   return (
-    <>
-      {enabled && metadata && collection && collection.features.length > 0 ? (
-        <BasicSsmtGeoJsonLayer
-          collection={collection}
-          metadata={metadata}
-          opacity={opacity}
-        />
-      ) : null}
-
-      <MapControlContainer className={cn(position, className)}>
-        <div className="flex max-w-[calc(100vw-1.5rem)] flex-col items-start gap-2">
-          <div className="flex items-center gap-1.5">
+    <div className="flex max-w-[calc(100vw-1.5rem)] flex-col items-start gap-2">
+      <div className="flex items-center gap-1.5">
             <Button
               type="button"
               variant={enabled ? "default" : "secondary"}
@@ -306,10 +336,10 @@ export function BasicSsmtLayerControl({
             >
               <Filter className="h-4 w-4" />
             </Button>
-          </div>
+      </div>
 
-          {open ? (
-            <div className="w-[min(22rem,calc(100vw-1.5rem))] rounded-md border bg-background/96 p-3 shadow-xl backdrop-blur">
+      {open ? (
+        <div className="w-[min(22rem,calc(100vw-1.5rem))] rounded-md border bg-background/96 p-3 shadow-xl backdrop-blur">
               <div className="mb-3 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
                   <Layers3 className="h-4 w-4 text-muted-foreground" />
@@ -466,9 +496,59 @@ export function BasicSsmtLayerControl({
                   featureCount={featureCount}
                 />
               </div>
-            </div>
-          ) : null}
         </div>
+      ) : null}
+    </div>
+  )
+}
+
+function BasicSsmtMapLayer({ controller }: { controller: BasicSsmtLayerController }) {
+  const { enabled, metadata, collection, opacity } = controller
+
+  return enabled && metadata && collection && collection.features.length > 0 ? (
+    <BasicSsmtGeoJsonLayer
+      collection={collection}
+      metadata={metadata}
+      opacity={opacity}
+    />
+  ) : null
+}
+
+export function BasicSsmtControlCard({
+  controller,
+  className,
+}: {
+  controller: BasicSsmtLayerController
+  className?: string
+}) {
+  return (
+    <div className={cn("rounded-2xl border bg-background/80 p-3 shadow-sm", className)}>
+      <div className="mb-2 text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+        Site suitability
+      </div>
+      <BasicSsmtControls controller={controller} />
+    </div>
+  )
+}
+
+export function BasicSsmtLayer({ controller }: { controller: BasicSsmtLayerController }) {
+  return <BasicSsmtMapLayer controller={controller} />
+}
+
+export function BasicSsmtLayerControl({
+  position = "left-3 top-16",
+  className,
+}: {
+  position?: string
+  className?: string
+}) {
+  const controller = useBasicSsmtLayerController()
+
+  return (
+    <>
+      <BasicSsmtMapLayer controller={controller} />
+      <MapControlContainer className={cn(position, className)}>
+        <BasicSsmtControls controller={controller} />
       </MapControlContainer>
     </>
   )

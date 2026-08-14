@@ -22,10 +22,7 @@ import { ModeToggle } from "@/components/mode-toggle"
 import { useTheme } from "@/hooks/use-theme"
 
 const navigationItems = [
-  { name: "Home", href: "#hero" },
-  { name: "Features", href: "#features" },
-  { name: "Pricing", href: "#pricing" },
-  { name: "FAQ", href: "#faq" },
+  { name: "Newsletter", href: "/newsletter" },
   { name: "Contact", href: "#contact" },
 ] as const
 
@@ -124,46 +121,8 @@ export function LandingNavbar() {
           ))}
         </div>
 
-        {/* Desktop CTA */}
         <div className="hidden xl:flex items-center space-x-2">
           <ModeToggle variant="ghost" />
-          <Button variant="ghost" size="icon" asChild className="cursor-pointer">
-            <a
-              href="https://github.com/silicondeck/shadcn-dashboard-landing-template"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub Repository"
-            >
-              <Github className="h-5 w-5" />
-            </a>
-          </Button>
-          <Button 
-            variant="outline"
-            size="lg"
-            asChild
-            className="emerald-border-hover text-base cursor-pointer
-                      transition-all duration-300
-                      hover:text-emerald-400
-                      hover:shadow-[0_0_24px_rgba(16,185,129,0.35)]">
-            <a href={getAppUrl("/dashboard")} target="_blank" rel="noopener noreferrer">
-              <LayoutDashboard className="h-4 w-4 mr-2" />
-              Dashboard
-            </a>
-          </Button>
-          <Button variant="ghost" asChild className="cursor-pointer">
-            <a href={getAppUrl("/auth/sign-in")}>Sign In</a>
-          </Button>
-          <Button size="lg" className="text-base cursor-pointer" asChild>
-            <a
-              href={getAppUrl("/auth/sign-up")}
-              className="group relative overflow-hidden"
-            >
-              <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
-              <span className="relative z-10 inline-flex items-center group-hover:text-emerald-300">
-                Get Started
-              </span>
-            </a>
-          </Button>
         </div>
 
         {/* Mobile Menu */}

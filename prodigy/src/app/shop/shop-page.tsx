@@ -1,3 +1,5 @@
+"use client"
+
 import { Navigate, useParams } from "react-router-dom"
 import { BaseLayout } from "@/components/layouts/base-layout"
 import { shopPageComponents } from "./components/shops"

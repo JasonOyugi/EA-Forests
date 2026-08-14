@@ -77,12 +77,12 @@ export function BlogSection() {
       <div className={landingContainer}>
         {/* Section Header */}
         <ScrollReveal className={landingSectionIntro} distance={22}>
-          <Badge variant="outline" className={landingBadgeClass}>Latest Insights</Badge>
+          <Badge variant="outline" className={landingBadgeClass}>Latest from EA Forests</Badge>
           <h2 className={landingHeadingClass}>
-            From our blog
+            Field notes, markets and practical ideas
           </h2>
           <p className={landingLeadClass}>
-            Stay updated with the latest trends, best practices, and insights from our team of experts.
+            A growing editorial record of the people, projects and signals shaping East African forestry.
           </p>
         </ScrollReveal>
 
@@ -93,13 +93,13 @@ export function BlogSection() {
                 {blogs.map(blog => (
                   <div key={blog.id} className="min-w-0 flex-[0_0_100%] pl-4 md:flex-[0_0_50%] lg:flex-[0_0_33.333%]">
                     <BentoTilt className="h-full">
-                      <Card className="h-full overflow-hidden py-0">
+                      <Card className="group h-full overflow-hidden py-0 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl">
                         <CardContent className="flex h-full flex-col px-0">
                           <div className="aspect-video">
                             <img
                               src={blog.image}
                               alt={blog.title}
-                              className="size-full object-cover"
+                              className="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                               loading="lazy"
                               decoding="async"
                             />
@@ -119,10 +119,10 @@ export function BlogSection() {
                             <a
                               href="#"
                               onClick={e => e.preventDefault()}
-                              className="inline-flex items-center gap-2 text-primary hover:underline cursor-pointer"
+                              className="inline-flex items-center gap-2 text-primary cursor-pointer"
                             >
                               Learn More
-                              <ArrowRight className="size-4" />
+                              <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
                             </a>
                           </div>
                         </CardContent>

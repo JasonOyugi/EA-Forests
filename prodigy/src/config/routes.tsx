@@ -1,7 +1,7 @@
 import { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
+import Landing from '@/app/landing/page'
 
-const Landing = lazy(() => import('@/app/landing/page'))
 const ShopIndex = lazy(() => import("@/app/shop/page"))
 const ShopPage = lazy(() => import("@/app/shop/shop-page"))
 const ShopProductPage = lazy(() => import("@/app/shop/product-page"))
