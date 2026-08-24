@@ -214,7 +214,7 @@ export function ShopCommonLayout({
 
           <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)]">
             <div className="space-y-1">
-              <p className="text-sm font-medium text-slate-700">Filter by species</p>
+              <p className="text-sm font-medium text-muted-foreground">Filter by species</p>
               <Select value={selectedSpecies} onValueChange={setSelectedSpecies}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="All species" />
@@ -230,7 +230,7 @@ export function ShopCommonLayout({
             </div>
 
             <div className="space-y-1">
-              <p className="text-sm font-medium text-slate-700">Category</p>
+              <p className="text-sm font-medium text-muted-foreground">Category</p>
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="All categories" />
@@ -244,7 +244,7 @@ export function ShopCommonLayout({
             </div>
 
             <div className="space-y-1">
-              <p className="text-sm font-medium text-slate-700">Sort</p>
+              <p className="text-sm font-medium text-muted-foreground">Sort</p>
               <Select value={sortOrder} onValueChange={setSortOrder}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Sort order" />

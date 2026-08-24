@@ -2,7 +2,7 @@
   {
     "id": "roundwood-small-logs-002",
     "slug": "small-logs",
-    "shop": "roundwood",
+    "shop": "sector-map",
     "name": "Small Logs",
     "kind": "product",
     "unitLabel": "per lot",
@@ -18,7 +18,7 @@
   {
     "id": "roundwood-large-logs-003",
     "slug": "large-logs",
-    "shop": "roundwood",
+    "shop": "sector-map",
     "name": "Large Logs",
     "kind": "product",
     "unitLabel": "per lot",
@@ -34,7 +34,7 @@
   {
     "id": "roundwood-wood-chips-004",
     "slug": "wood-chips",
-    "shop": "roundwood",
+    "shop": "sector-map",
     "name": "Wood Chips",
     "kind": "product",
     "unitLabel": "per ton",

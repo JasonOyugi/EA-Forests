@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input"
 import { EditorialHeader } from "./editorial-header"
 import { forestryArticles } from "./data"
 
-const categories: Array<EditorialCategory | "All"> = ["All", "Information", "Markets", "Tools and Models", "Investment/Projects"]
+const categories: Array<EditorialCategory | "All"> = ["All", "Information", "Markets", "Models", "Investments"]
 
 export default function ArticlesPage() {
   const [searchParams, setSearchParams] = useSearchParams()

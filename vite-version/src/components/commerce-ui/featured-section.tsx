@@ -204,11 +204,11 @@ export function FeaturedSection({
                 </div>
               )}
               <div>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-4xl leading-[.9] tracking-[-.05em] sm:text-5xl lg:text-6xl">
                   {title}
                 </CardTitle>
                 {subtitle && (
-                  <p className="text-sm text-muted-foreground mt-1">{subtitle}</p>
+                  <p className="type-body-copy mt-2 max-w-3xl text-muted-foreground">{subtitle}</p>
                 )}
               </div>
             </div>

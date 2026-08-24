@@ -1,0 +1,14 @@
+interface:
+  display_name: Awwwards Web Director
+  short_description: Analyze references and direct premium web builds
+  default_prompt: Use $awwwards-web-director to analyze this reference and create
+    or implement a precise design brief for EA Forests.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

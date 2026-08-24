@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight, MapPinned, Sprout, Trees, Tractor, Factory, Building2 } from "lucide-react"
+import { ArrowRight, MapPinned } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { BentoTilt } from "@/components/ui/bento-tilt"
@@ -13,14 +13,6 @@ import {
   landingSectionIntro,
   landingSectionPadding,
 } from "./landing-shared"
-
-const valueChain = [
-  { name: "Seed sources", description: "Genetics, seed and proven planting material.", icon: Sprout, href: "/shop/seedlings" },
-  { name: "Nurseries", description: "Find planting stock and the people growing it.", icon: Trees, href: "/shop/seedlings" },
-  { name: "Contractors", description: "Establishment, silviculture and field services.", icon: Tractor, href: "/shop/forests-land" },
-  { name: "Processors", description: "Sawmills, timber buyers and market intelligence.", icon: Factory, href: "/shop/roundwood#market-concessions" },
-  { name: "Developers", description: "Forest projects, land and investment opportunities.", icon: Building2, href: "/shop/forests-land" },
-] as const
 
 export function DiscoverySection() {
   return (
@@ -36,7 +28,7 @@ export function DiscoverySection() {
 
         <div className="grid gap-6 lg:grid-cols-[1.08fr_.92fr]">
           <ScrollReveal className="h-full" delay={80}>
-            <a href="/shop/roundwood#market-concessions" className="group block h-full">
+            <a href="/shop/sector-map#market-concessions" className="group block h-full">
               <BentoTilt className="h-full">
                 <article className="relative min-h-[360px] h-full overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm">
                   <img src="/maps.jpg" alt="East African forestry sector map" className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105" />

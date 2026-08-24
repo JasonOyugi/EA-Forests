@@ -48,16 +48,16 @@ const data = {
           icon: ShoppingCart,
           items: [
             {
-              title: "Seedlings",
+              title: "Seed & seedlings",
               url: "/shop/seedlings",
             },
             {
-              title: "Forests & Land",
+              title: "Land & services",
               url: "/shop/forests-land",
             },
             {
               title: "Markets",
-              url: "/shop/roundwood",
+              url: "/shop/sector-map",
             },
           ],
         },

@@ -6,6 +6,13 @@ import { baseColors } from '@/config/theme-customizer-constants'
 import { colorThemes } from '@/config/theme-data'
 import type { ThemePreset, ImportedTheme } from '@/types/theme-customizer'
 
+const applyThemeVariables = (root: HTMLElement, styles: Record<string, string>) => {
+  Object.entries(styles).forEach(([key, value]) => {
+    if (key === 'font-sans') return
+    root.style.setProperty(`--${key}`, value)
+  })
+}
+
 export function useThemeManager() {
   const { theme, setTheme } = useTheme()
   const [brandColorsValues, setBrandColorsValues] = React.useState<Record<string, string>>({})
@@ -84,9 +91,7 @@ export function useThemeManager() {
     const styles = darkMode ? theme.preset.styles.dark : theme.preset.styles.light
     const root = document.documentElement
 
-    Object.entries(styles).forEach(([key, value]) => {
-      root.style.setProperty(`--${key}`, value)
-    })
+    applyThemeVariables(root, styles)
 
     // Update brand colors values when theme changes
     updateBrandColorsFromTheme(styles)
@@ -98,9 +103,7 @@ export function useThemeManager() {
     const styles = darkMode ? themePreset.styles.dark : themePreset.styles.light
     const root = document.documentElement
 
-    Object.entries(styles).forEach(([key, value]) => {
-      root.style.setProperty(`--${key}`, value)
-    })
+    applyThemeVariables(root, styles)
 
     // Update brand colors values when theme changes
     updateBrandColorsFromTheme(styles)
@@ -111,9 +114,7 @@ export function useThemeManager() {
     const themeVars = darkMode ? themeData.dark : themeData.light
     
     // Apply all variables from the theme
-    Object.entries(themeVars).forEach(([variable, value]) => {
-      root.style.setProperty(`--${variable}`, value)
-    })
+    applyThemeVariables(root, themeVars)
     
     // Update brand colors values for the customizer UI
     const newBrandColors: Record<string, string> = {}

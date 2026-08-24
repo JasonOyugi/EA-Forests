@@ -91,7 +91,7 @@ export function ContactSection() {
                   Speak directly with our care team to ask about personal care products or hospital supplies.
                 </p>
                 <Button variant="outline" size="sm" className="cursor-pointer" asChild>
-                  <a href="tel:+254700000000">
+                  <a href="tel:+254733342820">
                     Call Now
                   </a>
                 </Button>
@@ -110,7 +110,7 @@ export function ContactSection() {
                   Message our support team for quick answers about appointments and orders.
                 </p>
                 <Button variant="outline" size="sm" className="cursor-pointer" asChild>
-                  <a href="#contact">
+                  <a href="https://wa.me/254700709066" target="_blank" rel="noreferrer">
                     Start a Chat
                   </a>
                 </Button>

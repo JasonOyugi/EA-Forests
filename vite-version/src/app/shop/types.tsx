@@ -2,7 +2,8 @@ export type ShopSlug =
   | "seedlings"
   | "forests-land"
   | "forestry-services"
-  | "roundwood"
+  | "sector-map"
+  | "wood-markets-map"
 
 export type ShopDomain = "all" | "timber" | "agroforestry" | "restoration" | "services"
 
@@ -88,7 +89,9 @@ export interface ShopItem {
   kind: ShopItemKind
   unitLabel: string
   price: number
+  priceAvailable?: boolean
   currency: string
+  updatedAt?: string
   description: string
   image: string
   imageGallery?: ShopItemImage[]

@@ -35,7 +35,7 @@ export function ProductCard({
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">
           <div className="space-y-2">
-            <CardTitle className="text-lg text-white">{item.name}</CardTitle>
+            <CardTitle className="text-xl text-white">{item.name}</CardTitle>
             <CardDescription className="max-w-xl text-white/82">{item.description}</CardDescription>
           </div>
           <Badge

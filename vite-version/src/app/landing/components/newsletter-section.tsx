@@ -1,58 +1,66 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
-import type { PointerEvent, WheelEvent } from "react"
+import type { KeyboardEvent, PointerEvent, WheelEvent } from "react"
 import { ArrowLeft, ArrowRight, Mail } from "lucide-react"
-import { getAppUrl } from "@/lib/utils"
-import { editorialActionLabels } from "./editorial-actions"
 
 const newsletterStories = [
   {
-    title: "Pine hybrids enter the East African planting market",
-    category: "Information",
+    chapter: "Policy and regulation",
+    strapline: "EA Forest live",
+    title: "How the US-Iran war is reshaping East African forestry",
+    summary: "From fuel prices to trade decisions, track every effect the war in Iran has on East African forestry.",
     location: "East Africa",
-    date: "12 Aug 2026",
-    image: "/forest.webp",
-    href: "/shop/seedlings#featured-products",
+    image: "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA28mi8n.img?w=2048&h=1365&m=4&q=81",
+    href: "/articles",
+    accent: "#e96e65",
   },
   {
-    title: "Where roundwood demand is moving this month",
-    category: "Markets",
-    location: "Regional",
-    date: "11 Aug 2026",
-    image: "/greenbuilding.webp",
-    href: "/shop/roundwood",
+    chapter: "Finance and Markets",
+    strapline: "World Bank page",
+    title: "The carbon markets are set to inject +$300m into Ethiopia's economy",
+    summary: "Ethiopia becomes the first country to reach issuance under the World Bank BioCarbon Fund ISFL.",
+    location: "Oromia: Ethiopia",
+    image: "https://advocacy4oromia.org/wp-content/uploads/2014/06/landscape-around-dube-bute-in-the-oromia-region.jpg",
+    href: "https://cats.worldbank.org/ProgramDetails?programId=352&sectorId=70&utm_source=chatgpt.com",
+    accent: "#c5cf86",
   },
   {
-    title: "Match species to site before the rains arrive",
-    category: "Tools and Models",
+    chapter: "Investments",
+    strapline: "CAFI Report",
+    title: "CAFI approves a new $22.65m private-sector finance facility",
+    summary: "A project implemented by the CFC to begin financing SMEs in deforestation-free value chains across the Congo Basin.",
+    location: "DRC",
+    image: "https://files.nettsteder.regjeringen.no/wpuploads01/sites/543/2023/09/Yangambi-Research-Station-1500x1000-1.jpg",
+    href: "https://cafi.org/app/uploads/2026/03/EB.2026.20-Decision-Private-Sector-CFC-Project-Approval.pdf",
+    accent: "#a980c0",
+  },
+  {
+    chapter: "Genetics",
+    strapline: "Forest News",
+    title: "Genetic quality is moving into the regulatory system",
+    summary: "Potentially changes who can credibly supply seedlings and seed, and how they are evaluated.",
+    location: "Kenya/Rwanda",
+    image: "https://www.forestsnews.org/wp-content/uploads/2026/08/KT_251107_ICRAF_QTS_86352-1024x1536.jpg",
+    href: "https://www.forestsnews.org/162337/strengthening-policy-tree-seed-systems-africa",
+    accent: "#6ce3a9",
+  },
+  {
+    chapter: "Technology",
+    strapline: "EA Forests Live",
+    title: "The latest in geospatial intelligence for forestry",
+    summary: "Follow the latest developments in geospatial intelligence relevant to forestry in East Africa",
     location: "East Africa",
-    date: "9 Aug 2026",
-    image: "/maps.jpg",
-    href: "/models/site-species-analysis",
-  },
-  {
-    title: "The investment case for dryland forestry",
-    category: "Investment/Projects",
-    location: "Kenya",
-    date: "8 Aug 2026",
-    image: "/drylands.webp",
-    href: "/shop/forests-land/dryland-frontier-forests",
-  },
-  {
-    title: "What better genetics change at plantation scale",
-    category: "Information",
-    location: "Uganda",
-    date: "5 Aug 2026",
-    image: "/eucalyptus.jpg",
-    href: "/shop/seedlings",
+    image: "https://eros.usgs.gov/doi-remote-sensing-activities/sites/default/files/public/USGS/Wu_lidar.png",
+    href: "https://eaforests.org/ea-forests-live/geospatial-intelligence-forestry",
+    accent: "#8d92d1",
   },
 ] as const
 
-const twoDigits = (value: number) => String(value + 1).padStart(2, "0")
-const stackWidth = "clamp(42px, 5vw, 70px)"
-const nextPeek = "clamp(48px, 8vw, 110px)"
-const offsetFor = (index: number) => `clamp(${index * 12}px, ${index * 2.4}vw, ${index * 34}px)`
+const chapterNumber = (value: number) => String(value + 1).padStart(2, "0")
+const stackWidth = "clamp(52px, 5vw, 82px)"
+const nextPeek = "clamp(96px, 11vw, 172px)"
+const offsetFor = (index: number) => `clamp(${index * 16}px, ${index * 3.25}vw, ${index * 52}px)`
 
 export function NewsletterSection() {
   const [selectedIndex, setSelectedIndex] = useState(0)
@@ -60,6 +68,7 @@ export function NewsletterSection() {
   const wheelTotalRef = useRef(0)
   const wheelCooldownRef = useRef(false)
   const wheelTimerRef = useRef<number | null>(null)
+  const wheelCooldownTimerRef = useRef<number | null>(null)
   const pointerStartRef = useRef<number | null>(null)
   const pointerDraggedRef = useRef(false)
 
@@ -69,12 +78,14 @@ export function NewsletterSection() {
 
   useEffect(() => () => {
     if (wheelTimerRef.current !== null) window.clearTimeout(wheelTimerRef.current)
+    if (wheelCooldownTimerRef.current !== null) window.clearTimeout(wheelCooldownTimerRef.current)
   }, [])
 
   const handleWheel = (event: WheelEvent<HTMLDivElement>) => {
     const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY
     const atStart = selectedIndex === 0 && delta < 0
     const atEnd = selectedIndex === newsletterStories.length - 1 && delta > 0
+
     if (atStart || atEnd || Math.abs(delta) < 4) return
 
     event.preventDefault()
@@ -88,13 +99,18 @@ export function NewsletterSection() {
     }, 150)
 
     if (Math.abs(wheelTotalRef.current) < 70) return
+
     moveTo(selectedIndex + (wheelTotalRef.current > 0 ? 1 : -1))
     wheelTotalRef.current = 0
     wheelCooldownRef.current = true
-    window.setTimeout(() => { wheelCooldownRef.current = false }, 480)
+    wheelCooldownTimerRef.current = window.setTimeout(() => {
+      wheelCooldownRef.current = false
+      wheelCooldownTimerRef.current = null
+    }, 520)
   }
 
   const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.button !== 0) return
     pointerStartRef.current = event.clientX
     pointerDraggedRef.current = false
     event.currentTarget.setPointerCapture(event.pointerId)
@@ -104,7 +120,7 @@ export function NewsletterSection() {
     if (pointerStartRef.current === null) return
     const offset = event.clientX - pointerStartRef.current
     if (Math.abs(offset) > 5) pointerDraggedRef.current = true
-    setDragOffset(Math.max(-90, Math.min(90, offset * 0.4)))
+    setDragOffset(Math.max(-100, Math.min(100, offset * 0.42)))
   }
 
   const finishPointerGesture = (event: PointerEvent<HTMLDivElement>) => {
@@ -113,44 +129,79 @@ export function NewsletterSection() {
       if (offset < -45) moveTo(selectedIndex + 1)
       if (offset > 45) moveTo(selectedIndex - 1)
     }
+
     pointerStartRef.current = null
     setDragOffset(0)
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId)
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId)
+    }
+  }
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault()
+      moveTo(selectedIndex - 1)
+    }
+    if (event.key === "ArrowRight") {
+      event.preventDefault()
+      moveTo(selectedIndex + 1)
+    }
+    if (event.key === "Home") {
+      event.preventDefault()
+      moveTo(0)
+    }
+    if (event.key === "End") {
+      event.preventDefault()
+      moveTo(newsletterStories.length - 1)
+    }
   }
 
   return (
-    <section id="newsletter" className="overflow-hidden bg-[#111713] py-12 text-white sm:py-16 lg:py-20">
-      <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 flex flex-col gap-6 border-b border-white/15 pb-7 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[.24em] text-emerald-300">Weekly newsletter</p>
-            <a href={getAppUrl("/newsletter")} className="group mt-3 inline-flex items-center gap-3">
-              <h2 className="text-4xl font-semibold tracking-[-.04em] transition-colors group-hover:text-emerald-300 sm:text-5xl">The EA Forests Brief</h2>
-              <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
-            </a>
-            <p className="mt-3 max-w-xl text-sm leading-6 text-white/60">Open the full intelligence publication for weekly features, essential reads, sector data and field notes.</p>
-          </div>
-
-          <div className="flex flex-col items-start gap-2 sm:flex-row">
-            <a href={getAppUrl("/newsletter")} className="group inline-flex w-fit items-center gap-3 bg-emerald-300 px-5 py-3 text-sm font-semibold text-emerald-950 transition-colors hover:bg-emerald-200">
-              Open the Briefing
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-            </a>
-            <a href={getAppUrl("/newsletter#subscribe")} className="group inline-flex w-fit items-center gap-3 border border-white/30 px-5 py-3 text-sm font-semibold transition-colors hover:border-emerald-300 hover:text-emerald-300">
-              <Mail className="size-4" /> Join the mailing list
-            </a>
-          </div>
+    <section id="newsletter" className="overflow-hidden bg-[#070907] text-[#f4f0e8]">
+      <div className="border-y border-white/15 px-4 pb-8 pt-10 sm:px-6 sm:pb-10 sm:pt-14 lg:px-8">
+        <div className="flex items-center justify-between gap-6 text-xs font-semibold uppercase tracking-[.22em] text-white/60">
+          <p>EA Forests — Field intelligence</p>
         </div>
 
+        <div className="mt-9 grid gap-8 lg:items-end">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[.3em] text-[#3fe3bf]">1st week of September, 2026</p>
+          <h2 className="landing-newsletter-heading">
+            EA FORESTRY THIS WEEK
+          </h2>
+        </div>
+      </div>
+
+      <div className="hidden lg:block">
+        <div className="grid grid-cols-[auto_1fr_auto] items-center gap-5 border-t border-white/15 px-5 py-5 lg:px-8">
+          <span className="min-w-20 text-xs font-semibold tracking-[.18em] text-white/65">
+            {chapterNumber(selectedIndex)} / {String(newsletterStories.length).padStart(2, "0")}
+          </span>
+          <div className="relative h-px overflow-hidden bg-white/20">
+            <span
+              className="absolute inset-y-0 left-0 bg-[#3fe3bf] transition-[width] duration-500 motion-reduce:transition-none"
+              style={{ width: `${((selectedIndex + 1) / newsletterStories.length) * 100}%` }}
+            />
+          </div>
+          <div className="flex gap-2">
+            <button type="button" disabled={selectedIndex === 0} onClick={() => moveTo(selectedIndex - 1)} aria-label="Previous forestry brief" className="grid size-11 place-items-center border border-white/30 transition-colors hover:border-[#3fe3bf] hover:bg-[#3fe3bf] focus-visible:border-[#3fe3bf] focus-visible:bg-[#3fe3bf] disabled:cursor-not-allowed disabled:opacity-25 motion-reduce:transition-none"><ArrowLeft className="size-4" /></button>
+            <button type="button" disabled={selectedIndex === newsletterStories.length - 1} onClick={() => moveTo(selectedIndex + 1)} aria-label="Next forestry brief" className="grid size-11 place-items-center border border-white/30 transition-colors hover:border-[#3fe3bf] hover:bg-[#3fe3bf] focus-visible:border-[#3fe3bf] focus-visible:bg-[#3fe3bf] disabled:cursor-not-allowed disabled:opacity-25 motion-reduce:transition-none"><ArrowRight className="size-4" /></button>
+          </div>
+        </div>
         <div
           onWheel={handleWheel}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={finishPointerGesture}
           onPointerCancel={finishPointerGesture}
-          className="relative h-[440px] cursor-grab touch-pan-y select-none overflow-hidden active:cursor-grabbing sm:h-[520px]"
-          aria-label="Weekly updates carousel"
+          onKeyDown={handleKeyDown}
+          className="relative h-[min(74svh,760px)] min-h-[560px] cursor-grab touch-pan-y select-none overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#3fe3bf] active:cursor-grabbing"
+          role="region"
+          tabIndex={0}
+          aria-roledescription="carousel"
+          aria-label="Forestry sector briefings"
         >
+          <p className="sr-only" aria-live="polite">{newsletterStories[selectedIndex].chapter} briefing, chapter {selectedIndex + 1} of {newsletterStories.length}</p>
+
           {newsletterStories.map((story, index) => {
             const isPast = index < selectedIndex
             const isActive = index === selectedIndex
@@ -171,14 +222,14 @@ export function NewsletterSection() {
 
             return (
               <article
-                key={story.title}
-                className="absolute inset-y-0 overflow-hidden bg-black shadow-[-12px_0_28px_rgba(0,0,0,.3)] transition-[left,width,transform,opacity,filter] duration-700 ease-[cubic-bezier(.22,1,.36,1)]"
+                key={story.chapter}
+                className="absolute inset-y-0 overflow-hidden border-r border-white/20 bg-black shadow-[-18px_0_44px_rgba(0,0,0,.42)] transition-[left,width,transform,opacity,filter] duration-700 ease-[cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none"
                 style={{
                   left,
                   width,
                   zIndex: isActive ? 30 : isPast ? 10 + index : 20 - index,
-                  opacity: isFuture && index > selectedIndex + 1 ? 0.5 : 1,
-                  filter: isActive ? "none" : "saturate(.72) brightness(.72)",
+                  opacity: isFuture && index > selectedIndex + 1 ? 0.55 : 1,
+                  filter: isActive ? "none" : "saturate(.55) brightness(.58)",
                   transform: isActive ? `translateX(${dragOffset}px)` : "translateX(0)",
                 }}
               >
@@ -195,45 +246,90 @@ export function NewsletterSection() {
                       moveTo(index)
                     }
                   }}
-                  className="group relative block size-full overflow-hidden"
-                  aria-label={isActive ? story.title : `Show update ${index + 1}: ${story.title}`}
+                  className="group relative block size-full overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white"
+                  aria-label={isActive ? `Read the ${story.chapter} brief` : `Show chapter ${index + 1}: ${story.chapter}`}
                 >
-                  <img src={story.image} alt="" draggable={false} className="absolute inset-0 size-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/15 to-black/5" />
+                  <img
+                    src={story.image}
+                    alt=""
+                    draggable={false}
+                    className="absolute inset-0 size-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.045] motion-reduce:transition-none"
+                  />
+                  <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,4,3,.88)_0%,rgba(2,4,3,.3)_56%,rgba(2,4,3,.16)_100%),linear-gradient(0deg,rgba(2,4,3,.84)_0%,transparent_56%)]" />
 
                   {!isActive ? (
-                    <span className="absolute left-1/2 top-5 z-10 -translate-x-1/2 text-[10px] font-bold tracking-[.18em] text-white/75">
-                      {twoDigits(index)}
-                    </span>
+                    <div className="absolute inset-y-0 left-1/2 flex -translate-x-1/2 items-center gap-4 py-6 [writing-mode:vertical-rl]">
+                      <span className="text-xs tracking-[.22em] text-white/55">{chapterNumber(index)}</span>
+                      <span className="text-sm font-semibold uppercase tracking-[.16em]" style={{ color: story.accent }}>{story.chapter}</span>
+                    </div>
                   ) : null}
 
-                  <div className={`absolute inset-x-0 bottom-0 p-6 transition-all duration-500 sm:p-9 ${isActive ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}>
-                    <p className="text-[10px] font-bold uppercase tracking-[.2em] text-emerald-200">
-                      {story.date} <span className="mx-1 text-white/35">|</span> {story.category} <span className="mx-1 text-white/35">|</span> {story.location}
-                    </p>
-                    <h3 className="mt-3 max-w-3xl text-3xl font-semibold leading-tight tracking-[-.03em] sm:text-4xl lg:text-5xl">{story.title}</h3>
-                    <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold">
-                      {editorialActionLabels[story.category]} <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-                    </span>
+                  <div className={`absolute inset-0 grid grid-rows-[auto_1fr] p-4 transition-[opacity,transform] delay-150 duration-500 motion-reduce:transition-none ${isActive ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"}`}>
+                    <div className="flex items-start justify-between gap-8 self-start">
+                      <p className="text-xs font-semibold uppercase tracking-[.2em] text-white/70">
+                        {chapterNumber(index)} / {story.location}
+                      </p>
+                      <p className="max-w-xs text-right text-xs font-semibold uppercase tracking-[.18em]" style={{ color: story.accent }}>
+                        {story.strapline}
+                      </p>
+                    </div>
+
+                    <div className="w-full self-end">
+                      <p className="landing-newsletter-chapter" style={{ color: story.accent }}>
+                        {story.chapter}
+                      </p>
+                      <div className="mt-6 grid grid-cols-[minmax(0,1fr)_20rem] items-center gap-6 border-t border-white/35 pt-5">
+                        <h3 className="landing-newsletter-story-title font-medium text-white">
+                          {story.title}
+                        </h3>
+                        <div>
+                          <p className="text-base text-white/72">{story.summary}</p>
+                          <span className="mt-5 inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[.15em]">
+                            Read the brief <ArrowRight className="size-4 transition-transform group-hover:translate-x-1.5 motion-reduce:transition-none" />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </a>
               </article>
             )
           })}
         </div>
+      </div>
 
-        <div className="mt-8 flex items-center gap-5">
-          <span className="min-w-16 text-xs font-semibold tracking-[.18em] text-white/70">
-            {twoDigits(selectedIndex)} / {String(newsletterStories.length).padStart(2, "0")}
-          </span>
-          <div className="relative h-px flex-1 overflow-hidden bg-white/20">
-            <span className="absolute inset-y-0 left-0 bg-emerald-300 transition-[width] duration-500" style={{ width: `${((selectedIndex + 1) / newsletterStories.length) * 100}%` }} />
-          </div>
-          <div className="flex gap-2">
-            <button type="button" disabled={selectedIndex === 0} onClick={() => moveTo(selectedIndex - 1)} aria-label="Previous newsletter story" className="grid size-11 place-items-center border border-white/25 transition-colors hover:border-emerald-300 hover:bg-emerald-300 hover:text-emerald-950 disabled:cursor-not-allowed disabled:opacity-30"><ArrowLeft className="size-4" /></button>
-            <button type="button" disabled={selectedIndex === newsletterStories.length - 1} onClick={() => moveTo(selectedIndex + 1)} aria-label="Next newsletter story" className="grid size-11 place-items-center border border-white/25 transition-colors hover:border-emerald-300 hover:bg-emerald-300 hover:text-emerald-950 disabled:cursor-not-allowed disabled:opacity-30"><ArrowRight className="size-4" /></button>
-          </div>
-        </div>
+      <div className="lg:hidden">
+        {newsletterStories.map((story, index) => (
+          <article key={story.chapter} className="relative min-h-[100svh] border-b border-white/20">
+            <a href={story.href} className="group absolute inset-0 block overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white">
+              <img src={story.image} alt="" className="absolute inset-0 size-full object-cover transition-transform duration-1000 group-hover:scale-105 motion-reduce:transition-none" />
+              <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(2,4,3,.94)_0%,rgba(2,4,3,.42)_62%,rgba(2,4,3,.2)_100%)]" />
+              <div className="absolute inset-0 grid grid-rows-[auto_1fr] p-2">
+                <div className="flex items-start justify-between gap-1 self-start text-xs font-semibold uppercase tracking-[.18em]">
+                  <span>{chapterNumber(index)} / {story.location}</span>
+                  <span className="max-w-[11rem] text-right" style={{ color: story.accent }}>{story.strapline}</span>
+                </div>
+                <div className="w-full max-w-2xl self-end">
+                  <p className="landing-newsletter-chapter" style={{ color: story.accent }}>{story.chapter}</p>
+                  <div className="mt-4 grid grid-cols-[minmax(0,1.1fr)_minmax(0,.9fr)] items-center gap-4 border-t border-white/40 pt-4 sm:mt-5 sm:gap-6 sm:pt-5">
+                    <h3 className="landing-newsletter-story-title font-medium text-white">{story.title}</h3>
+                    <div>
+                      <p className="type-small-copy text-white/72">{story.summary}</p>
+                      <span className="mt-5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.12em] sm:gap-3 sm:tracking-[.15em]">
+                        Read the brief <ArrowRight className="size-4 shrink-0 transition-transform group-hover:translate-x-1.5 motion-reduce:transition-none" />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+      <div className="landing-container mt-6 flex flex-wrap gap-x-6 gap-y-3 py-6 text-xs font-semibold uppercase tracking-[.16em]">
+        <a className="group inline-flex items-center gap-2 hover:text-[#3fe3bf] focus-visible:text-[#3fe3bf]" href="#contact">
+          <Mail className="size-3.5" /> Subscribe
+        </a>
       </div>
     </section>
   )

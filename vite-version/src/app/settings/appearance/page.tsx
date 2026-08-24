@@ -31,7 +31,7 @@ export default function AppearanceSettings() {
     resolver: zodResolver(appearanceFormSchema),
     defaultValues: {
       theme: "dark",
-      fontFamily: "",
+      fontFamily: "archivo",
       fontSize: "",
       sidebarWidth: "",
       contentWidth: "",
@@ -140,7 +140,7 @@ export default function AppearanceSettings() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="inter">Inter</SelectItem>
+                      <SelectItem value="archivo">EA Forests Editorial (Archivo)</SelectItem>
                       <SelectItem value="roboto">Roboto</SelectItem>
                       <SelectItem value="system">System Default</SelectItem>
                     </SelectContent>

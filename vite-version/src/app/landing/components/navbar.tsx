@@ -22,14 +22,14 @@ import { ModeToggle } from "@/components/mode-toggle"
 import { useTheme } from "@/hooks/use-theme"
 
 const navigationItems = [
-  { name: "Newsletter", href: "/newsletter" },
+  { name: "Investments", href: "#brief" },
   { name: "Contact", href: "#contact" },
 ] as const
 
 const shopToggleItems = [
-  { name: "Seedlings", href: getAppUrl("/shop/seedlings") },
-  { name: "Forests & Land", href: getAppUrl("/shop/forests-land") },
-  { name: "Markets", href: getAppUrl("/shop/roundwood") },
+  { name: "Planting material", href: getAppUrl("/shop/seedlings") },
+  { name: "Land & services", href: getAppUrl("/shop/forests-land") },
+  { name: "Wood Markets", href: getAppUrl("/shop/wood-markets-map") },
 ] as const
 
 const smoothScrollTo = (targetId: string) => {
@@ -81,7 +81,7 @@ export function LandingNavbar() {
         className="navbar-map-tint absolute inset-0 transition-opacity duration-300"
         style={{ opacity: 0.06 + heroProgress * 0.34 }}
       />
-      <div className="container relative z-10 mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="container relative z-10 mx-auto flex h-16 items-center justify-between px-2">
         {/* Logo */}
         <div className="flex items-center space-x-2">
           <a
@@ -99,10 +99,11 @@ export function LandingNavbar() {
             {navigationItems.map((item) => (
               <NavigationMenuItem key={item.name}>
                 <NavigationMenuLink
-                  className="group inline-flex h-10 w-max items-center justify-center px-4 py-2 text-sm font-medium transition-colors hover:text-primary focus:text-primary focus:outline-none cursor-pointer"
+                  className="group inline-flex h-10 w-max items-center justify-center px-4 py-2 text-sm font-medium transition-colors hover:text-tertiary focus:text-primary focus:outline-none cursor-pointer"
                   onClick={(e) => {
                     e.preventDefault()
                     if (item.href.startsWith("#")) smoothScrollTo(item.href)
+                    else if (item.href.startsWith("http")) window.open(item.href, "_blank", "noopener,noreferrer")
                     else window.location.href = item.href
                   }}
                 >
@@ -188,6 +189,7 @@ export function LandingNavbar() {
                     <div key={item.name}>
                       <a
                         href={item.href}
+                        {...(item.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                         className="flex items-center px-4 py-3 text-base font-medium rounded-lg transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer"
                         onClick={(e) => {
                           setIsOpen(false)

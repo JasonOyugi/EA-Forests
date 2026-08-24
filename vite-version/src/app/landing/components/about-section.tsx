@@ -33,7 +33,7 @@ const values = [
   },
   {
     title: "Take your forestry product to market",
-    href: "/shop/roundwood",
+    href: "/shop/sector-map",
     image: "/greenbuilding.webp",
     description:
       "Hand-collected live market data from analysts on the ground committed to value chain performance optimization.",

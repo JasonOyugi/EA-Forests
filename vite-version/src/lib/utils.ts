@@ -25,3 +25,4 @@ export function getAppUrl(path: string): string {
   const cleanPath = path.startsWith('/') ? path : `/${path}`
   return basename + cleanPath
 }
+

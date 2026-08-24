@@ -48,9 +48,9 @@ export function BaseLayout({ children, title, description }: BaseLayoutProps) {
                   {title && (
                     <div className="px-4 lg:px-6">
                       <div className="flex flex-col gap-2">
-                        <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
+                        <h1 className="type-display-title">{title}</h1>
                         {description && (
-                          <p className="text-muted-foreground">{description}</p>
+                          <p className="type-body-copy max-w-3xl text-muted-foreground">{description}</p>
                         )}
                       </div>
                     </div>
@@ -72,9 +72,9 @@ export function BaseLayout({ children, title, description }: BaseLayoutProps) {
                   {title && (
                     <div className="px-4 lg:px-6">
                       <div className="flex flex-col gap-2">
-                        <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
+                        <h1 className="type-display-title">{title}</h1>
                         {description && (
-                          <p className="text-muted-foreground">{description}</p>
+                          <p className="type-body-copy max-w-3xl text-muted-foreground">{description}</p>
                         )}
                       </div>
                     </div>

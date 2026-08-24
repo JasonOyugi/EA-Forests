@@ -18,8 +18,10 @@ const SiteSpeciesAnalysis = lazy(() => import('@/app/models/site-species-analysi
 const Model2 = lazy(() => import('@/app/models/model-2/page'))
 const Model3 = lazy(() => import('@/app/models/model-3/page'))
 const ClonalEucalyptusNursery = lazy(() => import('@/app/models/clonal-eucalyptus-nursery/page'))
+const ModelComingSoon = lazy(() => import('@/app/models/coming-soon/page'))
 const Articles = lazy(() => import('@/app/articles/page'))
 const Article = lazy(() => import('@/app/articles/article-page'))
+const InformationHub = lazy(() => import('@/app/information/hub-page'))
 const Newsletter = lazy(() => import('@/app/newsletter/page'))
 
 // Auth pages
@@ -71,6 +73,10 @@ export const routes: RouteConfig[] = [
   {
     path: "/articles/:articleSlug",
     element: <Article />
+  },
+  {
+    path: "/information/:topicSlug",
+    element: <InformationHub />
   },
 
   // Dashboard Routes
@@ -149,6 +155,10 @@ export const routes: RouteConfig[] = [
   {
     path: "/models/clonal-eucalyptus-nursery",
     element: <ClonalEucalyptusNursery />
+  },
+  {
+    path: "/models/:modelSlug",
+    element: <ModelComingSoon />
   },
 
   // Authentication Routes

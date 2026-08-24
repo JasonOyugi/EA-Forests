@@ -10,9 +10,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { formatCurrency } from "@/app/shop/lib/format";
-import { ArrowUpRight, Heart, ShoppingCart } from "lucide-react";
+import { ArrowUpRight, Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import StarRatingFractions from "@/components/commerce-ui/star-rating-fractions";
+import { ContactMenu } from "@/app/shop/components/contact-menu";
 import type { ShopItem } from "@/app/shop/types";
 
 interface EnhancedProductCardProps {
@@ -42,9 +43,6 @@ function deriveRatingFromId(id: string) {
 
 export function EnhancedProductCard({
   item,
-  quantity,
-  onAdd,
-  onDecrement,
   onFavorite,
   isFavorite = false,
   showVariants = false,
@@ -161,17 +159,6 @@ export function EnhancedProductCard({
     return "border-emerald-600 bg-emerald-200 text-emerald-950 shadow-[0_0_0_3px_rgba(61, 204, 196,0.18)]"
   }
 
-  const handlePrimaryAction = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation()
-
-    if (item.kind === "asset" && onClick) {
-      onClick(item)
-      return
-    }
-
-    onAdd(item.id, activeVariant?.id)
-  }
-
   const accentDotClass =
     theme === "wellness-products"
       ? "bg-emerald-600"
@@ -220,7 +207,7 @@ export function EnhancedProductCard({
         <img
           src={item.image}
           alt=""
-          className="size-full object-cover object-center transition-transform duration-300 group-hover:scale-105 [filter:brightness(0.78)_saturate(0.9)_contrast(1.04)]"
+          className="size-full bg-white/95 object-contain object-center p-3 transition-transform duration-300 group-hover:scale-[1.03] [filter:brightness(0.8)_saturate(0.95)_contrast(1.02)]"
           loading="lazy"
           decoding="async"
         />
@@ -238,13 +225,7 @@ export function EnhancedProductCard({
           )}
           {item.tags.includes("new") && (
             <Badge
-              variant="destructive"
-              className={cn(
-                "animate-pulse opacity-100",
-                theme === "wellness-products"
-                  ? "bg-emerald-400"
-                  : "bg-primary text-primary-foreground"
-              )}
+              className="bg-emerald-500 text-white hover:bg-emerald-600"
             >
               New
             </Badge>
@@ -423,34 +404,27 @@ export function EnhancedProductCard({
         <div className={cn("flex flex-wrap items-center gap-2 text-sm drop-shadow-[0_1px_8px_rgba(0,0,0,0.32)]", metaClass)}>
           {compact ? (
             <span className={cn("text-xs", metaClass)}>{startingUnitLabel}</span>
-          ) : quantity > 0 ? (
-            `${quantity} in cart`
           ) : (
             footerFallbackText
           )}
         </div>
 
         <div className="flex items-center gap-2">
-          {quantity > 0 && (
+          {item.kind === "asset" ? (
             <Button
-              variant="outline"
               size="sm"
+              className={footerButtonClass}
               onClick={(event) => {
                 event.stopPropagation()
-                onDecrement(item.id)
+                onClick?.(item)
               }}
             >
-              -
-            </Button>
-          )}
-          <Button size="sm" className={footerButtonClass} onClick={handlePrimaryAction}>
-            {item.kind === "asset" ? (
               <ArrowUpRight className="mr-2 h-4 w-4" />
-            ) : (
-              <ShoppingCart className="mr-2 h-4 w-4" />
-            )}
-            {quantity > 0 && item.kind !== "asset" ? quantity : item.ctaLabel ?? "Add"}
-          </Button>
+              {item.ctaLabel ?? "Open"}
+            </Button>
+          ) : (
+            <ContactMenu productName={item.name} className={footerButtonClass} />
+          )}
         </div>
       </CardFooter>
     </Card>

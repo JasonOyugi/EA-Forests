@@ -2,15 +2,11 @@
 
 import { useMemo, useState, type ReactNode } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom"
-import { useShallow } from "zustand/react/shallow"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { CheckoutPlaceholder } from "../checkout-placeholder"
-import { FloatingCart } from "../floating-cart"
 import { ProductGrid } from "../product-grid"
 import { FeaturedSection } from "@/components/commerce-ui/featured-section"
-import { useShopStore } from "@/stores/shop-store"
 import type { ShopDefinition, ShopItem } from "@/app/shop/types"
 
 export type FeaturedTheme = "wellness-products" | "hospital-services" | "diabetes-programs"
@@ -19,6 +15,9 @@ export interface ShopCategoryFilter {
   value: string
   label: string
 }
+
+const emptyQuantities: Record<string, number> = {}
+const contactOnlyAction = () => undefined
 
 interface CategoryShowcaseProps {
   selectedCategory: string
@@ -72,35 +71,6 @@ export function ShopCommonLayout({
   const selectedCategory = categoryOptions.some((option) => option.value === requestedCategory)
     ? requestedCategory
     : "all"
-
-  const {
-    cart,
-    checkoutState,
-    addItem,
-    decrementItem,
-    removeItem,
-    clearCart,
-    beginFakeCheckout,
-    completeFakeCheckout,
-    getCartSubtotal,
-    getCartCount,
-  } = useShopStore(
-    useShallow((state) => ({
-      cart: state.cart,
-      checkoutState: state.checkoutState,
-      addItem: state.addItem,
-      decrementItem: state.decrementItem,
-      removeItem: state.removeItem,
-      clearCart: state.clearCart,
-      beginFakeCheckout: state.beginFakeCheckout,
-      completeFakeCheckout: state.completeFakeCheckout,
-      getCartSubtotal: state.getCartSubtotal,
-      getCartCount: state.getCartCount,
-    }))
-  )
-
-  const subtotal = getCartSubtotal(inventory)
-  const cartCount = getCartCount()
 
   const [sortOrder, setSortOrder] = useState("none")
 
@@ -199,9 +169,9 @@ export function ShopCommonLayout({
             compact={true}
             theme={featuredTheme}
             items={featuredItems}
-            quantities={cart}
-            onAdd={addItem}
-            onDecrement={decrementItem}
+            quantities={emptyQuantities}
+            onAdd={contactOnlyAction}
+            onDecrement={contactOnlyAction}
             onClick={handleProductClick}
             onViewAll={handleFeaturedViewAll}
             className={featuredSectionClassName}
@@ -217,9 +187,9 @@ export function ShopCommonLayout({
               compact={true}
               theme={newTheme}
               items={newItems}
-              quantities={cart}
-              onAdd={addItem}
-              onDecrement={decrementItem}
+              quantities={emptyQuantities}
+              onAdd={contactOnlyAction}
+              onDecrement={contactOnlyAction}
               onClick={handleProductClick}
               className={newSectionClassName}
             />
@@ -280,34 +250,18 @@ export function ShopCommonLayout({
 
           <Separator className="my-6" />
 
-          {checkoutState === "submitted" ? (
-            <CheckoutPlaceholder onBack={() => clearCart()} onConfirm={() => completeFakeCheckout()} />
-          ) : (
-            <ProductGrid
-              items={filteredItems}
-              quantities={cart}
-              onAdd={addItem}
-              onDecrement={decrementItem}
-              useEnhancedCards={true}
-              theme={featuredTheme}
-              onClick={handleProductClick}
-            />
-          )}
+          <ProductGrid
+            items={filteredItems}
+            quantities={emptyQuantities}
+            onAdd={contactOnlyAction}
+            onDecrement={contactOnlyAction}
+            useEnhancedCards={true}
+            theme={featuredTheme}
+            onClick={handleProductClick}
+          />
         </div>
       </div>
 
-      <FloatingCart
-        items={inventory}
-        cart={cart}
-        subtotal={subtotal}
-        cartCount={cartCount}
-        checkoutActive={checkoutState === "submitted"}
-        onAdd={addItem}
-        onDecrement={decrementItem}
-        onRemove={removeItem}
-        onCheckout={beginFakeCheckout}
-        onClear={clearCart}
-      />
     </div>
   )
 }

@@ -1,13 +1,14 @@
 {
-	"name": "shadcn-dashboard-vite",
+	"name": "ea-forests-platform",
 	"private": true,
 	"version": "1.0.0",
 	"type": "module",
 	  "scripts": {
-	    "dev": "vite",
-	    "build": "tsc -b && vite build",
-	    "lint": "eslint .",
-	    "preview": "vite preview",
+	    "dev": "pnpm --dir vite-version dev",
+	    "build": "pnpm --dir vite-version build",
+	    "check": "pnpm --filter @ea-forests/contracts check",
+	    "lint": "pnpm --dir vite-version lint",
+	    "preview": "pnpm --dir vite-version preview",
 	    "hermes": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/hermes.ps1"
 	  },
 	"dependencies": {
@@ -79,6 +80,7 @@
 	  "typescript": "~5.9.3",
 	  "typescript-eslint": "^8.51.0",
 	  "vite": "^7.3.0"
-	}
+	  },
+	"packageManager": "pnpm@11.11.0"
   }
   

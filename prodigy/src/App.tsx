@@ -32,7 +32,7 @@ function App() {
 
   return (
     <div className="font-sans antialiased" style={{ fontFamily: 'var(--font-inter)' }}>
-      <ThemeProvider defaultTheme="dark" storageKey="prodigy-ui-theme">
+      <ThemeProvider defaultTheme="dark" forcedTheme="dark" storageKey="prodigy-ui-theme">
         <ProdigyThemeDefault />
         <SidebarConfigProvider>
           <Router basename={basename}>

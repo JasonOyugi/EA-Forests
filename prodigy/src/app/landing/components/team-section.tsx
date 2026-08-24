@@ -1,11 +1,19 @@
 "use client"
 
-import { ArrowRight, HeartPulse, PackageCheck, Sparkles, Stethoscope } from "lucide-react"
+import { useRef } from "react"
+import {
+  ArrowLeft,
+  ArrowRight,
+  HeartPulse,
+  PackageCheck,
+  ShieldCheck,
+  Sparkles,
+  Stethoscope,
+} from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { BentoTilt } from "@/components/ui/bento-tilt"
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
-import { assetUrl, getAppUrl } from "@/lib/utils"
+import { assetUrl } from "@/lib/utils"
 import {
   landingBadgeClass,
   landingContainer,
@@ -19,92 +27,112 @@ const teamMembers = [
   {
     name: "Hospital Supply Desk",
     role: "Procurement support",
-    summary: "Coordinates dialysis, disinfectant, ICU, and wound-care supply requests for facility teams.",
-    image: assetUrl("/KNH.webp"),
+    summary: "Dialysis, disinfectant, ICU, and wound-care sourcing for hospitals and care facilities.",
+    image: assetUrl("/products/cvc-kit.png"),
     icon: PackageCheck,
   },
   {
-    name: "Nutrition Support",
+    name: "Nutrition & Wellness",
     role: "Product guidance",
-    summary: "Helps shoppers choose supplements and nutritional products around daily wellness goals.",
+    summary: "Practical guidance for supplements, nutritional shakes, and everyday wellness goals.",
     image: assetUrl("/nutritionist1.jpg"),
     icon: HeartPulse,
   },
   {
-    name: "Skin Care Support",
-    role: "Personal care specialist",
-    summary: "Guides topical care, moisturizer, serum, and skin support routines from the personal care shop.",
+    name: "Personal Care",
+    role: "Skin care support",
+    summary: "Help choosing topical care, moisturisers, cleansers, and targeted skin-support products.",
     image: assetUrl("/skin3.jpg"),
     icon: Sparkles,
   },
   {
-    name: "Consultation Desk",
-    role: "Care coordination",
-    summary: "Routes consultations, sourcing questions, and order support to the right Prodigy team member.",
+    name: "Care Coordination",
+    role: "Customer support",
+    summary: "Routes product questions and order enquiries to the right Prodigy specialist.",
     image: assetUrl("/healthws.jpg"),
     icon: Stethoscope,
   },
-]
+  {
+    name: "Distribution & Regulatory",
+    role: "Quality assurance",
+    summary: "Supports compliant sourcing, quality-controlled warehousing, and reliable distribution.",
+    image: assetUrl("/products/dialysafe-a.png"),
+    icon: ShieldCheck,
+  },
+] as const
 
 export function TeamSection() {
+  const carouselRef = useRef<HTMLDivElement>(null)
+
+  const scroll = (direction: -1 | 1) => {
+    const carousel = carouselRef.current
+    if (!carousel) return
+
+    carousel.scrollBy({
+      left: direction * Math.max(carousel.clientWidth * 0.76, 280),
+      behavior: "smooth",
+    })
+  }
+
   return (
-    <section id="team" className={`section-map-shell relative overflow-hidden bg-muted/35 ${landingSectionPadding}`}>
+    <section
+      id="team"
+      className={`section-map-shell relative scroll-mt-20 overflow-hidden bg-muted/35 ${landingSectionPadding}`}
+    >
       <div aria-hidden="true" className="section-map-bg absolute inset-0" />
       <div aria-hidden="true" className="section-map-tint absolute inset-0" />
 
       <div className={`${landingContainer} relative z-10`}>
-        <ScrollReveal className={landingSectionIntro} distance={22}>
-          <Badge variant="outline" className={landingBadgeClass}>
-            Team
-          </Badge>
-          <h2 className={landingHeadingClass}>Care teams for each Prodigy pathway</h2>
-          <p className={landingLeadClass}>
-            Product guidance, facility supply support, and care coordination from one connected Prodigy team.
-          </p>
-        </ScrollReveal>
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <ScrollReveal className={landingSectionIntro} distance={22}>
+            <Badge variant="outline" className={landingBadgeClass}>Team</Badge>
+            <h2 className={landingHeadingClass}>One team across every care pathway</h2>
+            <p className={landingLeadClass}>
+              Product guidance, facility supply support, and care coordination from a connected Prodigy team.
+            </p>
+          </ScrollReveal>
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="flex gap-2" aria-label="Team carousel controls">
+            <Button type="button" variant="outline" size="icon" className="rounded-full" onClick={() => scroll(-1)} aria-label="Previous team profiles">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+            <Button type="button" variant="outline" size="icon" className="rounded-full" onClick={() => scroll(1)} aria-label="Next team profiles">
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
+        <div
+          ref={carouselRef}
+          className="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          role="region"
+          aria-label="Prodigy team profiles"
+          tabIndex={0}
+        >
           {teamMembers.map((member) => {
             const Icon = member.icon
 
             return (
-              <ScrollReveal key={member.name} distance={18}>
-                <BentoTilt maxTilt={5}>
-                  <article className="group relative min-h-72 overflow-hidden rounded-lg border border-border/60 bg-background/45 text-white shadow-sm backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:shadow-lg">
-                    <img
-                      src={member.image}
-                      alt=""
-                      className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/84 via-black/42 to-black/10" />
-                    <div className="relative flex min-h-72 flex-col justify-between p-5">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-white/16 text-white backdrop-blur">
-                        <Icon className="h-5 w-5" aria-hidden="true" />
-                      </div>
-                      <div className="space-y-2">
-                        <Badge className="bg-white/16 text-white hover:bg-white/20">{member.role}</Badge>
-                        <h3 className="text-xl font-semibold">{member.name}</h3>
-                        <p className="text-sm leading-6 text-white/82">{member.summary}</p>
-                      </div>
-                    </div>
-                  </article>
-                </BentoTilt>
-              </ScrollReveal>
+              <article
+                key={member.name}
+                className="group relative min-h-80 shrink-0 basis-[84%] snap-start overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm sm:basis-[48%] lg:basis-[32%] xl:basis-[24%]"
+              >
+                <img src={member.image} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105" loading="lazy" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/56 to-black/8" />
+                <div className="relative flex min-h-80 flex-col justify-between p-5 text-white">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-emerald-400/18 text-emerald-300 backdrop-blur">
+                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  </div>
+                  <div className="space-y-2">
+                    <Badge className="bg-emerald-500 text-white hover:bg-emerald-500">{member.role}</Badge>
+                    <h3 className="text-xl font-semibold">{member.name}</h3>
+                    <p className="text-sm leading-6 text-white/78">{member.summary}</p>
+                  </div>
+                </div>
+              </article>
             )
           })}
         </div>
-
-        <ScrollReveal className="mt-10 flex justify-center" delay={120}>
-          <Button size="lg" asChild>
-            <a href={getAppUrl("/shop/wellness-products")} className="group relative overflow-hidden">
-              <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
-              <span className="relative z-10 inline-flex items-center">
-                Start with personal care
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </span>
-            </a>
-          </Button>
-        </ScrollReveal>
       </div>
     </section>
   )

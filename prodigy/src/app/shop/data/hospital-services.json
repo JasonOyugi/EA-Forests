@@ -9,11 +9,9 @@
     "price": 38,
     "currency": "USD",
     "description": "Acid concentrate (Part A) and sodium bicarbonate concentrate (Part B) for hemodialysis, formulated for consistent, reliable dialysate quality.",
-    "image": "/dialysafealabel.jpg",
+    "image": "/dialysafea.png",
     "imageGallery": [
-      { "url": "/dialysafealabel.jpg", "title": "DIALYSAFE Part A concentrate" },
       { "url": "/dialysafea.png", "title": "DIALYSAFE Part A concentrate" },
-      { "url": "/dialysafeblabel.jpg", "title": "DIALYSAFE Part B concentrate" },
       { "url": "/dialysafeb.png", "title": "DIALYSAFE Part B concentrate" }
     ],
     "tags": ["featured", "popular", "dialysis-consumables"],
@@ -40,10 +38,10 @@
     "price": 26,
     "currency": "USD",
     "description": "Citric acid based descaling disinfectant for heat disinfection of hemodialysis machines, available in three strengths.",
-    "image": "/acs.jpg",
+    "image": "/products/citrosafe-21.png",
     "imageGallery": [
-      { "url": "/acs.jpg", "title": "CITROSAFE Citric Acid Disinfectant" },
-      { "url": "/disinfect.webp", "title": "Hemodialysis disinfection workflow" }
+      { "url": "/products/citrosafe-21.png", "title": "CITROSAFE 21" },
+      { "url": "/products/citrosafe-50.png", "title": "CITROSAFE 50" }
     ],
     "tags": ["featured", "popular", "dialysis-consumables"],
     "stockStatus": "in-stock",
@@ -70,10 +68,10 @@
     "price": 32,
     "currency": "USD",
     "description": "Stabilised peracetic acid concentrate for cold sterilization of dialysis machines and water purification plants.",
-    "image": "/acs1.jpg",
+    "image": "/products/purilsafe.png",
     "imageGallery": [
-      { "url": "/acs1.jpg", "title": "PURILSAFE Peracetic Acid Disinfectant" },
-      { "url": "/dialysis1.jpg", "title": "Cold sterilization support" }
+      { "url": "/products/purilsafe.png", "title": "PURILSAFE Peracetic Acid Disinfectant" },
+      { "url": "/products/purilsafe-hd.png", "title": "PURILSAFE HD" }
     ],
     "tags": ["new", "dialysis-consumables"],
     "stockStatus": "in-stock",
@@ -94,10 +92,10 @@
     "price": 29,
     "currency": "USD",
     "description": "Advanced cold disinfectant for hemodialysis systems, combining sodium hypochlorite and hydrogen peroxide for superior biofilm removal at a gentler pH than competing formulas.",
-    "image": "/healthws.jpg",
+    "image": "/products/dialyclean-1.png",
     "imageGallery": [
-      { "url": "/healthws.jpg", "title": "DialyClean HD Cold Disinfectant" },
-      { "url": "/icu1.webp", "title": "Hemodialysis system care" }
+      { "url": "/products/dialyclean-1.png", "title": "DialyClean HD Cold Disinfectant" },
+      { "url": "/products/dialyclean-2.png", "title": "DialyClean technical overview" }
     ],
     "tags": ["new", "dialysis-consumables"],
     "stockStatus": "in-stock",
@@ -120,10 +118,9 @@
     "price": 46,
     "currency": "USD",
     "description": "Dual and triple lumen central venous catheter kits for vascular access in ICU and dialysis settings.",
-    "image": "/human-anatomy.jpg",
+    "image": "/products/cvc-kit.png",
     "imageGallery": [
-      { "url": "/human-anatomy.jpg", "title": "Central Venous Catheter Kits" },
-      { "url": "/icu1.webp", "title": "Critical care vascular access" }
+      { "url": "/products/cvc-kit.png", "title": "Central Venous Catheter Kits" }
     ],
     "tags": ["featured", "vascular-access-icu"],
     "stockStatus": "in-stock",
@@ -146,10 +143,9 @@
     "price": 21,
     "currency": "USD",
     "description": "Chemotherapy infusion sets built for safe compounded-drug administration, protecting patients, personnel, and the environment.",
-    "image": "/human-anatomy1.jpg",
+    "image": "/products/oncoera.png",
     "imageGallery": [
-      { "url": "/human-anatomy1.jpg", "title": "ONCOERA Oncology Infusion Sets" },
-      { "url": "/human-anatomy.webp", "title": "Infusion care support" }
+      { "url": "/products/oncoera.png", "title": "ONCOERA Oncology Infusion Set" }
     ],
     "tags": ["new", "vascular-access-icu"],
     "stockStatus": "in-stock",
@@ -172,10 +168,9 @@
     "price": 44,
     "currency": "USD",
     "description": "0.55% Ortho-Phthalaldehyde solution for high-level disinfection of medical instruments, endoscopes, and other heat-sensitive devices.",
-    "image": "/NairobiHospital.png",
+    "image": "/products/cidesafe-opa.png",
     "imageGallery": [
-      { "url": "/NairobiHospital.png", "title": "CideSafe OPA High-Level Disinfectant" },
-      { "url": "/antiseptic.webp", "title": "Instrument disinfection workflow" }
+      { "url": "/products/cidesafe-opa.png", "title": "CideSafe OPA High-Level Disinfectant" }
     ],
     "tags": ["featured", "high-level-disinfectants"],
     "stockStatus": "in-stock",
@@ -197,10 +192,9 @@
     "price": 27,
     "currency": "USD",
     "description": "The only 1-minute, non-flammable disinfectant proven to protect neonatal incubators against viruses, bacteria, and fungi without compromising material integrity.",
-    "image": "/MPShah.jpg",
+    "image": "/products/nicu-shield.png",
     "imageGallery": [
-      { "url": "/MPShah.jpg", "title": "NICU-Shield Incubator Disinfectant" },
-      { "url": "/disinfect.webp", "title": "Incubator disinfection support" }
+      { "url": "/products/nicu-shield.png", "title": "NICU-Shield Incubator Disinfectant" }
     ],
     "tags": ["new", "high-level-disinfectants"],
     "stockStatus": "in-stock",
@@ -217,10 +211,10 @@
     "price": 19,
     "currency": "USD",
     "description": "Rapid, effective pre-surgical skin antisepsis wipes, no bathing required, with long-lasting protection between uses.",
-    "image": "/body cs.jpg",
+    "image": "/products/steriderm-wipes.png",
     "imageGallery": [
-      { "url": "/body cs.jpg", "title": "STERIDERM Antiseptic Wipes" },
-      { "url": "/antiseptic.webp", "title": "Pre-surgical skin preparation" }
+      { "url": "/products/steriderm-wipes.png", "title": "STERIDERM Antiseptic Wipes" },
+      { "url": "/products/steriderm-wipes-top.png", "title": "STERIDERM pack label" }
     ],
     "tags": ["popular", "hospital-disinfectant-and-antiseptic-wipes"],
     "stockStatus": "in-stock",
@@ -243,10 +237,10 @@
     "price": 9,
     "currency": "USD",
     "description": "Povidone iodine antiseptic solution and surgical scrub for skin preparation and wound antisepsis.",
-    "image": "/mouth cs.jpg",
+    "image": "/products/povisafe.png",
     "imageGallery": [
-      { "url": "/mouth cs.jpg", "title": "POVISAFE Povidone Iodine Antiseptic" },
-      { "url": "/wound.jpg", "title": "Wound antisepsis support" }
+      { "url": "/products/povisafe.png", "title": "POVISAFE Povidone Iodine Antiseptic" },
+      { "url": "/products/povisafe-scrub.png", "title": "POVISAFE Scrub" }
     ],
     "tags": ["antiseptics"],
     "stockStatus": "in-stock",
@@ -267,10 +261,10 @@
     "price": 7,
     "currency": "USD",
     "description": "Thick antibacterial handwash and 70% alcohol hand rub for everyday hospital hand hygiene.",
-    "image": "/healthws.jpg",
+    "image": "/products/safesoap-1.png",
     "imageGallery": [
-      { "url": "/healthws.jpg", "title": "SAFESOAP Handwash and SAFESANITIZER" },
-      { "url": "/liquidsgel.png", "title": "Hospital hand hygiene" }
+      { "url": "/products/safesoap-1.png", "title": "SAFESOAP Handwash" },
+      { "url": "/products/safesanitizer.png", "title": "SAFESANITIZER Hand Rub" }
     ],
     "tags": ["new", "liquids-gels-soaps"],
     "stockStatus": "in-stock",
@@ -291,10 +285,10 @@
     "price": 3,
     "currency": "USD",
     "description": "Waterproof, antibacterial post-surgery dressings with absorbent pads, ensuring wound protection and accelerated healing.",
-    "image": "/wound.jpg",
+    "image": "/products/pharmapore-1.jpg",
     "imageGallery": [
-      { "url": "/wound.jpg", "title": "PHARMAPORE Waterproof Post-Operative Dressing" },
-      { "url": "/body cs.jpg", "title": "Post-operative wound care" }
+      { "url": "/products/pharmapore-1.jpg", "title": "PHARMAPORE Waterproof Post-Operative Dressing" },
+      { "url": "/products/pharmapore-2.jpg", "title": "PHARMAPORE dressing" }
     ],
     "tags": ["popular", "wound-care"],
     "stockStatus": "in-stock",
@@ -317,10 +311,10 @@
     "price": 2,
     "currency": "USD",
     "description": "Non-adherent absorbent sterile dressings for effective wound exudate management, available with silver impregnation for infection prevention.",
-    "image": "/face cs.jpg",
+    "image": "/products/pharmapad-1.png",
     "imageGallery": [
-      { "url": "/face cs.jpg", "title": "PHARMAPAD Absorbent Pad Dressings" },
-      { "url": "/wound.jpg", "title": "Absorbent wound dressing care" }
+      { "url": "/products/pharmapad-1.png", "title": "PHARMAPAD Absorbent Pad Dressings" },
+      { "url": "/products/pharmapad-2.png", "title": "PHARMAPAD product range" }
     ],
     "tags": ["new", "wound-care"],
     "stockStatus": "in-stock",

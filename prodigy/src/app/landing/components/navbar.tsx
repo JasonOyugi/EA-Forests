@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Menu, X, Moon, Sun } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   NavigationMenu,
@@ -18,8 +18,6 @@ import {
 } from "@/components/ui/sheet"
 import { getAppUrl } from "@/lib/utils"
 import { Logo } from "@/components/logo"
-import { ModeToggle } from "@/components/mode-toggle"
-import { useTheme } from "@/hooks/use-theme"
 
 const navigationItems = [
   { name: "Home", href: "#hero" },
@@ -44,7 +42,6 @@ const smoothScrollTo = (targetId: string) => {
 export function LandingNavbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [heroProgress, setHeroProgress] = useState(0)
-  const { setTheme, theme } = useTheme()
 
   useEffect(() => {
     const updateHeroProgress = () => {
@@ -125,7 +122,6 @@ export function LandingNavbar() {
 
         {/* Desktop CTA */}
         <div className="hidden xl:flex items-center space-x-2">
-          <ModeToggle variant="ghost" />
           <Button size="lg" className="text-base cursor-pointer" asChild>
             <a
               href={getAppUrl("/shop/wellness-products")}
@@ -162,16 +158,6 @@ export function LandingNavbar() {
                   <SheetTitle className="text-sm">Prodigy</SheetTitle>
 
                   <div className="ml-auto flex items-center gap-2">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-                      className="cursor-pointer h-8 w-8"
-                    >
-                      <Moon className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                      <Sun className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                    </Button>
-
                     <Button
                       variant="ghost"
                       size="icon"

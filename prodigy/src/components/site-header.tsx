@@ -5,7 +5,6 @@ import { Link } from "react-router-dom"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { CommandSearch, SearchTrigger } from "@/components/command-search"
-import { ModeToggle } from "@/components/mode-toggle"
 import { getAppUrl } from "@/lib/utils"
 
 export function SiteHeader() {
@@ -39,7 +38,6 @@ export function SiteHeader() {
             <Link to={getAppUrl("/landing")} className="hidden text-sm font-medium dark:text-foreground sm:flex">
               Landing Page
             </Link>
-            <ModeToggle />
           </div>
         </div>
       </header>

@@ -30,8 +30,8 @@ function App() {
   }, []);
 
   return (
-    <div className="font-sans antialiased" style={{ fontFamily: 'var(--font-inter)' }}>
-      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+    <div className="font-sans antialiased">
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme-nature">
         <NatureThemeDefault />
         <SidebarConfigProvider>
           <Router basename={basename}>

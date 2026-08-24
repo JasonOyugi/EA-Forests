@@ -10,6 +10,10 @@ export default function ShopPage() {
     return <Navigate to="/shop/seedlings" replace />
   }
 
+  if (shopSlug === "roundwood") {
+    return <Navigate to="/shop/sector-map" replace />
+  }
+
   if (!isValidShopSlug(shopSlug)) {
     return <Navigate to="/errors/not-found" replace />
   }

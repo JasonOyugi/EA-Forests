@@ -163,6 +163,9 @@ export function EnhancedProductCard({
   const activeSecondaryUnitLabel = activeVariant?.secondaryUnitLabel
   const compactHighlights = item.highlights?.slice(0, compact ? 2 : 3) ?? []
   const featuredStyleCard = theme === "seedlings" && compact
+  const variantSelectorLabel = item.materialType?.includes("Hybrid")
+    ? "Variety"
+    : "Package size"
   const gridVariantShade = (variantId: string) => {
     if (theme !== "seedlings") return "border-white/80 bg-transparent text-white hover:border-primary hover:bg-primary/10"
     if (variantId === "small") return "border-white bg-transparent text-white hover:border-emerald-400 hover:text-emerald-900 hover:shadow-[0_0_0_3px_rgba(52,211,153,0.18)]"
@@ -213,10 +216,12 @@ export function EnhancedProductCard({
   const featuredBadgeClass = activeTheme.featuredBadgeClass
 
   const footerFallbackText = item.domain ? item.domain.replace(/(^|\s)\S/g, (match) => match.toUpperCase()) : item.kind === "service" ? "Service" : "Product"
-  const startingPrice = formatCurrency(
-    featuredStyleCard ? startingVariant?.price ?? item.price : activeVariant?.price ?? item.price,
-    item.currency
-  )
+  const startingPrice = item.priceAvailable === false
+    ? "Price on request"
+    : formatCurrency(
+        featuredStyleCard ? startingVariant?.price ?? item.price : activeVariant?.price ?? item.price,
+        item.currency
+      )
   const startingUnitLabel =
     startingVariant?.unitLabel ??
     (startingVariant?.count ? `per ${startingVariant.count} seedlings` : item.unitLabel)
@@ -251,7 +256,7 @@ export function EnhancedProductCard({
         <div className="absolute left-3 top-3 z-10 flex flex-col gap-2">
           {item.stockStatus === "in-stock" && <Badge className={stockBadgeClass}>In Stock</Badge>}
           {item.tags.includes("featured") && !item.featuredLabel && (
-            <Badge variant="secondary" className="bg-white animate-pulse opacity-100">
+            <Badge variant="secondary" className="!bg-white !text-zinc-950 animate-pulse opacity-100 dark:!bg-white dark:!text-zinc-950">
               Featured
             </Badge>
           )}
@@ -269,7 +274,7 @@ export function EnhancedProductCard({
             </Badge>
           )}
           {item.featuredLabel ? (
-            <Badge variant="secondary" className={featuredBadgeClass}>
+            <Badge variant="secondary" className={cn(featuredBadgeClass, "dark:!bg-white dark:!text-zinc-950")}>
               {item.featuredLabel}
             </Badge>
           ) : null}
@@ -300,7 +305,7 @@ export function EnhancedProductCard({
               className={cn(
                 "line-clamp-2 text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.38)]",
                 titleClass,
-                compact ? "text-xl" : "text-xl"
+                compact ? "text-3xl leading-[.92]" : "text-3xl leading-[.92] sm:text-4xl"
               )}
             >
               {item.name}
@@ -311,7 +316,7 @@ export function EnhancedProductCard({
                 className={cn(
                   "line-clamp-2 drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)]",
                   bodyClass,
-                  featuredStyleCard ? "text-sm leading-6" : "text-sm"
+                  featuredStyleCard ? "text-base leading-6" : "text-base"
                 )}
               >
                 {item.description}
@@ -325,8 +330,8 @@ export function EnhancedProductCard({
                   bodyClass
                 )}
               >
-                {item.supplierCount ?? 0} mapped nursery
-                {(item.supplierCount ?? 0) === 1 ? "" : " suppliers"}
+                {item.supplierCount ?? 0} mapped {item.shop === "seedlings" ? "nursery " : ""}supplier
+                {(item.supplierCount ?? 0) === 1 ? "" : "s"}
               </div>
             ) : (
               <div className="flex items-center gap-2">
@@ -360,7 +365,7 @@ export function EnhancedProductCard({
             {showVariants && !compact && item.variants?.length ? (
               <div className="space-y-2">
                 <span className={cn("text-sm font-medium drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]", bodyClass)}>
-                  Package size
+                  {variantSelectorLabel}
                 </span>
                 <div className="flex flex-wrap gap-2">
                   {item.variants.map((variant) => (
@@ -407,7 +412,7 @@ export function EnhancedProductCard({
 
             <div className={cn("flex items-start justify-between gap-4", compact && "pt-1")}>
               <div>
-                {featuredStyleCard ? (
+                {featuredStyleCard && item.priceAvailable !== false ? (
                   <div className={cn("text-[10px] font-medium uppercase tracking-[0.18em] drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]", metaClass)}>
                     Starting from
                   </div>

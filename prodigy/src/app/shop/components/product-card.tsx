@@ -1,5 +1,4 @@
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -9,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { formatCurrency } from "@/app/shop/lib/format"
+import { ContactMenu } from "./contact-menu"
 import type { ShopItem } from "@/app/shop/types"
 
 interface ProductCardProps {
@@ -20,9 +20,6 @@ interface ProductCardProps {
 
 export function ProductCard({
   item,
-  quantity,
-  onAdd,
-  onDecrement,
 }: ProductCardProps) {
   return (
     <Card className="overflow-hidden gap-0 py-0">
@@ -30,7 +27,7 @@ export function ProductCard({
         <img
           src={item.image}
           alt={item.name}
-          className="block h-full w-full object-cover object-top"
+          className="block h-full w-full bg-white/95 object-contain object-center p-3"
           loading="lazy"
           decoding="async"
           fetchPriority="low"
@@ -57,7 +54,11 @@ export function ProductCard({
       <CardContent className="space-y-3 text-white">
         <div className="flex flex-wrap gap-2">
           {item.tags.map((tag) => (
-            <Badge key={tag} variant="outline">
+            <Badge
+              key={tag}
+              variant="outline"
+              className={tag === "new" ? "border-emerald-500 bg-emerald-500 text-white" : undefined}
+            >
               {tag}
             </Badge>
           ))}
@@ -73,20 +74,8 @@ export function ProductCard({
       </CardContent>
 
       <CardFooter className="flex items-center justify-between gap-3 border-t pt-2 pb-3">
-        <div className="text-sm text-white/82">
-          {quantity > 0 ? `${quantity} in cart` : "Not in cart"}
-        </div>
-
-        <div className="flex items-center gap-2">
-          {quantity > 0 && (
-            <Button variant="outline" size="sm" onClick={() => onDecrement(item.id)}>
-              Remove one
-            </Button>
-          )}
-          <Button size="sm" className="emerald-border-hover" onClick={() => onAdd(item.id)}>
-            Add to cart
-          </Button>
-        </div>
+        <div className="text-sm text-white/82">Contact for availability</div>
+        <ContactMenu productName={item.name} className="emerald-border-hover" />
       </CardFooter>
     </Card>
   )

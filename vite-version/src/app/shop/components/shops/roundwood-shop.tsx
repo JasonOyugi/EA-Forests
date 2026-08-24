@@ -17,7 +17,6 @@ import {
   PanelRightOpen,
   Route,
   ShieldCheck,
-  Sprout,
   Trees,
   X,
   type LucideIcon,
@@ -43,6 +42,7 @@ import {
   type MarketCountryFilter,
   type MarketActor,
   type MarketActorLayer,
+  type MarketProcessorCategory,
   type MarketRegion,
 } from "@/app/shop/data/market-map"
 import {
@@ -104,6 +104,31 @@ type RegionAnalytics = MarketRegion & {
 type MarketAnalyticsScope = {
   country: MarketCountryFilter
   regionId: string | null
+}
+
+type DiameterFilter = "all" | "le-20" | "21-30" | "gt-30" | "unknown"
+
+const diameterFilterOptions: Array<{ value: DiameterFilter; label: string }> = [
+  { value: "all", label: "Any minimum" },
+  { value: "le-20", label: "<= 20 cm" },
+  { value: "21-30", label: "21-30 cm" },
+  { value: "gt-30", label: "> 30 cm" },
+  { value: "unknown", label: "Not specified" },
+]
+
+const processorCategoryOrder: MarketProcessorCategory[] = [
+  "Sawmill",
+  "Veneer / Plywood",
+  "MDF / Panel Board",
+  "Pulp / Paper",
+  "Poles / Energy",
+]
+
+function toDiameterBand(minDiameterCm: number | null): DiameterFilter {
+  if (minDiameterCm == null) return "unknown"
+  if (minDiameterCm <= 20) return "le-20"
+  if (minDiameterCm <= 30) return "21-30"
+  return "gt-30"
 }
 
 const actorLayerOrder: MarketActorLayer[] = [
@@ -201,7 +226,7 @@ function CountryStripeBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-md border border-border/70 bg-background/90 px-2 py-1",
+        "inline-flex items-center gap-1 rounded-none border border-border/70 bg-background/90 px-2 py-1",
         className
       )}
       title={country}
@@ -587,7 +612,7 @@ function ConcessionPin({ active }: { active: boolean }) {
       />
       <div
         className={cn(
-          "relative flex h-9 w-9 items-center justify-center rounded-md border-2 border-white bg-amber-600 text-white shadow-md transition-transform",
+          "relative flex h-9 w-9 items-center justify-center rounded-none border-2 border-white bg-amber-600 text-white shadow-md transition-transform",
           active && "scale-110 ring-2 ring-amber-300 ring-offset-2 ring-offset-background"
         )}
       >
@@ -733,7 +758,7 @@ function DetailRows({ rows }: { rows: { label: string; value: string }[] }) {
   if (visibleRows.length === 0) return null
 
   return (
-    <div className="overflow-hidden rounded-md border">
+    <div className="overflow-hidden rounded-none border">
       {visibleRows.map((row) => (
         <div
           key={`${row.label}-${row.value}`}
@@ -772,7 +797,7 @@ function NearestFeatureList({
           </span>
         ) : null}
       </div>
-      <div className="overflow-hidden rounded-md border">
+      <div className="overflow-hidden rounded-none border">
         {features.map((feature, index) => (
           <div
             key={feature.id}
@@ -809,6 +834,7 @@ function MapSideTable({
   nearestFeatures,
   isRouting,
   showRoadAnalysis,
+  layers,
   onClose,
 }: {
   selectedActor: MarketActor | null
@@ -816,6 +842,7 @@ function MapSideTable({
   nearestFeatures: NearestFeatureGroups
   isRouting: boolean
   showRoadAnalysis: boolean
+  layers: NearestFeatureLayer[]
   onClose: () => void
 }) {
   const meta = selectedActor
@@ -825,12 +852,12 @@ function MapSideTable({
 
   return (
     <MapControlContainer className="right-3 top-14 bottom-3 w-[min(26rem,calc(100%-1.5rem))] !h-[calc(100%-4.25rem)] max-h-[calc(100%-4.25rem)]">
-      <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-md border bg-background/95 shadow-xl backdrop-blur">
+      <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-none border bg-background/95 shadow-xl backdrop-blur">
         <div className="flex items-start justify-between gap-3 border-b p-4">
           <div className="min-w-0">
             <div className="flex items-center gap-2">
               <span
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-white"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-none text-white"
                 style={{ backgroundColor: meta.color }}
               >
                 <Icon className="h-4 w-4" />
@@ -883,7 +910,7 @@ function MapSideTable({
 
           {showRoadAnalysis ? (
             <div className="space-y-4">
-              {nearestFeatureLayers.map((layer) => (
+              {layers.map((layer) => (
                 <NearestFeatureList
                   key={layer}
                   layer={layer}
@@ -893,7 +920,7 @@ function MapSideTable({
               ))}
             </div>
           ) : (
-            <div className="rounded-md border border-dashed bg-muted/30 p-3 text-sm text-muted-foreground">
+            <div className="rounded-none border border-dashed bg-muted/30 p-3 text-sm text-muted-foreground">
               Road analysis is hidden for this selected point.
             </div>
           )}
@@ -1261,20 +1288,22 @@ function MetricPanel({
   value,
   color,
   note,
+  className,
 }: {
   icon: ComponentType<{ className?: string }>
   label: string
   value: string
   color: string
   note?: string
+  className?: string
 }) {
   return (
     <div
-      className="roundwood-metric-card rounded-md border p-4"
+      className={cn("roundwood-metric-card rounded-none border p-4", className)}
       style={{ "--metric-color": color } as CSSProperties}
     >
       <div className="flex items-center gap-3">
-        <span className="roundwood-metric-icon flex h-9 w-9 items-center justify-center rounded-md">
+        <span className="roundwood-metric-icon flex h-9 w-9 items-center justify-center rounded-none">
           <Icon className="h-4 w-4" />
         </span>
         <div>
@@ -1314,7 +1343,7 @@ function average(values: number[]) {
 function formatSeedlingPrice(value: number | null) {
   if (value == null) return "No price data"
 
-  return `UGX ${Math.round(value).toLocaleString()} / seedling`
+  return `USD ${value.toFixed(2)} / seedling`
 }
 
 function formatUgxPrice(value: number | null) {
@@ -1326,12 +1355,12 @@ function formatUgxPrice(value: number | null) {
 function getAverageSeedlingPrice(actors: MarketActor[]) {
   const nurseryRecords = actors.filter((actor) => actor.layer === "nursery")
   const pricedRecords = nurseryRecords.filter(
-    (actor) => actor.seedlingPriceUgxPerSeedling != null
+    (actor) => actor.seedlingPriceUsdPerSeedling != null
   )
 
   return {
     value: average(
-      pricedRecords.map((actor) => actor.seedlingPriceUgxPerSeedling ?? 0)
+      pricedRecords.map((actor) => actor.seedlingPriceUsdPerSeedling ?? 0)
     ),
     pricedCount: pricedRecords.length,
     totalCount: nurseryRecords.length,
@@ -1480,7 +1509,7 @@ function MapControlCard({
   children: ReactNode
 }) {
   return (
-    <div className="rounded-2xl border bg-background/80 p-3 shadow-sm">
+    <div className="rounded-none border bg-background/80 p-3 shadow-sm">
       <div className="mb-2 text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
         {title}
       </div>
@@ -1495,7 +1524,19 @@ function MarketMapControls({
   selectedPoint,
   showRoadAnalysis,
   activeLayerGroups,
+  layerGroups,
   ssmtController,
+  showSsmt = true,
+  showRegionFocus = true,
+  showOverlayToggle = true,
+  processorCategoryOptions,
+  selectedProcessorCategory,
+  onProcessorCategoryChange,
+  speciesOptions,
+  selectedProcessorSpecies,
+  onProcessorSpeciesChange,
+  selectedDiameterFilter,
+  onDiameterFilterChange,
   onCountryChange,
   onRegionChange,
   onRoadAnalysisChange,
@@ -1506,7 +1547,19 @@ function MarketMapControls({
   selectedPoint: SelectedPoint | null
   showRoadAnalysis: boolean
   activeLayerGroups: string[]
+  layerGroups: string[]
   ssmtController: ReturnType<typeof useBasicSsmtLayerController>
+  showSsmt?: boolean
+  showRegionFocus?: boolean
+  showOverlayToggle?: boolean
+  processorCategoryOptions?: MarketProcessorCategory[]
+  selectedProcessorCategory?: MarketProcessorCategory | "all"
+  onProcessorCategoryChange?: (category: MarketProcessorCategory | "all") => void
+  speciesOptions?: string[]
+  selectedProcessorSpecies?: string
+  onProcessorSpeciesChange?: (species: string) => void
+  selectedDiameterFilter?: DiameterFilter
+  onDiameterFilterChange?: (filter: DiameterFilter) => void
   onCountryChange: (country: MarketCountryFilter) => void
   onRegionChange: (regionId: string) => void
   onRoadAnalysisChange: (visible: boolean) => void
@@ -1519,7 +1572,7 @@ function MarketMapControls({
   const allRegionsValue = "__all_regions__"
 
   return (
-    <div className="grid gap-3 xl:grid-cols-2 2xl:grid-cols-4">
+    <div className={cn("grid gap-3", showSsmt ? "xl:grid-cols-2 2xl:grid-cols-4" : "xl:grid-cols-3")}>
       <MapControlCard title="Map area">
         <ToggleGroup
           options={marketCountryFilters.map((country) => ({
@@ -1531,24 +1584,26 @@ function MarketMapControls({
         />
       </MapControlCard>
 
-      <MapControlCard title="Region focus">
-        {selectedCountry === "All" ? (
-          <p className="text-sm text-muted-foreground">Showing all countries and regions.</p>
-        ) : (
-          <ToggleGroup
-            options={[
-              { value: allRegionsValue, label: "All regions" },
-              ...regions.map((region) => ({ value: region.id, label: region.name })),
-            ]}
-            value={selectedRegionId ?? allRegionsValue}
-            onChange={(value) =>
-              onRegionChange(value === allRegionsValue ? "" : value)
-            }
-          />
-        )}
-      </MapControlCard>
+      {showRegionFocus ? (
+        <MapControlCard title="Region focus">
+          {selectedCountry === "All" ? (
+            <p className="text-sm text-muted-foreground">Showing all countries and regions.</p>
+          ) : (
+            <ToggleGroup
+              options={[
+                { value: allRegionsValue, label: "All regions" },
+                ...regions.map((region) => ({ value: region.id, label: region.name })),
+              ]}
+              value={selectedRegionId ?? allRegionsValue}
+              onChange={(value) =>
+                onRegionChange(value === allRegionsValue ? "" : value)
+              }
+            />
+          )}
+        </MapControlCard>
+      ) : null}
 
-      <BasicSsmtControlCard controller={ssmtController} />
+      {showSsmt ? <BasicSsmtControlCard controller={ssmtController} /> : null}
 
       <MapControlCard title="Road analysis">
         <Button
@@ -1568,34 +1623,74 @@ function MarketMapControls({
         </p>
       </MapControlCard>
 
-      <div className="rounded-2xl border bg-background/80 p-3 shadow-sm xl:col-span-2 2xl:col-span-4">
-        <div className="mb-2 text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
-          Map overlays
+      {processorCategoryOptions && onProcessorCategoryChange && selectedProcessorCategory ? (
+        <MapControlCard title="Processor class">
+          <ToggleGroup
+            options={[
+              { value: "all", label: "All classes" },
+              ...processorCategoryOptions.map((category) => ({ value: category, label: category })),
+            ]}
+            value={selectedProcessorCategory}
+            onChange={(value) =>
+              onProcessorCategoryChange(value as MarketProcessorCategory | "all")
+            }
+          />
+        </MapControlCard>
+      ) : null}
+
+      {speciesOptions && onProcessorSpeciesChange && selectedProcessorSpecies ? (
+        <MapControlCard title="Species">
+          <ToggleGroup
+            options={[
+              { value: "all", label: "All species" },
+              ...speciesOptions.map((species) => ({ value: species, label: species })),
+            ]}
+            value={selectedProcessorSpecies}
+            onChange={onProcessorSpeciesChange}
+          />
+        </MapControlCard>
+      ) : null}
+
+      {selectedDiameterFilter && onDiameterFilterChange ? (
+        <MapControlCard title="Minimum diameter">
+          <ToggleGroup
+            options={diameterFilterOptions}
+            value={selectedDiameterFilter}
+            onChange={(value) => onDiameterFilterChange(value as DiameterFilter)}
+          />
+        </MapControlCard>
+      ) : null}
+
+      {showOverlayToggle ? (
+        <div className="rounded-none border bg-background/80 p-3 shadow-sm xl:col-span-2 2xl:col-span-4">
+          <div className="mb-2 text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+            Map overlays
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {layerGroups.map((name) => {
+              const active = activeLayerGroups.includes(name)
+              return (
+                <Button
+                  key={name}
+                  type="button"
+                  size="sm"
+                  variant={active ? "default" : "outline"}
+                  aria-pressed={active}
+                  onClick={() =>
+                    onLayerGroupsChange(
+                      active
+                        ? activeLayerGroups.filter((group) => group !== name)
+                        : [...activeLayerGroups, name]
+                    )
+                  }
+                >
+                  {name}
+                </Button>
+              )
+            })}
+          </div>
         </div>
-        <div className="flex flex-wrap gap-2">
-          {defaultMapLayerGroups.map((name) => {
-            const active = activeLayerGroups.includes(name)
-            return (
-              <Button
-                key={name}
-                type="button"
-                size="sm"
-                variant={active ? "default" : "outline"}
-                aria-pressed={active}
-                onClick={() =>
-                  onLayerGroupsChange(
-                    active
-                      ? activeLayerGroups.filter((group) => group !== name)
-                      : [...activeLayerGroups, name]
-                  )
-                }
-              >
-                {name}
-              </Button>
-            )
-          })}
-        </div>
-      </div>
+      ) : null}
     </div>
   )
 }
@@ -1613,7 +1708,7 @@ function SpeciesDataNotice({
     const totalHa = speciesAreas.reduce((sum, item) => sum + item.hectares, 0)
 
     return (
-      <div className="rounded-md border bg-background/75 p-4">
+      <div className="rounded-none border bg-background/75 p-4">
         <div className="mb-3 flex items-center justify-between gap-3">
           <h3 className="text-sm font-semibold">Large commercial forest species split</h3>
           <span className="text-xs text-muted-foreground">
@@ -1656,7 +1751,7 @@ function SpeciesDataNotice({
   }
 
   return (
-    <div className="rounded-md border border-dashed bg-muted/25 p-4 text-sm leading-6 text-muted-foreground">
+    <div className="rounded-none border border-dashed bg-muted/25 p-4 text-sm leading-6 text-muted-foreground">
       No species-area split is recorded for this scope. Large commercial forest area
       coverage: {commercialForestAreaCount} of {commercialForestTotalCount} mapped
       large commercial forest records include hectares.
@@ -1667,10 +1762,13 @@ function SpeciesDataNotice({
 function MarketAnalysis({
   selectedCountry,
   selectedRegionId,
+  variant = "sector",
 }: {
   selectedCountry: MarketCountryFilter
   selectedRegionId: string | null
+  variant?: "sector" | "wood-markets"
 }) {
+  const isWoodMarkets = variant === "wood-markets"
   const countryActors = getActorsForScope({
     country: selectedCountry,
     regionId: null,
@@ -1709,7 +1807,16 @@ function MarketAnalysis({
   const avgG1RoundwoodPrice = getAverageG1RoundwoodPrice(summaryActors)
   const commercialSpeciesAreas = getCommercialSpeciesSummary(summaryActors)
   const countryFlagClass = countryFlagClasses[selectedCountry]
-  const countryMetricCards = [
+  const countryMetricCards = isWoodMarkets
+    ? [
+        {
+          icon: Building2,
+          label: "Processors",
+          value: String(countryCounts.processor),
+          color: marketActorLayerMeta.processor.color,
+        },
+      ]
+    : [
     {
       icon: Leaf,
       label: "Nurseries",
@@ -1741,7 +1848,16 @@ function MarketAnalysis({
       color: marketActorLayerMeta.forestReserve.color,
     },
   ]
-  const regionMetricCards = [
+  const regionMetricCards = isWoodMarkets
+    ? [
+        {
+          icon: Building2,
+          label: "Processors",
+          value: String(regionCounts.processor),
+          color: marketActorLayerMeta.processor.color,
+        },
+      ]
+    : [
     {
       icon: Leaf,
       label: "Nurseries",
@@ -1773,7 +1889,22 @@ function MarketAnalysis({
       color: marketActorLayerMeta.forestReserve.color,
     },
   ]
-  const summaryMetricCards = [
+  const summaryMetricCards = isWoodMarkets
+    ? [
+        {
+          icon: Route,
+          label: "Avg. G1 roundwood",
+          value: formatUgxPrice(avgG1RoundwoodPrice.value),
+          color: marketActorLayerMeta.processor.color,
+          note: formatRecordCoverage(
+            avgG1RoundwoodPrice.pricedCount,
+            avgG1RoundwoodPrice.totalCount,
+            "processor records include G1 UGX/t",
+            "No processor records in this scope"
+          ),
+        },
+      ]
+    : [
     {
       icon: CircleDollarSign,
       label: "Avg. seedling price",
@@ -1825,7 +1956,7 @@ function MarketAnalysis({
           <MapPinned className="h-4 w-4 text-muted-foreground" />
           {selectedCountry} overview
         </div>
-        <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        <div className={cn("mt-4 grid gap-3", isWoodMarkets ? "grid-cols-1" : "sm:grid-cols-2 xl:grid-cols-3")}>
           {countryMetricCards.map((metric) => (
             <MetricPanel key={metric.label} {...metric} />
           ))}
@@ -1835,7 +1966,7 @@ function MarketAnalysis({
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
         <div className="roundwood-analysis-subcard space-y-4 rounded-[24px] border bg-background/75 p-4">
           {selectedCountry === "All" ? (
-            <div className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
+            <div className="rounded-none border border-dashed p-4 text-sm text-muted-foreground">
               Select Uganda, Kenya, or Tanzania to inspect regional analytics.
             </div>
           ) : selectedRegion ? (
@@ -1843,30 +1974,32 @@ function MarketAnalysis({
               <div className="text-sm font-semibold">
                 {selectedRegion.name}
               </div>
-              <div className="grid gap-3 sm:grid-cols-2">
+              <div className={cn("grid gap-3", isWoodMarkets ? "grid-cols-1" : "sm:grid-cols-2")}>
                 {regionMetricCards.map((metric) => (
                   <MetricPanel key={metric.label} {...metric} />
                 ))}
               </div>
             </>
-          ) : (
-            <div className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
+          ) : !isWoodMarkets ? (
+            <div className="rounded-none border border-dashed p-4 text-sm text-muted-foreground">
               All regional overlays are visible. Select a region above the map to view its summary.
             </div>
-          )}
+          ) : null}
         </div>
 
         <div className="roundwood-analysis-subcard space-y-4 rounded-[24px] border bg-background/75 p-4">
-          <div className="grid gap-3 sm:grid-cols-3 xl:grid-cols-1 2xl:grid-cols-3">
+          <div className={cn("grid gap-3", isWoodMarkets ? "grid-cols-1" : "sm:grid-cols-3 xl:grid-cols-1 2xl:grid-cols-3")}>
             {summaryMetricCards.map((metric) => (
-              <MetricPanel key={metric.label} {...metric} />
+              <MetricPanel key={metric.label} {...metric} className={isWoodMarkets ? "p-6" : undefined} />
             ))}
           </div>
-          <SpeciesDataNotice
-            speciesAreas={commercialSpeciesAreas}
-            commercialForestAreaCount={forestCover.commercialForestAreaCount}
-            commercialForestTotalCount={forestCover.commercialForestTotalCount}
-          />
+          {!isWoodMarkets ? (
+            <SpeciesDataNotice
+              speciesAreas={commercialSpeciesAreas}
+              commercialForestAreaCount={forestCover.commercialForestAreaCount}
+              commercialForestTotalCount={forestCover.commercialForestTotalCount}
+            />
+          ) : null}
         </div>
       </div>
     </section>
@@ -1932,7 +2065,7 @@ function ConcessionsDatabase({
         >
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div className="flex items-start gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-amber-50 text-amber-800">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-none bg-amber-50 text-amber-800">
                 <Landmark className="h-5 w-5" />
               </span>
               <div className="space-y-1">
@@ -1971,7 +2104,7 @@ function ConcessionsDatabase({
                 ))}
               </div>
 
-              <div className="overflow-hidden rounded-md border bg-background">
+              <div className="overflow-hidden rounded-none border bg-background">
                 <div className="overflow-x-auto">
                   <table className="w-full min-w-[920px] text-left text-sm">
                     <thead className="border-b bg-muted/70 text-xs uppercase tracking-normal text-muted-foreground">
@@ -2035,15 +2168,32 @@ function ConcessionsDatabase({
   )
 }
 
-export function RoundwoodShop() {
-  const firstProcessor = marketActors.find((actor) => actor.layer === "processor")
+function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) {
+  const isWoodMarkets = variant === "wood-markets"
+  const visibleActorLayers = useMemo<MarketActorLayer[]>(
+    () => (isWoodMarkets ? ["processor"] : actorLayerOrder),
+    [isWoodMarkets]
+  )
+  const visibleNearestFeatureLayers = useMemo<NearestFeatureLayer[]>(
+    () => (isWoodMarkets ? ["processor"] : nearestFeatureLayers),
+    [isWoodMarkets]
+  )
+  const layerGroupOptions = useMemo(
+    () =>
+      isWoodMarkets
+        ? [marketActorLayerMeta.processor.label]
+        : defaultMapLayerGroups,
+    [isWoodMarkets]
+  )
   const [selectedActorId, setSelectedActorId] = useState<string | null>(null)
   const [clickedPoint, setClickedPoint] = useState<SelectedPoint | null>(null)
   const [isTableOpen, setIsTableOpen] = useState(false)
   const [selectedCountry, setSelectedCountry] =
     useState<MarketCountryFilter>("Uganda")
   const [selectedRegionId, setSelectedRegionId] = useState<string | null>(
-    marketRegions.find((region) => region.country === "Uganda")?.id ?? null
+    isWoodMarkets
+      ? null
+      : marketRegions.find((region) => region.country === "Uganda")?.id ?? null
   )
   const [nearestFeatures, setNearestFeatures] = useState<NearestFeatureGroups>(
     () => createEmptyNearestFeatureGroups()
@@ -2053,26 +2203,100 @@ export function RoundwoodShop() {
   const [selectedConcessionId, setSelectedConcessionId] = useState<string | null>(null)
   const [scopeFocusVersion, setScopeFocusVersion] = useState(0)
   const [activeLayerGroups, setActiveLayerGroups] = useState<string[]>(
-    defaultMapLayerGroups
+    layerGroupOptions
   )
+  const [selectedProcessorCategory, setSelectedProcessorCategory] = useState<
+    MarketProcessorCategory | "all"
+  >("all")
+  const [selectedProcessorSpecies, setSelectedProcessorSpecies] =
+    useState<string>("all")
+  const [selectedDiameterFilter, setSelectedDiameterFilter] =
+    useState<DiameterFilter>("all")
   const ssmtController = useBasicSsmtLayerController()
   const regionAnalytics = useMemo(() => getRegionAnalytics(), [])
 
+  useEffect(() => {
+    setActiveLayerGroups(layerGroupOptions)
+  }, [layerGroupOptions])
+
   const mapScope = useMemo<MarketAnalyticsScope>(
-    () => ({ country: selectedCountry, regionId: selectedRegionId }),
-    [selectedCountry, selectedRegionId]
+    () => ({
+      country: selectedCountry,
+      regionId: isWoodMarkets ? null : selectedRegionId,
+    }),
+    [isWoodMarkets, selectedCountry, selectedRegionId]
   )
   const scopedActors = useMemo(
     () => getActorsForScope(mapScope),
     [mapScope]
   )
+  const processorCategoryOptions = useMemo(
+    () =>
+      processorCategoryOrder.filter((category) =>
+        scopedActors.some(
+          (actor) =>
+            actor.layer === "processor" &&
+            actor.processorProfile?.categories.includes(category)
+        )
+      ),
+    [scopedActors]
+  )
+  const processorSpeciesOptions = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          scopedActors.flatMap((actor) =>
+            actor.layer === "processor"
+              ? actor.processorProfile?.species ?? []
+              : []
+          )
+        )
+      ).sort((a, b) => a.localeCompare(b)),
+    [scopedActors]
+  )
+  const filteredProcessorIds = useMemo(() => {
+    if (!isWoodMarkets) return null
+
+    return new Set(
+      scopedActors
+        .filter((actor) => actor.layer === "processor")
+        .filter((actor) => {
+          const profile = actor.processorProfile
+          if (!profile) return false
+          const categoryMatch =
+            selectedProcessorCategory === "all" ||
+            profile.categories.includes(selectedProcessorCategory)
+          const speciesMatch =
+            selectedProcessorSpecies === "all" ||
+            profile.species.includes(selectedProcessorSpecies)
+          const diameterMatch =
+            selectedDiameterFilter === "all" ||
+            toDiameterBand(profile.minDiameterCm) === selectedDiameterFilter
+
+          return categoryMatch && speciesMatch && diameterMatch
+        })
+        .map((actor) => actor.id)
+    )
+  }, [
+    isWoodMarkets,
+    scopedActors,
+    selectedProcessorCategory,
+    selectedProcessorSpecies,
+    selectedDiameterFilter,
+  ])
+  const visibleScopeActors = useMemo(() => {
+    if (!isWoodMarkets || !filteredProcessorIds) return scopedActors
+    return scopedActors.filter(
+      (actor) => actor.layer !== "processor" || filteredProcessorIds.has(actor.id)
+    )
+  }, [filteredProcessorIds, isWoodMarkets, scopedActors])
   const actorGroups = useMemo(
     () =>
       actorLayerOrder.reduce<Record<MarketActorLayer, MarketActor[]>>((groups, layer) => {
-        groups[layer] = scopedActors.filter((actor) => actor.layer === layer)
+        groups[layer] = visibleScopeActors.filter((actor) => actor.layer === layer)
         return groups
       }, {} as Record<MarketActorLayer, MarketActor[]>),
-    [scopedActors]
+    [visibleScopeActors]
   )
   const scopedRegions = useMemo(
     () =>
@@ -2169,11 +2393,11 @@ export function RoundwoodShop() {
   }, [scopedConcessions, selectedConcessionId])
 
   useEffect(() => {
-    if (selectedActor && !scopedActors.some((actor) => actor.id === selectedActor.id)) {
+    if (selectedActor && !visibleScopeActors.some((actor) => actor.id === selectedActor.id)) {
       setSelectedActorId(null)
       setIsTableOpen(false)
     }
-  }, [scopedActors, selectedActor])
+  }, [visibleScopeActors, selectedActor])
 
   const maxRegionCount = Math.max(...regionAnalytics.map((region) => region.count), 1)
   const nearestHighlights = useMemo(
@@ -2204,7 +2428,7 @@ export function RoundwoodShop() {
   const changeCountry = (country: MarketCountryFilter) => {
     setSelectedCountry(country)
     setSelectedRegionId(
-      country === "All"
+      isWoodMarkets || country === "All"
         ? null
         : marketRegions.find((region) => region.country === country)?.id ?? null
     )
@@ -2225,30 +2449,19 @@ export function RoundwoodShop() {
 
   return (
     <div className="space-y-8">
-      <ForestsLandTopBanner
-        targetId="market-concessions"
-        linkLabel="Review concessions"
-      />
+      {!isWoodMarkets ? (
+        <ForestsLandTopBanner
+          targetId="market-concessions"
+          linkLabel="Review concessions"
+        />
+      ) : null}
 
       <section className="space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-md bg-cyan-50 text-cyan-800">
+            <span className="flex h-10 w-10 items-center justify-center rounded-none bg-cyan-50 text-cyan-800">
               <MapPinned className="h-5 w-5" />
             </span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <Button
-              variant="outline"
-              onClick={() => {
-                setSelectedActorId(firstProcessor?.id ?? null)
-                setClickedPoint(null)
-                setIsTableOpen(true)
-              }}
-            >
-              <Sprout className="h-4 w-4" />
-              Reset view
-            </Button>
           </div>
         </div>
 
@@ -2258,18 +2471,30 @@ export function RoundwoodShop() {
           selectedPoint={selectedPoint}
           showRoadAnalysis={showRoadAnalysis}
           activeLayerGroups={activeLayerGroups}
+          layerGroups={layerGroupOptions}
           ssmtController={ssmtController}
+          showSsmt={!isWoodMarkets}
+          showRegionFocus={!isWoodMarkets}
+          showOverlayToggle={!isWoodMarkets}
+          processorCategoryOptions={isWoodMarkets ? processorCategoryOptions : undefined}
+          selectedProcessorCategory={isWoodMarkets ? selectedProcessorCategory : undefined}
+          onProcessorCategoryChange={isWoodMarkets ? setSelectedProcessorCategory : undefined}
+          speciesOptions={isWoodMarkets ? processorSpeciesOptions : undefined}
+          selectedProcessorSpecies={isWoodMarkets ? selectedProcessorSpecies : undefined}
+          onProcessorSpeciesChange={isWoodMarkets ? setSelectedProcessorSpecies : undefined}
+          selectedDiameterFilter={isWoodMarkets ? selectedDiameterFilter : undefined}
+          onDiameterFilterChange={isWoodMarkets ? setSelectedDiameterFilter : undefined}
           onCountryChange={changeCountry}
           onRegionChange={changeRegion}
           onRoadAnalysisChange={setShowRoadAnalysis}
           onLayerGroupsChange={setActiveLayerGroups}
         />
 
-        <div className="relative overflow-hidden rounded-md border bg-background">
+        <div className="relative overflow-hidden rounded-none border bg-background">
           <Map center={[-2.2, 34.7]} zoom={6} maxZoom={18} className="h-[680px] w-full rounded-none">
             <MapLayers
               defaultTileLayer={marketTileLayers[0].name}
-              defaultLayerGroups={defaultMapLayerGroups}
+              defaultLayerGroups={layerGroupOptions}
               activeLayerGroups={activeLayerGroups}
               onActiveLayerGroupsChange={setActiveLayerGroups}
             >
@@ -2289,17 +2514,21 @@ export function RoundwoodShop() {
                 regionId={selectedRegionId}
                 version={scopeFocusVersion}
               />
-              <BasicSsmtLayer controller={ssmtController} />
+              {!isWoodMarkets ? <BasicSsmtLayer controller={ssmtController} /> : null}
 
-              <RegionalBoundariesLayer regions={scopedRegions} maxCount={maxRegionCount} />
+              {!isWoodMarkets ? (
+                <RegionalBoundariesLayer regions={scopedRegions} maxCount={maxRegionCount} />
+              ) : null}
 
-              <ConcessionsLayer
-                concessions={scopedConcessions}
-                selectedConcessionId={selectedConcessionId}
-                onSelectConcession={selectConcession}
-              />
+              {!isWoodMarkets ? (
+                <ConcessionsLayer
+                  concessions={scopedConcessions}
+                  selectedConcessionId={selectedConcessionId}
+                  onSelectConcession={selectConcession}
+                />
+              ) : null}
 
-              {actorLayerOrder.map((layer) => (
+              {visibleActorLayers.map((layer) => (
                 <ActorLayerGroup
                   key={layer}
                   layer={layer}
@@ -2356,6 +2585,7 @@ export function RoundwoodShop() {
                   nearestFeatures={nearestFeatures}
                   isRouting={isRouting}
                   showRoadAnalysis={showRoadAnalysis}
+                  layers={visibleNearestFeatureLayers}
                   onClose={() => setIsTableOpen(false)}
                 />
               ) : null}
@@ -2367,13 +2597,24 @@ export function RoundwoodShop() {
       <MarketAnalysis
         selectedCountry={selectedCountry}
         selectedRegionId={selectedRegionId}
+        variant={variant}
       />
 
-      <ConcessionsDatabase
-        selectedCountry={selectedCountry}
-        selectedConcessionId={selectedConcessionId}
-        onSelectConcession={selectConcession}
-      />
+      {!isWoodMarkets ? (
+        <ConcessionsDatabase
+          selectedCountry={selectedCountry}
+          selectedConcessionId={selectedConcessionId}
+          onSelectConcession={selectConcession}
+        />
+      ) : null}
     </div>
   )
+}
+
+export function RoundwoodShop() {
+  return <RoundwoodShopBase variant="sector" />
+}
+
+export function WoodMarketsMap() {
+  return <RoundwoodShopBase variant="wood-markets" />
 }

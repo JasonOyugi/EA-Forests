@@ -66,54 +66,62 @@ export interface ProcessorRecord {
   "Coordinate map URL"?: DataValue
 }
 
-export interface NurserySpeciesSpec {
-  material_types: string[]
-  species_or_clones: string[]
-  price_mode: PriceMode
-  prices: Record<string, DataValue>
-  capacity: DataValue
-  availability: DataValue
-  source_traceability: DataValue
+export interface NurseryGenusSupply {
+  genus: string
+  species: string[]
+  varieties: Array<{
+    species: string
+    variety: string
+    price: {
+      perSeedling: number | null
+      per100Seedlings: number | null
+      per500Seedlings: number | null
+      per1000Seedlings: number | null
+    }
+    capacity: number | null
+    availability: string | null
+    traceability: string | null
+  }>
 }
 
 export interface NurseryRecord {
-  lon: DataValue
-  lat: DataValue
-  supply_specs: {
-    euc: NurserySpeciesSpec
-    pine: NurserySpeciesSpec
-    indigenous: NurserySpeciesSpec
+  id: string
+  name: string
+  lon: number | null
+  lat: number | null
+  country: string | null
+  region: string | null
+  address: string | null
+  genera: NurseryGenusSupply[]
+  totalCapacity: number | null
+  transport: string | null
+  certification: string | null
+  contact: {
+    person: string | null
+    phone: string | null
+    other: string | null
   }
-  "Total capacity": DataValue
-  Products: DataValue
-  "Target customers": DataValue
-  Transport: DataValue
-  Certification: DataValue
-  Contact: DataValue
-  Comments: DataValue
-  Database?: DataValue
-  Source?: DataValue
-  "Source ID"?: DataValue
-  "Country source"?: DataValue
-  "Category source"?: DataValue
-  Subcategory?: DataValue
-  "Additional source URL"?: DataValue
-  "Region / county"?: DataValue
-  "District / sub-county"?: DataValue
-  "Published locality / address"?: DataValue
-  "Coordinate precision"?: DataValue
-  "Coordinate confidence"?: DataValue
-  "Coordinate audit"?: DataValue
-  "Original coordinate"?: DataValue
-  "Display offset km"?: DataValue
-  "Chinese linkage"?: DataValue
-  "Chinese-link confidence"?: DataValue
-  "Contact person"?: DataValue
-  Phone?: DataValue
-  "Status / registration"?: DataValue
-  "Evidence class"?: DataValue
-  "Data vintage"?: DataValue
-  "Coordinate map URL"?: DataValue
+  comments: string | null
+  source: {
+    database: string | null
+    sourceId: string | null
+    url: string | null
+    dataVintage: string | null
+    coordinatePrecision: string | null
+    coordinateConfidence: string | null
+  }
+}
+
+export interface NurseryDatabase {
+  schemaVersion: number
+  lastUpdated: string
+  currency: "USD"
+  availableGenera: Array<{
+    id: string
+    label: string
+    species: string[]
+  }>
+  nurseries: NurseryRecord[]
 }
 
 export interface CommercialForestSpeciesSpec {
@@ -234,7 +242,8 @@ export interface CentralForestReserveRecord {
 }
 
 export const processorDatabase = processorDatabaseJson as Record<string, ProcessorRecord>
-export const nurseryDatabase = nurseryDatabaseJson as Record<string, NurseryRecord>
+export const nurseryDatabase = nurseryDatabaseJson as NurseryDatabase
+export const nurseryRecords = nurseryDatabase.nurseries
 export const largeCommercialForestDatabase =
   largeCommercialForestDatabaseJson as Record<string, LargeCommercialForestRecord>
 export const centralForestReserveDatabase =

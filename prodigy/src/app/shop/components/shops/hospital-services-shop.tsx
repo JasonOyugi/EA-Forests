@@ -3,7 +3,6 @@
 import {
   Droplets,
   HeartPulse,
-  Layers,
   ShieldCheck,
   Sparkles,
   Syringe,

@@ -1,9 +1,10 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import type { ComponentType } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { BookOpen, Github, Heart, Linkedin, Mail, MessageCircle, Send, Twitter, Youtube } from "lucide-react"
+import { Github, Heart, Linkedin, Mail, Phone, Send, Twitter, Youtube } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -17,7 +18,38 @@ import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 import { Logo } from "@/components/logo"
-import { landingContainer } from "./landing-shared"
+import { DiscordIcon, TelegramIcon, WhatsAppIcon } from "@/components/brand-icons"
+import { landingContainer, landingEyebrowClass } from "./landing-shared"
+
+type FlipContactProps = {
+  href: string
+  label: string
+  value: string
+  icon: ComponentType<{ className?: string }>
+  wide?: boolean
+  external?: boolean
+}
+
+function FlipContact({ href, label, value, icon: Icon, wide, external }: FlipContactProps) {
+  return (
+    <a
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+      className={`group h-11 w-full [perspective:700px] ${wide ? "sm:w-64" : "sm:w-48"}`}
+      aria-label={`${label}: ${value}`}
+    >
+      <span className="relative block size-full transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateX(180deg)] group-focus-visible:[transform:rotateX(180deg)]">
+        <span className="absolute inset-0 inline-flex items-center justify-center gap-2 rounded-full border border-emerald-700/50 bg-emerald-950/70 px-4 text-xs font-semibold uppercase tracking-[.12em] text-emerald-100 [backface-visibility:hidden]">
+          <Icon className="size-3.5" /> <span className="sm:hidden">{value}</span><span className="hidden sm:inline">{label}</span>
+        </span>
+        <span className="absolute inset-0 inline-flex items-center justify-center rounded-full border border-emerald-400/60 bg-emerald-500 px-4 text-xs font-semibold tracking-[.05em] text-emerald-950 [backface-visibility:hidden] [transform:rotateX(180deg)]">
+          {value}
+        </span>
+      </span>
+    </a>
+  )
+}
 
 const newsletterSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
@@ -31,17 +63,13 @@ const contactSchema = z.object({
   message: z.string().min(10, { message: "Tell us a little more." }),
 })
 
-const contactLinks = [
-  { name: "Discord", href: "https://discord.com/invite/XEQhPc9a6p", icon: MessageCircle },
-  { name: "GitHub", href: "https://github.com/JasonOyugi/EA_Forests", icon: Github },
-  { name: "Guides", href: "/faqs", icon: BookOpen },
-] as const
-
 const socialLinks = [
   { name: "Twitter", href: "#", icon: Twitter },
   { name: "GitHub", href: "https://github.com/JasonOyugi/EA_Forests", icon: Github },
   { name: "LinkedIn", href: "#", icon: Linkedin },
   { name: "YouTube", href: "https://www.youtube.com/results?search_query=East+Africa+forestry", icon: Youtube },
+  { name: "Discord", href: "https://discord.com/invite/XEQhPc9a6p", icon: DiscordIcon },
+  { name: "Telegram", href: "#", icon: TelegramIcon },
 ] as const
 
 export function LandingFooter() {
@@ -69,22 +97,29 @@ export function LandingFooter() {
       <div aria-hidden className="section-map-bg absolute inset-0" />
       <div aria-hidden className="section-map-tint absolute inset-0" />
 
-      <div className={`${landingContainer} relative py-12 sm:py-14`}>
-        <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:gap-14">
+      <div className={`${landingContainer} relative py-16 sm:py-20 lg:py-24`}>
+        <div className="grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:gap-16">
           <div>
             <a href="#hero" className="inline-flex items-center gap-3">
               <Logo size={32} />
               <span className="text-xl font-bold">EA Forests</span>
             </a>
-            <h2 className="mt-6 max-w-md text-2xl font-semibold tracking-tight sm:text-3xl">
-              Stay informed. Build better forests.
+            <p className={`${landingEyebrowClass} mb-2 mt-6 text-primary`}>We say:</p>
+            <h2 className="landing-section-heading font-semibold uppercase">
+              Stay informed. Make money.
             </h2>
-            <p className="mt-3 max-w-md text-sm leading-6 text-muted-foreground">
-              Weekly market updates, useful tools and practical forestry intelligence from across East Africa.
+            <p className="mt-2 max-w-lg text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
+              Talk to us directly:
             </p>
 
+            <div className="mt-4 flex flex-wrap gap-2">
+              <FlipContact href="https://wa.me/254700000000" label="WhatsApp" value="+254 700 000 000" icon={WhatsAppIcon} external />
+              <FlipContact href="tel:+254700000000" label="Call us" value="+254 700 000 000" icon={Phone} />
+              <FlipContact href="mailto:hello@eaforests.com" label="Email us" value="hello@eaforests.com" icon={Mail} wide />
+            </div>
+
             <Form {...newsletterForm}>
-              <form onSubmit={newsletterForm.handleSubmit(submitNewsletter)} className="mt-5 flex max-w-md flex-col gap-2 sm:flex-row">
+              <form onSubmit={newsletterForm.handleSubmit(submitNewsletter)} className="mt-7 flex max-w-lg flex-col gap-2 sm:flex-row">
                 <FormField
                   control={newsletterForm.control}
                   name="email"
@@ -99,23 +134,12 @@ export function LandingFooter() {
               </form>
             </Form>
 
-            <div className="mt-6 flex flex-wrap gap-2">
-              {contactLinks.map((link) => {
-                const Icon = link.icon
-                const external = link.href.startsWith("http")
-                return (
-                  <a key={link.name} href={link.href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="inline-flex items-center gap-2 rounded-full border bg-background/60 px-3 py-2 text-xs font-semibold transition-colors hover:border-primary hover:text-primary">
-                    <Icon className="size-3.5" /> {link.name}
-                  </a>
-                )
-              })}
-            </div>
           </div>
 
           <div>
-            <div className="mb-4 flex items-center gap-3">
+            <div className="mb-6 flex items-center gap-3 border-b pb-5">
               <span className="grid size-9 place-items-center rounded-full bg-primary/10 text-primary"><Send className="size-4" /></span>
-              <div><h3 className="font-semibold">Send us a message</h3><p className="text-xs text-muted-foreground">Questions, opportunities or feedback.</p></div>
+              <div><h3 className="text-xl font-semibold tracking-[-.025em] sm:text-2xl">Send us a message</h3><p className="mt-1 text-sm leading-6 text-muted-foreground">Questions, opportunities or feedback.</p></div>
             </div>
 
             <Form {...contactForm}>

@@ -4,7 +4,7 @@ import {
   centralForestReserveDatabase,
   getCentralForestReserveAreaHa,
   largeCommercialForestDatabase,
-  nurseryDatabase,
+  nurseryRecords,
   processorDatabase,
   type CentralForestReserveRecord,
   type DataValue,
@@ -29,6 +29,19 @@ export interface MarketActorDetail {
   value: string
 }
 
+export type MarketProcessorCategory =
+  | "Sawmill"
+  | "Veneer / Plywood"
+  | "MDF / Panel Board"
+  | "Pulp / Paper"
+  | "Poles / Energy"
+
+export interface ProcessorProfile {
+  categories: MarketProcessorCategory[]
+  species: string[]
+  minDiameterCm: number | null
+}
+
 export interface MarketActor {
   id: string
   name: string
@@ -42,13 +55,14 @@ export interface MarketActor {
   details: MarketActorDetail[]
   source: string
   sizeHa?: number
-  seedlingPriceUgxPerSeedling?: number
+  seedlingPriceUsdPerSeedling?: number
   g1RoundwoodPriceUgxPerTonne?: number
   commercialSpeciesAreas?: {
     species: string
     hectares: number
     color: string
   }[]
+  processorProfile?: ProcessorProfile
 }
 
 export interface MarketRegion {
@@ -334,9 +348,10 @@ function actor(
     details?: MarketActorDetail[]
     source?: string
     sizeHa?: number
-    seedlingPriceUgxPerSeedling?: number
+    seedlingPriceUsdPerSeedling?: number
     g1RoundwoodPriceUgxPerTonne?: number
     commercialSpeciesAreas?: MarketActor["commercialSpeciesAreas"]
+    processorProfile?: ProcessorProfile
   } = {}
 ): MarketActor {
   const country = options.country ?? "Uganda"
@@ -358,8 +373,8 @@ function actor(
     details,
     source: options.source ?? "Upstream_Models.ipynb",
     ...(options.sizeHa != null ? { sizeHa: options.sizeHa } : {}),
-    ...(options.seedlingPriceUgxPerSeedling != null
-      ? { seedlingPriceUgxPerSeedling: options.seedlingPriceUgxPerSeedling }
+    ...(options.seedlingPriceUsdPerSeedling != null
+      ? { seedlingPriceUsdPerSeedling: options.seedlingPriceUsdPerSeedling }
       : {}),
     ...(options.g1RoundwoodPriceUgxPerTonne != null
       ? { g1RoundwoodPriceUgxPerTonne: options.g1RoundwoodPriceUgxPerTonne }
@@ -367,6 +382,7 @@ function actor(
     ...(options.commercialSpeciesAreas?.length
       ? { commercialSpeciesAreas: options.commercialSpeciesAreas }
       : {}),
+    ...(options.processorProfile ? { processorProfile: options.processorProfile } : {}),
   }
 }
 
@@ -393,14 +409,14 @@ function formatDatabaseValue(value: DataValue | string[] | Record<string, DataVa
 }
 
 function getRecordSource(
-  record: Pick<ProcessorRecord | NurseryRecord, "Database" | "Source">,
+  record: Pick<ProcessorRecord, "Database" | "Source">,
   fallbackDatabase: string
 ) {
   return formatDatabaseValue(record.Database ?? record.Source ?? fallbackDatabase)
 }
 
 function getRecordCountry(
-  record: Pick<ProcessorRecord | NurseryRecord, "Country source">,
+  record: Pick<ProcessorRecord, "Country source">,
   latitude: number,
   longitude: number
 ): MarketCountry {
@@ -464,17 +480,10 @@ function formatProcessorRoundwoodPrices(record: ProcessorRecord) {
 }
 
 function formatNurseryPrices(record: NurseryRecord) {
-  const prices = Object.entries(record.supply_specs).flatMap(([group, spec]) =>
-    Object.entries(spec.prices).flatMap(([material, value]) => {
-      const price = parseDatabaseNumber(value)
-      if (price == null) return []
-
-      const unit = ["per_seedling", "UGX", "ugx"].includes(spec.price_mode)
-        ? "/seedling"
-        : spec.price_mode === "per_tray"
-          ? "/tray"
-          : ""
-      return [`${group === "euc" ? "Eucalyptus" : group === "pine" ? "Pine" : "Indigenous"} ${material}: UGX ${Math.round(price).toLocaleString()}${unit}`]
+  const prices = record.genera.flatMap((genus) =>
+    genus.varieties.flatMap((option) => {
+      const price = option.price.perSeedling
+      return price == null ? [] : [`${option.species} · ${option.variety}: USD ${price.toFixed(2)}/seedling`]
     })
   )
 
@@ -482,17 +491,18 @@ function formatNurseryPrices(record: NurseryRecord) {
 }
 
 function formatNurseryAvailability(record: NurseryRecord) {
-  const values = Object.entries(record.supply_specs).flatMap(([group, spec]) =>
-    hasDatabaseValue(spec.availability)
-      ? [`${group === "euc" ? "Eucalyptus" : group === "pine" ? "Pine" : "Indigenous"}: ${spec.availability}`]
-      : []
+  const values = record.genera.flatMap((genus) =>
+    genus.varieties.flatMap((option) => {
+      const availability = option.availability
+      return availability ? [`${option.species} · ${option.variety}: ${availability}`] : []
+    })
   )
 
   return values.length ? values.join("; ") : "N/A"
 }
 
 function formatCertification(
-  record: Pick<ProcessorRecord | NurseryRecord, "Country source" | "Certification">
+  record: Pick<ProcessorRecord, "Country source" | "Certification">
 ) {
   const value = String(record.Certification ?? "").trim()
   if (record["Country source"] || !value || /test record/i.test(value)) return "N/A"
@@ -520,12 +530,85 @@ function getProcessorG1RoundwoodPrice(record: ProcessorRecord) {
   return prices.reduce((sum, price) => sum + price, 0) / prices.length
 }
 
+const processorCategoryRules: Array<{
+  category: MarketProcessorCategory
+  patterns: RegExp[]
+}> = [
+  {
+    category: "Sawmill",
+    patterns: [/sawmill/i, /sawn/i, /timber/i, /lumber/i, /plank/i],
+  },
+  {
+    category: "Veneer / Plywood",
+    patterns: [/veneer/i, /plywood/i, /peeler/i],
+  },
+  {
+    category: "MDF / Panel Board",
+    patterns: [/mdf/i, /particle\s*board/i, /chip\s*board/i, /panel/i],
+  },
+  {
+    category: "Pulp / Paper",
+    patterns: [/pulp/i, /paper/i],
+  },
+  {
+    category: "Poles / Energy",
+    patterns: [/pole/i, /biomass/i, /pellet/i, /charcoal/i, /energy/i],
+  },
+]
+
+function getProcessorCategories(record: ProcessorRecord): MarketProcessorCategory[] {
+  const sourceText = [record.Products, record.Subcategory, record["Category source"]]
+    .map((value) => String(value ?? ""))
+    .join(" ")
+
+  const matched = processorCategoryRules
+    .filter((rule) => rule.patterns.some((pattern) => pattern.test(sourceText)))
+    .map((rule) => rule.category)
+
+  return matched.length ? matched : ["Sawmill"]
+}
+
+function getProcessorSpecies(record: ProcessorRecord): string[] {
+  const species: string[] = []
+  const eucValues = [
+    record.buyer_specs.euc.prices.g1,
+    record.buyer_specs.euc.grades.g1.dbh_min,
+    record.buyer_specs.euc.grades.g1.h_min,
+  ]
+  const pineValues = [
+    record.buyer_specs.pine.prices.g1,
+    record.buyer_specs.pine.grades.g1.dbh_min,
+    record.buyer_specs.pine.grades.g1.h_min,
+  ]
+
+  if (eucValues.some((value) => hasDatabaseValue(value))) {
+    species.push("Eucalyptus")
+  }
+  if (pineValues.some((value) => hasDatabaseValue(value))) {
+    species.push("Pine")
+  }
+
+  return species.length ? species : ["Mixed/unspecified"]
+}
+
+function getProcessorMinDiameterCm(record: ProcessorRecord) {
+  const diameterValues = numericValues([
+    record.buyer_specs.euc.grades.g1.dbh_min,
+    record.buyer_specs.euc.grades.g2.dbh_min,
+    record.buyer_specs.euc.grades.g3.dbh_min,
+    record.buyer_specs.pine.grades.g1.dbh_min,
+    record.buyer_specs.pine.grades.g2.dbh_min,
+    record.buyer_specs.pine.grades.g3.dbh_min,
+  ])
+
+  if (diameterValues.length === 0) return null
+  return Math.min(...diameterValues)
+}
+
 function getNurserySeedlingPrice(record: NurseryRecord) {
-  const prices = Object.values(record.supply_specs).flatMap((spec) =>
-    ["per_seedling", "UGX", "ugx"].includes(spec.price_mode)
-      ? numericValues(Object.values(spec.prices))
-      : []
-  )
+  const prices = record.genera
+    .flatMap((genus) => genus.varieties.map((option) => option.price.perSeedling))
+    .filter((price): price is number => price != null)
 
   if (prices.length === 0) return undefined
 
@@ -582,22 +665,20 @@ function processorDetails(record: ProcessorRecord): MarketActorDetail[] {
 }
 
 function nurseryDetails(record: NurseryRecord): MarketActorDetail[] {
+  const species = record.genera.flatMap((genus) => genus.species)
+  const contact = record.contact.phone ?? record.contact.other ?? record.contact.person
   return [
-    { label: "County / region", value: formatDatabaseValue(record["Region / county"] ?? "") },
-    { label: "Address / locality", value: formatDatabaseValue(record["Published locality / address"] ?? "") },
-    { label: "Planting material", value: formatDatabaseValue(record.Products) },
-    { label: "Species / clones", value: formatDatabaseValue([
-      ...record.supply_specs.euc.species_or_clones,
-      ...record.supply_specs.pine.species_or_clones,
-      ...record.supply_specs.indigenous.species_or_clones,
-    ]) },
+    { label: "County / region", value: formatDatabaseValue(record.region ?? "") },
+    { label: "Address / locality", value: formatDatabaseValue(record.address ?? "") },
+    { label: "Available genera", value: formatDatabaseValue(record.genera.map((genus) => genus.genus)) },
+    { label: "Species / varieties", value: formatDatabaseValue(species) },
     { label: "Seedling prices", value: formatNurseryPrices(record) },
-    { label: "Total capacity", value: formatDatabaseValue(record["Total capacity"]) },
+    { label: "Total capacity", value: formatDatabaseValue(record.totalCapacity ?? "") },
     { label: "Availability", value: formatNurseryAvailability(record) },
-    { label: "Certification", value: formatCertification(record) },
-    { label: "Contact", value: formatDatabaseValue(record.Contact || record.Phone || "") },
-    { label: "Location confidence", value: formatDatabaseValue(record["Coordinate confidence"] ?? "") },
-    { label: "Location basis", value: formatDatabaseValue(record["Coordinate precision"] ?? "") },
+    { label: "Certification", value: formatDatabaseValue(record.certification ?? "") },
+    { label: "Contact", value: formatDatabaseValue(contact ?? "") },
+    { label: "Location confidence", value: formatDatabaseValue(record.source.coordinateConfidence ?? "") },
+    { label: "Location basis", value: formatDatabaseValue(record.source.coordinatePrecision ?? "") },
   ]
 }
 
@@ -657,7 +738,7 @@ function summarizeProcessorRecord(name: string, record: ProcessorRecord) {
 }
 
 function summarizeNurseryRecord(name: string, record: NurseryRecord) {
-  const products = formatDatabaseValue(record.Products)
+  const products = formatDatabaseValue(record.genera.flatMap((genus) => genus.species))
   return products === "N/A"
     ? `${name} is a mapped tree nursery.`
     : `${name} supplies ${products}.`
@@ -707,22 +788,28 @@ const processorActors = Object.entries(processorDatabase).map(([name, record]) =
       details: processorDetails(record),
       source: getRecordSource(record, "Processor database"),
       g1RoundwoodPriceUgxPerTonne: getProcessorG1RoundwoodPrice(record),
+      processorProfile: {
+        categories: getProcessorCategories(record),
+        species: getProcessorSpecies(record),
+        minDiameterCm: getProcessorMinDiameterCm(record),
+      },
     })
   }
 )
 
-const nurseryActors = Object.entries(nurseryDatabase).map(([name, record]) =>
+const nurseryActors = nurseryRecords.map((record) =>
   {
+    const name = record.name
     const latitude = Number(record.lat)
     const longitude = Number(record.lon)
 
     return actor("nursery", name, latitude, longitude, {
       role: "Nursery",
       summary: summarizeNurseryRecord(name, record),
-      country: getRecordCountry(record, latitude, longitude),
+      country: getRecordCountry({ "Country source": record.country ?? "" }, latitude, longitude),
       details: nurseryDetails(record),
-      source: getRecordSource(record, "Nursery database"),
-      seedlingPriceUgxPerSeedling: getNurserySeedlingPrice(record),
+      source: record.source.database ?? record.source.url ?? "Nursery database",
+      seedlingPriceUsdPerSeedling: getNurserySeedlingPrice(record),
     })
   }
 )

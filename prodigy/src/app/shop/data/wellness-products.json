@@ -9,9 +9,9 @@
     "price": 18.99,
     "currency": "USD",
     "description": "A balanced daily multivitamin supporting energy, immunity, and general wellbeing.",
-    "image": "/veggie.png",
+    "image": "/products/daily-multivitamin.png",
     "imageGallery": [
-      { "url": "/veggie.png", "title": "Daily Multivitamin Complex" },
+      { "url": "/products/daily-multivitamin.png", "title": "Daily Multivitamin Complex" },
       { "url": "/nutritionist1.jpg", "title": "Daily nutrition support" }
     ],
     "tags": ["featured", "popular", "supplements"],
@@ -74,10 +74,10 @@
     "price": 19.5,
     "currency": "USD",
     "description": "Everyday facial moisturizer for all skin types, formulated with ceramides and hyaluronic acid.",
-    "image": "/skin.jpg",
+    "image": "/products/moisturizer-main.png",
     "imageGallery": [
-      { "url": "/skin.jpg", "title": "Hydrating Daily Moisturizer" },
-      { "url": "/skin3.jpg", "title": "Hydration routine" }
+      { "url": "/products/moisturizer-main.png", "title": "Hydrating Daily Moisturizer" },
+      { "url": "/products/moisturizer-1.jpg", "title": "Nuage Ceramide moisturizer" }
     ],
     "tags": ["new", "skincare"],
     "stockStatus": "in-stock",
@@ -94,10 +94,10 @@
     "price": 29.99,
     "currency": "USD",
     "description": "A balanced protein shake designed to support healthy weight management goals.",
-    "image": "/shake1.jpg",
+    "image": "/products/replace-main.png",
     "imageGallery": [
-      { "url": "/shake1.jpg", "title": "Meal Replacement Shake" },
-      { "url": "/mealplan.jpg", "title": "Balanced meal planning" }
+      { "url": "/products/replace-main.png", "title": "Meal Replacement Shake" },
+      { "url": "/products/replace-1.png", "title": "Replace Classic nutritional shake" }
     ],
     "tags": ["popular", "weight-management"],
     "stockStatus": "in-stock",
@@ -134,9 +134,9 @@
     "price": 24.5,
     "currency": "USD",
     "description": "A targeted topical gel from Prodigy Healthcare's skincare range, formulated to even out skin tone and support scar and dark spot management.",
-    "image": "/skin4.jpg",
+    "image": "/products/vitilsi-gel.png",
     "imageGallery": [
-      { "url": "/skin4.jpg", "title": "Vitilsi Gel" },
+      { "url": "/products/vitilsi-gel.png", "title": "Vitilsi Gel" },
       { "url": "/skin2.jpg", "title": "Targeted skincare routine" }
     ],
     "tags": ["featured", "popular", "skincare"],
@@ -158,10 +158,10 @@
     "price": 26.0,
     "currency": "USD",
     "description": "A complete, balanced nutritional supplement shake for adults, supporting energy and recovery alongside a normal diet.",
-    "image": "/shake2.jpg",
+    "image": "/products/lifegain-main.jpg",
     "imageGallery": [
-      { "url": "/shake2.jpg", "title": "Lifegain Adult Nutritional Supplement Shake" },
-      { "url": "/nutritionist1.jpg", "title": "Adult nutritional support" }
+      { "url": "/products/lifegain-main.jpg", "title": "Lifegain Adult Nutritional Supplement Shake" },
+      { "url": "/products/lifegain-1.jpg", "title": "Lifegain vanilla 300g" }
     ],
     "tags": ["new", "popular", "weight-management"],
     "stockStatus": "in-stock",

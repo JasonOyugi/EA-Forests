@@ -1,0 +1,215 @@
+/*
+ * Landing display contract
+ * compact:  < 640px   — one column, touch-first actions
+ * standard: 640–1023  — one column with roomier type and spacing
+ * wide:     1024–1279 — newsletter carousel, editorial feed
+ * canvas:   >= 1280   — full editorial mosaic
+ */
+.landing-page {
+  --landing-gutter: 1rem;
+  --landing-section-space: 4rem;
+  --landing-section-space-compact: 3rem;
+  --landing-title-hero: clamp(2.75rem, 9.7vw, 11rem);
+  --landing-title-display: clamp(2.6rem, 9vw, 11rem);
+  --landing-title-section: clamp(2.25rem, 6.2vw, 7rem);
+  --landing-title-story: clamp(2rem, 4.2vw, 4.5rem);
+  --landing-title-card: clamp(1.75rem, 3.6vw, 3.75rem);
+  --landing-title-card-compact: clamp(1.65rem, 3vw, 3rem);
+  --landing-title-player: clamp(1.9rem, 3.6vw, 3rem);
+  --landing-title-metric: clamp(2.25rem, 4.4vw, 3.75rem);
+  --landing-title-newsletter: clamp(2.75rem, 7.8vw, 10.5rem);
+  --landing-title-newsletter-chapter: clamp(3rem, 9vw, 10.5rem);
+  --landing-title-newsletter-story: clamp(1.35rem, 3.3vw, 3.75rem);
+  --landing-lead-size: clamp(1rem, 0.92rem + 0.32vw, 1.25rem);
+  --text-xs: clamp(0.72rem, 0.68rem + 0.14vw, 0.82rem);
+  --text-xs--line-height: 1.4;
+  --text-sm: clamp(0.84rem, 0.78rem + 0.22vw, 1rem);
+  --text-sm--line-height: 1.5;
+  --text-base: clamp(0.98rem, 0.9rem + 0.28vw, 1.15rem);
+  --text-base--line-height: 1.6;
+  --text-lg: clamp(1.08rem, 0.98rem + 0.34vw, 1.3rem);
+  --text-lg--line-height: 1.55;
+  --text-xl: clamp(1.18rem, 1.05rem + 0.45vw, 1.5rem);
+  --text-xl--line-height: 1.4;
+  --text-2xl: clamp(1.35rem, 1.16rem + 0.62vw, 1.75rem);
+  --text-2xl--line-height: 1.3;
+  --type-body-size: var(--text-base);
+  --type-small-size: var(--text-sm);
+  --landing-story-min-height: clamp(22rem, 105vw, 26rem);
+  --landing-product-min-height: clamp(21rem, 96vw, 24rem);
+  --landing-player-min-height: clamp(20rem, 90vw, 23rem);
+  --landing-metric-pair-min-height: clamp(24rem, 112vw, 27.5rem);
+  font-size: var(--text-base);
+}
+
+.landing-container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--landing-gutter);
+}
+
+.landing-section-space {
+  padding-block: var(--landing-section-space);
+}
+
+.landing-section-space-compact {
+  padding-block: var(--landing-section-space-compact);
+}
+
+.landing-section-intro {
+  margin-bottom: var(--landing-section-space-compact);
+}
+
+.landing-hero-height {
+  min-height: calc(100svh - 4rem);
+  min-height: calc(100dvh - 4rem);
+}
+
+.landing-hero-title,
+.landing-display-title,
+.landing-section-heading,
+.landing-newsletter-heading,
+.landing-newsletter-chapter {
+  max-inline-size: 100%;
+  overflow-wrap: break-word;
+  font-family: var(--font-canals);
+  font-stretch: condensed;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.landing-hero-title,
+.landing-display-title,
+.landing-newsletter-heading,
+.landing-newsletter-chapter {
+  text-transform: uppercase;
+}
+
+.landing-hero-title {
+  font-size: var(--landing-title-hero);
+  line-height: 0.78;
+  letter-spacing: -0.065em;
+}
+
+.landing-display-title {
+  font-size: var(--landing-title-display);
+  line-height: 0.8;
+  letter-spacing: -0.065em;
+}
+
+.landing-section-heading {
+  font-size: var(--landing-title-section);
+  line-height: 0.88;
+  letter-spacing: -0.055em;
+}
+
+.landing-story-title,
+.landing-product-title,
+.landing-player-title,
+.landing-newsletter-story-title {
+  max-inline-size: 100%;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+.landing-story-title {
+  font-size: var(--landing-title-story);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.landing-product-title {
+  font-size: var(--landing-title-card);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.landing-product-title--compact {
+  font-size: var(--landing-title-card-compact);
+}
+
+.landing-player-title {
+  font-size: var(--landing-title-player);
+  letter-spacing: -0.04em;
+}
+
+.landing-metric-value {
+  font-size: var(--landing-title-metric);
+}
+
+.landing-newsletter-heading {
+  font-size: var(--landing-title-newsletter);
+  line-height: 0.8;
+  letter-spacing: -0.065em;
+}
+
+.landing-newsletter-chapter {
+  font-size: var(--landing-title-newsletter-chapter);
+  line-height: 0.74;
+  letter-spacing: -0.07em;
+}
+
+.landing-newsletter-story-title {
+  font-size: var(--landing-title-newsletter-story);
+  line-height: 1.05;
+}
+
+.landing-lead {
+  font-size: var(--landing-lead-size);
+  line-height: 1.65;
+}
+
+.landing-card-action {
+  opacity: 1;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .landing-card-content {
+    transform: none;
+  }
+}
+
+@media (max-width: 79.999rem) {
+  .landing-story-card {
+    min-height: var(--landing-story-min-height);
+  }
+
+  .landing-product-card {
+    min-height: var(--landing-product-min-height);
+  }
+
+  .landing-player-card {
+    min-height: var(--landing-player-min-height);
+  }
+
+  .landing-metric-pair {
+    min-height: var(--landing-metric-pair-min-height);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .landing-card-action {
+    opacity: 0;
+  }
+
+  .group:hover .landing-card-action,
+  .landing-card-action:focus-visible {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 40rem) {
+  .landing-page {
+    --landing-gutter: 1.5rem;
+    --landing-section-space: 5rem;
+    --landing-section-space-compact: 4rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .landing-page {
+    --landing-gutter: 2rem;
+    --landing-section-space: 6rem;
+    --landing-section-space-compact: 5rem;
+  }
+}

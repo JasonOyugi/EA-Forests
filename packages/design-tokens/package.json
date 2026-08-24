@@ -1,0 +1,8 @@
+{
+  "name": "@ea-forests/design-tokens",
+  "version": "0.1.0",
+  "private": true,
+  "exports": {
+    "./brand.css": "./src/brand.css"
+  }
+}

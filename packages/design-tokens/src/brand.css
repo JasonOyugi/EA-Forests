@@ -1,0 +1,25 @@
+:root {
+  --ink: #182219;
+  --ink-soft: #445047;
+  --paper: #f4f1e8;
+  --paper-deep: #e7e2d4;
+  --white: #fffdf7;
+  --forest: #153f2d;
+  --forest-bright: #1f6945;
+  --acid: #d9ef63;
+  --clay: #d87a52;
+  --gold: #dda947;
+  --moss: #6f8c62;
+  --lime: #a7bd55;
+  --sky: #73a9a2;
+  --rule: color-mix(in srgb, var(--ink) 22%, transparent);
+  --shadow: 0 24px 70px color-mix(in srgb, var(--ink) 12%, transparent);
+  --page: 1440px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --section: clamp(5rem, 10vw, 9rem);
+  --radius-sm: 0.75rem;
+  --radius: 1.25rem;
+  --radius-lg: 2rem;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --font-editorial: "Archivo", "Helvetica Neue", Arial, sans-serif;
+}

@@ -228,7 +228,7 @@ function createLocateSiteStep(image: string): FlagshipStep {
 
   return {
     stepNumber: "01",
-    title: "Locate the site",
+    title: "Step 1: Understand the site",
     description,
     longDescription: description,
     cta1: { label: "Site-species matching tool", href: "/shop/seedlings" },
@@ -592,8 +592,8 @@ function FlagshipMarketsMapAd({
             <Badge variant="outline" className="flagship-badge flagship-premium-badge rounded-full px-3 py-1 text-xs uppercase tracking-[0.2em]">
               Market intelligence
             </Badge>
-            <div className="space-y-3 text-primary-foreground">
-              <h2 className="text-3xl font-semibold leading-tight sm:text-4xl md:text-5xl">
+            <div className="space-y-3">
+            <h2 className="type-section-title">
                 What do you do with the forest?
               </h2>
               <p className="text-sm leading-7 sm:text-base">
@@ -629,9 +629,9 @@ function FlagshipMarketsMapAd({
             })}
           </div>
 
-          <Button className="h-auto cursor-pointer rounded-full p-0 text-sm" asChild>
+          <Button className="h-auto cursor-pointer rounded-full p-0 text-sm text-tertiary" asChild>
             <a
-              href="/shop/roundwood"
+              href="/shop/sector-map"
               className="group relative flex min-h-[46px] items-center justify-center overflow-hidden rounded-full px-5 py-3"
             >
               <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
@@ -682,17 +682,17 @@ function FlagshipTestimonialsCarousel({ testimonials }: { testimonials: Flagship
             type="button"
             aria-expanded={isExpanded}
             onClick={() => setIsExpanded((value) => !value)}
-            className="flagship-premium-section group block h-auto w-full rounded-[1.75rem] p-6 text-left text-primary sm:p-7"
+            className="flagship-premium-section group block h-auto w-full rounded-[1.75rem] p-6 text-left text-emerald-400 sm:p-7"
           >
             <div className="flex items-start justify-between gap-4">
               <div className="max-w-3xl space-y-3">
-                <Badge variant="outline" className="flagship-badge rounded-full bg-primary text-primary-foreground px-3 py-1 text-xs uppercase tracking-[0.2em]">
+                <Badge variant="outline" className="flagship-badge rounded-full bg-primary px-3 py-1 text-xs uppercase tracking-[0.2em]">
                   Testimonials
                 </Badge>
-                <h2 className="text-3xl font-semibold text-primary-foreground sm:text-4xl md:text-5xl">
+                <h2 className="type-section-title text-emerald-400">
                   What the investors and experts are saying
                 </h2>
-                <p className="text-sm leading-7 text-primary/75 sm:text-base">
+                <p className="text-sm leading-7 text-white">
                   Practical notes from investors, operators, and forestry specialists reviewing this flagship pathway.
                 </p>
               </div>
@@ -853,16 +853,16 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
             <ScrollReveal distance={24}>
               <div className="space-y-4 sm:space-y-6">
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                  <Badge className="badge-emerald-run border border-emerald-500 bg-emerald-50 text-primary">
+                  <Badge className="badge-emerald-run border border-emerald-500 bg-emerald-300 text-black">
                     {config.eyebrow}
                   </Badge>
                 </div>
 
                 <div className="space-y-3 sm:space-y-4">
-                  <h1 className="max-w-3xl text-2xl font-semibold tracking-tight text-primary sm:text-3xl md:text-5xl lg:text-6xl">
+                  <h1 className="type-section-title max-w-4xl text-foreground">
                     {config.headline}
                   </h1>
-                  <p className="text-sm leading-7 text-primary sm:text-base sm:leading-8 md:text-lg">
+                  <p className="text-sm leading-7 text-muted-foreground sm:text-base sm:leading-8 md:text-lg">
                     {config.summary}
                   </p>
                 </div>
@@ -876,14 +876,14 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
                 return (
                   <ScrollReveal key={metric.label} delay={100 + index * 80}>
                     <BentoTilt className="h-full" maxTilt={2}>
-                      <div className="flagship-premium-hover-card flagship-metric-card flex h-full flex-col items-center rounded-[1.25rem] p-4 text-center sm:rounded-[1.5rem]">
-                        <div className="flagship-card-icon mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/15 text-primary sm:h-12 sm:w-12">
+                      <div className="flagship-premium-hover-card flagship-metric-card flex h-full flex-col items-center rounded-[1.25rem] p-4 text-center group-hover:text-emerald-400 sm:rounded-[1.5rem]">
+                        <div className="flagship-card-icon mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/15 text-emerald-400 sm:h-12 sm:w-12">
                           <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
                         </div>
-                        <div className="text-[0.65rem] uppercase tracking-[0.15em] text-primary/60 sm:text-xs sm:tracking-[0.2em]">
+                        <div className="text-[0.65rem] uppercase tracking-[0.15em] text-muted-foreground sm:text-xs sm:tracking-[0.2em]">
                           {metric.label}
                         </div>
-                        <div className="mt-2 text-sm font-semibold leading-6 text-primary sm:text-base">{metric.value}</div>
+                        <div className="mt-2 text-emerald-400 text-sm font-semibold leading-6">{metric.value}</div>
                       </div>
                     </BentoTilt>
                   </ScrollReveal>
@@ -908,22 +908,22 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
       <section className="flagship-premium-section px-4 py-6 sm:px-6 md:px-8">
         <ScrollReveal delay={150} distance={24}>
           <div className="flagship-managed-shell emerald-border-hover overflow-hidden rounded-[2rem]">
-            <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)] lg:p-10">
+            <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)] lg:items-center lg:p-10">
               <div className="space-y-6">
                 <div className="space-y-4">
-                  <p className="text-xs uppercase tracking-[0.24em] text-primary/60">Our Offer</p>
-                  <h2 className="text-2xl font-semibold text-primary-foreground sm:text-3xl">{config.premiumLabel}</h2>
-                  <p className="max-w-2xl text-sm leading-7 text-primary/80 sm:text-base">{config.premiumSummary}</p>
+                    <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">Our Offer</p>
+                    <h2 className="type-section-title text-foreground">{config.premiumLabel}</h2>
+                    <p className="max-w-2xl text-sm leading-7 text-muted-foreground sm:text-base">{config.premiumSummary}</p>
                 </div>
 
                 <div className="grid gap-3 lg:grid-rows-3">
                   {config.verificationPoints.map((point) => (
                     <div key={point} className="flagship-premium-hover-card flex items-center gap-3 rounded-[1.35rem] p-2">
-                      <div className="flagship-card-icon flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary/15 text-primary-foreground">
+                      <div className="flagship-card-icon flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary/15 text-foreground">
                         <CheckCircle2 className="h-5 w-5" />
                       </div>
 
-                      <p className="text-sm leading-6 text-primary-foreground/82">{point}</p>
+                      <p className="text-sm leading-6 text-foreground">{point}</p>
                     </div>
                   ))}
                 </div>
@@ -933,20 +933,20 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
                 <div className="grid gap-3 sm:grid-rows-2">
                   <BentoTilt className="h-full">
                     <div className="flagship-premium-hover-card flagship-price-card rounded-[1.35rem] p-4 sm:p-5">
-                      <div className="text-xs uppercase tracking-[0.18em] text-primary/60">From</div>
-                      <div className="mt-3 text-2xl font-semibold text-primary sm:text-3xl">
+                      <div className="text-xs uppercase tracking-[0.18em] text-white/60">From</div>
+                      <div className="mt-3 text-2xl font-semibold text-emerald-400 sm:text-3xl">
                         {pricing?.monthlyLabel ?? ""}
                       </div>
-                      <div className="mt-1 text-xs text-primary/70 sm:text-sm">establishment fee</div>
+                      <div className="mt-1 text-xs text-white/70 sm:text-sm">establishment fee</div>
                     </div>
                   </BentoTilt>
                   <BentoTilt className="h-full">
                     <div className="flagship-premium-hover-card flagship-price-card rounded-[1.35rem] p-4 sm:p-5">
-                      <div className="text-xs uppercase tracking-[0.18em] text-primary/60">Or</div>
-                      <div className="mt-3 text-2xl font-semibold text-primary sm:text-3xl">
+                      <div className="text-xs uppercase tracking-[0.18em] text-white/60">Or</div>
+                      <div className="mt-3 text-2xl font-semibold text-emerald-400 sm:text-3xl">
                         {pricing?.yearlyLabel ?? ""}
                       </div>
-                      <div className="mt-1 text-xs text-primary/70 sm:text-sm">
+                      <div className="mt-1 text-xs text-white/70 sm:text-sm">
                         maintenance: {pricing?.maintenanceYearlyLabel ?? ""}
                       </div>
                     </div>
@@ -971,7 +971,7 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
                   <Button
                     asChild
                     variant="outline"
-                    className="emerald-border-hover h-full w-full cursor-pointer rounded-[1.35rem] p-0 text-base transition-all duration-300 hover:bg-secondary/20 hover:text-slate-400 hover:shadow-[0_0_24px_rgba(16,185,129,0.35)]"
+                    className="emerald-border-hover h-full w-full cursor-pointer rounded-[1.35rem] p-0 text-base text-foreground transition-all duration-300 hover:bg-secondary/20 hover:text-emerald-500 hover:shadow-[0_0_24px_rgba(16,185,129,0.35)]"
                   >
                     <a
                       href="#diy-path"
@@ -994,9 +994,9 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
 
             return (
               <ScrollReveal key={step.stepNumber} delay={180 + stepIndex * 80} distance={24}>
-                <div className="relative overflow-hidden rounded-[2rem] p-6 text-primary sm:p-8 lg:p-10">
+                <div className="relative overflow-hidden rounded-[2rem] p-6 text-foreground sm:p-8 lg:p-10">
                   <div className="relative z-10 flex items-start gap-4">
-                    <div className="flagship-card-icon flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/15 text-primary-foreground">
+                    <div className="flagship-card-icon flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary/15 text-foreground">
                       <StepIcon className="h-7 w-7" />
                     </div>
 
@@ -1004,12 +1004,12 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
                       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.18fr)_minmax(260px,0.62fr)] xl:items-center">
                         <div className="space-y-5">
                           <div>
-                            <h3 className="mt-1 text-2xl font-semibold text-primary-foreground sm:text-3xl md:text-4xl">
+                            <h3 className="mt-1 text-2xl font-semibold text-foreground sm:text-3xl md:text-4xl">
                               {step.title}
                             </h3>
                           </div>
 
-                          <p className="text-sm leading-7 text-primary/80 sm:text-base">
+                          <p className="text-sm leading-7 text-muted-foreground sm:text-base">
                             {step.longDescription}
                           </p>
                         </div>
@@ -1021,7 +1021,7 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
                               className="group relative flex min-h-[46px] items-center justify-center overflow-hidden rounded-full px-4 py-3"
                             >
                               <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
-                              <span className="relative z-10 inline-flex items-center group-hover:text-emerald-100">
+                              <span className="relative z-10 inline-flex items-center text-emerald-100">
                                 {step.cta1.label}
                                 <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                               </span>
@@ -1064,21 +1064,21 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
           className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(4,10,18,0.62),rgba(6,14,24,0.48)),radial-gradient(circle_at_top_right,hsl(var(--primary)/0.2),transparent_42%)]"
         />
 
-        <div className="relative z-10 mx-auto space-y-12 text-primary-foreground">
+        <div className="relative z-10 mx-auto space-y-12">
           <ScrollReveal distance={24}>
             <div className="space-y-4">
-              <Badge className="flagship-badge flagship-premium-badge rounded-full px-3 py-1 text-xs uppercase tracking-[0.2em]">
+              <Badge className="flagship-badge flagship-premium-badge rounded-full px-3 py-1 text-emerald-400 text-xs uppercase tracking-[0.2em]">
                 Premium investment
               </Badge>
-              <h2 className="text-4xl font-semibold text-primary sm:text-5xl md:text-6xl">{config.managedTitle}</h2>
-              <p className="text-base leading-8 text-primary/85 sm:text-lg">{config.managedSummary}</p>
+              <h2 className="type-section-title text-white">{config.managedTitle}</h2>
+              <p className="text-base leading-8 text-white/80 sm:text-lg">{config.managedSummary}</p>
             </div>
           </ScrollReveal>
 
           <div className="space-y-6">
             <div className="space-y-2">
-              <h3 className="text-xl font-semibold text-primary-foreground">What we manage for you</h3>
-              <p className="text-sm leading-6 text-primary/75">
+              <h3 className="text-xl font-semibold text-white">What we manage for you</h3>
+              <p className="text-sm leading-6 text-white/75">
                 The managed path moves from setup to operations to intelligence. Each product shifts the details, but the flow stays clear.
               </p>
             </div>
@@ -1201,9 +1201,9 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
           <div className="grid gap-8">
             <ScrollReveal delay={100} distance={24}>
               <div className="h-full rounded-[1.75rem] p-6 sm:p-7">
-                <div className="space-y-3 text-primary-foreground">
-                  <h2 className="text-2xl font-semibold sm:text-3xl">Ready to invest? Have more questions?</h2>
-                  <p className="text-sm leading-6 text-primary/85 sm:text-base">
+                <div className="space-y-3 text-white">
+                <h2 className="type-section-title">Ready to invest? Have more questions?</h2>
+                  <p className="text-sm leading-6 text-white/80 sm:text-base">
                     Choose the fastest route from interest to action, whether you want to move capital now or talk through the mandate first.
                   </p>
                 </div>
@@ -1232,13 +1232,13 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
                   <Button
                     asChild
                     variant="outline"
-                    className="emerald-border-hover w-full rounded-[1.25rem] p-0 text-base text-primary-foreground transition-all duration-300 hover:border-primary/35 hover:bg-primary/15 hover:text-emerald-300 hover:shadow-[0_0_24px_rgba(16,185,129,0.28)]"
+                    className="emerald-border-hover w-full rounded-[1.25rem] p-0 text-base text-primary transition-all duration-300 hover:border-primary/35 hover:bg-primary/15 hover:text-emerald-300 hover:shadow-[0_0_24px_rgba(16,185,129,0.28)]"
                   >
                     <a
                       href="#contact"
                       className="group flex min-h-[64px] items-center justify-between rounded-[1.25rem] px-5 py-4"
                     >
-                      <span className="inline-flex items-center gap-3 text-primary">
+                      <span className="inline-flex items-center gap-3">
                         <span className="relative flex h-5 w-5 items-center justify-center">
                           <PhoneCall className="h-5 w-5 transition-all duration-300 group-hover:scale-0 group-hover:opacity-0" />
                           <CheckCircle2 className="absolute h-5 w-5 scale-75 opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100" />
@@ -1262,14 +1262,14 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
               type="button"
               aria-expanded={isDiyExpanded}
               onClick={() => setIsDiyExpanded((value) => !value)}
-              className="flagship-premium-hover-card group block h-auto w-full rounded-[1.75rem] p-6 text-left text-primary sm:p-7"
+              className="flagship-premium-hover-card group block h-auto w-full rounded-[1.75rem] p-6 text-left text-foreground sm:p-7"
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="space-y-3">
-                  <Badge variant="outline" className="flagship-badge bg-primary text-primary-foreground rounded-full px-3 py-1 text-xs uppercase tracking-[0.2em]">
+                  <Badge variant="outline" className="flagship-badge rounded-full border-border bg-muted px-3 py-1 text-xs uppercase tracking-[0.2em] text-foreground">
                     Prefer to try it yourself?
                   </Badge>
-                  <h2 className="text-3xl font-semibold text-primary-foreground sm:text-4xl md:text-5xl">Consider a few steps</h2>
+                <h2 className="type-section-title text-foreground">Consider a few steps</h2>
                 </div>
 
                 <div
@@ -1300,15 +1300,15 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
                       <BentoTilt className="h-full" maxTilt={3}>
                         <div className="flagship-premium-hover-card h-full rounded-[1.5rem] p-6">
                           <div className="flex items-center gap-3">
-                            <div className="h-px flex-1 bg-gradient-to-r from-primary-foreground/35 to-transparent" />
+                            <div className="h-px flex-1 bg-gradient-to-r from-primary to-transparent" />
                             <div className="flagship-card-icon flex h-10 w-10 items-center justify-center rounded-lg bg-primary/20">
-                              <Icon className="h-5 w-5 text-primary-foreground" />
+                              <Icon className="h-5 w-5 text-primary" />
                             </div>
                           </div>
 
                           <div className="mt-5 flex-1">
-                            <h3 className="text-lg font-semibold text-primary-foreground">{step.title}</h3>
-                            <p className="mt-2 text-sm leading-6 text-primary">{step.description}</p>
+                            <h3 className="text-lg font-semibold text-foreground">{step.title}</h3>
+                            <p className="mt-2 text-sm leading-6 text-muted-foreground">{step.description}</p>
                           </div>
 
                           {"links" in step ? (
@@ -1355,7 +1355,7 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
 
               <div className="flagship-premium-hover-card mt-6 rounded-[1.75rem] p-6 sm:p-7">
                 <div className="space-y-3">
-                  <h2 className="text-2xl font-semibold text-primary sm:text-3xl">
+                  <h2 className="text-2xl font-semibold text-foreground sm:text-3xl">
                     What investors should pay attention to
                   </h2>
                 </div>
@@ -1365,7 +1365,7 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
                     <div key={entry} className="rounded-[1.1rem] border border-primary/10 bg-primary/5 p-4">
                       <div className="flex gap-3">
                         <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary/75" />
-                        <p className="text-sm leading-6 text-primary">{entry}</p>
+                        <p className="text-sm leading-6 text-muted-foreground">{entry}</p>
                       </div>
                     </div>
                   ))}
@@ -1376,7 +1376,7 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
         </div>
       </section>
 
-      <section className="flagship-map-reveal-footer bg-primary-foreground border-t border-primary/10 px-4 py-6 text-sm text-primary/70 sm:px-6 md:px-8">
+      <section className="flagship-map-reveal-footer border-t border-border px-4 py-6 text-sm text-muted-foreground sm:px-6 md:px-8">
         <div className="mx-auto max-w-7xl">
           * Actual numbers depend highly on site and species and are averaged over ideal rotation lengths.
         </div>

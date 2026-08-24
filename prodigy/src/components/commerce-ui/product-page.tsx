@@ -13,10 +13,7 @@ import {
   ChevronDown,
   ExternalLink,
   Heart,
-  Mail,
   MapPinned,
-  Phone,
-  ShoppingCart,
   Store,
   Truck,
   UserRound,
@@ -26,9 +23,7 @@ import { assetUrl, cn, getAppUrl } from "@/lib/utils";
 import ImageCarouselBasic from "./image-carousel-basic";
 import StarRatingFractions from "./star-rating-fractions";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { FloatingCart } from "@/app/shop/components/floating-cart";
-import { useShopStore } from "@/stores/shop-store";
-import { useShallow } from "zustand/react/shallow";
+import { ContactMenu } from "@/app/shop/components/contact-menu";
 import type { ShopItem, ShopItemMapPoint } from "@/app/shop/types";
 
 type ReviewSort = "highToLow" | "lowToHigh" | "newest";
@@ -336,54 +331,6 @@ function pickHospitalCategoryTeasers(itemId: string) {
   ];
 }
 
-function SweepActionButton({
-  href,
-  icon,
-  children,
-  onClick,
-  variant = "outline",
-  className,
-}: {
-  href?: string;
-  icon: React.ReactNode;
-  children: React.ReactNode;
-  onClick?: () => void;
-  variant?: "outline" | "solid";
-  className?: string;
-}) {
-  const buttonClassName =
-    variant === "solid"
-      ? "w-full cursor-pointer overflow-hidden rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
-      : "cursor-pointer overflow-hidden rounded-full border-primary/25 bg-transparent text-foreground hover:bg-primary/5";
-  const iconClassName = variant === "solid" ? "group-hover:animate-[cartShake_0.55s_ease-in-out]" : "group-hover:animate-[cartShake_0.55s_ease-in-out]";
-
-  if (href) {
-    return (
-      <Button variant={variant === "solid" ? "default" : "outline"} className={cn(buttonClassName, className)} asChild>
-        <a href={href} onClick={onClick} className="group relative inline-flex items-center justify-center overflow-hidden rounded-full px-4 py-2.5">
-          <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-primary/25 via-primary/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
-          <span className="relative z-10 inline-flex items-center group-hover:text-primary">
-            <span className={cn("mr-2 inline-flex", iconClassName)}>{icon}</span>
-            {children}
-          </span>
-        </a>
-      </Button>
-    );
-  }
-
-  return (
-    <Button variant={variant === "solid" ? "default" : "outline"} className={cn(buttonClassName, className)} onClick={onClick} asChild>
-      <button type="button" className="group relative inline-flex items-center justify-center overflow-hidden rounded-full px-4 py-2.5">
-        <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-primary-foreground/25 via-primary-foreground/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
-        <span className="relative z-10 inline-flex items-center group-hover:text-primary-foreground">
-          <span className={cn("mr-2 inline-flex", iconClassName)}>{icon}</span>
-          {children}
-        </span>
-      </button>
-    </Button>
-  );
-}
-
 function SiteMapPanel({
   item,
   selectedPoint,
@@ -475,13 +422,11 @@ function PharmacyMapPanel({
   retailers,
   selectedRetailer,
   onSelectRetailer,
-  onAddToCart,
   copy,
 }: {
   retailers: RetailerLocation[];
   selectedRetailer: RetailerLocation;
   onSelectRetailer: (retailer: RetailerLocation) => void;
-  onAddToCart: () => void;
   copy: ReturnType<typeof getCommerceCopy>;
 }) {
   return (
@@ -554,16 +499,9 @@ function PharmacyMapPanel({
               <div className="text-muted-foreground">{selectedRetailer.leadTime}</div>
             </div>
           </div>
-          <div className="grid gap-2 sm:grid-cols-3">
-            <SweepActionButton href={`mailto:${selectedRetailer.email}`} icon={<Mail className="h-4 w-4" />}>
-              Contact
-            </SweepActionButton>
-            <SweepActionButton href={`tel:${selectedRetailer.phone.replace(/\s+/g, "")}`} icon={<Phone className="h-4 w-4" />}>
-              {copy.directCallLabel}
-            </SweepActionButton>
-            <SweepActionButton className="w-full" icon={<ShoppingCart className="h-4 w-4" />} onClick={onAddToCart} variant="solid">
-              Add to cart
-            </SweepActionButton>
+          <div className="flex items-center gap-3">
+            <ContactMenu productName={selectedRetailer.name} className="h-10 w-10" />
+            <span className="text-sm text-muted-foreground">Call, WhatsApp, or email Prodigy Healthcare.</span>
           </div>
         </div>
       </div>
@@ -698,13 +636,7 @@ function CustomerRatingsPanel({
   );
 }
 
-function OtherDealsPanel({ item }: { item: ShopItem }) {
-  const noun = item.shop === "wellness-products"
-    ? "wellness product"
-    : item.shop === "hospital-services"
-      ? "hospital service"
-      : "care program";
-
+function OtherDealsPanel() {
   return (
     <div className="space-y-4">
       <div className="space-y-1">
@@ -760,10 +692,6 @@ function HospitalCategoryRecommendations({ item }: { item: ShopItem }) {
 
 export function ProductPage({
   item,
-  shopItems,
-  quantity,
-  onAdd,
-  onDecrement,
   onFavorite,
   onBack,
   isFavorite = false,
@@ -776,25 +704,6 @@ export function ProductPage({
   const [highlightsOpen, setHighlightsOpen] = React.useState(false);
 
   const activeVariant = item.variants?.find((variant) => variant.id === selectedVariant) ?? defaultVariant;
-  const {
-    cart,
-    checkoutState,
-    removeItem,
-    clearCart,
-    beginFakeCheckout,
-    getCartSubtotal,
-    getCartCount,
-  } = useShopStore(
-    useShallow((state) => ({
-      cart: state.cart,
-      checkoutState: state.checkoutState,
-      removeItem: state.removeItem,
-      clearCart: state.clearCart,
-      beginFakeCheckout: state.beginFakeCheckout,
-      getCartSubtotal: state.getCartSubtotal,
-      getCartCount: state.getCartCount,
-    }))
-  );
   const selectedPoint =
     item.mapPoints?.find((point) => point.id === selectedPointId) ?? item.mapPoints?.[0] ?? null;
   const isSeedlingsItem = item.shop === "wellness-products";
@@ -879,12 +788,6 @@ export function ProductPage({
   const images =
     item.imageGallery && item.imageGallery.length > 0 ? item.imageGallery : [{ url: item.image, title: item.name }];
 
-  const handleAddToCart = () => {
-    onAdd(item.id, activeVariant?.id);
-  };
-  const subtotal = getCartSubtotal(shopItems);
-  const cartCount = getCartCount();
-
   return (
     <div className={cn("space-y-6 p-4", className)}>
       <Button variant="ghost" onClick={onBack} className="mb-4">
@@ -913,14 +816,7 @@ export function ProductPage({
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button variant="outline" size="icon" onClick={handleAddToCart} className="relative">
-                  <ShoppingCart className="h-4 w-4" />
-                  {quantity > 0 ? (
-                    <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold text-primary-foreground">
-                      {quantity}
-                    </span>
-                  ) : null}
-                </Button>
+                <ContactMenu productName={item.name} variant="outline" />
                 {onFavorite ? (
                   <Button variant="outline" size="icon" onClick={() => onFavorite(item.id)}>
                     <Heart className={cn("h-4 w-4", isFavorite ? "fill-red-500 text-red-500" : "")} />
@@ -937,6 +833,9 @@ export function ProductPage({
                 <Badge variant="secondary" className="bg-primary text-primary-foreground animate-pulse opacity-100">
                   Featured
                 </Badge>
+              ) : null}
+              {item.tags.includes("new") ? (
+                <Badge className="bg-emerald-500 text-white hover:bg-emerald-600">New</Badge>
               ) : null}
             </div>
 
@@ -1029,29 +928,9 @@ export function ProductPage({
             <span>{retailerInfo.fulfillment}</span>
           </div>
 
-          <div className="space-y-4">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                {quantity > 0 ? (
-                  <Button variant="outline" onClick={() => onDecrement(item.id)}>
-                    -
-                  </Button>
-                ) : null}
-                {quantity > 0 ? <span className="w-12 text-center font-medium">{quantity}</span> : null}
-                <Button onClick={handleAddToCart} className="cursor-pointer text-base" asChild>
-                  <button type="button" className="group relative overflow-hidden rounded-full">
-                    <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-primary-foreground/25 via-primary-foreground/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
-                    <span className="relative z-10 inline-flex items-center group-hover:text-primary-foreground">
-                      <ShoppingCart className="mr-2 h-4 w-4 group-hover:animate-[cartShake_0.55s_ease-in-out]" />
-                      {quantity > 0 ? "Add more" : "Add to cart"}
-                    </span>
-                  </button>
-                </Button>
-              </div>
-            </div>
-            {quantity > 0 ? (
-              <p className="text-sm text-muted-foreground">{quantity} {item.name.toLowerCase()} in your cart</p>
-            ) : null}
+          <div className="flex items-center gap-3">
+            <ContactMenu productName={item.name} className="h-11 w-11" />
+            <p className="text-sm text-muted-foreground">Call, WhatsApp, or email for availability and ordering.</p>
           </div>
 
           {item.highlights?.length ? (
@@ -1124,7 +1003,6 @@ export function ProductPage({
                 retailers={nearestRetailers}
                 selectedRetailer={selectedRetailer}
                 onSelectRetailer={(retailer) => setSelectedRetailerId(retailer.id)}
-                onAddToCart={handleAddToCart}
                 copy={commerceCopy}
               />
               <CustomerRatingsPanel initialReviews={dummyReviews} initialAverage={rating} />
@@ -1132,7 +1010,7 @@ export function ProductPage({
           ) : (
             <CustomerRatingsPanel initialReviews={dummyReviews} initialAverage={rating} />
           )}
-          <OtherDealsPanel item={item} />
+          <OtherDealsPanel />
           {item.shop === "hospital-services" ? <HospitalCategoryRecommendations item={item} /> : null}
         </div>
       ) : (
@@ -1195,18 +1073,6 @@ export function ProductPage({
         </div>
       )}
 
-      <FloatingCart
-        items={shopItems}
-        cart={cart}
-        subtotal={subtotal}
-        cartCount={cartCount}
-        checkoutActive={checkoutState === "submitted"}
-        onAdd={(itemId) => onAdd(itemId)}
-        onDecrement={onDecrement}
-        onRemove={removeItem}
-        onCheckout={beginFakeCheckout}
-        onClear={clearCart}
-      />
     </div>
   );
 }

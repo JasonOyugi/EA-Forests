@@ -7,6 +7,7 @@ import { LandingFooter } from "./components/footer"
 import { EditorialBriefSection, SectorSearchSection } from "./components/editorial-landing-section"
 import { NewsletterSection } from "./components/newsletter-section"
 import { LandingThemeCustomizerTrigger } from "./components/landing-theme-customizer-trigger"
+import "./landing-responsive.css"
 
 const LandingThemeCustomizer = React.lazy(() =>
   import("./components/landing-theme-customizer").then((module) => ({
@@ -18,7 +19,7 @@ export default function LandingPage() {
   const [themeCustomizerOpen, setThemeCustomizerOpen] = React.useState(false)
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="landing-page min-h-screen bg-[#07110c] text-emerald-50">
       <LandingNavbar />
 
       <main>

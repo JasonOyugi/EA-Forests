@@ -3,13 +3,14 @@ import forestsLandInventory from "../data/forests-land.json"
 import forestryServicesInventory from "../data/forestry-services.json"
 import roundwoodInventory from "../data/roundwood.json"
 import { normalizeFlagshipShopItem } from "../lib/flagship-pricing"
+import { normalizeSeedlingInventory } from "../data/nursery-data"
 import type { ShopDefinition, ShopItem, ShopSlug } from "../types"
 
 export const shopDefinitions: Record<ShopSlug, ShopDefinition> = {
   seedlings: {
     slug: "seedlings",
-    name: "Seed and Seedlings",
-    shortName: "Seed and Seedlings",
+    name: "Seed & Seedlings",
+    shortName: "Seed & Seedlings",
     description: "The best planting material at the right price for forestry and agroforestry establishment.",
     heroTitle: "Seed/Seedling marketplace",
     heroDescription:
@@ -23,9 +24,9 @@ export const shopDefinitions: Record<ShopSlug, ShopDefinition> = {
   },
   "forests-land": {
     slug: "forests-land",
-    name: "Forestry Investment Hub",
-    shortName: "Forests & Land",
-    description: "Invest in profitable forestry assets: browse and select verified services and opportunities to grow your portfolio",
+    name: "Land & services",
+    shortName: "Land & Services",
+    description: "Browse and select verified land and contractor services for your forestry investments",
     heroTitle: "Forestry opportunities",
     heroDescription:
       "Review managed forest blocks, land-linked opportunities, and forestry assets suitable for pipeline development.",
@@ -51,9 +52,9 @@ export const shopDefinitions: Record<ShopSlug, ShopDefinition> = {
     ],
     emptyState: "No forestry services match the current filter.",
   },
-  roundwood: {
-    slug: "roundwood",
-    name: "Markets",
+  "sector-map": {
+    slug: "sector-map",
+    name: "Sector Map",
     shortName: "Markets",
     description: "Structured market access across carbon, roundwood, and sawn timber offtake channels.",
     heroTitle: "Markets marketplace",
@@ -66,13 +67,29 @@ export const shopDefinitions: Record<ShopSlug, ShopDefinition> = {
     ],
     emptyState: "No market listings match the current filter.",
   },
+  "wood-markets-map": {
+    slug: "wood-markets-map",
+    name: "Wood markets",
+    shortName: "Wood markets",
+    description: "Processor locations, buyer specs, and roundwood pricing across East Africa.",
+    heroTitle: "Wood markets map",
+    heroDescription:
+      "A processor-only view of the sector map: buyer locations, grade specs, and delivered roundwood pricing, with nurseries, concessions, and forest reserves removed.",
+    heroBadge: "Roundwood markets",
+    metrics: [
+      { label: "Focus", value: "Processors only" },
+      { label: "Data", value: "Buyer specs · Grades · Prices" },
+    ],
+    emptyState: "No processor listings match the current filter.",
+  },
 }
 
 export const shopInventoryMap: Record<ShopSlug, ShopItem[]> = {
-  seedlings: seedlingsInventory as ShopItem[],
+  seedlings: normalizeSeedlingInventory(seedlingsInventory as ShopItem[]),
   "forests-land": (forestsLandInventory as ShopItem[]).map(normalizeFlagshipShopItem),
   "forestry-services": forestryServicesInventory as ShopItem[],
-  roundwood: roundwoodInventory as ShopItem[],
+  "sector-map": roundwoodInventory as ShopItem[],
+  "wood-markets-map": roundwoodInventory as ShopItem[],
 }
 
 export const shopList = Object.values(shopDefinitions).filter(

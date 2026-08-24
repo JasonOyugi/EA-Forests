@@ -7,18 +7,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { formatCurrency } from "@/app/shop/lib/format";
 import {
   ArrowLeft,
   ChevronDown,
   ExternalLink,
   Heart,
   Leaf,
-  Mail,
   MapPinned,
   Phone,
   Store,
-  ShoppingCart,
   Truck,
   UserRound,
   Users,
@@ -30,15 +27,16 @@ import { Map, MapCircle, MapMarker, MapMarkerClusterGroup, MapPopup, MapTileLaye
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ForestryServicesCountdownBanner } from "@/components/commerce-ui/forestry-services-countdown-banner";
 import { ForestryServicesSaleBanner } from "@/components/commerce-ui/forestry-services-sale-banner";
-import { FloatingCart } from "@/app/shop/components/floating-cart";
-import { useShopStore } from "@/stores/shop-store";
-import { useShallow } from "zustand/react/shallow";
 import type { ShopItem, ShopItemMapPoint } from "@/app/shop/types";
-import nurseryDatabaseJson from "@/app/shop/data/market-databases/nurseries.json";
-import type { DataValue, NurseryRecord } from "@/app/shop/data/market-databases";
+import { getNurserySpeciesOffers } from "@/app/shop/data/nursery-data";
+import {
+  convertMoney,
+  CurrencySelect,
+  formatMoney,
+  useCurrencyRates,
+  type CurrencyCode,
+} from "@/app/models/currency";
 import { useMap } from "react-leaflet";
-
-const nurseryDatabase = nurseryDatabaseJson as Record<string, NurseryRecord>;
 
 type ReviewSort = "highToLow" | "lowToHigh" | "newest";
 
@@ -67,14 +65,17 @@ type RetailerLocation = {
   capacity?: string;
   certification?: string;
   locationConfidence?: string;
+  varieties?: string[];
+  traceability?: string;
+  availability?: string;
+  pricePerSeedling?: number | null;
+  pricePer100Seedlings?: number | null;
+  pricePer500Seedlings?: number | null;
+  pricePer1000Seedlings?: number | null;
 };
 
 interface ProductPageProps {
   item: ShopItem;
-  shopItems: ShopItem[];
-  quantity: number;
-  onAdd: (itemId: string, variant?: string) => void;
-  onDecrement: (itemId: string) => void;
   onFavorite?: (itemId: string) => void;
   onBack: () => void;
   isFavorite?: boolean;
@@ -207,93 +208,59 @@ function getSeedlingVariantVisual(variantId?: string) {
   };
 }
 
-function displayDatabaseValue(value: DataValue | undefined) {
+function displayDatabaseValue(value: string | number | null | undefined) {
   if (value == null || String(value).trim() === "") return "N/A";
   return String(value).trim();
 }
 
-function normalizeNurseryMaterial(value: string) {
-  return value
-    .toLowerCase()
-    .replace(/[×*]/g, "x")
-    .replace(/[().,_/\\-]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function getNurseryMaterials(record: NurseryRecord) {
-  return [
-    String(record.Products ?? ""),
-    ...Object.values(record.supply_specs).flatMap((spec) => [
-      ...spec.material_types,
-      ...spec.species_or_clones,
-    ]),
-  ]
-    .map(normalizeNurseryMaterial)
-    .filter(Boolean);
-}
-
-function nurseryMatchesItem(record: NurseryRecord, item: ShopItem) {
-  const aliases = item.nurseryVarietyAliases?.length
-    ? item.nurseryVarietyAliases
-    : [item.name];
-  const materials = new Set(getNurseryMaterials(record));
-  return aliases.some((alias) => materials.has(normalizeNurseryMaterial(alias)));
-}
-
-function getNurserySpecies(record: NurseryRecord) {
-  const species = Object.values(record.supply_specs).flatMap((spec) => [
-    ...spec.material_types,
-    ...spec.species_or_clones,
-  ]);
-  return species.length ? [...new Set(species)].join(", ") : "N/A";
-}
-
-function getNurseryCountry(record: NurseryRecord) {
-  const country = record["Country source"];
+function getNurseryCountry(country: string | null) {
   return country === "Uganda" || country === "Kenya" || country === "Tanzania"
     ? country
     : "Uganda";
 }
 
-function getNurseryCertification(record: NurseryRecord) {
-  if (record["Country source"] || String(record.Certification).toLowerCase().includes("test record")) {
-    return "N/A";
-  }
-  return displayDatabaseValue(record.Certification);
-}
-
 function getNearestRetailers(item: ShopItem): RetailerLocation[] {
   if (item.shop === "seedlings") {
-    return Object.entries(nurseryDatabase)
-      .filter(([, record]) => nurseryMatchesItem(record, item))
-      .map(([name, record]) => {
-        const country = getNurseryCountry(record);
-        const region = displayDatabaseValue(record["Region / county"]);
-        const address = displayDatabaseValue(record["Published locality / address"]);
-        const contact = displayDatabaseValue(record.Phone || record.Contact);
+    return getNurserySpeciesOffers(item)
+      .map((offer) => {
+        const { nursery } = offer;
+        const country = getNurseryCountry(nursery.country);
+        const region = displayDatabaseValue(nursery.region);
+        const address = displayDatabaseValue(nursery.address);
+        const contact = displayDatabaseValue(nursery.contact.phone || nursery.contact.other);
 
         return {
-          id: `nursery-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`,
-          name,
-          description: displayDatabaseValue(record.Products),
+          id: `nursery-${nursery.id}-${offer.varieties.join("-").toLowerCase().replace(/[^a-z0-9]+/g, "-")}`,
+          name: nursery.name,
+          description: offer.species,
           image: item.image,
-          latitude: Number(record.lat),
-          longitude: Number(record.lon),
+          latitude: Number(nursery.lat),
+          longitude: Number(nursery.lon),
           phone: contact,
           email: "",
           address: address === "N/A" ? [region, country].filter((value) => value !== "N/A").join(", ") : address,
-          leadTime: displayDatabaseValue(record.Transport),
+          leadTime: displayDatabaseValue(nursery.transport),
           country,
           region,
-          species: getNurserySpecies(record),
-          capacity: displayDatabaseValue(record["Total capacity"]),
-          certification: getNurseryCertification(record),
-          locationConfidence: displayDatabaseValue(record["Coordinate confidence"]),
+          species: offer.species,
+          capacity: displayDatabaseValue(offer.capacity),
+          certification: displayDatabaseValue(nursery.certification),
+          locationConfidence: displayDatabaseValue(nursery.source.coordinateConfidence),
+          varieties: offer.varieties,
+          traceability: displayDatabaseValue(offer.traceability),
+          availability: displayDatabaseValue(offer.availability),
+          pricePerSeedling: offer.pricePerSeedling,
+          pricePer100Seedlings: offer.pricePer100Seedlings,
+          pricePer500Seedlings: offer.pricePer500Seedlings,
+          pricePer1000Seedlings: offer.pricePer1000Seedlings,
         };
       })
       .filter((nursery) => Number.isFinite(nursery.latitude) && Number.isFinite(nursery.longitude))
-      .sort((a, b) => a.country.localeCompare(b.country) || a.name.localeCompare(b.name));
+      .sort((a, b) =>
+        Number(b.pricePerSeedling != null) - Number(a.pricePerSeedling != null) ||
+        a.country.localeCompare(b.country) ||
+        a.name.localeCompare(b.name)
+      );
   }
 
   const retailer = getRetailerInfo(item.shop);
@@ -593,14 +560,12 @@ function RetailerMapPanel({
   retailers,
   selectedRetailer,
   onSelectRetailer,
-  onAddToCart,
   copy,
   markerKind = "store",
 }: {
   retailers: RetailerLocation[];
   selectedRetailer: RetailerLocation | null;
   onSelectRetailer: (retailer: RetailerLocation) => void;
-  onAddToCart: () => void;
   copy: ReturnType<typeof getCommerceCopy>;
   markerKind?: "nursery" | "store";
 }) {
@@ -616,7 +581,7 @@ function RetailerMapPanel({
   const mapCenter = selectedRetailer
     ? [selectedRetailer.latitude, selectedRetailer.longitude] as [number, number]
     : getRetailerMapCenter(visibleRetailers);
-  const selectedNurseryRating = selectedRetailer
+  const selectedVendorRating = selectedRetailer
     ? deriveRatingFromId(selectedRetailer.id)
     : null;
   const markerNodes = visibleRetailers.map((retailer) => (
@@ -650,11 +615,14 @@ function RetailerMapPanel({
             <div className="grid gap-2 text-sm">
               <p><span className="font-medium">Country:</span> {retailer.country ?? "N/A"}</p>
               <p><span className="font-medium">County / region:</span> {retailer.region ?? "N/A"}</p>
-              <p><span className="font-medium">Planting material:</span> {retailer.description}</p>
-              {markerKind === "nursery" ? (
-                <>
-                  <p><span className="font-medium">Species / clones:</span> {retailer.species ?? "N/A"}</p>
-                  <p><span className="font-medium">Capacity:</span> {retailer.capacity ?? "N/A"}</p>
+                  <p><span className="font-medium">Planting material:</span> {retailer.description}</p>
+                  {markerKind === "nursery" ? (
+                    <>
+                  <p><span className="font-medium">Species:</span> {retailer.species ?? "N/A"}</p>
+                  <p><span className="font-medium">Variety:</span> {retailer.varieties?.join(", ") ?? "N/A"}</p>
+                  <p><span className="font-medium">Availability:</span> {retailer.availability ?? "N/A"}</p>
+                  <p><span className="font-medium">Variety capacity:</span> {retailer.capacity ?? "N/A"}</p>
+                  <p><span className="font-medium">Traceability:</span> {retailer.traceability ?? "N/A"}</p>
                   <p><span className="font-medium">Certification:</span> {retailer.certification ?? "N/A"}</p>
                   <p><span className="font-medium">Location confidence:</span> {retailer.locationConfidence ?? "N/A"}</p>
                 </>
@@ -671,16 +639,6 @@ function RetailerMapPanel({
                   {copy.quickActionLabel}
                 </SweepActionButton>
               ) : null}
-              <SweepActionButton
-                icon={<ShoppingCart className="h-4 w-4" />}
-                onClick={() => {
-                  onSelectRetailer(retailer);
-                  onAddToCart();
-                }}
-                variant="solid"
-              >
-                Add to cart
-              </SweepActionButton>
             </div>
           </div>
         </div>
@@ -728,7 +686,7 @@ function RetailerMapPanel({
         ) : null}
       </div>
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]">
-        <div className="h-[430px] overflow-hidden rounded-2xl border border-primary/20">
+        <div className="overflow-hidden rounded-2xl border border-primary/20">
           <Map center={mapCenter} zoom={markerKind === "nursery" ? 5 : 8} className="h-full w-full">
             <MapTileLayer
               url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
@@ -764,17 +722,17 @@ function RetailerMapPanel({
             <h3 className="mt-3 text-xl font-semibold">{selectedRetailer.name}</h3>
           </div>
           <div className="grid gap-3">
-            {markerKind === "nursery" && selectedNurseryRating ? (
+            {selectedVendorRating ? (
               <div className="border-b border-primary/20 pb-3 text-sm">
-                <div className="font-medium">Nursery rating</div>
+                <div className="font-medium">{markerKind === "nursery" ? "Nursery rating" : "Vendor rating"}</div>
                 <div className="mt-1 flex items-center gap-2">
                   <StarRatingFractions
-                    value={selectedNurseryRating.rating}
+                    value={selectedVendorRating.rating}
                     readOnly
                     iconSize={15}
                   />
                   <span className="text-muted-foreground">
-                    {selectedNurseryRating.rating.toFixed(2)}/5 ({selectedNurseryRating.reviewCount})
+                    {selectedVendorRating.rating.toFixed(2)}/5 ({selectedVendorRating.reviewCount})
                   </span>
                 </div>
               </div>
@@ -790,12 +748,24 @@ function RetailerMapPanel({
                   <div className="text-muted-foreground">{selectedRetailer.description}</div>
                 </div>
                 <div className="border-b border-primary/20 pb-3 text-sm">
-                  <div className="font-medium">Species / clones</div>
+                  <div className="font-medium">Species</div>
                   <div className="text-muted-foreground">{selectedRetailer.species ?? "N/A"}</div>
                 </div>
                 <div className="border-b border-primary/20 pb-3 text-sm">
-                  <div className="font-medium">Capacity</div>
+                  <div className="font-medium">Variety</div>
+                  <div className="text-muted-foreground">{selectedRetailer.varieties?.join(", ") ?? "N/A"}</div>
+                </div>
+                <div className="border-b border-primary/20 pb-3 text-sm">
+                  <div className="font-medium">Availability</div>
+                  <div className="text-muted-foreground">{selectedRetailer.availability ?? "N/A"}</div>
+                </div>
+                <div className="border-b border-primary/20 pb-3 text-sm">
+                  <div className="font-medium">Variety capacity</div>
                   <div className="text-muted-foreground">{selectedRetailer.capacity ?? "N/A"}</div>
+                </div>
+                <div className="border-b border-primary/20 pb-3 text-sm">
+                  <div className="font-medium">Traceability</div>
+                  <div className="text-muted-foreground">{selectedRetailer.traceability ?? "N/A"}</div>
                 </div>
                 <div className="border-b border-primary/20 pb-3 text-sm">
                   <div className="font-medium">Certification</div>
@@ -813,20 +783,8 @@ function RetailerMapPanel({
               </div>
             )}
           </div>
-          <div className="grid gap-2 sm:grid-cols-2">
-            {selectedRetailer.email ? (
-              <SweepActionButton href={`mailto:${selectedRetailer.email}`} icon={<Mail className="h-4 w-4" />}>
-                Contact
-              </SweepActionButton>
-            ) : null}
-            {selectedRetailer.phone !== "N/A" ? (
-              <SweepActionButton href={`tel:${selectedRetailer.phone.replace(/\s+/g, "")}`} icon={<Phone className="h-4 w-4" />}>
-                {copy.directCallLabel}
-              </SweepActionButton>
-            ) : null}
-          </div>
-          <SweepActionButton className="w-full" icon={<ShoppingCart className="h-4 w-4" />} onClick={onAddToCart} variant="solid">
-            Add to cart
+          <SweepActionButton className="w-full" href={`tel:${selectedRetailer.phone.replace(/\s+/g, "")}`} icon={<Phone className="h-4 w-4" />}>
+            {copy.directCallLabel}
           </SweepActionButton>
         </div>
         ) : (
@@ -998,10 +956,6 @@ function OtherDealsPanel({ item }: { item: ShopItem }) {
 
 export function ProductPage({
   item,
-  shopItems,
-  quantity,
-  onAdd,
-  onDecrement,
   onFavorite,
   onBack,
   isFavorite = false,
@@ -1012,44 +966,59 @@ export function ProductPage({
   const [selectedPointId, setSelectedPointId] = React.useState<string>(item.mapPoints?.[0]?.id ?? "");
   const [optionsOpen, setOptionsOpen] = React.useState(false);
   const [highlightsOpen, setHighlightsOpen] = React.useState(false);
+  const [currency, setCurrency] = React.useState<CurrencyCode>("USD");
+  const apiBaseUrl = React.useMemo(
+    () => (import.meta.env.VITE_API_URL?.replace(/\/$/, "") || "/api"),
+    []
+  );
+  const currencyRates = useCurrencyRates(apiBaseUrl);
 
   const activeVariant = item.variants?.find((variant) => variant.id === selectedVariant) ?? defaultVariant;
-  const {
-    cart,
-    checkoutState,
-    removeItem,
-    clearCart,
-    beginFakeCheckout,
-    getCartSubtotal,
-    getCartCount,
-  } = useShopStore(
-    useShallow((state) => ({
-      cart: state.cart,
-      checkoutState: state.checkoutState,
-      removeItem: state.removeItem,
-      clearCart: state.clearCart,
-      beginFakeCheckout: state.beginFakeCheckout,
-      getCartSubtotal: state.getCartSubtotal,
-      getCartCount: state.getCartCount,
-    }))
-  );
   const selectedPoint =
     item.mapPoints?.find((point) => point.id === selectedPointId) ?? item.mapPoints?.[0] ?? null;
   const isSeedlingsItem = item.shop === "seedlings";
   const isLandItem = item.tags.includes("land");
+  const isLandServicesItem = isLandItem || item.shop === "forestry-services";
   const isEnhancedCommerceItem = item.shop === "seedlings" || item.shop === "forestry-services" || isLandItem;
   const seedlingVariantVisual = getSeedlingVariantVisual(activeVariant?.id);
   const { rating, reviewCount } = React.useMemo(() => deriveRatingFromId(item.id), [item.id]);
   const retailerInfo = React.useMemo(() => getRetailerInfo(item.shop), [item.shop]);
   const commerceCopy = React.useMemo(() => getCommerceCopy(item.shop), [item.shop]);
   const nearestRetailers = React.useMemo(() => getNearestRetailers(item), [item]);
+  const [selectedVariety, setSelectedVariety] = React.useState("");
+  const availableVarieties = React.useMemo(
+    () => Array.from(new Set(nearestRetailers.flatMap((retailer) => retailer.varieties ?? []))),
+    [nearestRetailers]
+  );
+  const activeVariety = availableVarieties.includes(selectedVariety)
+    ? selectedVariety
+    : availableVarieties[0] ?? "";
+  const filteredRetailers = React.useMemo(
+    () =>
+      !isSeedlingsItem || !activeVariety
+        ? nearestRetailers
+        : nearestRetailers.filter((retailer) => retailer.varieties?.includes(activeVariety)),
+    [activeVariety, isSeedlingsItem, nearestRetailers]
+  );
   const [selectedRetailerId, setSelectedRetailerId] = React.useState<string>(nearestRetailers[0]?.id ?? "");
   const selectedRetailer =
-    nearestRetailers.find((retailer) => retailer.id === selectedRetailerId) ?? nearestRetailers[0] ?? null;
+    filteredRetailers.find((retailer) => retailer.id === selectedRetailerId) ?? filteredRetailers[0] ?? null;
+  const mappedSupplierCount = isSeedlingsItem
+    ? new Set(filteredRetailers.map((retailer) => retailer.name)).size
+    : item.supplierCount ?? nearestRetailers.length;
+
+  const selectedNurseryPrice = (count: number) => {
+    if (!selectedRetailer) return null;
+    if (count === 1) return selectedRetailer.pricePerSeedling ?? null;
+    if (count === 100) return selectedRetailer.pricePer100Seedlings ?? null;
+    if (count === 500) return selectedRetailer.pricePer500Seedlings ?? null;
+    if (count === 1000) return selectedRetailer.pricePer1000Seedlings ?? null;
+    return null;
+  };
 
   React.useEffect(() => {
-    setSelectedRetailerId(nearestRetailers[0]?.id ?? "");
-  }, [nearestRetailers]);
+    setSelectedRetailerId(filteredRetailers[0]?.id ?? "");
+  }, [filteredRetailers]);
 
   const dummyReviews = React.useMemo(
     () => [
@@ -1123,38 +1092,44 @@ export function ProductPage({
 
   const images =
     item.imageGallery && item.imageGallery.length > 0 ? item.imageGallery : [{ url: item.image, title: item.name }];
-
-  const handleAddToCart = () => {
-    onAdd(item.id, activeVariant?.id);
-  };
-  const subtotal = getCartSubtotal(shopItems);
-  const cartCount = getCartCount();
+  const displayCurrency = isSeedlingsItem ? currency : item.currency as CurrencyCode;
+  const activePrice = isSeedlingsItem
+    ? selectedNurseryPrice(activeVariant?.count ?? 1)
+    : activeVariant?.price ?? item.price;
+  const activePriceAvailable = isSeedlingsItem
+    ? activePrice != null
+    : item.priceAvailable !== false;
+  const displayPrice = (value: number | null | undefined) =>
+    formatMoney(
+      convertMoney(value, item.currency as CurrencyCode, displayCurrency, currencyRates.rates),
+      displayCurrency
+    );
 
   return (
-    <div className={cn("space-y-6 p-4", className)}>
+    <div className={cn("min-w-0 space-y-6 px-3 py-5 sm:px-6 sm:py-6 lg:p-8", className)}>
       <Button variant="ghost" onClick={onBack} className="mb-4">
         <ArrowLeft className="mr-2 h-4 w-4" />
         Back to products
       </Button>
 
-      <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(320px,1fr)]">
-        <div className="space-y-4">
+      <div className="grid min-w-0 items-start gap-6 lg:grid-cols-2">
+        <div className="min-w-0 space-y-4">
           <ImageCarouselBasic images={images} aspectRatio="square" showThumbs className="w-full" />
         </div>
 
-        <div className="space-y-5">
+        <div className="min-w-0 space-y-5">
           <div className="space-y-3">
-            <div className="flex items-start justify-between">
-              <div className="space-y-1.5">
+            <div className="flex min-w-0 items-start justify-between gap-3">
+              <div className="min-w-0 space-y-1.5">
                 <div className="flex flex-wrap items-center gap-2">
                   {item.featuredLabel ? <Badge className="bg-black text-white">{item.featuredLabel}</Badge> : null}
                   {item.subtitle ? <Badge variant="outline">{item.subtitle}</Badge> : null}
                 </div>
-                <h1 className="text-3xl font-bold">{item.name}</h1>
-                {isSeedlingsItem ? (
+              <h1 className="type-display-title max-w-full break-words [overflow-wrap:anywhere] sm:max-w-[14ch]">{item.name}</h1>
+                {isSeedlingsItem || isLandServicesItem ? (
                   <div className="text-sm text-muted-foreground">
-                    {item.supplierCount ?? nearestRetailers.length} mapped nursery
-                    {(item.supplierCount ?? nearestRetailers.length) === 1 ? "" : " suppliers"}
+                    {mappedSupplierCount} mapped {item.shop === "seedlings" ? "nursery " : ""}supplier
+                    {mappedSupplierCount === 1 ? "" : "s"}
                   </div>
                 ) : (
                   <div className="flex items-center gap-2">
@@ -1166,14 +1141,6 @@ export function ProductPage({
                 )}
               </div>
               <div className="flex gap-2">
-                <Button variant="outline" size="icon" onClick={handleAddToCart} className="relative">
-                  <ShoppingCart className="h-4 w-4" />
-                  {quantity > 0 ? (
-                    <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold text-primary-foreground">
-                      {quantity}
-                    </span>
-                  ) : null}
-                </Button>
                 {onFavorite ? (
                   <Button variant="outline" size="icon" onClick={() => onFavorite(item.id)}>
                     <Heart className={cn("h-4 w-4", isFavorite ? "fill-red-500 text-red-500" : "")} />
@@ -1187,17 +1154,40 @@ export function ProductPage({
                 {item.stockStatus === "quote" ? "Quote required" : item.stockStatus}
               </Badge>
               {item.tags.includes("featured") ? (
-                <Badge variant="secondary" className="bg-primary text-primary-foreground animate-pulse opacity-100">
+                <Badge variant="secondary" className="!bg-white !text-zinc-950 animate-pulse opacity-100 dark:!bg-white dark:!text-zinc-950">
                   Featured
                 </Badge>
               ) : null}
             </div>
 
-            <p className="text-base text-muted-foreground">{item.description}</p>
+            <p className="type-body-copy text-muted-foreground">{item.description}</p>
             {item.evidenceNote ? (
               <p className="text-xs leading-5 text-muted-foreground">
                 {item.evidenceNote}
               </p>
+            ) : null}
+
+            {isSeedlingsItem ? (
+              <div className="flex flex-wrap items-end gap-3">
+                <div className="w-40">
+                  <CurrencySelect value={currency} onChange={setCurrency} rateSource={currencyRates.source} />
+                </div>
+                {availableVarieties.length > 0 ? (
+                  <label className="w-52 space-y-2 text-sm">
+                    <span className="font-medium text-amber-700 dark:text-amber-300">Variety</span>
+                    <Select value={activeVariety} onValueChange={setSelectedVariety}>
+                      <SelectTrigger className="border-amber-500/60 bg-amber-100/60 text-amber-950 focus:ring-amber-500 dark:bg-amber-950/40 dark:text-amber-100">
+                        <SelectValue placeholder="Choose variety" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {availableVarieties.map((variety) => (
+                          <SelectItem key={variety} value={variety}>{variety}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </label>
+                ) : null}
+              </div>
             ) : null}
 
             <div
@@ -1208,13 +1198,21 @@ export function ProductPage({
                   : "border-primary/20 bg-primary/5 text-foreground"
               )}
             >
-              <div className="flex items-center gap-2 text-4xl font-bold">
-                {formatCurrency(activeVariant?.price ?? item.price, item.currency)}
-                <span className={cn("ml-2 text-sm font-normal", isSeedlingsItem ? "text-current/80" : "text-muted-foreground")}>{activeUnitLabel}</span>
+              {isSeedlingsItem && selectedRetailer ? (
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[.12em] text-current/75">
+                  Selected nursery: {selectedRetailer.name}
+                  {selectedRetailer.varieties?.length ? ` · ${selectedRetailer.varieties.join(", ")}` : ""}
+                </p>
+              ) : null}
+              <div className="flex flex-wrap items-end gap-2 text-4xl font-bold">
+                {activePriceAvailable ? displayPrice(activePrice) : "Price unavailable"}
+                {activePriceAvailable ? (
+                  <span className={cn("mb-1 ml-2 text-sm font-normal", isSeedlingsItem ? "text-current/80" : "text-muted-foreground")}>{activeUnitLabel}</span>
+                ) : null}
               </div>
               {activeVariant?.secondaryPrice ? (
                 <p className={cn("mt-2 text-sm", isSeedlingsItem ? "text-current/78" : "text-muted-foreground")}>
-                  Maintenance {formatCurrency(activeVariant.secondaryPrice, item.currency)}{" "}
+                  Maintenance {displayPrice(activeVariant.secondaryPrice)}{" "}
                   {activeVariant.secondaryUnitLabel}
                 </p>
               ) : null}
@@ -1229,7 +1227,7 @@ export function ProductPage({
 
           <Separator />
 
-          <Collapsible open={optionsOpen} onOpenChange={setOptionsOpen}>
+          {item.variants?.length ? <Collapsible open={optionsOpen} onOpenChange={setOptionsOpen}>
             <div className="rounded-2xl border border-transparent bg-transparent">
               <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 text-left">
                 <div>
@@ -1243,8 +1241,12 @@ export function ProductPage({
               <CollapsibleContent>
                 <div className="grid gap-3 border-t border-border px-4 py-4">
                   {item.variants?.length ? (
-                    item.variants.map((variant) => (
-                      <button
+                    item.variants.map((variant) => {
+                      const optionPrice = isSeedlingsItem
+                        ? selectedNurseryPrice(variant.count)
+                        : variant.price;
+
+                      return <button
                         key={variant.id}
                         type="button"
                         onClick={() => setSelectedVariant(variant.id)}
@@ -1262,54 +1264,29 @@ export function ProductPage({
                           {variant.badge ? <Badge variant="outline">{variant.badge}</Badge> : null}
                         </div>
                         <div className="mt-1 text-sm text-muted-foreground">
-                          {formatCurrency(variant.price, item.currency)} {variant.unitLabel}
+                          {optionPrice == null ? "Price unavailable" : `${displayPrice(optionPrice)} ${variant.unitLabel}`}
                         </div>
                         {variant.secondaryPrice ? (
                           <div className="text-sm text-muted-foreground">
-                            {formatCurrency(variant.secondaryPrice, item.currency)} {variant.secondaryUnitLabel}
+                            {displayPrice(variant.secondaryPrice)} {variant.secondaryUnitLabel}
                           </div>
                         ) : null}
                         {variant.description ? <div className="mt-2 text-xs text-muted-foreground">{variant.description}</div> : null}
                       </button>
-                    ))
+                    })
                   ) : (
                     <p className="text-sm text-muted-foreground">No variants available.</p>
                   )}
                 </div>
               </CollapsibleContent>
             </div>
-          </Collapsible>
+          </Collapsible> : null}
 
           <Separator />
 
           <div className="flex items-center gap-3 text-sm text-muted-foreground">
             <Truck className="h-4 w-4" />
             <span>{retailerInfo.fulfillment}</span>
-          </div>
-
-          <div className="space-y-4">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                {quantity > 0 ? (
-                  <Button variant="outline" onClick={() => onDecrement(item.id)}>
-                    -
-                  </Button>
-                ) : null}
-                {quantity > 0 ? <span className="w-12 text-center font-medium">{quantity}</span> : null}
-                <Button onClick={handleAddToCart} className="cursor-pointer text-base" asChild>
-                  <button type="button" className="group relative overflow-hidden rounded-full">
-                    <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-primary-foreground/25 via-primary-foreground/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
-                    <span className="relative z-10 inline-flex items-center group-hover:text-primary-foreground">
-                      <ShoppingCart className="mr-2 h-4 w-4 group-hover:animate-[cartShake_0.55s_ease-in-out]" />
-                      {quantity > 0 ? "Add more" : "Add to cart"}
-                    </span>
-                  </button>
-                </Button>
-              </div>
-            </div>
-            {quantity > 0 ? (
-              <p className="text-sm text-muted-foreground">{quantity} {item.name.toLowerCase()} in your cart</p>
-            ) : null}
           </div>
 
           {item.highlights?.length ? (
@@ -1348,50 +1325,23 @@ export function ProductPage({
 
       {selectedPoint ? <SiteMapPanel item={item} selectedPoint={selectedPoint} onSelectPoint={(point) => setSelectedPointId(point.id)} /> : null}
 
-      <div className="grid gap-8 md:grid-cols-1">
-        <div className="space-y-4">
-          <CardTitle>Specifications</CardTitle>
-          <div className="space-y-3">
-            <div className="flex justify-between gap-3">
-              <span className="text-muted-foreground">Type</span>
-              <span>{item.materialType ?? item.kind}</span>
-            </div>
-            <div className="flex justify-between gap-3">
-              <span className="text-muted-foreground">Primary unit</span>
-              <span className="text-right">{activeUnitLabel}</span>
-            </div>
-            <div className="flex justify-between gap-3">
-              <span className="text-muted-foreground">Stock status</span>
-              <span>{item.stockStatus}</span>
-            </div>
-            {selectedPoint?.metrics?.map((metric) => (
-              <div key={metric.label} className="flex justify-between gap-3">
-                <span className="text-muted-foreground">{metric.label}</span>
-                <span className="text-right">{metric.value}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {isEnhancedCommerceItem && (selectedRetailer || isSeedlingsItem) ? (
         <div className="space-y-6">
           <div
             className={cn(
               "items-start gap-6",
-              !isSeedlingsItem &&
+              !isSeedlingsItem && !isLandServicesItem &&
                 "grid xl:grid-cols-[minmax(0,1.18fr)_minmax(360px,0.82fr)]"
             )}
           >
             <RetailerMapPanel
-              retailers={nearestRetailers}
+              retailers={filteredRetailers}
               selectedRetailer={selectedRetailer}
               onSelectRetailer={(retailer) => setSelectedRetailerId(retailer.id)}
-              onAddToCart={handleAddToCart}
               copy={commerceCopy}
               markerKind={isSeedlingsItem ? "nursery" : "store"}
             />
-            {!isSeedlingsItem ? (
+            {!isSeedlingsItem && !isLandServicesItem ? (
               <CustomerRatingsPanel initialReviews={dummyReviews} initialAverage={rating} />
             ) : null}
           </div>
@@ -1457,18 +1407,6 @@ export function ProductPage({
         </div>
       )}
 
-      <FloatingCart
-        items={shopItems}
-        cart={cart}
-        subtotal={subtotal}
-        cartCount={cartCount}
-        checkoutActive={checkoutState === "submitted"}
-        onAdd={(itemId) => onAdd(itemId)}
-        onDecrement={onDecrement}
-        onRemove={removeItem}
-        onCheckout={beginFakeCheckout}
-        onClear={clearCart}
-      />
     </div>
   );
 }

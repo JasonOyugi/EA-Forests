@@ -1,158 +1,5 @@
 [
   {
-    "id": "seedlings-gu-7-gu-8",
-    "slug": "gu-7-gu-8-seedlings",
-    "shop": "seedlings",
-    "name": "Eucalyptus GU 7 / GU 8",
-    "species": "Eucalyptus",
-    "materialType": "Clonal material",
-    "nurseryVarietyAliases": [
-      "GU 7",
-      "GU 8"
-    ],
-    "supplierCount": 1,
-    "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
-    "kind": "product",
-    "unitLabel": "per package",
-    "price": 38.99,
-    "currency": "USD",
-    "description": "Named clonal eucalyptus material. The map only includes nurseries whose records explicitly list GU 7 or GU 8.",
-    "image": "https://files.crtgroupstorage.com/assets/silviculture/627B295A-A403-A78E-B34A-2650F3016798.jpg",
-    "tags": [
-      "featured",
-      "clonal",
-      "timber"
-    ],
-    "stockStatus": "limited",
-    "domain": "timber",
-    "featured": true,
-    "variants": [
-      {
-        "id": "small",
-        "label": "100 seedlings",
-        "count": 100,
-        "price": 38.99,
-        "unitLabel": "per 100 seedlings"
-      },
-      {
-        "id": "medium",
-        "label": "500 seedlings",
-        "count": 500,
-        "price": 179.35,
-        "unitLabel": "per 500 seedlings"
-      },
-      {
-        "id": "large",
-        "label": "1,000 seedlings",
-        "count": 1000,
-        "price": 343.11,
-        "unitLabel": "per 1,000 seedlings"
-      }
-    ]
-  },
-  {
-    "id": "seedlings-gc-550",
-    "slug": "gc-550-seedlings",
-    "shop": "seedlings",
-    "name": "Eucalyptus GC 550",
-    "species": "Eucalyptus",
-    "materialType": "Clonal material",
-    "nurseryVarietyAliases": [
-      "GC 550"
-    ],
-    "supplierCount": 1,
-    "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
-    "kind": "product",
-    "unitLabel": "per package",
-    "price": 38.99,
-    "currency": "USD",
-    "description": "Named eucalyptus clone with supplier availability tied directly to nursery catalogue records.",
-    "image": "https://files.crtgroupstorage.com/assets/silviculture/63DAD0BA-CC9F-0B9C-655B-546A6A26E8A7.jpg",
-    "tags": [
-      "featured",
-      "clonal",
-      "timber"
-    ],
-    "stockStatus": "limited",
-    "domain": "timber",
-    "featured": true,
-    "variants": [
-      {
-        "id": "small",
-        "label": "100 seedlings",
-        "count": 100,
-        "price": 38.99,
-        "unitLabel": "per 100 seedlings"
-      },
-      {
-        "id": "medium",
-        "label": "500 seedlings",
-        "count": 500,
-        "price": 179.35,
-        "unitLabel": "per 500 seedlings"
-      },
-      {
-        "id": "large",
-        "label": "1,000 seedlings",
-        "count": 1000,
-        "price": 343.11,
-        "unitLabel": "per 1,000 seedlings"
-      }
-    ]
-  },
-  {
-    "id": "seedlings-grandis-urophylla",
-    "slug": "grandis-urophylla-seedlings",
-    "shop": "seedlings",
-    "name": "Eucalyptus grandis × urophylla",
-    "species": "Eucalyptus",
-    "materialType": "Hybrid / clonal material",
-    "nurseryVarietyAliases": [
-      "Grandis x Urophylla",
-      "Eucalyptus grandis x urophylla"
-    ],
-    "supplierCount": 1,
-    "evidenceNote": "Genetic material drawn from Information Pack - Large processors_v2.pptx; nursery supply is matched independently.",
-    "kind": "product",
-    "unitLabel": "per package",
-    "price": 39.99,
-    "currency": "USD",
-    "description": "Hybrid material highlighted in the processor information pack for wood-quality potential; suitability remains site dependent.",
-    "image": "https://files.crtgroupstorage.com/assets/silviculture/627B295A-A403-A78E-B34A-2650F3016798.jpg",
-    "tags": [
-      "featured",
-      "hybrid",
-      "deck-evidence",
-      "timber"
-    ],
-    "stockStatus": "limited",
-    "domain": "timber",
-    "featured": true,
-    "variants": [
-      {
-        "id": "small",
-        "label": "100 seedlings",
-        "count": 100,
-        "price": 39.99,
-        "unitLabel": "per 100 seedlings"
-      },
-      {
-        "id": "medium",
-        "label": "500 seedlings",
-        "count": 500,
-        "price": 183.95,
-        "unitLabel": "per 500 seedlings"
-      },
-      {
-        "id": "large",
-        "label": "1,000 seedlings",
-        "count": 1000,
-        "price": 351.91,
-        "unitLabel": "per 1,000 seedlings"
-      }
-    ]
-  },
-  {
     "id": "seedlings-eucalyptus-grandis",
     "slug": "eucalyptus-grandis-seedlings",
     "shop": "seedlings",
@@ -166,7 +13,7 @@
     "supplierCount": 23,
     "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
     "kind": "product",
-    "unitLabel": "per package",
+    "unitLabel": "per 100 seedlings",
     "price": 34.99,
     "currency": "USD",
     "description": "Widely recorded commercial eucalyptus planting material across the mapped East African nursery network.",
@@ -201,7 +48,164 @@
         "price": 307.91,
         "unitLabel": "per 1,000 seedlings"
       }
-    ]
+    ],
+    "updatedAt": "2026-08-19"
+  },
+  {
+    "id": "seedlings-eucalyptus-urophylla",
+    "slug": "eucalyptus-urophylla-seedlings",
+    "shop": "seedlings",
+    "name": "Eucalyptus urophylla",
+    "species": "Eucalyptus",
+    "materialType": "Pure species",
+    "nurseryVarietyAliases": [
+      "Eucalyptus urophylla",
+      "E. urophylla"
+    ],
+    "supplierCount": 7,
+    "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
+    "kind": "product",
+    "unitLabel": "per 100 seedlings",
+    "price": 34.99,
+    "currency": "USD",
+    "description": "Pure eucalyptus species commonly used as a hybrid parent, offered where nurseries list it directly.",
+    "image": "https://files.crtgroupstorage.com/assets/silviculture/627B295A-A403-A78E-B34A-2650F3016798.jpg",
+    "tags": [
+      "new",
+      "pure-species",
+      "timber"
+    ],
+    "stockStatus": "in-stock",
+    "domain": "timber",
+    "featured": false,
+    "variants": [
+      {
+        "id": "small",
+        "label": "100 seedlings",
+        "count": 100,
+        "price": 34.99,
+        "unitLabel": "per 100 seedlings"
+      },
+      {
+        "id": "medium",
+        "label": "500 seedlings",
+        "count": 500,
+        "price": 160.95,
+        "unitLabel": "per 500 seedlings"
+      },
+      {
+        "id": "large",
+        "label": "1,000 seedlings",
+        "count": 1000,
+        "price": 307.91,
+        "unitLabel": "per 1,000 seedlings"
+      }
+    ],
+    "updatedAt": "2026-08-19"
+  },
+  {
+    "id": "seedlings-eucalyptus-nitens",
+    "slug": "eucalyptus-nitens-seedlings",
+    "shop": "seedlings",
+    "name": "Eucalyptus nitens",
+    "species": "Eucalyptus",
+    "materialType": "Pure species",
+    "nurseryVarietyAliases": [
+      "Eucalyptus nitens",
+      "E. nitens"
+    ],
+    "supplierCount": 2,
+    "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
+    "kind": "product",
+    "unitLabel": "per 100 seedlings",
+    "price": 34.99,
+    "currency": "USD",
+    "description": "Cold-tolerant eucalyptus species suited to higher-altitude East African sites.",
+    "image": "https://files.crtgroupstorage.com/assets/silviculture/63DAD0BA-CC9F-0B9C-655B-546A6A26E8A7.jpg",
+    "tags": [
+      "new",
+      "pure-species",
+      "timber"
+    ],
+    "stockStatus": "limited",
+    "domain": "timber",
+    "featured": false,
+    "variants": [
+      {
+        "id": "small",
+        "label": "100 seedlings",
+        "count": 100,
+        "price": 34.99,
+        "unitLabel": "per 100 seedlings"
+      },
+      {
+        "id": "medium",
+        "label": "500 seedlings",
+        "count": 500,
+        "price": 160.95,
+        "unitLabel": "per 500 seedlings"
+      },
+      {
+        "id": "large",
+        "label": "1,000 seedlings",
+        "count": 1000,
+        "price": 307.91,
+        "unitLabel": "per 1,000 seedlings"
+      }
+    ],
+    "updatedAt": "2026-08-19"
+  },
+  {
+    "id": "seedlings-eucalyptus-saligna",
+    "slug": "eucalyptus-saligna-seedlings",
+    "shop": "seedlings",
+    "name": "Eucalyptus saligna",
+    "species": "Eucalyptus",
+    "materialType": "Pure species",
+    "nurseryVarietyAliases": [
+      "Eucalyptus saligna",
+      "E. saligna"
+    ],
+    "supplierCount": 5,
+    "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
+    "kind": "product",
+    "unitLabel": "per 100 seedlings",
+    "price": 34.99,
+    "currency": "USD",
+    "description": "Pure eucalyptus species valued for fast growth and pole production, matched to nurseries that list it explicitly.",
+    "image": "https://files.crtgroupstorage.com/assets/silviculture/627B295A-A403-A78E-B34A-2650F3016798.jpg",
+    "tags": [
+      "new",
+      "pure-species",
+      "timber"
+    ],
+    "stockStatus": "in-stock",
+    "domain": "timber",
+    "featured": false,
+    "variants": [
+      {
+        "id": "small",
+        "label": "100 seedlings",
+        "count": 100,
+        "price": 34.99,
+        "unitLabel": "per 100 seedlings"
+      },
+      {
+        "id": "medium",
+        "label": "500 seedlings",
+        "count": 500,
+        "price": 160.95,
+        "unitLabel": "per 500 seedlings"
+      },
+      {
+        "id": "large",
+        "label": "1,000 seedlings",
+        "count": 1000,
+        "price": 307.91,
+        "unitLabel": "per 1,000 seedlings"
+      }
+    ],
+    "updatedAt": "2026-08-19"
   },
   {
     "id": "seedlings-eucalyptus-camaldulensis",
@@ -217,7 +221,7 @@
     "supplierCount": 1,
     "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
     "kind": "product",
-    "unitLabel": "per package",
+    "unitLabel": "per 100 seedlings",
     "price": 34.99,
     "currency": "USD",
     "description": "Commercial eucalyptus planting material shown only where the nursery record names the species.",
@@ -252,31 +256,203 @@
         "price": 307.91,
         "unitLabel": "per 1,000 seedlings"
       }
-    ]
+    ],
+    "updatedAt": "2026-08-19"
   },
   {
-    "id": "seedlings-eucalyptus-saligna-urophylla",
-    "slug": "eucalyptus-saligna-urophylla-seedlings",
+    "id": "seedlings-gu-hybrid",
+    "slug": "gu-hybrid-seedlings",
     "shop": "seedlings",
-    "name": "Eucalyptus saligna × urophylla",
+    "name": "Eucalyptus grandis x urophylla",
     "species": "Eucalyptus",
-    "materialType": "Hybrid material",
+    "materialType": "Hybrid / clonal material",
     "nurseryVarietyAliases": [
-      "Saligna x Urophylla",
-      "Eucalyptus saligna x urophylla"
+      "Eucalyptus grandis x urophylla",
+      "GU 3",
+      "GU 4",
+      "GU 7",
+      "GU 8",
+      "GU 411",
+      "GU 111"
+    ],
+    "supplierCount": 5,
+    "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
+    "kind": "product",
+    "unitLabel": "per 100 seedlings",
+    "price": 38.99,
+    "currency": "USD",
+    "description": "Choose from GU 3, GU 4, GU 7, GU 8, GU 411, GU 111. Nursery matches remain tied to records that explicitly name the clone code.",
+    "image": "https://files.crtgroupstorage.com/assets/silviculture/627B295A-A403-A78E-B34A-2650F3016798.jpg",
+    "tags": [
+      "featured",
+      "hybrid",
+      "clonal",
+      "timber"
+    ],
+    "stockStatus": "limited",
+    "domain": "timber",
+    "featured": true,
+    "variants": [
+      {
+        "id": "gu-3",
+        "label": "Variety 3",
+        "count": 100,
+        "price": 38.99,
+        "unitLabel": "per 100 seedlings",
+        "description": "Clone 3 of Eucalyptus grandis x urophylla"
+      },
+      {
+        "id": "gu-4",
+        "label": "Variety 4",
+        "count": 100,
+        "price": 38.99,
+        "unitLabel": "per 100 seedlings",
+        "description": "Clone 4 of Eucalyptus grandis x urophylla"
+      },
+      {
+        "id": "gu-7",
+        "label": "Variety 7",
+        "count": 100,
+        "price": 38.99,
+        "unitLabel": "per 100 seedlings",
+        "description": "Clone 7 of Eucalyptus grandis x urophylla"
+      },
+      {
+        "id": "gu-8",
+        "label": "Variety 8",
+        "count": 100,
+        "price": 38.99,
+        "unitLabel": "per 100 seedlings",
+        "description": "Clone 8 of Eucalyptus grandis x urophylla"
+      },
+      {
+        "id": "gu-411",
+        "label": "Variety 411",
+        "count": 100,
+        "price": 38.99,
+        "unitLabel": "per 100 seedlings",
+        "description": "Clone 411 of Eucalyptus grandis x urophylla"
+      },
+      {
+        "id": "gu-111",
+        "label": "Variety 111",
+        "count": 100,
+        "price": 38.99,
+        "unitLabel": "per 100 seedlings",
+        "description": "Clone 111 of Eucalyptus grandis x urophylla"
+      }
+    ],
+    "updatedAt": "2026-08-19"
+  },
+  {
+    "id": "seedlings-gc-hybrid",
+    "slug": "gc-hybrid-seedlings",
+    "shop": "seedlings",
+    "name": "Eucalyptus grandis x camaldulensis",
+    "species": "Eucalyptus",
+    "materialType": "Hybrid / clonal material",
+    "nurseryVarietyAliases": [
+      "Eucalyptus grandis x camaldulensis",
+      "GC 3",
+      "GC 4",
+      "GC 7",
+      "GC 8",
+      "GC 411",
+      "GC 111"
+    ],
+    "supplierCount": 3,
+    "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
+    "kind": "product",
+    "unitLabel": "per 100 seedlings",
+    "price": 38.99,
+    "currency": "USD",
+    "description": "Choose from GC 3, GC 4, GC 7, GC 8, GC 411, GC 111. Nursery matches remain tied to records that explicitly name the clone code.",
+    "image": "https://files.crtgroupstorage.com/assets/silviculture/63DAD0BA-CC9F-0B9C-655B-546A6A26E8A7.jpg",
+    "tags": [
+      "featured",
+      "hybrid",
+      "clonal",
+      "timber"
+    ],
+    "stockStatus": "limited",
+    "domain": "timber",
+    "featured": true,
+    "variants": [
+      {
+        "id": "gc-3",
+        "label": "Variety 3",
+        "count": 100,
+        "price": 38.99,
+        "unitLabel": "per 100 seedlings",
+        "description": "Clone 3 of Eucalyptus grandis x camaldulensis"
+      },
+      {
+        "id": "gc-4",
+        "label": "Variety 4",
+        "count": 100,
+        "price": 38.99,
+        "unitLabel": "per 100 seedlings",
+        "description": "Clone 4 of Eucalyptus grandis x camaldulensis"
+      },
+      {
+        "id": "gc-7",
+        "label": "Variety 7",
+        "count": 100,
+        "price": 38.99,
+        "unitLabel": "per 100 seedlings",
+        "description": "Clone 7 of Eucalyptus grandis x camaldulensis"
+      },
+      {
+        "id": "gc-8",
+        "label": "Variety 8",
+        "count": 100,
+        "price": 38.99,
+        "unitLabel": "per 100 seedlings",
+        "description": "Clone 8 of Eucalyptus grandis x camaldulensis"
+      },
+      {
+        "id": "gc-411",
+        "label": "Variety 411",
+        "count": 100,
+        "price": 38.99,
+        "unitLabel": "per 100 seedlings",
+        "description": "Clone 411 of Eucalyptus grandis x camaldulensis"
+      },
+      {
+        "id": "gc-111",
+        "label": "Variety 111",
+        "count": 100,
+        "price": 38.99,
+        "unitLabel": "per 100 seedlings",
+        "description": "Clone 111 of Eucalyptus grandis x camaldulensis"
+      }
+    ],
+    "updatedAt": "2026-08-19"
+  },
+  {
+    "id": "seedlings-gn-hybrid",
+    "slug": "gn-hybrid-seedlings",
+    "shop": "seedlings",
+    "name": "Eucalyptus grandis x nitens",
+    "species": "Eucalyptus",
+    "materialType": "Hybrid / clonal material",
+    "nurseryVarietyAliases": [
+      "Eucalyptus grandis x nitens",
+      "GN 3",
+      "GN 4"
     ],
     "supplierCount": 0,
     "evidenceNote": "Genetic material drawn from Information Pack - Large processors_v2.pptx; nursery supply is matched independently.",
     "kind": "product",
-    "unitLabel": "per package",
+    "unitLabel": "per 100 seedlings",
     "price": 39.99,
     "currency": "USD",
-    "description": "Information-pack hybrid associated with low splitting risk; no nursery is shown unless it explicitly lists this material.",
+    "description": "Choose from GN 3, GN 4. Nursery matches remain tied to records that explicitly name the clone code.",
     "image": "https://files.crtgroupstorage.com/assets/silviculture/63DAD0BA-CC9F-0B9C-655B-546A6A26E8A7.jpg",
     "tags": [
       "new",
       "hybrid",
-      "deck-evidence",
+      "clonal",
       "timber"
     ],
     "stockStatus": "quote",
@@ -284,51 +460,48 @@
     "featured": false,
     "variants": [
       {
-        "id": "small",
-        "label": "100 seedlings",
+        "id": "gn-3",
+        "label": "Variety 3",
         "count": 100,
         "price": 39.99,
-        "unitLabel": "per 100 seedlings"
+        "unitLabel": "per 100 seedlings",
+        "description": "Clone 3 of Eucalyptus grandis x nitens"
       },
       {
-        "id": "medium",
-        "label": "500 seedlings",
-        "count": 500,
-        "price": 183.95,
-        "unitLabel": "per 500 seedlings"
-      },
-      {
-        "id": "large",
-        "label": "1,000 seedlings",
-        "count": 1000,
-        "price": 351.91,
-        "unitLabel": "per 1,000 seedlings"
+        "id": "gn-4",
+        "label": "Variety 4",
+        "count": 100,
+        "price": 39.99,
+        "unitLabel": "per 100 seedlings",
+        "description": "Clone 4 of Eucalyptus grandis x nitens"
       }
-    ]
+    ],
+    "updatedAt": "2026-08-19"
   },
   {
-    "id": "seedlings-eucalyptus-cloeziana",
-    "slug": "eucalyptus-cloeziana-seedlings",
+    "id": "seedlings-su-hybrid",
+    "slug": "su-hybrid-seedlings",
     "shop": "seedlings",
-    "name": "Eucalyptus cloeziana",
+    "name": "Eucalyptus saligna x urophylla",
     "species": "Eucalyptus",
-    "materialType": "Pure species",
+    "materialType": "Hybrid / clonal material",
     "nurseryVarietyAliases": [
-      "Eucalyptus cloeziana",
-      "Cloeziana"
+      "Eucalyptus saligna x urophylla",
+      "SU 3",
+      "SU 4"
     ],
     "supplierCount": 0,
     "evidenceNote": "Genetic material drawn from Information Pack - Large processors_v2.pptx; nursery supply is matched independently.",
     "kind": "product",
-    "unitLabel": "per package",
-    "price": 34.99,
+    "unitLabel": "per 100 seedlings",
+    "price": 39.99,
     "currency": "USD",
-    "description": "Pure eucalyptus species highlighted in the information pack for density, stiffness, and dimensional stability.",
+    "description": "Choose from SU 3, SU 4. Nursery matches remain tied to records that explicitly name the clone code.",
     "image": "https://files.crtgroupstorage.com/assets/silviculture/627B295A-A403-A78E-B34A-2650F3016798.jpg",
     "tags": [
       "new",
-      "pure-species",
-      "deck-evidence",
+      "hybrid",
+      "clonal",
       "timber"
     ],
     "stockStatus": "quote",
@@ -336,27 +509,281 @@
     "featured": false,
     "variants": [
       {
+        "id": "su-3",
+        "label": "Variety 3",
+        "count": 100,
+        "price": 39.99,
+        "unitLabel": "per 100 seedlings",
+        "description": "Clone 3 of Eucalyptus saligna x urophylla"
+      },
+      {
+        "id": "su-4",
+        "label": "Variety 4",
+        "count": 100,
+        "price": 39.99,
+        "unitLabel": "per 100 seedlings",
+        "description": "Clone 4 of Eucalyptus saligna x urophylla"
+      }
+    ],
+    "updatedAt": "2026-08-19"
+  },
+  {
+    "id": "seedlings-melia-volkensii",
+    "slug": "melia-volkensii-seedlings",
+    "shop": "seedlings",
+    "name": "Melia volkensii",
+    "species": "Melia",
+    "materialType": "Indigenous pure species",
+    "nurseryVarietyAliases": [
+      "Melia volkensii"
+    ],
+    "supplierCount": 1,
+    "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
+    "kind": "product",
+    "unitLabel": "per 100 seedlings",
+    "price": 29.99,
+    "currency": "USD",
+    "description": "Dryland timber and agroforestry species with nursery availability based on explicit catalogue records.",
+    "image": "https://static.wixstatic.com/media/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg/v1/fill/w_959,h_705,al_c,q_85,enc_avif,quality_auto/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg",
+    "tags": [
+      "featured",
+      "indigenous",
+      "agroforestry",
+      "hardwood"
+    ],
+    "stockStatus": "limited",
+    "domain": "agroforestry",
+    "featured": true,
+    "variants": [
+      {
         "id": "small",
         "label": "100 seedlings",
         "count": 100,
-        "price": 34.99,
+        "price": 29.99,
         "unitLabel": "per 100 seedlings"
       },
       {
         "id": "medium",
         "label": "500 seedlings",
         "count": 500,
-        "price": 160.95,
+        "price": 137.95,
         "unitLabel": "per 500 seedlings"
       },
       {
         "id": "large",
         "label": "1,000 seedlings",
         "count": 1000,
-        "price": 307.91,
+        "price": 263.91,
         "unitLabel": "per 1,000 seedlings"
       }
-    ]
+    ],
+    "updatedAt": "2026-08-19"
+  },
+  {
+    "id": "seedlings-gmelina-arborea",
+    "slug": "gmelina-arborea-seedlings",
+    "shop": "seedlings",
+    "name": "Gmelina arborea",
+    "species": "Gmelina",
+    "materialType": "Pure species",
+    "nurseryVarietyAliases": [
+      "Gmelina arborea"
+    ],
+    "supplierCount": 6,
+    "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
+    "kind": "product",
+    "unitLabel": "per 100 seedlings",
+    "price": 27.99,
+    "currency": "USD",
+    "description": "Fast-growing timber species offered by nurseries that explicitly list Gmelina planting material.",
+    "image": "https://static.wixstatic.com/media/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg/v1/fill/w_959,h_705,al_c,q_85,enc_avif,quality_auto/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg",
+    "tags": [
+      "new",
+      "pure-species",
+      "timber"
+    ],
+    "stockStatus": "in-stock",
+    "domain": "timber",
+    "featured": false,
+    "variants": [
+      {
+        "id": "small",
+        "label": "100 seedlings",
+        "count": 100,
+        "price": 27.99,
+        "unitLabel": "per 100 seedlings"
+      },
+      {
+        "id": "medium",
+        "label": "500 seedlings",
+        "count": 500,
+        "price": 128.75,
+        "unitLabel": "per 500 seedlings"
+      },
+      {
+        "id": "large",
+        "label": "1,000 seedlings",
+        "count": 1000,
+        "price": 246.31,
+        "unitLabel": "per 1,000 seedlings"
+      }
+    ],
+    "updatedAt": "2026-08-19"
+  },
+  {
+    "id": "seedlings-tectona-grandis",
+    "slug": "tectona-grandis-seedlings",
+    "shop": "seedlings",
+    "name": "Tectona grandis",
+    "species": "Teak",
+    "materialType": "Pure species",
+    "nurseryVarietyAliases": [
+      "Tectona grandis"
+    ],
+    "supplierCount": 4,
+    "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
+    "kind": "product",
+    "unitLabel": "per 100 seedlings",
+    "price": 32.99,
+    "currency": "USD",
+    "description": "Teak planting material shown only for nurseries whose catalogues explicitly name the species.",
+    "image": "https://static.wixstatic.com/media/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg/v1/fill/w_959,h_705,al_c,q_85,enc_avif,quality_auto/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg",
+    "tags": [
+      "new",
+      "pure-species",
+      "hardwood",
+      "timber"
+    ],
+    "stockStatus": "in-stock",
+    "domain": "timber",
+    "featured": false,
+    "variants": [
+      {
+        "id": "small",
+        "label": "100 seedlings",
+        "count": 100,
+        "price": 32.99,
+        "unitLabel": "per 100 seedlings"
+      },
+      {
+        "id": "medium",
+        "label": "500 seedlings",
+        "count": 500,
+        "price": 151.75,
+        "unitLabel": "per 500 seedlings"
+      },
+      {
+        "id": "large",
+        "label": "1,000 seedlings",
+        "count": 1000,
+        "price": 290.31,
+        "unitLabel": "per 1,000 seedlings"
+      }
+    ],
+    "updatedAt": "2026-08-19"
+  },
+  {
+    "id": "seedlings-maesopsis-eminii",
+    "slug": "maesopsis-eminii-seedlings",
+    "shop": "seedlings",
+    "name": "Maesopsis eminii",
+    "species": "Maesopsis",
+    "materialType": "Indigenous pure species",
+    "nurseryVarietyAliases": [
+      "Maesopsis eminii"
+    ],
+    "supplierCount": 12,
+    "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
+    "kind": "product",
+    "unitLabel": "per 100 seedlings",
+    "price": 24.99,
+    "currency": "USD",
+    "description": "East African timber and restoration species listed by multiple mapped nurseries.",
+    "image": "https://static.wixstatic.com/media/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg/v1/fill/w_959,h_705,al_c,q_85,enc_avif,quality_auto/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg",
+    "tags": [
+      "new",
+      "indigenous",
+      "restoration",
+      "timber"
+    ],
+    "stockStatus": "in-stock",
+    "domain": "restoration",
+    "featured": false,
+    "variants": [
+      {
+        "id": "small",
+        "label": "100 seedlings",
+        "count": 100,
+        "price": 24.99,
+        "unitLabel": "per 100 seedlings"
+      },
+      {
+        "id": "medium",
+        "label": "500 seedlings",
+        "count": 500,
+        "price": 114.95,
+        "unitLabel": "per 500 seedlings"
+      },
+      {
+        "id": "large",
+        "label": "1,000 seedlings",
+        "count": 1000,
+        "price": 219.91,
+        "unitLabel": "per 1,000 seedlings"
+      }
+    ],
+    "updatedAt": "2026-08-19"
+  },
+  {
+    "id": "seedlings-grevillea-robusta",
+    "slug": "grevillea-robusta-seedlings",
+    "shop": "seedlings",
+    "name": "Grevillea robusta",
+    "species": "Grevillea",
+    "materialType": "Agroforestry pure species",
+    "nurseryVarietyAliases": [
+      "Grevillea robusta"
+    ],
+    "supplierCount": 9,
+    "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
+    "kind": "product",
+    "unitLabel": "per 100 seedlings",
+    "price": 24.99,
+    "currency": "USD",
+    "description": "Multipurpose agroforestry and timber species with mapped nursery availability.",
+    "image": "https://static.wixstatic.com/media/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg/v1/fill/w_959,h_705,al_c,q_85,enc_avif,quality_auto/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg",
+    "tags": [
+      "new",
+      "agroforestry",
+      "pure-species"
+    ],
+    "stockStatus": "in-stock",
+    "domain": "agroforestry",
+    "featured": false,
+    "variants": [
+      {
+        "id": "small",
+        "label": "100 seedlings",
+        "count": 100,
+        "price": 24.99,
+        "unitLabel": "per 100 seedlings"
+      },
+      {
+        "id": "medium",
+        "label": "500 seedlings",
+        "count": 500,
+        "price": 114.95,
+        "unitLabel": "per 500 seedlings"
+      },
+      {
+        "id": "large",
+        "label": "1,000 seedlings",
+        "count": 1000,
+        "price": 219.91,
+        "unitLabel": "per 1,000 seedlings"
+      }
+    ],
+    "updatedAt": "2026-08-19"
   },
   {
     "id": "seedlings-pinus-caribaea",
@@ -372,7 +799,7 @@
     "supplierCount": 20,
     "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
     "kind": "product",
-    "unitLabel": "per package",
+    "unitLabel": "per 100 seedlings",
     "price": 29.99,
     "currency": "USD",
     "description": "Commercial pine planting material recorded across multiple nursery registers in East Africa.",
@@ -408,13 +835,67 @@
         "price": 263.91,
         "unitLabel": "per 1,000 seedlings"
       }
-    ]
+    ],
+    "updatedAt": "2026-08-19"
+  },
+  {
+    "id": "seedlings-pinus-patula",
+    "slug": "pinus-patula-seedlings",
+    "shop": "seedlings",
+    "name": "Pinus patula",
+    "species": "Pine",
+    "materialType": "Pure species",
+    "nurseryVarietyAliases": [
+      "Pinus patula",
+      "P. patula"
+    ],
+    "supplierCount": 15,
+    "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
+    "kind": "product",
+    "unitLabel": "per 100 seedlings",
+    "price": 29.99,
+    "currency": "USD",
+    "description": "Widely planted highland pine species, offered by nurseries with confirmed catalogue listings.",
+    "image": "https://files.crtgroupstorage.com/assets/silviculture/F1467843-D02B-67BD-FB09-98CEB0D4F747.jpg",
+    "tags": [
+      "new",
+      "pure-species",
+      "softwood",
+      "timber"
+    ],
+    "stockStatus": "in-stock",
+    "domain": "timber",
+    "featured": false,
+    "variants": [
+      {
+        "id": "small",
+        "label": "100 seedlings",
+        "count": 100,
+        "price": 29.99,
+        "unitLabel": "per 100 seedlings"
+      },
+      {
+        "id": "medium",
+        "label": "500 seedlings",
+        "count": 500,
+        "price": 137.95,
+        "unitLabel": "per 500 seedlings"
+      },
+      {
+        "id": "large",
+        "label": "1,000 seedlings",
+        "count": 1000,
+        "price": 263.91,
+        "unitLabel": "per 1,000 seedlings"
+      }
+    ],
+    "updatedAt": "2026-08-19"
   },
   {
     "id": "seedlings-patula-tecunumanii",
     "slug": "patula-tecunumanii-seedlings",
     "shop": "seedlings",
-    "name": "Pinus patula × tecunumanii",
+    "name": "Pinus patula x tecunumanii",
     "species": "Pine",
     "materialType": "Hybrid material",
     "nurseryVarietyAliases": [
@@ -424,7 +905,7 @@
     "supplierCount": 0,
     "evidenceNote": "Genetic material drawn from Information Pack - Large processors_v2.pptx; nursery supply is matched independently.",
     "kind": "product",
-    "unitLabel": "per package",
+    "unitLabel": "per 100 seedlings",
     "price": 34.99,
     "currency": "USD",
     "description": "Tanzania trials in the information pack identify this hybrid as high-volume material; mapped supply requires an exact nursery listing.",
@@ -461,13 +942,14 @@
         "price": 307.91,
         "unitLabel": "per 1,000 seedlings"
       }
-    ]
+    ],
+    "updatedAt": "2026-08-19"
   },
   {
     "id": "seedlings-elliottii-caribaea",
     "slug": "elliottii-caribaea-seedlings",
     "shop": "seedlings",
-    "name": "Pinus elliottii × caribaea",
+    "name": "Pinus elliottii x caribaea",
     "species": "Pine",
     "materialType": "Hybrid material",
     "nurseryVarietyAliases": [
@@ -477,7 +959,7 @@
     "supplierCount": 0,
     "evidenceNote": "Genetic material drawn from Information Pack - Large processors_v2.pptx; nursery supply is matched independently.",
     "kind": "product",
-    "unitLabel": "per package",
+    "unitLabel": "per 100 seedlings",
     "price": 34.99,
     "currency": "USD",
     "description": "Information-pack pine hybrid with strong trial performance in suitable sites; availability is not inferred.",
@@ -514,35 +996,37 @@
         "price": 307.91,
         "unitLabel": "per 1,000 seedlings"
       }
-    ]
+    ],
+    "updatedAt": "2026-08-19"
   },
   {
-    "id": "seedlings-melia-volkensii",
-    "slug": "melia-volkensii-seedlings",
+    "id": "seedlings-pinus-maximinoi",
+    "slug": "pinus-maximinoi-seedlings",
     "shop": "seedlings",
-    "name": "Melia volkensii",
-    "species": "Melia",
-    "materialType": "Indigenous pure species",
+    "name": "Pinus maximinoi",
+    "species": "Pine",
+    "materialType": "Pure species",
     "nurseryVarietyAliases": [
-      "Melia volkensii"
+      "Pinus maximinoi",
+      "P. maximinoi"
     ],
-    "supplierCount": 1,
-    "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
+    "supplierCount": 0,
+    "evidenceNote": "Genetic material drawn from Information Pack - Large processors_v2.pptx; nursery supply is matched independently.",
     "kind": "product",
-    "unitLabel": "per package",
+    "unitLabel": "per 100 seedlings",
     "price": 29.99,
     "currency": "USD",
-    "description": "Dryland timber and agroforestry species with nursery availability based on explicit catalogue records.",
-    "image": "https://static.wixstatic.com/media/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg/v1/fill/w_959,h_705,al_c,q_85,enc_avif,quality_auto/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg",
+    "description": "Fast-growing tropical pine species; shown only where nursery supply is confirmed independently.",
+    "image": "https://files.crtgroupstorage.com/assets/silviculture/F1467843-D02B-67BD-FB09-98CEB0D4F747.jpg",
     "tags": [
-      "featured",
-      "indigenous",
-      "agroforestry",
-      "hardwood"
+      "new",
+      "pure-species",
+      "softwood",
+      "timber"
     ],
-    "stockStatus": "limited",
-    "domain": "agroforestry",
-    "featured": true,
+    "stockStatus": "quote",
+    "domain": "timber",
+    "featured": false,
     "variants": [
       {
         "id": "small",
@@ -565,208 +1049,7 @@
         "price": 263.91,
         "unitLabel": "per 1,000 seedlings"
       }
-    ]
-  },
-  {
-    "id": "seedlings-gmelina-arborea",
-    "slug": "gmelina-arborea-seedlings",
-    "shop": "seedlings",
-    "name": "Gmelina arborea",
-    "species": "Gmelina",
-    "materialType": "Pure species",
-    "nurseryVarietyAliases": [
-      "Gmelina arborea"
     ],
-    "supplierCount": 6,
-    "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
-    "kind": "product",
-    "unitLabel": "per package",
-    "price": 27.99,
-    "currency": "USD",
-    "description": "Fast-growing timber species offered by nurseries that explicitly list Gmelina planting material.",
-    "image": "https://static.wixstatic.com/media/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg/v1/fill/w_959,h_705,al_c,q_85,enc_avif,quality_auto/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg",
-    "tags": [
-      "new",
-      "pure-species",
-      "timber"
-    ],
-    "stockStatus": "in-stock",
-    "domain": "timber",
-    "featured": false,
-    "variants": [
-      {
-        "id": "small",
-        "label": "100 seedlings",
-        "count": 100,
-        "price": 27.99,
-        "unitLabel": "per 100 seedlings"
-      },
-      {
-        "id": "medium",
-        "label": "500 seedlings",
-        "count": 500,
-        "price": 128.75,
-        "unitLabel": "per 500 seedlings"
-      },
-      {
-        "id": "large",
-        "label": "1,000 seedlings",
-        "count": 1000,
-        "price": 246.31,
-        "unitLabel": "per 1,000 seedlings"
-      }
-    ]
-  },
-  {
-    "id": "seedlings-grevillea-robusta",
-    "slug": "grevillea-robusta-seedlings",
-    "shop": "seedlings",
-    "name": "Grevillea robusta",
-    "species": "Grevillea",
-    "materialType": "Agroforestry pure species",
-    "nurseryVarietyAliases": [
-      "Grevillea robusta"
-    ],
-    "supplierCount": 9,
-    "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
-    "kind": "product",
-    "unitLabel": "per package",
-    "price": 24.99,
-    "currency": "USD",
-    "description": "Multipurpose agroforestry and timber species with mapped nursery availability.",
-    "image": "https://static.wixstatic.com/media/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg/v1/fill/w_959,h_705,al_c,q_85,enc_avif,quality_auto/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg",
-    "tags": [
-      "new",
-      "agroforestry",
-      "pure-species"
-    ],
-    "stockStatus": "in-stock",
-    "domain": "agroforestry",
-    "featured": false,
-    "variants": [
-      {
-        "id": "small",
-        "label": "100 seedlings",
-        "count": 100,
-        "price": 24.99,
-        "unitLabel": "per 100 seedlings"
-      },
-      {
-        "id": "medium",
-        "label": "500 seedlings",
-        "count": 500,
-        "price": 114.95,
-        "unitLabel": "per 500 seedlings"
-      },
-      {
-        "id": "large",
-        "label": "1,000 seedlings",
-        "count": 1000,
-        "price": 219.91,
-        "unitLabel": "per 1,000 seedlings"
-      }
-    ]
-  },
-  {
-    "id": "seedlings-maesopsis-eminii",
-    "slug": "maesopsis-eminii-seedlings",
-    "shop": "seedlings",
-    "name": "Maesopsis eminii",
-    "species": "Maesopsis",
-    "materialType": "Indigenous pure species",
-    "nurseryVarietyAliases": [
-      "Maesopsis eminii"
-    ],
-    "supplierCount": 12,
-    "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
-    "kind": "product",
-    "unitLabel": "per package",
-    "price": 24.99,
-    "currency": "USD",
-    "description": "East African timber and restoration species listed by multiple mapped nurseries.",
-    "image": "https://static.wixstatic.com/media/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg/v1/fill/w_959,h_705,al_c,q_85,enc_avif,quality_auto/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg",
-    "tags": [
-      "new",
-      "indigenous",
-      "restoration",
-      "timber"
-    ],
-    "stockStatus": "in-stock",
-    "domain": "restoration",
-    "featured": false,
-    "variants": [
-      {
-        "id": "small",
-        "label": "100 seedlings",
-        "count": 100,
-        "price": 24.99,
-        "unitLabel": "per 100 seedlings"
-      },
-      {
-        "id": "medium",
-        "label": "500 seedlings",
-        "count": 500,
-        "price": 114.95,
-        "unitLabel": "per 500 seedlings"
-      },
-      {
-        "id": "large",
-        "label": "1,000 seedlings",
-        "count": 1000,
-        "price": 219.91,
-        "unitLabel": "per 1,000 seedlings"
-      }
-    ]
-  },
-  {
-    "id": "seedlings-tectona-grandis",
-    "slug": "tectona-grandis-seedlings",
-    "shop": "seedlings",
-    "name": "Tectona grandis",
-    "species": "Teak",
-    "materialType": "Pure species",
-    "nurseryVarietyAliases": [
-      "Tectona grandis"
-    ],
-    "supplierCount": 4,
-    "evidenceNote": "Nursery supply is matched from the East Africa nursery database.",
-    "kind": "product",
-    "unitLabel": "per package",
-    "price": 32.99,
-    "currency": "USD",
-    "description": "Teak planting material shown only for nurseries whose catalogues explicitly name the species.",
-    "image": "https://static.wixstatic.com/media/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg/v1/fill/w_959,h_705,al_c,q_85,enc_avif,quality_auto/b9a05c_a9337f30a32b4dcc872ec0232647eeb4~mv2.jpg",
-    "tags": [
-      "new",
-      "pure-species",
-      "hardwood",
-      "timber"
-    ],
-    "stockStatus": "in-stock",
-    "domain": "timber",
-    "featured": false,
-    "variants": [
-      {
-        "id": "small",
-        "label": "100 seedlings",
-        "count": 100,
-        "price": 32.99,
-        "unitLabel": "per 100 seedlings"
-      },
-      {
-        "id": "medium",
-        "label": "500 seedlings",
-        "count": 500,
-        "price": 151.75,
-        "unitLabel": "per 500 seedlings"
-      },
-      {
-        "id": "large",
-        "label": "1,000 seedlings",
-        "count": 1000,
-        "price": 290.31,
-        "unitLabel": "per 1,000 seedlings"
-      }
-    ]
+    "updatedAt": "2026-08-19"
   }
 ]

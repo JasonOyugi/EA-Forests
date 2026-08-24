@@ -87,7 +87,7 @@ export function HeroSection() {
       </div>
 
       <div className={`${landingContainer} relative`}>
-        <div className="mx-auto max-w-4xl text-center">
+        <div className="mx-auto text-center">
           <div className="landing-fade-up landing-delay-1 mb-8 flex justify-center">
             <a href="#contact" className="group inline-flex">
               <Badge

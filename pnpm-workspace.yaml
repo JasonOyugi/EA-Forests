@@ -1,2 +1,8 @@
+packages:
+  - "packages/*"
+  - "vite-version"
+
 allowBuilds:
-  esbuild: set this to true or false
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
