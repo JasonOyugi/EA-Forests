@@ -1,0 +1,215 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": 1,
+      "url": "https://www.iea.org/data-and-statistics/data-tools/middle-east-maritime-chokepoints-shipping-monitor",
+      "title": "IEA Middle East Maritime Chokepoints Shipping Monitor",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 2,
+      "url": "https://apnews.com/article/1685cdc4e6ef330406e0ebe242b21e70",
+      "title": "Six months on, the Iran war has changed the Middle East",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 3,
+      "url": "https://www.theeastafrican.co.ke/tea/news/east-africa/region-s-fuel-pumps-dry-up-amid-iran-conflict-5405734",
+      "title": "Region's fuel pumps dry up amid Iran conflict",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 4,
+      "url": "https://www.president.go.ke/president-ruto-calls-for-patience-as-government-addresses-global-fuel-crisis",
+      "title": "Kenya government addresses global fuel crisis",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 5,
+      "url": "https://www.theeastafrican.co.ke/tea/business-tech/uganda-tightens-its-grip-on-kenya-fuel-corridor-5536864",
+      "title": "Uganda tightens grip on Kenya fuel corridor",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 6,
+      "url": "https://www.businessdailyafrica.com/bd/economy/uae-loses-sh61bn-in-kenya-exports-after-iran-war-5571968",
+      "title": "UAE loses Kenya exports after Iran war",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 7,
+      "url": "https://forestry.go.ke/he-president-william-ruto-phd-cgh-assents-forest-conservation-and-management-amendment-act-2025",
+      "title": "Kenya Forest Conservation and Management Amendment Act",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 8,
+      "url": "https://forestry.go.ke/acts-regulations",
+      "title": "Kenya forestry acts and regulations",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 9,
+      "url": "https://www.biocarbonfund-isfl.org/result-stories/ethiopia-becomes-first-country-have-verified-emission-reductions-issued-under-isfl",
+      "title": "Ethiopia ISFL emission reductions issued",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 10,
+      "url": "https://apnews.com/article/cc9833a1431cfb77086d1b2c06c4a20d",
+      "title": "Kenya carbon market rule book",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 11,
+      "url": "https://forestry.go.ke/kenya-launches-national-carbon-registry-boost-climate-transparency",
+      "title": "Kenya launches national carbon registry",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 12,
+      "url": "https://www.article6pipeline.unepccc.org/global-data/regions/un-classification/africa/eastern-africa",
+      "title": "Eastern Africa Article 6 pipeline",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 13,
+      "url": "https://eucaecoconsults.com/blog/tree-prices-uganda.html",
+      "title": "Uganda tree seedling and timber price guide",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 14,
+      "url": "https://impactfund.dk/news/impact-fund-denmark-invests-in-sustainable-forest-management-in-east-africa",
+      "title": "Impact Fund Denmark invests in East African forestry",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 15,
+      "url": "https://edfimc.eu/carbon-sinks-guarantee-under-efsd-supports-impact-fund-denmarks-investment-in-the-new-forests-company",
+      "title": "EU guarantee supports New Forests Company investment",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 16,
+      "url": "https://forestry.go.ke/kenya-launches-landmark-strategies-transform-asals-and-boost-climate-resilience",
+      "title": "Kenya launches dryland and commercial forestry strategies",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 17,
+      "url": "https://forestry.go.ke/kenya-moves-secure-forest-future-through-meetings-between-state-department-and-technical-working",
+      "title": "Kenya forest tree seed regulation update",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 18,
+      "url": "https://www.forestsnews.org/162337/strengthening-policy-tree-seed-systems-africa",
+      "title": "Strengthening policy for tree seed systems",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 19,
+      "url": "https://treegenebank.cifor-icraf.org",
+      "title": "CIFOR-ICRAF Tree Genebank",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 20,
+      "url": "https://www.fao.org/uganda/news/detail/more-data--more-wood-industry-investments/en",
+      "title": "Uganda LiDAR wood resource inventory",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 21,
+      "url": "https://www.fao.org/e-agriculture/news/community-forests-digital-innovation-how-open-foris-transforming-forest-monitoring",
+      "title": "Open Foris transforms forest monitoring in Uganda",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 22,
+      "url": "https://www.fao.org/forestry/newsroom/news-detail/fao-issues-forest-monitoring-good-practices-for-tree-crop-commodities-and-smallholders/en",
+      "title": "FAO tree crop forest monitoring guidance",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 23,
+      "url": "https://www.researchgate.net/publication/399850131_Predicament_for_the_sustainability_of_wood-based_industries_in_the_Lake_Zone_Tanzania",
+      "title": "Tanzania Lake Zone wood industry study",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 24,
+      "url": "https://www.bauhauserde.org/projects/safari-ya-mbao",
+      "title": "Safari ya Mbao East Africa timber logistics",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 25,
+      "url": "https://cafi.org/app/uploads/2026/03/EB.2026.20-Decision-Private-Sector-CFC-Project-Approval.pdf",
+      "title": "CAFI private-sector CFC project approval",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 26,
+      "url": "https://arxiv.org/abs/2606.29447",
+      "title": "Miti360 reforestation monitoring dataset",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 27,
+      "url": "https://www.globalwood.org/market/timber_prices_2026/aaw20260801.htm",
+      "title": "International tropical timber market report August 2026",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 28,
+      "url": "https://www.landscapealliance.org/quality-tree-seed-for-africa",
+      "title": "Quality Tree Seed for Africa",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 29,
+      "url": "https://www.fao.org/in-action/sepal/overview",
+      "title": "FAO SEPAL forest monitoring overview",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 30,
+      "url": "https://justice.gov.et/en/directives/forest-carbon-trading-amendment-directive",
+      "title": "Ethiopia Forest Carbon Trading Amendment Directive 2026",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 31,
+      "url": "https://apnews.com/article/421ee64fdc9a5c26460df8119c7d1b3f",
+      "title": "US and Iran agree to two-week ceasefire",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 32,
+      "url": "https://www.businessdailyafrica.com/bd/corporate/industry/iran-war-aid-saudi-beat-uae-in-kenya-fuel-supplies-5549276",
+      "title": "Saudi becomes top Kenya fuel supplier during Iran war",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 33,
+      "url": "https://www.theeastafrican.co.ke/tea/business-tech/iran-war-cuts-fertiliser-supplies-to-kenya-tanzania-5387948",
+      "title": "Iran war cuts fertiliser supplies to Kenya and Tanzania",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 34,
+      "url": "https://www.journalijecc.com/index.php/IJECC/article/view/5561",
+      "title": "Rwanda Coffea eugenioides seed source strategy",
+      "accessed": "2026-08-30"
+    },
+    {
+      "id": 35,
+      "url": "https://forestry.go.ke/sites/default/files/2026-03/NATIONAL%20COMMERCIAL%20FORESTRY%20STRATEGY%202025-2035.pdf",
+      "title": "Kenya National Commercial Forestry Strategy 2025-2035",
+      "accessed": "2026-08-30"
+    }
+  ]
+}

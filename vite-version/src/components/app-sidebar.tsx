@@ -3,11 +3,6 @@
 import * as React from "react"
 import {
   LayoutDashboard,
-  Shield,
-  AlertTriangle,
-  Settings,
-  HelpCircle,
-  CreditCard,
   ShoppingCart,
   Trees,
 } from "lucide-react"
@@ -35,15 +30,15 @@ const data = {
   },
   navGroups: [
     {
-      label: "User Products",
+      label: "EA Forests",
       items: [
         {
-          title: "Investor Dashboard",
+          title: "Portfolio Preview",
           url: "/dashboard",
           icon: LayoutDashboard,
         },
         {
-          title: "Shops",
+          title: "Market Data",
           url: "#",
           icon: ShoppingCart,
           items: [
@@ -56,7 +51,7 @@ const data = {
               url: "/shop/forests-land",
             },
             {
-              title: "Markets",
+              title: "Market map",
               url: "/shop/sector-map",
             },
           ],
@@ -83,98 +78,6 @@ const data = {
               url: "/models/clonal-eucalyptus-nursery",
             },
           ],
-        },
-      ],
-    },
-    {
-      label: "Back Pages",
-      items: [
-        {
-          title: "Auth Pages",
-          url: "#",
-          icon: Shield,
-          items: [
-            {
-              title: "Sign In",
-              url: "/auth/sign-in",
-            },
-            {
-              title: "Sign Up",
-              url: "/auth/sign-up",
-            },
-            {
-              title: "Forgot Password",
-              url: "/auth/forgot-password",
-            }
-          ],
-        },
-        {
-          title: "Errors",
-          url: "#",
-          icon: AlertTriangle,
-          items: [
-            {
-              title: "Unauthorized",
-              url: "/errors/unauthorized",
-            },
-            {
-              title: "Forbidden",
-              url: "/errors/forbidden",
-            },
-            {
-              title: "Not Found",
-              url: "/errors/not-found",
-            },
-            {
-              title: "Internal Server Error",
-              url: "/errors/internal-server-error",
-            },
-            {
-              title: "Under Maintenance",
-              url: "/errors/under-maintenance",
-            },
-          ],
-        },
-        {
-          title: "Settings",
-          url: "#",
-          icon: Settings,
-          items: [
-            {
-              title: "User Settings",
-              url: "/settings/user",
-            },
-            {
-              title: "Account Settings",
-              url: "/settings/account",
-            },
-            {
-              title: "Plans & Billing",
-              url: "/settings/billing",
-            },
-            {
-              title: "Appearance",
-              url: "/settings/appearance",
-            },
-            {
-              title: "Notifications",
-              url: "/settings/notifications",
-            },
-            {
-              title: "Connections",
-              url: "/settings/connections",
-            },
-          ],
-        },
-        {
-          title: "FAQs",
-          url: "/faqs",
-          icon: HelpCircle,
-        },
-        {
-          title: "Pricing",
-          url: "/pricing",
-          icon: CreditCard,
         },
       ],
     },

@@ -7,7 +7,8 @@ import { TiLocationArrow } from "react-icons/ti"
 import { BentoTilt } from "@/components/ui/bento-tilt"
 import { Badge } from "@/components/ui/badge"
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
-import { cn } from "@/lib/utils"
+import { AutoPlayVideo } from "@/components/auto-play-video"
+import { assetUrl, cn } from "@/lib/utils"
 import {
   landingBadgeClass,
   landingContainer,
@@ -43,13 +44,9 @@ function BentoCard({ src, title, description, status, href }: BentoCardProps) {
         </div>
       ) : null}
 
-      <video
-        src={src}
+      <AutoPlayVideo
+        src={assetUrl(src)}
         loop
-        muted
-        autoPlay
-        playsInline
-        preload="metadata"
         className="absolute left-0 top-0 size-full object-cover object-center"
         onLoadStart={() => setLoading(true)}
         onLoadedData={() => setLoading(false)}
@@ -119,7 +116,7 @@ export function FeaturesSection() {
         <ScrollReveal className="mb-7" delay={80}>
           <BentoTilt className="relative h-full w-full overflow-hidden rounded-xl border bg-card shadow-sm md:h-[50vh]">
             <BentoCard
-              src="/feature-1.mp4"
+                src="/video/feature-1.mp4"
               title={<>Trade Forestry Assets</>}
               description="Have a forest? Looking to source roundwood or carbon? Click here to find credible partners asap."
               href="/shop/sector-map"
@@ -131,7 +128,7 @@ export function FeaturesSection() {
           <ScrollReveal className="h-full md:row-span-2" delay={120}>
             <BentoTilt className="h-full overflow-hidden rounded-xl border bg-card shadow-sm">
               <BentoCard
-                src="/feature-2.mp4"
+                src="/video/feature-2.mp4"
                 title={<>The Nursery Shop</>}
                 description="Want to start a forest? Whether you already have land or not, you can find and plant the latest generation of tree species, hybrids, and clones."
                 href="/shop/seedlings"
@@ -142,7 +139,7 @@ export function FeaturesSection() {
           <ScrollReveal delay={180}>
             <BentoTilt className="h-full overflow-hidden rounded-xl border bg-card shadow-sm">
               <BentoCard
-                src="/feature-3.mp4"
+                src="/video/feature-3.mp4"
                 title={<>Market Insight Tools</>}
                 description="Forestry on steroids - introduce cutting edge, on-the-ground analysis to calculate the most profitable trades and deals in real-time"
                 href="https://github.com/JasonOyugi/EA-Forestry-Geospatial-Analysis.git"
@@ -154,7 +151,7 @@ export function FeaturesSection() {
           <ScrollReveal delay={240}>
             <BentoTilt className="h-full overflow-hidden rounded-xl border bg-card shadow-sm">
               <BentoCard
-                src="/feature-4.mp4"
+                src="/video/feature-4.mp4"
                 title={<>Site Species Matching</>}
                 description="Match planting sites to species and trial evidence using climate, soils, topography, and performance signals."
                 href="/models/site-species-analysis"
@@ -166,7 +163,7 @@ export function FeaturesSection() {
           <ScrollReveal delay={300}>
             <BentoTilt className="overflow-hidden rounded-xl border bg-card shadow-sm">
               <BentoCard
-                src="/feature-5.mp4"
+                src="/video/feature-5.mp4"
                 title={<>Forestry Modelling</>}
                 description="Model forestry viability, roundwood production, and establishment decisions with practical assumptions."
                 href="/models/model-2"

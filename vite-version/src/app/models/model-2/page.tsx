@@ -25,6 +25,7 @@ import {
 } from "recharts"
 
 import { BaseLayout } from "@/components/layouts/base-layout"
+import { ComingSoonPreview } from "@/components/coming-soon-preview"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -769,6 +770,11 @@ export default function ModelTwoPage() {
       labour mix switches between standard and skilled crews; Discount 1 and Discount 2 reduce later maintenance costs after thinning;
       thinning controls set removal year, share, and price; and final-harvest price, area, stocking density, rotation age, and discount rate drive the investment outputs)"
     >
+      <ComingSoonPreview
+        title="Silvicultural Models — Coming Soon"
+        description="Silviculture costs, thinning revenue, final-harvest revenue, and rotation cashflow metrics for commercial screening."
+        links={[{ label: "All models", href: "/models" }]}
+      >
       <div className="@container/main min-w-0 max-w-full overflow-hidden px-4 lg:px-6">
         <div className="grid min-w-0 max-w-full gap-4">
           <Card className="min-w-0 gap-4 border-border/70 bg-background/75 py-5">
@@ -1434,6 +1440,7 @@ export default function ModelTwoPage() {
           </div>
         </div>
       </div>
+      </ComingSoonPreview>
     </BaseLayout>
   )
 }

@@ -1677,11 +1677,11 @@ html {
 @keyframes landingFadeUp {
   0% {
     opacity: 0;
-    transform: translate3d(0, 24px, 0);
+    transform: translate3d(0, 24px, 0) scaleY(var(--landing-fade-scale-y, 1));
   }
   100% {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0) scaleY(var(--landing-fade-scale-y, 1));
   }
 }
 

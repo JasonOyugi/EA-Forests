@@ -25,11 +25,7 @@ export const editorialSubsections: Record<EditorialCategory, EditorialSubsection
     { label: "Genetics", href: "#brief", topic: "Genetics" },
     { label: "Technology", href: "#brief", topic: "Technology" },
   ],
-  Markets: [
-    { label: "Seed & Seedlings", href: "/shop/seedlings" },
-    { label: "Land & Services", href: "/shop/forests-land" },
-    { label: "Sector Map", href: "/shop/sector-map" },
-  ],
+  Markets: [],
   Models: [
     { label: "Genetic Models", href: "#brief", topic: "Genetic" },
     { label: "Commercial Models", href: "#brief", topic: "Commercial" },

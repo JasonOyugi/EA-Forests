@@ -7,7 +7,6 @@ import {
   Search,
   LayoutDashboard,
   Calendar,
-  Shield,
   AlertTriangle,
   Settings,
   HelpCircle,
@@ -140,11 +139,6 @@ export function CommandSearch({ open, onOpenChange }: CommandSearchProps) {
     { title: "Roundwood Production", url: "/models/model-3", group: "Models", icon: Workflow },
     { title: "Clonal Nursery", url: "/models/clonal-eucalyptus-nursery", group: "Models", icon: Sprout },
 
-    // Auth Pages
-    { title: "Sign In", url: "/auth/sign-in", group: "Auth Pages", icon: Shield },
-    { title: "Sign Up", url: "/auth/sign-up", group: "Auth Pages", icon: Shield },
-    { title: "Forgot Password", url: "/auth/forgot-password", group: "Auth Pages", icon: Shield },
-
     // Errors
     { title: "Unauthorized", url: "/errors/unauthorized", group: "Errors", icon: AlertTriangle },
     { title: "Forbidden", url: "/errors/forbidden", group: "Errors", icon: AlertTriangle },
@@ -162,7 +156,6 @@ export function CommandSearch({ open, onOpenChange }: CommandSearchProps) {
 
     // Pages
     { title: "FAQs", url: "/faqs", group: "Pages", icon: HelpCircle },
-    { title: "Pricing", url: "/pricing", group: "Pages", icon: CreditCard },
   ]
 
   const groupedItems = searchItems.reduce((acc, item) => {

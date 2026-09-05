@@ -26,9 +26,9 @@ const navigationItems = [
   { name: "Contact", href: "#contact" },
 ] as const
 
-const shopToggleItems = [
-  { name: "Planting material", href: getAppUrl("/shop/seedlings") },
-  { name: "Land & services", href: getAppUrl("/shop/forests-land") },
+const marketsToggleItems = [
+  { name: "Seed & Seedlings", href: getAppUrl("/shop/seedlings") },
+  { name: "Land & Services", href: getAppUrl("/shop/forests-land") },
   { name: "Wood Markets", href: getAppUrl("/shop/wood-markets-map") },
 ] as const
 
@@ -115,7 +115,7 @@ export function LandingNavbar() {
         </NavigationMenu>
 
         <div className="hidden xl:flex items-center gap-1 rounded-full border border-border/70 bg-background/70 p-1 shadow-sm backdrop-blur-sm">
-          {shopToggleItems.map((item) => (
+          {marketsToggleItems.map((item) => (
             <Button key={item.name} variant="ghost" size="sm" asChild className="rounded-full px-3 text-xs font-medium sm:text-sm">
               <a href={item.href}>{item.name}</a>
             </Button>
@@ -207,10 +207,10 @@ export function LandingNavbar() {
 
                 <div className="px-6 pb-6">
                   <div className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                    Shop
+                    Markets
                   </div>
                   <div className="grid gap-2">
-                    {shopToggleItems.map((item) => (
+                    {marketsToggleItems.map((item) => (
                       <Button key={item.name} variant="outline" asChild className="justify-start rounded-full">
                         <a href={item.href} onClick={() => setIsOpen(false)}>
                           {item.name}

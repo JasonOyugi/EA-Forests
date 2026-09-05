@@ -3,6 +3,7 @@
 import * as React from "react"
 
 import { BaseLayout } from "@/components/layouts/base-layout"
+import { ComingSoonPreview } from "@/components/coming-soon-preview"
 
 import {
   SiteClassificationAnalysis,
@@ -55,6 +56,11 @@ export default function SiteSpeciesAnalysisPage() {
       title="Site-species analysis"
       description="Select analysis period and then double click on map."
     >
+      <ComingSoonPreview
+        title="Site-species Analysis — Coming Soon"
+        description="Classify site conditions and match analogue trial sites and species performance evidence."
+        links={[{ label: "All models", href: "/models" }]}
+      >
       <div className="space-y-8">
         <div className="@container/main px-4 lg:px-6">
           <TrialSiteClassifierMap
@@ -80,6 +86,7 @@ export default function SiteSpeciesAnalysisPage() {
           artifactsState={trialArtifactsState}
         />
       </div>
+      </ComingSoonPreview>
     </BaseLayout>
   )
 }

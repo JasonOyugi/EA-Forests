@@ -6,11 +6,14 @@ import type { MouseEvent } from "react"
 
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
 import SeedlingsBanner from "@/components/commerce-ui/seedlings-banner"
+import { AutoPlayVideo } from "@/components/auto-play-video"
 import seedlingsInventory from "@/app/shop/data/seedlings.json"
 import { normalizeSeedlingInventory } from "@/app/shop/data/nursery-data"
 import type { ShopItem } from "@/app/shop/types"
+import { assetUrl } from "@/lib/utils"
 import { editorialActionLabels, editorialSubsections } from "./editorial-actions"
 import type { EditorialCategory } from "./editorial-actions"
+import { InformationLiveHub } from "./information-live-hub"
 import { landingContainer, landingDisplayHeadingClass } from "./landing-shared"
 import { sectorMetrics, sectorPlayers } from "./sector-data"
 import type { SectorMetric, SectorPlayer } from "./sector-data"
@@ -40,9 +43,9 @@ type Story = {
   href: string
   updatedAt: string
   video?: string
-  /** Sub-tag used for in-grid filtering (Information topics, Models groups). */
+  /** Sub-tag used for in-grid filtering. */
   topic?: string
-  /** Optional ribbon shown over the card, e.g. "Coming soon" or "Live hub". */
+  /** Optional status ribbon shown over the card. */
   badge?: string
 }
 
@@ -72,7 +75,7 @@ const stories: Story[] = [
   { title: "Build a high-performance forest asset today", category: "Investments", image: "/about.webp", href: "/shop/forests-land/high-performance-forests", updatedAt: "6 Aug 2026" },
   { title: "Find a contractor", category: "Markets", image: "https://cdn.britannica.com/77/213177-138-0C119CB6/Overview-silviculture-lumber-industry.jpg", href: "/shop/forests-land", updatedAt: "5 Aug 2026" },
   { title: "The top nurseries in the world are looking for partnerships in East Africa. Is it you?", category: "Information", image: "https://www.totalenergygroup.com/wp-content/uploads/2018/08/greenhouse_interior.jpg", href: "/articles/nursery-partnerships-east-africa", updatedAt: "4 Aug 2026" },
-  { title: "Model the forest before committing capital", category: "Models", image: "/apps.png", video: "/hero-3.mp4", href: "/models/model-2", updatedAt: "3 Aug 2026", topic: "Commercial" },
+  { title: "Model the forest before committing capital", category: "Models", image: "/apps.png", video: "/video/hero-3.mp4", href: "/models/model-2", updatedAt: "3 Aug 2026", topic: "Commercial" },
   { title: "It is time to restore the drylands profitably", category: "Investments", image: "/drylands.webp", href: "/shop/forests-land/drylands", updatedAt: "2 Aug 2026" },
   { title: "Join the people building the sector", category: "Information", image: "/contact-2.webp", href: "#contact", updatedAt: "1 Aug 2026" },
 
@@ -86,26 +89,13 @@ const stories: Story[] = [
   // Models — Economic group (in development)
   { title: "East Africa forestry macro-economic model", category: "Models", image: "/eucalyptus.jpg", href: "/models/macro-economic-outlook", updatedAt: "14 Aug 2026", topic: "Economic", badge: "Coming soon" },
 
-  // Information — duplicated weekly-newsletter stories, tagged by chapter
-  { title: "How the US-Iran war is reshaping East African forestry", category: "Information", image: "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA28mi8n.img?w=2048&h=1365&m=4&q=81", href: "/information/policy-regulation", updatedAt: "18 Aug 2026", topic: "Policy & Regulation" },
-  { title: "The carbon markets are set to inject +$300m into Ethiopia's economy", category: "Information", image: "https://advocacy4oromia.org/wp-content/uploads/2014/06/landscape-around-dube-bute-in-the-oromia-region.jpg", href: "/information/finance-markets", updatedAt: "17 Aug 2026", topic: "Finance & Markets" },
-  { title: "CAFI approves a new $22.65m private-sector finance facility", category: "Information", image: "https://files.nettsteder.regjeringen.no/wpuploads01/sites/543/2023/09/Yangambi-Research-Station-1500x1000-1.jpg", href: "/information/investments", updatedAt: "16 Aug 2026", topic: "Investments" },
-  { title: "Genetic quality is moving into the regulatory system", category: "Information", image: "https://www.forestsnews.org/wp-content/uploads/2026/08/KT_251107_ICRAF_QTS_86352-1024x1536.jpg", href: "/information/genetics", updatedAt: "15 Aug 2026", topic: "Genetics" },
-  { title: "The latest in geospatial intelligence for forestry", category: "Information", image: "https://eros.usgs.gov/doi-remote-sensing-activities/sites/default/files/public/USGS/Wu_lidar.png", href: "/information/technology", updatedAt: "14 Aug 2026", topic: "Technology" },
-
-  // Information — live hub banners, one per topic
-  { title: "Policy & Regulation live hub", category: "Information", image: "/maps.jpg", href: "/information/policy-regulation", updatedAt: "Updated continuously", topic: "Policy & Regulation", badge: "Live hub" },
-  { title: "Finance & Markets live hub", category: "Information", image: "/greenbuilding.webp", href: "/information/finance-markets", updatedAt: "Updated continuously", topic: "Finance & Markets", badge: "Live hub" },
-  { title: "Investments live hub", category: "Information", image: "/drylands.webp", href: "/information/investments", updatedAt: "Updated continuously", topic: "Investments", badge: "Live hub" },
-  { title: "Genetics live hub", category: "Information", image: "/eucalyptus.jpg", href: "/information/genetics", updatedAt: "Updated continuously", topic: "Genetics", badge: "Live hub" },
-  { title: "Technology live hub", category: "Information", image: "/about.webp", href: "/information/technology", updatedAt: "Updated continuously", topic: "Technology", badge: "Live hub" },
 ]
 
 const editorialVideos: EditorialVideo[] = [
-  { title: "How to earn money from eucalyptus plantations.", previewSrc: "/profit.mp4", href: "https://www.youtube.com/watch?v=pZ7zwi2LU5o", uploadedAt: "16 Jul 2024" },
-  { title: "This Gene-Edited Tree Captures More CO2.", previewSrc: "/genetics.mp4", href: "https://www.youtube.com/watch?v=6OknnFuDQE8&t=104s", uploadedAt: "30 Jun 2022" },
-  { title: "Portable Sawmill Demo | Wood-Mizer LT70 Super Hydraulic ", previewSrc: "/mill.mp4", href: "https://www.youtube.com/watch?v=GdHRBmweOTY", uploadedAt: "24 Sep 2025" },
-  { title: "FAO: Forests and economies - forests mean business", previewSrc: "/vc.mp4", href: "https://www.youtube.com/watch?v=yEVeFWKyLqI", uploadedAt: "19 Feb 2026" },
+  { title: "How to earn money from eucalyptus plantations.", previewSrc: "/video/profit.mp4", href: "https://www.youtube.com/watch?v=pZ7zwi2LU5o", uploadedAt: "16 Jul 2024" },
+  { title: "This Gene-Edited Tree Captures More CO2.", previewSrc: "/video/genetics.mp4", href: "https://www.youtube.com/watch?v=6OknnFuDQE8&t=104s", uploadedAt: "30 Jun 2022" },
+  { title: "Portable Sawmill Demo | Wood-Mizer LT70 Super Hydraulic ", previewSrc: "/video/mill.mp4", href: "https://www.youtube.com/watch?v=GdHRBmweOTY", uploadedAt: "24 Sep 2025" },
+  { title: "FAO: Forests and economies - forests mean business", previewSrc: "/video/vc.mp4", href: "https://www.youtube.com/watch?v=yEVeFWKyLqI", uploadedAt: "19 Feb 2026" },
 ]
 
 const editorialEvents: EditorialEvent[] = [
@@ -115,8 +105,9 @@ const editorialEvents: EditorialEvent[] = [
   { title: "Dubai WoodShow 2027", date: "6-8 Apr 2027", location: "Dubai, UAE", organizer: "WoodShow Global", description: "The MENA region's B2B marketplace for timber, panels, engineered wood, machinery, buyers, distributors, and exporters.", href: "https://www.woodshowglobal.com/dubai" },
 ]
 
-const editorialCategories: EditorialCategory[] = ["Information", "Markets", "Models", "Investments", "Videos", "Events"]
+const editorialCategories: EditorialCategory[] = ["Information", "Models", "Investments", "Videos", "Events"]
 const initialVisibleStoryCount = 8
+const defaultInformationTopic = "Policy & Regulation"
 
 function StoryTile({ story, size }: { story: Story; size?: string }) {
   const mediaRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null)
@@ -156,7 +147,7 @@ function StoryTile({ story, size }: { story: Story; size?: string }) {
       className={`landing-story-card group relative block overflow-hidden bg-zinc-900 [perspective:1100px] transition-[width,height,transform] duration-500 ${size ?? ""}`}
     >
       {story.video ? (
-        <video ref={(node) => { mediaRef.current = node }} src={story.video} poster={story.image} autoPlay loop muted playsInline preload="metadata" className="absolute inset-0 size-full origin-center object-cover transition-transform ease-out will-change-transform [transform:perspective(1100px)_rotateX(0deg)_rotateY(0deg)_translate3d(0,0,0)_scale(1.02)]" />
+        <AutoPlayVideo ref={(node) => { mediaRef.current = node }} src={assetUrl(story.video)} poster={assetUrl(story.image)} loop className="absolute inset-0 size-full origin-center object-cover transition-transform ease-out will-change-transform [transform:perspective(1100px)_rotateX(0deg)_rotateY(0deg)_translate3d(0,0,0)_scale(1.02)]" />
       ) : (
         <img ref={(node) => { mediaRef.current = node }} src={story.image} alt="" className="absolute inset-0 size-full origin-center object-cover transition-transform ease-out will-change-transform [transform:perspective(1100px)_rotateX(0deg)_rotateY(0deg)_translate3d(0,0,0)_scale(1.02)]" loading="lazy" decoding="async" />
       )}
@@ -182,7 +173,7 @@ function StoryTile({ story, size }: { story: Story; size?: string }) {
 function VideoTile({ video, size = "" }: { video: EditorialVideo; size?: string }) {
   return (
     <a href={video.href} target="_blank" rel="noopener noreferrer" className={`landing-story-card group relative block min-h-[320px] overflow-hidden bg-zinc-900 text-white ${size}`}>
-      <video src={video.previewSrc} autoPlay loop muted playsInline preload="metadata" className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105" />
+      <AutoPlayVideo src={assetUrl(video.previewSrc)} loop className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-black/10" />
       <span className="absolute left-5 top-5 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-xs font-medium text-white/80 backdrop-blur-sm">
         <Clock3 className="size-3" /> Last updated: {video.uploadedAt}
@@ -222,19 +213,35 @@ function MetricTile({
   metric,
   size,
   onFocus,
+  onSelectInformation,
 }: {
   metric: SectorMetric
   size: string
   onFocus?: () => void
+  onSelectInformation?: (topic: string) => void
 }) {
   return (
     <article
-      className={`editorial-metric-tile emerald-border-hover group relative flex flex-col justify-between overflow-hidden bg-gradient-to-br from-emerald-950 via-zinc-950 to-emerald-950 p-6 text-white transition-all duration-500 sm:p-7 ${size}`}
+      role="button"
+      tabIndex={0}
+      className={`editorial-metric-tile group relative flex cursor-pointer flex-col justify-between overflow-hidden border p-6 text-white transition-all duration-500 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 sm:p-7 ${size}`}
+      onClick={() => onSelectInformation?.(metric.informationTopic)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault()
+          onSelectInformation?.(metric.informationTopic)
+        }
+      }}
       onDoubleClick={onFocus}
+      aria-label={`Open ${metric.informationTopic} information for ${metric.label}`}
+      style={{
+        borderColor: `color-mix(in srgb, ${metric.accent} 48%, transparent)`,
+        background: `linear-gradient(145deg, color-mix(in srgb, ${metric.accent} 58%, #07110c) 0%, color-mix(in srgb, ${metric.accent} 18%, #07110c) 55%, #050807 100%)`,
+      }}
     >
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        <span className="absolute -left-12 -top-12 size-32 animate-pulse rounded-full bg-emerald-300/18 blur-[1px] [animation-duration:2.8s]" />
-        <span className="absolute right-8 top-6 size-16 animate-pulse rounded-full bg-emerald-500/22 [animation-delay:350ms] [animation-duration:2.2s]" />
+        <span className="absolute -left-12 -top-12 size-32 rounded-full opacity-20 blur-xl" style={{ backgroundColor: metric.accent }} />
+        <span className="absolute right-8 top-6 size-16 rounded-full opacity-20" style={{ backgroundColor: metric.accent }} />
         <div className="absolute -bottom-16 -right-16 h-40 w-40 overflow-hidden opacity-40">
           <img
             src="/favicon-dark.png"
@@ -245,24 +252,11 @@ function MetricTile({
           />
         </div>
       </div>
-      <p className="relative z-10 text-xs font-semibold uppercase tracking-[.2em] text-emerald-300">Sector in Numbers</p>
+      <p className="relative z-10 text-xs font-semibold uppercase tracking-[.2em]" style={{ color: metric.accent }}>Did you know?</p>
       <div className="relative z-10">
         <p className="landing-metric-value font-semibold tracking-[-.03em]">{metric.value}</p>
         <p className="mt-3 text-sm font-medium text-white/85">{metric.label}</p>
-        <p className="mt-1 text-xs text-white/50">{metric.context}</p>
-        <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
-          <a
-            href={metric.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(event) => event.stopPropagation()}
-            onDoubleClick={(event) => event.stopPropagation()}
-            className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-[.12em] text-emerald-200/75 transition-colors hover:text-white focus-visible:text-white"
-            aria-label={`${metric.websiteLabel} for ${metric.label}`}
-          >
-            Explore <ExternalLink className="size-3" />
-          </a>
-        </div>
+        <p className="mt-2 text-xs leading-5 text-white/60">{metric.context}</p>
       </div>
     </article>
   )
@@ -352,11 +346,11 @@ function ProductTile({
   )
 }
 
-function MetricPair({ metrics, size, onFocus }: { metrics: SectorMetric[]; size: string; onFocus: () => void }) {
+function MetricPair({ metrics, size, onFocus, onSelectInformation }: { metrics: SectorMetric[]; size: string; onFocus: () => void; onSelectInformation: (topic: string) => void }) {
   return (
     <div className={`landing-metric-pair grid grid-rows-2 gap-2 ${size}`}>
       {metrics.map((metric) => (
-        <MetricTile key={metric.label} metric={metric} size="min-h-0" onFocus={onFocus} />
+        <MetricTile key={metric.label} metric={metric} size="min-h-0" onFocus={onFocus} onSelectInformation={onSelectInformation} />
       ))}
     </div>
   )
@@ -367,7 +361,7 @@ export function SectorSearchSection() {
     <section id="discover" className="bg-[#07110c] py-16 text-emerald-50 sm:py-20 lg:py-24">
       <div className={landingContainer}>
         <ScrollReveal className="grid items-stretch" delay={80}>
-          <a href="/shop/sector-map#market-concessions" className="emerald-border-hover group relative min-h-[26rem] overflow-hidden bg-zinc-900 p-5 text-white sm:min-h-[32rem] lg:min-h-[38rem]">
+          <a href="/shop/sector-map" className="emerald-border-hover group relative min-h-[26rem] overflow-hidden bg-zinc-900 p-5 text-white sm:min-h-[32rem] lg:min-h-[38rem]">
             <img src="/maps.jpg" alt="East African forestry sector map" className="absolute inset-0 size-full object-cover opacity-55 transition-transform duration-700 group-hover:scale-105" />
             <div className="absolute inset-0 bg-gradient-to-br from-emerald-950/95 via-zinc-950/72 to-black/25" />
             <div className="relative flex min-h-[23.5rem] flex-col justify-between sm:min-h-[28.5rem] lg:min-h-[34.5rem]">
@@ -405,7 +399,9 @@ export function EditorialBriefSection() {
     const handleEditorialFilter = (event: Event) => {
       const detail = (event as CustomEvent<EditorialCategory | { category: EditorialCategory; topic?: string }>).detail
       const category = typeof detail === "string" ? detail : detail.category
-      const topic = typeof detail === "string" ? null : detail.topic ?? null
+      const topic = typeof detail === "string"
+        ? category === "Information" ? defaultInformationTopic : null
+        : detail.topic ?? (category === "Information" ? defaultInformationTopic : null)
       if (!editorialCategories.includes(category)) return
       setActiveCategory(category)
       setActiveTopic(topic)
@@ -419,7 +415,7 @@ export function EditorialBriefSection() {
 
   const selectCategory = (category: EditorialCategory | "All") => {
     setActiveCategory(category)
-    setActiveTopic(null)
+    setActiveTopic(category === "Information" ? defaultInformationTopic : null)
     setVisibleCount(initialVisibleStoryCount)
     setFocusMode(null)
   }
@@ -429,6 +425,10 @@ export function EditorialBriefSection() {
     setActiveTopic(topic)
     setVisibleCount(initialVisibleStoryCount)
     setFocusMode(null)
+  }
+
+  const selectInformationTopic = (topic: string) => {
+    selectTopic("Information", topic)
   }
 
   const toggleFocus = (nextMode: Exclude<EditorialFocus, null>) => {
@@ -453,14 +453,19 @@ export function EditorialBriefSection() {
               key={category}
               category={category}
               isActive={activeCategory === category}
+              activeTopic={activeCategory === category ? activeTopic : null}
               onSelect={() => selectCategory(category)}
               onSelectTopic={(topic) => selectTopic(category, topic)}
             />
           ))}
         </ScrollReveal>
 
-        <div className="editorial-grid-transition" key={`${activeCategory}-${focusMode ?? "mixed"}`}>
-          {focusMode ? (
+        <div className="editorial-grid-transition" key={`${activeCategory}-${activeTopic ?? "all"}-${focusMode ?? "mixed"}`}>
+          {activeCategory === "Information" ? (
+            <InformationLiveHub
+              activeTopic={activeTopic ?? defaultInformationTopic}
+            />
+          ) : focusMode ? (
             <div className="editorial-focus-surface rounded-[2rem] border border-emerald-400/20 p-3 sm:p-5 lg:p-7">
               <div className="mb-5 flex flex-wrap items-center justify-between gap-3 px-1 text-emerald-50">
                 <p className="text-xs font-semibold uppercase tracking-[.2em]">
@@ -470,7 +475,7 @@ export function EditorialBriefSection() {
               </div>
               <div className={`grid gap-2 ${focusMode === "products" ? "md:grid-cols-2 xl:grid-cols-5" : "md:grid-cols-2 xl:grid-cols-3"}`}>
                 {focusMode === "metrics" ? sectorMetrics.map((metric) => (
-                  <MetricTile key={metric.label} metric={metric} size="min-h-[280px]" onFocus={() => toggleFocus("metrics")} />
+                  <MetricTile key={metric.label} metric={metric} size="min-h-[280px]" onFocus={() => toggleFocus("metrics")} onSelectInformation={selectInformationTopic} />
                 )) : null}
                 {focusMode === "players" ? sectorPlayers.map((player) => (
                   <PlayerTile key={player.name} player={player} size="min-h-[320px]" onFocus={() => toggleFocus("players")} />
@@ -484,14 +489,14 @@ export function EditorialBriefSection() {
             <div key={activeCategory} className="editorial-mosaic-grid grid grid-cols-1 gap-2 xl:grid-cols-12 xl:[grid-auto-flow:dense]">
             {activeCategory === "All" ? (
               <>
-                <StoryTile story={visibleStories[0]} size="xl:col-span-9 xl:row-span-[48]" />
-                <MetricPair metrics={sectorMetrics.slice(0, 2)} size="xl:col-span-3 xl:row-span-[48]" onFocus={() => toggleFocus("metrics")} />
+                <StoryTile story={visibleStories[0]} size="xl:col-span-8 xl:row-span-[36]" />
+                <MetricPair metrics={sectorMetrics.slice(0, 2)} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("metrics")} onSelectInformation={selectInformationTopic} />
 
                 <ProductTile item={featuredSeedlings[0]} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("products")} />
                 <StoryTile story={visibleStories[1]} size="xl:col-span-8 xl:row-span-[36]" />
 
-                <MetricPair metrics={sectorMetrics.slice(2, 4)} size="xl:col-span-3 xl:row-span-[36]" onFocus={() => toggleFocus("metrics")} />
-                <StoryTile story={visibleStories[2]} size="xl:col-span-9 xl:row-span-[36]" />
+                <MetricPair metrics={sectorMetrics.slice(2, 4)} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("metrics")} onSelectInformation={selectInformationTopic} />
+                <StoryTile story={visibleStories[2]} size="xl:col-span-8 xl:row-span-[36]" />
                 <StoryTile story={visibleStories[3]} size="xl:col-span-4 xl:row-span-[60]" />
                 <PlayerTile player={sectorPlayers[0]} size="xl:col-span-4 xl:row-span-[30]" onFocus={() => toggleFocus("players")} />
                 <VideoTile video={editorialVideos[0]} size="xl:col-span-4 xl:row-span-[60]" />
@@ -515,7 +520,7 @@ export function EditorialBriefSection() {
                 <EventTile event={editorialEvents[1]} size="xl:col-span-4 xl:row-span-[36]" />
                 <VideoTile video={editorialVideos[1]} size="xl:col-span-8 xl:row-span-[30]" />
 
-                <MetricPair metrics={sectorMetrics.slice(4, 6)} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("metrics")} />
+                <MetricPair metrics={sectorMetrics.slice(4, 6)} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("metrics")} onSelectInformation={selectInformationTopic} />
                 <StoryTile story={visibleStories[6]} size="xl:col-span-8 xl:row-span-[60]" />
                 <PlayerTile player={sectorPlayers[4]} size="xl:col-span-4 xl:row-span-[30]" onFocus={() => toggleFocus("players")} />
                 <StoryTile story={visibleStories[7]} size="xl:col-span-4 xl:row-span-[30]" />
@@ -536,7 +541,7 @@ export function EditorialBriefSection() {
           )}
         </div>
 
-        {activeCategory !== "Videos" && activeCategory !== "Events" && visibleCount < filteredStories.length ? (
+        {activeCategory !== "Information" && activeCategory !== "Videos" && activeCategory !== "Events" && visibleCount < filteredStories.length ? (
           <ScrollReveal className="mt-10 border-t border-emerald-900 pt-6 text-center" delay={140}>
             <button type="button" onClick={() => setVisibleCount(filteredStories.length)} className="group inline-flex items-center gap-3 text-sm text-primary uppercase tracking-[.16em]">Load more <ArrowRight className="size-4 rotate-90 transition-transform group-hover:translate-y-1" /></button>
           </ScrollReveal>
@@ -551,11 +556,13 @@ export function EditorialBriefSection() {
 function CategoryPill({
   category,
   isActive,
+  activeTopic,
   onSelect,
   onSelectTopic,
 }: {
   category: EditorialCategory
   isActive: boolean
+  activeTopic: string | null
   onSelect: () => void
   onSelectTopic: (topic: string) => void
 }) {
@@ -585,9 +592,12 @@ function CategoryPill({
                 key={sub.label}
                 type="button"
                 onClick={() => onSelectTopic(sub.topic as string)}
+                aria-pressed={isActive && activeTopic === sub.topic}
                 className={`whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-[.1em] transition-colors duration-300 ${
-                  isActive
-                    ? "bg-white/15 text-white hover:bg-white/25"
+                  isActive && activeTopic === sub.topic
+                    ? "bg-white text-emerald-950"
+                    : isActive
+                      ? "bg-white/15 text-white hover:bg-white/25"
                     : "bg-emerald-900/60 text-emerald-100 hover:bg-emerald-800 hover:text-white"
                 }`}
               >

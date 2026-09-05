@@ -6,27 +6,28 @@ import { AiFillYoutube } from "react-icons/ai"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { getAppUrl } from "@/lib/utils"
+import { AutoPlayVideo } from "@/components/auto-play-video"
+import { assetUrl, getAppUrl } from "@/lib/utils"
 import { landingContainer, landingHeroLeadClass } from "./landing-shared"
 
 const heroVideos = [
   {
-    src: "/profit.mp4",
+    src: "/video/profit.mp4",
     previewLabel: "Next video: Profit from Eucalyptus",
     youtubeUrl: "https://www.youtube.com/watch?v=pZ7zwi2LU5o",
   },
   {
-    src: "/genetics.mp4",
+    src: "/video/genetics.mp4",
     previewLabel: "Next video: Understand Genetics",
     youtubeUrl: "https://www.youtube.com/watch?v=6OknnFuDQE8&t=104s",
   },
   {
-    src: "/mill.mp4",
+    src: "/video/mill.mp4",
     previewLabel: "Next video: Tree sawmilling",
     youtubeUrl: "https://www.youtube.com/watch?v=GdHRBmweOTY",
   },
   {
-    src: "/vc.mp4",
+    src: "/video/vc.mp4",
     previewLabel: "Next video: sector overview (FAO)",
     youtubeUrl: "https://www.youtube.com/watch?v=yEVeFWKyLqI",
   },
@@ -71,7 +72,7 @@ export function HeroSection() {
       }}
       className="landing-hero-shell landing-hero-height relative isolate overflow-hidden bg-black"
     >
-      <video key={heroVideos[currentIndex].src} src={heroVideos[currentIndex].src} loop muted autoPlay playsInline preload="metadata" className="absolute inset-0 -z-30 size-full object-cover object-center" />
+      <AutoPlayVideo eager key={heroVideos[currentIndex].src} src={assetUrl(heroVideos[currentIndex].src)} loop className="absolute inset-0 -z-30 size-full object-cover object-center" />
       <div aria-hidden className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(3,13,9,.88)_0%,rgba(3,13,9,.64)_42%,rgba(3,13,9,.2)_100%)]" />
       <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-black/70 via-transparent to-black/45" />
 
@@ -94,7 +95,7 @@ export function HeroSection() {
           </h1>
 
           <p className={`landing-fade-up landing-delay-3 text-white/85 ${landingHeroLeadClass}`}>
-            From nurseries to building with timber, start generating cash from East African forestry now!
+            Start generating cash from forestry now!
           </p>
 
           <div className="landing-fade-up landing-delay-4 flex flex-col justify-start gap-4 sm:flex-row">
@@ -121,7 +122,9 @@ export function HeroSection() {
           transform: `translate(-50%, -50%) translate3d(0, 0, 0) perspective(800px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(${isHovering ? 1 : 0.7})`,
         }}
       >
-        <video key={heroVideos[nextIndex].src} src={heroVideos[nextIndex].src} muted loop playsInline autoPlay preload="metadata" className="size-full scale-110 object-cover" />
+        {isHovering ? (
+          <AutoPlayVideo eager key={heroVideos[nextIndex].src} src={assetUrl(heroVideos[nextIndex].src)} loop className="size-full scale-110 object-cover" />
+        ) : null}
         <span className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
         <span className="absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap border border-white/25 bg-black/35 px-3 py-1 text-xs tracking-[.18em] text-white/90 backdrop-blur-sm">
           {heroVideos[nextIndex].previewLabel}

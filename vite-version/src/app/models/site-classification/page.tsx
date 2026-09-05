@@ -70,15 +70,9 @@ type TableRowRecord = Record<string, TableRowValue>
 const siteAnalysisTileLayers = [
   {
     name: "Street",
-    url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
+    url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     attribution:
-      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
-  },
-  {
-    name: "Satellite",
-    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    attribution:
-      "Tiles &copy; Esri, Maxar, Earthstar Geographics, and the GIS User Community",
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   },
   {
     name: "Topographic",
@@ -88,9 +82,9 @@ const siteAnalysisTileLayers = [
   },
   {
     name: "Dark",
-    url: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
+    url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     attribution:
-      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   },
 ]
 

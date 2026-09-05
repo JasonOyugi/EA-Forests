@@ -68,7 +68,7 @@ export function EnhancedProductCard({
     seedlings: {
       stockBadgeClass: "bg-emerald-600 text-white",
       starActiveClass: "fill-emerald-400 text-emerald-400",
-      themeCardClass: "border border-emerald-100 bg-white/80",
+      themeCardClass: "bg-white/80",
       quickAddButtonClass: "bg-emerald-700 text-white hover:bg-emerald-800",
       footerButtonClass: "bg-emerald-700 text-white hover:bg-emerald-800 emerald-border-hover",
       variantButtonSelected: "border-emerald-700 bg-emerald-100 text-emerald-900",
@@ -85,7 +85,7 @@ export function EnhancedProductCard({
     "forests-land": {
       stockBadgeClass: "bg-primary text-primary-foreground",
       starActiveClass: "fill-primary text-primary",
-      themeCardClass: "border border-primary/15 bg-card",
+      themeCardClass: "bg-card",
       quickAddButtonClass: "bg-primary text-primary-foreground hover:bg-primary/90",
       footerButtonClass: "bg-primary text-primary-foreground hover:bg-primary/90 theme-primary-border-hover",
       variantButtonSelected: "border-primary bg-primary/10 text-primary",
@@ -102,7 +102,7 @@ export function EnhancedProductCard({
     "forestry-services": {
       stockBadgeClass: "bg-primary text-primary-foreground",
       starActiveClass: "fill-primary text-primary",
-      themeCardClass: "border border-primary/15 bg-card",
+      themeCardClass: "bg-card",
       quickAddButtonClass: "bg-primary text-primary-foreground hover:bg-primary/90",
       footerButtonClass: "bg-primary text-primary-foreground hover:bg-primary/90 theme-primary-border-hover",
       variantButtonSelected: "border-primary bg-primary/10 text-primary",
@@ -119,7 +119,7 @@ export function EnhancedProductCard({
     roundwood: {
       stockBadgeClass: "bg-rose-800 text-white",
       starActiveClass: "fill-rose-500 text-rose-500",
-      themeCardClass: "border border-rose-200 bg-white/90",
+      themeCardClass: "bg-white/90",
       quickAddButtonClass: "bg-rose-800 text-white hover:bg-rose-900",
       footerButtonClass: "bg-rose-800 text-white hover:bg-rose-900 emerald-border-hover",
       variantButtonSelected: "border-rose-800 bg-rose-100 text-rose-900",
@@ -229,10 +229,9 @@ export function EnhancedProductCard({
   const cardEl = (
     <Card
       className={cn(
-        "group relative cursor-pointer overflow-hidden bg-black py-0 transition-all hover:-translate-y-1 hover:shadow-lg",
+        "group relative cursor-pointer overflow-hidden bg-black py-0 !border-0 transition-all hover:-translate-y-1 hover:shadow-lg",
         shellClass,
         themeCardClass,
-        runningBorderOnHover && "border-transparent",
         className
       )}
       onClick={() => onClick?.(item)}

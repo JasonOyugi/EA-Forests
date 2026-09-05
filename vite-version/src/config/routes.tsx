@@ -12,22 +12,12 @@ const ShopPage = lazy(() => import("@/app/shop/shop-page"))
 const ShopProductPage = lazy(() => import("@/app/shop/product-page"))
 const Calendar = lazy(() => import('@/app/calendar/page'))
 const FAQs = lazy(() => import('@/app/faqs/page'))
-const Pricing = lazy(() => import('@/app/pricing/page'))
 const Models = lazy(() => import('@/app/models/page'))
 const SiteSpeciesAnalysis = lazy(() => import('@/app/models/site-species-analysis/page'))
 const Model2 = lazy(() => import('@/app/models/model-2/page'))
 const Model3 = lazy(() => import('@/app/models/model-3/page'))
 const ClonalEucalyptusNursery = lazy(() => import('@/app/models/clonal-eucalyptus-nursery/page'))
 const ModelComingSoon = lazy(() => import('@/app/models/coming-soon/page'))
-const Articles = lazy(() => import('@/app/articles/page'))
-const Article = lazy(() => import('@/app/articles/article-page'))
-const InformationHub = lazy(() => import('@/app/information/hub-page'))
-const Newsletter = lazy(() => import('@/app/newsletter/page'))
-
-// Auth pages
-const SignIn = lazy(() => import('@/app/auth/sign-in/page'))
-const SignUp = lazy(() => import('@/app/auth/sign-up/page'))
-const ForgotPassword = lazy(() => import('@/app/auth/forgot-password/page'))
 
 // Error pages
 const Unauthorized = lazy(() => import('@/app/errors/unauthorized/page'))
@@ -64,21 +54,16 @@ export const routes: RouteConfig[] = [
   },
   {
     path: "/newsletter",
-    element: <Newsletter />
+    element: <Navigate to="/landing" replace />
   },
   {
     path: "/articles",
-    element: <Articles />
+    element: <Navigate to="/models" replace />
   },
   {
     path: "/articles/:articleSlug",
-    element: <Article />
+    element: <Navigate to="/models" replace />
   },
-  {
-    path: "/information/:topicSlug",
-    element: <InformationHub />
-  },
-
   // Dashboard Routes
   {
     path: "/dashboard",
@@ -126,7 +111,7 @@ export const routes: RouteConfig[] = [
   },
   {
     path: "/pricing",
-    element: <Pricing />
+    element: <Navigate to="/models" replace />
   },
   {
     path: "/models",
@@ -164,15 +149,15 @@ export const routes: RouteConfig[] = [
   // Authentication Routes
   {
     path: "/auth/sign-in",
-    element: <SignIn />
+    element: <Navigate to="/models" replace />
   },
   {
     path: "/auth/sign-up",
-    element: <SignUp />
+    element: <Navigate to="/models" replace />
   },
   {
     path: "/auth/forgot-password",
-    element: <ForgotPassword />
+    element: <Navigate to="/models" replace />
   },
 
   // Error Pages

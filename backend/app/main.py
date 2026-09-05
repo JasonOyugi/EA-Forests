@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -29,18 +31,35 @@ from app.services.site_classification import (
     run_site_classification,
 )
 
-app = FastAPI(title="EA Forests Models Backend", version="0.1.0")
+def _split_csv_env(value: str | None) -> list[str]:
+    if not value:
+        return []
+    return [item.strip() for item in value.split(",") if item.strip()]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
+
+def _allowed_origins() -> list[str]:
+    origins = _split_csv_env(os.getenv("ALLOWED_ORIGINS"))
+    if origins:
+        return origins
+
+    defaults = [
         "http://127.0.0.1:5173",
         "http://localhost:5173",
         "http://127.0.0.1:5174",
         "http://localhost:5174",
         "http://127.0.0.1:4173",
         "http://localhost:4173",
-    ],
+    ]
+    for host in _split_csv_env(os.getenv("APP_ORIGIN")):
+        defaults.append(host)
+    return defaults
+
+
+app = FastAPI(title="EA Forests Models Backend", version="0.1.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=_allowed_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

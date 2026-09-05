@@ -17,17 +17,17 @@ export function CheckoutPlaceholder({
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-sm text-muted-foreground">
-          This is a fake v1 checkout flow. The next step can swap this for a real
-          checkout service, backend order API, or payment provider without rewriting
-          the shop listing and cart logic.
+          Checkout is not enabled in this MVP. The market catalog is presented for
+          discovery and model context, while procurement and payment workflows remain
+          to be connected to a live operational backend.
         </p>
 
         <div className="flex flex-wrap gap-3">
           <Button variant="outline" onClick={onBack}>
-            Back to cart
+            Back to market
           </Button>
           <Button onClick={onConfirm}>
-            Confirm fake checkout
+            Acknowledge preview
           </Button>
         </div>
       </CardContent>

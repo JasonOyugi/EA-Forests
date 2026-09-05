@@ -6,7 +6,7 @@ This backend turns the notebook-driven model workflows into a FastAPI service fo
 
 ```powershell
 cd backend
-$env:UV_CACHE_DIR='c:\Users\JasonOyugi\Downloads\EA_Forests\.uv-cache'
+$env:UV_CACHE_DIR='c:\Users\JasonOyugi\Downloads\EA-Forests\.uv-cache'
 uv sync
 ```
 
@@ -15,7 +15,7 @@ uv sync
 ```powershell
 cd backend
 $env:EARTH_ENGINE_PROJECT='ee-oyugijason'
-$env:UV_CACHE_DIR='c:\Users\JasonOyugi\Downloads\EA_Forests\.uv-cache'
+$env:UV_CACHE_DIR='c:\Users\JasonOyugi\Downloads\EA-Forests\.uv-cache'
 uv run uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 

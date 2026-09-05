@@ -25,7 +25,7 @@ export function ProductCard({
   onDecrement,
 }: ProductCardProps) {
   return (
-    <Card className="overflow-hidden gap-0 py-0">
+    <Card className="overflow-hidden gap-0 py-0 !border-0">
       <div className="relative aspect-[16/10] overflow-hidden bg-transparent">
         <img
           src={item.image}

@@ -73,7 +73,7 @@
   max-inline-size: 100%;
   overflow-wrap: break-word;
   font-family: var(--font-canals);
-  font-stretch: condensed;
+  font-stretch: extra-condensed;
   font-weight: 600;
   text-wrap: balance;
 }
@@ -86,9 +86,14 @@
 }
 
 .landing-hero-title {
+  --landing-hero-title-scale-y: 1;
+  --landing-fade-scale-y: var(--landing-hero-title-scale-y);
   font-size: var(--landing-title-hero);
-  line-height: 0.78;
-  letter-spacing: -0.065em;
+  line-height: 0.82;
+  letter-spacing: -0.055em;
+  margin-block-end: clamp(1.0rem, 8vw, 2.5rem);
+  transform: scaleY(var(--landing-hero-title-scale-y));
+  transform-origin: left top;
 }
 
 .landing-display-title {
@@ -110,6 +115,7 @@
   max-inline-size: 100%;
   overflow-wrap: break-word;
   text-wrap: balance;
+  font-stretch: condensed;
 }
 
 .landing-story-title {

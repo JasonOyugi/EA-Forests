@@ -689,8 +689,8 @@ function RetailerMapPanel({
         <div className="overflow-hidden rounded-2xl border border-primary/20">
           <Map center={mapCenter} zoom={markerKind === "nursery" ? 5 : 8} className="h-full w-full">
             <MapTileLayer
-              url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions">CARTO</a>'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             />
             {markerKind === "nursery" && selectedRetailer ? (
               <CatchmentViewport

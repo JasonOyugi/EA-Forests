@@ -9,6 +9,6 @@ export const landingHeadingClass = "landing-section-heading mb-4"
 export const landingLeadClass = "landing-lead mx-auto max-w-2xl text-muted-foreground"
 export const landingEyebrowClass = "text-xs font-semibold uppercase tracking-[.24em] text-muted-foreground"
 export const landingHeroHeadingClass =
-  "landing-section-heading mb-6"
+  "landing-section-heading mb-1"
 export const landingHeroLeadClass =
   "landing-lead mb-8 mt-5 text-muted-foreground sm:mb-10 sm:mt-7"

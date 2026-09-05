@@ -41,16 +41,7 @@ export function SidebarNotification() {
             </div>
           </h3>
           <p className="text-sm text-muted-foreground dark:text-neutral-400 leading-relaxed">
-            Explore our premium {" "}
-            <a 
-              href="https://shadcnstore.com/blocks" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-primary underline"
-            >
-              Models
-            </a>{" "}
-            to build your next project faster.
+            Explore the live forestry models and market intelligence surfaces available in this MVP.
           </p>
         </div>
       </CardContent>

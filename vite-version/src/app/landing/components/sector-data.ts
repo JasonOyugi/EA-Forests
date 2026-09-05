@@ -1,20 +1,30 @@
+import { informationHubOrder, informationHubTopics } from "@/app/information/data"
+
 export type SectorMetric = {
   label: string
   value: string
   context: string
   website: string
   websiteLabel: string
+  informationTopic: string
+  informationSlug: string
+  accent: string
 }
 
-/** Illustrative sector snapshot, formerly published on the retired Sector Hub. */
-export const sectorMetrics: SectorMetric[] = [
-  { label: "Commercial forestry area", value: "420k ha", context: "Regional planted-forest estimate", website: "https://fra-data.fao.org/WO/fra2020/home/", websiteLabel: "Explore FAO data" },
-  { label: "Seedling demand", value: "68M / yr", context: "Estimated planting-material need", website: "https://www.cifor-icraf.org/tree-genetic-resources/", websiteLabel: "Explore CIFOR-ICRAF" },
-  { label: "Timber demand outlook", value: "7.4%", context: "Indicative demand-growth scenario", website: "https://www.itto.int/market_information_service/", websiteLabel: "Explore ITTO markets" },
-  { label: "Investment activity", value: "$24M", context: "Visible project pipeline under review", website: "https://www.gatsbyafrica.org.uk/", websiteLabel: "Explore sector investment" },
-  { label: "Carbon project activity", value: "18 projects", context: "Forestry-linked initiatives tracked", website: "https://registry.verra.org/", websiteLabel: "Explore Verra registry" },
-  { label: "Nursery capacity", value: "46M", context: "Potential annual seedling capacity", website: "https://www.cifor-icraf.org/tree-genetic-resources/", websiteLabel: "Explore tree-seed systems" },
-]
+/** Two topic-linked numbers for each of the five Information sections. */
+export const sectorMetrics: SectorMetric[] = informationHubOrder.flatMap((slug) => {
+  const topic = informationHubTopics[slug]
+  const primarySource = topic.cards[0]
+
+  return topic.stats.slice(0, 2).map((stat) => ({
+    ...stat,
+    website: primarySource?.href ?? "#brief",
+    websiteLabel: primarySource?.title ?? `Open ${topic.label}`,
+    informationTopic: topic.label,
+    informationSlug: topic.slug,
+    accent: topic.accent,
+  }))
+})
 
 export type SectorPlayer = {
   name: string
