@@ -57,8 +57,11 @@ function BentoCard({ src, title, description, status, href }: BentoCardProps) {
       />
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
+      {status === "coming-soon" ? (
+        <div aria-hidden="true" className="coming-soon-card-tint z-10" />
+      ) : null}
 
-      <div className="relative z-10 flex size-full flex-col justify-between p-5 text-white">
+      <div className="relative z-20 flex size-full flex-col justify-between p-5 text-white">
         <div>
           <h3 className="text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">
             {title}

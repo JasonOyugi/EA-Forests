@@ -25,6 +25,7 @@ export function ComingSoonPreview({
 }: ComingSoonPreviewProps) {
   return (
     <div className={cn("relative isolate overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-100/80 shadow-sm dark:border-slate-700/80 dark:bg-slate-900/70", className)}>
+      <div aria-hidden="true" className="coming-soon-card-tint" />
       {children ?? null}
 
       <div className="relative flex min-h-[210px] flex-col justify-center gap-5 p-6 sm:p-8">

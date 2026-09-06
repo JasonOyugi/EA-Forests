@@ -9,6 +9,7 @@ import {
 
 import { BentoTilt } from "@/components/ui/bento-tilt"
 import { Badge } from "@/components/ui/badge"
+import { MetricCardDecoration } from "@/app/landing/components/metric-card-decoration"
 import {
   Card,
   CardAction,
@@ -67,10 +68,11 @@ function DashboardSummaryCard({
   return (
     <BentoTilt className="h-full">
       <Card
-        className={`@container/card h-full cursor-pointer shadow-xs investor-card ${toneClassName}`}
+        className={`@container/card relative overflow-hidden h-full cursor-pointer shadow-xs investor-card ${toneClassName}`}
         onClick={onClick}
       >
-        <CardHeader>
+        <MetricCardDecoration accent="#10b981" />
+        <CardHeader className="relative z-10">
           <CardDescription className="font-bold text-foreground">
             {title}
           </CardDescription>
@@ -84,7 +86,7 @@ function DashboardSummaryCard({
             </Badge>
           </CardAction>
         </CardHeader>
-        <CardFooter className="flex-col items-start gap-1.5 text-sm">
+        <CardFooter className="relative z-10 flex-col items-start gap-1.5 text-sm">
           <div className="line-clamp-2 flex gap-2 font-medium">
             {summary}
             <Icon className="size-5" />

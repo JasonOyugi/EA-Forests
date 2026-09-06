@@ -91,7 +91,6 @@ if (Array.isArray(legacyDatabase.nurseries)) {
   process.exit(0)
 }
 
-const usdRates = { USD: 1, UGX: 3700, KES: 129, TZS: 2600 }
 const knownSpecies = [
   "Eucalyptus grandis",
   "Eucalyptus urophylla",
@@ -144,7 +143,7 @@ const asNumber = (value) => {
 }
 
 const cleanText = (value) => String(value ?? "").trim()
-const roundUsd = (value) => value == null ? null : Number(value.toFixed(4))
+const roundAmount = (value) => value == null ? null : Number(value.toFixed(4))
 const slugify = (value) => value
   .toLowerCase()
   .normalize("NFKD")
@@ -195,9 +194,7 @@ function getLegacyPrice(spec, rawSpecies, canonicalSpecies) {
   const legacyPrice = direct ?? canonical ?? (entries.length === 1 ? entries[0] : null)
   if (legacyPrice == null) return null
 
-  const currency = cleanText(spec.price_mode).toUpperCase()
-  const rate = usdRates[currency] ?? 1
-  return roundUsd(legacyPrice / rate)
+  return roundAmount(legacyPrice)
 }
 
 const usedIds = new Map()
@@ -259,9 +256,9 @@ const nurseries = Object.entries(legacyDatabase).map(([name, record]) => {
         variety,
         price: {
           perSeedling: value.pricePerSeedling,
-          per100Seedlings: roundUsd(value.pricePerSeedling == null ? null : value.pricePerSeedling * 100),
-          per500Seedlings: roundUsd(value.pricePerSeedling == null ? null : value.pricePerSeedling * 500),
-          per1000Seedlings: roundUsd(value.pricePerSeedling == null ? null : value.pricePerSeedling * 1000),
+          per100Seedlings: roundAmount(value.pricePerSeedling == null ? null : value.pricePerSeedling * 100),
+          per500Seedlings: roundAmount(value.pricePerSeedling == null ? null : value.pricePerSeedling * 500),
+          per1000Seedlings: roundAmount(value.pricePerSeedling == null ? null : value.pricePerSeedling * 1000),
         },
         capacity: value.capacity == null ? null : Math.round(value.capacity / varietyCount),
         availability: value.availability,
@@ -319,7 +316,7 @@ const availableGenera = Object.entries(genusLabels).map(([id, label]) => ({
 const normalizedDatabase = {
   schemaVersion: 4,
   lastUpdated: "2026-08-19",
-  currency: "USD",
+  currency: "source currency",
   availableGenera,
   nurseries,
 }

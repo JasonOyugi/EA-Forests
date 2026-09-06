@@ -115,7 +115,7 @@ export interface NurseryRecord {
 export interface NurseryDatabase {
   schemaVersion: number
   lastUpdated: string
-  currency: "USD"
+  currency: string
   availableGenera: Array<{
     id: string
     label: string
@@ -241,13 +241,31 @@ export interface CentralForestReserveRecord {
   Comments: DataValue
 }
 
-export const processorDatabase = processorDatabaseJson as Record<string, ProcessorRecord>
-export const nurseryDatabase = nurseryDatabaseJson as NurseryDatabase
+function isDummyRecord(value: unknown) {
+  return /\bdummy\b|\btest(?:_|\s|-)record\b|replace with verified/i.test(
+    JSON.stringify(value)
+  )
+}
+
+export const processorDatabase = Object.fromEntries(
+  Object.entries(processorDatabaseJson as Record<string, ProcessorRecord>)
+    .filter(([, record]) => !isDummyRecord(record))
+)
+export const nurseryDatabase = {
+  ...(nurseryDatabaseJson as NurseryDatabase),
+  nurseries: (nurseryDatabaseJson as NurseryDatabase).nurseries.filter(
+    (record) => !isDummyRecord(record)
+  ),
+}
 export const nurseryRecords = nurseryDatabase.nurseries
-export const largeCommercialForestDatabase =
-  largeCommercialForestDatabaseJson as Record<string, LargeCommercialForestRecord>
-export const centralForestReserveDatabase =
-  centralForestReserveDatabaseJson as Record<string, CentralForestReserveRecord>
+export const largeCommercialForestDatabase = Object.fromEntries(
+  Object.entries(largeCommercialForestDatabaseJson as Record<string, LargeCommercialForestRecord>)
+    .filter(([, record]) => !isDummyRecord(record))
+)
+export const centralForestReserveDatabase = Object.fromEntries(
+  Object.entries(centralForestReserveDatabaseJson as Record<string, CentralForestReserveRecord>)
+    .filter(([, record]) => !isDummyRecord(record))
+)
 
 export const marketDatabaseSources = {
   processors: "src/app/shop/data/market-databases/processors.json",

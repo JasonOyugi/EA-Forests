@@ -2156,6 +2156,60 @@ html {
   animation: editorial-grid-enter 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+.metric-card-pixel {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: currentColor;
+  opacity: 0.55;
+  border-radius: 2px;
+  animation: metric-pixel-pulse 3.6s ease-in-out infinite;
+}
+
+.metric-card-pixel:nth-child(1) {
+  top: 21%;
+  right: 25%;
+  animation-delay: -0.6s;
+}
+
+.metric-card-pixel:nth-child(2) {
+  top: 45%;
+  right: 9%;
+  width: 18px;
+  height: 18px;
+  animation-delay: -1.8s;
+}
+
+.metric-card-pixel:nth-child(3) {
+  right: 38%;
+  bottom: 12%;
+  width: 10px;
+  height: 10px;
+  animation-delay: -3s;
+}
+
+.metric-card-pixel:nth-child(4) {
+  top: 15%;
+  left: 18%;
+  width: 8px;
+  height: 8px;
+  animation-delay: -1.2s;
+}
+
+@keyframes metric-pixel-pulse {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 0.85; transform: scale(1.25); }
+}
+
+.coming-soon-card-tint {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(112, 128, 124, 0.68), rgba(6, 78, 59, 0.65));
+  backdrop-filter: saturate(0.4) blur(1px);
+  z-index: 10;
+}
+
 /* Fine-grained row track so xl:row-span-[n] tiles can dense-pack and
    genuinely backfill gaps of matching size (see editorial-landing-section.tsx). */
 @media (min-width: 1280px) {
@@ -2202,7 +2256,8 @@ html {
   }
 
   .editorial-grid-transition,
-  .editorial-focus-surface {
+  .editorial-focus-surface,
+  .metric-card-pixel {
     animation: none;
   }
 }

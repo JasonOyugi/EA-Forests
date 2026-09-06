@@ -20,12 +20,42 @@ import type { ResearchCard, ResearchCardKind } from "@/app/information/data"
 import { assetUrl } from "@/lib/utils"
 
 import { sectorMetrics } from "./sector-data"
+import { MetricCardDecoration } from "./metric-card-decoration"
 
 type InformationLiveHubProps = {
   activeTopic: string
 }
 
 const allSignals = "All"
+
+const topicCardImages: Record<string, string[]> = {
+  "policy-regulation": ["/forest.webp", "/about.webp", "/drylands.webp"],
+  "finance-markets": ["/eucalyptus.jpg", "/forest.webp", "/greenbuilding.webp"],
+  investments: ["/about.webp", "/greenbuilding.webp", "/eucalyptus.jpg"],
+  genetics: ["/eucalyptus.jpg", "/forest.webp", "/drylands.webp"],
+  technology: ["/maps.jpg", "/about.webp", "/eucalyptus.jpg"],
+}
+
+function InformationCardBackground({ image, fallbackImage }: { image?: string; fallbackImage: string }) {
+  const src = image ?? fallbackImage
+
+  return (
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+      <img
+        src={src.startsWith("/") ? assetUrl(src) : src}
+        alt=""
+        className="size-full object-cover opacity-75 transition-transform duration-700 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+        loading="lazy"
+        decoding="async"
+        onError={({ currentTarget }) => {
+          const fallbackSrc = assetUrl(fallbackImage)
+          if (currentTarget.getAttribute("src") !== fallbackSrc) currentTarget.src = fallbackSrc
+        }}
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(3,10,7,.38)_0%,rgba(3,10,7,.72)_48%,rgba(3,10,7,.94)_100%)]" />
+    </div>
+  )
+}
 
 const cardKindLabels: Record<ResearchCardKind, string> = {
   news: "News",
@@ -44,17 +74,20 @@ function CardKindIcon({ kind }: { kind: ResearchCardKind }) {
 
 type InformationMetric = (typeof sectorMetrics)[number]
 
-function MetricCardTile({ metric }: { metric: InformationMetric }) {
+function MetricCardTile({ metric, image }: { metric: InformationMetric; image: string }) {
   return (
     <a
       href={metric.website}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative flex min-h-[21rem] flex-col justify-between overflow-hidden border border-white/12 p-6 transition-[border-color,transform] duration-300 hover:-translate-y-1 sm:p-7 xl:col-span-6"
+      className="editorial-metric-tile group relative flex min-h-[21rem] flex-col justify-between overflow-hidden border border-white/12 p-6 transition-[border-color,transform] duration-300 hover:-translate-y-1 sm:p-7 xl:col-span-6"
       style={{
         background: `linear-gradient(145deg, color-mix(in srgb, ${metric.accent} 58%, #07110c) 0%, color-mix(in srgb, ${metric.accent} 18%, #07110c) 55%, #050807 100%)`,
       }}
     >
+      <InformationCardBackground fallbackImage={image} />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: `linear-gradient(135deg, color-mix(in srgb, ${metric.accent} 25%, transparent), transparent 75%)` }} />
+      <MetricCardDecoration accent={metric.accent} />
       <div className="relative flex items-start justify-between gap-4">
         <span className="inline-flex items-center gap-1.5 text-[.68rem] font-semibold uppercase tracking-[.16em]" style={{ color: metric.accent }}>Did you know?</span>
         <ArrowUpRight className="size-5 shrink-0 text-white/45 transition-all group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-white" />
@@ -68,7 +101,7 @@ function MetricCardTile({ metric }: { metric: InformationMetric }) {
   )
 }
 
-function ResearchCardTile({ card }: { card: ResearchCard }) {
+function ResearchCardTile({ card, fallbackImage }: { card: ResearchCard; fallbackImage: string }) {
   const spanClass = card.size === "feature"
     ? "md:col-span-2 xl:col-span-12 xl:row-span-2"
     : card.size === "wide"
@@ -79,12 +112,9 @@ function ResearchCardTile({ card }: { card: ResearchCard }) {
 
   if (card.kind === "timeline" && card.timeline) {
     return (
-      <article className={`group overflow-hidden border border-white/12 bg-[#07110c] ${spanClass}`}>
+      <article className={`group relative overflow-hidden border border-white/12 bg-[#07110c] ${spanClass}`}>
+        <InformationCardBackground image={card.image} fallbackImage={fallbackImage} />
         <div className="relative min-h-[20rem] overflow-hidden p-6 sm:p-8">
-          {card.image ? (
-            <img src={card.image.startsWith("/") ? assetUrl(card.image) : card.image} alt="" className="absolute inset-0 size-full object-cover opacity-35 transition-transform duration-700 group-hover:scale-[1.025]" loading="lazy" decoding="async" />
-          ) : null}
-          <div className="absolute inset-0 bg-[linear-gradient(110deg,rgba(3,10,7,.98)_4%,rgba(3,10,7,.82)_55%,rgba(3,10,7,.46)_100%)]" />
           <div className="relative flex min-h-[17rem] flex-col justify-between">
             <div className="flex flex-wrap items-center gap-2 text-[.68rem] font-semibold uppercase tracking-[.16em] text-white/65">
               <span className="inline-flex items-center gap-1.5" style={{ color: "var(--information-accent)" }}><Globe2 className="size-3.5" /> Live timeline</span>
@@ -99,7 +129,7 @@ function ResearchCardTile({ card }: { card: ResearchCard }) {
           </div>
         </div>
 
-        <div className="border-t border-white/10 p-5 sm:p-8">
+        <div className="relative border-t border-white/10 bg-[#07110c]/55 p-5 sm:p-8">
           <div className="relative ml-2 border-l border-white/15 pl-6 sm:ml-3 sm:pl-8">
             {card.timeline.map((entry) => (
               <a
@@ -134,21 +164,9 @@ function ResearchCardTile({ card }: { card: ResearchCard }) {
       href={card.href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`group relative flex min-h-[21rem] flex-col justify-between overflow-hidden border border-white/12 p-6 transition-[border-color,transform] duration-300 hover:-translate-y-1 sm:p-7 ${spanClass}`}
-      style={{
-        background: card.image
-          ? undefined
-          : "linear-gradient(145deg, color-mix(in srgb, var(--information-accent) 13%, #07110c) 0%, #050c08 72%)",
-      }}
+      className={`group relative flex min-h-[21rem] flex-col justify-between overflow-hidden border border-white/12 bg-[#07110c] p-6 transition-[border-color,transform] duration-300 hover:-translate-y-1 sm:p-7 ${spanClass}`}
     >
-      {card.image ? (
-        <>
-          <img src={card.image.startsWith("/") ? assetUrl(card.image) : card.image} alt="" className="absolute inset-0 size-full object-cover opacity-32 transition-all duration-700 group-hover:scale-105 group-hover:opacity-40" loading="lazy" decoding="async" />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(3,10,7,.38)_0%,rgba(3,10,7,.88)_58%,rgba(3,10,7,.98)_100%)]" />
-        </>
-      ) : (
-        <div aria-hidden className="absolute -right-20 -top-20 size-52 rounded-full opacity-15 blur-3xl" style={{ backgroundColor: "var(--information-accent)" }} />
-      )}
+      <InformationCardBackground image={card.image} fallbackImage={fallbackImage} />
 
       <div className="relative flex items-start justify-between gap-4">
         <div className="flex flex-wrap items-center gap-2 text-[.68rem] font-semibold uppercase tracking-[.16em] text-white/55">
@@ -179,6 +197,7 @@ export function InformationLiveHub({ activeTopic }: InformationLiveHubProps) {
     (slug) => informationHubTopics[slug].label === activeTopic
   ) ?? informationHubOrder[0]
   const topic = informationHubTopics[activeSlug]
+  const cardImages = topicCardImages[activeSlug] ?? topicCardImages["policy-regulation"]
   const accentStyle = {
     "--information-accent": topic.accent,
   } as CSSProperties
@@ -237,8 +256,8 @@ export function InformationLiveHub({ activeTopic }: InformationLiveHubProps) {
       </nav>
 
       <div className="grid gap-2 p-2 md:grid-cols-2 xl:grid-cols-12 xl:auto-rows-[minmax(14rem,auto)]">
-        {activeSubtopic === allSignals ? topicMetrics.map((metric) => <MetricCardTile key={metric.label} metric={metric} />) : null}
-        {cards.map((card) => <ResearchCardTile key={card.id} card={card} />)}
+        {activeSubtopic === allSignals ? topicMetrics.map((metric, index) => <MetricCardTile key={metric.label} metric={metric} image={cardImages[index % cardImages.length]} />) : null}
+        {cards.map((card) => <ResearchCardTile key={card.id} card={card} fallbackImage={cardImages[topic.cards.indexOf(card) % cardImages.length]} />)}
       </div>
     </section>
   )

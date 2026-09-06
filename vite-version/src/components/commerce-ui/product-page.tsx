@@ -4,7 +4,6 @@ import * as React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
@@ -17,12 +16,9 @@ import {
   Phone,
   Store,
   Truck,
-  UserRound,
-  Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import ImageCarouselBasic from "./image-carousel-basic";
-import StarRatingFractions from "./star-rating-fractions";
 import { Map, MapCircle, MapMarker, MapMarkerClusterGroup, MapPopup, MapTileLayer, MapTooltip } from "@/components/ui/map";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ForestryServicesCountdownBanner } from "@/components/commerce-ui/forestry-services-countdown-banner";
@@ -37,16 +33,6 @@ import {
   type CurrencyCode,
 } from "@/app/models/currency";
 import { useMap } from "react-leaflet";
-
-type ReviewSort = "highToLow" | "lowToHigh" | "newest";
-
-type ReviewEntry = {
-  id: string;
-  name: string;
-  rating: number;
-  text: string;
-  date: string;
-};
 
 type RetailerLocation = {
   id: string;
@@ -80,50 +66,6 @@ interface ProductPageProps {
   onBack: () => void;
   isFavorite?: boolean;
   className?: string;
-}
-
-function deriveRatingFromId(id: string) {
-  const hash = Array.from(id).reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  const rating = 4 + (hash % 5) * 0.25;
-  const reviewCount = 18 + (hash % 73);
-
-  return { rating, reviewCount };
-}
-
-function getRetailerInfo(shop: ShopItem["shop"]) {
-  if (shop === "seedlings") {
-    return {
-      name: "EA Forests Nursery Division",
-      location: "Nakuru, Kenya",
-      since: "2014",
-      fulfillment: "Ships in 2-4 business days",
-    };
-  }
-
-  if (shop === "forests-land") {
-    return {
-      name: "EA Forests Land Holdings",
-      location: "Nairobi, Kenya",
-      since: "2011",
-      fulfillment: "Documents ready within 24 hours",
-    };
-  }
-
-  if (shop === "forestry-services") {
-    return {
-      name: "EA Forests Field Operations",
-      location: "Nairobi, Kenya",
-      since: "2012",
-      fulfillment: "Site team mobilization in 3-5 days",
-    };
-  }
-
-  return {
-    name: "EA Forests Timber Exchange",
-    location: "Eldoret, Kenya",
-    since: "2013",
-    fulfillment: "Dispatch scheduling within 48 hours",
-  };
 }
 
 function getCommerceCopy(shop: ShopItem["shop"]) {
@@ -263,22 +205,7 @@ function getNearestRetailers(item: ShopItem): RetailerLocation[] {
       );
   }
 
-  const retailer = getRetailerInfo(item.shop);
-  const entityLabel = item.shop === "forestry-services" ? "service team" : "seller";
-  return [
-    {
-      id: `${item.id}-retailer`,
-      name: retailer.name,
-      description: `${retailer.name} is the nearest available ${entityLabel} currently shown for this listing.`,
-      image: item.image,
-      latitude: -1.2864,
-      longitude: 36.8172,
-      phone: "+254 700 000 000",
-      email: "hello@eaforests.com",
-      address: retailer.location,
-      leadTime: retailer.fulfillment,
-    },
-  ];
+  return [];
 }
 
 function distanceKm(left: RetailerLocation, right: RetailerLocation) {
@@ -569,6 +496,20 @@ function RetailerMapPanel({
   copy: ReturnType<typeof getCommerceCopy>;
   markerKind?: "nursery" | "store";
 }) {
+  if (retailers.length === 0) {
+    return (
+      <div className="flex min-h-[24rem] items-center justify-center rounded-md border border-dashed p-6 text-center">
+        <div>
+          <Leaf className="mx-auto h-8 w-8 text-emerald-700" />
+          <h3 className="mt-3 font-semibold">Provider not yet mapped</h3>
+          <p className="mt-2 text-sm text-muted-foreground">
+            No source record explicitly maps a provider for this offer.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   const [catchmentRadiusKm, setCatchmentRadiusKm] = React.useState(500);
   const visibleRetailers =
     markerKind === "nursery" && selectedRetailer
@@ -581,9 +522,6 @@ function RetailerMapPanel({
   const mapCenter = selectedRetailer
     ? [selectedRetailer.latitude, selectedRetailer.longitude] as [number, number]
     : getRetailerMapCenter(visibleRetailers);
-  const selectedVendorRating = selectedRetailer
-    ? deriveRatingFromId(selectedRetailer.id)
-    : null;
   const markerNodes = visibleRetailers.map((retailer) => (
     <MapMarker
       key={retailer.id}
@@ -722,21 +660,6 @@ function RetailerMapPanel({
             <h3 className="mt-3 text-xl font-semibold">{selectedRetailer.name}</h3>
           </div>
           <div className="grid gap-3">
-            {selectedVendorRating ? (
-              <div className="border-b border-primary/20 pb-3 text-sm">
-                <div className="font-medium">{markerKind === "nursery" ? "Nursery rating" : "Vendor rating"}</div>
-                <div className="mt-1 flex items-center gap-2">
-                  <StarRatingFractions
-                    value={selectedVendorRating.rating}
-                    readOnly
-                    iconSize={15}
-                  />
-                  <span className="text-muted-foreground">
-                    {selectedVendorRating.rating.toFixed(2)}/5 ({selectedVendorRating.reviewCount})
-                  </span>
-                </div>
-              </div>
-            ) : null}
             <div className="border-b border-primary/20 pb-3 text-sm">
               <div className="font-medium">Address</div>
               <div className="text-muted-foreground">{selectedRetailer.address}</div>
@@ -783,9 +706,11 @@ function RetailerMapPanel({
               </div>
             )}
           </div>
-          <SweepActionButton className="w-full" href={`tel:${selectedRetailer.phone.replace(/\s+/g, "")}`} icon={<Phone className="h-4 w-4" />}>
-            {copy.directCallLabel}
-          </SweepActionButton>
+          {selectedRetailer.phone !== "N/A" ? (
+            <SweepActionButton className="w-full" href={`tel:${selectedRetailer.phone.replace(/\s+/g, "")}`} icon={<Phone className="h-4 w-4" />}>
+              {copy.directCallLabel}
+            </SweepActionButton>
+          ) : null}
         </div>
         ) : (
           <div className="flex min-h-[24rem] items-center justify-center rounded-md border border-dashed p-6 text-center">
@@ -800,133 +725,6 @@ function RetailerMapPanel({
         )}
       </div>
     </div>
-  );
-}
-
-function CustomerRatingsPanel({
-  initialReviews,
-  initialAverage,
-}: {
-  initialReviews: ReviewEntry[];
-  initialAverage: number;
-}) {
-  const [sortOrder, setSortOrder] = React.useState<ReviewSort>("highToLow");
-  const [name, setName] = React.useState("");
-  const [ratingInput, setRatingInput] = React.useState(5);
-  const [reviewText, setReviewText] = React.useState("");
-  const [userReviews, setUserReviews] = React.useState<ReviewEntry[]>([]);
-
-  const allReviews = React.useMemo(() => [...userReviews, ...initialReviews], [initialReviews, userReviews]);
-  const averageRating = React.useMemo(() => {
-    if (allReviews.length === 0) return initialAverage;
-    return allReviews.reduce((sum, review) => sum + review.rating, 0) / allReviews.length;
-  }, [allReviews, initialAverage]);
-
-  const sortedReviews = React.useMemo(() => {
-    const reviews = [...allReviews];
-    if (sortOrder === "highToLow") {
-      return reviews.sort((a, b) => b.rating - a.rating);
-    }
-    if (sortOrder === "lowToHigh") {
-      return reviews.sort((a, b) => a.rating - b.rating);
-    }
-    return reviews.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  }, [allReviews, sortOrder]);
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!name.trim() || !reviewText.trim()) return;
-
-    setUserReviews((current) => [
-      {
-        id: `user-review-${Date.now()}`,
-        name: name.trim(),
-        rating: ratingInput,
-        text: reviewText.trim(),
-        date: new Date().toISOString(),
-      },
-      ...current,
-    ]);
-    setName("");
-    setRatingInput(5);
-    setReviewText("");
-    setSortOrder("newest");
-  };
-
-  return (
-    <Card className="border-border bg-card">
-      <CardHeader className="space-y-3">
-        <div className="flex items-center gap-2">
-          <Users className="h-5 w-5 text-primary" />
-          <CardTitle>Customer ratings</CardTitle>
-        </div>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <div className="flex items-center gap-2">
-              <StarRatingFractions value={averageRating} readOnly iconSize={16} />
-              <span className="text-sm font-medium">{averageRating.toFixed(2)}/5</span>
-            </div>
-            <p className="text-sm text-muted-foreground">{allReviews.length} total ratings</p>
-          </div>
-
-          <div className="w-full sm:w-[180px]">
-            <Select value={sortOrder} onValueChange={(value) => setSortOrder(value as ReviewSort)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Order ratings" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="highToLow">Ratings: High to low</SelectItem>
-                <SelectItem value="lowToHigh">Ratings: Low to high</SelectItem>
-                <SelectItem value="newest">Newest first</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-5">
-        <form onSubmit={handleSubmit} className="space-y-3 rounded-2xl border border-primary/20 bg-primary/5 p-4">
-          <div className="text-sm font-medium">Add your rating</div>
-          <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_200px] sm:items-start">
-            <Input value={name} onChange={(event) => setName(event.target.value)} placeholder="Your name" />
-            <div className="space-y-2 rounded-xl border border-primary/20 bg-background/75 px-3 py-2.5">
-              <div className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">Your rating</div>
-              <StarRatingFractions value={ratingInput} onChange={setRatingInput} iconSize={22} color="#f4b400" />
-              <div className="text-xs text-muted-foreground">{ratingInput.toFixed(2)} / 5 selected</div>
-            </div>
-          </div>
-          <textarea
-            value={reviewText}
-            onChange={(event) => setReviewText(event.target.value)}
-            placeholder="Share your experience with this nursery stock, quality, fulfillment, or communication."
-            className="min-h-[120px] w-full rounded-xl border border-input bg-background px-3 py-2 text-sm outline-none transition focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
-          />
-          <Button type="submit">
-            Submit rating
-          </Button>
-        </form>
-
-        <div className="space-y-3">
-          {sortedReviews.map((review) => (
-            <div key={review.id} className="rounded-xl border border-border bg-card p-4">
-              <div className="mb-2 flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2 text-sm font-medium">
-                  <UserRound className="h-4 w-4 text-muted-foreground" />
-                  {review.name}
-                </div>
-                <span className="text-xs text-muted-foreground">
-                  {new Date(review.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
-                </span>
-              </div>
-              <div className="mb-2 flex items-center gap-2">
-                <StarRatingFractions value={review.rating} readOnly iconSize={14} />
-                <span className="text-xs text-muted-foreground">{review.rating.toFixed(2)}/5</span>
-              </div>
-              <p className="text-sm leading-6 text-muted-foreground">{review.text}</p>
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
   );
 }
 
@@ -981,8 +779,6 @@ export function ProductPage({
   const isLandServicesItem = isLandItem || item.shop === "forestry-services";
   const isEnhancedCommerceItem = item.shop === "seedlings" || item.shop === "forestry-services" || isLandItem;
   const seedlingVariantVisual = getSeedlingVariantVisual(activeVariant?.id);
-  const { rating, reviewCount } = React.useMemo(() => deriveRatingFromId(item.id), [item.id]);
-  const retailerInfo = React.useMemo(() => getRetailerInfo(item.shop), [item.shop]);
   const commerceCopy = React.useMemo(() => getCommerceCopy(item.shop), [item.shop]);
   const nearestRetailers = React.useMemo(() => getNearestRetailers(item), [item]);
   const [selectedVariety, setSelectedVariety] = React.useState("");
@@ -1019,48 +815,6 @@ export function ProductPage({
   React.useEffect(() => {
     setSelectedRetailerId(filteredRetailers[0]?.id ?? "");
   }, [filteredRetailers]);
-
-  const dummyReviews = React.useMemo(
-    () => [
-      {
-        id: `${item.id}-r1`,
-        name: "Amina K.",
-        rating: 5,
-        date: "2026-04-12",
-        text:
-          item.shop === "forests-land"
-            ? "The diligence pack was clean and the site framing made comparison much easier."
-            : item.shop === "forestry-services"
-              ? "Mobilisation was smooth and the team handled site prep with strong field discipline."
-              : "Healthy stock and very consistent sizing across trays.",
-      },
-      {
-        id: `${item.id}-r2`,
-        name: "David M.",
-        rating: 4.75,
-        date: "2026-03-27",
-        text:
-          item.shop === "forests-land"
-            ? "Clear pricing logic and strong context around the operating model."
-            : item.shop === "forestry-services"
-              ? "Good reporting cadence and the maintenance checklist was handled exactly as scoped."
-              : "Strong germination results, delivery updates were clear.",
-      },
-      {
-        id: `${item.id}-r3`,
-        name: "Grace N.",
-        rating: 4.5,
-        date: "2026-02-18",
-        text:
-          item.shop === "forests-land"
-            ? "Useful for getting from shortlist to diligence conversation quickly."
-            : item.shop === "forestry-services"
-              ? "The field crew adapted well to our terrain and follow-up communication stayed clear."
-              : "Good quality overall, would order again for next planting cycle.",
-      },
-    ],
-    [item.id, item.shop]
-  );
 
   const linkedPromos = React.useMemo(
     () => [
@@ -1131,14 +885,7 @@ export function ProductPage({
                     {mappedSupplierCount} mapped {item.shop === "seedlings" ? "nursery " : ""}supplier
                     {mappedSupplierCount === 1 ? "" : "s"}
                   </div>
-                ) : (
-                  <div className="flex items-center gap-2">
-                    <StarRatingFractions value={rating} readOnly iconSize={16} />
-                    <span className="text-sm text-muted-foreground">
-                      {rating.toFixed(2)}/5 · {reviewCount} reviews
-                    </span>
-                  </div>
-                )}
+                ) : null}
               </div>
               <div className="flex gap-2">
                 {onFavorite ? (
@@ -1286,7 +1033,7 @@ export function ProductPage({
 
           <div className="flex items-center gap-3 text-sm text-muted-foreground">
             <Truck className="h-4 w-4" />
-            <span>{retailerInfo.fulfillment}</span>
+            <span>Provider contact and fulfillment details are not yet mapped.</span>
           </div>
 
           {item.highlights?.length ? (
@@ -1341,47 +1088,17 @@ export function ProductPage({
               copy={commerceCopy}
               markerKind={isSeedlingsItem ? "nursery" : "store"}
             />
-            {!isSeedlingsItem && !isLandServicesItem ? (
-              <CustomerRatingsPanel initialReviews={dummyReviews} initialAverage={rating} />
-            ) : null}
           </div>
           <OtherDealsPanel item={item} />
         </div>
       ) : (
-        <div className="grid items-start gap-6 lg:grid-cols-3">
+        <div className="grid items-start gap-6 lg:grid-cols-2">
           <Card className="h-full">
             <CardHeader>
-              <CardTitle>Retailer Info</CardTitle>
+              <CardTitle>Provider information</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 text-sm">
-              <p><span className="text-muted-foreground">Enterprise:</span> {retailerInfo.name}</p>
-              <p><span className="text-muted-foreground">Location:</span> {retailerInfo.location}</p>
-              <p><span className="text-muted-foreground">Operating Since:</span> {retailerInfo.since}</p>
-              <p><span className="text-muted-foreground">Fulfillment:</span> {retailerInfo.fulfillment}</p>
-            </CardContent>
-          </Card>
-
-          <Card className="h-full">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Users className="h-5 w-5" />
-                Customer Ratings
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {dummyReviews.map((review) => (
-                <div key={review.id} className="rounded-lg border p-3">
-                  <div className="mb-1 flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-sm font-medium">
-                      <UserRound className="h-4 w-4 text-muted-foreground" />
-                      {review.name}
-                    </div>
-                    <span className="text-xs text-muted-foreground">{review.rating.toFixed(2)}/5</span>
-                  </div>
-                  <StarRatingFractions value={review.rating} readOnly iconSize={14} className="mb-1" />
-                  <p className="text-xs text-muted-foreground">{review.text}</p>
-                </div>
-              ))}
+              <p className="text-muted-foreground">Provider not yet mapped from an evidence source.</p>
             </CardContent>
           </Card>
 

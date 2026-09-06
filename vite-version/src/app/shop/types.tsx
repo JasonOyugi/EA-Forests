@@ -11,6 +11,116 @@ export type ShopItemKind = "product" | "service" | "asset"
 
 export type StockStatus = "in-stock" | "limited" | "quote"
 
+export type EvidenceKind = "observed" | "inferred" | "derived"
+
+export interface EvidenceRef {
+  kind: EvidenceKind
+  confidence: number
+  sourceIds: string[]
+  inferenceRuleId?: string
+}
+
+export interface SourceRecord {
+  id: string
+  title: string
+  publisher?: string
+  url?: string
+  publishedAt?: string
+  accessedAt?: string
+  vintage?: string
+  jurisdiction?: string
+  adapterId: string
+  rawLocator?: string
+}
+
+export type PriceType =
+  | "official_price"
+  | "published_retail"
+  | "auction_floor"
+  | "asking_price"
+  | "indicative_range"
+  | "buyer_offer"
+  | "unknown"
+
+export interface PriceObservation {
+  originalAmount: number
+  originalCurrency: string
+  unit: string
+  basis: string
+  priceType: PriceType
+  date?: string
+  vintage?: string
+  seller?: string
+  buyer?: string
+  entity?: string
+  product: string
+  specification?: string
+  sourceIds: string[]
+  evidence: EvidenceRef
+}
+
+export type LocationPrecision = "locality" | "address" | "parcel" | "exact" | "geocoded"
+
+export interface LocationEvidence {
+  country?: string
+  region?: string
+  locality?: string
+  address?: string
+  latitude?: number
+  longitude?: number
+  precision: LocationPrecision
+  confidence: number
+  sourceIds: string[]
+  evidence: EvidenceRef
+}
+
+export interface AvailabilityEvidence {
+  status: "available" | "seasonal" | "unavailable" | "unknown"
+  asOf?: string
+  sourceIds: string[]
+  evidence: EvidenceRef
+}
+
+export interface NurseryOfferEvidence {
+  kind: "nursery-offer"
+  entity: string
+  product: string
+  prices: PriceObservation[]
+  location?: LocationEvidence
+  availability?: AvailabilityEvidence
+  sourceIds: string[]
+}
+
+export interface ForestryServiceOfferEvidence {
+  kind: "forestry-service-offer"
+  provider?: string
+  service: string
+  prices: PriceObservation[]
+  location?: LocationEvidence
+  availability?: AvailabilityEvidence
+  sourceIds: string[]
+}
+
+export interface ForestInvestmentEvidence {
+  kind: "forest-investment-opportunity"
+  entity?: string
+  opportunity: string
+  prices: PriceObservation[]
+  location?: LocationEvidence
+  availability?: AvailabilityEvidence
+  sourceIds: string[]
+}
+
+export interface WoodMarketObservationEvidence {
+  kind: "wood-market-observation"
+  entity?: string
+  product: string
+  prices: PriceObservation[]
+  location?: LocationEvidence
+  availability?: AvailabilityEvidence
+  sourceIds: string[]
+}
+
 export interface ShopCategory {
   id: ShopDomain
   name: string
@@ -109,4 +219,9 @@ export interface ShopItem {
   mapTitle?: string
   mapDescription?: string
   mapPoints?: ShopItemMapPoint[]
+  evidence?:
+    | NurseryOfferEvidence
+    | ForestryServiceOfferEvidence
+    | ForestInvestmentEvidence
+    | WoodMarketObservationEvidence
 }

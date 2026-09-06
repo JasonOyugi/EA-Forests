@@ -14,6 +14,7 @@ import { assetUrl } from "@/lib/utils"
 import { editorialActionLabels, editorialSubsections } from "./editorial-actions"
 import type { EditorialCategory } from "./editorial-actions"
 import { InformationLiveHub } from "./information-live-hub"
+import { MetricCardDecoration } from "./metric-card-decoration"
 import { landingContainer, landingDisplayHeadingClass } from "./landing-shared"
 import { sectorMetrics, sectorPlayers } from "./sector-data"
 import type { SectorMetric, SectorPlayer } from "./sector-data"
@@ -152,6 +153,7 @@ function StoryTile({ story, size }: { story: Story; size?: string }) {
         <img ref={(node) => { mediaRef.current = node }} src={story.image} alt="" className="absolute inset-0 size-full origin-center object-cover transition-transform ease-out will-change-transform [transform:perspective(1100px)_rotateX(0deg)_rotateY(0deg)_translate3d(0,0,0)_scale(1.02)]" loading="lazy" decoding="async" />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/10 transition-colors duration-500 group-hover:from-black/95 group-hover:via-black/45" />
+      {story.badge === "Coming soon" ? <div aria-hidden="true" className="coming-soon-card-tint" /> : null}
       <div ref={lightRef} aria-hidden className="pointer-events-none absolute inset-0 z-[1] opacity-0 transition-opacity duration-300" />
       <span className="absolute left-5 top-5 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/30 px-3 py-1.5 text-xs font-medium text-white/75 backdrop-blur-sm sm:left-7 sm:top-7">
         <Clock3 className="size-3" /> Last updated: {story.updatedAt}
@@ -194,12 +196,21 @@ function VideoTile({ video, size = "" }: { video: EditorialVideo; size?: string 
 
 function EventTile({ event, size = "" }: { event: EditorialEvent; size?: string }) {
   return (
-    <article className={`emerald-border-hover group flex min-h-[300px] flex-col justify-between border border-emerald-800/60 bg-emerald-950/55 p-6 text-emerald-50 sm:p-7 ${size}`}>
-      <div className="flex items-start justify-between gap-4">
+    <article className={`emerald-border-hover group relative flex min-h-[300px] flex-col justify-between overflow-hidden border border-emerald-800/60 bg-emerald-950/55 p-6 text-emerald-50 sm:p-7 ${size}`}>
+      <img
+        src={assetUrl("/forest.webp")}
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 size-full object-cover opacity-30 transition-transform duration-700 group-hover:scale-105"
+        loading="lazy"
+        decoding="async"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-950/95 via-emerald-950/85 to-zinc-950/90" />
+      <div className="relative z-10 flex items-start justify-between gap-4">
         <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.16em] text-emerald-300"><CalendarDays className="size-4" /> {event.date}</span>
         <span className="inline-flex items-center gap-1.5 text-xs text-emerald-100/65"><MapPin className="size-3.5" /> {event.location}</span>
       </div>
-      <div>
+      <div className="relative z-10">
         <p className="mb-3 text-xs font-semibold uppercase tracking-[.18em] text-emerald-300/80">{event.organizer}</p>
         <h3 className="text-2xl font-semibold text-white">{event.title}</h3>
         <p className="mt-3 text-sm leading-6 text-emerald-100/70">{event.description}</p>
@@ -220,6 +231,17 @@ function MetricTile({
   onFocus?: () => void
   onSelectInformation?: (topic: string) => void
 }) {
+  const bgImage =
+    metric.informationSlug === "policy-regulation"
+      ? "/forest.webp"
+      : metric.informationSlug === "finance-markets"
+        ? "/eucalyptus.jpg"
+        : metric.informationSlug === "investments"
+          ? "/about.webp"
+          : metric.informationSlug === "genetics"
+            ? "/drylands.webp"
+            : "/maps.jpg"
+
   return (
     <article
       role="button"
@@ -239,19 +261,17 @@ function MetricTile({
         background: `linear-gradient(145deg, color-mix(in srgb, ${metric.accent} 58%, #07110c) 0%, color-mix(in srgb, ${metric.accent} 18%, #07110c) 55%, #050807 100%)`,
       }}
     >
-      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        <span className="absolute -left-12 -top-12 size-32 rounded-full opacity-20 blur-xl" style={{ backgroundColor: metric.accent }} />
-        <span className="absolute right-8 top-6 size-16 rounded-full opacity-20" style={{ backgroundColor: metric.accent }} />
-        <div className="absolute -bottom-16 -right-16 h-40 w-40 overflow-hidden opacity-40">
-          <img
-            src="/favicon-dark.png"
-            alt=""
-            className="h-full w-full object-cover object-left-top"
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+        <img
+          src={assetUrl(bgImage)}
+          alt=""
+          className="size-full object-cover opacity-25 transition-transform duration-700 group-hover:scale-105"
+          loading="lazy"
+          decoding="async"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35" />
       </div>
+      <MetricCardDecoration accent={metric.accent} />
       <p className="relative z-10 text-xs font-semibold uppercase tracking-[.2em]" style={{ color: metric.accent }}>Did you know?</p>
       <div className="relative z-10">
         <p className="landing-metric-value font-semibold tracking-[-.03em]">{metric.value}</p>
@@ -489,19 +509,19 @@ export function EditorialBriefSection() {
             <div key={activeCategory} className="editorial-mosaic-grid grid grid-cols-1 gap-2 xl:grid-cols-12 xl:[grid-auto-flow:dense]">
             {activeCategory === "All" ? (
               <>
-                <StoryTile story={visibleStories[0]} size="xl:col-span-8 xl:row-span-[36]" />
-                <MetricPair metrics={sectorMetrics.slice(0, 2)} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("metrics")} onSelectInformation={selectInformationTopic} />
+                <StoryTile story={visibleStories[0]} size="xl:col-span-8 xl:row-span-[48]" />
+                <MetricPair metrics={sectorMetrics.slice(0, 2)} size="xl:col-span-4 xl:row-span-[48]" onFocus={() => toggleFocus("metrics")} onSelectInformation={selectInformationTopic} />
 
                 <ProductTile item={featuredSeedlings[0]} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("products")} />
                 <StoryTile story={visibleStories[1]} size="xl:col-span-8 xl:row-span-[36]" />
 
-                <MetricPair metrics={sectorMetrics.slice(2, 4)} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("metrics")} onSelectInformation={selectInformationTopic} />
+                <MetricPair metrics={sectorMetrics.slice(2, 4)} size="xl:col-span-4 xl:row-span-[48]" onFocus={() => toggleFocus("metrics")} onSelectInformation={selectInformationTopic} />
                 <StoryTile story={visibleStories[2]} size="xl:col-span-8 xl:row-span-[36]" />
-                <StoryTile story={visibleStories[3]} size="xl:col-span-4 xl:row-span-[60]" />
-                <PlayerTile player={sectorPlayers[0]} size="xl:col-span-4 xl:row-span-[30]" onFocus={() => toggleFocus("players")} />
+                <StoryTile story={visibleStories[3]} size="xl:col-span-4 xl:row-span-[48]" />
+                <PlayerTile player={sectorPlayers[0]} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("players")} />
                 <VideoTile video={editorialVideos[0]} size="xl:col-span-4 xl:row-span-[60]" />
-                <PlayerTile player={sectorPlayers[1]} size="xl:col-span-4 xl:row-span-[30]" onFocus={() => toggleFocus("players")} />
-                <EventTile event={editorialEvents[0]} size="xl:col-span-3 xl:row-span-[36]" />
+                <PlayerTile player={sectorPlayers[1]} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("players")} />
+                <EventTile event={editorialEvents[0]} size="xl:col-span-4 xl:row-span-[24]" />
 
                 {bannerVisible ? (
                   <div className="min-h-[240px] xl:col-span-12 xl:row-span-[21]">
@@ -512,7 +532,7 @@ export function EditorialBriefSection() {
                 <ProductTile item={featuredSeedlings[1]} size="xl:col-span-6 xl:row-span-[36]" onFocus={() => toggleFocus("products")} />
                 <PlayerTile player={sectorPlayers[2]} size="xl:col-span-3 xl:row-span-[36]" onFocus={() => toggleFocus("players")} />
                 <StoryTile story={visibleStories[4]} size="xl:col-span-12 xl:row-span-[60]" />
-                <PlayerTile player={sectorPlayers[3]} size="xl:col-span-3 xl:row-span-[30]" onFocus={() => toggleFocus("players")} />
+                <PlayerTile player={sectorPlayers[3]} size="xl:col-span-3 xl:row-span-[36]" onFocus={() => toggleFocus("players")} />
 
                 <StoryTile story={visibleStories[5]} size="xl:col-span-9 xl:row-span-[30]" />
                 <ProductTile item={featuredSeedlings[2]} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("products")} />

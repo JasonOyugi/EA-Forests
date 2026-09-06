@@ -26,6 +26,7 @@ import {
 } from "recharts"
 
 import { BaseLayout } from "@/components/layouts/base-layout"
+import { MetricCardDecoration } from "@/app/landing/components/metric-card-decoration"
 import { ComingSoonPreview } from "@/components/coming-soon-preview"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -514,17 +515,18 @@ function MetricCard({
   icon: React.ComponentType<{ className?: string }>
 }) {
   return (
-    <Card className="min-w-0 gap-3 border-border/70 bg-background/75 py-5">
-      <CardHeader className="flex flex-row items-start justify-between gap-3 px-5">
+    <Card className="relative min-w-0 overflow-hidden gap-3 border-border/70 bg-background/75 py-5">
+      <MetricCardDecoration accent="#10b981" />
+      <CardHeader className="relative z-10 flex flex-row items-start justify-between gap-3 px-5">
         <div className="min-w-0 space-y-1">
           <CardDescription>{title}</CardDescription>
           <CardTitle className="truncate text-xl">{value}</CardTitle>
         </div>
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-800">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
           <Icon className="h-5 w-5" />
         </div>
       </CardHeader>
-      <CardContent className="px-5 text-xs text-muted-foreground">
+      <CardContent className="relative z-10 px-5 text-xs text-muted-foreground">
         {description}
       </CardContent>
     </Card>

@@ -9,6 +9,11 @@ EA Forests is a forestry intelligence and decision-support MVP for East African 
 - Shared contracts and package metadata in [packages](packages)
 - Project docs and release notes in [docs](docs)
 
+The [EO observation architecture](docs/architecture/eo-observation-architecture.md)
+defines the canonical design and implementation sequence for extending Earth Engine
+monitoring into asset evidence and field verification. It is an architecture
+specification; the EO feature has not been implemented.
+
 ## Core product intent
 
 This repository is not a generic template. It is a functional MVP for:

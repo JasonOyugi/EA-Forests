@@ -23,6 +23,7 @@ import {
 } from "lucide-react"
 import { useMap, useMapEvents } from "react-leaflet"
 
+import { MetricCardDecoration } from "@/app/landing/components/metric-card-decoration"
 import { marketConcessions, type MarketConcession } from "@/app/shop/data/concessions"
 import {
   BasicSsmtControlCard,
@@ -1299,10 +1300,11 @@ function MetricPanel({
 }) {
   return (
     <div
-      className={cn("roundwood-metric-card rounded-none border p-4", className)}
+      className={cn("roundwood-metric-card relative overflow-hidden rounded-none border p-4", className)}
       style={{ "--metric-color": color } as CSSProperties}
     >
-      <div className="flex items-center gap-3">
+      <MetricCardDecoration accent={color} />
+      <div className="relative z-10 flex items-center gap-3">
         <span className="roundwood-metric-icon flex h-9 w-9 items-center justify-center rounded-none">
           <Icon className="h-4 w-4" />
         </span>
@@ -1312,7 +1314,7 @@ function MetricPanel({
         </div>
       </div>
       {note ? (
-        <p className="mt-3 text-xs leading-5 text-muted-foreground">{note}</p>
+        <p className="relative z-10 mt-3 text-xs leading-5 text-muted-foreground">{note}</p>
       ) : null}
     </div>
   )

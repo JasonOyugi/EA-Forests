@@ -6,6 +6,10 @@ import { normalizeFlagshipShopItem } from "../lib/flagship-pricing"
 import { normalizeSeedlingInventory } from "../data/nursery-data"
 import type { ShopDefinition, ShopItem, ShopSlug } from "../types"
 
+function isProductionShopItem(item: ShopItem) {
+  return !item.tags.some((tag) => /^(dummy|generated|test)(-|$)/i.test(tag))
+}
+
 export const shopDefinitions: Record<ShopSlug, ShopDefinition> = {
   seedlings: {
     slug: "seedlings",
@@ -86,7 +90,9 @@ export const shopDefinitions: Record<ShopSlug, ShopDefinition> = {
 
 export const shopInventoryMap: Record<ShopSlug, ShopItem[]> = {
   seedlings: normalizeSeedlingInventory(seedlingsInventory as ShopItem[]),
-  "forests-land": (forestsLandInventory as ShopItem[]).map(normalizeFlagshipShopItem),
+  "forests-land": (forestsLandInventory as ShopItem[])
+    .filter(isProductionShopItem)
+    .map(normalizeFlagshipShopItem),
   "forestry-services": forestryServicesInventory as ShopItem[],
   "sector-map": roundwoodInventory as ShopItem[],
   "wood-markets-map": roundwoodInventory as ShopItem[],

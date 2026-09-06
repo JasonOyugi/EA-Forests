@@ -12,7 +12,6 @@ import {
 import { formatCurrency } from "@/app/shop/lib/format";
 import { ArrowUpRight, Heart, ShoppingCart } from "lucide-react";
 import { cn } from "@/lib/utils";
-import StarRatingFractions from "@/components/commerce-ui/star-rating-fractions";
 import type { ShopItem } from "@/app/shop/types";
 
 interface EnhancedProductCardProps {
@@ -30,14 +29,6 @@ interface EnhancedProductCardProps {
   pricePulseOnHover?: boolean;
   runningBorderOnHover?: boolean;
   className?: string;
-}
-
-function deriveRatingFromId(id: string) {
-  const hash = Array.from(id).reduce((acc, char) => acc + char.charCodeAt(0), 0)
-  const rating = 4 + (hash % 5) * 0.25
-  const reviewCount = 18 + (hash % 73)
-
-  return { rating, reviewCount }
 }
 
 export function EnhancedProductCard({
@@ -61,13 +52,11 @@ export function EnhancedProductCard({
 
   const startingVariant = item.variants?.[0] ?? defaultVariant
   const activeVariant = item.variants?.find((variant) => variant.id === selectedVariant) ?? defaultVariant
-  const { rating, reviewCount } = React.useMemo(() => deriveRatingFromId(item.id), [item.id])
 
   // Define theme styles and extract colors early for use in variant shade functions
   const themeStyles = {
     seedlings: {
       stockBadgeClass: "bg-emerald-600 text-white",
-      starActiveClass: "fill-emerald-400 text-emerald-400",
       themeCardClass: "bg-white/80",
       quickAddButtonClass: "bg-emerald-700 text-white hover:bg-emerald-800",
       footerButtonClass: "bg-emerald-700 text-white hover:bg-emerald-800 emerald-border-hover",
@@ -84,7 +73,6 @@ export function EnhancedProductCard({
     },
     "forests-land": {
       stockBadgeClass: "bg-primary text-primary-foreground",
-      starActiveClass: "fill-primary text-primary",
       themeCardClass: "bg-card",
       quickAddButtonClass: "bg-primary text-primary-foreground hover:bg-primary/90",
       footerButtonClass: "bg-primary text-primary-foreground hover:bg-primary/90 theme-primary-border-hover",
@@ -101,7 +89,6 @@ export function EnhancedProductCard({
     },
     "forestry-services": {
       stockBadgeClass: "bg-primary text-primary-foreground",
-      starActiveClass: "fill-primary text-primary",
       themeCardClass: "bg-card",
       quickAddButtonClass: "bg-primary text-primary-foreground hover:bg-primary/90",
       footerButtonClass: "bg-primary text-primary-foreground hover:bg-primary/90 theme-primary-border-hover",
@@ -118,7 +105,6 @@ export function EnhancedProductCard({
     },
     roundwood: {
       stockBadgeClass: "bg-rose-800 text-white",
-      starActiveClass: "fill-rose-500 text-rose-500",
       themeCardClass: "bg-white/90",
       quickAddButtonClass: "bg-rose-800 text-white hover:bg-rose-900",
       footerButtonClass: "bg-rose-800 text-white hover:bg-rose-900 emerald-border-hover",
@@ -135,7 +121,6 @@ export function EnhancedProductCard({
     },
     default: {
       stockBadgeClass: "bg-green-500 text-white",
-      starActiveClass: "fill-yellow-400 text-yellow-400",
       themeCardClass: "",
       quickAddButtonClass: "",
       footerButtonClass: "emerald-border-hover",
@@ -204,7 +189,6 @@ export function EnhancedProductCard({
       : "bg-slate-700"
 
   const stockBadgeClass = activeTheme.stockBadgeClass
-  const starActiveClass = activeTheme.starActiveClass
   const themeCardClass = activeTheme.themeCardClass
   const footerButtonClass = activeTheme.footerButtonClass
   const shellClass = activeTheme.shellClass
@@ -332,34 +316,7 @@ export function EnhancedProductCard({
                 {item.supplierCount ?? 0} mapped {item.shop === "seedlings" ? "nursery " : ""}supplier
                 {(item.supplierCount ?? 0) === 1 ? "" : "s"}
               </div>
-            ) : (
-              <div className="flex items-center gap-2">
-                <StarRatingFractions
-                  value={rating}
-                  readOnly
-                  iconSize={featuredStyleCard ? 16 : compact ? 12 : 14}
-                  className={cn("gap-x-0.5", starActiveClass)}
-                />
-                <span
-                  className={cn(
-                    "drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]",
-                    bodyClass,
-                    featuredStyleCard ? "text-sm" : compact ? "text-xs" : "text-sm"
-                  )}
-                >
-                  {rating.toFixed(2)}/5
-                </span>
-                <span
-                  className={cn(
-                    "drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]",
-                    metaClass,
-                    featuredStyleCard ? "text-sm" : "text-xs"
-                  )}
-                >
-                  ({reviewCount})
-                </span>
-              </div>
-            )}
+            ) : null}
 
             {showVariants && !compact && item.variants?.length ? (
               <div className="space-y-2">
