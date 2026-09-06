@@ -1,0 +1,18 @@
+services:
+  canonical-db:
+    image: postgis/postgis:17-3.5
+    environment:
+      POSTGRES_USER: ea_forests
+      POSTGRES_PASSWORD: ${CANONICAL_DB_PASSWORD:-local-development-only}
+      POSTGRES_DB: ea_forests
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - canonical-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ea_forests -d ea_forests"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+volumes:
+  canonical-postgres:

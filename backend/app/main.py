@@ -3,6 +3,8 @@ import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.canonical import router as canonical_router
+
 from app.schemas import (
     ClonalEucalyptusNurseryRequest,
     CommercialForestViabilityRequest,
@@ -56,6 +58,9 @@ def _allowed_origins() -> list[str]:
 
 
 app = FastAPI(title="EA Forests Models Backend", version="0.1.0")
+
+# Canonical routes resolve their database lazily; legacy model startup stays database-independent.
+app.include_router(canonical_router)
 
 app.add_middleware(
     CORSMiddleware,

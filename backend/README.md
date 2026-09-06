@@ -1,5 +1,75 @@
 # EA Forests Models Backend
 
+## Canonical State v0.1
+
+Canonical persistence is additive. Existing model endpoints still work with manual
+payloads without PostgreSQL. The new administrative API uses PostgreSQL/PostGIS,
+SQLAlchemy 2, Alembic and a private local artifact directory.
+
+From the repository root:
+
+```powershell
+docker compose -f compose.canonical.yml up -d
+cd backend
+uv sync
+$env:CANONICAL_DATABASE_URL='postgresql+psycopg://ea_forests:local-development-only@127.0.0.1:5433/ea_forests'
+$env:CANONICAL_ARTIFACT_ROOT='.cache/canonical-artifacts'
+uv run alembic upgrade head
+uv run python -m app.canonical bootstrap
+uv run python -m app.canonical import all
+```
+
+Environment variables are read from the process; `.env.example` documents them but
+is not automatically loaded. Set a private `CANONICAL_API_TOKEN` to enable
+`/api/canonical` routes and send it as `Authorization: Bearer <token>`. The default
+API is disabled, with no anonymous access to source facts or model inputs. Raw
+artifacts are not exposed by HTTP. These routes are for trusted local administration;
+public/multi-tenant access is outside this release.
+
+Imports are transactional and preserve raw bytes and full source records. They do
+not modify frontend JSON. Explicit dummy/test/demo records, including mixed CFR
+records, enter `legacy-import-quarantine`. Coordinate confidence and unknown price
+basis remain visible. Identical file/parser imports are idempotent.
+
+Run the deterministic demonstration in a **separate fresh database**:
+
+```powershell
+# From repository root; the Compose service must be running.
+docker compose -f compose.canonical.yml exec canonical-db createdb -U ea_forests ea_forests_demo
+cd backend
+$env:CANONICAL_DATABASE_URL='postgresql+psycopg://ea_forests:local-development-only@127.0.0.1:5433/ea_forests_demo'
+uv run alembic upgrade head
+uv run python -m app.canonical demo --output .cache/canonical-demo.json
+```
+
+The demo imports the actual Shanglong source record, records an experiment-only
+threshold/price change, retains historical snapshots, prints lineage and verifies
+that stricter G1 thresholds reduce G1 tonnes through the existing roundwood
+simulation. Its data and manual stand assumptions are synthetic, not verified prices.
+
+Tests use a **disposable database whose name ends in `_test`**:
+
+```powershell
+# From repository root:
+docker compose -f compose.canonical.yml exec canonical-db createdb -U ea_forests ea_forests_test
+cd backend
+$env:CANONICAL_TEST_DATABASE_URL='postgresql+psycopg://ea_forests:local-development-only@127.0.0.1:5433/ea_forests_test'
+uv run pytest -q
+uv run python -m app.check_backend
+```
+
+Tests include migration downgrade/upgrade and database constraints. Never point them
+at operational data. Without the test URL, PostgreSQL tests explicitly skip; this
+is not evidence of PostGIS validation. `alembic downgrade base` destroys all
+canonical schemas and is only for disposable databases or a deliberate backed-up
+rollback. Normal upgrades do not destroy source history. Back up PostgreSQL and
+the artifact directory together.
+
+For detailed semantics, domain coverage, migration findings, non-goals and next
+steps, see [Canonical State architecture](../docs/architecture/canonical-state-v0.1.md)
+and [the ER diagram](../docs/architecture/canonical-state-er.md). Canonical price
+history never uses the legacy model's fixed 3700 UGX/USD conversion.
+
 This backend turns the notebook-driven model workflows into a FastAPI service for the Vite app.
 
 ## Setup

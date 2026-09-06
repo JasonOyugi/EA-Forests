@@ -18,6 +18,7 @@ dist-ssr/
 __pycache__/
 *.py[cod]
 .pytest_cache/
+pytest-cache-files-*/
 backend/.cache/
 trial_site_climate_profiles_cache.json
 
