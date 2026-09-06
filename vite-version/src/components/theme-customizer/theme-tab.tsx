@@ -8,31 +8,23 @@ import { Separator } from '@/components/ui/separator'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { useThemeManager } from '@/hooks/use-theme-manager'
 import { useCircularTransition } from '@/hooks/use-circular-transition'
-import { colorThemes, tweakcnThemes } from '@/config/theme-data'
-import { radiusOptions, baseColors } from '@/config/theme-customizer-constants'
+import { tweakcnThemes } from '@/config/theme-data'
+import { baseColors } from '@/config/theme-customizer-constants'
 import { ColorPicker } from '@/components/color-picker'
 import type { ImportedTheme } from '@/types/theme-customizer'
 import React from 'react'
 import "./circular-transition.css"
 
 interface ThemeTabProps {
-  selectedTheme: string
-  setSelectedTheme: (theme: string) => void
   selectedTweakcnTheme: string
   setSelectedTweakcnTheme: (theme: string) => void
-  selectedRadius: string
-  setSelectedRadius: (radius: string) => void
   setImportedTheme: (theme: ImportedTheme | null) => void
   onImportClick: () => void
 }
 
 export function ThemeTab({
-  selectedTheme,
-  setSelectedTheme,
   selectedTweakcnTheme,
   setSelectedTweakcnTheme,
-  selectedRadius,
-  setSelectedRadius,
   setImportedTheme,
   onImportClick
 }: ThemeTabProps) {
@@ -40,37 +32,19 @@ export function ThemeTab({
     isDarkMode,
     brandColorsValues,
     setBrandColorsValues,
-    applyTheme,
     applyTweakcnTheme,
-    applyRadius,
     handleColorChange
   } = useThemeManager()
 
   const { toggleTheme } = useCircularTransition()
 
-  const handleRandomShadcn = () => {
-    // Apply a random shadcn theme
-    const randomTheme = colorThemes[Math.floor(Math.random() * colorThemes.length)]
-    setSelectedTheme(randomTheme.value)
-    setSelectedTweakcnTheme("") // Clear tweakcn selection
-    setBrandColorsValues({}) // Clear brand colors state
-    setImportedTheme(null) // Clear imported theme
-    applyTheme(randomTheme.value, isDarkMode)
-  }
-
   const handleRandomTweakcn = () => {
     // Apply a random tweakcn theme
     const randomTheme = tweakcnThemes[Math.floor(Math.random() * tweakcnThemes.length)]
     setSelectedTweakcnTheme(randomTheme.value)
-    setSelectedTheme("") // Clear shadcn selection
     setBrandColorsValues({}) // Clear brand colors state
     setImportedTheme(null) // Clear imported theme
     applyTweakcnTheme(randomTheme.preset, isDarkMode)
-  }
-
-  const handleRadiusSelect = (radius: string) => {
-    setSelectedRadius(radius)
-    applyRadius(radius)
   }
 
   const handleLightMode = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -85,62 +59,6 @@ export function ThemeTab({
 
   return (
     <div className="p-4 space-y-6">
-
-
-      {/* Shadcn UI Theme Presets */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <Label className="text-sm font-medium">Shadcn UI Theme Presets</Label>
-          <Button variant="outline" size="sm" onClick={handleRandomShadcn} className="cursor-pointer">
-            <Dices className="h-3.5 w-3.5 mr-1.5" />
-            Random
-          </Button>
-        </div>
-
-        <Select value={selectedTheme} onValueChange={(value) => {
-          setSelectedTheme(value)
-          setSelectedTweakcnTheme("") // Clear tweakcn selection
-          setBrandColorsValues({}) // Clear brand colors state
-          setImportedTheme(null) // Clear imported theme
-          applyTheme(value, isDarkMode)
-        }}>
-          <SelectTrigger className="w-full cursor-pointer">
-            <SelectValue placeholder="Choose Shadcn Theme" />
-          </SelectTrigger>
-          <SelectContent className="max-h-60">
-            <div className="p-2">
-              {colorThemes.map((theme) => (
-                <SelectItem key={theme.value} value={theme.value} className="cursor-pointer">
-                  <div className="flex items-center gap-2">
-                    <div className="flex gap-1">
-                      <div
-                        className="w-3 h-3 rounded-full border border-border/20"
-                        style={{ backgroundColor: theme.preset.styles.light.primary }}
-                      />
-                      <div
-                        className="w-3 h-3 rounded-full border border-border/20"
-                        style={{ backgroundColor: theme.preset.styles.light.secondary }}
-                      />
-                      <div
-                        className="w-3 h-3 rounded-full border border-border/20"
-                        style={{ backgroundColor: theme.preset.styles.light.accent }}
-                      />
-                      <div
-                        className="w-3 h-3 rounded-full border border-border/20"
-                        style={{ backgroundColor: theme.preset.styles.light.muted }}
-                      />
-                    </div>
-                    <span>{theme.name}</span>
-                  </div>
-                </SelectItem>
-              ))}
-            </div>
-          </SelectContent>
-        </Select>
-      </div>
-
-      <Separator />
-
       {/* Tweakcn Theme Presets */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
@@ -153,7 +71,6 @@ export function ThemeTab({
 
         <Select value={selectedTweakcnTheme} onValueChange={(value) => {
           setSelectedTweakcnTheme(value)
-          setSelectedTheme("") // Clear shadcn selection
           setBrandColorsValues({}) // Clear brand colors state
           setImportedTheme(null) // Clear imported theme
           const selectedPreset = tweakcnThemes.find(t => t.value === value)?.preset
@@ -198,29 +115,7 @@ export function ThemeTab({
 
       <Separator />
 
-      {/* Radius Selection */}
-      <div className="space-y-3">
-        <Label className="text-sm font-medium">Radius</Label>
-        <div className="grid grid-cols-5 gap-2">
-          {radiusOptions.map((option) => (
-            <div
-              key={option.value}
-              className={`relative cursor-pointer rounded-md p-3 border transition-colors ${
-                selectedRadius === option.value
-                  ? "border-primary"
-                  : "border-border hover:border-border/60"
-              }`}
-              onClick={() => handleRadiusSelect(option.value)}
-            >
-              <div className="text-center">
-                <div className="text-xs font-medium">{option.name}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
 
-      <Separator />
 
       {/* Mode Section */}
       <div className="space-y-3">

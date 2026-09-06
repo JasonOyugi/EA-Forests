@@ -3,12 +3,11 @@
 import React from 'react'
 import { useTheme } from '@/hooks/use-theme'
 import { baseColors } from '@/config/theme-customizer-constants'
-import { colorThemes } from '@/config/theme-data'
 import type { ThemePreset, ImportedTheme } from '@/types/theme-customizer'
 
 const applyThemeVariables = (root: HTMLElement, styles: Record<string, string>) => {
   Object.entries(styles).forEach(([key, value]) => {
-    if (key === 'font-sans') return
+    if (key === 'font-sans' || key.startsWith('radius')) return
     root.style.setProperty(`--${key}`, value)
   })
 }
@@ -82,21 +81,6 @@ export function useThemeManager() {
     setBrandColorsValues(newValues)
   }, [])
 
-  const applyTheme = React.useCallback((themeValue: string, darkMode: boolean) => {
-    const theme = colorThemes.find(t => t.value === themeValue)
-    if (!theme) return
-
-    // Reset and apply theme variables
-    resetTheme()
-    const styles = darkMode ? theme.preset.styles.dark : theme.preset.styles.light
-    const root = document.documentElement
-
-    applyThemeVariables(root, styles)
-
-    // Update brand colors values when theme changes
-    updateBrandColorsFromTheme(styles)
-  }, [resetTheme, updateBrandColorsFromTheme])
-
   const applyTweakcnTheme = React.useCallback((themePreset: ThemePreset, darkMode: boolean) => {
     // Reset and apply theme variables
     resetTheme()
@@ -127,10 +111,6 @@ export function useThemeManager() {
     setBrandColorsValues(newBrandColors)
   }, [])
 
-  const applyRadius = (radius: string) => {
-    document.documentElement.style.setProperty('--radius', radius)
-  }
-
   const handleColorChange = (cssVar: string, value: string) => {
     document.documentElement.style.setProperty(cssVar, value)
   }
@@ -142,10 +122,8 @@ export function useThemeManager() {
     brandColorsValues,
     setBrandColorsValues,
     resetTheme,
-    applyTheme,
     applyTweakcnTheme,
     applyImportedTheme,
-    applyRadius,
     handleColorChange,
     updateBrandColorsFromTheme
   }

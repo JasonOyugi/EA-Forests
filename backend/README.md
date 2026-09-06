@@ -1,12 +1,58 @@
 # EA Forests Models Backend
 
+## Run on this Windows machine without Docker
+
+If PowerShell says `docker` is not recognized, the Docker instructions below do
+not apply until Docker is installed. This workspace already has a portable
+PostgreSQL/PostGIS server and the populated `ea_forests_import` database.
+These commands reuse that installation; the ignored runtime is not included in
+a fresh clone.
+
+From the repository root, check the database:
+
+```powershell
+& .\backend\.cache\canonical-runtime\pgsql\bin\pg_isready.exe -h 127.0.0.1 -p 55433
+```
+
+If it reports **no response**, start it:
+
+```powershell
+& .\backend\.cache\canonical-runtime\pgsql\bin\pg_ctl.exe -D .\backend\.cache\canonical-runtime\pgdata -l .\backend\.cache\canonical-runtime\postgres.log -o '-h 127.0.0.1 -p 55433' -w start
+```
+
+Start the backend in one PowerShell terminal and leave it running:
+
+```powershell
+cd backend
+$env:PYTHONDONTWRITEBYTECODE='1'
+$env:EARTH_ENGINE_PROJECT='ee-oyugijason'
+$env:CANONICAL_DATABASE_URL='postgresql+psycopg://ea_forests@127.0.0.1:55433/ea_forests_import'
+$env:CANONICAL_ARTIFACT_ROOT='.cache/canonical-artifacts'
+& .\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
+
+In another terminal, from the repository root:
+
+```powershell
+cd vite-version
+npm run dev -- --host 127.0.0.1 --port 5173 --strictPort
+```
+
+Open <http://127.0.0.1:5173>. Verify the backend through the frontend proxy with
+`Invoke-RestMethod http://127.0.0.1:5173/api/health`; it should return `status: ok`.
+If either service is already running, reuse it instead of starting another copy.
+Use Ctrl+C in its terminal to stop it. The canonical administrative API still
+requires the private token described below. No migrations or re-import are needed
+to reuse this populated database.
+
 ## Canonical State v0.1
 
 Canonical persistence is additive. Existing model endpoints still work with manual
 payloads without PostgreSQL. The new administrative API uses PostgreSQL/PostGIS,
 SQLAlchemy 2, Alembic and a private local artifact directory.
 
-From the repository root:
+For a fresh database with Docker installed and running, from the repository root
+(Compose starts the database only; start the backend and frontend separately):
 
 ```powershell
 docker compose -f compose.canonical.yml up -d

@@ -14,7 +14,6 @@ import { SectionCards } from "./components/section-cards"
 import { SpeciesAllocation } from "./components/species-allocation"
 import type { MetricKey } from "./components/chart-area-interactive"
 import type { CalendarEvent } from "@/app/calendar/types"
-import { ComingSoonPreview } from "@/components/coming-soon-preview"
 
 export default function Page() {
   const formatCurrencyExact = React.useCallback(
@@ -116,65 +115,46 @@ export default function Page() {
 
   return (
     <BaseLayout title="Portfolio Intelligence Preview" description="Illustrative preview of the future forestry portfolio dashboard">
-      <div className="@container/main px-4 lg:px-6 space-y-6">
-        <ComingSoonPreview
-          className="mt-2"
-          links={[
-            { label: "Models", href: "/models" },
-            { label: "Marketplace", href: "/shop/seedlings" },
-          ]}
-        >
-          <div className="space-y-6 p-4">
-            <SectionCards
-              onMetricCardClick={handleMetricCardClick}
-              onPaymentsCardClick={handlePaymentsCardClick}
-              portfolioValue={formatCurrencyExact(portfolioPoint?.portfolioValue ?? 0)}
-              portfolioTrendLabel={portfolioTrend.label}
-              portfolioTrendUp={portfolioTrend.isUp}
-              portfolioSummary={`Derived from ${plantedAreaLabel} ha financed across ${acquiredAreaLabel} ha managed`}
-              landManaged={`${formatNumberExact(landPoint?.landManaged ?? 0)} ha`}
-              landTrendLabel={landTrend.label}
-              landTrendUp={landTrend.isUp}
-              landSummary={`Previous period: ${formatNumberExact(landPreviousPoint?.landManaged ?? 0)} ha across Uganda, Kenya, and Tanzania`}
-              estimatedVolume={`${formatNumberExact(landPoint?.expectedVolume ?? 0)} m3`}
-              volumeTrendLabel={volumeTrend.label}
-              volumeTrendUp={volumeTrend.isUp}
-              volumeSummary={`Standing timber estimate at ${landPoint?.label ?? "current horizon"} across planted blocks`}
-              pendingPayments={formatCurrencyExact(pendingTotals.amount)}
-              pendingInvoicesLabel={`${pendingTotals.count} invoices`}
-              pendingSummary={`Scheduled contractor and operations payments awaiting release`}
-            />
-            <div ref={chartRef} id="portfolio-summary-chart">
-              <ChartAreaInteractive metric={metric} onMetricChange={setMetric} />
-            </div>
-            <SpeciesAllocation />
-            <div ref={assetMapRef}>
-              <DashboardAssetMap selectedGroupId={selectedAssetMapId} onSelectGroup={setSelectedAssetMapId} />
-            </div>
-          </div>
-        </ComingSoonPreview>
+      <div className="@container/main px-4 lg:px-6 space-y-6 mt-2">
+        <SectionCards
+          onMetricCardClick={handleMetricCardClick}
+          onPaymentsCardClick={handlePaymentsCardClick}
+          portfolioValue={formatCurrencyExact(portfolioPoint?.portfolioValue ?? 0)}
+          portfolioTrendLabel={portfolioTrend.label}
+          portfolioTrendUp={portfolioTrend.isUp}
+          portfolioSummary={`Derived from ${plantedAreaLabel} ha financed across ${acquiredAreaLabel} ha managed`}
+          landManaged={`${formatNumberExact(landPoint?.landManaged ?? 0)} ha`}
+          landTrendLabel={landTrend.label}
+          landTrendUp={landTrend.isUp}
+          landSummary={`Previous period: ${formatNumberExact(landPreviousPoint?.landManaged ?? 0)} ha across Uganda, Kenya, and Tanzania`}
+          estimatedVolume={`${formatNumberExact(landPoint?.expectedVolume ?? 0)} m3`}
+          volumeTrendLabel={volumeTrend.label}
+          volumeTrendUp={volumeTrend.isUp}
+          volumeSummary={`Standing timber estimate at ${landPoint?.label ?? "current horizon"} across planted blocks`}
+          pendingPayments={formatCurrencyExact(pendingTotals.amount)}
+          pendingInvoicesLabel={`${pendingTotals.count} invoices`}
+          pendingSummary={`Scheduled contractor and operations payments awaiting release`}
+        />
+        <div ref={chartRef} id="portfolio-summary-chart">
+          <ChartAreaInteractive metric={metric} onMetricChange={setMetric} />
+        </div>
+        <SpeciesAllocation />
+        <div ref={assetMapRef}>
+          <DashboardAssetMap selectedGroupId={selectedAssetMapId} onSelectGroup={setSelectedAssetMapId} />
+        </div>
       </div>
-      <div ref={tableRef} className="@container/main" id="dashboard-data-table">
-        <ComingSoonPreview
-          links={[
-            { label: "Models", href: "/models" },
-            { label: "Marketplace", href: "/shop/seedlings" },
-          ]}
-        >
-          <div className="p-4">
-            <div className="pb-3">
-              <h2 className="text-xl font-semibold tracking-tight">Activity table</h2>
-            </div>
-            <DataTable
-              activeTab={tableTab}
-              onActiveTabChange={setTableTab}
-              transactionsHighlightKey={transactionsHighlightKey}
-              events={dashboardEvents}
-              onEventsChange={setDashboardEvents}
-              onAssetMapOpen={handleAssetMapOpen}
-            />
-          </div>
-        </ComingSoonPreview>
+      <div ref={tableRef} className="@container/main px-4 lg:px-6" id="dashboard-data-table">
+        <div className="pb-3">
+          <h2 className="text-xl font-semibold tracking-tight">Activity table</h2>
+        </div>
+        <DataTable
+          activeTab={tableTab}
+          onActiveTabChange={setTableTab}
+          transactionsHighlightKey={transactionsHighlightKey}
+          events={dashboardEvents}
+          onEventsChange={setDashboardEvents}
+          onAssetMapOpen={handleAssetMapOpen}
+        />
       </div>
     </BaseLayout>
   )

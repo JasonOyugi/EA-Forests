@@ -10,8 +10,8 @@ import { Separator } from '@/components/ui/separator'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { useThemeManager } from '@/hooks/use-theme-manager'
 import { useCircularTransition } from '@/hooks/use-circular-transition'
-import { colorThemes, tweakcnThemes } from '@/config/theme-data'
-import { radiusOptions, baseColors } from '@/config/theme-customizer-constants'
+import { tweakcnThemes } from '@/config/theme-data'
+import { baseColors } from '@/config/theme-customizer-constants'
 import { ColorPicker } from '@/components/color-picker'
 import { ImportModal } from '@/components/theme-customizer/import-modal'
 import { cn } from '@/lib/utils'
@@ -28,9 +28,7 @@ export function LandingThemeCustomizer({ open, onOpenChange }: LandingThemeCusto
     applyImportedTheme,
     isDarkMode,
     resetTheme,
-    applyRadius,
     setBrandColorsValues,
-    applyTheme,
     applyTweakcnTheme,
     brandColorsValues,
     handleColorChange
@@ -38,29 +36,23 @@ export function LandingThemeCustomizer({ open, onOpenChange }: LandingThemeCusto
 
   const { toggleTheme } = useCircularTransition()
 
-  const [selectedTheme, setSelectedTheme] = React.useState("default")
   const [selectedTweakcnTheme, setSelectedTweakcnTheme] = React.useState("")
-  const [selectedRadius, setSelectedRadius] = React.useState("0.5rem")
   const [importModalOpen, setImportModalOpen] = React.useState(false)
   const [importedTheme, setImportedTheme] = React.useState<ImportedTheme | null>(null)
 
   const handleReset = () => {
     // Reset all state variables to initial values
-    setSelectedTheme("")
     setSelectedTweakcnTheme("")
-    setSelectedRadius("0.5rem")
     setImportedTheme(null)
     setBrandColorsValues({})
 
-    // Reset theme and radius to defaults
+    // Reset theme to defaults
     resetTheme()
-    applyRadius("0.5rem")
   }
 
   const handleImport = (themeData: ImportedTheme) => {
     setImportedTheme(themeData)
     // Clear other selections to indicate custom import is active
-    setSelectedTheme("")
     setSelectedTweakcnTheme("")
 
     // Apply the imported theme
@@ -71,29 +63,13 @@ export function LandingThemeCustomizer({ open, onOpenChange }: LandingThemeCusto
     setImportModalOpen(true)
   }
 
-  const handleRandomShadcn = () => {
-    // Apply a random shadcn theme
-    const randomTheme = colorThemes[Math.floor(Math.random() * colorThemes.length)]
-    setSelectedTheme(randomTheme.value)
-    setSelectedTweakcnTheme("")
-    setBrandColorsValues({})
-    setImportedTheme(null)
-    applyTheme(randomTheme.value, isDarkMode)
-  }
-
   const handleRandomTweakcn = () => {
     // Apply a random tweakcn theme
     const randomTheme = tweakcnThemes[Math.floor(Math.random() * tweakcnThemes.length)]
     setSelectedTweakcnTheme(randomTheme.value)
-    setSelectedTheme("")
     setBrandColorsValues({})
     setImportedTheme(null)
     applyTweakcnTheme(randomTheme.preset, isDarkMode)
-  }
-
-  const handleRadiusSelect = (radius: string) => {
-    setSelectedRadius(radius)
-    applyRadius(radius)
   }
 
   const handleLightMode = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -110,15 +86,13 @@ export function LandingThemeCustomizer({ open, onOpenChange }: LandingThemeCusto
   React.useEffect(() => {
     if (importedTheme) {
       applyImportedTheme(importedTheme, isDarkMode)
-    } else if (selectedTheme) {
-      applyTheme(selectedTheme, isDarkMode)
     } else if (selectedTweakcnTheme) {
       const selectedPreset = tweakcnThemes.find(t => t.value === selectedTweakcnTheme)?.preset
       if (selectedPreset) {
         applyTweakcnTheme(selectedPreset, isDarkMode)
       }
     }
-  }, [isDarkMode, importedTheme, selectedTheme, selectedTweakcnTheme, applyImportedTheme, applyTheme, applyTweakcnTheme])
+  }, [isDarkMode, importedTheme, selectedTweakcnTheme, applyImportedTheme, applyTweakcnTheme])
 
   return (
     <>
@@ -181,59 +155,7 @@ export function LandingThemeCustomizer({ open, onOpenChange }: LandingThemeCusto
 
             <Separator />
 
-            {/* Shadcn UI Theme Presets */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <Label className="text-sm font-medium">Shadcn UI Theme Presets</Label>
-                <Button variant="outline" size="sm" onClick={handleRandomShadcn} className="cursor-pointer">
-                  <Dices className="h-3.5 w-3.5 mr-1.5" />
-                  Random
-                </Button>
-              </div>
 
-              <Select value={selectedTheme} onValueChange={(value) => {
-                setSelectedTheme(value)
-                setSelectedTweakcnTheme("")
-                setBrandColorsValues({})
-                setImportedTheme(null)
-                applyTheme(value, isDarkMode)
-              }}>
-                <SelectTrigger className="w-full cursor-pointer">
-                  <SelectValue placeholder="Choose Shadcn Theme" />
-                </SelectTrigger>
-                <SelectContent className="max-h-60">
-                  <div className="p-2">
-                    {colorThemes.map((theme) => (
-                      <SelectItem key={theme.value} value={theme.value} className="cursor-pointer">
-                        <div className="flex items-center gap-2">
-                          <div className="flex gap-1">
-                            <div
-                              className="w-3 h-3 rounded-full border border-border/20"
-                              style={{ backgroundColor: theme.preset.styles.light.primary }}
-                            />
-                            <div
-                              className="w-3 h-3 rounded-full border border-border/20"
-                              style={{ backgroundColor: theme.preset.styles.light.secondary }}
-                            />
-                            <div
-                              className="w-3 h-3 rounded-full border border-border/20"
-                              style={{ backgroundColor: theme.preset.styles.light.accent }}
-                            />
-                            <div
-                              className="w-3 h-3 rounded-full border border-border/20"
-                              style={{ backgroundColor: theme.preset.styles.light.muted }}
-                            />
-                          </div>
-                          <span>{theme.name}</span>
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </div>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <Separator />
 
             {/* Tweakcn Theme Presets */}
             <div className="space-y-3">
@@ -247,7 +169,6 @@ export function LandingThemeCustomizer({ open, onOpenChange }: LandingThemeCusto
 
               <Select value={selectedTweakcnTheme} onValueChange={(value) => {
                 setSelectedTweakcnTheme(value)
-                setSelectedTheme("")
                 setBrandColorsValues({})
                 setImportedTheme(null)
                 const selectedPreset = tweakcnThemes.find(t => t.value === value)?.preset
@@ -292,29 +213,7 @@ export function LandingThemeCustomizer({ open, onOpenChange }: LandingThemeCusto
 
             <Separator />
 
-            {/* Radius Selection */}
-            <div className="space-y-3">
-              <Label className="text-sm font-medium">Radius</Label>
-              <div className="grid grid-cols-5 gap-2">
-                {radiusOptions.map((option) => (
-                  <div
-                    key={option.value}
-                    className={`relative cursor-pointer rounded-md p-3 border transition-colors ${
-                      selectedRadius === option.value
-                        ? "border-primary"
-                        : "border-border hover:border-border/60"
-                    }`}
-                    onClick={() => handleRadiusSelect(option.value)}
-                  >
-                    <div className="text-center">
-                      <div className="text-xs font-medium">{option.name}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
 
-            <Separator />
 
             {/* Import Theme Button */}
             <div className="space-y-3">

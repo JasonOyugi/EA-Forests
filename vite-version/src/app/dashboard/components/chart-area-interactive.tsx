@@ -232,7 +232,7 @@ export function ChartAreaInteractive({
                 Projected value
               </div>
             ) : null}
-            <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full">
+            <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full [&_.recharts-cartesian-axis-tick_text]:fill-foreground">
               <BarChart data={tintedChartData} margin={{ left: 8, right: 8 }}>
                 <CartesianGrid vertical={false} />
                 {futureStartLabel ? (
@@ -254,7 +254,7 @@ export function ChartAreaInteractive({
                   angle={-45}
                   textAnchor="end"
                   height={80}
-                  tick={{ fill: "hsl(var(--foreground))", fontSize: 11 }}
+                  tick={{ fill: "var(--foreground)", fontSize: 11 }}
                 />
                 <YAxis
                   tickLine={false}
@@ -262,7 +262,7 @@ export function ChartAreaInteractive({
                   tickMargin={8}
                   width={94}
                   tickFormatter={activeMeta.axisTick}
-                  tick={{ fill: "hsl(var(--foreground))", fontSize: 11 }}
+                  tick={{ fill: "var(--foreground)", fontSize: 11 }}
                 />
                 <ChartTooltip
                   cursor={{ fill: "rgba(0, 0, 0, 0.1)" }}
@@ -281,11 +281,11 @@ export function ChartAreaInteractive({
                     />
                   }
                 />
-                <Bar dataKey="pastValue" fill={activeFill} radius={[4, 4, 0, 0]} barSize={32} />
+                <Bar dataKey="pastValue" fill={activeFill} radius={0} barSize={32} />
                 <Bar
                   dataKey="futureValue"
                   fill={futureFill}
-                  radius={[4, 4, 0, 0]}
+                  radius={0}
                   barSize={32}
                 />
               </BarChart>

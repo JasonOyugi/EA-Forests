@@ -1,15 +1,13 @@
 "use client"
 
 import React from 'react'
-import { Layout, Palette, RotateCcw, Settings, X } from 'lucide-react'
+import { RotateCcw, Settings, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useThemeManager } from '@/hooks/use-theme-manager'
 import { useSidebarConfig } from '@/contexts/sidebar-context'
 import { tweakcnThemes } from '@/config/theme-data'
 import { ThemeTab } from './theme-tab'
-import { LayoutTab } from './layout-tab'
 import { ImportModal } from './import-modal'
 import { cn } from '@/lib/utils'
 import type { ImportedTheme } from '@/types/theme-customizer'
@@ -20,13 +18,10 @@ interface ThemeCustomizerProps {
 }
 
 export function ThemeCustomizer({ open, onOpenChange }: ThemeCustomizerProps) {
-  const { applyImportedTheme, isDarkMode, resetTheme, applyRadius, setBrandColorsValues, applyTheme, applyTweakcnTheme } = useThemeManager()
+  const { applyImportedTheme, isDarkMode, resetTheme, setBrandColorsValues, applyTweakcnTheme } = useThemeManager()
   const { config: sidebarConfig, updateConfig: updateSidebarConfig } = useSidebarConfig()
 
-  const [activeTab, setActiveTab] = React.useState("theme")
-  const [selectedTheme, setSelectedTheme] = React.useState("default")
   const [selectedTweakcnTheme, setSelectedTweakcnTheme] = React.useState("")
-  const [selectedRadius, setSelectedRadius] = React.useState("0.5rem")
   const [importModalOpen, setImportModalOpen] = React.useState(false)
   const [importedTheme, setImportedTheme] = React.useState<ImportedTheme | null>(null)
 
@@ -34,26 +29,20 @@ export function ThemeCustomizer({ open, onOpenChange }: ThemeCustomizerProps) {
     // Complete reset to application defaults
 
     // 1. Reset all state variables to initial values
-    setSelectedTheme("")  // Clear theme selection after reset
     setSelectedTweakcnTheme("")
-    setSelectedRadius("0.5rem")
     setImportedTheme(null) // Clear imported theme
     setBrandColorsValues({}) // Clear brand colors state
 
     // 2. Completely remove all custom CSS variables
     resetTheme()
 
-    // 3. Reset the radius to default
-    applyRadius("0.5rem")
-
-    // 4. Reset sidebar to defaults
+    // 3. Reset sidebar to defaults
     updateSidebarConfig({ variant: "inset", collapsible: "offcanvas", side: "left" })
   }
 
   const handleImport = (themeData: ImportedTheme) => {
     setImportedTheme(themeData)
     // Clear other selections to indicate custom import is active
-    setSelectedTheme("")
     setSelectedTweakcnTheme("")
 
     // Apply the imported theme
@@ -68,15 +57,13 @@ export function ThemeCustomizer({ open, onOpenChange }: ThemeCustomizerProps) {
   React.useEffect(() => {
     if (importedTheme) {
       applyImportedTheme(importedTheme, isDarkMode)
-    } else if (selectedTheme) {
-      applyTheme(selectedTheme, isDarkMode)
     } else if (selectedTweakcnTheme) {
       const selectedPreset = tweakcnThemes.find(t => t.value === selectedTweakcnTheme)?.preset
       if (selectedPreset) {
         applyTweakcnTheme(selectedPreset, isDarkMode)
       }
     }
-  }, [isDarkMode, importedTheme, selectedTheme, selectedTweakcnTheme, applyImportedTheme, applyTheme, applyTweakcnTheme])
+  }, [isDarkMode, importedTheme, selectedTweakcnTheme, applyImportedTheme, applyTweakcnTheme])
 
   return (
     <>
@@ -107,40 +94,17 @@ export function ThemeCustomizer({ open, onOpenChange }: ThemeCustomizerProps) {
               </div>
             </div>
             <SheetDescription className="text-sm text-muted-foreground sr-only">
-              Customize the them and layout of your dashboard.
+              Customize the theme and colors of your dashboard.
             </SheetDescription>
           </SheetHeader>
 
           <div className="flex-1 overflow-y-auto">
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col">
-              <div className="py-2">
-                <TabsList className="grid w-full grid-cols-2 rounded-none h-12 p-1.5">
-                  <TabsTrigger value="theme" className="cursor-pointer data-[state=active]:bg-background"><Palette className="h-4 w-4 mr-1" /> Theme</TabsTrigger>
-                  <TabsTrigger value="layout" className="cursor-pointer data-[state=active]:bg-background"><Layout className="h-4 w-4 mr-1" /> Layout</TabsTrigger>
-                </TabsList>
-                {/* <TabsList className="grid w-full grid-cols-2 rounded-none h-12 p-1.5">
-                  <TabsTrigger value="theme" className="cursor-pointer data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"><Palette className="h-4 w-4 mr-1" /> Theme</TabsTrigger>
-                  <TabsTrigger value="layout" className="cursor-pointer data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"><Layout className="h-4 w-4 mr-1" /> Layout</TabsTrigger>
-                </TabsList> */}
-              </div>
-
-              <TabsContent value="theme" className="flex-1 mt-0">
-                <ThemeTab
-                  selectedTheme={selectedTheme}
-                  setSelectedTheme={setSelectedTheme}
-                  selectedTweakcnTheme={selectedTweakcnTheme}
-                  setSelectedTweakcnTheme={setSelectedTweakcnTheme}
-                  selectedRadius={selectedRadius}
-                  setSelectedRadius={setSelectedRadius}
-                  setImportedTheme={setImportedTheme}
-                  onImportClick={handleImportClick}
-                />
-              </TabsContent>
-
-              <TabsContent value="layout" className="flex-1 mt-0">
-                <LayoutTab />
-              </TabsContent>
-            </Tabs>
+            <ThemeTab
+              selectedTweakcnTheme={selectedTweakcnTheme}
+              setSelectedTweakcnTheme={setSelectedTweakcnTheme}
+              setImportedTheme={setImportedTheme}
+              onImportClick={handleImportClick}
+            />
           </div>
         </SheetContent>
       </Sheet>

@@ -1219,7 +1219,7 @@ function SiteMetricChart({
         <CardContent className="pt-2">
           <ChartContainer
             config={chartConfig}
-            className={`h-[220px] w-full text-foreground ${
+            className={`h-[220px] w-full text-foreground [&_.recharts-cartesian-axis-tick_text]:fill-foreground ${
               isMobile ? "h-[200px]" : ""
             }`}
           >
@@ -1242,7 +1242,7 @@ function SiteMetricChart({
                 tickMargin={isMobile ? 6 : 8}
                 interval={0}
                 tickFormatter={(value) => formatYearTick(String(value), isMobile)}
-                tick={{ fontSize: isMobile ? 10 : 11, fill: "currentColor" }}
+                tick={{ fontSize: isMobile ? 10 : 11, fill: "var(--foreground)" }}
               />
               <YAxis
                 hide={isMobile}
@@ -1251,7 +1251,7 @@ function SiteMetricChart({
                 width={78}
                 tickMargin={8}
                 tickFormatter={meta.axisTick}
-                tick={{ fontSize: 11, fill: "currentColor" }}
+                tick={{ fontSize: 11, fill: "var(--foreground)" }}
               />
               <ChartTooltip
                 content={
@@ -1275,7 +1275,7 @@ function SiteMetricChart({
                   key={species}
                   dataKey={species}
                   fill={speciesProfile[species].color}
-                  radius={[4, 4, 0, 0]}
+                  radius={0}
                   maxBarSize={visibleSpecies.length === 1 ? 42 : 26}
                 />
               ))}
@@ -1734,15 +1734,15 @@ export function DashboardAssetMap({
                 </Map>
               </div>
 
-              <div className="rounded-[28px] border-0 bg-background/70 p-4 backdrop-blur-sm">
+              <div className="border-0 bg-background/70">
                 <Select value={selectedGroup.id} onValueChange={handleSelectGroup}>
-                  <SelectTrigger className="group h-auto w-full rounded-[24px] border-0 bg-transparent text-left shadow-none">
-                    <div className="min-w-0 py-2">
+                  <SelectTrigger className="group w-full data-[size=default]:h-auto min-h-24 border-0 bg-transparent p-4 text-left shadow-none dark:bg-transparent dark:hover:bg-muted/50">
+                    <div className="min-w-0 flex-1 space-y-1">
                       <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
                         Selected site
                       </div>
                       <div
-                        className={`mt-2 truncate text-xl font-semibold text-foreground ${emeraldGlitterHoverClass}`}
+                        className={`truncate text-xl font-semibold text-foreground ${emeraldGlitterHoverClass}`}
                       >
                         {selectedGroup.block}
                       </div>
