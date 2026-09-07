@@ -20,21 +20,41 @@ import { sectorMetrics, sectorPlayers } from "./sector-data"
 import type { SectorMetric, SectorPlayer } from "./sector-data"
 
 const normalizedSeedlingsInventory = normalizeSeedlingInventory(seedlingsInventory as ShopItem[])
-const featuredSeedlings = normalizedSeedlingsInventory
-  .filter((item) => item.tags.includes("featured"))
+const featuredSeedlings = (normalizedSeedlingsInventory
+  .filter((item) => item.tags?.includes("featured") || item.tags?.includes("popular"))
   .slice(0, 3)
+)
+const safeFeaturedSeedlings = featuredSeedlings.length ? featuredSeedlings : normalizedSeedlingsInventory.slice(0, 3)
 const marketSeedlings = normalizedSeedlingsInventory.slice(0, 10)
 
 type EditorialFocus = "metrics" | "players" | "products" | null
 
 function formatProductUpdatedAt(value?: string) {
   if (!value) return "Not recorded"
+
+  const trimmed = value.trim()
+  if (!trimmed) return "Not recorded"
+
+  const rangeMatch = trimmed.match(/^(\d{4})[-/](\d{4})$/)
+  const normalizedValue = rangeMatch
+    ? `${rangeMatch[1]}-01-01T00:00:00Z`
+    : /^\d{4}$/.test(trimmed)
+      ? `${trimmed}-01-01T00:00:00Z`
+      : /^[\d]{4}-[\d]{2}-[\d]{2}$/.test(trimmed)
+        ? `${trimmed}T00:00:00Z`
+        : trimmed.includes("T") || trimmed.includes("-") || trimmed.includes("/")
+          ? trimmed
+          : `${trimmed}T00:00:00Z`
+
+  const date = new Date(normalizedValue)
+  if (Number.isNaN(date.getTime())) return "Not recorded"
+
   return new Intl.DateTimeFormat("en-GB", {
     day: "numeric",
     month: "short",
     year: "numeric",
     timeZone: "UTC",
-  }).format(new Date(`${value}T00:00:00Z`))
+  }).format(date)
 }
 
 type Story = {
@@ -231,17 +251,6 @@ function MetricTile({
   onFocus?: () => void
   onSelectInformation?: (topic: string) => void
 }) {
-  const bgImage =
-    metric.informationSlug === "policy-regulation"
-      ? "/forest.webp"
-      : metric.informationSlug === "finance-markets"
-        ? "/eucalyptus.jpg"
-        : metric.informationSlug === "investments"
-          ? "/about.webp"
-          : metric.informationSlug === "genetics"
-            ? "/drylands.webp"
-            : "/maps.jpg"
-
   return (
     <article
       role="button"
@@ -261,16 +270,6 @@ function MetricTile({
         background: `linear-gradient(145deg, color-mix(in srgb, ${metric.accent} 58%, #07110c) 0%, color-mix(in srgb, ${metric.accent} 18%, #07110c) 55%, #050807 100%)`,
       }}
     >
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-        <img
-          src={assetUrl(bgImage)}
-          alt=""
-          className="size-full object-cover opacity-25 transition-transform duration-700 group-hover:scale-105"
-          loading="lazy"
-          decoding="async"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35" />
-      </div>
       <MetricCardDecoration accent={metric.accent} />
       <p className="relative z-10 text-xs font-semibold uppercase tracking-[.2em]" style={{ color: metric.accent }}>Did you know?</p>
       <div className="relative z-10">
@@ -339,11 +338,13 @@ function ProductTile({
   onFocus,
   compact = false,
 }: {
-  item: ShopItem
+  item?: ShopItem
   size: string
   onFocus?: () => void
   compact?: boolean
 }) {
+  if (!item) return null
+
   return (
     <article
       className={`landing-product-card group relative block overflow-hidden bg-zinc-900 transition-all duration-500 ${size}`}
@@ -512,7 +513,7 @@ export function EditorialBriefSection() {
                 <StoryTile story={visibleStories[0]} size="xl:col-span-8 xl:row-span-[48]" />
                 <MetricPair metrics={sectorMetrics.slice(0, 2)} size="xl:col-span-4 xl:row-span-[48]" onFocus={() => toggleFocus("metrics")} onSelectInformation={selectInformationTopic} />
 
-                <ProductTile item={featuredSeedlings[0]} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("products")} />
+                <ProductTile item={safeFeaturedSeedlings[0]} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("products")} />
                 <StoryTile story={visibleStories[1]} size="xl:col-span-8 xl:row-span-[36]" />
 
                 <MetricPair metrics={sectorMetrics.slice(2, 4)} size="xl:col-span-4 xl:row-span-[48]" onFocus={() => toggleFocus("metrics")} onSelectInformation={selectInformationTopic} />
@@ -529,13 +530,13 @@ export function EditorialBriefSection() {
                   </div>
                 ) : null}
 
-                <ProductTile item={featuredSeedlings[1]} size="xl:col-span-6 xl:row-span-[36]" onFocus={() => toggleFocus("products")} />
+                <ProductTile item={safeFeaturedSeedlings[1]} size="xl:col-span-6 xl:row-span-[36]" onFocus={() => toggleFocus("products")} />
                 <PlayerTile player={sectorPlayers[2]} size="xl:col-span-3 xl:row-span-[36]" onFocus={() => toggleFocus("players")} />
                 <StoryTile story={visibleStories[4]} size="xl:col-span-12 xl:row-span-[60]" />
                 <PlayerTile player={sectorPlayers[3]} size="xl:col-span-3 xl:row-span-[36]" onFocus={() => toggleFocus("players")} />
 
                 <StoryTile story={visibleStories[5]} size="xl:col-span-9 xl:row-span-[30]" />
-                <ProductTile item={featuredSeedlings[2]} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("products")} />
+                <ProductTile item={safeFeaturedSeedlings[2]} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("products")} />
 
                 <EventTile event={editorialEvents[1]} size="xl:col-span-4 xl:row-span-[36]" />
                 <VideoTile video={editorialVideos[1]} size="xl:col-span-8 xl:row-span-[30]" />

@@ -75,9 +75,14 @@ export default function ModelComingSoonPage() {
   const { modelSlug } = useParams()
   const config = modelSlug ? comingSoonModels[modelSlug] : undefined
 
+  // Call hook unconditionally before early return
+  const countdown = useCountdown(
+    config ? config.expectedAt : new Date().toISOString()
+  )
+
   if (!config) return <Navigate to="/errors/not-found" replace />
 
-  const { days, hours, minutes, seconds, isDone } = useCountdown(config.expectedAt)
+  const { days, hours, minutes, seconds, isDone } = countdown
   const expectedLabel = new Date(config.expectedAt).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })
 
   return (

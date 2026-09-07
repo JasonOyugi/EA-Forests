@@ -2158,47 +2158,20 @@ html {
 
 .metric-card-pixel {
   position: absolute;
-  width: 12px;
-  height: 12px;
-  background: currentColor;
-  opacity: 0.55;
+  top: var(--pixel-y);
+  left: var(--pixel-x);
+  width: var(--pixel-size);
+  height: var(--pixel-size);
+  background: color-mix(in srgb, currentColor var(--pixel-accent-share), var(--pixel-tint));
+  opacity: var(--pixel-opacity-min);
   border-radius: 2px;
-  animation: metric-pixel-pulse 3.6s ease-in-out infinite;
-}
-
-.metric-card-pixel:nth-child(1) {
-  top: 21%;
-  right: 25%;
-  animation-delay: -0.6s;
-}
-
-.metric-card-pixel:nth-child(2) {
-  top: 45%;
-  right: 9%;
-  width: 18px;
-  height: 18px;
-  animation-delay: -1.8s;
-}
-
-.metric-card-pixel:nth-child(3) {
-  right: 38%;
-  bottom: 12%;
-  width: 10px;
-  height: 10px;
-  animation-delay: -3s;
-}
-
-.metric-card-pixel:nth-child(4) {
-  top: 15%;
-  left: 18%;
-  width: 8px;
-  height: 8px;
-  animation-delay: -1.2s;
+  animation: metric-pixel-pulse var(--pixel-duration) ease-in-out infinite;
+  animation-delay: var(--pixel-delay);
 }
 
 @keyframes metric-pixel-pulse {
-  0%, 100% { opacity: 0.2; transform: scale(0.8); }
-  50% { opacity: 0.85; transform: scale(1.25); }
+  0%, 100% { opacity: var(--pixel-opacity-min); transform: scale(var(--pixel-scale-min)); }
+  50% { opacity: var(--pixel-opacity-max); transform: scale(var(--pixel-scale-max)); }
 }
 
 .coming-soon-card-tint {

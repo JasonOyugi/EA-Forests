@@ -81,6 +81,36 @@ export interface AvailabilityEvidence {
   evidence: EvidenceRef
 }
 
+export type RegistrationStatus =
+  | "historically_registered"
+  | "currently_verified"
+  | "current_unverified"
+  | "unknown"
+
+export interface NurseryIdentityEvidence {
+  canonicalId: string
+  canonicalName: string
+  aliases: string[]
+  sourceIds: string[]
+  confidence: number
+  unresolvedDuplicateCandidates?: string[]
+}
+
+export interface NurseryStatusEvidence {
+  historicalRegistration?: RegistrationStatus
+  currentOperatingEvidence?: EvidenceRef
+  currentAvailability?: AvailabilityEvidence
+  lastObservedAt?: string
+}
+
+export interface InferenceAudit {
+  statement: string
+  ruleId: string
+  inputSourceIds: string[]
+  confidence: number
+  evidence: EvidenceRef
+}
+
 export interface NurseryOfferEvidence {
   kind: "nursery-offer"
   entity: string
@@ -219,6 +249,8 @@ export interface ShopItem {
   mapTitle?: string
   mapDescription?: string
   mapPoints?: ShopItemMapPoint[]
+  observedSupplierCount?: number
+  inferredSupplierCount?: number
   evidence?:
     | NurseryOfferEvidence
     | ForestryServiceOfferEvidence

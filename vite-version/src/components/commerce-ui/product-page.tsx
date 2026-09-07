@@ -58,6 +58,8 @@ type RetailerLocation = {
   pricePer100Seedlings?: number | null;
   pricePer500Seedlings?: number | null;
   pricePer1000Seedlings?: number | null;
+  priceRangeLabel?: string | null;
+  evidenceStatus?: "known" | "likely";
 };
 
 interface ProductPageProps {
@@ -195,6 +197,8 @@ function getNearestRetailers(item: ShopItem): RetailerLocation[] {
           pricePer100Seedlings: offer.pricePer100Seedlings,
           pricePer500Seedlings: offer.pricePer500Seedlings,
           pricePer1000Seedlings: offer.pricePer1000Seedlings,
+          priceRangeLabel: offer.priceRangeLabel ?? null,
+          evidenceStatus: offer.evidenceStatus === "inferred" ? "likely" as const : "known" as const,
         };
       })
       .filter((nursery) => Number.isFinite(nursery.latitude) && Number.isFinite(nursery.longitude))
@@ -496,20 +500,6 @@ function RetailerMapPanel({
   copy: ReturnType<typeof getCommerceCopy>;
   markerKind?: "nursery" | "store";
 }) {
-  if (retailers.length === 0) {
-    return (
-      <div className="flex min-h-[24rem] items-center justify-center rounded-md border border-dashed p-6 text-center">
-        <div>
-          <Leaf className="mx-auto h-8 w-8 text-emerald-700" />
-          <h3 className="mt-3 font-semibold">Provider not yet mapped</h3>
-          <p className="mt-2 text-sm text-muted-foreground">
-            No source record explicitly maps a provider for this offer.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   const [catchmentRadiusKm, setCatchmentRadiusKm] = React.useState(500);
   const visibleRetailers =
     markerKind === "nursery" && selectedRetailer
@@ -584,6 +574,20 @@ function RetailerMapPanel({
       <MapTooltip side="top">{retailer.name}</MapTooltip>
     </MapMarker>
   ));
+
+  if (retailers.length === 0) {
+    return (
+      <div className="flex min-h-[24rem] items-center justify-center rounded-md border border-dashed p-6 text-center">
+        <div>
+          <Leaf className="mx-auto h-8 w-8 text-emerald-700" />
+          <h3 className="mt-3 font-semibold">Provider not yet mapped</h3>
+          <p className="mt-2 text-sm text-muted-foreground">
+            No source record explicitly maps a provider for this offer.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="theme-primary-border-hover rounded-[2rem] border border-transparent bg-transparent p-3 transition-shadow duration-300 hover:shadow-lg">
@@ -660,6 +664,16 @@ function RetailerMapPanel({
             <h3 className="mt-3 text-xl font-semibold">{selectedRetailer.name}</h3>
           </div>
           <div className="grid gap-3">
+            {markerKind === "nursery" ? (
+              <div className="border-b border-primary/20 pb-3 text-sm">
+                <Badge variant={selectedRetailer.evidenceStatus === "likely" ? "secondary" : "default"}>
+                  {selectedRetailer.evidenceStatus === "likely" ? "Likely supplier — confirm variety" : "Known supplier"}
+                </Badge>
+                {selectedRetailer.priceRangeLabel ? (
+                  <p className="mt-2 text-muted-foreground">{selectedRetailer.priceRangeLabel} / seedling</p>
+                ) : null}
+              </div>
+            ) : null}
             <div className="border-b border-primary/20 pb-3 text-sm">
               <div className="font-medium">Address</div>
               <div className="text-muted-foreground">{selectedRetailer.address}</div>
@@ -706,11 +720,9 @@ function RetailerMapPanel({
               </div>
             )}
           </div>
-          {selectedRetailer.phone !== "N/A" ? (
-            <SweepActionButton className="w-full" href={`tel:${selectedRetailer.phone.replace(/\s+/g, "")}`} icon={<Phone className="h-4 w-4" />}>
-              {copy.directCallLabel}
-            </SweepActionButton>
-          ) : null}
+          <SweepActionButton className="w-full" href={`tel:${selectedRetailer.phone.replace(/\s+/g, "")}`} icon={<Phone className="h-4 w-4" />}>
+            {copy.directCallLabel}
+          </SweepActionButton>
         </div>
         ) : (
           <div className="flex min-h-[24rem] items-center justify-center rounded-md border border-dashed p-6 text-center">

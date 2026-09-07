@@ -74,7 +74,7 @@ function CardKindIcon({ kind }: { kind: ResearchCardKind }) {
 
 type InformationMetric = (typeof sectorMetrics)[number]
 
-function MetricCardTile({ metric, image }: { metric: InformationMetric; image: string }) {
+function MetricCardTile({ metric }: { metric: InformationMetric }) {
   return (
     <a
       href={metric.website}
@@ -85,7 +85,6 @@ function MetricCardTile({ metric, image }: { metric: InformationMetric; image: s
         background: `linear-gradient(145deg, color-mix(in srgb, ${metric.accent} 58%, #07110c) 0%, color-mix(in srgb, ${metric.accent} 18%, #07110c) 55%, #050807 100%)`,
       }}
     >
-      <InformationCardBackground fallbackImage={image} />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: `linear-gradient(135deg, color-mix(in srgb, ${metric.accent} 25%, transparent), transparent 75%)` }} />
       <MetricCardDecoration accent={metric.accent} />
       <div className="relative flex items-start justify-between gap-4">
@@ -256,7 +255,7 @@ export function InformationLiveHub({ activeTopic }: InformationLiveHubProps) {
       </nav>
 
       <div className="grid gap-2 p-2 md:grid-cols-2 xl:grid-cols-12 xl:auto-rows-[minmax(14rem,auto)]">
-        {activeSubtopic === allSignals ? topicMetrics.map((metric, index) => <MetricCardTile key={metric.label} metric={metric} image={cardImages[index % cardImages.length]} />) : null}
+        {activeSubtopic === allSignals ? topicMetrics.map((metric) => <MetricCardTile key={metric.label} metric={metric} />) : null}
         {cards.map((card) => <ResearchCardTile key={card.id} card={card} fallbackImage={cardImages[topic.cards.indexOf(card) % cardImages.length]} />)}
       </div>
     </section>

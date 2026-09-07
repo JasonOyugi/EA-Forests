@@ -14,6 +14,9 @@ export interface NurserySpeciesOffer {
   pricePer100Seedlings: number | null
   pricePer500Seedlings: number | null
   pricePer1000Seedlings: number | null
+  priceRangeLabel: string | null
+  currency: string
+  evidenceStatus: "observed" | "inferred"
   capacity: number | null
   traceability: string | null
   availability: string | null
@@ -50,6 +53,9 @@ export function getNurserySpeciesOffers(item: Pick<ShopItem, "name" | "nurseryVa
           pricePer100Seedlings: option.price.per100Seedlings,
           pricePer500Seedlings: option.price.per500Seedlings,
           pricePer1000Seedlings: option.price.per1000Seedlings,
+          priceRangeLabel: option.priceRangeLabel ?? null,
+          currency: nursery.currency ?? nurseryDatabase.currency,
+          evidenceStatus: option.evidenceStatus ?? "observed",
           capacity: option.capacity,
           traceability: option.traceability,
           availability: option.availability,
@@ -62,6 +68,16 @@ export function getNurserySpeciesOffers(item: Pick<ShopItem, "name" | "nurseryVa
 function minimumKnownPrice(values: Array<number | null>) {
   const knownValues = values.filter((value): value is number => value != null)
   return knownValues.length ? Math.min(...knownValues) : null
+}
+
+function pickPrimaryCurrency(offers: NurserySpeciesOffer[]) {
+  const pricedOffers = offers.filter((offer) => offer.pricePerSeedling != null)
+  const counts = new Map<string, number>()
+  for (const offer of pricedOffers) {
+    counts.set(offer.currency, (counts.get(offer.currency) ?? 0) + 1)
+  }
+  const ranked = [...counts.entries()].sort((a, b) => b[1] - a[1])
+  return ranked[0]?.[0] ?? null
 }
 
 function nurseryVariants(offers: NurserySpeciesOffer[]): ShopItemVariant[] {
@@ -85,19 +101,31 @@ function nurseryVariants(offers: NurserySpeciesOffer[]): ShopItemVariant[] {
 }
 
 export function normalizeSeedlingShopItem(item: ShopItem): ShopItem {
-  if (item.shop !== "seedlings") return item
+  if (item.shop !== "seedlings" || !item.nurseryVarietyAliases?.length) return item
 
   const offers = getNurserySpeciesOffers(item)
-  const variants = nurseryVariants(offers)
-  const perSeedlingPrice = minimumKnownPrice(offers.map((offer) => offer.pricePerSeedling))
+  const primaryCurrency = pickPrimaryCurrency(offers)
+  const comparableOffers = primaryCurrency
+    ? offers.filter((offer) => offer.currency === primaryCurrency)
+    : offers
+  const variants = nurseryVariants(comparableOffers)
+  const perSeedlingPrice = minimumKnownPrice(comparableOffers.map((offer) => offer.pricePerSeedling))
+  const observedNurseryIds = new Set(
+    offers.filter((offer) => offer.evidenceStatus === "observed").map((offer) => offer.nursery.id)
+  )
+  const inferredNurseryIds = new Set(
+    offers.filter((offer) => offer.evidenceStatus === "inferred").map((offer) => offer.nursery.id)
+  )
 
   return {
     ...item,
     supplierCount: new Set(offers.map((offer) => offer.nursery.id)).size,
+    observedSupplierCount: observedNurseryIds.size,
+    inferredSupplierCount: inferredNurseryIds.size,
     unitLabel: "per seedling",
     price: perSeedlingPrice ?? item.price / 100,
     priceAvailable: perSeedlingPrice != null,
-    currency: nurseryDatabase.currency,
+    currency: primaryCurrency ?? nurseryDatabase.currency,
     updatedAt: item.updatedAt ?? nurseryDatabase.lastUpdated,
     variants,
   }

@@ -12,7 +12,7 @@ interface CalendarProps {
   onEventsChange?: (events: CalendarEvent[]) => void
 }
 
-export function Calendar({ events, eventDates: _eventDates, onEventsChange }: CalendarProps) {
+export function Calendar({ events, onEventsChange }: CalendarProps) {
   const calendar = useCalendar(events, onEventsChange)
 
   return (

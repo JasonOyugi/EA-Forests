@@ -1,2 +1,157 @@
 19:03:42 [vite] (client) Pre-transform error: Failed to load url /src/app/information/data.ts (resolved id: C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/src/app/information/data.ts) in C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/src/app/landing/components/sector-data.ts. Does the file exist?
 19:03:42 [vite] (client) Pre-transform error: Failed to load url /src/app/information/data.ts (resolved id: C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/src/app/information/data.ts) in C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/src/app/landing/components/sector-data.ts. Does the file exist?
+05:55:09 [vite] Internal server error: Failed to resolve import "./uganda/data" from "src/app/shop/data/source-data/index.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/src/app/shop/data/source-data/index.ts:9:39
+  1  |  import { ugandaNfaSeedlingItems } from "./uganda/data";
+     |                                          ^
+  2  |  export const commerceSourceData = [
+  3  |    ...ugandaNfaSeedlingItems
+      at TransformPluginContext._formatLog (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:29003:43)
+      at TransformPluginContext.error (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:29000:14)
+      at normalizeUrl (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:27123:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:27181:32
+      at async Promise.all (index 0)
+      at async TransformPluginContext.transform (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:27149:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:28801:14)
+      at async loadAndTransform (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:22670:26)
+05:55:09 [vite] (client) Pre-transform error: Failed to resolve import "./uganda/data" from "src/app/shop/data/source-data/index.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/src/app/shop/data/source-data/index.ts:9:39
+  1  |  import { ugandaNfaSeedlingItems } from "./uganda/data";
+     |                                          ^
+  2  |  export const commerceSourceData = [
+  3  |    ...ugandaNfaSeedlingItems
+05:55:10 [vite] (client) Pre-transform error: Failed to resolve import "./uganda/data" from "src/app/shop/data/source-data/index.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/src/app/shop/data/source-data/index.ts:9:39
+  1  |  import { ugandaNfaSeedlingItems } from "./uganda/data";
+     |                                          ^
+  2  |  export const commerceSourceData = [
+  3  |    ...ugandaNfaSeedlingItems
+05:55:10 [vite] (client) Pre-transform error: Failed to resolve import "./uganda/data" from "src/app/shop/data/source-data/index.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/src/app/shop/data/source-data/index.ts:9:39
+  1  |  import { ugandaNfaSeedlingItems } from "./uganda/data";
+     |                                          ^
+  2  |  export const commerceSourceData = [
+  3  |    ...ugandaNfaSeedlingItems
+05:55:12 [vite] Internal server error: Failed to resolve import "./uganda/data" from "src/app/shop/data/source-data/index.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/src/app/shop/data/source-data/index.ts:9:39
+  1  |  import { ugandaNfaSeedlingItems } from "./uganda/data";
+     |                                          ^
+  2  |  export const commerceSourceData = [
+  3  |    ...ugandaNfaSeedlingItems
+      at TransformPluginContext._formatLog (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:29003:43)
+      at TransformPluginContext.error (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:29000:14)
+      at normalizeUrl (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:27123:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:27181:32
+      at async Promise.all (index 0)
+      at async TransformPluginContext.transform (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:27149:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:28801:14)
+      at async loadAndTransform (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:22670:26)
+      at async viteTransformMiddleware (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:24546:20)
+05:55:13 [vite] Internal server error: Failed to resolve import "./uganda/data" from "src/app/shop/data/source-data/index.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/src/app/shop/data/source-data/index.ts:9:39
+  1  |  import { ugandaNfaSeedlingItems } from "./uganda/data";
+     |                                          ^
+  2  |  export const commerceSourceData = [
+  3  |    ...ugandaNfaSeedlingItems
+      at TransformPluginContext._formatLog (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:29003:43)
+      at TransformPluginContext.error (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:29000:14)
+      at normalizeUrl (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:27123:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:27181:32
+      at async Promise.all (index 0)
+      at async TransformPluginContext.transform (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:27149:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:28801:14)
+      at async loadAndTransform (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:22670:26)
+      at async viteTransformMiddleware (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:24546:20)
+05:55:21 [vite] Internal server error: Failed to resolve import "./uganda/data" from "src/app/shop/data/source-data/index.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/src/app/shop/data/source-data/index.ts:9:39
+  1  |  import { ugandaNfaSeedlingItems } from "./uganda/data";
+     |                                          ^
+  2  |  export const commerceSourceData = [
+  3  |    ...ugandaNfaSeedlingItems
+      at TransformPluginContext._formatLog (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:29003:43)
+      at TransformPluginContext.error (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:29000:14)
+      at normalizeUrl (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:27123:18)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:27181:32
+      at async Promise.all (index 0)
+      at async TransformPluginContext.transform (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:27149:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:28801:14)
+      at async loadAndTransform (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:22670:26)
+      at async viteTransformMiddleware (file:///C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/node_modules/.pnpm/vite@7.3.2_@types+node@25.5.2_jiti@2.6.1_lightningcss@1.32.0/node_modules/vite/dist/node/chunks/config.js:24546:20)
+09:35:42 [vite] Internal server error: C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\src\app\dashboard\components\dashboard-asset-map.tsx: Unexpected token (856:8)
+
+  854 |             </MapPolygon>
+  855 |           ))
+> 856 |         )}
+      |         ^
+  857 |       </MapLayerGroup>
+  858 |     )
+  859 |   }
+  Plugin: vite:react-babel
+  File: C:/Users/JasonOyugi/Downloads/EA-Forests/vite-version/src/app/dashboard/components/dashboard-asset-map.tsx:856:8
+  882 |            >
+  883 |              <MapPopup className="w-80 p-0">
+  884 |                <ActorPopup actor={actor} onFocusActor={onSelectActor} />
+      |                                              ^
+  885 |              </MapPopup>
+  886 |            </MapMarker>
+      at constructor (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:365:19)
+      at TypeScriptParserMixin.raise (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:6599:19)
+      at TypeScriptParserMixin.unexpected (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:6619:16)
+      at TypeScriptParserMixin.parseExprAtom (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:11442:22)
+      at TypeScriptParserMixin.parseExprAtom (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:4764:20)
+      at TypeScriptParserMixin.parseExprSubscripts (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:11081:23)
+      at TypeScriptParserMixin.parseUpdate (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:11066:21)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:11046:23)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:9837:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:10899:61)
+      at TypeScriptParserMixin.parseExprOps (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:10904:23)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:10881:23)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:10831:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:9786:20)
+      at TypeScriptParserMixin.parseExpressionBase (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:10784:23)
+      at C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:10780:39
+      at TypeScriptParserMixin.allowInAnd (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:12421:16)
+      at TypeScriptParserMixin.parseExpression (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:10780:17)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:12895:23)
+      at TypeScriptParserMixin.parseStatementContent (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:9508:18)
+      at TypeScriptParserMixin.parseStatementLike (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:12767:17)
+      at TypeScriptParserMixin.parseStatementListItem (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:12747:17)
+      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:13316:61)
+      at TypeScriptParserMixin.parseBlockBody (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:13309:10)
+      at TypeScriptParserMixin.parseBlock (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:13297:10)
+      at TypeScriptParserMixin.parseFunctionBody (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:12100:24)
+      at TypeScriptParserMixin.parseArrowExpression (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:12075:10)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:11687:12)
+      at TypeScriptParserMixin.parseExprAtom (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:11331:23)
+      at TypeScriptParserMixin.parseExprAtom (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:4764:20)
+      at TypeScriptParserMixin.parseExprSubscripts (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:11081:23)
+      at TypeScriptParserMixin.parseUpdate (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:11066:21)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:11046:23)
+      at TypeScriptParserMixin.parseMaybeUnary (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:9837:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:10899:61)
+      at TypeScriptParserMixin.parseExprOps (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:10904:23)
+      at TypeScriptParserMixin.parseMaybeConditional (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:10881:23)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:10831:21)
+      at TypeScriptParserMixin.parseMaybeAssign (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:9786:20)
+      at C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:10800:39
+      at TypeScriptParserMixin.allowInAnd (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:12426:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:10800:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:12493:17)
+      at TypeScriptParserMixin.parseExprListItem (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:12175:18)
+      at TypeScriptParserMixin.parseCallExpressionArguments (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:11252:22)
+      at TypeScriptParserMixin.parseCoverCallAndAsyncArrowHead (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:11186:29)
+      at TypeScriptParserMixin.parseSubscript (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:11120:19)
+      at TypeScriptParserMixin.parseSubscript (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:9272:18)
+      at TypeScriptParserMixin.parseSubscripts (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:11094:19)
+      at TypeScriptParserMixin.parseExprSubscripts (C:\Users\JasonOyugi\Downloads\EA-Forests\vite-version\node_modules\.pnpm\@babel+parser@7.29.2\node_modules\@babel\parser\lib\index.js:11085:17)

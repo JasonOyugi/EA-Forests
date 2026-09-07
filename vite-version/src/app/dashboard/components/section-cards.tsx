@@ -50,6 +50,7 @@ type SummaryCard = {
   negativeIcon?: LucideIcon
   onClick: () => void
   toneClassName: string
+  decorationAccent: string
 }
 
 function DashboardSummaryCard({
@@ -62,6 +63,7 @@ function DashboardSummaryCard({
   negativeIcon,
   onClick,
   toneClassName,
+  decorationAccent,
 }: SummaryCard) {
   const Icon = trendUp ? positiveIcon : negativeIcon ?? positiveIcon
 
@@ -71,7 +73,7 @@ function DashboardSummaryCard({
         className={`@container/card relative overflow-hidden h-full cursor-pointer shadow-xs investor-card ${toneClassName}`}
         onClick={onClick}
       >
-        <MetricCardDecoration accent="#10b981" />
+        <MetricCardDecoration accent={decorationAccent} />
         <CardHeader className="relative z-10">
           <CardDescription className="font-bold text-foreground">
             {title}
@@ -129,6 +131,7 @@ export function SectionCards({
       toneClassName: portfolioTrendUp
         ? "bg-emerald-400 investor-card-emerald"
         : "bg-rose-400 investor-card-rose",
+      decorationAccent: portfolioTrendUp ? "#34d399" : "#fb7185",
     },
     {
       title: "Land Managed",
@@ -142,6 +145,7 @@ export function SectionCards({
       toneClassName: landTrendUp
         ? "bg-emerald-400 investor-card-emerald"
         : "bg-rose-400 investor-card-rose",
+      decorationAccent: landTrendUp ? "#34d399" : "#fb7185",
     },
     {
       title: "Estimated Volume",
@@ -155,6 +159,7 @@ export function SectionCards({
       toneClassName: volumeTrendUp
         ? "bg-emerald-400 investor-card-emerald"
         : "bg-rose-300 investor-card-rose",
+      decorationAccent: volumeTrendUp ? "#34d399" : "#fda4af",
     },
     {
       title: "Payments Pending",
@@ -166,6 +171,7 @@ export function SectionCards({
       negativeIcon: Wallet,
       onClick: onPaymentsCardClick,
       toneClassName: "bg-lime-200 dark:bg-yellow-300 investor-card-lime",
+      decorationAccent: "#bef264",
     },
   ]
 
