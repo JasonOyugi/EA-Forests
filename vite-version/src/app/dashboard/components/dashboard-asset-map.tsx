@@ -79,6 +79,7 @@ import {
 } from "@/app/shop/data/market-map"
 import { ugandaCfrs, type LatLngTuple } from "@/app/shop/data/generated-boundaries"
 import cfrReconciliation from "@/app/shop/data/cfr-reconciliation.json"
+import { EoEvidencePanel } from "@/components/eo/eo-evidence-panel"
 import {
   buildGroupMetricSeries,
   createPolygon,
@@ -841,10 +842,13 @@ function ActorLayerGroup({
                     ]}
                   />
                   {isLinked && (
-                    <p className="text-xs text-muted-foreground">
-                      Canonical entity, AOI and AOI version resolve at runtime via
-                      /api/canonical/spatial-assets (country=UG, spatial_type=reserve).
-                    </p>
+                    <>
+                      <p className="text-xs text-muted-foreground">
+                        Canonical entity, AOI and AOI version resolve at runtime via
+                        /api/canonical/spatial-assets (country=UG, spatial_type=reserve).
+                      </p>
+                      <EoEvidencePanel cfrName={cfr.name} />
+                    </>
                   )}
                 </div>
               </MapPopup>

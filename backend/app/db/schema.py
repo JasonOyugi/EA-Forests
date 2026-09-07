@@ -935,6 +935,180 @@ change_event = table(
     js("details"),
 )
 
+# --- EO observation pipeline (Sentinel-2 vertical slice; EO observation
+# architecture sections 7, 8, 12). Processing is deterministic derivation
+# (D16), never a model posterior: processing.version/run/input are separate
+# from models.model_version/model_run and never referenced by belief tables.
+eo_source_item = table(
+    "evidence",
+    "eo_source_item",
+    col("provider_key"),
+    col("collection_key"),
+    col("item_id"),
+    ts("sensing_start"),
+    ts("sensing_end", True),
+    col("platform", nullable=True),
+    col("processing_baseline", nullable=True),
+    js("properties"),
+    ts("discovered_at", default=True),
+    UniqueConstraint(
+        "provider_key", "collection_key", "item_id", name="uq_eo_source_item_identity"
+    ),
+)
+processing_version = table(
+    "processing",
+    "version",
+    col("recipe_key"),
+    col("recipe_version"),
+    col("code_hash"),
+    col("git_commit_sha", nullable=True),
+    js("environment"),
+    col("configuration_schema_version"),
+    ts("created_at", default=True),
+    UniqueConstraint(
+        "recipe_key", "recipe_version", "code_hash", name="uq_processing_version_identity"
+    ),
+)
+processing_run = table(
+    "processing",
+    "run",
+    fk("processing_version_id", "processing.version.id"),
+    fk("world_id", "core.world.id"),
+    js("configuration"),
+    ts("started_at", True),
+    ts("completed_at", True),
+    choice("outcome", "success partial no_observation failed", nullable=True),
+    js("reason_codes"),
+    col("output_manifest_hash", nullable=True),
+    ts("created_at", default=True),
+)
+processing_input = table(
+    "processing",
+    "input",
+    fk("processing_run_id", "processing.run.id"),
+    choice("input_kind", "aoi_version source_item"),
+    fk("aoi_version_id", "geo.aoi_version.id", True),
+    fk("eo_source_item_id", "evidence.eo_source_item.id", True),
+    col("role"),
+    CheckConstraint("num_nonnulls(aoi_version_id,eo_source_item_id) = 1"),
+)
+eo_series = table(
+    "observations",
+    "eo_series",
+    fk("aoi_version_id", "geo.aoi_version.id"),
+    fk("world_id", "core.world.id"),
+    col("provider_key"),
+    col("collection_key"),
+    col("recipe_key"),
+    col("recipe_version"),
+    col("qa_profile_key"),
+    col("qa_profile_version"),
+    col("statistics_profile"),
+    ts("created_at", default=True),
+    UniqueConstraint(
+        "aoi_version_id",
+        "provider_key",
+        "collection_key",
+        "recipe_key",
+        "recipe_version",
+        "qa_profile_key",
+        "qa_profile_version",
+        "statistics_profile",
+        name="uq_eo_series_identity",
+    ),
+)
+eo_observation = table(
+    "observations",
+    "eo_observation",
+    fk("series_id", "observations.eo_series.id"),
+    fk("world_id", "core.world.id"),
+    fk("processing_run_id", "processing.run.id"),
+    ts("window_start"),
+    ts("window_end"),
+    choice("support_kind", "acquisition composite", "composite"),
+    choice("outcome", "success partial no_observation failed"),
+    js("reason_codes"),
+    number("source_coverage_fraction", minimum=0, maximum=1),
+    number("clear_pixel_fraction", minimum=0, maximum=1),
+    number("usable_observation_fraction", minimum=0, maximum=1),
+    Column("acquisition_count", Integer, nullable=False),
+    Column("eligible_acquisition_count", Integer, nullable=False),
+    col("applied_qa_profile"),
+    js("discovery_manifest"),
+    ts("recorded_at", default=True),
+    js(),
+    UniqueConstraint(
+        "series_id",
+        "window_start",
+        "window_end",
+        "processing_run_id",
+        name="uq_eo_observation_period_run",
+    ),
+    CheckConstraint("window_start < window_end"),
+)
+eo_feature_set = table(
+    "observations",
+    "eo_feature_set",
+    fk("eo_observation_id", "observations.eo_observation.id", unique=True),
+    col("feature_recipe_key"),
+    col("feature_recipe_version"),
+    col("statistics_profile"),
+    ts("created_at", default=True),
+)
+eo_feature_value = table(
+    "observations",
+    "eo_feature_value",
+    fk("eo_feature_set_id", "observations.eo_feature_set.id"),
+    col("feature_key"),
+    col("feature_version"),
+    choice("value_statistic", "mean", "mean"),
+    number("value"),
+    col("unit"),
+    number("variance"),
+    number("standard_deviation"),
+    Column("valid_pixel_count", Integer, nullable=True),
+    Column("total_pixel_count", Integer, nullable=True),
+    number("effective_area_m2", minimum=0),
+    number("source_coverage_fraction", minimum=0, maximum=1),
+    number("usable_fraction", minimum=0, maximum=1),
+    choice("missingness", "UNKNOWN NOT_APPLICABLE NOT_MEASURED", nullable=True),
+    js("reason_codes"),
+    UniqueConstraint(
+        "eo_feature_set_id",
+        "feature_key",
+        "feature_version",
+        "value_statistic",
+        name="uq_eo_feature_value_identity",
+    ),
+)
+# Mutable execution coordination (architecture section 13); the scientific
+# record it produces (processing.run/observations.eo_observation) is sealed
+# and immutable, but this row itself is not -- it is a job, not evidence.
+eo_job = table(
+    "processing",
+    "eo_job",
+    col("request_hash", unique=True),
+    fk("world_id", "core.world.id"),
+    fk("aoi_version_id", "geo.aoi_version.id"),
+    ts("window_start"),
+    ts("window_end"),
+    col("recipe_key"),
+    col("recipe_version"),
+    col("qa_profile_key"),
+    col("qa_profile_version"),
+    col("statistics_profile"),
+    choice("status", "queued running succeeded retry_wait failed cancelled", "queued"),
+    Column("attempts", Integer, nullable=False, server_default=text("0")),
+    Column("max_attempts", Integer, nullable=False, server_default=text("3")),
+    fk("processing_run_id", "processing.run.id", True),
+    fk("eo_observation_id", "observations.eo_observation.id", True),
+    ts("requested_at", default=True),
+    ts("started_at", True),
+    ts("completed_at", True),
+    col("error", nullable=True),
+    js(),
+)
+
 # Foreign key indexes are intentionally systematic; history gets both range and current indexes.
 for _table in metadata.tables.values():
     for _column in _table.columns:
