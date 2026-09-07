@@ -2,7 +2,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import AwareDatetime, BaseModel, ConfigDict
-from sqlalchemy import select
+from sqlalchemy import select, text
 
 from app.api.canonical import DB, require_access
 from app.db import schema as s
@@ -218,3 +218,61 @@ def get_series(series_id: UUID, db: DB):
             {**_observation_summary(o), "features": _feature_values(db, o["id"])} for o in observations
         ],
     }
+
+
+@router.get("/country-status")
+def country_status(
+    db: DB,
+    country: str,
+    spatial_type: str,
+    limit: int = Query(1000, ge=1, le=2000),
+):
+    """National EO-status read model for the existing map (country-pass
+    Part 11): one row per matching AOI, its latest observation's status,
+    period and usable coverage -- ``not_processed`` for a CFR with no
+    observation yet. Never a "forest health" score; ``eo_status`` is one of
+    the outcome vocabulary (success/partial/no_observation/failed) plus
+    the technical ``not_processed`` state.
+    """
+    rows = db.execute(
+        text(
+            """
+            SELECT
+                e.id AS entity_id,
+                e.canonical_name AS name,
+                a.id AS aoi_id,
+                av.id AS aoi_version_id,
+                lo.outcome AS eo_status,
+                lo.window_start AS observation_month,
+                lo.usable_observation_fraction AS usable_observation_fraction,
+                lo.applied_qa_profile AS applied_qa_profile
+            FROM core.entity e
+            JOIN geo.aoi a ON a.geometry_owner_entity_id = e.id
+            JOIN geo.aoi_version av ON av.aoi_id = a.id AND av.superseded_at IS NULL
+            LEFT JOIN observations.eo_series es ON es.aoi_version_id = av.id
+            LEFT JOIN observations.latest_eo_observation lo ON lo.series_id = es.id
+            WHERE a.metadata->>'spatial_type' = :spatial_type
+              AND a.metadata->>'country' = :country
+            ORDER BY e.canonical_name
+            LIMIT :limit
+            """
+        ),
+        {"spatial_type": spatial_type, "country": country, "limit": limit},
+    ).mappings()
+    return [
+        {
+            "entity_id": row["entity_id"],
+            "name": row["name"],
+            "aoi_id": row["aoi_id"],
+            "aoi_version_id": row["aoi_version_id"],
+            "eo_status": row["eo_status"] or "not_processed",
+            "observation_month": row["observation_month"].strftime("%Y-%m") if row["observation_month"] else None,
+            "usable_observation_fraction": (
+                float(row["usable_observation_fraction"])
+                if row["usable_observation_fraction"] is not None
+                else None
+            ),
+            "applied_qa_profile": row["applied_qa_profile"],
+        }
+        for row in rows
+    ]

@@ -446,6 +446,46 @@ function getCfrReconciliation(cfrIndex: number): CfrReconciliationEntry | undefi
   return cfrReconciliationByIndex[cfrIndex]
 }
 
+// National EO status layer (Uganda country pass Part 11). Reads the existing
+// admin-gated /api/canonical/eo/country-status route -- same local-dev-only
+// token convention as EoEvidencePanel, never a public data path. A status
+// tint is a technical-completeness signal (did Sentinel-2 processing
+// succeed this month?), never a "forest health" color.
+type CountryEoStatus = {
+  entity_id: string
+  name: string
+  eo_status: "success" | "partial" | "no_observation" | "failed" | "not_processed"
+  observation_month: string | null
+  usable_observation_fraction: number | null
+}
+
+const EO_STATUS_LABELS: Record<CountryEoStatus["eo_status"], string> = {
+  success: "Success",
+  partial: "Partial",
+  no_observation: "No observation",
+  failed: "Failed",
+  not_processed: "Not processed",
+}
+
+const EO_STATUS_COLORS: Record<CountryEoStatus["eo_status"], string> = {
+  success: "#16a34a",
+  partial: "#d97706",
+  no_observation: "#64748b",
+  failed: "#dc2626",
+  not_processed: "#94a3b8",
+}
+
+async function fetchCountryEoStatus(): Promise<CountryEoStatus[]> {
+  const token = import.meta.env.VITE_CANONICAL_API_TOKEN as string | undefined
+  if (!token) throw new Error("VITE_CANONICAL_API_TOKEN not set (local admin API only)")
+  const response = await fetch(
+    "/api/canonical/eo/country-status?country=UG&spatial_type=reserve&limit=1000",
+    { headers: { Authorization: `Bearer ${token}` } }
+  )
+  if (!response.ok) throw new Error(`Request failed (${response.status})`)
+  return response.json() as Promise<CountryEoStatus[]>
+}
+
 function countForestReservesForRegion(region: MarketRegion) {
   if (region.country !== "Uganda") return 0
 
@@ -795,6 +835,22 @@ function ActorLayerGroup({
   onSelectActor: (actorId: string) => void
 }) {
   const meta = marketActorLayerMeta[layer]
+  // A plain lookup object, not the JS `Map` class: this file already imports
+  // a Leaflet `Map` component of that name from "@/components/ui/map".
+  const [eoStatusByName, setEoStatusByName] = React.useState<Record<string, CountryEoStatus> | null>(null)
+  const [eoStatusError, setEoStatusError] = React.useState<string | null>(null)
+  const loadEoStatus = React.useCallback(async () => {
+    setEoStatusError(null)
+    try {
+      const rows = await fetchCountryEoStatus()
+      setEoStatusByName(Object.fromEntries(rows.map((row) => [row.name, row])))
+    } catch (err) {
+      setEoStatusError(err instanceof Error ? err.message : "Failed to load EO status")
+    }
+  }, [])
+  React.useEffect(() => {
+    if (layer === "forestReserve") void loadEoStatus()
+  }, [layer, loadEoStatus])
 
   if (layer === "forestReserve") {
     return (
@@ -802,14 +858,16 @@ function ActorLayerGroup({
         {ugandaCfrs.flatMap((cfr, cfrIndex) => {
           const reconciliation = getCfrReconciliation(cfrIndex)
           const isLinked = reconciliation?.status === "POLYGON_LINKED"
+          const eoStatus = eoStatusByName?.[cfr.name]
+          const statusColor = eoStatus ? EO_STATUS_COLORS[eoStatus.eo_status] : undefined
           return cfr.polygons.map((boundary, index) => (
             <MapPolygon
               key={`${cfr.id}-${index}`}
               positions={boundary}
               pathOptions={{
-                color: meta.color,
-                fillColor: meta.color,
-                fillOpacity: 0.14,
+                color: statusColor ?? meta.color,
+                fillColor: statusColor ?? meta.color,
+                fillOpacity: statusColor ? 0.35 : 0.14,
                 opacity: isLinked ? 0.78 : 0.4,
                 weight: 1.25,
                 dashArray: isLinked ? undefined : "4 4",
@@ -826,6 +884,11 @@ function ActorLayerGroup({
                         ? "Canonical link resolvable"
                         : reconciliation?.status ?? "Reconciliation pending"}
                     </Badge>
+                    {eoStatus && (
+                      <Badge variant="secondary" style={{ color: statusColor }}>
+                        Sentinel-2: {EO_STATUS_LABELS[eoStatus.eo_status]}
+                      </Badge>
+                    )}
                     <h3 className="mt-2 w-full text-base font-semibold">{cfr.name}</h3>
                   </div>
                   <DetailRows
@@ -839,8 +902,21 @@ function ActorLayerGroup({
                       ...(reconciliation?.reason
                         ? [{ label: "Reconciliation note", value: reconciliation.reason }]
                         : []),
+                      ...(eoStatus
+                        ? [
+                            { label: "EO observation month", value: eoStatus.observation_month ?? "n/a" },
+                            {
+                              label: "EO usable coverage",
+                              value:
+                                eoStatus.usable_observation_fraction != null
+                                  ? `${Math.round(eoStatus.usable_observation_fraction * 100)}%`
+                                  : "n/a",
+                            },
+                          ]
+                        : []),
                     ]}
                   />
+                  {eoStatusError && <p className="text-xs text-destructive">{eoStatusError}</p>}
                   {isLinked && (
                     <>
                       <p className="text-xs text-muted-foreground">
