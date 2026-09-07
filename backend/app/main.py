@@ -1,9 +1,8 @@
-import os
-
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.canonical import router as canonical_router
+from app.api.canonical import session_router
 from app.api.eo import router as eo_router
 from app.schemas import (
     ClonalEucalyptusNurseryRequest,
@@ -13,6 +12,7 @@ from app.schemas import (
     RoundwoodProductionRequest,
     SiteClassificationRequest,
 )
+from app.security import allowed_origins
 from app.services.clonal_nursery import (
     clonal_nursery_default_library,
     run_clonal_eucalyptus_nursery,
@@ -33,40 +33,16 @@ from app.services.site_classification import (
     run_site_classification,
 )
 
-
-def _split_csv_env(value: str | None) -> list[str]:
-    if not value:
-        return []
-    return [item.strip() for item in value.split(",") if item.strip()]
-
-
-def _allowed_origins() -> list[str]:
-    origins = _split_csv_env(os.getenv("ALLOWED_ORIGINS"))
-    if origins:
-        return origins
-
-    defaults = [
-        "http://127.0.0.1:5173",
-        "http://localhost:5173",
-        "http://127.0.0.1:5174",
-        "http://localhost:5174",
-        "http://127.0.0.1:4173",
-        "http://localhost:4173",
-    ]
-    for host in _split_csv_env(os.getenv("APP_ORIGIN")):
-        defaults.append(host)
-    return defaults
-
-
 app = FastAPI(title="EA Forests Models Backend", version="0.1.0")
 
 # Canonical routes resolve their database lazily; legacy model startup stays database-independent.
 app.include_router(canonical_router)
+app.include_router(session_router)
 app.include_router(eo_router)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=_allowed_origins(),
+    allow_origins=allowed_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

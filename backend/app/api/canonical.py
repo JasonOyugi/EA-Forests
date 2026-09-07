@@ -4,7 +4,7 @@ import os
 from typing import Annotated, Literal
 from uuid import UUID, uuid4
 
-from fastapi import APIRouter, Depends, Header, HTTPException, Query
+from fastapi import APIRouter, Depends, Header, HTTPException, Query, Request, Response
 from pydantic import AwareDatetime, BaseModel, ConfigDict, Field
 from sqlalchemy import func, select
 from sqlalchemy.exc import DBAPIError, NoResultFound, OperationalError
@@ -14,6 +14,15 @@ from app.db import schema as s
 from app.db.session import session_scope
 from app.domain.values import FactCreate
 from app.schemas import RoundwoodProductionRequest
+from app.security import (
+    SESSION_COOKIE_NAME,
+    SESSION_LIFETIME_SECONDS,
+    admin_enabled,
+    is_loopback,
+    issue_session,
+    origin_allowed,
+    session_valid,
+)
 from app.services.evidence.artifacts import LocalArtifactStore
 from app.services.state.facts import FACT_TABLES, create_fact, supersede_fact, temporal_query
 from app.services.state.legacy_roundwood import run_from_snapshot
@@ -21,12 +30,59 @@ from app.services.state.registry import audit_context, insert_row
 from app.services.state.snapshots import build_snapshot, explain_snapshot
 
 
-def require_access(authorization: str | None = Header(default=None)):
+def require_access(request: Request, authorization: str | None = Header(default=None)):
     expected = os.getenv("CANONICAL_API_TOKEN")
     if not expected:
         raise HTTPException(503, "Canonical administrative API is not enabled")
-    if not authorization or not hmac.compare_digest(authorization, f"Bearer {expected}"):
+    if authorization is not None:
+        # Direct Bearer credential: unchanged behavior for CLI/admin tooling.
+        if not hmac.compare_digest(authorization, f"Bearer {expected}"):
+            raise HTTPException(401, "Canonical API credentials required")
+        return
+    # Browser session fallback (app/security.py): the admin token itself
+    # never reaches the browser. A cookie is ambient credential, so
+    # state-changing requests still need an allowed Origin/Referer.
+    if not session_valid(request.cookies.get(SESSION_COOKIE_NAME)):
         raise HTTPException(401, "Canonical API credentials required")
+    if request.method not in ("GET", "HEAD", "OPTIONS") and not origin_allowed(request):
+        raise HTTPException(403, "Origin not allowed for this session")
+
+
+session_router = APIRouter(prefix="/api/canonical/session", tags=["Canonical session"])
+
+
+@session_router.get("/status")
+def session_status(request: Request):
+    """No secret here: just whether the admin capability is configured on
+    this backend and whether the caller already holds a valid session, so
+    the frontend can show an accurate local-setup message instead of a raw
+    401/503.
+    """
+    return {
+        "admin_enabled": admin_enabled(),
+        "session_active": session_valid(request.cookies.get(SESSION_COOKIE_NAME)),
+    }
+
+
+@session_router.post("/bootstrap")
+def bootstrap_session(request: Request, response: Response):
+    if not admin_enabled():
+        raise HTTPException(503, "Canonical administrative API is not enabled")
+    if not is_loopback(request):
+        raise HTTPException(403, "Session bootstrap is only available from the local machine")
+    if not origin_allowed(request):
+        raise HTTPException(403, "Origin not allowed")
+    token, max_age = issue_session()
+    response.set_cookie(
+        key=SESSION_COOKIE_NAME,
+        value=token,
+        max_age=max_age,
+        httponly=True,
+        samesite="lax",
+        secure=request.url.scheme == "https",
+        path="/api/canonical",
+    )
+    return {"session_active": True, "expires_in": SESSION_LIFETIME_SECONDS}
 
 
 def database():
