@@ -15,7 +15,9 @@ from app.services.ingestion.cfr_geometry import (
     BLOCKED_INVALID_GEOMETRY,
     BLOCKED_NO_POLYGON,
     EXPLORATORY,
+    PROVENANCE_CLASS,
     READY,
+    classify_eo_readiness,
     ingest_cfr_polygons,
     resolve_ring_topology,
 )
@@ -42,12 +44,25 @@ def test_normalize_reserve_name_collapses_whitespace_and_case():
     assert normalize_reserve_name("Lodonga") == normalize_reserve_name("lodonga")
 
 
+def test_readiness_reflects_provenance_not_area_agreement():
+    # No provenance class this importer produces is currently adequate for
+    # READY (task correction: unverified repository-derived geometry cannot
+    # be READY regardless of how well its area happens to agree).
+    assert classify_eo_readiness(PROVENANCE_CLASS) == EXPLORATORY
+    assert classify_eo_readiness("official_kml") == READY
+
+
 def test_single_ring_polygon_ingested_with_area_and_provenance(db, store):
     report = ingest_cfr_polygons(db, store, only="Lodonga")
     (record,) = report["records"]
     assert record["reconciliation_status"] == POLYGON_LINKED
     assert record["eo_scope"] is True
-    assert record["eo_readiness"] in (READY, EXPLORATORY)
+    # Unverified repository-derived provenance is EXPLORATORY even though
+    # this record's reported/polygon area agree closely (area agreement is a
+    # separate, independent flag -- see area_discrepancy_flag below).
+    assert record["eo_readiness"] == EXPLORATORY
+    assert record["provenance_class"] == PROVENANCE_CLASS
+    assert record["area_discrepancy_flag"] is False
     assert record["aoi_id"] and record["aoi_version_id"] and record["geometry_observation_id"]
     # Reported (source) area and polygon-derived area are both preserved, distinctly.
     assert record["reported_area_ha"] == pytest.approx(107.028796)
@@ -63,7 +78,7 @@ def test_single_ring_polygon_ingested_with_area_and_provenance(db, store):
         .mappings()
         .one()
     )
-    assert geometry_observation["method"] == "digitised"
+    assert geometry_observation["method"] == "repository_derived"
     assert geometry_observation["metadata"]["provenance_class"] == "UNVERIFIED_REPOSITORY_DERIVED"
 
     aoi = db.execute(select(s.aoi).where(s.aoi.c.id == record["aoi_id"])).mappings().one()
@@ -341,3 +356,4 @@ def test_exploratory_readiness_still_counts_as_eo_scope(db, store):
     assert result["eo_readiness"] == EXPLORATORY
     assert result["eo_scope"] is True
     assert result["area_discrepancy_fraction"] > 0.20
+    assert result["area_discrepancy_flag"] is True

@@ -61,21 +61,41 @@ other 656 produce a valid `Polygon`/`MultiPolygon` (50 CFRs have more than one
 ring; PostGIS confirms these are predominantly disjoint multi-part reserves,
 not holes).
 
-## Area agreement and EO readiness
+## EO readiness (provenance-driven, corrected 2026-09-07)
 
-For each valid CFR, the geodesic polygon area (`ST_Area(geography(geom))`) is
-compared against the JSON's independently reported `plantable_area_ha` (never
-rescaled to force agreement; both values are preserved). Most CFRs agree to
-within roughly 1% (the polygon export and the point dataset appear to derive
-from a common upstream source despite having no shared file in this
-repository). Two CFRs disagree by more than the 20% pilot threshold
-(`Katabalalu`, 32.2%; `Lwamunda`, 49.6%) and are classified `EXPLORATORY`
-rather than `READY`; they remain in EO scope per the project's MVP assumption
-(section 9), just flagged for closer review before being treated as
-equally reliable as the `READY` majority.
+`EO_READINESS_POLICY = "cfr-eo-readiness/0.2"`: `classify_eo_readiness`
+reflects **geometry validity and provenance adequacy only**. `READY` requires
+a provenance class this repository has actually verified as adequate for
+operational use (e.g. a reviewed official/surveyed import); `EXPLORATORY` is
+everything else with a technically valid polygon. Since every CFR polygon in
+this ingestion path is `UNVERIFIED_REPOSITORY_DERIVED` (no recoverable
+original KML/GeoJSON artifact, no known transformation history, no known
+digitisation method), **all 656 geometrically valid, unambiguously linked
+CFRs are `EXPLORATORY`; none are `READY`**. `READY` and `EXPLORATORY` are
+both fully EO-processable per the project's MVP assumption (section 9) —
+this correction only stops the pipeline from calling unverified geometry
+"ready" merely because its area happens to agree with the source record.
 
-`EO_READINESS_POLICY = "cfr-eo-readiness/0.1"`: `READY` requires a valid
-polygon, an unambiguous canonical AOI/AOI version, and reported/polygon area
-agreement within 20%; `EXPLORATORY` is everything else with a valid polygon.
-This is a versioned, conservative pilot heuristic, not a claim of
-survey-grade accuracy for the `READY` majority.
+An earlier revision of this document and importer (policy `0.1`) folded area
+agreement into the readiness classification, which conflated two unrelated
+signals: how well-attested a boundary's origin is, and how closely its area
+matches an independently reported figure. Those are now tracked as
+independent, non-collapsing fields on every ingested `geo.aoi_version`:
+
+- `area_discrepancy_flag` (bool): reported vs. polygon-derived area disagree
+  by more than 20%. Currently true for `Katabalalu` (32.2%) and `Lwamunda`
+  (49.6%); the polygon export and the point dataset otherwise agree to
+  within roughly 1% for the rest, suggesting a common (but unrecoverable)
+  upstream source.
+- `ring_topology_review_required` (bool): a CFR's rings needed containment
+  depth greater than one to resolve (none currently).
+
+Neither flag changes `eo_readiness`; both remain visible for review priority.
+
+`geometry_observation.method = "repository_derived"` (not `"digitised"`,
+which would imply a specific human tracing method not evidenced here).
+Every such row's `metadata` additionally records `provenance_class`,
+`original_geometry_artifact: "unavailable"`, `transformation_history:
+"unknown"`, and `digitisation_method: "unknown"` so no API/UI consumer can
+imply an official NFA boundary, a surveyed geometry, or a verified
+government geometry without that evidence actually existing.

@@ -49,6 +49,7 @@ SCHEMAS = (
     "verification",
     "decision",
     "audit",
+    "processing",
 )
 
 
@@ -289,7 +290,7 @@ geometry_observation = table(
     col("original_srid", Integer, server_default=text("4326")),
     choice(
         "method",
-        "surveyed gps official_kml digitised remote_sensing geocoded reported_coordinate centroid_estimate display_offset",
+        "surveyed gps official_kml digitised remote_sensing geocoded reported_coordinate centroid_estimate display_offset repository_derived",
     ),
     number("precision_m", minimum=0),
     col("precision_description"),

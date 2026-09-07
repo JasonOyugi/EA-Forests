@@ -11,11 +11,13 @@ Derived reconciliation report. Not a source of truth: source records remain `cen
 - POLYGON ONLY: 0
 - AMBIGUOUS: 1
 - INVALID: 3
-- EO READY: 654
-- EO EXPLORATORY: 2
+- EO READY: 0
+- EO EXPLORATORY: 656
 - EO BLOCKED: 5
 - TOTAL EO-PROCESSABLE CFRS: 656
 - TOTAL EO-PROCESSABLE AREA: 1239551.5 ha
+
+EO readiness reflects geometry validity and provenance adequacy only. Every processable CFR here is `EXPLORATORY`: their polygons are all `UNVERIFIED_REPOSITORY_DERIVED` (no recoverable KML/GeoJSON artifact or transformation script), so none currently qualify as `READY`. `READY` and `EXPLORATORY` are both EO-processable; area discrepancy and ring-topology review are tracked as independent flags below, not folded into readiness.
 
 ## Blocked / ambiguous / record-only entries
 
@@ -27,9 +29,9 @@ Derived reconciliation report. Not a source of truth: source records remain `cen
 | Luvunya | POLYGON_LINKED | BLOCKED_INVALID_GEOMETRY | Rings 1 and 2 overlap without clean containment |
 | Kabula (2) | RECORD_ONLY | BLOCKED_NO_POLYGON | No boundary export entry with a matching normalized name |
 
-## Exploratory entries (in EO scope, provenance/precision flagged)
+## Area-discrepancy-flagged entries (in EO scope; independent of readiness)
 
 | Name | Reported area (ha) | Polygon area (ha) | Discrepancy | AOI version |
 | --- | --- | --- | --- | --- |
-| Katabalalu | 1350.991029 | 1786.5 | 32.2% | 0cbd187d-5819-4f32-bb5c-794980e0946d |
-| Lwamunda | 4495.852101 | 6726.5 | 49.6% | 9201b346-458c-4a95-988c-31b015935db6 |
+| Katabalalu | 1350.991029 | 1786.5 | 32.2% | 04f1efb3-f61c-4495-b4b6-f4bf9e591b68 |
+| Lwamunda | 4495.852101 | 6726.5 | 49.6% | 4d4cb610-f911-410d-a3eb-2c877a821752 |

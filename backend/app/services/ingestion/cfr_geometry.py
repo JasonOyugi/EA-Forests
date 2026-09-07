@@ -43,10 +43,10 @@ from app.services.ingestion.market_databases import (
 from app.services.state.registry import audit_context, insert_row
 
 NORMALIZATION_VERSION = "cfr-polygon-ingest/0.1"
-EO_READINESS_POLICY = "cfr-eo-readiness/0.1"
+EO_READINESS_POLICY = "cfr-eo-readiness/0.2"
 ANALYSIS_SCOPE = "uganda_cfr_commercial_eo_mvp"
 PROVENANCE_CLASS = "UNVERIFIED_REPOSITORY_DERIVED"
-AREA_AGREEMENT_READY_THRESHOLD = 0.20  # fraction; see EO_READINESS_POLICY note below.
+AREA_AGREEMENT_READY_THRESHOLD = 0.20  # fraction; drives area_discrepancy_flag only, not readiness.
 
 # BLOCKED_* status names from EO observation architecture section 9.
 BLOCKED_NO_POLYGON = "BLOCKED_NO_POLYGON"
@@ -54,6 +54,23 @@ BLOCKED_IDENTITY_AMBIGUOUS = "BLOCKED_IDENTITY_AMBIGUOUS"
 BLOCKED_INVALID_GEOMETRY = "BLOCKED_INVALID_GEOMETRY"
 READY = "READY"
 EXPLORATORY = "EXPLORATORY"
+
+# Provenance classes adequate for current operational (READY) use. None of the
+# CFR boundary export's polygons currently qualify -- every one is ingested as
+# PROVENANCE_CLASS (UNVERIFIED_REPOSITORY_DERIVED) below, so this importer
+# always produces EXPLORATORY for valid geometry today. The set exists so a
+# future importer with real official/surveyed provenance (e.g. a reviewed NFA
+# KML import) can earn READY without changing this classification function.
+PROVENANCE_ADEQUATE_FOR_READY = frozenset({"official_kml", "surveyed", "verified_government_source"})
+
+
+def classify_eo_readiness(provenance_class: str) -> str:
+    """EO readiness reflects geometry validity (already required to reach this
+    call) and provenance adequacy only. Area discrepancy and ring-topology
+    review are separate, non-collapsing signals (area_discrepancy_flag,
+    ring_topology_review_required) -- never folded into this classification.
+    """
+    return READY if provenance_class in PROVENANCE_ADEQUATE_FOR_READY else EXPLORATORY
 
 
 def _ring_to_wkt(ring: list[list[float]]) -> str:
@@ -346,7 +363,7 @@ def _ingest_row(session, row: ReconciliationRow, boundary_source, boundary_inges
             entity_id=entity_id,
             world_id=world_id,
             geometry=f"SRID=4326;{topology.multipolygon_wkt}",
-            method="digitised",
+            method="repository_derived",
             precision_description=(
                 "Unverified repository-derived polygon; no recoverable original "
                 "KML/GeoJSON artifact or transformation script found in repository history"
@@ -355,6 +372,9 @@ def _ingest_row(session, row: ReconciliationRow, boundary_source, boundary_inges
             evidence_item_id=evidence["id"],
             metadata={
                 "provenance_class": PROVENANCE_CLASS,
+                "original_geometry_artifact": "unavailable",
+                "transformation_history": "unknown",
+                "digitisation_method": "unknown",
                 "boundary_export_id": row.boundary_id,
                 "ring_part_count": topology.part_count,
                 "ring_hole_count": topology.hole_count,
@@ -443,13 +463,10 @@ def _ingest_row(session, row: ReconciliationRow, boundary_source, boundary_inges
             if reported_ha and float(reported_ha) > 0
             else None
         )
-        readiness = READY
-        if (
-            topology.review_required
-            or discrepancy_fraction is None
-            or discrepancy_fraction > AREA_AGREEMENT_READY_THRESHOLD
-        ):
-            readiness = EXPLORATORY
+        readiness = classify_eo_readiness(PROVENANCE_CLASS)
+        area_discrepancy_flag = (
+            discrepancy_fraction is None or discrepancy_fraction > AREA_AGREEMENT_READY_THRESHOLD
+        )
 
         next_revision = 1 + (
             session.scalar(
@@ -478,12 +495,17 @@ def _ingest_row(session, row: ReconciliationRow, boundary_source, boundary_inges
             metadata={
                 "eo_readiness": readiness,
                 "eo_readiness_policy": EO_READINESS_POLICY,
+                "provenance_class": PROVENANCE_CLASS,
                 "eo_scope": True,
                 "analysis_scope": ANALYSIS_SCOPE,
                 "reported_area_ha": float(reported_ha) if reported_ha is not None else None,
                 "boundary_reported_area_ha": row.boundary_reported_area_ha,
                 "polygon_area_ha": area_ha,
                 "area_discrepancy_fraction": discrepancy_fraction,
+                # Independent review signals: neither collapses into eo_readiness,
+                # which reflects provenance/geometry validity only.
+                "area_discrepancy_flag": area_discrepancy_flag,
+                "ring_topology_review_required": topology.review_required,
             },
         )
         savepoint.commit()
@@ -496,6 +518,8 @@ def _ingest_row(session, row: ReconciliationRow, boundary_source, boundary_inges
             "boundary_reported_area_ha": row.boundary_reported_area_ha,
             "eo_scope": True,
             "eo_readiness": readiness,
+            "provenance_class": PROVENANCE_CLASS,
+            "area_discrepancy_flag": area_discrepancy_flag,
             "blocking_reason": None,
             "entity_id": entity_id,
             "aoi_id": aoi["id"],

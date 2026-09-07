@@ -47,6 +47,8 @@ def build(records: list[dict]) -> dict:
                 "reported_area_ha": r.get("reported_area_ha"),
                 "polygon_area_ha": r.get("area_ha"),
                 "area_discrepancy_fraction": r.get("area_discrepancy_fraction"),
+                "area_discrepancy_flag": r.get("area_discrepancy_flag"),
+                "provenance_class": r.get("provenance_class"),
                 "aoi_id": r.get("aoi_id"),
                 "aoi_version_id": r.get("aoi_version_id"),
                 "geometry_observation_id": r.get("geometry_observation_id"),
@@ -105,6 +107,15 @@ def render_markdown(inventory: dict) -> str:
         f"- TOTAL EO-PROCESSABLE CFRS: {s['total_eo_processable_cfrs']}",
         f"- TOTAL EO-PROCESSABLE AREA: {s['total_eo_processable_area_ha']:.1f} ha",
         "",
+        (
+            "EO readiness reflects geometry validity and provenance adequacy only. "
+            "Every processable CFR here is `EXPLORATORY`: their polygons are all "
+            "`UNVERIFIED_REPOSITORY_DERIVED` (no recoverable KML/GeoJSON artifact or "
+            "transformation script), so none currently qualify as `READY`. `READY` and "
+            "`EXPLORATORY` are both EO-processable; area discrepancy and ring-topology "
+            "review are tracked as independent flags below, not folded into readiness."
+        ),
+        "",
         "## Blocked / ambiguous / record-only entries",
         "",
         "| Name | Status | EO readiness | Reason |",
@@ -117,11 +128,15 @@ def render_markdown(inventory: dict) -> str:
             f"| {r['name']} | {r['reconciliation_status']} | {r['eo_readiness']} | "
             f"{(r['blocking_reason'] or '').replace(chr(10), ' ')} |"
         )
-    lines += ["", "## Exploratory entries (in EO scope, provenance/precision flagged)", "",
-              "| Name | Reported area (ha) | Polygon area (ha) | Discrepancy | AOI version |",
-              "| --- | --- | --- | --- | --- |"]
+    lines += [
+        "",
+        "## Area-discrepancy-flagged entries (in EO scope; independent of readiness)",
+        "",
+        "| Name | Reported area (ha) | Polygon area (ha) | Discrepancy | AOI version |",
+        "| --- | --- | --- | --- | --- |",
+    ]
     for r in inventory["records"]:
-        if r["eo_readiness"] != "EXPLORATORY":
+        if not r.get("area_discrepancy_flag"):
             continue
         discrepancy = (
             f"{r['area_discrepancy_fraction']:.1%}" if r["area_discrepancy_fraction"] is not None else "n/a"
