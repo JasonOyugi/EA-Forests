@@ -6,7 +6,7 @@ from uuid import UUID, uuid4
 
 from fastapi import APIRouter, Depends, Header, HTTPException, Query
 from pydantic import AwareDatetime, BaseModel, ConfigDict, Field
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.exc import DBAPIError, NoResultFound, OperationalError
 from sqlalchemy.orm import Session
 
@@ -281,6 +281,103 @@ def model_run(run_id: UUID, db: DB):
     if not row:
         raise HTTPException(404, "Model run not found")
     return dict(row)
+
+
+@router.get("/spatial-assets")
+def spatial_assets(
+    db: DB,
+    country: str,
+    spatial_type: str,
+    world_id: UUID | None = None,
+    limit: int = Query(100, ge=1, le=1000),
+    offset: int = Query(0, ge=0),
+):
+    """Smallest canonical read model for a country/spatial-type scope
+    (EO observation architecture section 10): entity identity, its latest
+    AOI version and geometry, reported vs geometry-derived area, provenance
+    and EO readiness. Generic by design -- ``country=UG&spatial_type=reserve``
+    is a query, not a dedicated Uganda endpoint.
+    """
+    query = (
+        select(
+            s.entity.c.id.label("entity_id"),
+            s.entity.c.canonical_name,
+            s.entity.c.entity_type,
+            s.aoi.c.id.label("aoi_id"),
+            s.aoi.c.world_id,
+            s.aoi.c.analysis_scope,
+            s.aoi_version.c.id.label("aoi_version_id"),
+            s.aoi_version.c.revision,
+            s.aoi_version.c.area_m2,
+            s.aoi_version.c.bounds,
+            s.aoi_version.c.geometry_observation_id,
+            s.aoi_version.c.metadata.label("aoi_version_metadata"),
+            func.ST_AsGeoJSON(s.geometry_observation.c.geometry).label("geometry_geojson"),
+            s.geometry_observation.c.method,
+            s.geometry_observation.c.precision_description,
+        )
+        .select_from(s.entity)
+        .join(s.aoi, s.aoi.c.geometry_owner_entity_id == s.entity.c.id)
+        .join(
+            s.aoi_version,
+            (s.aoi_version.c.aoi_id == s.aoi.c.id) & (s.aoi_version.c.superseded_at.is_(None)),
+        )
+        .join(
+            s.geometry_observation,
+            s.geometry_observation.c.id == s.aoi_version.c.geometry_observation_id,
+        )
+        .where(
+            s.aoi.c.metadata["spatial_type"].astext == spatial_type,
+            s.aoi.c.metadata["country"].astext == country,
+        )
+        .order_by(s.entity.c.canonical_name, s.aoi_version.c.revision.desc())
+        .limit(limit)
+        .offset(offset)
+    )
+    if world_id:
+        query = query.where(s.aoi.c.world_id == world_id)
+    rows = db.execute(query).mappings().all()
+    results = []
+    for row in rows:
+        reported_area = db.scalar(
+            select(s.assertion.c.numeric_value)
+            .where(
+                s.assertion.c.subject_entity_id == row["entity_id"],
+                s.assertion.c.world_id == row["world_id"],
+                s.assertion.c.variable_definition_id.in_(
+                    select(s.variable_definition.c.id).where(
+                        s.variable_definition.c.key == "forest.area"
+                    )
+                ),
+            )
+            .order_by(s.assertion.c.recorded_at.desc())
+            .limit(1)
+        )
+        version_metadata = row["aoi_version_metadata"] or {}
+        results.append(
+            {
+                "entity_id": row["entity_id"],
+                "name": row["canonical_name"],
+                "spatial_type": row["entity_type"],
+                "country": country,
+                "world_id": row["world_id"],
+                "analysis_scope": row["analysis_scope"],
+                "aoi_id": row["aoi_id"],
+                "aoi_version_id": row["aoi_version_id"],
+                "aoi_revision": row["revision"],
+                "geometry_observation_id": row["geometry_observation_id"],
+                "geometry_method": row["method"],
+                "geometry_precision_description": row["precision_description"],
+                "reported_area_ha": float(reported_area) if reported_area is not None else None,
+                "polygon_area_m2": float(row["area_m2"]),
+                "polygon_area_ha": float(row["area_m2"]) / 10_000,
+                "bounds": row["bounds"],
+                "eo_readiness": version_metadata.get("eo_readiness"),
+                "eo_scope": version_metadata.get("eo_scope"),
+                "provenance_class": version_metadata.get("analysis_scope"),
+            }
+        )
+    return results
 
 
 class VerificationCreate(Request):

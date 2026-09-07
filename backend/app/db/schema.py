@@ -303,6 +303,42 @@ geometry_observation = table(
 )
 Index("ix_geometry_observation_geometry", geometry_observation.c.geometry, postgresql_using="gist")
 
+# Stable analysis-area identity (EO observation architecture section 6, decision D3).
+# An AOI never stores geometry itself; it names one geometry-owning entity and,
+# optionally, the distinct canonical asset/stand/plot the analysis is about.
+aoi = table(
+    "geo",
+    "aoi",
+    fk("world_id", "core.world.id"),
+    fk("geometry_owner_entity_id", "core.entity.id"),
+    fk("subject_entity_id", "core.entity.id", True),
+    col("name", nullable=True),
+    col("analysis_scope"),
+    ts("created_at", default=True),
+    js(),
+)
+# Immutable boundary selection. Corrections append a new revision; they never
+# rewrite a prior geometry_observation_id or area_m2.
+aoi_version = table(
+    "geo",
+    "aoi_version",
+    fk("aoi_id", "geo.aoi.id"),
+    fk("world_id", "core.world.id"),
+    Column("revision", Integer, nullable=False),
+    fk("geometry_observation_id", "geo.geometry_observation.id"),
+    col("geometry_hash"),
+    col("normalization_version"),
+    number("area_m2"),
+    js("bounds"),
+    fk("predecessor_aoi_version_id", "geo.aoi_version.id", True),
+    col("correction_reason", nullable=True),
+    *provenance(),
+    *temporal(),
+    js(),
+    UniqueConstraint("aoi_id", "revision", name="uq_aoi_version_aoi_id_revision"),
+    CheckConstraint("area_m2 > 0"),
+)
+
 
 def fact(name):
     return table(

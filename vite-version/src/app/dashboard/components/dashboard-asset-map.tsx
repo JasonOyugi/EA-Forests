@@ -78,6 +78,7 @@ import {
   type MarketRegion,
 } from "@/app/shop/data/market-map"
 import { ugandaCfrs, type LatLngTuple } from "@/app/shop/data/generated-boundaries"
+import cfrReconciliation from "@/app/shop/data/cfr-reconciliation.json"
 import {
   buildGroupMetricSeries,
   createPolygon,
@@ -424,6 +425,24 @@ function pointInMarketRegion(
   return getRegionBoundaries(region).some((boundary) =>
     pointInBoundary(latitude, longitude, boundary)
   )
+}
+
+// Position-aligned with `ugandaCfrs` (index, not id: two boundary entries
+// share the id/name "cfr-kabula"). This lookup only carries reconciliation
+// status; canonical AOI/entity IDs are environment-specific database values
+// resolved at runtime via GET /api/canonical/spatial-assets?country=UG&spatial_type=reserve,
+// not baked into the frontend build. See docs/data-provenance/uganda-cfr-spatial-spine-report.md.
+type CfrReconciliationEntry = {
+  boundaryId: string
+  sourceRecordKey: string | null
+  status: "POLYGON_LINKED" | "AMBIGUOUS" | "RECORD_ONLY" | "POLYGON_ONLY"
+  reason: string | null
+}
+
+const cfrReconciliationByIndex = cfrReconciliation as CfrReconciliationEntry[]
+
+function getCfrReconciliation(cfrIndex: number): CfrReconciliationEntry | undefined {
+  return cfrReconciliationByIndex[cfrIndex]
 }
 
 function countForestReservesForRegion(region: MarketRegion) {
@@ -779,8 +798,10 @@ function ActorLayerGroup({
   if (layer === "forestReserve") {
     return (
       <MapLayerGroup name={meta.label}>
-        {ugandaCfrs.flatMap((cfr) =>
-          cfr.polygons.map((boundary, index) => (
+        {ugandaCfrs.flatMap((cfr, cfrIndex) => {
+          const reconciliation = getCfrReconciliation(cfrIndex)
+          const isLinked = reconciliation?.status === "POLYGON_LINKED"
+          return cfr.polygons.map((boundary, index) => (
             <MapPolygon
               key={`${cfr.id}-${index}`}
               positions={boundary}
@@ -788,25 +809,43 @@ function ActorLayerGroup({
                 color: meta.color,
                 fillColor: meta.color,
                 fillOpacity: 0.14,
-                opacity: 0.78,
+                opacity: isLinked ? 0.78 : 0.4,
                 weight: 1.25,
+                dashArray: isLinked ? undefined : "4 4",
               }}
             >
               <MapPopup className="w-72 p-0">
                 <div className="space-y-3 bg-background p-4">
-                  <div>
+                  <div className="flex flex-wrap items-center gap-2">
                     <Badge variant="secondary" style={{ color: meta.color }}>
                       Central Forest Reserve
                     </Badge>
-                    <h3 className="mt-2 text-base font-semibold">{cfr.name}</h3>
+                    <Badge variant={isLinked ? "outline" : "destructive"}>
+                      {isLinked
+                        ? "Canonical link resolvable"
+                        : reconciliation?.status ?? "Reconciliation pending"}
+                    </Badge>
+                    <h3 className="mt-2 w-full text-base font-semibold">{cfr.name}</h3>
                   </div>
                   <DetailRows
                     rows={[
-                      { label: "Area", value: formatArea(cfr.areaHa) },
-                      { label: "Source", value: "Ugandabmap.kml" },
+                      { label: "Area (boundary export)", value: formatArea(cfr.areaHa) },
+                      {
+                        label: "Boundary provenance",
+                        value: "Unverified, repository-derived",
+                      },
                       { label: "Footprints", value: String(cfr.polygons.length) },
+                      ...(reconciliation?.reason
+                        ? [{ label: "Reconciliation note", value: reconciliation.reason }]
+                        : []),
                     ]}
                   />
+                  {isLinked && (
+                    <p className="text-xs text-muted-foreground">
+                      Canonical entity, AOI and AOI version resolve at runtime via
+                      /api/canonical/spatial-assets (country=UG, spatial_type=reserve).
+                    </p>
+                  )}
                 </div>
               </MapPopup>
               <MapTooltip side="top">
@@ -814,7 +853,7 @@ function ActorLayerGroup({
               </MapTooltip>
             </MapPolygon>
           ))
-        )}
+        })}
       </MapLayerGroup>
     )
   }
