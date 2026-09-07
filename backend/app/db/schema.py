@@ -1106,6 +1106,9 @@ eo_job = table(
     ts("started_at", True),
     ts("completed_at", True),
     col("error", nullable=True),
+    ts("lease_expires_at", True),
+    Column("fencing_token", Integer, nullable=False, server_default=text("0")),
+    col("worker_id", nullable=True),
     js(),
 )
 
