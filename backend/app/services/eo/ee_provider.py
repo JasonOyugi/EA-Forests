@@ -27,6 +27,12 @@ COLLECTION_KEY = "COPERNICUS/S2_SR_HARMONIZED"
 QA_PROFILE_CORE = "s2-qa-scl-core/1"
 QA_PROFILE_ENHANCED = "s2-qa-scl-enhanced/1"  # registered; execution deferred (task section 10)
 MAX_PIXELS = int(1e8)
+# Pilot eligibility policy (EO observation architecture section on observation
+# eligibility): a comparison candidate needs at least 2 distinct contributing
+# acquisitions per eligible target cell. Not revised here for lack of
+# evidence; see country-pass Part 2 report for the investigation that
+# confirmed this is unrelated to the statistics fix.
+MIN_SUPPORT_ACQUISITIONS = 2
 
 
 def _ee_datetime(millis) -> datetime | None:
@@ -223,24 +229,47 @@ class EarthEngineProvider:
         ndvi = b8.subtract(composite.select("B4")).divide(b8.add(composite.select("B4"))).rename("ndvi")
         ndmi = b8.subtract(composite.select("B11")).divide(b8.add(composite.select("B11"))).rename("ndmi")
         nbr = b8.subtract(composite.select("B12")).divide(b8.add(composite.select("B12"))).rename("nbr")
-        # An always-valid "total" band is added to the SAME image so its pixel
-        # count is rasterized in the SAME reduceRegion call as the masked
-        # feature bands. Two independent reduceRegion calls (even with
-        # identical crs/scale/geometry) can disagree by a handful of boundary
-        # pixels -- observed live during the pilot as usable_fraction > 1 --
-        # so total and valid counts must come from one call, not two.
-        total_band = ee.Image.constant(1).rename("total_pixels")
-        feature_image = ndvi.addBands(ndmi).addBands(nbr).addBands(total_band)
 
-        stats_reducer = (
-            ee.Reducer.mean()
-            .combine(ee.Reducer.variance(), sharedInputs=True)
-            .combine(ee.Reducer.count(), sharedInputs=True)
-        )
+        # Per-cell acquisition support: how many DISTINCT prepared acquisitions
+        # contributed an unmasked pixel here (never an AOI-wide scene count
+        # standing in for per-cell support -- task Part 4). A pixel is
+        # "eligible" only where the pilot policy's minimum (2) is met.
+        support_count = prepared.map(lambda img: ee.Image(img).select("B4").mask()).sum().rename("support")
+        eligible_mask = support_count.gte(MIN_SUPPORT_ACQUISITIONS).rename("eligible")
+
+        # Explicit area-weighted sufficient statistics (task Parts 2/3): every
+        # quantity below is reduced with the SAME default *weighted* sum()
+        # reducer in one reduceRegion call, which empirically applies EE's
+        # native AOI-boundary coverage-fraction weighting (verified live:
+        # scripts/investigate_reduceregion_weighting.py) -- i.e. exactly
+        # w_i = area(AOI intersect cell_i). This replaces the previous
+        # mean()/variance()/count() combo, whose count() used a binary
+        # "pixel touched" rule that overcounts boundary pixels relative to
+        # true area (16 vs a true ~9 in the verification script) and was the
+        # source of both the >1 coverage-fraction bug and the small-AOI
+        # sample()-vs-reduceRegion() disagreement in the pilot: count() was
+        # never the right denominator. Only sum() is used below; count() is
+        # not used for any scientific quantity.
+        # A single (non-combined) reducer's reduceRegion output key is just
+        # the band name, with NO reducer-name suffix; that suffix only
+        # appears for combined multi-statistic reducers (e.g.
+        # mean().combine(variance())). Assuming a "_sum" suffix here produced
+        # an all-None/all-zero result live twice before this was verified
+        # with a minimal repro -- see docs/data-provenance/
+        # uganda-eo-country-pass-report.md.
+        sum_bands = [ee.Image.constant(1).rename("total_weight"), eligible_mask.rename("eligible_weight")]
+        for definition in CORE_FEATURES:
+            key = definition.key
+            band = {"ndvi": ndvi, "ndmi": ndmi, "nbr": nbr}[key]
+            sum_bands.append(band.rename(f"{key}_x"))
+            sum_bands.append(band.pow(2).rename(f"{key}_x2"))
+            sum_bands.append(band.mask().rename(f"{key}_w"))
+        stats_image = ee.Image.cat(sum_bands)
+
         try:
             stats = safe_getinfo(
-                feature_image.reduceRegion(
-                    reducer=stats_reducer,
+                stats_image.reduceRegion(
+                    reducer=ee.Reducer.sum(),
                     geometry=aoi,
                     crs=crs,
                     scale=grid.resolution_m,
@@ -249,26 +278,30 @@ class EarthEngineProvider:
             )
         except RuntimeError as exc:
             raise ProviderError("PROVIDER_UNAVAILABLE", str(exc), retryable=True) from exc
-        total_pixels = stats.get("total_pixels_count")
 
-        features = []
+        total_weight = stats.get("total_weight")
+        eligible_weight = stats.get("eligible_weight")
+
         def _fraction(numerator, denominator):
-            # Defensive clamp: reduceRegion pixel counts are integers from the
-            # provider, so this should already be <= 1; clamping only guards
-            # against floating-point edge cases, it never hides a real defect
-            # (the single-call total/valid rasterization above is the actual fix).
+            # Defensive clamp: weighted sums are theoretically bounded by
+            # denominator already; clamping only guards float rounding, it
+            # never substitutes for the explicit weighted computation above.
             if numerator is None or not denominator:
                 return None
             return max(0.0, min(1.0, numerator / denominator))
 
-        min_valid = None
+        features = []
+        min_valid_weight = None
         for definition in CORE_FEATURES:
             key = definition.key
-            valid_count = stats.get(f"{key}_count")
-            mean = stats.get(f"{key}_mean")
-            variance = stats.get(f"{key}_variance")
-            if valid_count is not None:
-                min_valid = valid_count if min_valid is None else min(min_valid, valid_count)
+            sum_w = stats.get(f"{key}_w")
+            sum_x = stats.get(f"{key}_x")
+            sum_x2 = stats.get(f"{key}_x2")
+            mean = (sum_x / sum_w) if sum_w else None
+            variance = (sum_x2 / sum_w - mean**2) if sum_w and mean is not None else None
+            variance = max(variance, 0.0) if variance is not None else None  # guard tiny negative float noise
+            if sum_w is not None:
+                min_valid_weight = sum_w if min_valid_weight is None else min(min_valid_weight, sum_w)
             features.append(
                 FeatureStat(
                     feature_key=key,
@@ -278,16 +311,17 @@ class EarthEngineProvider:
                     unit=definition.unit,
                     variance=variance,
                     standard_deviation=variance**0.5 if variance is not None else None,
-                    valid_pixel_count=int(valid_count) if valid_count is not None else 0,
-                    total_pixel_count=int(total_pixels) if total_pixels else 0,
-                    effective_area_m2=(valid_count or 0) * (grid.resolution_m**2),
-                    source_coverage_fraction=_fraction(valid_count, total_pixels),
-                    usable_fraction=_fraction(valid_count, total_pixels),
-                    missingness=None if valid_count else "NOT_MEASURED",
+                    valid_pixel_count=round(sum_w) if sum_w is not None else 0,
+                    total_pixel_count=round(total_weight) if total_weight else 0,
+                    effective_area_m2=(sum_w or 0) * (grid.resolution_m**2),
+                    source_coverage_fraction=_fraction(sum_w, total_weight),
+                    usable_fraction=_fraction(sum_w, total_weight),
+                    missingness=None if sum_w else "NOT_MEASURED",
                 )
             )
 
-        usable_fraction = _fraction(min_valid, total_pixels) or 0.0
+        usable_fraction = _fraction(min_valid_weight, total_weight) or 0.0
+        eligible_support_area_fraction = _fraction(eligible_weight, total_weight)
         outcome = "success" if usable_fraction and usable_fraction > 0 else "partial"
         return ExtractionResult(
             outcome=outcome,
@@ -301,6 +335,8 @@ class EarthEngineProvider:
             features=tuple(features),
             grid={"crs": crs, "resolution_m": grid.resolution_m, "grid_version": grid.grid_version},
             used_items=used_items,
+            min_acquisition_support=MIN_SUPPORT_ACQUISITIONS,
+            eligible_support_area_fraction=eligible_support_area_fraction,
         )
 
 

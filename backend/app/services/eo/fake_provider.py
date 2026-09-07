@@ -32,6 +32,7 @@ class FakeEOProvider:
     usable_observation_fraction: float = 0.9
     total_pixel_count: int = 100
     valid_pixel_count: int | None = None
+    eligible_support_area_fraction: float | None = None
     raise_error: Exception | None = None
     discover_calls: list[tuple] = field(default_factory=list)
     extract_calls: list[tuple] = field(default_factory=list)
@@ -116,4 +117,10 @@ class FakeEOProvider:
             features=tuple(features),
             grid={"crs": "EPSG:32636", "resolution_m": 20, "grid_version": "cfr-eo-grid/0.1"},
             used_items=manifest.included_items,
+            min_acquisition_support=2,
+            eligible_support_area_fraction=(
+                self.eligible_support_area_fraction
+                if self.eligible_support_area_fraction is not None
+                else (self.usable_observation_fraction if self.outcome == "success" else None)
+            ),
         )

@@ -315,6 +315,10 @@ def run_analysis(session, provider, request: EOAnalysisRequest, store=None) -> d
             ],
             "grid": result.grid,
         },
+        metadata={
+            "min_acquisition_support": result.min_acquisition_support,
+            "eligible_support_area_fraction": result.eligible_support_area_fraction,
+        },
     )
 
     feature_set = None

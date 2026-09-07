@@ -86,6 +86,12 @@ class ExtractionResult:
     features: tuple[FeatureStat, ...]
     grid: dict
     used_items: tuple[SourceItem, ...] = ()
+    # Per-cell acquisition support (task Part 4): the minimum distinct-
+    # acquisition threshold applied, and the AOI-area-weighted fraction of
+    # target cells that actually met it. An AOI-wide acquisition count never
+    # implies every cell had that much support -- this is the per-cell signal.
+    min_acquisition_support: int = 2
+    eligible_support_area_fraction: float | None = None
 
 
 class EOProvider(Protocol):
