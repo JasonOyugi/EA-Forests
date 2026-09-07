@@ -4,15 +4,17 @@ pixel-inclusion rule? Settles this empirically instead of from memory, to
 choose the correct moments-v1 implementation (EO country pass Part 2/3).
 """
 
-import os
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-import ee  # noqa: E402
+import ee
 
-from app.services.site_classification import ensure_earth_engine_initialized, safe_getinfo  # noqa: E402
+from app.services.site_classification import (
+    ensure_earth_engine_initialized,
+    safe_getinfo,
+)
 
 ensure_earth_engine_initialized()
 
