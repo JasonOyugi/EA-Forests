@@ -1,97 +1,180 @@
 "use client"
 
 import * as React from "react"
+import { ChevronDown } from "lucide-react"
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 
 import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Separator } from "@/components/ui/separator"
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet"
+import {
+  CanonicalApiUnavailableError,
+  EO_OUTCOME_LABELS,
+  type EoObservation,
+  type EoObservationDetail,
+  featureValue,
+  fetchEoObservationDetail,
+  fetchEoObservations,
+  fetchSpatialAsset,
+  type SpatialAsset,
+} from "@/lib/canonical-api"
 
-// Reads the existing administrative /api/canonical/eo/* routes. Those routes
-// require CANONICAL_API_TOKEN (backend/README.md) and are documented as a
-// local administrative API, never public/multi-tenant auth -- this panel is
-// a local-development affordance, not a production public data path. Set
-// VITE_CANONICAL_API_TOKEN in a local .env for development use only; never
-// ship a real token in a public build.
-const DEV_TOKEN = import.meta.env.VITE_CANONICAL_API_TOKEN as string | undefined
+const FEATURE_META = {
+  ndvi: { label: "Sentinel-2 NDVI", color: "#16a34a" },
+  ndmi: { label: "Sentinel-2 NDMI", color: "#0891b2" },
+  nbr: { label: "Sentinel-2 NBR", color: "#b45309" },
+} as const
 
-type SpatialAsset = {
-  entity_id: string
-  name: string
-  aoi_version_id: string
-  eo_readiness: string | null
-  eo_scope: boolean | null
+function monthLabel(iso: string) {
+  return new Date(iso).toLocaleDateString(undefined, { year: "numeric", month: "short" })
 }
 
-type FeatureValue = {
-  feature_key: string
-  value: number | null
-  standard_deviation: number | null
-  usable_fraction: number | null
+function outcomeBadgeVariant(outcome: EoObservation["outcome"]) {
+  return outcome === "success" ? "outline" : outcome === "failed" ? "destructive" : "secondary"
 }
 
-type Observation = {
-  id: string
-  window_start: string
-  window_end: string
-  outcome: "success" | "partial" | "no_observation" | "failed"
-  acquisition_count: number
-  eligible_acquisition_count: number
-  usable_observation_fraction: number | null
-  applied_qa_profile: string
-  features: FeatureValue[]
-}
-
-async function canonicalFetch<T>(path: string): Promise<T> {
-  if (!DEV_TOKEN) {
-    throw new Error(
-      "Set VITE_CANONICAL_API_TOKEN locally to load EO evidence (local admin API only)."
-    )
-  }
-  const response = await fetch(path, { headers: { Authorization: `Bearer ${DEV_TOKEN}` } })
-  if (!response.ok) throw new Error(`Request failed (${response.status})`)
-  return response.json() as Promise<T>
-}
-
-function featureValue(observation: Observation, key: string) {
-  return observation.features.find((f) => f.feature_key === key)
-}
-
-function outcomeLabel(outcome: Observation["outcome"]) {
-  return {
-    success: "Success",
-    partial: "Partial",
-    no_observation: "No observation",
-    failed: "Failed",
-  }[outcome]
-}
-
-export function EoEvidencePanel({ cfrName }: { cfrName: string }) {
+function useEoEvidence(cfrName: string, enabled: boolean) {
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
-  const [observations, setObservations] = React.useState<Observation[] | null>(null)
+  const [asset, setAsset] = React.useState<SpatialAsset | null>(null)
+  const [observations, setObservations] = React.useState<EoObservation[] | null>(null)
 
-  const load = React.useCallback(async () => {
+  React.useEffect(() => {
+    if (!enabled) return
+    let cancelled = false
     setLoading(true)
     setError(null)
-    try {
-      const assets = await canonicalFetch<SpatialAsset[]>(
-        "/api/canonical/spatial-assets?country=UG&spatial_type=reserve&limit=1000"
-      )
-      const asset = assets.find((a) => a.name === cfrName)
-      if (!asset) {
-        setObservations([])
-        return
+    ;(async () => {
+      try {
+        const resolvedAsset = await fetchSpatialAsset(cfrName)
+        if (cancelled) return
+        setAsset(resolvedAsset)
+        if (!resolvedAsset) {
+          setObservations([])
+          return
+        }
+        const rows = await fetchEoObservations(resolvedAsset.aoi_version_id)
+        if (!cancelled) setObservations(rows)
+      } catch (err) {
+        if (cancelled) return
+        setError(
+          err instanceof CanonicalApiUnavailableError
+            ? err.message
+            : err instanceof Error
+              ? err.message
+              : "Failed to load EO evidence"
+        )
+      } finally {
+        if (!cancelled) setLoading(false)
       }
-      const rows = await canonicalFetch<Observation[]>(
-        `/api/canonical/eo/observations?aoi_version_id=${asset.aoi_version_id}`
-      )
-      setObservations(rows)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load EO evidence")
-    } finally {
-      setLoading(false)
+    })()
+    return () => {
+      cancelled = true
     }
-  }, [cfrName])
+  }, [cfrName, enabled])
+
+  return { loading, error, asset, observations }
+}
+
+/** Compact content for the existing map popup. */
+export function EoEvidenceSummary({
+  cfrName,
+  onViewDetails,
+}: {
+  cfrName: string
+  onViewDetails: () => void
+}) {
+  const { loading, error, observations } = useEoEvidence(cfrName, true)
+  const latest = observations?.[0]
+
+  return (
+    <div className="space-y-2 text-sm">
+      {loading && <p className="text-xs text-muted-foreground">Loading Sentinel-2 status…</p>}
+      {error && <p className="text-xs text-destructive">{error}</p>}
+      {observations && observations.length === 0 && (
+        <p className="text-xs text-muted-foreground">No Sentinel-2 observation processed yet.</p>
+      )}
+      {latest && (
+        <>
+          <div className="flex items-center justify-between">
+            <Badge variant={outcomeBadgeVariant(latest.outcome)}>
+              Sentinel-2 · {EO_OUTCOME_LABELS[latest.outcome]}
+            </Badge>
+            <span className="text-xs text-muted-foreground">{monthLabel(latest.window_start)}</span>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Usable coverage{" "}
+            {latest.usable_observation_fraction != null
+              ? `${Math.round(latest.usable_observation_fraction * 100)}%`
+              : "n/a"}
+          </p>
+          {latest.outcome !== "no_observation" && latest.outcome !== "failed" && (
+            <div className="grid grid-cols-3 gap-2 text-xs">
+              {(["ndvi", "ndmi", "nbr"] as const).map((key) => (
+                <div key={key} className="rounded-md border p-1.5 text-center">
+                  <div className="text-[10px] uppercase text-muted-foreground">{key}</div>
+                  <div className="font-medium">{featureValue(latest, key)?.value?.toFixed(2) ?? "–"}</div>
+                </div>
+              ))}
+            </div>
+          )}
+          <Button size="sm" variant="secondary" className="w-full" onClick={onViewDetails}>
+            View EO evidence
+          </Button>
+        </>
+      )}
+    </div>
+  )
+}
+
+/** Large right-side detail panel: header / overview / quality / time series / provenance. */
+export function EoEvidenceDetailSheet({
+  cfrName,
+  open,
+  onOpenChange,
+}: {
+  cfrName: string | null
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}) {
+  const { loading, error, asset, observations } = useEoEvidence(cfrName ?? "", open && !!cfrName)
+  const latest = observations?.[0]
+  const [detail, setDetail] = React.useState<EoObservationDetail | null>(null)
+  const [detailError, setDetailError] = React.useState<string | null>(null)
+  const [provenanceOpen, setProvenanceOpen] = React.useState(false)
+
+  React.useEffect(() => {
+    setDetail(null)
+    setDetailError(null)
+    if (!latest) return
+    let cancelled = false
+    fetchEoObservationDetail(latest.id)
+      .then((row) => {
+        if (!cancelled) setDetail(row)
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          setDetailError(err instanceof Error ? err.message : "Failed to load EO provenance")
+        }
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [latest])
 
   const chartData = React.useMemo(
     () =>
@@ -107,83 +190,193 @@ export function EoEvidencePanel({ cfrName }: { cfrName: string }) {
         })),
     [observations]
   )
+  const hasSeries = chartData.length > 1
+  const lastAcquisition = React.useMemo(() => {
+    if (!detail?.source_items.length) return null
+    return detail.source_items
+      .map((item) => item.sensing_start)
+      .sort()
+      .at(-1)
+  }, [detail])
 
   return (
-    <Card className="border-dashed">
-      <CardHeader className="pb-2">
-        <CardTitle className="text-sm">Sentinel-2 EO evidence</CardTitle>
-        <CardDescription>
-          Derived from Sentinel-2 surface reflectance. Not a forest-health, timber, or supply
-          claim.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-3 text-sm">
-        {!observations && !loading && (
-          <button
-            type="button"
-            onClick={load}
-            className="text-xs font-medium text-primary underline underline-offset-2"
-          >
-            Load EO evidence history
-          </button>
-        )}
-        {loading && <p className="text-xs text-muted-foreground">Loading…</p>}
-        {error && <p className="text-xs text-destructive">{error}</p>}
-        {observations && observations.length === 0 && (
-          <p className="text-xs text-muted-foreground">
-            No canonical AOI resolved for this reserve yet, or no EO analyses run.
-          </p>
-        )}
-        {observations && observations.length > 0 && (
-          <>
-            {chartData.length > 1 && (
-              <div className="h-32 w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={chartData}>
-                    <XAxis dataKey="month" tick={{ fontSize: 10 }} />
-                    <YAxis domain={[-1, 1]} tick={{ fontSize: 10 }} width={28} />
-                    <Tooltip />
-                    <Line type="monotone" dataKey="ndvi" stroke="#16a34a" dot={false} strokeWidth={2} />
-                    <Line type="monotone" dataKey="ndmi" stroke="#0891b2" dot={false} strokeWidth={2} />
-                    <Line type="monotone" dataKey="nbr" stroke="#b45309" dot={false} strokeWidth={2} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        side="right"
+        className="w-full p-0 sm:max-w-none sm:w-[clamp(480px,42vw,720px)]"
+      >
+        <SheetHeader className="border-b p-4 pb-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge variant="secondary">Central Forest Reserve</Badge>
+            {latest && (
+              <Badge variant={outcomeBadgeVariant(latest.outcome)}>
+                Sentinel-2 · {EO_OUTCOME_LABELS[latest.outcome]}
+              </Badge>
             )}
-            <ul className="space-y-2">
-              {observations.slice(0, 6).map((observation) => {
-                const ndvi = featureValue(observation, "ndvi")
-                const ndmi = featureValue(observation, "ndmi")
-                const nbr = featureValue(observation, "nbr")
-                return (
-                  <li key={observation.id} className="rounded-md border p-2">
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">{observation.window_start.slice(0, 7)}</span>
-                      <Badge variant={observation.outcome === "success" ? "outline" : "secondary"}>
-                        {outcomeLabel(observation.outcome)}
-                      </Badge>
+            <Badge variant="outline">Geometry: unverified, repository-derived</Badge>
+          </div>
+          <SheetTitle className="text-xl">{cfrName}</SheetTitle>
+          <SheetDescription>
+            {latest
+              ? `Observation period ${monthLabel(latest.window_start)}. Derived from Sentinel-2 surface reflectance -- not a forest-health, timber, or supply claim.`
+              : "Sentinel-2 EO evidence for this canonical reserve."}
+          </SheetDescription>
+        </SheetHeader>
+
+        <ScrollArea className="h-[calc(100%-6.5rem)]">
+          <div className="space-y-6 p-4">
+            {loading && <p className="text-sm text-muted-foreground">Loading EO evidence…</p>}
+            {error && <p className="text-sm text-destructive">{error}</p>}
+            {asset === null && !loading && !error && (
+              <p className="text-sm text-muted-foreground">
+                No canonical AOI has resolved for this reserve yet.
+              </p>
+            )}
+            {observations && observations.length === 0 && !loading && (
+              <p className="text-sm text-muted-foreground">
+                No Sentinel-2 observation has been processed for this reserve yet.
+              </p>
+            )}
+
+            {latest && (
+              <>
+                {/* Overview */}
+                <section className="space-y-3">
+                  <h3 className="text-sm font-semibold">Overview</h3>
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                    {(["ndvi", "ndmi", "nbr"] as const).map((key) => {
+                      const feature = featureValue(latest, key)
+                      const meta = FEATURE_META[key]
+                      return (
+                        <Card key={key}>
+                          <CardHeader className="pb-1">
+                            <CardTitle className="text-xs font-medium" style={{ color: meta.color }}>
+                              {meta.label}
+                            </CardTitle>
+                          </CardHeader>
+                          <CardContent className="space-y-1 pb-3">
+                            <div className="text-2xl font-semibold">
+                              {feature?.value?.toFixed(3) ?? "–"}
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              spatial SD {feature?.standard_deviation?.toFixed(3) ?? "–"}
+                            </div>
+                          </CardContent>
+                        </Card>
+                      )
+                    })}
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Mean and spatial standard deviation over the reserve's valid target cells.
+                    Spatial SD describes within-reserve variability, not measurement uncertainty.
+                  </p>
+                </section>
+
+                <Separator />
+
+                {/* Quality / support */}
+                <section className="space-y-2">
+                  <h3 className="text-sm font-semibold">Quality &amp; support</h3>
+                  <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                    <DetailRow
+                      label="Usable coverage"
+                      value={
+                        latest.usable_observation_fraction != null
+                          ? `${Math.round(latest.usable_observation_fraction * 100)}%`
+                          : "n/a"
+                      }
+                    />
+                    <DetailRow
+                      label="Eligible acquisitions"
+                      value={`${latest.eligible_acquisition_count} / ${latest.acquisition_count}`}
+                    />
+                    <DetailRow label="QA profile" value={latest.applied_qa_profile} />
+                    <DetailRow
+                      label="Last acquisition"
+                      value={lastAcquisition ? new Date(lastAcquisition).toLocaleDateString() : "–"}
+                    />
+                  </dl>
+                </section>
+
+                <Separator />
+
+                {/* Time series */}
+                <section className="space-y-2">
+                  <h3 className="text-sm font-semibold">Monthly history</h3>
+                  {hasSeries ? (
+                    <div className="h-[260px] w-full">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <LineChart data={chartData}>
+                          <XAxis dataKey="month" tick={{ fontSize: 11 }} />
+                          <YAxis domain={[-1, 1]} tick={{ fontSize: 11 }} width={32} />
+                          <Tooltip />
+                          <Line type="monotone" dataKey="ndvi" name="NDVI" stroke={FEATURE_META.ndvi.color} dot strokeWidth={2} />
+                          <Line type="monotone" dataKey="ndmi" name="NDMI" stroke={FEATURE_META.ndmi.color} dot strokeWidth={2} />
+                          <Line type="monotone" dataKey="nbr" name="NBR" stroke={FEATURE_META.nbr.color} dot strokeWidth={2} />
+                        </LineChart>
+                      </ResponsiveContainer>
                     </div>
-                    {(ndvi || ndmi || nbr) && (
-                      <div className="mt-1 grid grid-cols-3 gap-2 text-xs text-muted-foreground">
-                        <span>NDVI {ndvi?.value?.toFixed(2) ?? "–"} (±{ndvi?.standard_deviation?.toFixed(2) ?? "–"})</span>
-                        <span>NDMI {ndmi?.value?.toFixed(2) ?? "–"}</span>
-                        <span>NBR {nbr?.value?.toFixed(2) ?? "–"}</span>
-                      </div>
-                    )}
-                    <div className="mt-1 text-xs text-muted-foreground">
-                      {observation.eligible_acquisition_count}/{observation.acquisition_count} acquisitions ·{" "}
-                      {observation.usable_observation_fraction != null
-                        ? `${Math.round(observation.usable_observation_fraction * 100)}% usable coverage`
-                        : "coverage n/a"}{" "}
-                      · {observation.applied_qa_profile}
-                    </div>
-                  </li>
-                )
-              })}
-            </ul>
-          </>
-        )}
-      </CardContent>
-    </Card>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">
+                      Only one monthly observation ({monthLabel(latest.window_start)}) has been
+                      processed for this reserve. Additional monthly history has not yet been
+                      processed -- this is a single-point result, not a trend.
+                    </p>
+                  )}
+                </section>
+
+                <Separator />
+
+                {/* Provenance / methods */}
+                <Collapsible open={provenanceOpen} onOpenChange={setProvenanceOpen}>
+                  <CollapsibleTrigger asChild>
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between text-sm font-semibold"
+                    >
+                      Provenance &amp; methods
+                      <ChevronDown
+                        className={`size-4 text-muted-foreground transition-transform ${provenanceOpen ? "rotate-180" : ""}`}
+                      />
+                    </button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="mt-2 space-y-2 text-sm">
+                    {detailError && <p className="text-xs text-destructive">{detailError}</p>}
+                    <dl className="grid grid-cols-1 gap-y-2 sm:grid-cols-2 sm:gap-x-4">
+                      <DetailRow label="AOI version" value={asset?.aoi_version_id ?? "–"} mono />
+                      <DetailRow label="Sentinel collection" value="COPERNICUS/S2_SR_HARMONIZED" />
+                      <DetailRow label="QA profile" value={latest.applied_qa_profile} />
+                      <DetailRow
+                        label="Statistics profile"
+                        value={String(detail?.processing_run.configuration.statistics_profile ?? "–")}
+                      />
+                      <DetailRow
+                        label="Exact observation period"
+                        value={`${latest.window_start.slice(0, 10)} – ${latest.window_end.slice(0, 10)}`}
+                      />
+                      <DetailRow
+                        label="Source items retained"
+                        value={detail ? String(detail.source_items.length) : "–"}
+                      />
+                      <DetailRow label="Geometry provenance" value="UNVERIFIED_REPOSITORY_DERIVED" />
+                      <DetailRow label="EO readiness" value={asset?.eo_readiness ?? "–"} />
+                    </dl>
+                  </CollapsibleContent>
+                </Collapsible>
+              </>
+            )}
+          </div>
+        </ScrollArea>
+      </SheetContent>
+    </Sheet>
+  )
+}
+
+function DetailRow({ label, value, mono }: { label: string; value: string; mono?: boolean }) {
+  return (
+    <div className="flex flex-col">
+      <dt className="text-xs text-muted-foreground">{label}</dt>
+      <dd className={mono ? "truncate font-mono text-xs" : "text-sm"}>{value}</dd>
+    </div>
   )
 }
