@@ -1,0 +1,182 @@
+{
+  "schema_version": "eo-pilot-site-manifest/0.1",
+  "generated": "2026-09-08",
+  "selection_method": "Sites were selected from real, already-verified repository evidence only: the 656-member Uganda CFR canonical cohort (real polygons, real August 2026 Sentinel-2 observations) and the 13-site Tanzania tree-breeding trial dataset (real field measurements, point geometry). No site or attribute was invented; two Tanzania registry entries (NFC, Tukuyu) were EXCLUDED from this manifest due to an unexplained data-quality anomaly in their measurement-age lists (see docs/eo/REPOSITORY_EO_AUDIT.md section 3) pending independent confirmation against their source Excel files.",
+  "smallest_experiment_site": "tz-kisolanza",
+  "sites": [
+    {
+      "id": "tz-kisolanza",
+      "country": "Tanzania",
+      "name": "Kisolanza",
+      "geometry_kind": "point_with_assumed_buffer",
+      "latitude": -8.15151,
+      "longitude": 35.4027,
+      "field_evidence": {
+        "source": "vite-version/public/data/trial-sites/",
+        "genus_groups": ["eucalyptus_clonal_hybrid", "eucalyptus_pure_species", "pine"],
+        "measurement_ages_months": [17, 29, 42, 56, 91],
+        "measured_attributes": ["n_planted", "n_alive", "survival_rate", "mean_height_m", "sd_height_m", "mean_dbh_cm (partially populated -- often null at young ages)", "mean_stem_score"],
+        "not_yet_promoted_to_canonical": true
+      },
+      "why_selected": "Longest clean real age series (17-91 months, ~7.6 years) with both pine and eucalyptus (species contrast) at one location -- best candidate for a real optical/SAR growth trajectory compared against real measured height/DBH trends.",
+      "eo_geometry_available": false,
+      "role_in_track_b": "field-truth anchor, point-based"
+    },
+    {
+      "id": "tz-uchindile",
+      "country": "Tanzania",
+      "name": "Uchindile",
+      "geometry_kind": "point_with_assumed_buffer",
+      "latitude": -8.72494,
+      "longitude": 35.511,
+      "field_evidence": {
+        "source": "vite-version/public/data/trial-sites/",
+        "genus_groups": ["corymbia", "eucalyptus_clonal_hybrid", "eucalyptus_pure_species", "pine"],
+        "measurement_ages_months": [17, 27, 29, 37, 41, 47, 55, 57, 91],
+        "measured_attributes": ["n_planted", "n_alive", "survival_rate", "mean_height_m", "mean_dbh_cm", "mean_stem_score"],
+        "not_yet_promoted_to_canonical": true
+      },
+      "why_selected": "Richest real measurement-age series of any site (9 distinct campaigns) -- best resolution for a real growth curve, and includes corymbia as a third genus not present at Kisolanza.",
+      "eo_geometry_available": false,
+      "role_in_track_b": "field-truth anchor, point-based, highest temporal resolution"
+    },
+    {
+      "id": "tz-tanwat",
+      "country": "Tanzania",
+      "name": "Tanwat",
+      "geometry_kind": "point_with_assumed_buffer",
+      "latitude": -9.24236,
+      "longitude": 34.8536,
+      "field_evidence": {
+        "source": "vite-version/public/data/trial-sites/",
+        "genus_groups": ["corymbia", "eucalyptus_clonal_hybrid", "eucalyptus_pure_species", "pine"],
+        "measurement_ages_months": [17, 29, 41, 56, 91],
+        "not_yet_promoted_to_canonical": true
+      },
+      "why_selected": "Southernmost clean Tanzania site (Southern Highlands) with the long 91-month series -- geographic/terrain contrast from Kisolanza and Uchindile within the same trial network.",
+      "eo_geometry_available": false,
+      "role_in_track_b": "field-truth anchor, point-based, Southern Highlands terrain"
+    },
+    {
+      "id": "tz-saohill",
+      "country": "Tanzania",
+      "name": "Saohill",
+      "geometry_kind": "point_with_assumed_buffer",
+      "latitude": -8.49868,
+      "longitude": 35.0947,
+      "field_evidence": {
+        "source": "vite-version/public/data/trial-sites/",
+        "genus_groups": ["corymbia", "eucalyptus_clonal_hybrid", "eucalyptus_pure_species", "pine"],
+        "measurement_ages_months": [16, 41, 55],
+        "not_yet_promoted_to_canonical": true
+      },
+      "why_selected": "Fourth pine-bearing site clustered near Kisolanza/Uchindile -- shorter series (to 55 months) gives a younger-stand contrast within the same broad geography.",
+      "eo_geometry_available": false,
+      "role_in_track_b": "field-truth anchor, point-based, younger-stand contrast"
+    },
+    {
+      "id": "tz-tabora",
+      "country": "Tanzania",
+      "name": "Tabora",
+      "geometry_kind": "point_with_assumed_buffer",
+      "latitude": -5.0167,
+      "longitude": 32.8,
+      "field_evidence": {
+        "source": "vite-version/public/data/trial-sites/",
+        "genus_groups": ["corymbia", "eucalyptus_clonal_hybrid", "eucalyptus_pure_species"],
+        "measurement_ages_months": [17, 42, 56],
+        "not_yet_promoted_to_canonical": true
+      },
+      "why_selected": "Only clean site in west-central Tanzania (drier, miombo-adjacent climate) -- no pine, but the clearest available climate/geography contrast to the Southern Highlands cluster (Kisolanza/Uchindile/Tanwat/Saohill).",
+      "eo_geometry_available": false,
+      "role_in_track_b": "field-truth anchor, point-based, drier/semi-arid contrast"
+    },
+    {
+      "id": "ug-zulia",
+      "country": "Uganda",
+      "name": "Zulia",
+      "geometry_kind": "canonical_polygon",
+      "latitude": 4.0261194626325825,
+      "longitude": 33.95007490657858,
+      "area_ha": 92559.259549664400,
+      "eo_evidence": {
+        "source": "geo.aoi_version + observations.eo_observation (August 2026 country pass)",
+        "sentinel2_ndvi_mean_aug2026": 0.339685921693854,
+        "already_validated_in": "docs/data-provenance/uganda-sentinel2-pilot-report.md, uganda-eo-country-pass-report.md"
+      },
+      "why_selected": "Largest CFR in the cohort (92,559 ha) with lower relative NDVI -- size and vegetation-density extreme; already used as the direct-processing-ceiling reference case, so its EO behavior is unusually well characterized.",
+      "field_evidence_available": false,
+      "role_in_track_b": "EO-geometry anchor, canonical polygon, size extreme"
+    },
+    {
+      "id": "ug-musamya",
+      "country": "Uganda",
+      "name": "Musamya",
+      "geometry_kind": "canonical_polygon",
+      "latitude": 0.2799154128410663,
+      "longitude": 32.00508851982315,
+      "area_ha": 739.3917648550040000,
+      "eo_evidence": {
+        "sentinel2_ndvi_mean_aug2026": 0.681726748947857
+      },
+      "why_selected": "75th-percentile area, high NDVI, near-equatorial -- a mid-large, apparently dense/productive CFR distinct from Zulia's low-NDVI extreme.",
+      "field_evidence_available": false,
+      "role_in_track_b": "EO-geometry anchor, canonical polygon, high-productivity contrast"
+    },
+    {
+      "id": "ug-epor",
+      "country": "Uganda",
+      "name": "Epor",
+      "geometry_kind": "canonical_polygon",
+      "latitude": 2.4037400450065944,
+      "longitude": 33.05792738084296,
+      "area_ha": 223.4631459939270000,
+      "eo_evidence": {
+        "sentinel2_ndvi_mean_aug2026": 0.622109532744995
+      },
+      "why_selected": "Median-area CFR, median-ish NDVI -- the single most 'typical' member of the 656-CFR cohort; already exercised in the EO evidence-drawer UI validation, so its full August observation (NDVI/NDMI/NBR, coverage, acquisition count) is already known end-to-end.",
+      "field_evidence_available": false,
+      "role_in_track_b": "EO-geometry anchor, canonical polygon, typical/median case"
+    },
+    {
+      "id": "ug-bunjazi",
+      "country": "Uganda",
+      "name": "Bunjazi",
+      "geometry_kind": "canonical_polygon",
+      "latitude": -0.3403811260091039,
+      "longitude": 32.528059452754704,
+      "area_ha": 79.9541087667544000,
+      "eo_evidence": {
+        "sentinel2_ndvi_mean_aug2026": 0.845115056710367
+      },
+      "why_selected": "Highest NDVI of any Uganda CFR (0.845) -- the cohort's vegetation-density extreme in the opposite direction from Zulia; small enough for a fast, cheap multi-sensor pull.",
+      "field_evidence_available": false,
+      "role_in_track_b": "EO-geometry anchor, canonical polygon, high-NDVI extreme"
+    },
+    {
+      "id": "ug-kihihi",
+      "country": "Uganda",
+      "name": "Kihihi",
+      "geometry_kind": "canonical_polygon",
+      "latitude": -0.7602591915203424,
+      "longitude": 29.69920061117488,
+      "area_ha": 35.9240311814739000,
+      "eo_evidence": {
+        "sentinel2_ndvi_mean_aug2026": 0.563059712288153
+      },
+      "why_selected": "Southwesternmost clean candidate (near the Bwindi/DRC border region, materially different terrain from the other four Uganda picks) and 25th-percentile area -- smallest-scale, most geographically distinct Uganda case in the set.",
+      "field_evidence_available": false,
+      "role_in_track_b": "EO-geometry anchor, canonical polygon, geographic/terrain extreme"
+    }
+  ],
+  "excluded_candidates": {
+    "tz_data_quality_flagged": ["NFC", "Tukuyu"],
+    "tz_available_but_not_selected_for_this_wave": ["Korogwe", "KVTC", "North Ruvu", "SFI Handeni", "Unilever", "Wino"],
+    "ug_noted_edge_case_not_selected": ["Mala Island (1.15 ha, NDVI -0.09 -- likely water/bare-ground dominated, not a forest-productivity extreme)"]
+  },
+  "explicit_gaps": [
+    "No Tanzania CFR/AOI canonical polygon geometry exists anywhere in the repository -- Tanzania sites here are point coordinates with an ASSUMED buffer, not surveyed boundaries.",
+    "No Uganda CFR has field-measured DBH/height/survival ground truth -- Uganda sites here contribute EO+geometry only.",
+    "No single site in this manifest has both a canonical polygon AND real field measurements -- that combination does not yet exist in this repository for any site."
+  ]
+}

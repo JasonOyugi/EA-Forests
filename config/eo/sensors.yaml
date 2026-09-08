@@ -1,0 +1,455 @@
+# Canonical EO sensor/product registry (Uganda/Tanzania multi-sensor physics
+# observatory, Track A + Track B). Config-driven: sensor semantics (bands,
+# native support, geometry fields, access method) live HERE, not scattered
+# through service code. A provider adapter reads this registry; it does not
+# redefine sensor facts inline.
+#
+# `operational_status_in_ea_forests` values used below:
+#   operational              -- implemented, running in production (S2 only)
+#   adapter_ready            -- product verified reachable through our
+#                                existing Earth Engine connection (project
+#                                ee-oyugijason); no new credentials needed;
+#                                not yet wired into a recipe/pipeline
+#   adapter_only_external     -- requires a NEW access path (not Earth Engine)
+#                                that we have not built; documented boundary
+#                                only, per docs/eo/ACCESS_REQUIREMENTS.md
+#   blocked_pending_access    -- requires registration/approval we do not yet
+#                                hold; do not let this block the rest of the
+#                                programme
+#   monitoring_release        -- mission is real and partly operational, but
+#                                the specific product we need is still being
+#                                phased in by the provider
+#
+# Every `verified` field records HOW availability was checked and WHEN, per
+# the instruction to verify current catalogue/product/access status rather
+# than assume it from mission existence. "EE query" = a live
+# ee.ImageCollection(...).filterBounds(Uganda point).size().getInfo() call
+# against ee-oyugijason; "web search" = a live search against provider
+# documentation on the date shown, cited in docs/eo/ACCESS_REQUIREMENTS.md.
+
+schema_version: "eo-sensor-registry/0.1"
+updated: "2026-09-08"
+
+products:
+  # --- optical: Sentinel-2 (operational) -----------------------------------
+  - id: sentinel2-l2a-sr
+    mission: Sentinel-2
+    sensor: MSI
+    product: S2_SR_HARMONIZED
+    processing_level: L2A (surface reflectance, harmonized baseline)
+    native_support_m: {B2: 10, B3: 10, B4: 10, B8: 10, B5: 20, B6: 20, B7: 20, B8A: 20, B11: 20, B12: 20, SCL: 20}
+    bands:
+      - {name: B2, role: blue}
+      - {name: B3, role: green}
+      - {name: B4, role: red}
+      - {name: B5, role: red_edge_1}
+      - {name: B6, role: red_edge_2}
+      - {name: B7, role: red_edge_3}
+      - {name: B8, role: nir}
+      - {name: B8A, role: narrow_nir}
+      - {name: B11, role: swir_1}
+      - {name: B12, role: swir_2}
+      - {name: SCL, role: scene_classification_qa}
+    acquisition_geometry_fields: [sensing_start, sensing_end, MGRS_TILE, CLOUDY_PIXEL_PERCENTAGE, PROCESSING_BASELINE, sun_azimuth, sun_zenith]
+    qa: [SCL scene classification (used for s2-qa-scl-core/1), CLOUDY_PIXEL_PERCENTAGE]
+    provider: google_earth_engine
+    access_method: earth_engine_collection
+    collection_id: COPERNICUS/S2_SR_HARMONIZED
+    licence: open (Copernicus)
+    commercial_use_constraints: none beyond standard Copernicus terms
+    registration_required: false
+    operational_status_in_ea_forests: operational
+    recipe_key: s2-sr-optical-v1
+    qa_profile: s2-qa-scl-core/1
+    derived_features_in_use: [ndvi, ndmi, nbr]
+    derived_features_reserved: [evi, ndre, red_edge_position_proxy, swir_nir_ratios]
+    verified: {method: "already in production; 656-CFR national pass, Aug 2026", date: "2026-09-07"}
+
+  # --- optical: Landsat / HLS -----------------------------------------------
+  - id: landsat8-c2-l2
+    mission: Landsat 8
+    sensor: OLI/TIRS
+    product: LC08_C02_T1_L2
+    processing_level: Collection 2 Level-2 (surface reflectance/temperature)
+    native_support_m: {optical: 30, thermal: 100 (resampled to 30)}
+    bands: [SR_B1, SR_B2, SR_B3, SR_B4, SR_B5, SR_B6, SR_B7, ST_B10, QA_PIXEL]
+    acquisition_geometry_fields: [sensing_time, WRS_PATH, WRS_ROW, sun_azimuth, sun_elevation, cloud_cover]
+    qa: [QA_PIXEL bitmask (cloud/shadow/snow)]
+    provider: google_earth_engine
+    access_method: earth_engine_collection
+    collection_id: LANDSAT/LC08/C02/T1_L2
+    licence: open (USGS)
+    commercial_use_constraints: none
+    registration_required: false
+    operational_status_in_ea_forests: adapter_ready
+    recipe_key: null
+    verified: {method: "EE query: ee.ImageCollection filterBounds(Uganda point) -> non-empty", date: "2026-09-08"}
+    notes: >
+      Extends optical history before the 2015 Sentinel-2 era. Landsat 8 launched
+      2013; combine with Landsat 9 (LC09_C02_T1_L2, same structure, launched 2021)
+      for continuity. Spectral bands differ from S2 (fewer, coarser red-edge
+      absence) -- cross-sensor differences must be characterized, not assumed away.
+
+  - id: landsat9-c2-l2
+    mission: Landsat 9
+    sensor: OLI-2/TIRS-2
+    product: LC09_C02_T1_L2
+    processing_level: Collection 2 Level-2
+    native_support_m: {optical: 30, thermal: 100 (resampled to 30)}
+    bands: [SR_B1, SR_B2, SR_B3, SR_B4, SR_B5, SR_B6, SR_B7, ST_B10, QA_PIXEL]
+    acquisition_geometry_fields: [sensing_time, WRS_PATH, WRS_ROW, sun_azimuth, sun_elevation, cloud_cover]
+    qa: [QA_PIXEL bitmask]
+    provider: google_earth_engine
+    access_method: earth_engine_collection
+    collection_id: LANDSAT/LC09/C02/T1_L2
+    licence: open (USGS)
+    registration_required: false
+    operational_status_in_ea_forests: adapter_ready
+    verified: {method: "EE query: ee.ImageCollection filterBounds(Uganda point) -> non-empty", date: "2026-09-08"}
+
+  - id: hls-l30
+    mission: Landsat (HLS)
+    sensor: OLI/OLI-2
+    product: HLSL30 v002
+    processing_level: Harmonized Landsat-Sentinel L2 surface reflectance (30m, Sentinel-2 tiling grid)
+    native_support_m: 30
+    bands: [B01, B02, B03, B04, B05, B06, B07, Fmask]
+    acquisition_geometry_fields: [sensing_time, MGRS tile, cloud_cover]
+    qa: [Fmask bitmask]
+    provider: google_earth_engine
+    access_method: earth_engine_collection
+    collection_id: NASA/HLS/HLSL30/v002
+    licence: open (NASA/USGS)
+    registration_required: false
+    operational_status_in_ea_forests: adapter_ready
+    verified: {method: "EE query: ee.ImageCollection filterBounds(Uganda point) -> non-empty", date: "2026-09-08"}
+    notes: "Harmonizes Landsat radiometry onto the S2 tiling grid -- useful for cross-sensor comparability, but harmonization is itself a processing choice to document, not proof of physical equivalence."
+
+  - id: hls-s30
+    mission: Sentinel-2 (HLS)
+    sensor: MSI
+    product: HLSS30 v002
+    processing_level: Harmonized Landsat-Sentinel L2 surface reflectance (30m)
+    native_support_m: 30
+    bands: [B01, B02, B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12, Fmask]
+    acquisition_geometry_fields: [sensing_time, MGRS tile, cloud_cover]
+    qa: [Fmask bitmask]
+    provider: google_earth_engine
+    access_method: earth_engine_collection
+    collection_id: NASA/HLS/HLSS30/v002
+    licence: open (NASA/ESA)
+    registration_required: false
+    operational_status_in_ea_forests: adapter_ready
+    verified: {method: "EE query: ee.ImageCollection filterBounds(Uganda point) -> non-empty", date: "2026-09-08"}
+
+  # --- C-band SAR: Sentinel-1 ------------------------------------------------
+  - id: sentinel1-grd
+    mission: Sentinel-1
+    sensor: C-SAR
+    product: S1_GRD (IW mode, analysis-ready)
+    processing_level: Ground Range Detected, radiometrically/terrain-uncorrected as delivered by EE (calibrated sigma0)
+    native_support_m: 10 (IW GRD, resampled from ~5x20m slant range)
+    polarizations: [VV, VH where dual-pol scenes exist]
+    acquisition_geometry_fields: [orbitProperties_pass (ascending/descending), relativeOrbitNumber_start, resolution_meters, instrumentMode, transmitterReceiverPolarisation]
+    qa: [border noise removal + thermal noise removal already applied by EE ingestion; no cloud QA (radar)]
+    provider: google_earth_engine
+    access_method: earth_engine_collection
+    collection_id: COPERNICUS/S1_GRD
+    licence: open (Copernicus)
+    registration_required: false
+    operational_status_in_ea_forests: adapter_ready
+    recipe_key: null
+    verified: {method: "EE query: ee.ImageCollection filterBounds(Uganda point) -> non-empty", date: "2026-09-08"}
+    notes: >
+      Do not mix ascending/descending or incompatible relative orbits into one
+      physical time series (Track A2) -- group by (orbit direction, relative
+      orbit) into homogeneous streams before any temporal analysis.
+
+  - id: sentinel1-slc
+    mission: Sentinel-1
+    sensor: C-SAR
+    product: S1_SLC
+    processing_level: Single Look Complex (phase-preserving)
+    native_support_m: "~5 x 20 (range x azimuth, IW)"
+    polarizations: [VV, VH where dual-pol]
+    acquisition_geometry_fields: [orbit pass, relative orbit, burst/swath geometry, baseline]
+    qa: [none built-in; coherence pair selection is the analyst's responsibility]
+    provider: external (Copernicus Data Space Ecosystem / ASF)
+    access_method: adapter_only_external
+    licence: open (Copernicus)
+    registration_required: true (Copernicus Data Space Ecosystem account, free)
+    operational_status_in_ea_forests: adapter_only_external
+    verified: {method: "not verified on Earth Engine; EE only serves pre-processed GRD, not SLC -- SLC requires direct Copernicus Data Space Ecosystem or ASF access", date: "2026-09-08"}
+    notes: >
+      Needed only where coherence/phase analysis is scientifically justified
+      (Track B). Pair selection must match orbit, geometry and temporal
+      baseline carefully -- never compute coherence from arbitrary scene pairs.
+
+  # --- L-band SAR: legacy JAXA archive ---------------------------------------
+  - id: alos-palsar-yearly-mosaic
+    mission: ALOS
+    sensor: PALSAR
+    product: PALSAR_YEARLY_MOSAIC (25m global mosaic)
+    processing_level: Radiometrically terrain-corrected mosaic
+    native_support_m: 25
+    polarizations: [HH, HV]
+    temporal_coverage: {start: "2007", end: "2010", cadence: annual}
+    acquisition_geometry_fields: [acquisition_year, incidence_angle (nominal per mosaic tile)]
+    qa: [mask band (water/layover/shadow)]
+    provider: google_earth_engine
+    access_method: earth_engine_collection
+    collection_id: JAXA/ALOS/PALSAR/YEARLY/SAR
+    licence: open (JAXA)
+    registration_required: false
+    operational_status_in_ea_forests: adapter_ready
+    verified: {method: "EE query: ee.ImageCollection filterBounds(Uganda point) -> non-empty", date: "2026-09-08"}
+    notes: "Also mirrored regionally via Digital Earth Africa (S3 af-south-1, STAC, no AWS account needed) -- redundant access path, same underlying JAXA product; see docs/eo/ACCESS_REQUIREMENTS.md."
+
+  - id: alos-palsar-forest-nonforest
+    mission: ALOS
+    sensor: PALSAR
+    product: PALSAR_YEARLY_FNF (forest/non-forest classification)
+    processing_level: Derived classification mosaic
+    native_support_m: 25
+    provider: google_earth_engine
+    access_method: earth_engine_collection
+    collection_id: JAXA/ALOS/PALSAR/YEARLY/FNF
+    licence: open (JAXA)
+    registration_required: false
+    operational_status_in_ea_forests: adapter_ready
+    verified: {method: "EE query: ee.ImageCollection filterBounds(Uganda point) -> non-empty", date: "2026-09-08"}
+    notes: "A JAXA-derived classification, not a raw backscatter product -- useful as independent forest-mask context, not a structural observation in itself."
+
+  - id: alos2-palsar2-scansar-l22
+    mission: ALOS-2
+    sensor: PALSAR-2
+    product: ScanSAR Level 2.2
+    processing_level: Ortho-rectified, radiometrically corrected
+    native_support_m: "~100 (ScanSAR)"
+    polarizations: [HH, HV depending on mode]
+    temporal_coverage: {start: "2014-08", end: "ongoing, ~10-day cadence per JAXA release schedule"}
+    provider: google_earth_engine
+    access_method: earth_engine_collection
+    collection_id: JAXA/ALOS/PALSAR-2/Level2_2/ScanSAR
+    licence: open (JAXA public-release program)
+    registration_required: false
+    operational_status_in_ea_forests: adapter_ready
+    verified: {method: "EE query: ee.ImageCollection filterBounds(Uganda point) -> non-empty", date: "2026-09-08"}
+    notes: >
+      Coarser than ideal for stand-level analysis (~100m). Finer ALOS-2 modes
+      (stripmap, higher-res L2.1) are NOT confirmed on Earth Engine; would need
+      direct JAXA/ASF access -- treat as adapter_only_external until verified.
+
+  - id: jers1-sar-mosaic
+    mission: JERS-1
+    sensor: SAR
+    product: 1996 L-band mosaic
+    processing_level: Mosaic
+    native_support_m: 25
+    polarizations: [HH]
+    temporal_coverage: {start: "1996", end: "1996"}
+    provider: external (JAXA EORC / Digital Earth Africa mirror)
+    access_method: adapter_only_external
+    licence: open (JAXA)
+    registration_required: false
+    operational_status_in_ea_forests: adapter_only_external
+    verified: {method: "web search: JAXA EORC product page + Digital Earth Africa AWS Open Data registry (S3 af-south-1, STAC v1.0.0, no AWS account required)", date: "2026-09-08", not_verified_on: "Earth Engine (not queried as a distinct asset ID; may only exist bundled in the JAXA yearly mosaic collection under an early epoch -- needs a direct check before relying on it)"}
+    notes: >
+      The oldest usable open L-band epoch (1996) -- valuable for very long
+      rotation/disturbance history, not contemporary AGB regression.
+
+  # --- L-band SAR: NISAR (new, high priority) --------------------------------
+  - id: nisar-gcov
+    mission: NISAR
+    sensor: L-SAR (+S-SAR)
+    product: GCOV (Geocoded Polarimetric Covariance Matrix)
+    processing_level: Radiometrically terrain-corrected backscatter/covariance
+    native_support_m: "per ASF product spec, ~sub-pixel to tens of metres depending on product -- confirm exact grid before implementation, not assumed here"
+    polarizations: [HH, HV, VH, VV, covariance terms]
+    acquisition_geometry_fields: [incidence angle, local geometry, effective number of looks, orbit]
+    qa: [per-pixel quality flags per ASF product spec]
+    provider: external (NASA Earthdata / ASF DAAC)
+    access_method: adapter_only_external
+    licence: open (NASA/ISRO, provisional products)
+    registration_required: true (NASA Earthdata Login, free)
+    operational_status_in_ea_forests: monitoring_release
+    verified:
+      method: "web search (2026-09-08): NISAR launched 2025-07-30; fully calibrated PROVISIONAL L-band products released for the public starting 2026-06-17 (all L-band acquisitions); Cycle 25 (from 2026-07-08) systematically generates S-Band products for direct download. Global 12-day coverage plan alternates Africa/South America in 6-month blocks."
+      caveat: "Provisional status and the exact current Africa acquisition cadence within the active 6-month plan were NOT independently confirmed against a live ASF/Earthdata catalogue query for the Uganda/Tanzania AOI -- treat coverage as likely-available-soon, not confirmed-in-hand, until a real ASF Vertex/CMR search is run for our AOI and date range."
+    notes: >
+      Highest scientific priority of the new L-band sources given full-power,
+      high-resolution polarimetric SAR designed explicitly for structural
+      science. Not yet reachable through our existing Earth Engine connection
+      -- needs its own ASF/Earthdata adapter. Do not assume decomposition
+      labels literally represent forest components.
+
+  # --- L-band SAR: SAOCOM -----------------------------------------------------
+  - id: saocom-l1b-l2
+    mission: SAOCOM 1A/1B
+    sensor: L-SAR
+    product: L1B (SLC) / L2 (detected, geocoded)
+    processing_level: per CONAE product spec
+    native_support_m: "mode-dependent (StripMap ~10m class; TOPSAR wider swath, coarser)"
+    polarizations: [full-pol and dual-pol modes available depending on acquisition]
+    provider: external (CONAE catalogue; ESA PUMAS AO for the international science community)
+    access_method: adapter_only_external
+    licence: restricted -- registration/approval required
+    commercial_use_constraints: "not established for our use case; must be confirmed with CONAE/ESA before any commercial application"
+    registration_required: true (CONAE user registry, or ESA/CONAE PUMAS Announcement of Opportunity)
+    operational_status_in_ea_forests: blocked_pending_access
+    verified:
+      method: "web search (2026-09-08): CONAE catalogue (catalogos.conae.gov.ar) requires login; ESA/CONAE PUMAS AO for international science-community access had a submission deadline extended to 2025-11-28 -- status of a NEW/rolling application window not confirmed."
+      caveat: "Uganda/Tanzania coverage history, exact product types actually acquired over East Africa, and current AO application availability were NOT independently confirmed -- this entry documents the access boundary, not confirmed in-hand data."
+    notes: >
+      Treat as a potentially valuable L-band source, NOT interchangeable with
+      NISAR/ALOS-2 merely because both are L-band (different modes,
+      calibration, revisit, and access terms). Do not let this block the rest
+      of the programme -- proceed with NISAR/ALOS-2 first.
+
+  # --- LiDAR: GEDI -------------------------------------------------------------
+  - id: gedi-l2a
+    mission: GEDI (ISS)
+    sensor: full-waveform lidar
+    product: GEDI02_A (footprint RH metrics)
+    processing_level: L2A
+    native_support_m: "~25m diameter footprint, ~60m along-track spacing"
+    metrics: [rh (RH0..RH100 relative height profile), quality_flag, sensitivity, elev_lowestmode, degrade_flag]
+    acquisition_geometry_fields: [shot_number, delta_time, beam, footprint lat/lon geometry]
+    qa: [quality_flag, sensitivity, degrade_flag]
+    provider: google_earth_engine
+    access_method: earth_engine_collection
+    collection_id: LARSE/GEDI/GEDI02_A_002_MONTHLY
+    licence: open (NASA)
+    registration_required: false
+    operational_status_in_ea_forests: adapter_ready
+    verified: {method: "EE query: ee.ImageCollection filterBounds(Uganda point) -> non-empty", date: "2026-09-08"}
+    notes: >
+      GEDI resumed ISS operations 2024-04-26 after 2023-03-17..2024-04-24
+      hibernation; Version 3 products released 2026-07. Preserve the full RH10
+      ... RH100 trajectory, not just RH98/RH100. GEDI-derived structure is
+      MODEL-DERIVED evidence, not field truth.
+
+  - id: gedi-l2b
+    mission: GEDI (ISS)
+    sensor: full-waveform lidar
+    product: GEDI02_B (canopy cover / vertical profile metrics)
+    processing_level: L2B
+    native_support_m: "~25m diameter footprint"
+    metrics: [cover, pai (plant area index), pavd_z (plant area volume density profile), fhd_normal (foliage height diversity)]
+    provider: google_earth_engine
+    access_method: earth_engine_collection
+    collection_id: LARSE/GEDI/GEDI02_B_002_MONTHLY
+    licence: open (NASA)
+    registration_required: false
+    operational_status_in_ea_forests: adapter_ready
+    verified: {method: "EE query: ee.ImageCollection filterBounds(Uganda point) -> non-empty", date: "2026-09-08"}
+
+  - id: gedi-l4a
+    mission: GEDI (ISS)
+    sensor: full-waveform lidar
+    product: GEDI04_A (footprint AGBD)
+    processing_level: L4A
+    native_support_m: "~25m diameter footprint"
+    metrics: [agbd, agbd_se (standard error), agbd_prediction_quality_flag]
+    provider: google_earth_engine
+    access_method: earth_engine_collection
+    collection_id: LARSE/GEDI/GEDI04_A_002_MONTHLY
+    licence: open (ORNL DAAC / NASA)
+    registration_required: false
+    operational_status_in_ea_forests: adapter_ready
+    verified: {method: "EE query: ee.ImageCollection filterBounds(Uganda point) -> non-empty", date: "2026-09-08"}
+    notes: "AGBD here is a MODEL prediction from a global allometric model, carried with agbd_se where supplied. It is not field-measured biomass -- never treat it as ground truth calibration data without saying so."
+
+  - id: gedi-l1b
+    mission: GEDI (ISS)
+    sensor: full-waveform lidar
+    product: GEDI01_B (raw geolocated waveform)
+    processing_level: L1B
+    native_support_m: "~25m diameter footprint"
+    provider: external (NASA LP DAAC)
+    access_method: adapter_only_external
+    licence: open (NASA)
+    registration_required: true (NASA Earthdata Login, free)
+    operational_status_in_ea_forests: adapter_only_external
+    verified: {method: "EE query for LARSE/GEDI/GEDI01_B_002_MONTHLY -> asset not found", date: "2026-09-08"}
+    notes: "Only needed if raw waveform shape itself becomes analytically important; L2A/L2B/L4A derived metrics cover most Track B needs."
+
+  - id: gedi-l4c
+    mission: GEDI (ISS)
+    sensor: full-waveform lidar
+    product: GEDI04_C (footprint structural complexity index + uncertainty)
+    processing_level: L4C
+    provider: external (NASA ORNL DAAC)
+    access_method: adapter_only_external
+    licence: open (NASA)
+    registration_required: true (NASA Earthdata Login, free)
+    operational_status_in_ea_forests: adapter_only_external
+    verified: {method: "EE query for two plausible asset IDs -> not found", date: "2026-09-08"}
+
+  # --- LiDAR: ICESat-2 ---------------------------------------------------------
+  - id: icesat2-atl08
+    mission: ICESat-2
+    sensor: ATLAS
+    product: ATL08 (Land and Vegetation Height), version 7
+    processing_level: L3A
+    native_support_m: "along-track 100m fixed segments, ~17m footprint diameter per shot"
+    metrics: [terrain height, canopy height, canopy cover, per-segment quality]
+    acquisition_geometry_fields: [beam, delta_time, ground track geometry]
+    provider: external (NASA NSIDC DAAC)
+    access_method: adapter_only_external
+    licence: open (NASA)
+    registration_required: true (NASA Earthdata Login, free)
+    operational_status_in_ea_forests: adapter_only_external
+    verified: {method: "EE query for two plausible asset IDs -> not found; web search confirms ATL08 v7 is current, distributed via NSIDC, not observed on any STAC-native cloud catalogue we already use", date: "2026-09-08"}
+    notes: "Independent canopy/terrain structure source -- its along-track segment support is NOT equivalent to a GEDI circular footprint; do not conflate the two support geometries."
+
+  # --- P-band SAR: ESA Biomass --------------------------------------------------
+  - id: esa-biomass-l1
+    mission: ESA Biomass (Earth Explorer 7)
+    sensor: P-SAR
+    product: Level-1 (SLC-like, single-pass)
+    processing_level: L1
+    native_support_m: "native P-band product support not yet confirmed for our AOI; DO NOT assume 10m -- see hard prohibition on upsampling coarse P-band data"
+    provider: external (ESA Earth Online / EOGateway)
+    access_method: adapter_only_external
+    licence: open (ESA, post-commissioning)
+    registration_required: true (ESA EO sign-in)
+    operational_status_in_ea_forests: monitoring_release
+    verified:
+      method: "web search (2026-09-08): launched 2025-04-29; in-orbit commissioning through 2025-11-20; Level-1 products released 2025-12; Level-2 (biomass/height/disturbance, 200m biomass/height grid, 50m disturbance grid) phased release from summer 2026 through 2027."
+      caveat: "Level-2 phased release means our specific AOI/date coverage is NOT yet confirmed available -- do not assume it is ready to use."
+    notes: >
+      Global biomass/height maps target 200m resolution, disturbance maps
+      50m -- both far coarser than the S2 20m operational grid. Preserve
+      native support explicitly; never resample a coarse Biomass product to
+      10m and treat it as 10m evidence.
+
+  # --- terrain context ----------------------------------------------------------
+  - id: nasadem
+    mission: NASADEM
+    sensor: SRTM (reprocessed)
+    product: NASADEM_HGT
+    processing_level: void-filled DEM
+    native_support_m: 30
+    provider: google_earth_engine
+    access_method: earth_engine_image
+    collection_id: NASA/NASADEM_HGT/001
+    licence: open (NASA)
+    registration_required: false
+    operational_status_in_ea_forests: adapter_ready
+    verified: {method: "EE query: confirmed as an ee.Image asset (not an ImageCollection)", date: "2026-09-08"}
+    notes: "Use for slope/aspect/local-incidence-angle derivation for SAR terrain context -- radiometric terrain correction upstream does not mean all terrain dependence has disappeared."
+
+  - id: srtm-gl1
+    mission: SRTM
+    sensor: SRTM
+    product: SRTMGL1
+    processing_level: DEM
+    native_support_m: 30
+    provider: google_earth_engine
+    access_method: earth_engine_image
+    collection_id: USGS/SRTMGL1_003
+    licence: open (USGS)
+    registration_required: false
+    operational_status_in_ea_forests: adapter_ready
+    verified: {method: "EE query: confirmed as an ee.Image asset", date: "2026-09-08"}
