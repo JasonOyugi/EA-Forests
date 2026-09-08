@@ -1109,7 +1109,23 @@ eo_job = table(
     ts("lease_expires_at", True),
     Column("fencing_token", Integer, nullable=False, server_default=text("0")),
     col("worker_id", nullable=True),
+    ts("retry_not_before", True),
+    col("last_reason_code", nullable=True),
     js(),
+)
+eo_job_attempt = table(
+    "processing",
+    "eo_job_attempt",
+    fk("eo_job_id", "processing.eo_job.id"),
+    Column("attempt_number", Integer, nullable=False),
+    col("worker_id"),
+    ts("started_at"),
+    ts("completed_at", True),
+    choice("outcome", "succeeded retry_wait failed"),
+    col("reason_code", nullable=True),
+    col("error", nullable=True),
+    ts("recorded_at", default=True),
+    UniqueConstraint("eo_job_id", "attempt_number"),
 )
 
 # Foreign key indexes are intentionally systematic; history gets both range and current indexes.

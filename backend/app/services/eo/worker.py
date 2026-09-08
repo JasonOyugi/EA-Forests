@@ -26,6 +26,7 @@ from sqlalchemy import select, text
 from app.db import schema as s
 from app.services.eo.pipeline import build_analysis_request, run_analysis
 from app.services.eo.provider import ProviderError
+from app.services.eo.reliability import retry_not_before
 from app.services.state.registry import audit_context, insert_row
 
 DEFAULT_MAX_ATTEMPTS = 3
@@ -103,7 +104,8 @@ def claim_job(session, *, worker_id: str, lease_seconds: int = DEFAULT_LEASE_SEC
         text(
             """
             SELECT id FROM processing.eo_job
-            WHERE status IN ('queued', 'retry_wait')
+            WHERE status = 'queued'
+               OR (status = 'retry_wait' AND (retry_not_before IS NULL OR retry_not_before <= clock_timestamp()))
                OR (status = 'running' AND lease_expires_at < clock_timestamp())
             ORDER BY requested_at
             FOR UPDATE SKIP LOCKED
@@ -150,6 +152,27 @@ def _publish(session, job_id, fencing_token, **values) -> bool:
     return result.rowcount > 0
 
 
+def _record_attempt(session, *, job_id, attempt_number, worker_id, started_at, outcome, reason_code, error):
+    """Append-only per-attempt row (migration 0007): the generic audit trail
+    on ``eo_job`` records that the row changed and why, not what happened on
+    THIS attempt specifically -- a timed-out attempt must stay auditable as
+    its own fact, never mutated into a later successful attempt's row.
+    """
+    audit_context(session, "eo-worker", f"Record EO job attempt {attempt_number} (worker={worker_id})")
+    insert_row(
+        session,
+        s.eo_job_attempt,
+        eo_job_id=job_id,
+        attempt_number=attempt_number,
+        worker_id=worker_id,
+        started_at=started_at,
+        completed_at=datetime.now(UTC),
+        outcome=outcome,
+        reason_code=reason_code,
+        error=error,
+    )
+
+
 def execute_claimed_job(session, provider, claimed: dict, store=None) -> dict:
     """Runs Earth Engine discovery/extraction for an already-claimed job and
     publishes the result, guarded by the fencing token captured at claim
@@ -157,6 +180,9 @@ def execute_claimed_job(session, provider, claimed: dict, store=None) -> dict:
     """
     job_id = claimed["id"]
     fencing_token = claimed["fencing_token"]
+    attempts = claimed["attempts"]
+    worker_id = claimed["worker_id"]
+    attempt_started_at = claimed["started_at"] or datetime.now(UTC)
     request = build_analysis_request(
         session,
         aoi_version_id=str(claimed["aoi_version_id"]),
@@ -173,9 +199,28 @@ def execute_claimed_job(session, provider, claimed: dict, store=None) -> dict:
     try:
         result = run_analysis(session, provider, request, store=store)
     except ProviderError as exc:
-        attempts = claimed["attempts"]
-        if exc.retryable and attempts < claimed["max_attempts"]:
-            published = _publish(session, job_id, fencing_token, status="retry_wait", error=exc.message)
+        will_retry = exc.retryable and attempts < claimed["max_attempts"]
+        status = "retry_wait" if will_retry else "failed"
+        _record_attempt(
+            session,
+            job_id=job_id,
+            attempt_number=attempts,
+            worker_id=worker_id,
+            started_at=attempt_started_at,
+            outcome=status,
+            reason_code=exc.reason_code,
+            error=exc.message,
+        )
+        if will_retry:
+            published = _publish(
+                session,
+                job_id,
+                fencing_token,
+                status="retry_wait",
+                error=exc.message,
+                last_reason_code=exc.reason_code,
+                retry_not_before=retry_not_before(attempts),
+            )
         else:
             published = _publish(
                 session,
@@ -183,21 +228,33 @@ def execute_claimed_job(session, provider, claimed: dict, store=None) -> dict:
                 fencing_token,
                 status="failed",
                 error=exc.message,
+                last_reason_code=exc.reason_code,
                 completed_at=datetime.now(UTC),
             )
         return {
-            "status": "retry_wait" if (exc.retryable and attempts < claimed["max_attempts"]) else "failed",
+            "status": status,
             "error": exc.message,
             "reason_code": exc.reason_code,
             "lease_held": published,
         }
 
+    _record_attempt(
+        session,
+        job_id=job_id,
+        attempt_number=attempts,
+        worker_id=worker_id,
+        started_at=attempt_started_at,
+        outcome="succeeded",
+        reason_code=None,
+        error=None,
+    )
     published = _publish(
         session,
         job_id,
         fencing_token,
         status="succeeded",
         completed_at=datetime.now(UTC),
+        last_reason_code=None,
         processing_run_id=result["processing_run_id"],
         eo_observation_id=result["eo_observation_id"],
     )

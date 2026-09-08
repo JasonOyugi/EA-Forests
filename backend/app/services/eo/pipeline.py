@@ -15,7 +15,14 @@ from sqlalchemy import func, select
 from app.db import schema as s
 from app.services.eo.feature_registry import FEATURE_RECIPE_KEY, FEATURE_RECIPE_VERSION
 from app.services.eo.grid import select_grid
-from app.services.eo.provider import DiscoveryManifest, ExactGeometry, ExtractionResult, SourceItem
+from app.services.eo.provider import (
+    DiscoveryManifest,
+    ExactGeometry,
+    ExtractionResult,
+    ProviderError,
+    SourceItem,
+)
+from app.services.eo.reliability import WorkUnitClock
 from app.services.eo.request import EOAnalysisRequest
 from app.services.evidence.artifacts import LocalArtifactStore
 from app.services.state.registry import audit_context, insert_row
@@ -202,6 +209,16 @@ def run_analysis(session, provider, request: EOAnalysisRequest, store=None) -> d
         role="aoi",
     )
 
+    # Work-unit deadline (distinct from the provider's own per-call transport
+    # deadline in ee_provider.py -- see reliability.py's module docstring for
+    # why this is a cooperative post-call check rather than a threaded
+    # timeout racing this function's own DB session). A single analysis makes
+    # at most one discover() and two extract() Earth Engine calls, each
+    # already bounded by the provider deadline, so exceeding this budget here
+    # means something outside that bound (e.g. local grid computation) ran
+    # long -- and per policy, an over-budget result is not published as a
+    # success; it is surfaced as a retryable timeout instead.
+    clock = WorkUnitClock()
     manifest: DiscoveryManifest = provider.discover(
         geometry, request.collection_key, request.window_start, request.window_end
     )
@@ -213,6 +230,13 @@ def run_analysis(session, provider, request: EOAnalysisRequest, store=None) -> d
         request.qa_profile_key,
         request.qa_profile_version,
     )
+    if clock.exceeded():
+        raise ProviderError(
+            "WORK_UNIT_TIMEOUT",
+            f"Analysis exceeded the {clock.budget_seconds}s work-unit deadline "
+            f"({clock.elapsed_seconds():.1f}s elapsed)",
+            retryable=True,
+        )
 
     source_item_rows = {}
     for item in result.used_items:

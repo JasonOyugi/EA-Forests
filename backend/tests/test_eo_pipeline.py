@@ -559,6 +559,146 @@ def test_run_job_convenience_wrapper_still_uses_fencing(db, store):
     assert row["status"] == "succeeded"
 
 
+# --- bounded EE evaluation latency: backoff, attempt audit trail (S2 history v0.1 Parts 2-4) ---
+
+
+def test_retryable_failure_sets_backoff_and_is_not_reclaimable_until_it_passes(db, store):
+    aoi_version_id = ready_aoi_version(db, store)
+    job = enqueue(
+        db,
+        aoi_version_id=aoi_version_id,
+        window_start=WINDOW_START,
+        window_end=WINDOW_END,
+        provider_key="google_earth_engine",
+        collection_key=COLLECTION,
+        recipe_key=RECIPE,
+        recipe_version="1",
+        qa_profile_key=QA_PROFILE,
+        qa_profile_version="1",
+        statistics_profile="moments-v1",
+    )
+    claimed = claim_job(db, worker_id="worker-a")
+    provider = FakeEOProvider(raise_error=ProviderError("PROVIDER_TIMEOUT", "deadline exceeded", retryable=True))
+    result = execute_claimed_job(db, provider, claimed, store=store)
+    assert result["status"] == "retry_wait"
+    assert result["reason_code"] == "PROVIDER_TIMEOUT"
+
+    row = db.execute(select(s.eo_job).where(s.eo_job.c.id == job["id"])).mappings().one()
+    assert row["status"] == "retry_wait"
+    assert row["last_reason_code"] == "PROVIDER_TIMEOUT"
+    assert row["retry_not_before"] is not None
+    assert row["retry_not_before"] > datetime.now(UTC)
+
+    # Backoff has not elapsed yet: nothing is claimable.
+    assert claim_job(db, worker_id="worker-b") is None
+
+    # Force the backoff window into the past (same transaction, so the
+    # `canonical.actor`/`reason` set by the earlier claim_job call still
+    # applies -- same pattern as the lease-expiry tests above).
+    db.execute(
+        text(
+            "UPDATE processing.eo_job SET retry_not_before = clock_timestamp() - interval '1 second' "
+            "WHERE id = :id"
+        ),
+        {"id": job["id"]},
+    )
+    recovered = claim_job(db, worker_id="worker-b")
+    assert recovered is not None
+    assert recovered["id"] == job["id"]
+
+
+def test_retry_exhaustion_leaves_last_reason_code_on_the_failed_job(db, store):
+    aoi_version_id = ready_aoi_version(db, store)
+    job = enqueue(
+        db,
+        aoi_version_id=aoi_version_id,
+        window_start=WINDOW_START,
+        window_end=WINDOW_END,
+        provider_key="google_earth_engine",
+        collection_key=COLLECTION,
+        recipe_key=RECIPE,
+        recipe_version="1",
+        qa_profile_key=QA_PROFILE,
+        qa_profile_version="1",
+        statistics_profile="moments-v1",
+    )
+    provider = FakeEOProvider(raise_error=ProviderError("PROVIDER_UNAVAILABLE", "boom", retryable=True))
+    for _ in range(3):
+        claimed = claim_job(db, worker_id="worker-a")
+        assert claimed is not None
+        execute_claimed_job(db, provider, claimed, store=store)
+        db.execute(
+            text(
+                "UPDATE processing.eo_job SET retry_not_before = clock_timestamp() - interval '1 second' "
+                "WHERE id = :id"
+            ),
+            {"id": job["id"]},
+        )
+    row = db.execute(select(s.eo_job).where(s.eo_job.c.id == job["id"])).mappings().one()
+    assert row["status"] == "failed"
+    assert row["attempts"] == 3
+    assert row["last_reason_code"] == "PROVIDER_UNAVAILABLE"
+    # A non-retryable/exhausted failure carries no backoff -- there is nothing left to retry.
+    assert row["retry_not_before"] is None or row["retry_not_before"] < datetime.now(UTC)
+
+
+def test_eo_job_attempt_records_each_attempt_immutably(db, store):
+    aoi_version_id = ready_aoi_version(db, store)
+    job = enqueue(
+        db,
+        aoi_version_id=aoi_version_id,
+        window_start=WINDOW_START,
+        window_end=WINDOW_END,
+        provider_key="google_earth_engine",
+        collection_key=COLLECTION,
+        recipe_key=RECIPE,
+        recipe_version="1",
+        qa_profile_key=QA_PROFILE,
+        qa_profile_version="1",
+        statistics_profile="moments-v1",
+    )
+    # Attempt 1: times out.
+    claimed = claim_job(db, worker_id="worker-a")
+    timeout_provider = FakeEOProvider(raise_error=ProviderError("PROVIDER_TIMEOUT", "slow", retryable=True))
+    execute_claimed_job(db, timeout_provider, claimed, store=store)
+    db.execute(
+        text(
+            "UPDATE processing.eo_job SET retry_not_before = clock_timestamp() - interval '1 second' "
+            "WHERE id = :id"
+        ),
+        {"id": job["id"]},
+    )
+    # Attempt 2: succeeds.
+    claimed2 = claim_job(db, worker_id="worker-a")
+    execute_claimed_job(db, FakeEOProvider(items=sample_items(1)), claimed2, store=store)
+
+    attempts = (
+        db.execute(
+            select(s.eo_job_attempt)
+            .where(s.eo_job_attempt.c.eo_job_id == job["id"])
+            .order_by(s.eo_job_attempt.c.attempt_number)
+        )
+        .mappings()
+        .all()
+    )
+    assert len(attempts) == 2
+    assert attempts[0]["attempt_number"] == 1
+    assert attempts[0]["outcome"] == "retry_wait"
+    assert attempts[0]["reason_code"] == "PROVIDER_TIMEOUT"
+    assert attempts[1]["attempt_number"] == 2
+    assert attempts[1]["outcome"] == "succeeded"
+    assert attempts[1]["reason_code"] is None
+
+    # The timed-out attempt's row is never mutated into the later success --
+    # it is a separate, immutable row (audit.guard_history()).
+    with pytest.raises(DBAPIError), db.begin_nested():
+        db.execute(
+            s.eo_job_attempt.update()
+            .where(s.eo_job_attempt.c.id == attempts[0]["id"])
+            .values(outcome="succeeded")
+        )
+
+
 # --- low-support / small-AOI statistics policy (Parts 2, 13) ---------------
 
 

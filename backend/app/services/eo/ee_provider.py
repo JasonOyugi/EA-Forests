@@ -20,7 +20,8 @@ from app.services.eo.provider import (
     ProviderError,
     SourceItem,
 )
-from app.services.site_classification import ensure_earth_engine_initialized, safe_getinfo
+from app.services.eo.reliability import PROVIDER_DEADLINE_MS
+from app.services.site_classification import ensure_earth_engine_initialized
 
 PROVIDER_KEY = "google_earth_engine"
 COLLECTION_KEY = "COPERNICUS/S2_SR_HARMONIZED"
@@ -33,6 +34,43 @@ MAX_PIXELS = int(1e8)
 # evidence; see country-pass Part 2 report for the investigation that
 # confirmed this is unrelated to the statistics fix.
 MIN_SUPPORT_ACQUISITIONS = 2
+
+
+_deadline_applied = False
+
+
+def _ensure_provider_deadline() -> None:
+    """Sets a real, transport-level deadline on every subsequent Earth Engine
+    API call (verified live against ee-oyugijason: a tightened deadline here
+    surfaces as a builtin ``TimeoutError`` from the actual HTTP read, not a
+    Python-level wrapper racing an uncontrolled request -- see
+    reliability.py's module docstring). Applied once per process; global
+    process state, same as ``ee.Initialize()`` itself.
+    """
+    global _deadline_applied
+    if _deadline_applied:
+        return
+    ee.data.setDeadline(PROVIDER_DEADLINE_MS)
+    _deadline_applied = True
+
+
+def _getinfo(obj):
+    """Like ``site_classification.safe_getinfo``, but preserves enough of the
+    original exception to classify a real provider timeout (``TimeoutError``,
+    raised by ee's own transport when ``_ensure_provider_deadline`` 's limit
+    is hit) as distinctly retryable from any other provider failure, instead
+    of collapsing every exception into one generic message.
+    """
+    try:
+        return obj.getInfo()
+    except TimeoutError as exc:
+        raise ProviderError(
+            "PROVIDER_TIMEOUT",
+            f"Earth Engine request exceeded the {PROVIDER_DEADLINE_MS}ms provider deadline: {exc}",
+            retryable=True,
+        ) from exc
+    except Exception as exc:
+        raise ProviderError("PROVIDER_UNAVAILABLE", f"Earth Engine request failed: {exc}", retryable=True) from exc
 
 
 def _ee_datetime(millis) -> datetime | None:
@@ -60,32 +98,30 @@ class EarthEngineProvider:
         if collection_key != COLLECTION_KEY:
             raise ProviderError("UNSUPPORTED_COLLECTION", f"Only {COLLECTION_KEY} is registered")
         ensure_earth_engine_initialized()
-        try:
-            aoi = ee.Geometry(geometry.geojson)
-            collection = (
-                ee.ImageCollection(collection_key)
-                .filterBounds(aoi)
-                .filterDate(_ee_date(window_start), _ee_date(window_end))
+        _ensure_provider_deadline()
+        aoi = ee.Geometry(geometry.geojson)
+        collection = (
+            ee.ImageCollection(collection_key)
+            .filterBounds(aoi)
+            .filterDate(_ee_date(window_start), _ee_date(window_end))
+        )
+
+        def to_feature(image):
+            image = ee.Image(image)
+            return ee.Feature(
+                None,
+                {
+                    "system_index": image.get("system:index"),
+                    "sensing_start": image.get("system:time_start"),
+                    "sensing_end": image.get("system:time_end"),
+                    "platform": image.get("SPACECRAFT_NAME"),
+                    "processing_baseline": image.get("PROCESSING_BASELINE"),
+                    "cloudy_pixel_percentage": image.get("CLOUDY_PIXEL_PERCENTAGE"),
+                    "mgrs_tile": image.get("MGRS_TILE"),
+                },
             )
 
-            def to_feature(image):
-                image = ee.Image(image)
-                return ee.Feature(
-                    None,
-                    {
-                        "system_index": image.get("system:index"),
-                        "sensing_start": image.get("system:time_start"),
-                        "sensing_end": image.get("system:time_end"),
-                        "platform": image.get("SPACECRAFT_NAME"),
-                        "processing_baseline": image.get("PROCESSING_BASELINE"),
-                        "cloudy_pixel_percentage": image.get("CLOUDY_PIXEL_PERCENTAGE"),
-                        "mgrs_tile": image.get("MGRS_TILE"),
-                    },
-                )
-
-            raw = safe_getinfo(ee.FeatureCollection(collection.map(to_feature)))
-        except RuntimeError as exc:
-            raise ProviderError("PROVIDER_UNAVAILABLE", str(exc), retryable=True) from exc
+        raw = _getinfo(ee.FeatureCollection(collection.map(to_feature)))
 
         items = []
         for feature in raw.get("features", []):
@@ -140,6 +176,7 @@ class EarthEngineProvider:
                 f"Only {QA_PROFILE_CORE} executes in this vertical slice",
             )
         ensure_earth_engine_initialized()
+        _ensure_provider_deadline()
         used_items = manifest.included_items
         if not used_items:
             return ExtractionResult(
@@ -196,10 +233,7 @@ class EarthEngineProvider:
             )
             return ee.Feature(None, {"system_index": image.get("system:index"), "valid_count": count})
 
-        try:
-            support_raw = safe_getinfo(ee.FeatureCollection(prepared.map(acquisition_support)))
-        except RuntimeError as exc:
-            raise ProviderError("PROVIDER_UNAVAILABLE", str(exc), retryable=True) from exc
+        support_raw = _getinfo(ee.FeatureCollection(prepared.map(acquisition_support)))
 
         eligible_ids = {
             f["properties"]["system_index"]
@@ -266,18 +300,15 @@ class EarthEngineProvider:
             sum_bands.append(band.mask().rename(f"{key}_w"))
         stats_image = ee.Image.cat(sum_bands)
 
-        try:
-            stats = safe_getinfo(
-                stats_image.reduceRegion(
-                    reducer=ee.Reducer.sum(),
-                    geometry=aoi,
-                    crs=crs,
-                    scale=grid.resolution_m,
-                    maxPixels=MAX_PIXELS,
-                )
+        stats = _getinfo(
+            stats_image.reduceRegion(
+                reducer=ee.Reducer.sum(),
+                geometry=aoi,
+                crs=crs,
+                scale=grid.resolution_m,
+                maxPixels=MAX_PIXELS,
             )
-        except RuntimeError as exc:
-            raise ProviderError("PROVIDER_UNAVAILABLE", str(exc), retryable=True) from exc
+        )
 
         total_weight = stats.get("total_weight")
         eligible_weight = stats.get("eligible_weight")
