@@ -1,0 +1,272 @@
+{
+  "tz-uchindile": {
+    "kind": "point_buffer_300m",
+    "s2_scene_count": 10,
+    "s2_ndvi_mean": 0.2002980286749943,
+    "s1_scene_count": 24,
+    "s1_ascending_count": 16,
+    "s1_descending_count": 8,
+    "s1_asc_vv_db_mean": -11.816229788868695,
+    "gedi_l2a_rh98": {
+      "rh98_count": 45,
+      "rh98_max": 59.380001,
+      "rh98_mean": 16.4863580113737,
+      "rh98_min": 0
+    },
+    "gedi_l2b_cover": {
+      "cover_count": 24,
+      "cover_max": 0.9691299796104431,
+      "cover_mean": 0.4703463339907154,
+      "cover_min": 0.011795000173151493
+    },
+    "gedi_l4a_agbd": {
+      "agbd_count": 24,
+      "agbd_max": 666.560364,
+      "agbd_mean": 182.9799024581028,
+      "agbd_min": 11.890047073364258
+    },
+    "palsar2_scene_count": 250,
+    "elevation_m": 1238.2972952760808,
+    "slope_deg": 17.10069279436991
+  },
+  "tz-tanwat": {
+    "kind": "point_buffer_300m",
+    "s2_scene_count": 27,
+    "s2_ndvi_mean": 0.6490872263033486,
+    "s1_scene_count": 40,
+    "s1_ascending_count": 16,
+    "s1_descending_count": 24,
+    "s1_asc_vv_db_mean": -11.972842931829693,
+    "gedi_l2a_rh98": {
+      "rh98_count": 50,
+      "rh98_max": 42.490002,
+      "rh98_mean": 11.517412852276019,
+      "rh98_min": 0
+    },
+    "gedi_l2b_cover": {
+      "cover_count": 24,
+      "cover_max": 0.9478899836540222,
+      "cover_mean": 0.4498447114950833,
+      "cover_min": 0.04714599996805191
+    },
+    "gedi_l4a_agbd": {
+      "agbd_count": 35,
+      "agbd_max": 288.811981,
+      "agbd_mean": 71.91254334565943,
+      "agbd_min": 10.356740951538086
+    },
+    "palsar2_scene_count": 395,
+    "elevation_m": 1827.1036362278799,
+    "slope_deg": 7.012659257956116
+  },
+  "tz-saohill": {
+    "kind": "point_buffer_300m",
+    "s2_scene_count": 10,
+    "s2_ndvi_mean": 0.7141237379283399,
+    "s1_scene_count": 16,
+    "s1_ascending_count": 8,
+    "s1_descending_count": 8,
+    "s1_asc_vv_db_mean": -11.55441858759332,
+    "gedi_l2a_rh98": {
+      "rh98_count": 44,
+      "rh98_max": 30.229999542236328,
+      "rh98_mean": 9.718773987779207,
+      "rh98_min": 0
+    },
+    "gedi_l2b_cover": {
+      "cover_count": 39,
+      "cover_max": 0.7965589761734009,
+      "cover_mean": 0.4472152371789317,
+      "cover_min": 0.024769000709056854
+    },
+    "gedi_l4a_agbd": {
+      "agbd_count": 39,
+      "agbd_max": 322.198151,
+      "agbd_mean": 121.53755711197418,
+      "agbd_min": 1.22843599319458
+    },
+    "palsar2_scene_count": 561,
+    "elevation_m": 1877.7614315106925,
+    "slope_deg": 2.9372342595287644
+  },
+  "tz-tabora": {
+    "kind": "point_buffer_300m",
+    "s2_scene_count": 25,
+    "s2_ndvi_mean": 0.2518040148853637,
+    "s1_scene_count": 15,
+    "s1_ascending_count": 7,
+    "s1_descending_count": 8,
+    "s1_asc_vv_db_mean": -6.959720281097395,
+    "gedi_l2a_rh98": {
+      "rh98_count": 80,
+      "rh98_max": 12.380000114440918,
+      "rh98_mean": 3.0856014015262625,
+      "rh98_min": 0
+    },
+    "gedi_l2b_cover": {
+      "cover_count": 47,
+      "cover_max": 0.4984639883041382,
+      "cover_mean": 0.17229001279917103,
+      "cover_min": 0.012012000195682049
+    },
+    "gedi_l4a_agbd": {
+      "agbd_count": 47,
+      "agbd_max": 57.79390335083008,
+      "agbd_mean": 14.659368466784708,
+      "agbd_min": 4.486591815948486
+    },
+    "palsar2_scene_count": 354,
+    "elevation_m": 1200.4121658963027,
+    "slope_deg": 2.3260940387231135
+  },
+  "ug-zulia": {
+    "kind": "canonical_polygon",
+    "s2_scene_count": 48,
+    "s2_ndvi_mean": 0.39184652620417826,
+    "s1_scene_count": 25,
+    "s1_ascending_count": 17,
+    "s1_descending_count": 8,
+    "s1_asc_vv_db_mean": -11.063024635200122,
+    "gedi_l2a_rh98": {
+      "rh98_count": 136779,
+      "rh98_max": 157.479996,
+      "rh98_mean": 4.7161614936725345,
+      "rh98_min": 0
+    },
+    "gedi_l2b_cover": {
+      "cover_count": 101176,
+      "cover_max": 0.9914939999580383,
+      "cover_mean": 0.16662958509156364,
+      "cover_min": 0
+    },
+    "gedi_l4a_agbd": {
+      "agbd_count": 101826,
+      "agbd_max": 2409.142334,
+      "agbd_mean": 24.599257218499783,
+      "agbd_min": 0.09101100265979767
+    },
+    "palsar2_scene_count": 449,
+    "elevation_m": 1259.6225366634706,
+    "slope_deg": 10.228043169262506
+  },
+  "ug-musamya": {
+    "kind": "canonical_polygon",
+    "s2_scene_count": 18,
+    "s2_ndvi_mean": 0.7001585287171672,
+    "s1_scene_count": 29,
+    "s1_ascending_count": 11,
+    "s1_descending_count": 18,
+    "s1_asc_vv_db_mean": -10.017402216703228,
+    "gedi_l2a_rh98": {
+      "rh98_count": 858,
+      "rh98_max": 158.720001,
+      "rh98_mean": 11.463874035477009,
+      "rh98_min": 0
+    },
+    "gedi_l2b_cover": {
+      "cover_count": 528,
+      "cover_max": 0.9896000027656555,
+      "cover_mean": 0.3190859837437222,
+      "cover_min": 0.0017170000355690718
+    },
+    "gedi_l4a_agbd": {
+      "agbd_count": 780,
+      "agbd_max": 1008.591736,
+      "agbd_mean": 59.11718283345655,
+      "agbd_min": 8.586240768432617
+    },
+    "palsar2_scene_count": 279,
+    "elevation_m": 1200.7150890653388,
+    "slope_deg": 4.341595776324881
+  },
+  "ug-epor": {
+    "kind": "canonical_polygon",
+    "s2_scene_count": 41,
+    "s2_ndvi_mean": 0.6310136498846384,
+    "s1_scene_count": 34,
+    "s1_ascending_count": 8,
+    "s1_descending_count": 26,
+    "s1_asc_vv_db_mean": -9.966390526301595,
+    "gedi_l2a_rh98": {
+      "rh98_count": 374,
+      "rh98_max": 60.240002,
+      "rh98_mean": 6.470839130853348,
+      "rh98_min": 0
+    },
+    "gedi_l2b_cover": {
+      "cover_count": 315,
+      "cover_max": 0.9129719734191895,
+      "cover_mean": 0.074049201987965,
+      "cover_min": 0.0004769999941345304
+    },
+    "gedi_l4a_agbd": {
+      "agbd_count": 315,
+      "agbd_max": 430.879211,
+      "agbd_mean": 13.250243421113412,
+      "agbd_min": 3.6957499980926514
+    },
+    "palsar2_scene_count": 370,
+    "elevation_m": 1049.2719086891716,
+    "slope_deg": 2.8910163602849694
+  },
+  "ug-bunjazi": {
+    "kind": "canonical_polygon",
+    "s2_scene_count": 16,
+    "s2_ndvi_mean": 0.819307874130608,
+    "s1_scene_count": 42,
+    "s1_ascending_count": 16,
+    "s1_descending_count": 26,
+    "s1_asc_vv_db_mean": -8.394546244766017,
+    "gedi_l2a_rh98": {
+      "rh98_count": 153,
+      "rh98_max": 24.760000228881836,
+      "rh98_mean": 2.563802953746514,
+      "rh98_min": 0
+    },
+    "gedi_l2b_cover": {
+      "cover_count": 46,
+      "cover_max": 0.91378253698349,
+      "cover_mean": 0.17400401073587993,
+      "cover_min": 0.001998000079765916
+    },
+    "gedi_l4a_agbd": {
+      "agbd_count": 64,
+      "agbd_max": 162.590134,
+      "agbd_mean": 22.527661345355785,
+      "agbd_min": 10.160457611083984
+    },
+    "palsar2_scene_count": 376,
+    "elevation_m": 1174.6132874339453,
+    "slope_deg": 6.520808657433404
+  },
+  "ug-kihihi": {
+    "kind": "canonical_polygon",
+    "s2_scene_count": 32,
+    "s2_ndvi_mean": 0.5407104071696899,
+    "s1_scene_count": 30,
+    "s1_ascending_count": 14,
+    "s1_descending_count": 16,
+    "s1_asc_vv_db_mean": -10.314303936109914,
+    "gedi_l2a_rh98": {
+      "rh98_count": 78,
+      "rh98_max": 71.510002,
+      "rh98_mean": 7.012909032067249,
+      "rh98_min": 0
+    },
+    "gedi_l2b_cover": {
+      "cover_count": 46,
+      "cover_max": 0.9415494799613953,
+      "cover_mean": 0.24465882540987616,
+      "cover_min": 0.009452154859900475
+    },
+    "gedi_l4a_agbd": {
+      "agbd_count": 60,
+      "agbd_max": 1142.981323,
+      "agbd_mean": 90.25812337752932,
+      "agbd_min": 9.751398086547852
+    },
+    "palsar2_scene_count": 467,
+    "elevation_m": 1156.6468928759684,
+    "slope_deg": 3.181924898663727
+  }
+}

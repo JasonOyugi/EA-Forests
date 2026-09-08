@@ -13,7 +13,6 @@ from pathlib import Path
 from sqlalchemy import func, select
 
 from app.db import schema as s
-from app.services.eo.feature_registry import FEATURE_RECIPE_KEY, FEATURE_RECIPE_VERSION
 from app.services.eo.grid import select_grid
 from app.services.eo.provider import (
     DiscoveryManifest,
@@ -107,13 +106,19 @@ def build_analysis_request(
     )
 
 
-def _register_processing_version(session, store):
+def _register_processing_version(session, store, *, recipe_key: str, recipe_version: str):
+    # recipe_key/recipe_version come from the REQUEST, not a hardcoded
+    # constant: this function registers the processing version for whichever
+    # recipe actually ran (S2 optical, S1 backscatter, ...), so a second
+    # sensor's recipe is never mis-tagged with the S2 feature registry's
+    # identity. See feature_registry.py (optical) / sar_feature_registry.py
+    # (S1) for the recipe-specific formulas this version's code_hash covers.
     code_hash = _code_hash()
     existing = (
         session.execute(
             select(s.processing_version).where(
-                s.processing_version.c.recipe_key == FEATURE_RECIPE_KEY,
-                s.processing_version.c.recipe_version == FEATURE_RECIPE_VERSION,
+                s.processing_version.c.recipe_key == recipe_key,
+                s.processing_version.c.recipe_version == recipe_version,
                 s.processing_version.c.code_hash == code_hash,
             )
         )
@@ -128,8 +133,8 @@ def _register_processing_version(session, store):
     return insert_row(
         session,
         s.processing_version,
-        recipe_key=FEATURE_RECIPE_KEY,
-        recipe_version=FEATURE_RECIPE_VERSION,
+        recipe_key=recipe_key,
+        recipe_version=recipe_version,
         code_hash=code_hash,
         environment=environment,
         configuration_schema_version=CONFIGURATION_SCHEMA_VERSION,
@@ -172,7 +177,9 @@ def run_analysis(session, provider, request: EOAnalysisRequest, store=None) -> d
     if world_id != request.world_id:
         raise ValueError("AOI version world does not match the requested world")
 
-    processing_version = _register_processing_version(session, store)
+    processing_version = _register_processing_version(
+        session, store, recipe_key=request.recipe_key, recipe_version=request.recipe_version
+    )
     run = insert_row(
         session,
         s.processing_run,
@@ -351,8 +358,8 @@ def run_analysis(session, provider, request: EOAnalysisRequest, store=None) -> d
             session,
             s.eo_feature_set,
             eo_observation_id=observation["id"],
-            feature_recipe_key=FEATURE_RECIPE_KEY,
-            feature_recipe_version=FEATURE_RECIPE_VERSION,
+            feature_recipe_key=request.recipe_key,
+            feature_recipe_version=request.recipe_version,
             statistics_profile=request.statistics_profile,
         )
         for feature in result.features:

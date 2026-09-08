@@ -57,6 +57,132 @@ def test_getinfo_passes_through_the_result_on_success():
     assert _getinfo(_Ok()) == {"answer": 42}
 
 
+# --- Sentinel-1 dispatch/validation (offline: these paths raise before any
+# Earth Engine call, so they are testable without live auth) --------------
+
+
+def test_discover_rejects_unknown_collection():
+    from app.services.eo.ee_provider import EarthEngineProvider
+
+    provider = EarthEngineProvider()
+    with pytest.raises(ProviderError) as excinfo:
+        provider.discover(
+            _dummy_geometry(), "NOT_A_REGISTERED_COLLECTION", datetime(2026, 6, 1, tzinfo=UTC), datetime(2026, 9, 1, tzinfo=UTC)
+        )
+    assert excinfo.value.reason_code == "UNSUPPORTED_COLLECTION"
+
+
+def test_extract_rejects_unknown_collection_via_manifest():
+    from app.services.eo.ee_provider import EarthEngineProvider
+    from app.services.eo.provider import DiscoveryManifest
+
+    provider = EarthEngineProvider()
+    manifest = DiscoveryManifest(
+        provider_key="google_earth_engine",
+        collection_key="NOT_A_REGISTERED_COLLECTION",
+        window_start=datetime(2026, 6, 1, tzinfo=UTC),
+        window_end=datetime(2026, 9, 1, tzinfo=UTC),
+        candidate_count=0,
+        items=(),
+    )
+    with pytest.raises(ProviderError) as excinfo:
+        provider.extract(_dummy_geometry(), manifest, "irrelevant", "1", "irrelevant", "1")
+    assert excinfo.value.reason_code == "UNSUPPORTED_COLLECTION"
+
+
+def test_extract_s1_rejects_unregistered_recipe_key():
+    from app.services.eo.ee_provider import S1_COLLECTION_KEY, EarthEngineProvider
+    from app.services.eo.provider import DiscoveryManifest
+    from app.services.eo.sar_feature_registry import QA_PROFILE_KEY, RECIPE_VERSION
+
+    provider = EarthEngineProvider()
+    manifest = DiscoveryManifest(
+        provider_key="google_earth_engine",
+        collection_key=S1_COLLECTION_KEY,
+        window_start=datetime(2026, 6, 1, tzinfo=UTC),
+        window_end=datetime(2026, 9, 1, tzinfo=UTC),
+        candidate_count=0,
+        items=(),
+    )
+    with pytest.raises(ProviderError) as excinfo:
+        provider.extract(_dummy_geometry(), manifest, "s1-grd-backscatter-orbit-agnostic-v1", RECIPE_VERSION, QA_PROFILE_KEY, RECIPE_VERSION)
+    assert excinfo.value.reason_code == "UNKNOWN_RECIPE"
+
+
+def test_extract_s1_rejects_unknown_qa_profile():
+    from app.services.eo.ee_provider import S1_COLLECTION_KEY, EarthEngineProvider
+    from app.services.eo.provider import DiscoveryManifest
+    from app.services.eo.sar_feature_registry import RECIPE_KEY_ASCENDING, RECIPE_VERSION
+
+    provider = EarthEngineProvider()
+    manifest = DiscoveryManifest(
+        provider_key="google_earth_engine",
+        collection_key=S1_COLLECTION_KEY,
+        window_start=datetime(2026, 6, 1, tzinfo=UTC),
+        window_end=datetime(2026, 9, 1, tzinfo=UTC),
+        candidate_count=0,
+        items=(),
+    )
+    with pytest.raises(ProviderError) as excinfo:
+        provider.extract(_dummy_geometry(), manifest, RECIPE_KEY_ASCENDING, RECIPE_VERSION, "some-other-qa-profile/1", "1")
+    assert excinfo.value.reason_code == "UNKNOWN_QA_PROFILE"
+
+
+def test_extract_s1_orbit_pass_homogeneity_excludes_the_other_pass():
+    """Without any live EE call: a manifest with BOTH orbit passes present
+    must, after filtering to one recipe's pass, use only that pass's items --
+    verified by forcing the "no acquisitions" early-return path when the
+    manifest contains only the WRONG pass for the requested recipe.
+    """
+    from app.services.eo.ee_provider import S1_COLLECTION_KEY, EarthEngineProvider
+    from app.services.eo.provider import DiscoveryManifest, SourceItem
+    from app.services.eo.sar_feature_registry import (
+        QA_PROFILE_KEY,
+        RECIPE_KEY_ASCENDING,
+        RECIPE_VERSION,
+    )
+
+    descending_only_item = SourceItem(
+        provider_key="google_earth_engine",
+        collection_key=S1_COLLECTION_KEY,
+        item_id="S1A_TEST_DESCENDING",
+        sensing_start=datetime(2026, 6, 15, tzinfo=UTC),
+        sensing_end=None,
+        platform="Sentinel-1",
+        processing_baseline=None,
+        properties={"orbit_pass": "DESCENDING", "relative_orbit": 1, "polarisations": ["VV", "VH"]},
+        role="signal",
+        included=True,
+    )
+    manifest = DiscoveryManifest(
+        provider_key="google_earth_engine",
+        collection_key=S1_COLLECTION_KEY,
+        window_start=datetime(2026, 6, 1, tzinfo=UTC),
+        window_end=datetime(2026, 9, 1, tzinfo=UTC),
+        candidate_count=1,
+        items=(descending_only_item,),
+    )
+    provider = EarthEngineProvider()
+    # Requesting the ASCENDING recipe against a manifest that only has a
+    # DESCENDING item must find zero eligible items -- proving the orbit
+    # filter actually excludes the wrong pass rather than using it anyway.
+    result = provider.extract(_dummy_geometry(), manifest, RECIPE_KEY_ASCENDING, RECIPE_VERSION, QA_PROFILE_KEY, RECIPE_VERSION)
+    assert result.outcome == "no_observation"
+    assert result.reason_codes == ("NO_ACQUISITIONS_FOR_ORBIT_PASS",)
+    assert result.eligible_acquisition_count == 0
+
+
+def _dummy_geometry():
+    from app.services.eo.provider import ExactGeometry
+
+    return ExactGeometry(
+        aoi_version_id="00000000-0000-0000-0000-000000000000",
+        geometry_hash="deadbeef",
+        geojson={"type": "Point", "coordinates": [0, 0]},
+        area_m2=1.0,
+    )
+
+
 def test_backoff_grows_with_attempt_number_and_is_bounded():
     # No jitter, so growth is exactly deterministic and comparable.
     b1 = compute_backoff_seconds(1, random_fn=lambda: 0.5)
