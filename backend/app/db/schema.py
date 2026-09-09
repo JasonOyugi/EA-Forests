@@ -1092,6 +1092,8 @@ eo_job = table(
     fk("aoi_version_id", "geo.aoi_version.id"),
     ts("window_start"),
     ts("window_end"),
+    col("provider_key"),
+    col("collection_key"),
     col("recipe_key"),
     col("recipe_version"),
     col("qa_profile_key"),

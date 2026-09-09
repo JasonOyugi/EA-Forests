@@ -1,0 +1,182 @@
+[
+  {
+    "cfr": "Epor",
+    "orbit": "ascending",
+    "job_id": "140a0504-7637-4c34-8150-5e0cff6273c4",
+    "result": {
+      "status": "succeeded",
+      "lease_held": true,
+      "processing_run_id": "4118cfb9-d3fa-473d-a7cd-58c535d91381",
+      "eo_series_id": "2cd9a907-8b36-42bf-80b9-69c54c17ffb2",
+      "eo_observation_id": "ce8fe212-c014-489a-9b2f-6f1177925fd5",
+      "eo_feature_set_id": "bd234147-1c6a-4d88-8a8d-2eba1bd073f1",
+      "outcome": "success",
+      "reason_codes": [],
+      "acquisition_count": 33,
+      "eligible_acquisition_count": 8,
+      "usable_observation_fraction": 1.0,
+      "features": [
+        {
+          "feature_key": "s1_vv",
+          "value": -9.849099016147427,
+          "standard_deviation": 0.8461926172084906
+        },
+        {
+          "feature_key": "s1_vh",
+          "value": -15.921716707092562,
+          "standard_deviation": 0.9722488518595851
+        }
+      ]
+    }
+  },
+  {
+    "cfr": "Epor",
+    "orbit": "descending",
+    "job_id": "c1818ff5-a5e1-4a5c-b0c5-9e794e695ee4",
+    "result": {
+      "status": "succeeded",
+      "lease_held": true,
+      "processing_run_id": "31e0f37c-6c97-4a06-bd5f-b1c36aafb78e",
+      "eo_series_id": "f6f59723-0fe2-4e13-8337-596c92d15cca",
+      "eo_observation_id": "499dc566-8bd8-49b5-bd5c-cdabf3a13543",
+      "eo_feature_set_id": "2ac6a213-ff45-47ad-a7cd-b2c6cee1ed6b",
+      "outcome": "success",
+      "reason_codes": [],
+      "acquisition_count": 33,
+      "eligible_acquisition_count": 25,
+      "usable_observation_fraction": 1.0,
+      "features": [
+        {
+          "feature_key": "s1_vv",
+          "value": -8.690243332798577,
+          "standard_deviation": 0.7190502787199802
+        },
+        {
+          "feature_key": "s1_vh",
+          "value": -15.088618400829532,
+          "standard_deviation": 0.7482860776953961
+        }
+      ]
+    }
+  },
+  {
+    "cfr": "Zulia",
+    "orbit": "ascending",
+    "job_id": "9754040a-d874-4582-bdf3-08dff0054448",
+    "result": {
+      "status": "succeeded",
+      "lease_held": true,
+      "processing_run_id": "1b615132-dffa-4a4f-a6f4-99102d9f14a7",
+      "eo_series_id": "ca75ed61-05ad-4497-ba8e-6fa2b368fe68",
+      "eo_observation_id": "3d09f479-d444-419c-ae70-378ea3e84733",
+      "eo_feature_set_id": "94c2198c-e027-45a9-b5a8-1cdc795132e1",
+      "outcome": "success",
+      "reason_codes": [],
+      "acquisition_count": 24,
+      "eligible_acquisition_count": 16,
+      "usable_observation_fraction": 1.0,
+      "features": [
+        {
+          "feature_key": "s1_vv",
+          "value": -10.905420413914657,
+          "standard_deviation": 3.210431230417907
+        },
+        {
+          "feature_key": "s1_vh",
+          "value": -17.414983417046894,
+          "standard_deviation": 3.728200173834147
+        }
+      ]
+    }
+  },
+  {
+    "cfr": "Zulia",
+    "orbit": "descending",
+    "job_id": "0a698117-8890-4dd8-b9cf-88dbe0776e1f",
+    "result": {
+      "status": "succeeded",
+      "lease_held": true,
+      "processing_run_id": "9ca12f6d-b0a1-4bac-b4e1-7d216459e479",
+      "eo_series_id": "553a997d-2c62-4d28-a587-2ac6bee3859d",
+      "eo_observation_id": "641a8c78-71cf-4ca6-90c3-e5e29f9a5787",
+      "eo_feature_set_id": "a2acf661-4ac5-485f-a264-f0256c10faf1",
+      "outcome": "success",
+      "reason_codes": [],
+      "acquisition_count": 24,
+      "eligible_acquisition_count": 8,
+      "usable_observation_fraction": 1.0,
+      "features": [
+        {
+          "feature_key": "s1_vv",
+          "value": -11.470207963220151,
+          "standard_deviation": 2.946441855633253
+        },
+        {
+          "feature_key": "s1_vh",
+          "value": -17.590108368363648,
+          "standard_deviation": 3.3387197948560225
+        }
+      ]
+    }
+  },
+  {
+    "cfr": "Musamya",
+    "orbit": "ascending",
+    "job_id": "6342b1de-ee88-40ef-9b34-4bcdc9acec26",
+    "result": {
+      "status": "succeeded",
+      "lease_held": true,
+      "processing_run_id": "a7d4fdf5-f64d-426a-bee0-bb961d4e0b93",
+      "eo_series_id": "0995b7f3-2541-4adb-9432-c3b9e18ea361",
+      "eo_observation_id": "d3af7e0c-8dd6-453f-afc6-4ab4f063e400",
+      "eo_feature_set_id": "07945c02-a953-4b07-8df4-74f23f6d8dda",
+      "outcome": "success",
+      "reason_codes": [],
+      "acquisition_count": 28,
+      "eligible_acquisition_count": 11,
+      "usable_observation_fraction": 1.0,
+      "features": [
+        {
+          "feature_key": "s1_vv",
+          "value": -9.899777689740631,
+          "standard_deviation": 1.51613948369685
+        },
+        {
+          "feature_key": "s1_vh",
+          "value": -15.410704230618316,
+          "standard_deviation": 1.5990444936777148
+        }
+      ]
+    }
+  },
+  {
+    "cfr": "Musamya",
+    "orbit": "descending",
+    "job_id": "c1929183-03d3-4538-a874-eca8a774d94b",
+    "result": {
+      "status": "succeeded",
+      "lease_held": true,
+      "processing_run_id": "583fbd9f-5284-44bf-96e9-db444ff8086b",
+      "eo_series_id": "91c65ebe-3329-4b2e-a5fc-8244cc7c88d1",
+      "eo_observation_id": "43c53f58-f340-4497-9c13-61ed70d30db6",
+      "eo_feature_set_id": "ca031376-1c56-41e2-8cf3-876cfee0e088",
+      "outcome": "success",
+      "reason_codes": [],
+      "acquisition_count": 28,
+      "eligible_acquisition_count": 17,
+      "usable_observation_fraction": 1.0,
+      "features": [
+        {
+          "feature_key": "s1_vv",
+          "value": -9.266526695688084,
+          "standard_deviation": 1.4322935667537657
+        },
+        {
+          "feature_key": "s1_vh",
+          "value": -15.007400447294764,
+          "standard_deviation": 1.4640906441425598
+        }
+      ]
+    }
+  }
+]

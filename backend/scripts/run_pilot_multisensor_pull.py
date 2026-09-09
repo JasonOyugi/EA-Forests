@@ -12,17 +12,16 @@ convention as scripts/run_eo_pilot.py.
 from __future__ import annotations
 
 import json
-import os
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-import ee  # noqa: E402
-from sqlalchemy import text  # noqa: E402
+import ee
+from sqlalchemy import text
 
-from app.db.session import database_url, engine_for  # noqa: E402
-from app.services.site_classification import ensure_earth_engine_initialized  # noqa: E402
+from app.db.session import database_url, engine_for
+from app.services.site_classification import ensure_earth_engine_initialized
 
 TZ_SITES = [
     {"id": "tz-uchindile", "name": "Uchindile", "lat": -8.72494, "lon": 35.511},
@@ -51,7 +50,7 @@ def ug_geometry(conn, name: str) -> dict:
     return json.loads(row)
 
 
-def pull_site(aoi: "ee.Geometry", label: str) -> dict:
+def pull_site(aoi: ee.Geometry, label: str) -> dict:
     out: dict = {}
     window_start = ee.Date("2026-06-01")
     window_end = ee.Date("2026-09-01")

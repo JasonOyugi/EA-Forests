@@ -1,0 +1,95 @@
+{
+  "schema_version": "eo-pilot-site-manifest/0.2",
+  "generated": "2026-09-09",
+  "supersedes": "outputs/eo/pilot_site_manifest.json (v1 is NOT deleted; this is an explicit re-rank, not a replacement of record)",
+  "method": "Re-ranked after docs/eo/PILOT_GEOMETRY_AUDIT.md. Evaluated the newly-ingested 'large-commercial-forests' estates (BFC, 3x NFC plantations, 9 others) as candidates and did NOT promote any of them: unknown-precision reported-point geometry (explicitly not the original polygon, per the ingestion's own metadata) plus attribute data that is self-labeled 'Dummy functional test data' or an empty unpopulated template for all 13 records, with zero real measured forestry attributes found. Newness of canonical ingestion (2026-09-05) is not evidence of data quality; the underlying source content is unchanged dummy data from an old commit. See audit section B for the full evidence trail.",
+  "pilot_classes": {
+    "calibration_pilots": {
+      "definition": "EO <-> field relationships, observation-operator analysis, temporal matching, information-value analysis. Requires high-confidence spatial support AND strong field evidence AND acceptable temporal compatibility.",
+      "current_members": [],
+      "status": "EMPTY. No site in this repository currently satisfies all three requirements simultaneously -- the Tanzania sites have real field measurements but only MEDIUM_CONFIDENCE point geometry of unstated precision/meaning; the Uganda CFRs have HIGH_CONFIDENCE polygon geometry but zero field measurements. This is stated plainly rather than forcing a downgraded site into this class."
+    },
+    "engineering_pilots": {
+      "definition": "EO providers, recipes, acquisition geometry, runtime, source availability, worker/job behaviour. Can tolerate weaker biological metadata -- used to prove the pipeline works, not to draw biological conclusions.",
+      "current_members": ["ug-zulia", "ug-musamya", "ug-epor", "ug-bunjazi", "ug-kihihi", "tz-kisolanza", "tz-uchindile", "tz-tanwat", "tz-saohill", "tz-tabora"]
+    }
+  },
+  "sites": [
+    {
+      "id": "ug-zulia", "v1_status": "engineering-suitable (unlabeled)", "geometry_confidence": "HIGH_CONFIDENCE",
+      "pilot_class": "engineering_pilot", "decision": "retained",
+      "reason": "Real canonical polygon (656-CFR cohort), already validated end-to-end for S2 and S1 (ee-oyugijason). No field measurements exist or are expected for Uganda CFRs -- not eligible for calibration_pilot regardless of geometry quality."
+    },
+    {
+      "id": "ug-musamya", "v1_status": "engineering-suitable (unlabeled)", "geometry_confidence": "HIGH_CONFIDENCE",
+      "pilot_class": "engineering_pilot", "decision": "retained", "reason": "Same as ug-zulia."
+    },
+    {
+      "id": "ug-epor", "v1_status": "engineering-suitable (unlabeled)", "geometry_confidence": "HIGH_CONFIDENCE",
+      "pilot_class": "engineering_pilot", "decision": "retained",
+      "reason": "Same as ug-zulia; also already used for the live S1 discover/extract provider proof (both orbit recipes verified end-to-end)."
+    },
+    {
+      "id": "ug-bunjazi", "v1_status": "engineering-suitable (unlabeled)", "geometry_confidence": "HIGH_CONFIDENCE",
+      "pilot_class": "engineering_pilot", "decision": "retained", "reason": "Same as ug-zulia."
+    },
+    {
+      "id": "ug-kihihi", "v1_status": "engineering-suitable (unlabeled)", "geometry_confidence": "HIGH_CONFIDENCE",
+      "pilot_class": "engineering_pilot", "decision": "retained", "reason": "Same as ug-zulia."
+    },
+    {
+      "id": "tz-kisolanza", "v1_status": "field-truth anchor (unlabeled)", "geometry_confidence": "MEDIUM_CONFIDENCE",
+      "pilot_class": "engineering_pilot", "decision": "retained_but_downgraded",
+      "reason": "Real field measurements exist (height/DBH/survival at real campaign dates), but the site is a single point of UNSTATED precision/meaning -- not yet HIGH_CONFIDENCE spatial support. Kept as an engineering pilot (useful for GEDI/S1/S2 discovery behavior at a real forestry point) but MUST NOT be used for biological/calibration conclusions until the point's precision and represented extent are resolved against the original source Excel workbooks."
+    },
+    {
+      "id": "tz-uchindile", "v1_status": "field-truth anchor (unlabeled)", "geometry_confidence": "MEDIUM_CONFIDENCE",
+      "pilot_class": "engineering_pilot", "decision": "retained_but_downgraded", "reason": "Same as tz-kisolanza."
+    },
+    {
+      "id": "tz-tanwat", "v1_status": "field-truth anchor (unlabeled)", "geometry_confidence": "MEDIUM_CONFIDENCE",
+      "pilot_class": "engineering_pilot", "decision": "retained_but_downgraded", "reason": "Same as tz-kisolanza."
+    },
+    {
+      "id": "tz-saohill", "v1_status": "field-truth anchor (unlabeled)", "geometry_confidence": "MEDIUM_CONFIDENCE",
+      "pilot_class": "engineering_pilot", "decision": "retained_but_downgraded", "reason": "Same as tz-kisolanza."
+    },
+    {
+      "id": "tz-tabora", "v1_status": "field-truth anchor (unlabeled)", "geometry_confidence": "MEDIUM_CONFIDENCE",
+      "pilot_class": "engineering_pilot", "decision": "retained_but_downgraded",
+      "reason": "Same as tz-kisolanza. Additionally: this is the site with the strongest apparent cross-sensor 'outlier' signal (lowest NDVI/cover/AGBD, highest VV) -- precisely why its MEDIUM geometry confidence matters most here. See docs/eo/PHASE1_PHYSICS_ANALYSIS.md for the reclassified, confidence-annotated version of that finding."
+    }
+  ],
+  "evaluated_and_not_promoted": [
+    {
+      "candidate": "Busoga Forestry Company (BFC)", "source": "large-commercial-forests (ea_forests_import)",
+      "geometry_confidence": "LOW_CONFIDENCE", "decision": "deferred",
+      "reason": "Unknown-precision reported point (not the original polygon, per ingestion metadata); forestry attributes self-labeled 'Dummy functional test data'."
+    },
+    {
+      "candidate": "NFC Achwa Plantation", "source": "large-commercial-forests (ea_forests_import)",
+      "geometry_confidence": "LOW_CONFIDENCE", "decision": "deferred",
+      "reason": "Unknown-precision reported point; every forestry attribute field is an empty, unpopulated template."
+    },
+    {
+      "candidate": "NFC Luwunga Plantation", "source": "large-commercial-forests (ea_forests_import)",
+      "geometry_confidence": "LOW_CONFIDENCE", "decision": "deferred",
+      "reason": "Unknown-precision reported point; forestry attributes self-labeled 'Dummy functional test data'."
+    },
+    {
+      "candidate": "NFC Namwasa Plantation", "source": "large-commercial-forests (ea_forests_import)",
+      "geometry_confidence": "LOW_CONFIDENCE", "decision": "deferred",
+      "reason": "Same as NFC Luwunga."
+    },
+    {
+      "candidate": "9 remaining large-commercial-forests estates (Ambiance Tree Farm Gomba, Core Woods Ltd, Critical Mass Group Sugar Plantation, Kijani Forestry, Modern Laminates, Nile Fibreboards, Nile Fibreboards Kikonda Plantation, Nile Plywoods (U) Ltd, Woodland Investments)",
+      "source": "large-commercial-forests (ea_forests_import)", "geometry_confidence": "LOW_CONFIDENCE", "decision": "deferred",
+      "reason": "Same pattern: unknown-precision point, dummy/empty attributes. Critical Mass Group is a sugar plantation, not forestry, and should likely be excluded from any future forest-candidate promotion entirely regardless of geometry quality."
+    }
+  ],
+  "what_would_promote_a_deferred_candidate": [
+    "A real polygon boundary for the estate (the UG-NFA-CFR source in config/eo -- actually backend/app/services/ingestion/spatial/sources.json -- is registered but explicitly 'pending acquisition until an actual downloadable polygon artifact is resolved').",
+    "Real (non-dummy) forestry attribute data replacing the current placeholder JSON, ideally with measurement dates.",
+    "Independent confirmation the reported point falls within, not merely near, the operator's actual estate."
+  ]
+}
