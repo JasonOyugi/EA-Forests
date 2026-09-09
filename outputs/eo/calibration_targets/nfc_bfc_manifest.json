@@ -1,0 +1,173 @@
+{
+  "schema_version": "eo-calibration-target-manifest/0.1",
+  "generated": "2026-09-09",
+  "status": "calibration_preparation",
+  "note": "Current NFC/BFC repository records are weak historical evidence only. This manifest targets the real plantations for deliberate geometry + field calibration without promoting dummy records.",
+  "targets": [
+    {
+      "target_key": "ug-nfc-achwa",
+      "canonical_name": "NFC Achwa Plantation",
+      "organisation_family": "New Forests Company",
+      "current_geometry_state": "reported_coordinate_unknown_precision",
+      "current_geometry_confidence": "LOW_CONFIDENCE",
+      "current_field_evidence": "none_calibration_grade",
+      "current_attribute_state": "empty_template_not_field_truth",
+      "missing_geometry_evidence": [
+        "authoritative_estate_or_compartment_polygon",
+        "stand_or_compartment_support_identity",
+        "geometry_date_crs_precision_and_raw_artifact"
+      ],
+      "missing_field_evidence": [
+        "dated_plot_support",
+        "DBH",
+        "height",
+        "stocking_or_survival",
+        "species_or_genetics_where_known",
+        "management_history"
+      ],
+      "eo_already_available": [
+        "Sentinel-2 catalogue/extraction capability",
+        "Sentinel-1 ascending/descending capability",
+        "GEDI discovery capability",
+        "PALSAR-2 catalogue/discovery capability"
+      ],
+      "verification_tasks": [
+        "Verify stand boundary and support type",
+        "Confirm species/genetics",
+        "Confirm planting date",
+        "Measure DBH/height distribution",
+        "Confirm stocking/survival",
+        "Confirm management history"
+      ],
+      "priority": "VERY_HIGH",
+      "information_gain_rationale": "Verified geometry plus dated field plots would convert an existing high-value commercial target from weak point evidence into a usable EO-field calibration unit. No numeric EIG is claimed."
+    },
+    {
+      "target_key": "ug-nfc-luwunga",
+      "canonical_name": "NFC Luwunga Plantation",
+      "organisation_family": "New Forests Company",
+      "current_geometry_state": "reported_coordinate_unknown_precision",
+      "current_geometry_confidence": "LOW_CONFIDENCE",
+      "current_field_evidence": "none_calibration_grade",
+      "current_attribute_state": "dummy_test_content_not_field_truth",
+      "missing_geometry_evidence": [
+        "authoritative_estate_or_compartment_polygon",
+        "stand_or_compartment_support_identity",
+        "geometry_date_crs_precision_and_raw_artifact"
+      ],
+      "missing_field_evidence": [
+        "dated_plot_support",
+        "DBH",
+        "height",
+        "stocking_or_survival",
+        "species_or_genetics_where_known",
+        "management_history"
+      ],
+      "eo_already_available": [
+        "Sentinel-2 catalogue/extraction capability",
+        "Sentinel-1 ascending/descending capability",
+        "GEDI discovery capability",
+        "PALSAR-2 catalogue/discovery capability"
+      ],
+      "verification_tasks": [
+        "Verify stand boundary and support type",
+        "Confirm species/genetics",
+        "Confirm planting date",
+        "Measure DBH/height distribution",
+        "Confirm stocking/survival",
+        "Confirm management history"
+      ],
+      "priority": "VERY_HIGH",
+      "information_gain_rationale": "Real spatial and field evidence would replace a currently unusable dummy calibration record while preserving its historical provenance. No numeric EIG is claimed."
+    },
+    {
+      "target_key": "ug-nfc-namwasa",
+      "canonical_name": "NFC Namwasa Plantation",
+      "organisation_family": "New Forests Company",
+      "current_geometry_state": "reported_coordinate_unknown_precision",
+      "current_geometry_confidence": "LOW_CONFIDENCE",
+      "current_field_evidence": "none_calibration_grade",
+      "current_attribute_state": "dummy_test_content_not_field_truth",
+      "missing_geometry_evidence": [
+        "authoritative_estate_or_compartment_polygon",
+        "stand_or_compartment_support_identity",
+        "geometry_date_crs_precision_and_raw_artifact"
+      ],
+      "missing_field_evidence": [
+        "dated_plot_support",
+        "DBH",
+        "height",
+        "stocking_or_survival",
+        "species_or_genetics_where_known",
+        "management_history"
+      ],
+      "eo_already_available": [
+        "Sentinel-2 catalogue/extraction capability",
+        "Sentinel-1 ascending/descending capability",
+        "GEDI discovery capability",
+        "PALSAR-2 catalogue/discovery capability"
+      ],
+      "verification_tasks": [
+        "Verify stand boundary and support type",
+        "Confirm species/genetics",
+        "Confirm planting date",
+        "Measure DBH/height distribution",
+        "Confirm stocking/survival",
+        "Confirm management history"
+      ],
+      "priority": "VERY_HIGH",
+      "information_gain_rationale": "A high-value commercial estate with existing EO accessibility but no trustworthy calibration-grade spatial/field support in the repository. No numeric EIG is claimed."
+    },
+    {
+      "target_key": "ug-bfc-unresolved-estate",
+      "canonical_name": "Busoga Forestry Company (BFC)",
+      "organisation_family": "Busoga Forestry Company",
+      "current_geometry_state": "reported_coordinate_unknown_precision",
+      "current_geometry_confidence": "LOW_CONFIDENCE",
+      "current_field_evidence": "none_calibration_grade",
+      "current_attribute_state": "dummy_test_content_not_field_truth",
+      "identity_resolution_state": "specific_real_plantation_or_estate_not_yet_resolved_from_trustworthy_evidence",
+      "missing_geometry_evidence": [
+        "resolve_real_estate_or_plantation_identity",
+        "authoritative_estate_or_compartment_polygon",
+        "stand_or_compartment_support_identity",
+        "geometry_date_crs_precision_and_raw_artifact"
+      ],
+      "missing_field_evidence": [
+        "dated_plot_support",
+        "DBH",
+        "height",
+        "stocking_or_survival",
+        "species_or_genetics_where_known",
+        "management_history"
+      ],
+      "eo_already_available": [
+        "Sentinel-2 catalogue/extraction capability",
+        "Sentinel-1 ascending/descending capability",
+        "GEDI discovery capability",
+        "PALSAR-2 catalogue/discovery capability"
+      ],
+      "verification_tasks": [
+        "Resolve real estate/plantation identity represented by the old BFC record",
+        "Verify stand boundary and support type",
+        "Confirm species/genetics",
+        "Confirm planting date",
+        "Measure DBH/height distribution",
+        "Confirm stocking/survival",
+        "Confirm management history"
+      ],
+      "priority": "VERY_HIGH",
+      "information_gain_rationale": "BFC is commercially important, but the existing canonical record does not yet identify trustworthy plantation geometry or real field attributes. Identity resolution is the first information bottleneck. No numeric EIG is claimed."
+    }
+  ],
+  "promotion_rule": {
+    "calibration_pilot_requires": [
+      "high_confidence_field_support_geometry",
+      "real_field_measurements_linked_to_that_support",
+      "field_and_eo_dates_or_explicit_temporal_precision",
+      "sensor_support_overlap_qc",
+      "sufficient_provenance_for_reproducible_alignment"
+    ],
+    "production_biological_inference_authorised": false
+  }
+}
