@@ -22,6 +22,7 @@ from __future__ import annotations
 from datetime import UTC, datetime
 
 from sqlalchemy import select, text
+from sqlalchemy.dialects.postgresql import insert as pg_insert
 
 from app.db import schema as s
 from app.services.eo.pipeline import build_analysis_request, run_analysis
@@ -49,6 +50,16 @@ def enqueue(
 ) -> dict:
     """Deterministic dedup on request identity: an equivalent in-flight or
     completed request returns the existing job instead of creating a new one.
+
+    The insert itself is the dedup guard (``INSERT ... ON CONFLICT
+    (request_hash) DO NOTHING``), not a prior SELECT -- a plain
+    check-then-insert has a real race between the existence check and the
+    insert (two enqueue() calls for the same request identity can both pass
+    the check before either commits), which surfaced live as an unhandled
+    ``uq_eo_job_request_hash`` UniqueViolation crashing the national
+    backfill. Postgres resolves the conflict atomically against the unique
+    index; a losing insert falls through to the SELECT below, which is then
+    guaranteed to see the winning row.
     """
     request = build_analysis_request(
         session,
@@ -64,32 +75,39 @@ def enqueue(
         statistics_profile=statistics_profile,
     )
     request_hash = request.request_hash()
-    existing = (
-        session.execute(select(s.eo_job).where(s.eo_job.c.request_hash == request_hash))
+    audit_context(session, "eo-worker", "Enqueue EO analysis job")
+    inserted = (
+        session.execute(
+            pg_insert(s.eo_job)
+            .values(
+                request_hash=request_hash,
+                world_id=request.world_id,
+                aoi_version_id=request.aoi_version_id,
+                window_start=request.window_start,
+                window_end=request.window_end,
+                provider_key=request.provider_key,
+                collection_key=request.collection_key,
+                recipe_key=request.recipe_key,
+                recipe_version=request.recipe_version,
+                qa_profile_key=request.qa_profile_key,
+                qa_profile_version=request.qa_profile_version,
+                statistics_profile=request.statistics_profile,
+                max_attempts=DEFAULT_MAX_ATTEMPTS,
+            )
+            .on_conflict_do_nothing(index_elements=["request_hash"])
+            .returning(s.eo_job)
+        )
         .mappings()
         .first()
     )
-    if existing:
-        return dict(existing) | {"deduplicated": True}
-    audit_context(session, "eo-worker", "Enqueue EO analysis job")
-    job = insert_row(
-        session,
-        s.eo_job,
-        request_hash=request_hash,
-        world_id=request.world_id,
-        aoi_version_id=request.aoi_version_id,
-        window_start=request.window_start,
-        window_end=request.window_end,
-        provider_key=request.provider_key,
-        collection_key=request.collection_key,
-        recipe_key=request.recipe_key,
-        recipe_version=request.recipe_version,
-        qa_profile_key=request.qa_profile_key,
-        qa_profile_version=request.qa_profile_version,
-        statistics_profile=request.statistics_profile,
-        max_attempts=DEFAULT_MAX_ATTEMPTS,
+    if inserted is not None:
+        return dict(inserted) | {"deduplicated": False}
+    existing = (
+        session.execute(select(s.eo_job).where(s.eo_job.c.request_hash == request_hash))
+        .mappings()
+        .one()
     )
-    return dict(job) | {"deduplicated": False}
+    return dict(existing) | {"deduplicated": True}
 
 
 def claim_job(session, *, worker_id: str, lease_seconds: int = DEFAULT_LEASE_SECONDS) -> dict | None:

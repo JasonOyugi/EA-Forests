@@ -29,6 +29,7 @@ from app.services.eo.work_limits import (
 )
 from app.services.eo.worker import claim_job, enqueue, execute_claimed_job, run_job
 from app.services.ingestion.cfr_geometry import ingest_cfr_polygons
+from app.services.state.registry import audit_context
 
 pytestmark = pytest.mark.integration
 
@@ -312,6 +313,54 @@ def test_job_dedup_on_identical_request(db, store):
     assert first["deduplicated"] is False
     assert second["deduplicated"] is True
     assert first["id"] == second["id"]
+
+
+def test_enqueue_handles_pre_existing_request_hash_without_crashing(db, store):
+    """Regression: this reproduces the real UniqueViolation on
+    ``uq_eo_job_request_hash`` that crashed the Uganda national S2 backfill
+    mid-run. enqueue() previously did a plain SELECT-then-INSERT, which
+    races against any other writer that commits a row with the same
+    request_hash between the SELECT and the INSERT; the fix makes the
+    INSERT itself the dedup guard (``ON CONFLICT ... DO NOTHING``), so a
+    pre-existing row -- however it got there -- is always found, never
+    raised as an unhandled IntegrityError.
+    """
+    aoi_version_id = ready_aoi_version(db, store)
+    kwargs = {
+        "aoi_version_id": aoi_version_id,
+        "window_start": WINDOW_START,
+        "window_end": WINDOW_END,
+        "provider_key": "google_earth_engine",
+        "collection_key": COLLECTION,
+        "recipe_key": RECIPE,
+        "recipe_version": "1",
+        "qa_profile_key": QA_PROFILE,
+        "qa_profile_version": "1",
+        "statistics_profile": "moments-v1",
+    }
+    request = build_analysis_request(db, **kwargs)
+    request_hash = request.request_hash()
+    audit_context(db, "test", "pre-insert a row racing enqueue()'s own insert")
+    db.execute(
+        s.eo_job.insert().values(
+            request_hash=request_hash,
+            world_id=request.world_id,
+            aoi_version_id=request.aoi_version_id,
+            window_start=request.window_start,
+            window_end=request.window_end,
+            provider_key=request.provider_key,
+            collection_key=request.collection_key,
+            recipe_key=request.recipe_key,
+            recipe_version=request.recipe_version,
+            qa_profile_key=request.qa_profile_key,
+            qa_profile_version=request.qa_profile_version,
+            statistics_profile=request.statistics_profile,
+            max_attempts=3,
+        )
+    )
+    job = enqueue(db, **kwargs)
+    assert job["deduplicated"] is True
+    assert job["request_hash"] == request_hash
 
 
 def test_succeeded_job_can_carry_no_observation_scientific_outcome(db, store):
