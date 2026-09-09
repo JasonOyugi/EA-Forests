@@ -1,0 +1,252 @@
+{
+  "ug-zulia": {
+    "kind": "canonical_polygon",
+    "full_aoi": {
+      "aoi_area_m2": 925592595.496644,
+      "gedi_covered_area_m2": 85251590.6862745,
+      "gedi_coverage_fraction": 0.09210487540744766
+    },
+    "interior": {
+      "INTERIOR_10M": {
+        "aoi_area_m2": 924007040.8678236,
+        "gedi_covered_area_m2": 85103953.43137254,
+        "gedi_coverage_fraction": 0.09210314388020599
+      },
+      "INTERIOR_20M": {
+        "aoi_area_m2": 922424016.7833287,
+        "gedi_covered_area_m2": 84955750.00000001,
+        "gedi_coverage_fraction": 0.09210053994068496
+      },
+      "INTERIOR_30M": {
+        "aoi_area_m2": 920843862.2044077,
+        "gedi_covered_area_m2": 84808375.0,
+        "gedi_coverage_fraction": 0.09209853969920294
+      }
+    }
+  },
+  "ug-musamya": {
+    "kind": "canonical_polygon",
+    "full_aoi": {
+      "aoi_area_m2": 7393917.64855004,
+      "gedi_covered_area_m2": 511470.58823529404,
+      "gedi_coverage_fraction": 0.06917450430836139
+    },
+    "interior": {
+      "INTERIOR_10M": {
+        "aoi_area_m2": 7145349.808678865,
+        "gedi_covered_area_m2": 494218.137254902,
+        "gedi_coverage_fraction": 0.0691664019940096
+      },
+      "INTERIOR_20M": {
+        "aoi_area_m2": 6898031.331052329,
+        "gedi_covered_area_m2": 476431.3725490197,
+        "gedi_coverage_fraction": 0.06906773102121264
+      },
+      "INTERIOR_30M": {
+        "aoi_area_m2": 6651961.760642453,
+        "gedi_covered_area_m2": 458767.15686274495,
+        "gedi_coverage_fraction": 0.06896719695190141
+      }
+    }
+  },
+  "ug-epor": {
+    "kind": "canonical_polygon",
+    "full_aoi": {
+      "aoi_area_m2": 2234631.45993927,
+      "gedi_covered_area_m2": 223186.27450980386,
+      "gedi_coverage_fraction": 0.0998760997108084
+    },
+    "interior": {
+      "INTERIOR_10M": {
+        "aoi_area_m2": 2174095.7855388755,
+        "gedi_covered_area_m2": 218110.29411764708,
+        "gedi_coverage_fraction": 0.10032230206618327
+      },
+      "INTERIOR_20M": {
+        "aoi_area_m2": 2114346.184212655,
+        "gedi_covered_area_m2": 213473.03921568627,
+        "gedi_coverage_fraction": 0.10096409036970445
+      },
+      "INTERIOR_30M": {
+        "aoi_area_m2": 2055383.0810656692,
+        "gedi_covered_area_m2": 207735.29411764708,
+        "gedi_coverage_fraction": 0.10106889369252814
+      }
+    }
+  },
+  "ug-bunjazi": {
+    "kind": "canonical_polygon",
+    "full_aoi": {
+      "aoi_area_m2": 799541.087667544,
+      "gedi_covered_area_m2": 91473.0392156863,
+      "gedi_coverage_fraction": 0.1144069274570184
+    },
+    "interior": {
+      "INTERIOR_10M": {
+        "aoi_area_m2": 761436.4876983791,
+        "gedi_covered_area_m2": 88196.07843137255,
+        "gedi_coverage_fraction": 0.11582854230950494
+      },
+      "INTERIOR_20M": {
+        "aoi_area_m2": 724142.5748541352,
+        "gedi_covered_area_m2": 85161.76470588235,
+        "gedi_coverage_fraction": 0.1176035875573765
+      },
+      "INTERIOR_30M": {
+        "aoi_area_m2": 687610.3679526635,
+        "gedi_covered_area_m2": 82022.0588235294,
+        "gedi_coverage_fraction": 0.11928566328594971
+      }
+    }
+  },
+  "ug-kihihi": {
+    "kind": "canonical_polygon",
+    "full_aoi": {
+      "aoi_area_m2": 359240.311814739,
+      "gedi_covered_area_m2": 42490.196078431385,
+      "gedi_coverage_fraction": 0.1182779178199346
+    },
+    "interior": {
+      "INTERIOR_10M": {
+        "aoi_area_m2": 330190.7766164098,
+        "gedi_covered_area_m2": 39017.1568627451,
+        "gedi_coverage_fraction": 0.11816549590684727
+      },
+      "INTERIOR_20M": {
+        "aoi_area_m2": 301972.9415212538,
+        "gedi_covered_area_m2": 35730.39215686275,
+        "gedi_coverage_fraction": 0.1183231582831998
+      },
+      "INTERIOR_30M": {
+        "aoi_area_m2": 274586.9444714532,
+        "gedi_covered_area_m2": 31208.333333333332,
+        "gedi_coverage_fraction": 0.11365556142301526
+      }
+    }
+  },
+  "tz-kisolanza": {
+    "kind": "point_buffer_300m_NOT_a_surveyed_boundary",
+    "full_aoi": {
+      "aoi_area_m2": 282743.3385,
+      "gedi_covered_area_m2": 41284.313725490196,
+      "gedi_coverage_fraction": 0.14601339131280786
+    },
+    "interior": {
+      "INTERIOR_10M": {
+        "aoi_area_m2": 264207.941865,
+        "gedi_covered_area_m2": 39272.05882352941,
+        "gedi_coverage_fraction": 0.1486407204352544
+      },
+      "INTERIOR_20M": {
+        "aoi_area_m2": 246300.86376000004,
+        "gedi_covered_area_m2": 37377.450980392154,
+        "gedi_coverage_fraction": 0.15175525741076332
+      },
+      "INTERIOR_30M": {
+        "aoi_area_m2": 229022.104185,
+        "gedi_covered_area_m2": 34980.39215686274,
+        "gedi_coverage_fraction": 0.15273806116376523
+      }
+    }
+  },
+  "tz-uchindile": {
+    "kind": "point_buffer_300m_NOT_a_surveyed_boundary",
+    "full_aoi": {
+      "aoi_area_m2": 282743.3385,
+      "gedi_covered_area_m2": 25404.41176470589,
+      "gedi_coverage_fraction": 0.08984972696255367
+    },
+    "interior": {
+      "INTERIOR_10M": {
+        "aoi_area_m2": 264207.941865,
+        "gedi_covered_area_m2": 23558.823529411766,
+        "gedi_coverage_fraction": 0.08916773418359017
+      },
+      "INTERIOR_20M": {
+        "aoi_area_m2": 246300.86376000004,
+        "gedi_covered_area_m2": 21669.11764705882,
+        "gedi_coverage_fraction": 0.08797824464056121
+      },
+      "INTERIOR_30M": {
+        "aoi_area_m2": 229022.104185,
+        "gedi_covered_area_m2": 19580.882352941175,
+        "gedi_coverage_fraction": 0.08549778381707682
+      }
+    }
+  },
+  "tz-tanwat": {
+    "kind": "point_buffer_300m_NOT_a_surveyed_boundary",
+    "full_aoi": {
+      "aoi_area_m2": 282743.3385,
+      "gedi_covered_area_m2": 28041.666666666668,
+      "gedi_coverage_fraction": 0.09917710816966487
+    },
+    "interior": {
+      "INTERIOR_10M": {
+        "aoi_area_m2": 264207.941865,
+        "gedi_covered_area_m2": 26531.86274509804,
+        "gedi_coverage_fraction": 0.10042038311874361
+      },
+      "INTERIOR_20M": {
+        "aoi_area_m2": 246300.86376000004,
+        "gedi_covered_area_m2": 25254.90196078431,
+        "gedi_coverage_fraction": 0.10253679818757412
+      },
+      "INTERIOR_30M": {
+        "aoi_area_m2": 229022.104185,
+        "gedi_covered_area_m2": 23593.137254901965,
+        "gedi_coverage_fraction": 0.10301685655566174
+      }
+    }
+  },
+  "tz-saohill": {
+    "kind": "point_buffer_300m_NOT_a_surveyed_boundary",
+    "full_aoi": {
+      "aoi_area_m2": 282743.3385,
+      "gedi_covered_area_m2": 25330.88235294118,
+      "gedi_coverage_fraction": 0.0895896698657011
+    },
+    "interior": {
+      "INTERIOR_10M": {
+        "aoi_area_m2": 264207.941865,
+        "gedi_covered_area_m2": 23465.686274509804,
+        "gedi_coverage_fraction": 0.08881521921282691
+      },
+      "INTERIOR_20M": {
+        "aoi_area_m2": 246300.86376000004,
+        "gedi_covered_area_m2": 21120.098039215685,
+        "gedi_coverage_fraction": 0.08574918381039656
+      },
+      "INTERIOR_30M": {
+        "aoi_area_m2": 229022.104185,
+        "gedi_covered_area_m2": 19227.941176470587,
+        "gedi_coverage_fraction": 0.0839567047246173
+      }
+    }
+  },
+  "tz-tabora": {
+    "kind": "point_buffer_300m_NOT_a_surveyed_boundary",
+    "full_aoi": {
+      "aoi_area_m2": 282743.3385,
+      "gedi_covered_area_m2": 47703.43137254902,
+      "gedi_coverage_fraction": 0.1687163758680349
+    },
+    "interior": {
+      "INTERIOR_10M": {
+        "aoi_area_m2": 264207.941865,
+        "gedi_covered_area_m2": 45232.84313725491,
+        "gedi_coverage_fraction": 0.17120167856410287
+      },
+      "INTERIOR_20M": {
+        "aoi_area_m2": 246300.86376000004,
+        "gedi_covered_area_m2": 42414.21568627451,
+        "gedi_coverage_fraction": 0.17220490029463997
+      },
+      "INTERIOR_30M": {
+        "aoi_area_m2": 229022.104185,
+        "gedi_covered_area_m2": 39291.66666666667,
+        "gedi_coverage_fraction": 0.1715627703556839
+      }
+    }
+  }
+}
