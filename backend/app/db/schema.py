@@ -1130,6 +1130,35 @@ eo_job_attempt = table(
     UniqueConstraint("eo_job_id", "attempt_number"),
 )
 
+# Frozen EO execution cohort: names existing geo.aoi_version rows a sensor
+# backfill should run against, separately from the canonical ingestion that
+# created them (observatory v1, section 1). Never stores or derives geometry.
+eo_cohort = table(
+    "processing",
+    "eo_cohort",
+    fk("world_id", "core.world.id"),
+    col("country"),
+    col("cohort_key"),
+    col("definition_version"),
+    ts("created_at", default=True),
+    col("note", nullable=True),
+    js(),
+    UniqueConstraint("country", "cohort_key", "definition_version", name="uq_eo_cohort_identity"),
+)
+eo_cohort_member = table(
+    "processing",
+    "eo_cohort_member",
+    fk("cohort_id", "processing.eo_cohort.id"),
+    fk("entity_id", "core.entity.id"),
+    fk("aoi_id", "geo.aoi.id"),
+    fk("aoi_version_id", "geo.aoi_version.id"),
+    col("source_record_key"),
+    col("geometry_hash"),
+    col("eligibility_status"),
+    ts("created_at", default=True),
+    UniqueConstraint("cohort_id", "source_record_key", name="uq_eo_cohort_member_identity"),
+)
+
 # Foreign key indexes are intentionally systematic; history gets both range and current indexes.
 for _table in metadata.tables.values():
     for _column in _table.columns:

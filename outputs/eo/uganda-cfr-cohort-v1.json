@@ -1,0 +1,11 @@
+{
+  "country": "UG",
+  "cohort_key": "uganda-cfr-observation-cohort",
+  "definition_version": "v1",
+  "created": true,
+  "cohort_id": "564df59e-0631-41af-a8bb-3a0c55293dd7",
+  "candidate_count": 656,
+  "member_count": 656,
+  "unresolved_count": 0,
+  "unresolved_source_record_keys": []
+}

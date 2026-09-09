@@ -15,6 +15,16 @@ exhausted-failed) job is cheap and safe -- it returns the existing row
 without re-touching Earth Engine. Interrupting and restarting this script is
 therefore safe by construction, not by any special resume flag.
 
+Cohort separation (observatory v1, section 1): this script used to call
+``ingest_cfr_polygons`` for the full 656-CFR estate at the start of every
+single invocation -- redundant once canonical geometry already exists, and
+the direct cause of a verified PostgreSQL advisory-lock contention when the
+S1 and S2 backfills both tried to re-ingest the same estate concurrently.
+It now reads a pre-frozen cohort (``scripts/prepare_country_cohort.py``,
+``app.services.eo.cohort.load_cohort``) instead: a fast, contention-free
+read against ``processing.eo_cohort_member`` naming AOI versions that
+already exist. Run ``prepare_country_cohort.py`` once first.
+
 Circuit breaker: a small in-process reliability.CircuitBreaker pauses new
 claims (sleeping, not aborting) if repeated transient provider failures land
 within its window -- the durable queue holds the real work safely while it
@@ -44,6 +54,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from sqlalchemy.orm import Session
 
 from app.db.session import engine_for
+from app.services.eo.cohort import load_cohort
 from app.services.eo.ee_provider import (
     COLLECTION_KEY,
     PROVIDER_KEY,
@@ -68,14 +79,9 @@ from app.services.eo.sar_feature_registry import (
 )
 from app.services.eo.worker import claim_job, enqueue, execute_claimed_job
 from app.services.evidence.artifacts import LocalArtifactStore
-from app.services.ingestion.cfr_geometry import ingest_cfr_polygons
 from app.services.state.registry import bootstrap
 
 S2_QA_PROFILE = "s2-qa-scl-core/1"
-INVENTORY = (
-    Path(__file__).resolve().parents[2]
-    / "vite-version/docs/data-provenance/uganda-cfr-spatial-spine-inventory.json"
-)
 
 
 def month_window(year: int, month: int):
@@ -135,12 +141,11 @@ def main() -> None:
     parser.add_argument("--output", required=True)
     parser.add_argument("--limit", type=int, default=None, help="Process only the first N cohort members (debug)")
     parser.add_argument("--worker-id", default="uganda-national-history-worker")
+    parser.add_argument("--country", default="UG")
+    parser.add_argument("--cohort-key", default="uganda-cfr-observation-cohort")
+    parser.add_argument("--definition-version", default="v1")
     args = parser.parse_args()
 
-    inventory = json.loads(INVENTORY.read_text(encoding="utf-8"))
-    cohort = [r for r in inventory["records"] if r["eo_scope"]]
-    if args.limit:
-        cohort = cohort[: args.limit]
     months = parse_months(args.months)
     specs = recipe_specs(args.sensor)
 
@@ -163,23 +168,22 @@ def main() -> None:
         bootstrap(db)
         db.commit()
 
-        print(f"Ingesting {len(cohort)} cohort CFRs (idempotent)...", flush=True)
-        aoi_version_by_key = {}
-        for i, record in enumerate(cohort):
-            db.begin()
-            try:
-                report = ingest_cfr_polygons(db, store, only=record["source_record_key"])
-                row = report["records"][0]
-                if row["aoi_version_id"] is None:
-                    raise RuntimeError(f"CFR not EO-processable at ingest time: {row}")
-                aoi_version_by_key[record["source_record_key"]] = row["aoi_version_id"]
-                db.commit()
-            except Exception as exc:  # noqa: BLE001 - one CFR's ingest failure must not abort the run
-                db.rollback()
-                tally["ingest_failed"] += 1
-                print(f"  INGEST FAILED {record['source_record_key']}: {exc}", flush=True)
-            if (i + 1) % 200 == 0:
-                print(f"  ingested {i + 1}/{len(cohort)}", flush=True)
+        aoi_version_by_key = load_cohort(
+            db, country=args.country, cohort_key=args.cohort_key, definition_version=args.definition_version
+        )
+        # load_cohort()'s read auto-begins an implicit transaction on this
+        # Session (SQLAlchemy 2.0 autobegin); close it explicitly so the job
+        # loop's own db.begin() below does not fail with "a transaction is
+        # already begun on this Session".
+        db.commit()
+        if not aoi_version_by_key:
+            raise RuntimeError(
+                f"No frozen cohort members for {args.country}/{args.cohort_key}/{args.definition_version} -- "
+                "run scripts/prepare_country_cohort.py first."
+            )
+        if args.limit:
+            aoi_version_by_key = dict(list(aoi_version_by_key.items())[: args.limit])
+        print(f"Loaded frozen cohort: {len(aoi_version_by_key)} EO-processable CFRs (no re-ingestion).", flush=True)
 
         total_units = len(aoi_version_by_key) * len(months) * len(specs)
         print(f"{len(aoi_version_by_key)} CFRs x {len(months)} months x {len(specs)} recipe(s) = {total_units} work units", flush=True)
