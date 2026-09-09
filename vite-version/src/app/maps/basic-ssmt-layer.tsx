@@ -186,7 +186,7 @@ export interface BasicSsmtLayerController {
 }
 
 export function useBasicSsmtLayerController(): BasicSsmtLayerController {
-  const [enabled, setEnabled] = React.useState(true)
+  const [enabled, setEnabled] = React.useState(false)
   const [open, setOpen] = React.useState(false)
   const [metadata, setMetadata] = React.useState<BasicSsmtMetadata | null>(null)
   const [filters, setFilters] = React.useState<BasicSsmtFilters>(() =>

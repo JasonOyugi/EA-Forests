@@ -167,3 +167,72 @@ export async function fetchCountryEoStatus(): Promise<CountryEoStatus[]> {
     "/api/canonical/eo/country-status?country=UG&spatial_type=reserve&limit=1000"
   )
 }
+
+export type ForestPolygonProperties = {
+  entity_id: string
+  geometry_observation_id: string
+  name: string
+  source_name: string
+  country: string
+  source_key: string
+  source_feature_id: string | null
+  publisher: string | null
+  dataset_version: string | null
+  data_vintage: string | null
+  commercial_class: string
+  authority_class: string | null
+  area_ha: number | null
+  geometry_area_ha: number
+  retrieved_at: string | null
+  reference_url: string | null
+  evidence_url: string
+}
+
+export type ForestPolygonFeature = {
+  type: "Feature"
+  id: string
+  geometry: GeoJSON.Geometry
+  properties: ForestPolygonProperties
+}
+
+export type ForestPolygonCollection = {
+  type: "FeatureCollection"
+  features: ForestPolygonFeature[]
+  bbox: [number, number, number, number]
+  meta: {
+    returned: number
+    truncated: boolean
+    simplification_degrees: number
+    canonical_crs: string
+    area_note: string
+  }
+}
+
+export async function fetchForestPolygons(params: {
+  bbox: [number, number, number, number]
+  country?: string
+  sourceKeys?: string[]
+  classes?: string[]
+  limit?: number
+  zoom?: number
+  signal?: AbortSignal
+}): Promise<ForestPolygonCollection> {
+  const search = new URLSearchParams({
+    bbox: params.bbox.join(","),
+    limit: String(params.limit ?? 500),
+    zoom: String(params.zoom ?? 8),
+  })
+
+  if (params.country) search.set("country", params.country)
+  if (params.sourceKeys?.length) search.set("source_keys", params.sourceKeys.join(","))
+  if (params.classes?.length) search.set("classes", params.classes.join(","))
+
+  const response = await fetch(`/api/canonical/forest-polygons?${search.toString()}`, {
+    credentials: "include",
+    signal: params.signal,
+  })
+  if (!response.ok) {
+    throw new Error(`Forest polygon request failed (${response.status})`)
+  }
+  return response.json() as Promise<ForestPolygonCollection>
+}

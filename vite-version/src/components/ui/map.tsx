@@ -647,7 +647,7 @@ function MapCircle({
     return (
         <LeafletCircle
             className={cn(
-                "fill-foreground stroke-foreground stroke-2",
+                props.pathOptions ? "" : "fill-foreground stroke-foreground stroke-2",
                 className
             )}
             {...props}
@@ -662,7 +662,7 @@ function MapCircleMarker({
     return (
         <LeafletCircleMarker
             className={cn(
-                "fill-foreground stroke-foreground stroke-2",
+                props.pathOptions ? "" : "fill-foreground stroke-foreground stroke-2",
                 className
             )}
             {...props}
@@ -677,7 +677,7 @@ function MapPolyline({
     return (
         <LeafletPolyline
             className={cn(
-                "fill-foreground stroke-foreground stroke-2",
+                props.pathOptions ? "" : "fill-foreground stroke-foreground stroke-2",
                 className
             )}
             {...props}
@@ -707,7 +707,7 @@ function MapRectangle({
     return (
         <LeafletRectangle
             className={cn(
-                "fill-foreground stroke-foreground stroke-2",
+                props.pathOptions ? "" : "fill-foreground stroke-foreground stroke-2",
                 className
             )}
             {...props}

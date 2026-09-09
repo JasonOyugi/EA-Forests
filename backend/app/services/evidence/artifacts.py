@@ -54,3 +54,40 @@ class LocalArtifactStore:
         if hashlib.sha256(content).hexdigest() != digest:
             raise ValueError("Artifact integrity check failed")
         return content
+
+    def put_file(self, path: str | Path) -> tuple[str, str]:
+        """Stream large upstream archives; atomic publication without loading them into RAM."""
+        self.root.mkdir(parents=True, exist_ok=True)
+        temporary = self.root / f".{uuid4().hex}.tmp"
+        sha = hashlib.sha256()
+        try:
+            with Path(path).open("rb") as source, temporary.open("xb") as target:
+                while block := source.read(8 * 1024 * 1024):
+                    sha.update(block)
+                    target.write(block)
+                target.flush()
+                os.fsync(target.fileno())
+            digest = sha.hexdigest()
+            destination = self.root / digest[:2] / digest
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            try:
+                os.link(temporary, destination)
+            except FileExistsError:
+                with destination.open("rb") as existing:
+                    if hashlib.file_digest(existing, "sha256").hexdigest() != digest:
+                        raise ValueError("Artifact content-address collision or corruption")
+            return f"sha256:{digest}", digest
+        finally:
+            temporary.unlink(missing_ok=True)
+
+    def verified_path(self, uri: str) -> Path:
+        """Private streaming access for GDAL; never expose this path through an API."""
+        scheme, _, digest = uri.partition(":")
+        if (scheme != "sha256" or len(digest) != 64
+                or any(c not in "0123456789abcdef" for c in digest)):
+            raise ValueError("Invalid artifact URI")
+        path = self.root / digest[:2] / digest
+        with path.open("rb") as stream:
+            if hashlib.file_digest(stream, "sha256").hexdigest() != digest:
+                raise ValueError("Artifact integrity check failed")
+        return path

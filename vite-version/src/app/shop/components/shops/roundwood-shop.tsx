@@ -348,9 +348,10 @@ function getEstimatedNearestFeatures(
 
 function getEstimatedNearestFeatureGroups(
   selectedPoint: SelectedPoint,
-  selectedActor: MarketActor | null
+  selectedActor: MarketActor | null,
+  layers: NearestFeatureLayer[] = nearestFeatureLayers
 ) {
-  return nearestFeatureLayers.reduce<NearestFeatureGroups>((groups, layer) => {
+  return layers.reduce<NearestFeatureGroups>((groups, layer) => {
     groups[layer] = getEstimatedNearestFeatures(
       layer,
       selectedPoint.latitude,
@@ -443,10 +444,11 @@ async function getNearestFeaturesByRoad(
 async function getNearestFeatureGroupsByRoad(
   selectedPoint: SelectedPoint,
   selectedActor: MarketActor | null,
-  signal: AbortSignal
+  signal: AbortSignal,
+  layers: NearestFeatureLayer[] = nearestFeatureLayers
 ) {
   const entries = await Promise.all(
-    nearestFeatureLayers.map(async (layer) => [
+    layers.map(async (layer) => [
       layer,
       await getNearestFeaturesByRoad(
         selectedPoint,
@@ -1193,16 +1195,18 @@ function ActorLayerGroup({
 
 function NearestFeatureRoutes({
   nearestFeatures,
+  layers,
   selectedActorId,
   onSelectActor,
 }: {
   nearestFeatures: NearestFeatureGroups
+  layers: NearestFeatureLayer[]
   selectedActorId: string | null
   onSelectActor: (actorId: string) => void
 }) {
   return (
     <>
-      {nearestFeatureLayers.flatMap((layer) => {
+      {layers.flatMap((layer) => {
         const color = marketActorLayerMeta[layer].color
 
         return nearestFeatures[layer].flatMap((feature, index) => {
@@ -1244,7 +1248,7 @@ function NearestFeatureRoutes({
           ]
         })
       })}
-      {nearestFeatureLayers.flatMap((layer) => {
+      {layers.flatMap((layer) => {
         const color = marketActorLayerMeta[layer].color
 
         return nearestFeatures[layer].map((feature, index) => (
@@ -1263,7 +1267,7 @@ function NearestFeatureRoutes({
               />
             }
             iconAnchor={[20, 20]}
-            zIndexOffset={1000 + (nearestFeatureLayers.length - index) * 10}
+            zIndexOffset={1000 + (layers.length - index) * 10}
             bubblingMouseEvents={false}
             eventHandlers={{ click: () => onSelectActor(feature.id) }}
           >
@@ -2357,7 +2361,8 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
     setShowRoadAnalysis(true)
     const estimatedFeatures = getEstimatedNearestFeatureGroups(
       selectedPoint,
-      selectedActor
+      selectedActor,
+      visibleNearestFeatureLayers
     )
     const controller = new AbortController()
 
@@ -2367,7 +2372,8 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
     getNearestFeatureGroupsByRoad(
       selectedPoint,
       selectedActor,
-      controller.signal
+      controller.signal,
+      visibleNearestFeatureLayers
     )
       .then((features) => {
         if (!controller.signal.aborted) {
@@ -2381,7 +2387,7 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
       })
 
     return () => controller.abort()
-  }, [selectedPointKey])
+  }, [selectedPointKey, visibleNearestFeatureLayers])
 
   useEffect(() => {
     if (!selectedConcessionId) return
@@ -2406,7 +2412,7 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
     () => {
       if (!showRoadAnalysis) return {}
 
-      return nearestFeatureLayers.reduce<Record<string, NearestHighlight>>((highlights, layer) => {
+      return visibleNearestFeatureLayers.reduce<Record<string, NearestHighlight>>((highlights, layer) => {
         const color = marketActorLayerMeta[layer].color
         nearestFeatures[layer].forEach((feature, index) => {
           highlights[feature.id] = {
@@ -2418,7 +2424,7 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
         return highlights
       }, {})
     },
-    [nearestFeatures, showRoadAnalysis]
+    [nearestFeatures, showRoadAnalysis, visibleNearestFeatureLayers]
   )
 
   const focusActor = (actorId: string) => {
@@ -2548,6 +2554,7 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
                   {showRoadAnalysis ? (
                     <NearestFeatureRoutes
                       nearestFeatures={nearestFeatures}
+                      layers={visibleNearestFeatureLayers}
                       selectedActorId={selectedActorId}
                       onSelectActor={focusActor}
                     />

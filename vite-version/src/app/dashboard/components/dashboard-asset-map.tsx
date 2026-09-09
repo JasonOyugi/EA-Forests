@@ -80,7 +80,12 @@ import {
 import { ugandaCfrs, type LatLngTuple } from "@/app/shop/data/generated-boundaries"
 import cfrReconciliation from "@/app/shop/data/cfr-reconciliation.json"
 import { EoEvidenceDetailSheet, EoEvidenceSummary } from "@/components/eo/eo-evidence-panel"
-import { fetchCountryEoStatus, type CountryEoStatus } from "@/lib/canonical-api"
+import {
+  fetchCountryEoStatus,
+  fetchForestPolygons,
+  type CountryEoStatus,
+  type ForestPolygonFeature,
+} from "@/lib/canonical-api"
 import {
   buildGroupMetricSeries,
   createPolygon,
@@ -191,7 +196,10 @@ const nearestFeatureLabels: Record<NearestFeatureLayer, string> = {
   commercialForest: "Nearest commercial forests",
 }
 
-const defaultMarketMapLayerGroups: string[] = ["Asset blocks"]
+const defaultMarketMapLayerGroups: string[] = [
+  "Asset blocks",
+  "Commercial / productive forest areas",
+]
 
 const actorLayerIcons: Record<MarketActorLayer, LucideIcon> = {
   processor: Building2,
@@ -575,6 +583,181 @@ function MapViewportFocus({
   }, [bounds, focusVersion, map])
 
   return null
+}
+
+function polygonPathOptionsForClass(commercialClass: string) {
+  switch (commercialClass) {
+    case "official_forest_reserve":
+      return {
+        color: "#15803d",
+        fillColor: "#15803d",
+        fillOpacity: 0.16,
+        opacity: 0.82,
+        weight: 1.4,
+      }
+    case "gazetted_forest":
+      return {
+        color: "#d97706",
+        fillColor: "#d97706",
+        fillOpacity: 0.12,
+        opacity: 0.8,
+        weight: 1.4,
+      }
+    case "tree_plantation":
+      return {
+        color: "#0f766e",
+        fillColor: "#0f766e",
+        fillOpacity: 0.18,
+        opacity: 0.8,
+        weight: 1.5,
+      }
+    case "planted_tree_candidate":
+      return {
+        color: "#7c3aed",
+        fillColor: "#7c3aed",
+        fillOpacity: 0.14,
+        opacity: 0.8,
+        weight: 1.4,
+      }
+    case "forest_candidate":
+      return {
+        color: "#475569",
+        fillColor: "#475569",
+        fillOpacity: 0.12,
+        opacity: 0.75,
+        weight: 1.2,
+      }
+    default:
+      return {
+        color: "#64748b",
+        fillColor: "#64748b",
+        fillOpacity: 0.1,
+        opacity: 0.75,
+        weight: 1.2,
+      }
+  }
+}
+
+function forestFeaturePositions(feature: ForestPolygonFeature) {
+  const { geometry } = feature
+  const toLatLng = (coord: GeoJSON.Position): [number, number] => {
+    const [lng, lat] = coord as [number, number]
+    return [lat, lng]
+  }
+
+  if (geometry.type === "Polygon") {
+    return [geometry.coordinates.map((ring) => ring.map(toLatLng))]
+  }
+  if (geometry.type === "MultiPolygon") {
+    return geometry.coordinates.map((polygon) =>
+      polygon.map((ring) => ring.map(toLatLng))
+    )
+  }
+  return null
+}
+
+function ForestEvidenceLayer() {
+  const map = useMap()
+  const [features, setFeatures] = React.useState<ForestPolygonFeature[]>([])
+  const [loading, setLoading] = React.useState(false)
+  const [error, setError] = React.useState<string | null>(null)
+
+  const loadViewport = React.useCallback(() => {
+    const bounds = map.getBounds()
+    const bbox: [number, number, number, number] = [
+      bounds.getWest(),
+      bounds.getSouth(),
+      bounds.getEast(),
+      bounds.getNorth(),
+    ]
+    const controller = new AbortController()
+    setLoading(true)
+    setError(null)
+
+    fetchForestPolygons({
+      bbox,
+      limit: 500,
+      zoom: map.getZoom(),
+      signal: controller.signal,
+    })
+      .then((collection) => {
+        if (controller.signal.aborted) return
+        setFeatures(collection.features)
+      })
+      .catch((nextError: unknown) => {
+        if (controller.signal.aborted) return
+        setFeatures([])
+        setError(nextError instanceof Error ? nextError.message : "Forest polygon data could not be loaded.")
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) {
+          setLoading(false)
+        }
+      })
+
+    return () => controller.abort()
+  }, [map])
+
+  React.useEffect(() => {
+    loadViewport()
+    const cleanup = () => undefined
+    return cleanup
+  }, [loadViewport])
+
+  useMapEvents({
+    moveend: loadViewport,
+    zoomend: loadViewport,
+  })
+
+  return (
+    <MapLayerGroup name="Commercial / productive forest areas">
+      {features.map((feature) => {
+        const positions = forestFeaturePositions(feature)
+        if (!positions) return null
+        const properties = feature.properties
+        const pathOptions = polygonPathOptionsForClass(properties.commercial_class)
+
+        return (
+          <MapPolygon
+            key={feature.id}
+            positions={positions as unknown as [number, number][][]}
+            pathOptions={pathOptions}
+          >
+            <MapPopup className="w-80 p-0">
+              <div className="space-y-3 bg-background p-4">
+                <div>
+                  <Badge variant="secondary" style={{ color: pathOptions.color }}>
+                    {properties.commercial_class.replace(/_/g, " ")}
+                  </Badge>
+                  <h3 className="mt-2 text-base font-semibold">{properties.name}</h3>
+                  <div className="mt-1 text-xs uppercase tracking-[0.15em] text-muted-foreground">
+                    {properties.country} · {properties.source_key}
+                  </div>
+                </div>
+                <DetailRows
+                  rows={[
+                    { label: "Source", value: properties.source_name || properties.publisher || "Public source" },
+                    { label: "Publisher", value: properties.publisher || "Not recorded" },
+                    { label: "Area", value: properties.geometry_area_ha ? `${Math.round(properties.geometry_area_ha).toLocaleString()} ha` : "Not calculated" },
+                    { label: "Authority", value: properties.authority_class || "Not recorded" },
+                    { label: "Version", value: properties.dataset_version || properties.data_vintage || "Not recorded" },
+                    { label: "Evidence", value: properties.evidence_url || "N/A" },
+                  ]}
+                />
+              </div>
+            </MapPopup>
+            <MapTooltip side="top">{properties.name}</MapTooltip>
+          </MapPolygon>
+        )
+      })}
+      {loading ? (
+        <MapTooltip side="top">Loading forest evidence…</MapTooltip>
+      ) : null}
+      {error ? (
+        <MapTooltip side="top">{error}</MapTooltip>
+      ) : null}
+    </MapLayerGroup>
+  )
 }
 
 function MarketMapClickHandler({
@@ -1603,6 +1786,8 @@ export function DashboardAssetMap({
                       group={selectedGroup}
                       focusVersion={focusVersion}
                     />
+
+                    <ForestEvidenceLayer />
 
                     <MapLayerGroup name="Asset blocks">
                       {initialAssetGroups.flatMap((group) => {

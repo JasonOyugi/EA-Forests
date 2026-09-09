@@ -1,0 +1,76 @@
+[
+  {
+    "source_key": "UG-NFA-CFR", "title": "Uganda NFA Forest Reserves Shapefile",
+    "publisher": "National Forestry Authority", "countries": ["UG"],
+    "source_type": "government_vector", "reference_url": "https://nfa.go.ug/gis-mapping-inventory/",
+    "strategy": "nfa_download", "dataset_version": null, "data_vintage": null,
+    "authority_class": "authoritative_official", "semantic_class": "official_forest_reserve",
+    "map_label": "Uganda — NFA CFRs", "rights": null, "access": "public",
+    "name_fields": ["NAME", "Name", "FOREST", "RES_NAME"], "id_fields": ["CFR_ID", "RES_ID", "OBJECTID"],
+    "notes": "Pending acquisition until an actual downloadable polygon artifact is resolved. Never infer polygons from inventory or area."
+  },
+  {
+    "source_key": "UG-CFR-REPOSITORY", "title": "Existing Uganda CFR boundary export",
+    "publisher": "EA Forests repository", "countries": ["UG"], "source_type": "repository_dataset",
+    "reference_url": "vite-version/src/app/shop/data/generated-boundaries.ts", "strategy": "existing_cfr",
+    "dataset_version": "cfr-polygon-ingest/0.1", "data_vintage": null,
+    "authority_class": "unverified_repository_derived", "semantic_class": "official_forest_reserve",
+    "map_label": "Uganda — CFRs (existing evidence)", "rights": null, "access": "restricted",
+    "legacy_source_title": "generated-boundaries.ts (ugandaCfrs)",
+    "notes": "Reserve identity is reported. Geometry is unverified repository-derived, not a surveyed or authoritative boundary."
+  },
+  {
+    "source_key": "KE-GAZETTED-FOREST", "title": "Kenya gazetted forest (public ArcGIS copy)",
+    "publisher": "FSC International ArcGIS publisher", "countries": ["KE"], "source_type": "arcgis_rest",
+    "reference_url": "https://www.arcgis.com/home/item.html?id=d77a977f0b2e432da6c37203726f7731",
+    "strategy": "arcgis", "directory_url": "https://services8.arcgis.com/32TQOipPYLOeSkYk/arcgis/rest/services",
+    "service_name": "kenya_gazetted_forest", "layer_name": "kenya_gazetted_forest",
+    "dataset_version": null, "data_vintage": null, "authority_class": "reported_public_sector_secondary",
+    "semantic_class": "gazetted_forest", "map_label": "Kenya — Gazetted forests", "rights": null,
+    "access": "public", "name_fields": ["FOREST"],
+    "notes": "Secondary public spatial evidence; not asserted to be current KFS cadastral truth. The area field has no documented units and is not mapped to hectares."
+  },
+  {
+    "source_key": "KE-TREE-PLANTATIONS", "title": "Kenya tree plantations (public ArcGIS copy)",
+    "publisher": "FSC International ArcGIS publisher", "countries": ["KE"], "source_type": "arcgis_rest",
+    "reference_url": "https://www.arcgis.com/home/item.html?id=e8a1bda768424ca09dca147efb14906f",
+    "strategy": "arcgis", "directory_url": "https://services8.arcgis.com/32TQOipPYLOeSkYk/arcgis/rest/services",
+    "service_name": "ke_tree_plantations", "layer_name": "ke_tree_plantations",
+    "dataset_version": null, "data_vintage": null, "authority_class": "third_party_spatial_dataset",
+    "semantic_class": "tree_plantation", "map_label": "Kenya — Tree plantations", "rights": null,
+    "access": "public", "name_fields": ["USERLABEL"], "area_field": "AREA_SQKM_", "area_to_ha": 100,
+    "notes": "Source land-cover plantation class, not evidence of active commercial operation."
+  },
+  {
+    "source_key": "TZ-FORESTS", "title": "Tanzania Forests — Forests",
+    "publisher": "WWF Tanzania", "countries": ["TZ"], "source_type": "arcgis_rest",
+    "reference_url": "https://www.arcgis.com/home/item.html?id=958b37df31164ba6915fa043132af8c6",
+    "strategy": "arcgis", "item_id": "958b37df31164ba6915fa043132af8c6", "layer_name": "Forests",
+    "dataset_version": null, "data_vintage": null, "authority_class": "third_party_spatial_dataset",
+    "semantic_class": "forest_candidate", "map_label": "Tanzania — Forests", "rights": "WWF Tanzania; layer copyright: Cutlan Consultant (http://www.cutlan.co.tz)",
+    "access": "public", "name_fields": ["RES_NAME"],
+    "notes": "Forest Reserves layer 0 is point geometry and is excluded from polygon ingestion. Not TFS cadastral truth."
+  },
+  {
+    "source_key": "WRI-SDPT-2.1", "title": "WRI Spatial Database of Planted Trees v2.1",
+    "publisher": "World Resources Institute", "countries": ["UG", "KE", "TZ"], "source_type": "file_geodatabase_archive",
+    "reference_url": "https://datasets.wri.org/datasets/spatial-database-of-planted-trees-sdpt-version-21",
+    "strategy": "wri_archive", "catalog_url": "https://datasets.wri.org/api/3/action/package_show?id=spatial-database-of-planted-trees-sdpt-version-21",
+    "dataset_version": "2.1", "data_vintage": "Varies by original source; archive v09152024; catalogue updated June 2026",
+    "authority_class": "third_party_spatial_dataset", "semantic_class": "planted_tree_candidate",
+    "map_label": "WRI — Planted-tree candidates", "rights": null, "access": "public",
+    "name_fields": ["name", "Name", "plantation", "species"], "id_fields": ["objectid", "OBJECTID", "id"],
+    "country_fields": ["iso", "ISO", "iso3", "ISO3", "country", "Country", "COUNTRY"],
+    "notes": "Retain source simpleType and all attributes. Planted trees include tree crops; no blanket commercial-forest claim. June 2026 is catalogue release metadata, not a universal observation date."
+  },
+  {
+    "source_key": "GFM-2020-10M-PART2", "title": "Global Forest Management Type Map 2020, 10 m, Part 2",
+    "publisher": "De Keersmaecker et al.; VITO / IIASA", "countries": ["UG", "KE", "TZ"], "source_type": "raster",
+    "reference_url": "https://zenodo.org/records/20426234", "strategy": "manual_raster_window",
+    "raster_url": "https://zenodo.org/records/20426234/files/global_forest_management_2020_10m_v1_part2.tif",
+    "dataset_version": "v1", "data_vintage": "2020", "authority_class": "eo_derived",
+    "semantic_class": "planted_tree_candidate", "map_label": "EO — Forest management 2020 (experimental)",
+    "rights": null, "access": "public", "classes": {"31": "planted forest", "32": "plantation forest"},
+    "notes": "Experimental EO classification. Registered only; never downloaded by an application request. Part 2 covers Africa, Europe, Asia and Australia."
+  }
+]

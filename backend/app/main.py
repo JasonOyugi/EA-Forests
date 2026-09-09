@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.canonical import router as canonical_router
 from app.api.canonical import session_router
 from app.api.eo import router as eo_router
+from app.api.spatial import router as spatial_router
 from app.schemas import (
     ClonalEucalyptusNurseryRequest,
     CommercialForestViabilityRequest,
@@ -39,6 +40,7 @@ app = FastAPI(title="EA Forests Models Backend", version="0.1.0")
 app.include_router(canonical_router)
 app.include_router(session_router)
 app.include_router(eo_router)
+app.include_router(spatial_router)
 
 app.add_middleware(
     CORSMiddleware,
