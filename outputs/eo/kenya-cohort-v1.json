@@ -1,0 +1,15 @@
+{
+  "identities_seen": 666,
+  "promoted_new": 0,
+  "already_promoted": 666,
+  "skipped_no_geometry": [],
+  "by_source_family": {
+    "KE-GAZETTED-FOREST": 386,
+    "KE-TREE-PLANTATIONS": 280
+  },
+  "cohort": {
+    "cohort_id": "788f81bd-30f3-427b-9b43-65f29b912c3d",
+    "created": true,
+    "member_count": 666
+  }
+}

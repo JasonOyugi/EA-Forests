@@ -1,0 +1,174 @@
+{
+  "month": "2026-08",
+  "assets": 8,
+  "results": [
+    {
+      "source_record_key": "KE-GAZETTED-FOREST::0:53",
+      "lane": "s2",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-GAZETTED-FOREST::0:53",
+      "lane": "s1-ascending",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-GAZETTED-FOREST::0:53",
+      "lane": "s1-descending",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-GAZETTED-FOREST::0:101",
+      "lane": "s2",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-GAZETTED-FOREST::0:101",
+      "lane": "s1-ascending",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-GAZETTED-FOREST::0:101",
+      "lane": "s1-descending",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-GAZETTED-FOREST::0:21",
+      "lane": "s2",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-GAZETTED-FOREST::0:21",
+      "lane": "s1-ascending",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-GAZETTED-FOREST::0:21",
+      "lane": "s1-descending",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-GAZETTED-FOREST::0:119",
+      "lane": "s2",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-GAZETTED-FOREST::0:119",
+      "lane": "s1-ascending",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-GAZETTED-FOREST::0:119",
+      "lane": "s1-descending",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-TREE-PLANTATIONS::0:1",
+      "lane": "s2",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-TREE-PLANTATIONS::0:1",
+      "lane": "s1-ascending",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-TREE-PLANTATIONS::0:1",
+      "lane": "s1-descending",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-TREE-PLANTATIONS::0:73",
+      "lane": "s2",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-TREE-PLANTATIONS::0:73",
+      "lane": "s1-ascending",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-TREE-PLANTATIONS::0:73",
+      "lane": "s1-descending",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-TREE-PLANTATIONS::0:92",
+      "lane": "s2",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-TREE-PLANTATIONS::0:92",
+      "lane": "s1-ascending",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-TREE-PLANTATIONS::0:92",
+      "lane": "s1-descending",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-TREE-PLANTATIONS::0:126",
+      "lane": "s2",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-TREE-PLANTATIONS::0:126",
+      "lane": "s1-ascending",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    },
+    {
+      "source_record_key": "KE-TREE-PLANTATIONS::0:126",
+      "lane": "s1-descending",
+      "result": "succeeded",
+      "outcome": "success",
+      "error": null
+    }
+  ]
+}
