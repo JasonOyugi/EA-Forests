@@ -1211,12 +1211,22 @@ cross_sensor_corroboration = table(
     fk("world_id", "core.world.id"),
     ts("reference_window_start"),
     ts("reference_window_end"),
+    # SINGLE_STREAM / WITHIN_SENSOR_MULTI_STREAM_SUPPORTED / CROSS_SENSOR_SUPPORTED /
+    # CROSS_MODALITY_SUPPORTED / SENSOR_DISAGREEMENT / INSUFFICIENT_COMMON_SUPPORT /
+    # INSUFFICIENT_EVIDENCE (migration 0012) -- replaces the original 0011
+    # vocabulary, which let two streams of the SAME sensor (S1 ascending +
+    # descending) satisfy "MULTI_SENSOR_SUPPORTED". Distinct stream/sensor-
+    # family/modality counts (below) are the evidence for the classification,
+    # not decoration -- enforced by CHECK constraints in the raw migration SQL.
     choice(
         "state",
-        "OPTICAL_ONLY SAR_ASC_ONLY SAR_DESC_ONLY MULTI_SENSOR_SUPPORTED "
-        "SENSOR_DISAGREEMENT INSUFFICIENT_COMMON_SUPPORT INSUFFICIENT_EVIDENCE",
+        "SINGLE_STREAM WITHIN_SENSOR_MULTI_STREAM_SUPPORTED CROSS_SENSOR_SUPPORTED "
+        "CROSS_MODALITY_SUPPORTED SENSOR_DISAGREEMENT INSUFFICIENT_COMMON_SUPPORT INSUFFICIENT_EVIDENCE",
     ),
     number("max_temporal_offset_days"),
+    Column("distinct_stream_count", Integer, nullable=True),
+    Column("distinct_sensor_family_count", Integer, nullable=True),
+    Column("distinct_modality_count", Integer, nullable=True),
     ts("created_at", default=True),
     js(),
     CheckConstraint("reference_window_start < reference_window_end"),

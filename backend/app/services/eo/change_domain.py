@@ -21,15 +21,65 @@ from app.services.state.registry import audit_context, insert_row
 
 CORROBORATION_STATES = frozenset(
     {
-        "OPTICAL_ONLY",
-        "SAR_ASC_ONLY",
-        "SAR_DESC_ONLY",
-        "MULTI_SENSOR_SUPPORTED",
+        "SINGLE_STREAM",
+        "WITHIN_SENSOR_MULTI_STREAM_SUPPORTED",
+        "CROSS_SENSOR_SUPPORTED",
+        "CROSS_MODALITY_SUPPORTED",
         "SENSOR_DISAGREEMENT",
         "INSUFFICIENT_COMMON_SUPPORT",
         "INSUFFICIENT_EVIDENCE",
     }
 )
+
+# Sensor-family/modality identity for each known sensor_stream (migration
+# 0012). Ascending and descending Sentinel-1 are the SAME sensor family
+# (Sentinel-1 C-band SAR) and the SAME modality (radar) -- two streams of
+# one instrument, not two instruments. This is exactly the distinction the
+# original vocabulary blurred (a real Musamya candidate satisfied
+# "MULTI_SENSOR_SUPPORTED" from S1 ascending + descending agreement alone).
+STREAM_SENSOR_FAMILY = {
+    "s2_optical": "sentinel-2",
+    "s1_ascending": "sentinel-1",
+    "s1_descending": "sentinel-1",
+}
+STREAM_MODALITY = {
+    "s2_optical": "optical",
+    "s1_ascending": "radar",
+    "s1_descending": "radar",
+}
+
+
+def classify_corroboration_state(streams: list[str], *, temporally_compatible: bool) -> tuple[str, dict]:
+    """Derives both the corroboration state and the distinct stream/sensor-
+    family/modality counts that justify it, from the sensor streams of the
+    contributing change candidates alone -- the classification is not a
+    free-form caller choice. An unrecognized stream is treated as its own
+    singleton sensor family/modality (conservative: never silently assumed
+    to corroborate an existing one).
+    """
+    if not streams:
+        return "INSUFFICIENT_EVIDENCE", {
+            "distinct_stream_count": 0,
+            "distinct_sensor_family_count": 0,
+            "distinct_modality_count": 0,
+        }
+    distinct_streams = set(streams)
+    families = {STREAM_SENSOR_FAMILY.get(stream, stream) for stream in distinct_streams}
+    modalities = {STREAM_MODALITY.get(stream, f"unknown:{stream}") for stream in distinct_streams}
+    counts = {
+        "distinct_stream_count": len(distinct_streams),
+        "distinct_sensor_family_count": len(families),
+        "distinct_modality_count": len(modalities),
+    }
+    if len(distinct_streams) == 1:
+        return "SINGLE_STREAM", counts
+    if not temporally_compatible:
+        return "SENSOR_DISAGREEMENT", counts
+    if len(modalities) >= 2:
+        return "CROSS_MODALITY_SUPPORTED", counts
+    if len(families) >= 2:
+        return "CROSS_SENSOR_SUPPORTED", counts
+    return "WITHIN_SENSOR_MULTI_STREAM_SUPPORTED", counts
 
 
 def create_change_candidate(
@@ -115,14 +165,33 @@ def create_cross_sensor_corroboration(
     aoi_version_id: str,
     world_id: str,
     reference_window: tuple,
-    state: str,
-    member_change_candidate_ids: list[str],
+    members: list[dict],
+    temporally_compatible: bool = True,
+    common_support_ok: bool = True,
     max_temporal_offset_days: float | None = None,
     metadata: dict | None = None,
 ) -> dict:
-    if state not in CORROBORATION_STATES:
-        raise ValueError(f"Unknown corroboration state: {state!r}")
-    if state != "INSUFFICIENT_EVIDENCE" and not member_change_candidate_ids:
+    """``members``: one dict per contributing change candidate, each
+    ``{"change_candidate_id": ..., "sensor_stream": ...}``. The state is
+    DERIVED here from the members' real sensor streams
+    (``classify_corroboration_state``), never accepted as a free-form
+    caller value -- this is what makes it impossible to again label two
+    streams of one sensor (e.g. S1 ascending + descending) as cross-sensor
+    or cross-modality support: the counts are computed from the data, and
+    the state name is picked to match them, not the other way around.
+    ``common_support_ok=False`` overrides to INSUFFICIENT_COMMON_SUPPORT
+    regardless of stream composition (a distinct failure mode: enough
+    streams detected something, but their spatial/acquisition support
+    does not overlap enough to compare them meaningfully).
+    """
+    if not common_support_ok and members:
+        state = "INSUFFICIENT_COMMON_SUPPORT"
+        counts = {"distinct_stream_count": None, "distinct_sensor_family_count": None, "distinct_modality_count": None}
+    else:
+        state, counts = classify_corroboration_state(
+            [m["sensor_stream"] for m in members], temporally_compatible=temporally_compatible
+        )
+    if state != "INSUFFICIENT_EVIDENCE" and not members:
         raise ValueError(f"State {state!r} requires at least one contributing change candidate")
 
     audit_context(session, "change-domain", f"Create cross-sensor corroboration ({state})")
@@ -136,13 +205,16 @@ def create_cross_sensor_corroboration(
         reference_window_end=reference_window[1],
         state=state,
         max_temporal_offset_days=max_temporal_offset_days,
+        distinct_stream_count=counts["distinct_stream_count"],
+        distinct_sensor_family_count=counts["distinct_sensor_family_count"],
+        distinct_modality_count=counts["distinct_modality_count"],
         metadata=metadata or {},
     )
-    for candidate_id in member_change_candidate_ids:
+    for member in members:
         insert_row(
             session,
             s.cross_sensor_corroboration_member,
             corroboration_id=corroboration["id"],
-            change_candidate_id=candidate_id,
+            change_candidate_id=member["change_candidate_id"],
         )
     return dict(corroboration)

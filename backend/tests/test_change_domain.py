@@ -11,7 +11,11 @@ from sqlalchemy import select
 from sqlalchemy.exc import DBAPIError, IntegrityError
 
 from app.db import schema as s
-from app.services.eo.change_domain import create_change_candidate, create_cross_sensor_corroboration
+from app.services.eo.change_domain import (
+    classify_corroboration_state,
+    create_change_candidate,
+    create_cross_sensor_corroboration,
+)
 from app.services.eo.fake_provider import FakeEOProvider
 from app.services.eo.provider import SourceItem
 from app.services.eo.worker import enqueue, run_job
@@ -189,21 +193,15 @@ def test_cross_sensor_corroboration_links_real_candidates(db, store):
         aoi_version_id=aoi_version_id,
         world_id=world_id,
         reference_window=(datetime(2026, 9, 1, tzinfo=UTC), datetime(2026, 10, 1, tzinfo=UTC)),
-        state="OPTICAL_ONLY",
-        member_change_candidate_ids=[optical_candidate["id"]],
+        members=[{"change_candidate_id": optical_candidate["id"], "sensor_stream": "s2_optical"}],
     )
-    assert corroboration["state"] == "OPTICAL_ONLY"
-
-    with pytest.raises(ValueError, match="requires at least one"):
-        create_cross_sensor_corroboration(
-            db,
-            entity_id=entity_id,
-            aoi_version_id=aoi_version_id,
-            world_id=world_id,
-            reference_window=(datetime(2026, 9, 1, tzinfo=UTC), datetime(2026, 10, 1, tzinfo=UTC)),
-            state="MULTI_SENSOR_SUPPORTED",
-            member_change_candidate_ids=[],
-        )
+    # One stream contributed -> SINGLE_STREAM, derived from the data, not
+    # asserted by the caller (this is the whole point of the fix: the
+    # state can no longer be requested independently of what actually
+    # contributed).
+    assert corroboration["state"] == "SINGLE_STREAM"
+    assert corroboration["distinct_stream_count"] == 1
+    assert corroboration["distinct_sensor_family_count"] == 1
 
 
 def test_insufficient_evidence_state_does_not_require_members(db, store):
@@ -215,10 +213,89 @@ def test_insufficient_evidence_state_does_not_require_members(db, store):
         aoi_version_id=aoi_version_id,
         world_id=world_id,
         reference_window=(datetime(2026, 9, 1, tzinfo=UTC), datetime(2026, 10, 1, tzinfo=UTC)),
-        state="INSUFFICIENT_EVIDENCE",
-        member_change_candidate_ids=[],
+        members=[],
     )
     assert corroboration["state"] == "INSUFFICIENT_EVIDENCE"
+
+
+def test_two_s1_streams_are_within_sensor_not_cross_sensor():
+    """The real bug this migration fixes: S1 ascending + S1 descending are
+    two streams of ONE sensor family (Sentinel-1 C-band SAR), not two
+    sensors -- they must never classify as CROSS_SENSOR_SUPPORTED or
+    CROSS_MODALITY_SUPPORTED.
+    """
+    state, counts = classify_corroboration_state(
+        ["s1_ascending", "s1_descending"], temporally_compatible=True
+    )
+    assert state == "WITHIN_SENSOR_MULTI_STREAM_SUPPORTED"
+    assert counts["distinct_stream_count"] == 2
+    assert counts["distinct_sensor_family_count"] == 1
+    assert counts["distinct_modality_count"] == 1
+
+
+def test_s1_and_s2_together_are_cross_sensor_and_cross_modality():
+    state, counts = classify_corroboration_state(["s1_ascending", "s2_optical"], temporally_compatible=True)
+    assert state == "CROSS_MODALITY_SUPPORTED"
+    assert counts["distinct_sensor_family_count"] == 2
+    assert counts["distinct_modality_count"] == 2
+
+
+def test_single_stream_regardless_of_candidate_count():
+    state, counts = classify_corroboration_state(["s2_optical"], temporally_compatible=True)
+    assert state == "SINGLE_STREAM"
+    assert counts["distinct_stream_count"] == 1
+
+
+def test_temporally_incompatible_multi_stream_is_disagreement():
+    state, _ = classify_corroboration_state(["s1_ascending", "s2_optical"], temporally_compatible=False)
+    assert state == "SENSOR_DISAGREEMENT"
+
+
+def test_no_streams_is_insufficient_evidence():
+    state, counts = classify_corroboration_state([], temporally_compatible=True)
+    assert state == "INSUFFICIENT_EVIDENCE"
+    assert counts["distinct_stream_count"] == 0
+
+
+def test_insufficient_common_support_overrides_stream_composition(db, store):
+    """Even a real cross-sensor stream combination must not be classified
+    as supported evidence if the caller flags inadequate common support --
+    a distinct failure mode from stream composition.
+    """
+    aoi_version_id = ingest_cfr_polygons(db, store, only="Adjumani")["records"][0]["aoi_version_id"]
+    entity_id, world_id = _entity_and_world(db, aoi_version_id)
+    baseline_obs = _real_observation(
+        db, store, aoi_version_id, datetime(2026, 8, 1, tzinfo=UTC), datetime(2026, 9, 1, tzinfo=UTC)
+    )
+    candidate_obs = _real_observation(
+        db, store, aoi_version_id, datetime(2026, 9, 1, tzinfo=UTC), datetime(2026, 10, 1, tzinfo=UTC)
+    )
+    optical_candidate = create_change_candidate(
+        db,
+        entity_id=entity_id,
+        aoi_version_id=aoi_version_id,
+        world_id=world_id,
+        sensor_stream="s2_optical",
+        features=["ndvi"],
+        baseline_window=(datetime(2026, 8, 1, tzinfo=UTC), datetime(2026, 9, 1, tzinfo=UTC)),
+        candidate_window=(datetime(2026, 9, 1, tzinfo=UTC), datetime(2026, 10, 1, tzinfo=UTC)),
+        algorithm="robust_first_difference",
+        algorithm_version="1",
+        config_version="1",
+        statistic=5.0,
+        baseline_observation_ids=[baseline_obs],
+        candidate_observation_ids=[candidate_obs],
+    )
+    corroboration = create_cross_sensor_corroboration(
+        db,
+        entity_id=entity_id,
+        aoi_version_id=aoi_version_id,
+        world_id=world_id,
+        reference_window=(datetime(2026, 9, 1, tzinfo=UTC), datetime(2026, 10, 1, tzinfo=UTC)),
+        members=[{"change_candidate_id": optical_candidate["id"], "sensor_stream": "s2_optical"}],
+        common_support_ok=False,
+    )
+    assert corroboration["state"] == "INSUFFICIENT_COMMON_SUPPORT"
 
 
 def test_baseline_window_must_not_overlap_candidate_window(db, store):
