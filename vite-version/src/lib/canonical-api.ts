@@ -92,9 +92,24 @@ export type EoFeatureValue = {
 
 export type EoOutcome = "success" | "partial" | "no_observation" | "failed"
 
+/** Homogeneous-stream identity (never blended -- S1 ascending/descending
+ * are separate lanes on purpose). `null` means the observation's recipe
+ * is not yet in the frontend's known lane set; treat as "unrecognized
+ * sensor", never default it to optical. */
+export type SensorLane = "s2_optical" | "s1_ascending" | "s1_descending"
+
+export const SENSOR_LANE_LABELS: Record<SensorLane, string> = {
+  s2_optical: "Sentinel-2 optical",
+  s1_ascending: "Sentinel-1 radar (ascending)",
+  s1_descending: "Sentinel-1 radar (descending)",
+}
+
 export type EoObservation = {
   id: string
   series_id: string
+  recipe_key: string
+  collection_key: string
+  sensor_lane: SensorLane | null
   window_start: string
   window_end: string
   outcome: EoOutcome
@@ -126,17 +141,32 @@ export type EoObservationDetail = EoObservation & {
   }[]
 }
 
-export async function fetchSpatialAsset(cfrName: string): Promise<SpatialAsset | null> {
+/** Generalised beyond Uganda: `spatialType` defaults to "reserve" (Uganda
+ * CFRs) for backward compatibility with existing callers, but Kenya's
+ * canonical forests use spatial_type="forest_candidate" -- pass it
+ * explicitly for any non-Uganda-CFR lookup. Prefer resolving an asset by
+ * `entity_id`/`aoi_version_id` (already present on most canonical map
+ * data, e.g. `ForestPolygonProperties`) over this name-matching lookup
+ * wherever the caller already has those identifiers.
+ */
+export async function fetchSpatialAsset(
+  cfrName: string,
+  country = "UG",
+  spatialType = "reserve"
+): Promise<SpatialAsset | null> {
   const assets = await canonicalFetch<SpatialAsset[]>(
-    "/api/canonical/spatial-assets?country=UG&spatial_type=reserve&limit=1000"
+    `/api/canonical/spatial-assets?country=${country}&spatial_type=${spatialType}&limit=1000`
   )
   return assets.find((asset) => asset.name === cfrName) ?? null
 }
 
-export async function fetchEoObservations(aoiVersionId: string): Promise<EoObservation[]> {
-  return canonicalFetch<EoObservation[]>(
-    `/api/canonical/eo/observations?aoi_version_id=${aoiVersionId}`
-  )
+export async function fetchEoObservations(
+  aoiVersionId: string,
+  sensorLane?: SensorLane
+): Promise<EoObservation[]> {
+  const search = new URLSearchParams({ aoi_version_id: aoiVersionId })
+  if (sensorLane) search.set("sensor_lane", sensorLane)
+  return canonicalFetch<EoObservation[]>(`/api/canonical/eo/observations?${search.toString()}`)
 }
 
 export async function fetchEoObservationDetail(observationId: string): Promise<EoObservationDetail> {
@@ -168,9 +198,130 @@ export async function fetchCountryEoStatus(country = "UG"): Promise<CountryEoSta
   )
 }
 
+/** Real per-lane completeness for one canonical forest -- backend-computed
+ * (never re-derive "x/12" in the browser). A lane absent from `lanes` was
+ * never queried at all for this AOI; a lane present with
+ * `completed_months: 0` was queried and genuinely has no successful month
+ * yet. Both are real, different states.
+ */
+export type CoverageLane = {
+  completed_months: number
+  target_months: number
+  latest_observation_month: string | null
+  latest_outcome: EoOutcome | null
+  latest_usable_support: number | null
+}
+
+export type CoverageSummaryEntry = {
+  entity_id: string
+  name: string
+  aoi_id: string
+  aoi_version_id: string
+  country: string
+  lanes: Partial<Record<SensorLane, CoverageLane>>
+  latest_corroboration_state?: CorroborationState
+}
+
+/** One real map-scale request per country -- never one request per AOI
+ * per sensor. Works identically for country="UG" and country="KE".
+ */
+export async function fetchCoverageSummary(
+  country: string,
+  targetMonths = 12
+): Promise<CoverageSummaryEntry[]> {
+  return canonicalFetch<CoverageSummaryEntry[]>(
+    `/api/canonical/eo/coverage-summary?country=${country}&target_months=${targetMonths}`
+  )
+}
+
+// --- Change evidence (observatory v0.2) --------------------------------
+
+/** Evidence-quality grade: an execution-gate pass (e.g. "3 months of
+ * history") is NOT the same as scientific sufficiency. Never a calibrated
+ * probability -- display as a label, not a percentage.
+ */
+export type EvidenceGrade = "PRELIMINARY" | "REVIEWABLE" | "STRONGER_SUPPORT"
+
+export const EVIDENCE_GRADE_LABELS: Record<EvidenceGrade, string> = {
+  PRELIMINARY: "Preliminary",
+  REVIEWABLE: "Reviewable",
+  STRONGER_SUPPORT: "Stronger support",
+}
+
+/** Corroboration semantics (migration 0012): S1 ascending + S1 descending
+ * agreeing is WITHIN_SENSOR_MULTI_STREAM_SUPPORTED, never
+ * CROSS_SENSOR_SUPPORTED -- they are two streams of one sensor family
+ * (Sentinel-1), not two instruments. Only optical + radar (or radar +
+ * lidar) corroboration is cross-sensor/cross-modality.
+ */
+export type CorroborationState =
+  | "SINGLE_STREAM"
+  | "WITHIN_SENSOR_MULTI_STREAM_SUPPORTED"
+  | "CROSS_SENSOR_SUPPORTED"
+  | "CROSS_MODALITY_SUPPORTED"
+  | "SENSOR_DISAGREEMENT"
+  | "INSUFFICIENT_COMMON_SUPPORT"
+  | "INSUFFICIENT_EVIDENCE"
+
+export const CORROBORATION_STATE_LABELS: Record<CorroborationState, string> = {
+  SINGLE_STREAM: "Single sensor stream",
+  WITHIN_SENSOR_MULTI_STREAM_SUPPORTED: "Multiple streams, one sensor",
+  CROSS_SENSOR_SUPPORTED: "Cross-sensor support",
+  CROSS_MODALITY_SUPPORTED: "Cross-modality support (optical + radar)",
+  SENSOR_DISAGREEMENT: "Sensors disagree on timing",
+  INSUFFICIENT_COMMON_SUPPORT: "Insufficient common support",
+  INSUFFICIENT_EVIDENCE: "Insufficient evidence",
+}
+
+export type ChangeCandidate = {
+  id: string
+  sensor_stream: string
+  features: string[]
+  baseline_window: { start: string; end: string }
+  candidate_window: { start: string; end: string }
+  algorithm: string
+  algorithm_version: string
+  config_version: string
+  statistic: number
+  persistence: number | null
+  common_support_fraction: number | null
+  interpretation_class: "OBSERVATION_CHANGE"
+  evidence_grade: EvidenceGrade | null
+  evidence_quality: { grade: EvidenceGrade; reasons: string[] } | null
+  confounders: Record<string, unknown> | null
+  spatial_evidence: { region_count: number; evidence_cell_count: number; cell_count_total: number } | null
+}
+
+export type ChangeCorroboration = {
+  id: string
+  state: CorroborationState
+  reference_window: { start: string; end: string }
+  distinct_stream_count: number | null
+  distinct_sensor_family_count: number | null
+  distinct_modality_count: number | null
+  max_temporal_offset_days: number | null
+  member_change_candidate_ids: string[]
+}
+
+export type ChangeEvidence = {
+  aoi_version_id: string
+  candidates: ChangeCandidate[]
+  corroborations: ChangeCorroboration[]
+}
+
+export async function fetchChangeEvidence(aoiVersionId: string): Promise<ChangeEvidence> {
+  return canonicalFetch<ChangeEvidence>(
+    `/api/canonical/eo/change-evidence?aoi_version_id=${aoiVersionId}`
+  )
+}
+
 export type ForestPolygonProperties = {
   entity_id: string
   geometry_observation_id: string
+  /** Null when this polygon has not been promoted to an EO-processable
+   * AOI version yet -- present, real EO coverage can only exist when
+   * this is non-null. */
+  aoi_version_id: string | null
   name: string
   source_name: string
   country: string

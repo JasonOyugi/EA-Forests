@@ -35,6 +35,10 @@ import {
   ForestEvidenceLayer,
 } from "@/components/map/forest-evidence-layer"
 import {
+  EoEvidenceDetailSheet,
+  type EoEvidenceTarget,
+} from "@/components/eo/eo-evidence-panel"
+import {
   marketActorLayerMeta,
   marketActors,
   marketCountryFilters,
@@ -2230,6 +2234,11 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
   const [isRouting, setIsRouting] = useState(false)
   const [showRoadAnalysis, setShowRoadAnalysis] = useState(false)
   const [selectedConcessionId, setSelectedConcessionId] = useState<string | null>(null)
+  // Sector Map's EO intelligence layer: the same canonical identity
+  // (entity_id/aoi_version_id) that opens the exact same Observatory
+  // drawer on the Asset Map -- never a name-matched, country-specific fork.
+  const [selectedEoEvidenceTarget, setSelectedEoEvidenceTarget] =
+    useState<EoEvidenceTarget | null>(null)
   const [scopeFocusVersion, setScopeFocusVersion] = useState(0)
   const [activeLayerGroups, setActiveLayerGroups] = useState<string[]>(
     layerGroupOptions
@@ -2566,7 +2575,10 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
                 // not surveyed polygons, so they are excluded from the read model and
                 // do not duplicate these boundaries. Revisit once real CFR polygon
                 // evidence lands in the canonical spatial pipeline.
-                <ForestEvidenceLayer country={isoCountryForScope(selectedCountry)} />
+                <ForestEvidenceLayer
+                  country={isoCountryForScope(selectedCountry)}
+                  onViewEoEvidence={setSelectedEoEvidenceTarget}
+                />
               ) : null}
 
               {visibleActorLayers.map((layer) => (
@@ -2636,6 +2648,14 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
           </Map>
         </div>
       </section>
+
+      <EoEvidenceDetailSheet
+        target={selectedEoEvidenceTarget}
+        open={selectedEoEvidenceTarget !== null}
+        onOpenChange={(nextOpen) => {
+          if (!nextOpen) setSelectedEoEvidenceTarget(null)
+        }}
+      />
 
       <MarketAnalysis
         selectedCountry={selectedCountry}

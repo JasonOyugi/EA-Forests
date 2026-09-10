@@ -79,7 +79,11 @@ import {
 } from "@/app/shop/data/market-map"
 import { ugandaCfrs, type LatLngTuple } from "@/app/shop/data/generated-boundaries"
 import cfrReconciliation from "@/app/shop/data/cfr-reconciliation.json"
-import { EoEvidenceDetailSheet, EoEvidenceSummary } from "@/components/eo/eo-evidence-panel"
+import {
+  EoEvidenceDetailSheet,
+  EoEvidenceSummary,
+  type EoEvidenceTarget,
+} from "@/components/eo/eo-evidence-panel"
 import { ForestEvidenceLayer } from "@/components/map/forest-evidence-layer"
 import { fetchCountryEoStatus, type CountryEoStatus } from "@/lib/canonical-api"
 import {
@@ -855,7 +859,7 @@ function ActorLayerGroup({
     return (
       <MapLayerGroup name={eoLayerLabel}>
         <EoEvidenceDetailSheet
-          cfrName={selectedEoCfrName}
+          target={selectedEoCfrName ? { kind: "name", cfrName: selectedEoCfrName } : null}
           open={selectedEoCfrName !== null}
           onOpenChange={(nextOpen) => {
             if (!nextOpen) setSelectedEoCfrName(null)
@@ -908,7 +912,7 @@ function ActorLayerGroup({
                   {eoStatusError && <p className="text-xs text-destructive">{eoStatusError}</p>}
                   {isLinked && (
                     <EoEvidenceSummary
-                      cfrName={cfr.name}
+                      target={{ kind: "name", cfrName: cfr.name }}
                       onViewDetails={() => setSelectedEoCfrName(cfr.name)}
                     />
                   )}
@@ -1422,6 +1426,12 @@ export function DashboardAssetMap({
   )
   const [isRouting, setIsRouting] = React.useState(false)
   const [showRoadAnalysis, setShowRoadAnalysis] = React.useState(false)
+  // Canonical-identity EO evidence target for the shared ForestEvidenceLayer
+  // (UG + KE + any future country's real forests) -- distinct from
+  // ActorLayerGroup's own name-based selectedEoCfrName, which stays scoped
+  // to the legacy Uganda-only ugandaCfrs national-status layer.
+  const [selectedEoEvidenceTarget, setSelectedEoEvidenceTarget] =
+    React.useState<EoEvidenceTarget | null>(null)
 
   const selectedGroup =
     initialAssetGroups.find((group) => group.id === selectedGroupId) ??
@@ -1626,7 +1636,7 @@ export function DashboardAssetMap({
                       focusVersion={focusVersion}
                     />
 
-                    <ForestEvidenceLayer />
+                    <ForestEvidenceLayer onViewEoEvidence={setSelectedEoEvidenceTarget} />
 
                     <MapLayerGroup name="Asset blocks">
                       {initialAssetGroups.flatMap((group) => {
@@ -1844,6 +1854,14 @@ export function DashboardAssetMap({
                   </MapLayers>
                 </Map>
               </div>
+
+              <EoEvidenceDetailSheet
+                target={selectedEoEvidenceTarget}
+                open={selectedEoEvidenceTarget !== null}
+                onOpenChange={(nextOpen) => {
+                  if (!nextOpen) setSelectedEoEvidenceTarget(null)
+                }}
+              />
 
               <div className="border-0 bg-background/70">
                 <Select value={selectedGroup.id} onValueChange={handleSelectGroup}>

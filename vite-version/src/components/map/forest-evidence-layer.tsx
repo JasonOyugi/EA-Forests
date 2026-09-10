@@ -17,6 +17,7 @@ import {
   type ForestPolygonFeature,
   type ForestPolygonProperties,
 } from "@/lib/canonical-api"
+import { EoEvidenceSummary, type EoEvidenceTarget } from "@/components/eo/eo-evidence-panel"
 
 export const DEFAULT_FOREST_EVIDENCE_LAYER_NAME = "Commercial / productive forest areas"
 
@@ -124,11 +125,20 @@ function ForestPolygonDetails({ rows }: { rows: { label: string; value: string }
   )
 }
 
-function ForestPolygonPopup({ properties }: { properties: ForestPolygonProperties }) {
+function ForestPolygonPopup({
+  properties,
+  onViewEoEvidence,
+}: {
+  properties: ForestPolygonProperties
+  onViewEoEvidence?: (target: EoEvidenceTarget) => void
+}) {
   const pathOptions = polygonPathOptionsForClass(properties.commercial_class)
   const areaLabel = properties.geometry_area_ha
     ? `${Math.round(properties.geometry_area_ha).toLocaleString()} ha`
     : "Not calculated"
+  const eoTarget: EoEvidenceTarget | null = properties.aoi_version_id
+    ? { kind: "id", entityId: properties.entity_id, aoiVersionId: properties.aoi_version_id, name: properties.name }
+    : null
 
   return (
     <div className="space-y-3 bg-background p-4">
@@ -156,6 +166,16 @@ function ForestPolygonPopup({ properties }: { properties: ForestPolygonPropertie
           { label: "Status", value: forestClassStatus(properties.commercial_class) },
         ]}
       />
+      {eoTarget && onViewEoEvidence ? (
+        <>
+          <div className="border-t pt-3">
+            <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              Earth-observation evidence
+            </div>
+            <EoEvidenceSummary target={eoTarget} onViewDetails={() => onViewEoEvidence(eoTarget)} />
+          </div>
+        </>
+      ) : null}
       <details className="text-xs text-muted-foreground">
         <summary className="cursor-pointer select-none">Provenance details</summary>
         <div className="mt-2 space-y-1">
@@ -186,6 +206,13 @@ export type ForestEvidenceLayerProps = {
   sourceKeys?: string[]
   classes?: string[]
   limit?: number
+  /** Called when the user clicks "View EO evidence" in a polygon's popup
+   * (only shown for polygons with a real promoted AOI version). The
+   * caller owns the actual `EoEvidenceDetailSheet` -- this layer only
+   * surfaces the canonical identity to open it with, by entity_id/
+   * aoi_version_id, never by name.
+   */
+  onViewEoEvidence?: (target: EoEvidenceTarget) => void
 }
 
 export function ForestEvidenceLayer({
@@ -194,6 +221,7 @@ export function ForestEvidenceLayer({
   sourceKeys,
   classes,
   limit = 500,
+  onViewEoEvidence,
 }: ForestEvidenceLayerProps) {
   const map = useMap()
   const active = useMapLayerActive(name)
@@ -280,7 +308,7 @@ export function ForestEvidenceLayer({
             pathOptions={pathOptions}
           >
             <MapPopup className="w-80 p-0">
-              <ForestPolygonPopup properties={feature.properties} />
+              <ForestPolygonPopup properties={feature.properties} onViewEoEvidence={onViewEoEvidence} />
             </MapPopup>
             <MapTooltip side="top">{feature.properties.name}</MapTooltip>
           </MapPolygon>
