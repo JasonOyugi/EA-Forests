@@ -1,0 +1,47 @@
+{
+  "Epor (UG)": {
+    "granule_count_this_page": 38,
+    "earliest": "2019-09-02T08:20:07.000Z",
+    "latest": "2025-04-11T13:38:01.000Z",
+    "sample_granule_ids": [
+      "GEDI02_A_2019245082007_O04091_03_T00705_02_003_02_V002",
+      "GEDI02_A_2019245082007_O04091_03_T00705_02_004_02_V003",
+      "GEDI02_A_2019290033556_O04786_02_T05120_02_003_01_V002"
+    ],
+    "sample_download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/GEDI02_A.002/GEDI02_A_2019245082007_O04091_03_T00705_02_003_02_V002/GEDI02_A_2019245082007_O04091_03_T00705_02_003_02_V002.h5"
+  },
+  "Zulia (UG)": {
+    "granule_count_this_page": 200,
+    "earliest": "2019-04-14T16:00:23.000Z",
+    "latest": "2025-06-26T20:27:45.000Z",
+    "sample_granule_ids": [
+      "GEDI02_A_2019104160023_O01907_03_T00506_02_004_02_V003",
+      "GEDI02_A_2019164161057_O02839_03_T03352_02_003_01_V002",
+      "GEDI02_A_2019164161057_O02839_03_T03352_02_004_02_V003"
+    ],
+    "sample_download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/GEDI02_A.003/GEDI02_A_2019104160023_O01907_03_T00506_02_004_02_V003/GEDI02_A_2019104160023_O01907_03_T00506_02_004_02_V003.h5"
+  },
+  "Musamya (UG)": {
+    "granule_count_this_page": 52,
+    "earliest": "2019-05-11T18:21:15.000Z",
+    "latest": "2025-01-02T05:09:40.000Z",
+    "sample_granule_ids": [
+      "GEDI02_A_2019131182115_O02328_02_T02580_02_003_01_V002",
+      "GEDI02_A_2019131182115_O02328_02_T02580_02_004_03_V003",
+      "GEDI02_A_2019167151823_O02885_03_T03444_02_003_01_V002"
+    ],
+    "sample_download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/GEDI02_A.002/GEDI02_A_2019131182115_O02328_02_T02580_02_003_01_V002/GEDI02_A_2019131182115_O02328_02_T02580_02_003_01_V002.h5"
+  },
+  "Mount Kenya gazetted forest (KE)": {
+    "granule_count_this_page": 200,
+    "earliest": "2019-04-07T18:42:27.000Z",
+    "latest": "2022-08-03T07:11:13.000Z",
+    "sample_granule_ids": [
+      "GEDI02_A_2019097184227_O01800_03_T00812_02_004_02_V003",
+      "GEDI02_A_2019097184227_O01800_04_T00812_02_004_02_V003",
+      "GEDI02_A_2019101060749_O01854_01_T01371_02_004_02_V003"
+    ],
+    "sample_download_url": "https://data.lpdaac.earthdatacloud.nasa.gov/lp-prod-protected/GEDI02_A.003/GEDI02_A_2019097184227_O01800_03_T00812_02_004_02_V003/GEDI02_A_2019097184227_O01800_03_T00812_02_004_02_V003.h5"
+  },
+  "_credential_check": "HTTP 403 Forbidden (confirms Earthdata Login required)"
+}
