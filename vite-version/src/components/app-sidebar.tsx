@@ -3,6 +3,7 @@
 import * as React from "react"
 import {
   LayoutDashboard,
+  Satellite,
   ShoppingCart,
   Trees,
 } from "lucide-react"
@@ -78,6 +79,26 @@ const data = {
               url: "/models/clonal-eucalyptus-nursery",
             },
           ],
+        },
+      ],
+    },
+    {
+      label: "EO Intelligence",
+      items: [
+        {
+          title: "Uganda EO",
+          url: "/dashboard/assets-map?mode=eo&country=UG",
+          icon: Satellite,
+        },
+        {
+          title: "Kenya EO",
+          url: "/dashboard/assets-map?mode=eo&country=KE",
+          icon: Satellite,
+        },
+        {
+          title: "Tanzania EO",
+          url: "/dashboard/assets-map?mode=eo&country=TZ",
+          icon: Satellite,
         },
       ],
     },

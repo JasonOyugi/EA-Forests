@@ -8,6 +8,14 @@ from app.api.canonical import DB, require_access
 from app.services.ingestion.spatial.read_model import LATEST, query_forests, source_summary
 from app.services.ingestion.spatial.registry import CLASSES, COUNTRIES, load_registry
 
+# Planted-tree estates are real evidence but not part of any country's
+# default national forest-estate view (regional observatory brief,
+# section 2B) -- kept as an explicit opt-in layer, never silently blended
+# into "the" estate for a country. Driven by the same semantic_class the
+# source registry already assigns, so this holds for any future country
+# without new country-specific code.
+DEFAULT_CLASSES = CLASSES - {"tree_plantation"}
+
 router = APIRouter(prefix="/api/canonical", tags=["Spatial evidence"],
                    dependencies=[Depends(require_access)])
 
@@ -48,6 +56,10 @@ def forest_polygons(db: DB, response: Response, bbox: str = Query(max_length=120
         envelope = parse_bbox(bbox)
         sources = parse_filter(source_key, source_keys, load_registry())
         selected_classes = parse_filter(commercial_class, classes, CLASSES)
+        # No explicit source or class filter -> default to the
+        # non-plantation estate rather than every registered class.
+        if not sources and not selected_classes:
+            selected_classes = sorted(DEFAULT_CLASSES)
         if country and country not in COUNTRIES:
             raise ValueError("country must be UG, KE or TZ")
     except ValueError as exc:

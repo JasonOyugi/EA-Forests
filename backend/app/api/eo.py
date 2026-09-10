@@ -269,14 +269,28 @@ def coverage_summary(db: DB, country: str, target_months: int = Query(12, ge=1, 
     ``country``; works identically for UG and KE cohorts without
     country-specific code. Sensor semantics (completed/latest/outcome)
     are computed here, never re-derived in the frontend.
+
+    A country can accumulate more than one frozen cohort over time (e.g.
+    Kenya's original combined-estate cohort, later superseded by a
+    gazetted-forest-only re-scoping). Cohorts are append-only and never
+    mutated in place, so "the" cohort for a country is resolved here as
+    the most recently frozen one -- never a union of every cohort ever
+    frozen for that country, which would silently blend superseded scope
+    (e.g. tree plantations) back into the default national estate.
     """
     lane_rows = db.execute(
         text(
             """
-            WITH cohort AS (
+            WITH latest_cohort AS (
+                SELECT id FROM processing.eo_cohort
+                WHERE country = :country
+                ORDER BY created_at DESC
+                LIMIT 1
+            ),
+            cohort AS (
                 SELECT cm.entity_id, cm.source_record_key, cm.aoi_id, cm.aoi_version_id, e.canonical_name
                 FROM processing.eo_cohort_member cm
-                JOIN processing.eo_cohort c ON c.id = cm.cohort_id AND c.country = :country
+                JOIN latest_cohort c ON c.id = cm.cohort_id
                 JOIN core.entity e ON e.id = cm.entity_id
             ),
             lane_jobs AS (

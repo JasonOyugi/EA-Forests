@@ -10,6 +10,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
 import { DashboardAssetMap } from "../components/dashboard-asset-map"
+import { NationalEoMap, type EoCountry } from "../eo/national-eo-map"
 import {
   buildSiteGrid,
   compartmentStatusMeta,
@@ -371,6 +372,42 @@ export default function DashboardAssetsMapPage() {
         currentId: compartmentId,
       })
     }
+  }
+
+  // EO Intelligence mode: one shared route/component for every country
+  // (?mode=eo&country=UG|KE|TZ), rendered instead of the portfolio asset
+  // grid below -- never a separate per-country page.
+  const eoMode = searchParams.get("mode") === "eo"
+  const eoCountryParam = searchParams.get("country")
+  const eoCountry: EoCountry | null =
+    eoCountryParam === "UG" || eoCountryParam === "KE" || eoCountryParam === "TZ"
+      ? eoCountryParam
+      : null
+
+  if (eoMode && eoCountry) {
+    return (
+      <BaseLayout>
+        <div className="@container/main px-4 lg:px-6">
+          <div className="space-y-5">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex min-w-0 items-center gap-3">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => navigate("/dashboard")}
+                  className="-ml-2 shrink-0 text-foreground transition-colors hover:text-emerald-300"
+                  aria-label="Back to dashboard"
+                  title="Back to dashboard"
+                >
+                  <ArrowLeft className="h-5 w-5" />
+                </Button>
+              </div>
+            </div>
+            <NationalEoMap country={eoCountry} />
+          </div>
+        </div>
+      </BaseLayout>
+    )
   }
 
   return (

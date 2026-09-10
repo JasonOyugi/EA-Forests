@@ -28,6 +28,15 @@ const modelsNavItems = [
   { label: "Clonal Nursery", href: "/models/clonal-eucalyptus-nursery" },
 ] as const
 
+// One shared route/component per the regional observatory brief --
+// each entry differs only by the ?country= query param, never a
+// separate per-country page.
+const eoNavItems = [
+  { label: "Uganda EO", href: "/dashboard/assets-map?mode=eo&country=UG" },
+  { label: "Kenya EO", href: "/dashboard/assets-map?mode=eo&country=KE" },
+  { label: "Tanzania EO", href: "/dashboard/assets-map?mode=eo&country=TZ" },
+] as const
+
 /** Blurs a nav destination that isn't live yet on hover, popping a "Preview" badge on top of it. */
 function PreviewWrap({ children }: { children: React.ReactNode }) {
   return (
@@ -94,6 +103,27 @@ export function SiteHeader() {
                 <NavigationMenuContent>
                   <ul className="grid w-56 gap-1 p-2">
                     {modelsNavItems.map((item) => (
+                      <li key={item.label}>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to={item.href}
+                            className="block rounded-md px-3 py-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+                          >
+                            {item.label}
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="h-9 bg-transparent px-3 text-sm font-medium hover:bg-accent data-[state=open]:bg-accent/50 dark:text-foreground">
+                  EO Intelligence
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-56 gap-1 p-2">
+                    {eoNavItems.map((item) => (
                       <li key={item.label}>
                         <NavigationMenuLink asChild>
                           <Link
