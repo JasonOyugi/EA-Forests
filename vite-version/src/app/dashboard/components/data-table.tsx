@@ -412,7 +412,24 @@ function SortableAssetRow({ group, isExpanded, onToggle, onMapOpen }: SortableAs
           {isExpanded ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
         </TableCell>
 
-        <TableCell className="font-medium">{group.block}</TableCell>
+        <TableCell className="font-medium">
+          <div className="flex items-center gap-2">
+            <span>{group.block}</span>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Badge
+                  variant="outline"
+                  className="cursor-help text-[10px] font-normal uppercase tracking-wide text-muted-foreground"
+                >
+                  {group.provenance.geometryLabel}
+                </Badge>
+              </TooltipTrigger>
+              <TooltipContent side="top" sideOffset={6} className="max-w-xs">
+                {group.provenance.geometryNote}
+              </TooltipContent>
+            </Tooltip>
+          </div>
+        </TableCell>
         <TableCell className="text-xs text-muted-foreground">{groupVarieties(group)}</TableCell>
         <TableCell>{group.location}</TableCell>
         <TableCell>
@@ -745,6 +762,9 @@ export function DataTable({
             >
               Calendar
             </button>
+            <p className="text-xs text-muted-foreground">
+              Planned scenario activity -- demo operations for illustration, not verified field records.
+            </p>
           </div>
         </div>
         <div className="p-0">
