@@ -1,0 +1,24 @@
+{
+  "scenes_analyzed": 1504,
+  "months_with_data_so_far": [
+    "2025-09",
+    "2026-06",
+    "2026-08"
+  ],
+  "distinct_cfr_direction_pairs": 478,
+  "cfrs_with_single_relative_orbit_per_direction": 421,
+  "cfrs_with_multiple_relative_orbits_in_available_history": 57,
+  "month_to_month_relative_orbit_changes_observed": 0,
+  "relative_orbit_scene_counts_by_direction": {
+    "ASCENDING:29": 521,
+    "DESCENDING:123": 34,
+    "DESCENDING:50": 16,
+    "ASCENDING:131": 30,
+    "ASCENDING:101": 247,
+    "ASCENDING:102": 174,
+    "ASCENDING:28": 413,
+    "ASCENDING:130": 21,
+    "ASCENDING:174": 48
+  },
+  "note": "Based on whatever S1 history has been submitted so far by the live national backfill -- not yet the full 12-month cohort. Re-run this script once more months complete for a fuller picture; the single-vs-multiple relative-orbit finding is expected to be stable since it reflects real satellite orbit geometry, not backfill progress."
+}

@@ -20,6 +20,7 @@ __pycache__/
 .pytest_cache/
 pytest-cache-files-*/
 backend/.cache/
+/.cache/
 trial_site_climate_profiles_cache.json
 
 # Environment variables
