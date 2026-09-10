@@ -1159,6 +1159,76 @@ eo_cohort_member = table(
     UniqueConstraint("cohort_id", "source_record_key", name="uq_eo_cohort_member_identity"),
 )
 
+# Change-assessment domain (observatory v1, section 4): DERIVED evidence
+# about the observation process changing, never a forest-state observation.
+# interpretation_class is constrained to a single value at the DB level --
+# this schema cannot express a biological label even if application code
+# tried to write one.
+change_candidate = table(
+    "processing",
+    "change_candidate",
+    fk("entity_id", "core.entity.id"),
+    fk("aoi_version_id", "geo.aoi_version.id"),
+    fk("world_id", "core.world.id"),
+    col("sensor_stream"),
+    js("features"),
+    ts("baseline_window_start"),
+    ts("baseline_window_end"),
+    ts("candidate_window_start"),
+    ts("candidate_window_end"),
+    col("algorithm"),
+    col("algorithm_version"),
+    col("config_version"),
+    js("method_config"),
+    number("statistic", nullable=False),
+    number("persistence"),
+    number("common_support_fraction", minimum=0, maximum=1),
+    Column("baseline_acquisition_count", Integer, nullable=True),
+    Column("candidate_acquisition_count", Integer, nullable=True),
+    choice("status", "active retracted", "active"),
+    choice("interpretation_class", "OBSERVATION_CHANGE", "OBSERVATION_CHANGE"),
+    ts("created_at", default=True),
+    js(),
+    CheckConstraint("baseline_window_start < baseline_window_end"),
+    CheckConstraint("candidate_window_start < candidate_window_end"),
+    CheckConstraint("baseline_window_end <= candidate_window_start"),
+)
+change_candidate_source_observation = table(
+    "processing",
+    "change_candidate_source_observation",
+    fk("change_candidate_id", "processing.change_candidate.id"),
+    fk("eo_observation_id", "observations.eo_observation.id"),
+    choice("role", "baseline candidate"),
+    UniqueConstraint(
+        "change_candidate_id", "eo_observation_id", "role", name="uq_change_candidate_source_observation"
+    ),
+)
+cross_sensor_corroboration = table(
+    "processing",
+    "cross_sensor_corroboration",
+    fk("entity_id", "core.entity.id"),
+    fk("aoi_version_id", "geo.aoi_version.id"),
+    fk("world_id", "core.world.id"),
+    ts("reference_window_start"),
+    ts("reference_window_end"),
+    choice(
+        "state",
+        "OPTICAL_ONLY SAR_ASC_ONLY SAR_DESC_ONLY MULTI_SENSOR_SUPPORTED "
+        "SENSOR_DISAGREEMENT INSUFFICIENT_COMMON_SUPPORT INSUFFICIENT_EVIDENCE",
+    ),
+    number("max_temporal_offset_days"),
+    ts("created_at", default=True),
+    js(),
+    CheckConstraint("reference_window_start < reference_window_end"),
+)
+cross_sensor_corroboration_member = table(
+    "processing",
+    "cross_sensor_corroboration_member",
+    fk("corroboration_id", "processing.cross_sensor_corroboration.id"),
+    fk("change_candidate_id", "processing.change_candidate.id"),
+    UniqueConstraint("corroboration_id", "change_candidate_id", name="uq_cross_sensor_corroboration_member"),
+)
+
 # Foreign key indexes are intentionally systematic; history gets both range and current indexes.
 for _table in metadata.tables.values():
     for _column in _table.columns:
