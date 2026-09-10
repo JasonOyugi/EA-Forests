@@ -1,0 +1,19 @@
+{
+  "country": "TZ",
+  "datasets": [
+    "TZ-FORESTS"
+  ],
+  "identities_seen": 571,
+  "promoted_new": 571,
+  "already_promoted": 0,
+  "skipped_no_geometry": [],
+  "skipped_invalid_area": [],
+  "by_dataset": {
+    "TZ-FORESTS": 571
+  },
+  "cohort": {
+    "cohort_id": "03c730b0-5489-411d-98df-e8fdac440d18",
+    "created": true,
+    "member_count": 571
+  }
+}

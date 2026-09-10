@@ -1,0 +1,19 @@
+{
+  "country": "KE",
+  "datasets": [
+    "KE-GAZETTED-FOREST"
+  ],
+  "identities_seen": 386,
+  "promoted_new": 0,
+  "already_promoted": 386,
+  "skipped_no_geometry": [],
+  "skipped_invalid_area": [],
+  "by_dataset": {
+    "KE-GAZETTED-FOREST": 386
+  },
+  "cohort": {
+    "cohort_id": "49d6e961-9c13-4a34-8623-744af33f46db",
+    "created": true,
+    "member_count": 386
+  }
+}
