@@ -45,7 +45,16 @@ COLLECTION_KEY = "COPERNICUS/S2_SR_HARMONIZED"
 QA_PROFILE_CORE = "s2-qa-scl-core/1"
 QA_PROFILE_ENHANCED = "s2-qa-scl-enhanced/1"  # registered; execution deferred (task section 10)
 S1_COLLECTION_KEY = "COPERNICUS/S1_GRD"
-MAX_PIXELS = int(1e8)
+# Sized against Uganda's largest CFR (Zulia, 92,559 ha) originally, which
+# fits comfortably under 1e8 pixels at the shared 20m grid. Tanzania's
+# largest gazetted reserves (e.g. Rungwe, ~807,099 ha) are an order of
+# magnitude bigger and were observed failing with up to ~222M pixels
+# requested against this cap (PROVIDER_UNAVAILABLE / "Too many pixels in
+# the region"). Raised to cover that real, observed range at full native
+# resolution -- not via bestEffort degradation, which would silently
+# reduce at a coarser, unrecorded scale for exactly the AOIs where an
+# honest resolution matters most.
+MAX_PIXELS = int(1e9)
 # Pilot eligibility policy (EO observation architecture section on observation
 # eligibility): a comparison candidate needs at least 2 distinct contributing
 # acquisitions per eligible target cell. Not revised here for lack of
@@ -359,6 +368,7 @@ class EarthEngineProvider:
                     crs=crs,
                     scale=grid.resolution_m,
                     maxPixels=MAX_PIXELS,
+                    tileScale=4,
                 )
                 .get("B4")
             )
@@ -438,6 +448,7 @@ class EarthEngineProvider:
                 crs=crs,
                 scale=grid.resolution_m,
                 maxPixels=MAX_PIXELS,
+                tileScale=4,
             )
         )
 
@@ -570,7 +581,8 @@ class EarthEngineProvider:
 
         stats = _getinfo(
             stats_image.reduceRegion(
-                reducer=ee.Reducer.sum(), geometry=aoi, crs=crs, scale=grid.resolution_m, maxPixels=MAX_PIXELS
+                reducer=ee.Reducer.sum(), geometry=aoi, crs=crs, scale=grid.resolution_m,
+                maxPixels=MAX_PIXELS, tileScale=4,
             )
         )
 

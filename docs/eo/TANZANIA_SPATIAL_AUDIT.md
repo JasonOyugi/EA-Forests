@@ -87,6 +87,49 @@ live to return real Tanzania features with real `aoi_version_id` populated
 display them; whether Tanzania is currently *visible* in a given map view
 depends only on the viewport, not on any country gate in this layer.
 
+## S2/S1 one-month country pass (2026-08) -- real results
+
+Launched via the existing generic `run_uganda_national_history.py`
+(zero Tanzania-specific code, `--country TZ --cohort-key
+tanzania-forest-observation-cohort`). Final per-recipe tallies:
+
+| Recipe | Succeeded | Failed |
+|---|---|---|
+| S2 optical | 564 / 571 | 7 |
+| S1 ascending | 569 / 571 | 2 |
+| S1 descending | 569 / 571 | 2 |
+
+All 11 failures trace to exactly 8 of Tanzania's largest gazetted
+reserves (all >=389,066 ha: Rungwe, Nyahua Mbuga, Nyonga, Mpanda North
+East, Nikonga River, Mpanda Line, Itulu Hill, Ugalla River), all with
+the same real, reproducible Earth Engine error: `Image.reduceRegion:
+Too many pixels in the region`.
+
+Root cause: `app/services/eo/ee_provider.py`'s shared `MAX_PIXELS`
+constant (`1e8`) was sized against Uganda's largest CFR (Zulia, ~92,559
+ha) and had never been validated against Tanzania-scale reserves.
+Raised to `1e9` (plus `tileScale=4` on all three `reduceRegion` calls,
+matching the existing pattern in `site_classification.py`) and verified
+live: 6 of the original 11 failures were recovered with real NDVI/NDMI/
+NBR statistics and genuine acquisition support fractions -- not a proxy
+test, the actual production `claim_job`/`execute_claimed_job` path,
+re-run via `scripts/retry_failed_eo_jobs.py`.
+
+The remaining 8 AOIs still fail even at `1e9` -- directly verified via
+a minimal single-image reproduction against Nyahua Mbuga's real
+geometry, which succeeded easily even at the *original* `1e8` cap. This
+means the real pipeline's failure is not simply "too few pixels
+allowed" but a computation-shape issue (almost certainly Earth
+Engine's own interactive-query ceiling on multi-band/multi-acquisition
+`reduceRegion` calls, independent of the client-supplied `maxPixels`)
+that a larger constant cannot resolve. The already-implemented (but
+never wired into the production pipeline) `app/services/eo/
+work_limits.py` geometry-sharding module (`should_shard()`,
+`generate_deterministic_shards()`) is the architecturally correct fix
+for these 8 reserves -- not attempted this pass, since it requires
+aggregating sufficient statistics across shards through the pipeline's
+persistence layer, a larger change than this pass's scope.
+
 ## What this does NOT do
 
 - Does not use the old Tanzania trial-site point coordinates
