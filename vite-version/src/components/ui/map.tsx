@@ -236,6 +236,12 @@ function useMapLayersContext() {
     return useContext(MapLayersContext)
 }
 
+/** True when no MapLayers ancestor exists (nothing to gate) or the named group is active. */
+function useMapLayerActive(name: string) {
+    const context = useMapLayersContext()
+    return context ? context.activeLayerGroups.includes(name) : true
+}
+
 function MapTileLayer({
     name = "Default",
     url,
@@ -1563,4 +1569,5 @@ export {
     MapTooltip,
     MapZoomControl,
     useLeaflet,
+    useMapLayerActive,
 }

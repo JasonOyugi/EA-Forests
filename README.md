@@ -12,7 +12,9 @@ EA Forests is a forestry intelligence and decision-support MVP for East African 
 The [EO observation architecture](docs/architecture/eo-observation-architecture.md)
 defines the canonical design and implementation sequence for extending Earth Engine
 monitoring into asset evidence and field verification. It is an architecture
-specification; the EO feature has not been implemented.
+specification; the backend now includes EO observations, job processing, cohorts
+and change-assessment foundations. See the architecture and implementation reports
+for the scope and remaining work.
 
 ## Core product intent
 
@@ -29,6 +31,24 @@ This repository is not a generic template. It is a functional MVP for:
 The app deliberately keeps real forestry analytics and model pages active while marking preview-only dashboard surfaces and deferred functionality clearly. It does not present fictional investor portfolio activity as live data.
 
 ## Local development
+
+### Complete system on Windows
+
+From this repository's root:
+
+```powershell
+npm run system:start
+```
+
+Open <http://127.0.0.1:5173>. Use `npm run system:status`,
+`npm run system:restart`, and `npm run system:stop` to manage it.
+The launcher loads `backend/.env` and verifies PostgreSQL/PostGIS, FastAPI,
+the frontend proxy and the local browser session. See the
+[backend setup guide](backend/README.md) for dependencies, fresh database setup
+and troubleshooting. The portable database in this workspace is not shipped in Git.
+
+The individual commands below are for manual development; the short backend
+command alone does not enable canonical forest maps or EO evidence.
 
 ### Frontend
 

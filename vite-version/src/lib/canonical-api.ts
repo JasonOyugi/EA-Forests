@@ -162,9 +162,9 @@ export type CountryEoStatus = {
   usable_observation_fraction: number | null
 }
 
-export async function fetchCountryEoStatus(): Promise<CountryEoStatus[]> {
+export async function fetchCountryEoStatus(country = "UG"): Promise<CountryEoStatus[]> {
   return canonicalFetch<CountryEoStatus[]>(
-    "/api/canonical/eo/country-status?country=UG&spatial_type=reserve&limit=1000"
+    `/api/canonical/eo/country-status?country=${country}&spatial_type=reserve&limit=1000`
   )
 }
 
@@ -217,6 +217,12 @@ export async function fetchForestPolygons(params: {
   zoom?: number
   signal?: AbortSignal
 }): Promise<ForestPolygonCollection> {
+  const status = await ensureCanonicalSession()
+  if (!status.admin_enabled) {
+    throw new CanonicalApiUnavailableError(
+      "This backend has not enabled the canonical admin capability (set CANONICAL_API_TOKEN)."
+    )
+  }
   const search = new URLSearchParams({
     bbox: params.bbox.join(","),
     limit: String(params.limit ?? 500),
@@ -231,6 +237,12 @@ export async function fetchForestPolygons(params: {
     credentials: "include",
     signal: params.signal,
   })
+  if (response.status === 401 || response.status === 403) {
+    bootstrapPromise = null // session may have expired; next call re-bootstraps
+    throw new CanonicalApiUnavailableError(
+      "The local canonical session is unavailable. Reload the page to retry."
+    )
+  }
   if (!response.ok) {
     throw new Error(`Forest polygon request failed (${response.status})`)
   }

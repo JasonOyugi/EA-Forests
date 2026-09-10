@@ -1,0 +1,554 @@
+{
+  "Epor": {
+    "years": [
+      {
+        "year": 2015,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 22,
+            "ndvi_mean": 0.5395033357066686
+          },
+          "LANDSAT_8": {
+            "scene_count": 22,
+            "ndvi_mean": 0.6193210688551559
+          }
+        },
+        "total_scenes": 44
+      },
+      {
+        "year": 2016,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 18,
+            "ndvi_mean": 0.501079623419022
+          },
+          "LANDSAT_8": {
+            "scene_count": 20,
+            "ndvi_mean": 0.5396934084934506
+          }
+        },
+        "total_scenes": 38
+      },
+      {
+        "year": 2017,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 19,
+            "ndvi_mean": 0.49912610488443043
+          },
+          "LANDSAT_8": {
+            "scene_count": 21,
+            "ndvi_mean": 0.5447583969116971
+          }
+        },
+        "total_scenes": 40
+      },
+      {
+        "year": 2018,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 19,
+            "ndvi_mean": 0.5476734030112597
+          },
+          "LANDSAT_8": {
+            "scene_count": 23,
+            "ndvi_mean": 0.5998721486357466
+          }
+        },
+        "total_scenes": 42
+      },
+      {
+        "year": 2019,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 20,
+            "ndvi_mean": 0.4554656792372736
+          },
+          "LANDSAT_8": {
+            "scene_count": 22,
+            "ndvi_mean": 0.5877503403087349
+          }
+        },
+        "total_scenes": 42
+      },
+      {
+        "year": 2020,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 19,
+            "ndvi_mean": 0.6289737674779582
+          },
+          "LANDSAT_8": {
+            "scene_count": 19,
+            "ndvi_mean": 0.6729233661428099
+          }
+        },
+        "total_scenes": 38
+      },
+      {
+        "year": 2021,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 20,
+            "ndvi_mean": 0.5193304439015188
+          },
+          "LANDSAT_8": {
+            "scene_count": 20,
+            "ndvi_mean": 0.5484033984621451
+          },
+          "LANDSAT_9": {
+            "scene_count": 2,
+            "ndvi_mean": 0.5419980295687773
+          }
+        },
+        "total_scenes": 42
+      },
+      {
+        "year": 2022,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 23,
+            "ndvi_mean": 0.6207428981339231
+          },
+          "LANDSAT_8": {
+            "scene_count": 23,
+            "ndvi_mean": 0.592191861729031
+          },
+          "LANDSAT_9": {
+            "scene_count": 20,
+            "ndvi_mean": 0.6034571909495156
+          }
+        },
+        "total_scenes": 66
+      },
+      {
+        "year": 2023,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 24,
+            "ndvi_mean": 0.572424715903226
+          },
+          "LANDSAT_8": {
+            "scene_count": 20,
+            "ndvi_mean": 0.595973333464443
+          },
+          "LANDSAT_9": {
+            "scene_count": 21,
+            "ndvi_mean": 0.5935606432418786
+          }
+        },
+        "total_scenes": 65
+      },
+      {
+        "year": 2024,
+        "by_mission": {
+          "LANDSAT_8": {
+            "scene_count": 22,
+            "ndvi_mean": 0.6408085648700561
+          },
+          "LANDSAT_9": {
+            "scene_count": 19,
+            "ndvi_mean": 0.639012141739003
+          }
+        },
+        "total_scenes": 41
+      },
+      {
+        "year": 2025,
+        "by_mission": {
+          "LANDSAT_8": {
+            "scene_count": 22,
+            "ndvi_mean": 0.6344268806204562
+          },
+          "LANDSAT_9": {
+            "scene_count": 21,
+            "ndvi_mean": 0.6251604804511642
+          }
+        },
+        "total_scenes": 43
+      },
+      {
+        "year": 2026,
+        "by_mission": {
+          "LANDSAT_8": {
+            "scene_count": 15,
+            "ndvi_mean": 0.6284983775769011
+          },
+          "LANDSAT_9": {
+            "scene_count": 15,
+            "ndvi_mean": 0.6064297016382001
+          }
+        },
+        "total_scenes": 30
+      }
+    ]
+  },
+  "Zulia": {
+    "years": [
+      {
+        "year": 2015,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 22,
+            "ndvi_mean": 0.448271274831104
+          },
+          "LANDSAT_8": {
+            "scene_count": 21,
+            "ndvi_mean": 0.4868855366436519
+          }
+        },
+        "total_scenes": 43
+      },
+      {
+        "year": 2016,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 19,
+            "ndvi_mean": 0.4353572294730192
+          },
+          "LANDSAT_8": {
+            "scene_count": 19,
+            "ndvi_mean": 0.43047802687889886
+          }
+        },
+        "total_scenes": 38
+      },
+      {
+        "year": 2017,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 21,
+            "ndvi_mean": 0.39758393914476603
+          },
+          "LANDSAT_8": {
+            "scene_count": 20,
+            "ndvi_mean": 0.46024444165840994
+          }
+        },
+        "total_scenes": 41
+      },
+      {
+        "year": 2018,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 20,
+            "ndvi_mean": 0.43865300724658535
+          },
+          "LANDSAT_8": {
+            "scene_count": 20,
+            "ndvi_mean": 0.5192960159956048
+          }
+        },
+        "total_scenes": 40
+      },
+      {
+        "year": 2019,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 21,
+            "ndvi_mean": 0.4283765833924917
+          },
+          "LANDSAT_8": {
+            "scene_count": 22,
+            "ndvi_mean": 0.5301509406515402
+          }
+        },
+        "total_scenes": 43
+      },
+      {
+        "year": 2020,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 20,
+            "ndvi_mean": 0.5686737104486574
+          },
+          "LANDSAT_8": {
+            "scene_count": 20,
+            "ndvi_mean": 0.5802223406632512
+          }
+        },
+        "total_scenes": 40
+      },
+      {
+        "year": 2021,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 20,
+            "ndvi_mean": 0.48183269251047334
+          },
+          "LANDSAT_8": {
+            "scene_count": 21,
+            "ndvi_mean": 0.5436287263111943
+          },
+          "LANDSAT_9": {
+            "scene_count": 5,
+            "ndvi_mean": 0.46014930165321993
+          }
+        },
+        "total_scenes": 46
+      },
+      {
+        "year": 2022,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 21,
+            "ndvi_mean": 0.4890691519535485
+          },
+          "LANDSAT_8": {
+            "scene_count": 23,
+            "ndvi_mean": 0.5278617599539773
+          },
+          "LANDSAT_9": {
+            "scene_count": 19,
+            "ndvi_mean": 0.4985280723259473
+          }
+        },
+        "total_scenes": 63
+      },
+      {
+        "year": 2023,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 29,
+            "ndvi_mean": 0.4734641052674419
+          },
+          "LANDSAT_8": {
+            "scene_count": 19,
+            "ndvi_mean": 0.49603430603820403
+          },
+          "LANDSAT_9": {
+            "scene_count": 21,
+            "ndvi_mean": 0.5050025692821252
+          }
+        },
+        "total_scenes": 69
+      },
+      {
+        "year": 2024,
+        "by_mission": {
+          "LANDSAT_8": {
+            "scene_count": 20,
+            "ndvi_mean": 0.5713034081149023
+          },
+          "LANDSAT_9": {
+            "scene_count": 19,
+            "ndvi_mean": 0.5725946568873724
+          }
+        },
+        "total_scenes": 39
+      },
+      {
+        "year": 2025,
+        "by_mission": {
+          "LANDSAT_8": {
+            "scene_count": 21,
+            "ndvi_mean": 0.5807308394078015
+          },
+          "LANDSAT_9": {
+            "scene_count": 21,
+            "ndvi_mean": 0.5331504214525069
+          }
+        },
+        "total_scenes": 42
+      },
+      {
+        "year": 2026,
+        "by_mission": {
+          "LANDSAT_8": {
+            "scene_count": 14,
+            "ndvi_mean": 0.507655707505502
+          },
+          "LANDSAT_9": {
+            "scene_count": 14,
+            "ndvi_mean": 0.5010591789462697
+          }
+        },
+        "total_scenes": 28
+      }
+    ]
+  },
+  "Musamya": {
+    "years": [
+      {
+        "year": 2015,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 39,
+            "ndvi_mean": 0.628775301936315
+          },
+          "LANDSAT_8": {
+            "scene_count": 41,
+            "ndvi_mean": 0.7160391126158921
+          }
+        },
+        "total_scenes": 80
+      },
+      {
+        "year": 2016,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 39,
+            "ndvi_mean": 0.6632202902482486
+          },
+          "LANDSAT_8": {
+            "scene_count": 42,
+            "ndvi_mean": 0.7212078226916555
+          }
+        },
+        "total_scenes": 81
+      },
+      {
+        "year": 2017,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 38,
+            "ndvi_mean": 0.6714823250899442
+          },
+          "LANDSAT_8": {
+            "scene_count": 44,
+            "ndvi_mean": 0.7230983965732788
+          }
+        },
+        "total_scenes": 82
+      },
+      {
+        "year": 2018,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 40,
+            "ndvi_mean": 0.6493977670237204
+          },
+          "LANDSAT_8": {
+            "scene_count": 43,
+            "ndvi_mean": 0.7117848091074126
+          }
+        },
+        "total_scenes": 83
+      },
+      {
+        "year": 2019,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 39,
+            "ndvi_mean": 0.722835608405663
+          },
+          "LANDSAT_8": {
+            "scene_count": 41,
+            "ndvi_mean": 0.7836147286929354
+          }
+        },
+        "total_scenes": 80
+      },
+      {
+        "year": 2020,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 36,
+            "ndvi_mean": 0.7473949500264616
+          },
+          "LANDSAT_8": {
+            "scene_count": 40,
+            "ndvi_mean": 0.8142328519246792
+          }
+        },
+        "total_scenes": 76
+      },
+      {
+        "year": 2021,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 38,
+            "ndvi_mean": 0.7494692707590043
+          },
+          "LANDSAT_8": {
+            "scene_count": 38,
+            "ndvi_mean": 0.7886483680010624
+          },
+          "LANDSAT_9": {
+            "scene_count": 4,
+            "ndvi_mean": 0.8092964042198265
+          }
+        },
+        "total_scenes": 80
+      },
+      {
+        "year": 2022,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 18,
+            "ndvi_mean": 0.638047164422269
+          },
+          "LANDSAT_8": {
+            "scene_count": 39,
+            "ndvi_mean": 0.7289313743515848
+          },
+          "LANDSAT_9": {
+            "scene_count": 42,
+            "ndvi_mean": 0.7450857637981475
+          }
+        },
+        "total_scenes": 99
+      },
+      {
+        "year": 2023,
+        "by_mission": {
+          "LANDSAT_7": {
+            "scene_count": 18,
+            "ndvi_mean": 0.7123222397394715
+          },
+          "LANDSAT_8": {
+            "scene_count": 39,
+            "ndvi_mean": 0.8013177810481463
+          },
+          "LANDSAT_9": {
+            "scene_count": 37,
+            "ndvi_mean": 0.8049618238912318
+          }
+        },
+        "total_scenes": 94
+      },
+      {
+        "year": 2024,
+        "by_mission": {
+          "LANDSAT_8": {
+            "scene_count": 38,
+            "ndvi_mean": 0.7599759327594149
+          },
+          "LANDSAT_9": {
+            "scene_count": 35,
+            "ndvi_mean": 0.7575774755283464
+          }
+        },
+        "total_scenes": 73
+      },
+      {
+        "year": 2025,
+        "by_mission": {
+          "LANDSAT_8": {
+            "scene_count": 41,
+            "ndvi_mean": 0.7342204558833818
+          },
+          "LANDSAT_9": {
+            "scene_count": 38,
+            "ndvi_mean": 0.7338144586356686
+          }
+        },
+        "total_scenes": 79
+      },
+      {
+        "year": 2026,
+        "by_mission": {
+          "LANDSAT_8": {
+            "scene_count": 27,
+            "ndvi_mean": 0.7663249764745955
+          },
+          "LANDSAT_9": {
+            "scene_count": 27,
+            "ndvi_mean": 0.7521279690574
+          }
+        },
+        "total_scenes": 54
+      }
+    ]
+  }
+}

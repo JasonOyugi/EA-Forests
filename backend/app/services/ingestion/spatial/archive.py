@@ -118,6 +118,13 @@ def geojson_features(content):
     data = json.loads(content)
     if data.get("type") != "FeatureCollection":
         raise AcquisitionError("Expected a GeoJSON FeatureCollection")
-    if data.get("crs"):
+    crs = data.get("crs")
+    if crs and not (
+        isinstance(crs, dict)
+        and crs.get("type") == "name"
+        and isinstance(crs.get("properties", {}), dict)
+        and str(crs["properties"].get("name", "")).upper().replace("EPSG:", "")
+        in {"4326", "3857"}
+    ):
         raise AcquisitionError("Legacy GeoJSON CRS requires explicit vector import normalization")
     yield from data["features"]

@@ -31,6 +31,10 @@ import {
   useBasicSsmtLayerController,
 } from "@/app/maps/basic-ssmt-layer"
 import {
+  DEFAULT_FOREST_EVIDENCE_LAYER_NAME,
+  ForestEvidenceLayer,
+} from "@/components/map/forest-evidence-layer"
+import {
   marketActorLayerMeta,
   marketActors,
   marketCountryFilters,
@@ -178,8 +182,22 @@ const actorLayerIcons: Record<MarketActorLayer, LucideIcon> = {
 const defaultMapLayerGroups = [
   "Regional boundaries",
   concessionLayerName,
-  ...actorLayerOrder.map((layer) => marketActorLayerMeta[layer].label),
+  ...actorLayerOrder.map((layer) =>
+    // Matches the ActorLayerGroup's default `reserveCountry` ("Uganda") fallback.
+    layer === "forestReserve" ? "Uganda EO" : marketActorLayerMeta[layer].label
+  ),
+  DEFAULT_FOREST_EVIDENCE_LAYER_NAME,
 ]
+
+const marketCountryToIso: Record<MarketCountry, string> = {
+  Uganda: "UG",
+  Kenya: "KE",
+  Tanzania: "TZ",
+}
+
+function isoCountryForScope(country: MarketCountryFilter) {
+  return country === "All" ? undefined : marketCountryToIso[country]
+}
 
 function formatDistance(distanceKm: number) {
   return distanceKm >= 100
@@ -1058,6 +1076,7 @@ function ActorLayerGroup({
   layer,
   actors,
   forestReserves = ugandaCfrs,
+  reserveCountry = "Uganda",
   selectedActorId,
   nearestHighlights,
   onSelectActor,
@@ -1065,15 +1084,19 @@ function ActorLayerGroup({
   layer: MarketActorLayer
   actors: MarketActor[]
   forestReserves?: typeof ugandaCfrs
+  reserveCountry?: MarketCountry
   selectedActorId: string | null
   nearestHighlights: Record<string, NearestHighlight>
   onSelectActor: (actorId: string) => void
 }) {
   const meta = marketActorLayerMeta[layer]
+  // "{Country} EO": generalized from a Uganda-only label so Kenya/Tanzania read
+  // the same layer once their CFR-equivalent boundary data lands.
+  const eoLayerLabel = `${reserveCountry} EO`
 
   if (layer === "forestReserve") {
     return (
-      <MapLayerGroup name={meta.label}>
+      <MapLayerGroup name={eoLayerLabel}>
         {forestReserves.flatMap((cfr) => {
           const record = getCentralForestReserveRecord(
             cfr.name,
@@ -2536,12 +2559,23 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
                 />
               ) : null}
 
+              {!isWoodMarkets ? (
+                // Uganda CFRs still render from generated-boundaries.ts (below, in
+                // ActorLayerGroup's "forestReserve" branch): the canonical DB's
+                // existing central-forest-reserves.json records are point placeholders,
+                // not surveyed polygons, so they are excluded from the read model and
+                // do not duplicate these boundaries. Revisit once real CFR polygon
+                // evidence lands in the canonical spatial pipeline.
+                <ForestEvidenceLayer country={isoCountryForScope(selectedCountry)} />
+              ) : null}
+
               {visibleActorLayers.map((layer) => (
                 <ActorLayerGroup
                   key={layer}
                   layer={layer}
                   actors={actorGroups[layer]}
                   forestReserves={scopedForestReserves}
+                  reserveCountry={selectedCountry === "All" ? "Uganda" : selectedCountry}
                   selectedActorId={selectedActorId}
                   nearestHighlights={nearestHighlights}
                   onSelectActor={focusActor}

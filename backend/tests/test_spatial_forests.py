@@ -12,6 +12,7 @@ from app.api.spatial import parse_bbox
 from app.db import schema as s
 from app.main import app
 from app.services.ingestion.spatial.arcgis import acquire_arcgis
+from app.services.ingestion.spatial.archive import geojson_features
 from app.services.ingestion.spatial.base import Acquisition, AcquisitionError
 from app.services.ingestion.spatial.commercial_forests import SpatialImporter
 from app.services.ingestion.spatial.geometry import normalize_geometry
@@ -89,6 +90,15 @@ def test_arcgis_recovers_truncation_and_refuses_missing_inventory(store):
     assert sum(p["feature_count"] for p in manifest["pages"]) == 5
     with pytest.raises(AcquisitionError, match="inventory mismatch"):
         acquire_arcgis(load_registry()["KE-TREE-PLANTATIONS"], Acquisition(store, ArcGISFixture(omit=True)))
+
+
+def test_geojson_features_accepts_standard_arcgis_crs():
+    payload = {
+        "type": "FeatureCollection",
+        "crs": {"type": "name", "properties": {"name": "EPSG:4326"}},
+        "features": [feature()],
+    }
+    assert list(geojson_features(json.dumps(payload))) == payload["features"]
 
 
 @pytest.mark.parametrize("bbox", ["1,2,3", "nan,0,40,2", "40,0,35,2", "29,-91,42,5", "x,0,1,2"])

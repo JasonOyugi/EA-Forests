@@ -5,6 +5,10 @@
 	"type": "module",
 	  "scripts": {
 	    "dev": "pnpm --dir vite-version dev",
+	    "system:start": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/dev.ps1 start",
+	    "system:status": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/dev.ps1 status",
+	    "system:stop": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/dev.ps1 stop",
+	    "system:restart": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/dev.ps1 restart",
 	    "build": "pnpm --dir vite-version build",
 	    "check": "pnpm --filter @ea-forests/contracts check",
 	    "lint": "pnpm --dir vite-version lint",

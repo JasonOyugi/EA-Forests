@@ -1,0 +1,6 @@
+INFO:     127.0.0.1:52929 - "GET /api/canonical/session/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51051 - "GET /api/canonical/session/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49892 - "GET /api/canonical/session/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49904 - "GET /api/canonical/session/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58519 - "GET /api/canonical/session/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61681 - "GET /api/canonical/session/status HTTP/1.1" 200 OK

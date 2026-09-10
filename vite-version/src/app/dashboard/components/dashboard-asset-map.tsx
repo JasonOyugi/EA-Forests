@@ -80,12 +80,8 @@ import {
 import { ugandaCfrs, type LatLngTuple } from "@/app/shop/data/generated-boundaries"
 import cfrReconciliation from "@/app/shop/data/cfr-reconciliation.json"
 import { EoEvidenceDetailSheet, EoEvidenceSummary } from "@/components/eo/eo-evidence-panel"
-import {
-  fetchCountryEoStatus,
-  fetchForestPolygons,
-  type CountryEoStatus,
-  type ForestPolygonFeature,
-} from "@/lib/canonical-api"
+import { ForestEvidenceLayer } from "@/components/map/forest-evidence-layer"
+import { fetchCountryEoStatus, type CountryEoStatus } from "@/lib/canonical-api"
 import {
   buildGroupMetricSeries,
   createPolygon,
@@ -98,6 +94,7 @@ import {
   type AssetGroup,
   type SiteMetricKey,
 } from "./data-table"
+import type { Country } from "../data/forestry-data"
 import {
   compactCurrency,
   compactNumber,
@@ -183,6 +180,12 @@ const actorLayerOrder: MarketActorLayer[] = [
   "trialSite",
   "forestReserve",
 ]
+
+const countryToIso: Record<Country, string> = {
+  Uganda: "UG",
+  Kenya: "KE",
+  Tanzania: "TZ",
+}
 
 const nearestFeatureLayers: NearestFeatureLayer[] = [
   "processor",
@@ -585,181 +588,6 @@ function MapViewportFocus({
   return null
 }
 
-function polygonPathOptionsForClass(commercialClass: string) {
-  switch (commercialClass) {
-    case "official_forest_reserve":
-      return {
-        color: "#15803d",
-        fillColor: "#15803d",
-        fillOpacity: 0.16,
-        opacity: 0.82,
-        weight: 1.4,
-      }
-    case "gazetted_forest":
-      return {
-        color: "#d97706",
-        fillColor: "#d97706",
-        fillOpacity: 0.12,
-        opacity: 0.8,
-        weight: 1.4,
-      }
-    case "tree_plantation":
-      return {
-        color: "#0f766e",
-        fillColor: "#0f766e",
-        fillOpacity: 0.18,
-        opacity: 0.8,
-        weight: 1.5,
-      }
-    case "planted_tree_candidate":
-      return {
-        color: "#7c3aed",
-        fillColor: "#7c3aed",
-        fillOpacity: 0.14,
-        opacity: 0.8,
-        weight: 1.4,
-      }
-    case "forest_candidate":
-      return {
-        color: "#475569",
-        fillColor: "#475569",
-        fillOpacity: 0.12,
-        opacity: 0.75,
-        weight: 1.2,
-      }
-    default:
-      return {
-        color: "#64748b",
-        fillColor: "#64748b",
-        fillOpacity: 0.1,
-        opacity: 0.75,
-        weight: 1.2,
-      }
-  }
-}
-
-function forestFeaturePositions(feature: ForestPolygonFeature) {
-  const { geometry } = feature
-  const toLatLng = (coord: GeoJSON.Position): [number, number] => {
-    const [lng, lat] = coord as [number, number]
-    return [lat, lng]
-  }
-
-  if (geometry.type === "Polygon") {
-    return [geometry.coordinates.map((ring) => ring.map(toLatLng))]
-  }
-  if (geometry.type === "MultiPolygon") {
-    return geometry.coordinates.map((polygon) =>
-      polygon.map((ring) => ring.map(toLatLng))
-    )
-  }
-  return null
-}
-
-function ForestEvidenceLayer() {
-  const map = useMap()
-  const [features, setFeatures] = React.useState<ForestPolygonFeature[]>([])
-  const [loading, setLoading] = React.useState(false)
-  const [error, setError] = React.useState<string | null>(null)
-
-  const loadViewport = React.useCallback(() => {
-    const bounds = map.getBounds()
-    const bbox: [number, number, number, number] = [
-      bounds.getWest(),
-      bounds.getSouth(),
-      bounds.getEast(),
-      bounds.getNorth(),
-    ]
-    const controller = new AbortController()
-    setLoading(true)
-    setError(null)
-
-    fetchForestPolygons({
-      bbox,
-      limit: 500,
-      zoom: map.getZoom(),
-      signal: controller.signal,
-    })
-      .then((collection) => {
-        if (controller.signal.aborted) return
-        setFeatures(collection.features)
-      })
-      .catch((nextError: unknown) => {
-        if (controller.signal.aborted) return
-        setFeatures([])
-        setError(nextError instanceof Error ? nextError.message : "Forest polygon data could not be loaded.")
-      })
-      .finally(() => {
-        if (!controller.signal.aborted) {
-          setLoading(false)
-        }
-      })
-
-    return () => controller.abort()
-  }, [map])
-
-  React.useEffect(() => {
-    loadViewport()
-    const cleanup = () => undefined
-    return cleanup
-  }, [loadViewport])
-
-  useMapEvents({
-    moveend: loadViewport,
-    zoomend: loadViewport,
-  })
-
-  return (
-    <MapLayerGroup name="Commercial / productive forest areas">
-      {features.map((feature) => {
-        const positions = forestFeaturePositions(feature)
-        if (!positions) return null
-        const properties = feature.properties
-        const pathOptions = polygonPathOptionsForClass(properties.commercial_class)
-
-        return (
-          <MapPolygon
-            key={feature.id}
-            positions={positions as unknown as [number, number][][]}
-            pathOptions={pathOptions}
-          >
-            <MapPopup className="w-80 p-0">
-              <div className="space-y-3 bg-background p-4">
-                <div>
-                  <Badge variant="secondary" style={{ color: pathOptions.color }}>
-                    {properties.commercial_class.replace(/_/g, " ")}
-                  </Badge>
-                  <h3 className="mt-2 text-base font-semibold">{properties.name}</h3>
-                  <div className="mt-1 text-xs uppercase tracking-[0.15em] text-muted-foreground">
-                    {properties.country} · {properties.source_key}
-                  </div>
-                </div>
-                <DetailRows
-                  rows={[
-                    { label: "Source", value: properties.source_name || properties.publisher || "Public source" },
-                    { label: "Publisher", value: properties.publisher || "Not recorded" },
-                    { label: "Area", value: properties.geometry_area_ha ? `${Math.round(properties.geometry_area_ha).toLocaleString()} ha` : "Not calculated" },
-                    { label: "Authority", value: properties.authority_class || "Not recorded" },
-                    { label: "Version", value: properties.dataset_version || properties.data_vintage || "Not recorded" },
-                    { label: "Evidence", value: properties.evidence_url || "N/A" },
-                  ]}
-                />
-              </div>
-            </MapPopup>
-            <MapTooltip side="top">{properties.name}</MapTooltip>
-          </MapPolygon>
-        )
-      })}
-      {loading ? (
-        <MapTooltip side="top">Loading forest evidence…</MapTooltip>
-      ) : null}
-      {error ? (
-        <MapTooltip side="top">{error}</MapTooltip>
-      ) : null}
-    </MapLayerGroup>
-  )
-}
-
 function MarketMapClickHandler({
   onSelectPoint,
 }: {
@@ -982,17 +810,23 @@ function RegionalBoundariesLayer({
 function ActorLayerGroup({
   layer,
   actors,
+  country,
   selectedActorId,
   nearestHighlights,
   onSelectActor,
 }: {
   layer: MarketActorLayer
   actors: MarketActor[]
+  country: Country
   selectedActorId: string | null
   nearestHighlights: Record<string, NearestHighlight>
   onSelectActor: (actorId: string) => void
 }) {
   const meta = marketActorLayerMeta[layer]
+  // "{Country} EO": generalized from a Uganda-only label so Kenya/Tanzania read
+  // the same layer once their CFR-equivalent boundary data lands (see below).
+  const eoLayerLabel = `${country} EO`
+  const countryIso = countryToIso[country]
   // A plain lookup object, not the JS `Map` class: this file already imports
   // a Leaflet `Map` component of that name from "@/components/ui/map".
   const [eoStatusByName, setEoStatusByName] = React.useState<Record<string, CountryEoStatus> | null>(null)
@@ -1000,20 +834,26 @@ function ActorLayerGroup({
   const loadEoStatus = React.useCallback(async () => {
     setEoStatusError(null)
     try {
-      const rows = await fetchCountryEoStatus()
+      const rows = await fetchCountryEoStatus(countryIso)
       setEoStatusByName(Object.fromEntries(rows.map((row) => [row.name, row])))
     } catch (err) {
       setEoStatusError(err instanceof Error ? err.message : "Failed to load EO status")
     }
-  }, [])
+  }, [countryIso])
   React.useEffect(() => {
     if (layer === "forestReserve") void loadEoStatus()
   }, [layer, loadEoStatus])
   const [selectedEoCfrName, setSelectedEoCfrName] = React.useState<string | null>(null)
 
   if (layer === "forestReserve") {
+    // Boundary polygons (`ugandaCfrs`/`cfrReconciliation`) only exist for Uganda
+    // today; other countries still get the EO-labelled layer with no polygons
+    // until their own reserve boundary data is ingested.
+    if (country !== "Uganda") {
+      return <MapLayerGroup name={eoLayerLabel} />
+    }
     return (
-      <MapLayerGroup name={meta.label}>
+      <MapLayerGroup name={eoLayerLabel}>
         <EoEvidenceDetailSheet
           cfrName={selectedEoCfrName}
           open={selectedEoCfrName !== null}
@@ -1651,7 +1491,6 @@ export function DashboardAssetMap({
   }, [selectedGroup.id, showHeaderCopy])
 
   React.useEffect(() => {
-    setShowRoadAnalysis(true)
     const estimatedFeatures = getEstimatedNearestFeatureGroups(
       selectedPoint,
       selectedActor
@@ -1923,6 +1762,7 @@ export function DashboardAssetMap({
                         key={layer}
                         layer={layer}
                         actors={actorGroups[layer]}
+                        country={selectedGroup.country}
                         selectedActorId={selectedActorId}
                         nearestHighlights={nearestHighlights}
                         onSelectActor={focusActor}
@@ -1968,8 +1808,12 @@ export function DashboardAssetMap({
                           variant={showRoadAnalysis ? "default" : "secondary"}
                           className="border shadow-sm"
                           aria-label={showRoadAnalysis ? "Hide road analysis" : "Show road analysis"}
-                          title={showRoadAnalysis ? "Hide road analysis" : "Show road analysis"}
-                          onClick={() => setShowRoadAnalysis((value) => !value)}
+                          title={
+                            showRoadAnalysis
+                              ? "Double-click to hide road analysis"
+                              : "Double-click to show road analysis"
+                          }
+                          onDoubleClick={() => setShowRoadAnalysis((value) => !value)}
                         >
                           <Route className="h-4 w-4" />
                         </Button>

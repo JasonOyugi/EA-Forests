@@ -1,10 +1,12 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from app.api.canonical import router as canonical_router
 from app.api.canonical import session_router
 from app.api.eo import router as eo_router
 from app.api.spatial import router as spatial_router
+from app.readiness import system_readiness
 from app.schemas import (
     ClonalEucalyptusNurseryRequest,
     CommercialForestViabilityRequest,
@@ -54,6 +56,16 @@ app.add_middleware(
 @app.get("/api/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
+
+
+@app.get("/api/ready")
+def readiness() -> JSONResponse:
+    result = system_readiness()
+    return JSONResponse(
+        result,
+        status_code=200 if result["status"] == "ok" else 503,
+        headers={"Cache-Control": "no-store"},
+    )
 
 
 @app.get("/api/earth-engine/status", response_model=EarthEngineStatusResponse)

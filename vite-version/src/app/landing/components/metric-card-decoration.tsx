@@ -16,7 +16,7 @@ type PixelStyle = CSSProperties & {
   "--pixel-delay": string
 }
 
-const pixelCount = 13
+const pixelCount = 6
 const pixelTints = ["#ffffff", "#f8fafc", "#f5f5f4", "#fefce8"]
 
 function seededRandom(seed: number) {

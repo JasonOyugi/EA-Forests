@@ -1,0 +1,15 @@
+{
+  "tally": {
+    "success": 797,
+    "partial": 0,
+    "no_observation": 27,
+    "failed": 1,
+    "retry_wait": 0,
+    "deduplicated": 507,
+    "ingest_failed": 0
+  },
+  "done": 1332,
+  "total": 1332,
+  "elapsed_s": 2129.157,
+  "complete": true
+}

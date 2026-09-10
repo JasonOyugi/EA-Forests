@@ -1,49 +1,82 @@
 # EA Forests Models Backend
 
-## Run on this Windows machine without Docker
+## Start the complete system on Windows
 
-If PowerShell says `docker` is not recognized, the Docker instructions below do
-not apply until Docker is installed. This workspace already has a portable
-PostgreSQL/PostGIS server and the populated `ea_forests_import` database.
-These commands reuse that installation; the ignored runtime is not included in
-a fresh clone.
-
-From the repository root, check the database:
+From the **repository root** (`EA-Forests`, not `backend`), run:
 
 ```powershell
-& .\backend\.cache\canonical-runtime\pgsql\bin\pg_isready.exe -h 127.0.0.1 -p 55433
+npm run system:start
 ```
 
-If it reports **no response**, start it:
+Open <http://127.0.0.1:5173>. API documentation is at <http://127.0.0.1:8000/docs>.
+If your terminal is already in `backend`, use `npm --prefix .. run system:start`.
+The PowerShell equivalent is
+`powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\dev.ps1 start`.
+
+The launcher reads `backend/.env`, starts the existing portable PostgreSQL server
+if needed, checks PostGIS and migrations, starts FastAPI and Vite in the background,
+and verifies the browser session and database access through the Vite proxy.
+An existing healthy service is reused. Ports are fixed at **8000** and **5173**;
+the frontend never silently switches to a different port.
 
 ```powershell
-& .\backend\.cache\canonical-runtime\pgsql\bin\pg_ctl.exe -D .\backend\.cache\canonical-runtime\pgdata -l .\backend\.cache\canonical-runtime\postgres.log -o '-h 127.0.0.1 -p 55433' -w start
+npm run system:status
+npm run system:restart
+npm run system:stop
 ```
 
-Start the backend in one PowerShell terminal and leave it running:
+Closing the terminal does not stop these background services. `system:stop` stops
+only the frontend/backend processes tracked by this launcher and leaves PostgreSQL
+running. It verifies process identity before stopping a PID. After code or `.env`
+changes, use `system:restart`, then reload the browser to establish a new session.
+Services started manually must be stopped in their original terminal.
+
+This workspace has a populated `ea_forests_import` database on **55433** and a
+portable server under `backend/.cache/canonical-runtime`. These ignored files are
+**not included in a fresh clone**. Normal startup does not reinstall dependencies,
+re-import records, run migrations, or schedule EO processing.
+
+## Configuration and troubleshooting
+
+`backend/.env` is local and ignored by Git. `.env.example` documents configuration;
+process environment variables override the file. Relative artifact paths in the
+file resolve from `backend`, regardless of your terminal's working directory.
+For this existing portable database:
+
+```dotenv
+CANONICAL_DATABASE_URL=postgresql+psycopg://ea_forests@127.0.0.1:55433/ea_forests_import
+CANONICAL_ARTIFACT_ROOT=.cache/canonical-artifacts
+EARTH_ENGINE_PROJECT=ee-oyugijason
+```
+
+Use your own Earth Engine project on another machine. If `CANONICAL_API_TOKEN`
+is blank, the launcher generates a private process-only admin token. The browser
+uses a short-lived HttpOnly cookie; never put that token in a `VITE_*` variable.
+
+| Symptom | What to do |
+| --- | --- |
+| Missing backend environment/imports | From root: `uv sync --project backend --locked` |
+| Missing frontend dependencies | From root: `pnpm --dir vite-version install --frozen-lockfile` |
+| `migration_required` | Back up PostgreSQL and artifacts; from `backend`: `uv run --env-file .env alembic upgrade head`, then restart |
+| Database unavailable | Check `.env` port/database; existing portable runtime uses 55433, Docker uses 5433 |
+| Admin capability disabled / older backend on 8000 | Stop the old manual server, run `system:start`, reload the page |
+| Port already in use | Reuse or stop that service; inspect `.cache/dev/backend.err.log` or `frontend.err.log` |
+| Earth Engine unavailable | Complete the Earth Engine authentication section below and restart |
+
+Logs live under **`.cache/dev/` at the repository root**. For example:
 
 ```powershell
-cd backend
-$env:PYTHONDONTWRITEBYTECODE='1'
-$env:EARTH_ENGINE_PROJECT='ee-oyugijason'
-$env:CANONICAL_DATABASE_URL='postgresql+psycopg://ea_forests@127.0.0.1:55433/ea_forests_import'
-$env:CANONICAL_ARTIFACT_ROOT='.cache/canonical-artifacts'
-& .\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+Get-Content .cache/dev/backend.err.log -Tail 50
+Get-Content .cache/dev/frontend.err.log -Tail 50
+Invoke-RestMethod http://127.0.0.1:5173/api/ready
 ```
 
-In another terminal, from the repository root:
-
-```powershell
-cd vite-version
-npm run dev -- --host 127.0.0.1 --port 5173 --strictPort
-```
-
-Open <http://127.0.0.1:5173>. Verify the backend through the frontend proxy with
-`Invoke-RestMethod http://127.0.0.1:5173/api/health`; it should return `status: ok`.
-If either service is already running, reuse it instead of starting another copy.
-Use Ctrl+C in its terminal to stop it. The canonical administrative API still
-requires the private token described below. No migrations or re-import are needed
-to reuse this populated database.
+`/api/health` only confirms FastAPI is alive. **`/api/ready`** returns HTTP 200
+only when the database, PostGIS, current migration revision, private artifact
+directory and admin configuration are ready; otherwise it returns HTTP 503 with
+component statuses. Earth Engine readiness is checked separately at
+`/api/earth-engine/status`. A shell without the browser cookie reporting
+`session_active: False` from `/api/canonical/session/status` is normal.
 
 ## Canonical State v0.1
 
@@ -65,8 +98,10 @@ uv run python -m app.canonical bootstrap
 uv run python -m app.canonical import all
 ```
 
-Environment variables are read from the process; `.env.example` documents them but
-is not automatically loaded. Set a private `CANONICAL_API_TOKEN` to enable
+The system launcher loads `backend/.env`. Direct CLI commands need their process
+environment configured or `uv run --env-file .env ...`. Copy `.env.example` to
+`.env` on a fresh clone and configure the database before using `system:start`.
+Set a private `CANONICAL_API_TOKEN` for direct CLI/admin access to enable
 `/api/canonical` routes and send it as `Authorization: Bearer <token>`. The default
 API is disabled, with no anonymous access to source facts or model inputs. Raw
 artifacts are not exposed by HTTP. These routes are for trusted local administration;
@@ -126,7 +161,7 @@ $env:UV_CACHE_DIR='c:\Users\JasonOyugi\Downloads\EA-Forests\.uv-cache'
 uv sync
 ```
 
-## Run
+## Manual model-only server (optional)
 
 ```powershell
 cd backend
@@ -134,6 +169,10 @@ $env:EARTH_ENGINE_PROJECT='ee-oyugijason'
 $env:UV_CACHE_DIR='c:\Users\JasonOyugi\Downloads\EA-Forests\.uv-cache'
 uv run uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
+
+This minimal command starts the model endpoints only. For canonical forest
+polygons and EO evidence, use the database, artifact-root, and private-token
+configuration in **Start the complete system on Windows** above.
 
 In a second terminal, run the frontend:
 
@@ -205,10 +244,14 @@ If you do not want to authenticate Earth Engine yet, run only NASA POWER dynamic
 ## Endpoints
 
 - `GET /api/health`
+- `GET /api/ready` (full local-system readiness; 503 if configuration is incomplete)
 - `GET /api/earth-engine/status`
 - `POST /api/models/site-classification`
 - `POST /api/models/commercial-forest-viability`
 - `POST /api/models/roundwood-production`
+- `POST /api/models/clonal-eucalyptus-nursery`
+- `GET /api/canonical/forest-polygons` (local session or bearer token required)
+- `GET /api/canonical/eo/observations` (local session or bearer token required)
 
 ## Quick backend checks
 
