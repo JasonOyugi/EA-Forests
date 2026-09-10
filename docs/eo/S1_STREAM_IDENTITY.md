@@ -99,3 +99,52 @@ uv run python backend/scripts/analyze_s1_relative_orbit.py
 
 Read-only; safe to run at any time, including while the national S1
 backfill is active.
+
+## v1.1 update (2026-09-10): composition DOES shift with more real history
+
+The v1 conclusion above ("zero month-to-month relative-orbit changes
+observed") was drawn from very sparse data (effectively one real month).
+With substantially more real history now in (16,088 real scenes,
+`backend/scripts/analyze_s1_relative_orbit_composition.py`, output:
+`outputs/eo/s1_relative_orbit_composition.json`), the picture is more
+nuanced and the earlier conclusion does not hold as stated:
+
+- **191 of 656 CFR/direction pairs (29%) now show two relative orbits**
+  (up from 57/478 in the earlier partial-data pass -- expected, since more
+  months means more chances to see a boundary CFR's second swath).
+- **101 of those 191 (53%) show the DOMINANT relative orbit actually
+  changing which one contributes more scenes from month to month.** This
+  is exactly the confounding pattern flagged as a risk: a CFR near a swath
+  boundary can go from "100% orbit 29" one month to "50/50 orbit 28/29"
+  another, purely from real satellite coverage timing, with no change in
+  which orbits exist for that CFR.
+
+**Real quantification (bounded to the single most extreme case,
+`Ochomil/ASCENDING`, not yet generalized to all 101 affected CFRs):**
+Ochomil went from 100% orbit 29 (Sep/Oct 2025) to a 50/50 orbit 28/29 split
+(Aug 2026); the combined monthly VV mean moved from -9.79/-9.54 dB to
+-10.78 dB across that period (~1.2 dB apparent shift). A direct Earth
+Engine query restricted to each relative orbit separately, over the SAME
+AOI and SAME month (Aug 2026), found:
+
+```text
+orbit 28 alone: VV = -10.83 dB (2 images)
+orbit 29 alone: VV = -10.66 dB (2 images)
+combined:       VV = -10.77 dB (4 images)
+```
+
+The real orbit-to-orbit difference here (~0.17 dB) is small relative to
+the ~1.2 dB month-to-month swing in the combined series -- for this one
+tested case, composition shift does not appear to be the dominant driver
+of the observed monthly change. This is evidence FOR the current policy
+remaining viable, but it is a single data point, not a general proof; the
+other 100 affected CFRs have not been individually tested this way.
+
+**Policy: unchanged (still direction-as-identity), with one addition.**
+Per-CFR relative-orbit composition stability (stable / dominant-orbit-
+changed) should be attached as an explicit confounder/QA annotation on any
+change candidate computed for one of the 101 affected CFR/direction pairs
+-- named, not hidden -- rather than triggering a schema re-key. Re-running
+the composition script and widening the per-orbit EE comparison to more
+of the 101 affected CFRs (not just Ochomil) is the natural follow-up once
+change analysis is running routinely on the full national history.

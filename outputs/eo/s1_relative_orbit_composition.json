@@ -1,0 +1,2710 @@
+{
+  "multi_orbit_cfr_direction_pairs": 191,
+  "pairs_where_dominant_orbit_changed_month_to_month": 101,
+  "max_month_to_month_dominance_swing_fraction": 0.5,
+  "swingiest_pair": "Ochomil/ASCENDING",
+  "detail": {
+    "Epor/DESCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-06": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-06": 0.68,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Zulia/ASCENDING": {
+      "months_with_data": 5,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "131",
+        "2025-11": "29",
+        "2026-06": "131",
+        "2026-08": "131"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2025-11": 0.6,
+        "2026-06": 0.5,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Lopeichubei/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "131",
+        "2025-11": "29",
+        "2026-08": "131"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2025-11": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Ayipe/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "102",
+        "2025-11": "29",
+        "2026-08": "102"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2025-11": 0.6,
+        "2026-08": 0.778
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Atiya/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "102",
+        "2025-11": "29",
+        "2026-08": "102"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2025-11": 0.6,
+        "2026-08": 0.8
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Koreng/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "130",
+        "2025-11": "28",
+        "2026-08": "130"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2025-11": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Adjumani/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "102",
+        "2025-11": "29",
+        "2026-08": "102"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2025-11": 0.6,
+        "2026-08": 0.714
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Mutufu/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "130",
+        "2025-11": "28",
+        "2026-08": "130"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2025-11": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Budongo/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "102",
+        "2025-10": "102",
+        "2025-11": "102",
+        "2026-08": "102"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 1.0,
+        "2025-10": 1.0,
+        "2025-11": 1.0,
+        "2026-08": 0.833
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Nyabyeya/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "102",
+        "2025-10": "102",
+        "2025-11": "102",
+        "2026-08": "102"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 1.0,
+        "2025-10": 1.0,
+        "2025-11": 1.0,
+        "2026-08": 0.667
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Kamusenene/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2025-11": "28",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2025-11": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Mbale/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "130",
+        "2025-11": "28",
+        "2026-08": "130"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2025-11": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Lomej/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "131",
+        "2025-11": "29",
+        "2026-08": "131"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2025-11": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Lobajo/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "102",
+        "2025-11": "29",
+        "2026-08": "102"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2025-11": 0.6,
+        "2026-08": 0.714
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Eria/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "102",
+        "2025-11": "29",
+        "2026-08": "102"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2025-11": 0.6,
+        "2026-08": 0.714
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Era/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "102",
+        "2025-11": "29",
+        "2026-08": "102"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2025-11": 0.6,
+        "2026-08": 0.714
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Laropi/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "102",
+        "2025-11": "29",
+        "2026-08": "102"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2025-11": 0.6,
+        "2026-08": 0.714
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Nyangea - Napore/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "131",
+        "2025-11": "29",
+        "2026-08": "131"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2025-11": 0.6,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Pakelle/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "102",
+        "2025-11": "29",
+        "2026-08": "102"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2025-11": 0.6,
+        "2026-08": 0.714
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Zoka/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "102",
+        "2025-11": "29",
+        "2026-08": "102"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.5,
+        "2025-11": 0.6,
+        "2026-08": 0.714
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kilak/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "102",
+        "2025-11": "29",
+        "2026-08": "102"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.5,
+        "2025-11": 0.6,
+        "2026-08": 0.714
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Wiceri/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "102",
+        "2025-11": "29",
+        "2026-08": "102"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.5,
+        "2025-11": 0.6,
+        "2026-08": 0.714
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Anaka/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "102",
+        "2025-11": "29",
+        "2026-08": "102"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.5,
+        "2025-11": 0.6,
+        "2026-08": 0.714
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Nangolibwel/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "131",
+        "2025-11": "29",
+        "2026-08": "131"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2025-11": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kibeka/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "102",
+        "2025-11": "29",
+        "2026-08": "29"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.5,
+        "2025-11": 0.6,
+        "2026-08": 0.4
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kaduku/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "102",
+        "2025-10": "102",
+        "2025-11": "102",
+        "2026-08": "102"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 1.0,
+        "2025-10": 1.0,
+        "2025-11": 1.0,
+        "2026-08": 0.667
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Masindi/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "102",
+        "2025-10": "102",
+        "2025-11": "102",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 1.0,
+        "2025-10": 1.0,
+        "2025-11": 1.0,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Masindi Port/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "101",
+        "2025-11": "29",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2025-11": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Rwensama/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "102",
+        "2025-10": "102",
+        "2025-11": "102",
+        "2026-08": "102"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 1.0,
+        "2025-10": 1.0,
+        "2025-11": 1.0,
+        "2026-08": 0.667
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Kasokwa/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "102",
+        "2025-10": "102",
+        "2025-11": "102",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 1.0,
+        "2025-10": 1.0,
+        "2025-11": 1.0,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kigulya Hill/ASCENDING": {
+      "months_with_data": 4,
+      "dominant_ro_by_month": {
+        "2025-09": "102",
+        "2025-10": "102",
+        "2025-11": "102",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 1.0,
+        "2025-10": 1.0,
+        "2025-11": 1.0,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Ochomil/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "29",
+        "2026-08": "28"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 1.0,
+        "2025-10": 1.0,
+        "2026-08": 0.5
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Bujawe/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "101",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.5,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Kagwara/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "28",
+        "2026-08": "28"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.5,
+        "2025-10": 0.5,
+        "2026-08": 1.0
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Mukihani/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "101",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.5,
+        "2025-10": 0.6,
+        "2026-08": 1.0
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Ibamba/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Wabisi - Wajala/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "29",
+        "2026-08": "28"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 1.0,
+        "2025-10": 1.0,
+        "2026-08": 0.5
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kabwika - Mujwalanganda/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Bukigai/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "130",
+        "2026-08": "130"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Bubulo/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "130",
+        "2026-08": "130"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kapimpini/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "101",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 1.0,
+        "2025-10": 0.75,
+        "2026-08": 1.0
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Wankweyo/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Busumbu/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "130",
+        "2026-08": "130"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kabango - Muntandi/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "174",
+        "2025-10": "101",
+        "2026-08": "174"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.5,
+        "2026-08": 0.571
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "North Rwenzori/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "174",
+        "2025-10": "101",
+        "2026-08": "174"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.5,
+        "2026-08": 0.571
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Nabika/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Tororo/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Fort Portal/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "174",
+        "2025-10": "101",
+        "2026-08": "174"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.5,
+        "2026-08": 0.571
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Butebe/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "174",
+        "2025-10": "101",
+        "2026-08": "174"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.5,
+        "2026-08": 0.571
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Luwawa/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kateta/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Katabalalu/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Buvuma/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Name Unknown - Forest Reserve 5/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Lwamunda/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.714
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kakasi/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "174",
+        "2025-10": "101",
+        "2026-08": "174"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.5,
+        "2026-08": 0.571
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Navugulu/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kyampisi/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Nakindiba/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Tumbi/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kitubulu/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Nonve/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Nalubaga/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Wakayembe/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Wantayi/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kahunge/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "174",
+        "2025-10": "101",
+        "2026-08": "174"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.5,
+        "2026-08": 0.571
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kisangi/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "174",
+        "2025-10": "101",
+        "2026-08": "174"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.5,
+        "2026-08": 0.571
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kajansi/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Walumwanyi/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "101",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.571,
+        "2025-10": 0.75,
+        "2026-08": 0.714
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Mpanga/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "101",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.571,
+        "2025-10": 0.75,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Lufuka/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "101",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.571,
+        "2025-10": 0.75,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Mako/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Namagaza/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Degeya/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Nambuga/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kanjaza/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Mugomba/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Semunya/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kooga/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "174",
+        "2025-10": "101",
+        "2026-08": "174"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.5,
+        "2026-08": 0.571
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kisubi/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Gunda/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kalandazi/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kalangalo/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Ibanda/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "174",
+        "2025-10": "101",
+        "2026-08": "174"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.5,
+        "2026-08": 0.571
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kyewaga/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Bugana/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Bunjazi/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kitemu/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Tonde/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Bwizibwera/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "174",
+        "2025-10": "101",
+        "2026-08": "174"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.5,
+        "2026-08": 0.571
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kamukulu/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Buga/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "28",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Mbarara/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "174",
+        "2025-10": "101",
+        "2026-08": "174"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.5,
+        "2026-08": 0.571
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Bugamba/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "174",
+        "2025-10": "101",
+        "2026-08": "174"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.5,
+        "2026-08": 0.571
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kagogo/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "174",
+        "2025-10": "101",
+        "2026-08": "174"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.375,
+        "2025-10": 0.375,
+        "2026-08": 0.444
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Rwoho/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "174",
+        "2025-10": "101",
+        "2026-08": "174"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.5,
+        "2026-08": 0.571
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Otzi/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "29",
+        "2025-10": "102",
+        "2026-08": "102"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.6,
+        "2026-08": 0.714
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kasyoha - Kitomi/ASCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "101",
+        "2025-10": "101",
+        "2026-08": "101"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.571,
+        "2025-10": 0.667,
+        "2026-08": 0.556
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Achwera/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.8,
+        "2025-10": 0.625,
+        "2026-08": 0.667
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Orom/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.8,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Nebbi/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.8,
+        "2025-10": 0.625,
+        "2026-08": 0.667
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Adwari/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Apala/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Erusi/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.8,
+        "2025-10": 0.625,
+        "2026-08": 0.667
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Aloli/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Alebtong/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Kagorra/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "21",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.5,
+        "2025-10": 0.556,
+        "2026-08": 0.545
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Teiponga/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Ongom/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Amaich (H/Q)/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Onekokeo/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Mutufu/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Wamale/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Bajo/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Kamusenene/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Omier/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.8,
+        "2025-10": 0.625,
+        "2026-08": 0.667
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Mbale/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Ibambaro/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "21",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.5,
+        "2025-10": 0.556,
+        "2026-08": 0.545
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Nyangea - Napore/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.857,
+        "2025-10": 0.7,
+        "2026-08": 0.818
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Naam - Okora/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.8,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Utumbari/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "21",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.5,
+        "2025-10": 0.6,
+        "2026-08": 0.625
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Ogili/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Parabongo/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.75,
+        "2025-10": 0.727,
+        "2026-08": 0.818
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Suru/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.8,
+        "2025-10": 0.625,
+        "2026-08": 0.667
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Luku/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.8,
+        "2025-10": 0.625,
+        "2026-08": 0.667
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Acwao/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Abiba/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.8,
+        "2025-10": 0.625,
+        "2026-08": 0.667
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Ayito/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Ekwera/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Adero/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Kachung/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Agwata/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Awer/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Kangai/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Alit/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Aputi/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Achwali/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Along - Kongo/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Kiula/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Ibamba/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Bugoma/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.8,
+        "2025-10": 0.625,
+        "2026-08": 0.667
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Kagadi/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "21",
+        "2025-10": "21",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.5,
+        "2025-10": 0.5,
+        "2026-08": 0.545
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Namasagali/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Nakasenyi/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Tororo/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Nkera/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "21",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.5,
+        "2025-10": 0.556,
+        "2026-08": 0.545
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Nyantungo/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "21",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.5,
+        "2025-10": 0.556,
+        "2026-08": 0.545
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kasozi/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Namanve/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Banda Nursery/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Kateta/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Kifu/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Ibanda/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "21",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.5,
+        "2025-10": 0.556,
+        "2026-08": 0.545
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kyampisi/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Namyoya/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Bulijjo/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Nadagi/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Nakawa Forestry Research/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Kasala/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Kifunvwe/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Nabanga/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "50",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.5,
+        "2025-10": 0.545,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Zirimiti/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Kizinkuba/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "50",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.5,
+        "2025-10": 0.545,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kisakombe/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Nakalanga/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "50",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.5,
+        "2025-10": 0.545,
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kasulo/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Kooga/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "21",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.5,
+        "2025-10": 0.556,
+        "2026-08": 0.545
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Mwola/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Bunjazi/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Bugana/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Kitemu/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Tonde/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Bwizibwera/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "21",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.5,
+        "2025-10": 0.556,
+        "2026-08": 0.545
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kamukulu/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Sekazinga/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Buga/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Kabwohe/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "21",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.5,
+        "2025-10": 0.556,
+        "2026-08": 0.545
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Bugamba/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "21",
+        "2025-10": "21",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.5,
+        "2025-10": 0.5,
+        "2026-08": 0.545
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kagogo/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.6,
+        "2025-10": 0.583,
+        "2026-08": 0.643
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "Ntungamo/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "21",
+        "2025-10": "21",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.5,
+        "2025-10": 0.556,
+        "2026-08": 0.545
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Kagombe/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "21",
+        "2025-10": "21",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.556,
+        "2025-10": 0.583,
+        "2026-08": 0.545
+      },
+      "dominant_orbit_changed_across_months": true
+    },
+    "Mabira/DESCENDING": {
+      "months_with_data": 3,
+      "dominant_ro_by_month": {
+        "2025-09": "123",
+        "2025-10": "123",
+        "2026-08": "123"
+      },
+      "dominant_fraction_by_month": {
+        "2025-09": 0.667,
+        "2025-10": 0.625,
+        "2026-08": 0.75
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "KE-GAZETTED-FOREST::0:3/ASCENDING": {
+      "months_with_data": 1,
+      "dominant_ro_by_month": {
+        "2026-08": "58"
+      },
+      "dominant_fraction_by_month": {
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "KE-GAZETTED-FOREST::0:7/ASCENDING": {
+      "months_with_data": 1,
+      "dominant_ro_by_month": {
+        "2026-08": "57"
+      },
+      "dominant_fraction_by_month": {
+        "2026-08": 0.5
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "KE-GAZETTED-FOREST::0:23/ASCENDING": {
+      "months_with_data": 1,
+      "dominant_ro_by_month": {
+        "2026-08": "130"
+      },
+      "dominant_fraction_by_month": {
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "KE-GAZETTED-FOREST::0:93/ASCENDING": {
+      "months_with_data": 1,
+      "dominant_ro_by_month": {
+        "2026-08": "57"
+      },
+      "dominant_fraction_by_month": {
+        "2026-08": 0.5
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "KE-GAZETTED-FOREST::0:123/ASCENDING": {
+      "months_with_data": 1,
+      "dominant_ro_by_month": {
+        "2026-08": "130"
+      },
+      "dominant_fraction_by_month": {
+        "2026-08": 0.6
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "KE-GAZETTED-FOREST::0:124/ASCENDING": {
+      "months_with_data": 1,
+      "dominant_ro_by_month": {
+        "2026-08": "57"
+      },
+      "dominant_fraction_by_month": {
+        "2026-08": 0.5
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "KE-GAZETTED-FOREST::0:133/ASCENDING": {
+      "months_with_data": 1,
+      "dominant_ro_by_month": {
+        "2026-08": "57"
+      },
+      "dominant_fraction_by_month": {
+        "2026-08": 0.5
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "KE-GAZETTED-FOREST::0:137/ASCENDING": {
+      "months_with_data": 1,
+      "dominant_ro_by_month": {
+        "2026-08": "57"
+      },
+      "dominant_fraction_by_month": {
+        "2026-08": 0.667
+      },
+      "dominant_orbit_changed_across_months": false
+    },
+    "KE-GAZETTED-FOREST::0:142/ASCENDING": {
+      "months_with_data": 1,
+      "dominant_ro_by_month": {
+        "2026-08": "57"
+      },
+      "dominant_fraction_by_month": {
+        "2026-08": 0.5
+      },
+      "dominant_orbit_changed_across_months": false
+    }
+  }
+}
