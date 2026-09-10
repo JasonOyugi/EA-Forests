@@ -220,6 +220,82 @@ def get_series(series_id: UUID, db: DB):
     }
 
 
+@router.get("/change-evidence")
+def change_evidence(db: DB, aoi_version_id: UUID):
+    """Observatory v0.2 read model for one AOI: real change candidates
+    (never a biological label -- interpretation_class is DB-constrained to
+    OBSERVATION_CHANGE) plus cross-sensor corroboration, each candidate
+    carrying its evidence-quality grade and any confounder findings
+    verbatim from ``metadata``. Never fuses sensor streams; a candidate's
+    ``sensor_stream``/``features`` say exactly what produced it.
+    """
+    candidates = db.execute(
+        select(s.change_candidate)
+        .where(s.change_candidate.c.aoi_version_id == aoi_version_id, s.change_candidate.c.status == "active")
+        .order_by(s.change_candidate.c.candidate_window_start.desc())
+    ).mappings().all()
+    corroborations = db.execute(
+        select(s.cross_sensor_corroboration)
+        .where(s.cross_sensor_corroboration.c.aoi_version_id == aoi_version_id)
+        .order_by(s.cross_sensor_corroboration.c.reference_window_start.desc())
+    ).mappings().all()
+    corroboration_members = {}
+    for corroboration in corroborations:
+        members = db.execute(
+            select(s.cross_sensor_corroboration_member.c.change_candidate_id).where(
+                s.cross_sensor_corroboration_member.c.corroboration_id == corroboration["id"]
+            )
+        ).scalars().all()
+        corroboration_members[str(corroboration["id"])] = [str(m) for m in members]
+
+    return {
+        "aoi_version_id": str(aoi_version_id),
+        "candidates": [
+            {
+                "id": c["id"],
+                "sensor_stream": c["sensor_stream"],
+                "features": c["features"],
+                "baseline_window": {"start": c["baseline_window_start"], "end": c["baseline_window_end"]},
+                "candidate_window": {"start": c["candidate_window_start"], "end": c["candidate_window_end"]},
+                "algorithm": c["algorithm"],
+                "algorithm_version": c["algorithm_version"],
+                "config_version": c["config_version"],
+                "statistic": float(c["statistic"]),
+                "persistence": float(c["persistence"]) if c["persistence"] is not None else None,
+                "common_support_fraction": (
+                    float(c["common_support_fraction"]) if c["common_support_fraction"] is not None else None
+                ),
+                "interpretation_class": c["interpretation_class"],
+                "evidence_grade": (c["metadata"] or {}).get("evidence_quality", {}).get("grade"),
+                "evidence_quality": (c["metadata"] or {}).get("evidence_quality"),
+                "confounders": (c["metadata"] or {}).get("confounders"),
+                "spatial_evidence": (c["metadata"] or {}).get("spatial_evidence"),
+            }
+            for c in candidates
+        ],
+        "corroborations": [
+            {
+                "id": corroboration["id"],
+                "state": corroboration["state"],
+                "reference_window": {
+                    "start": corroboration["reference_window_start"],
+                    "end": corroboration["reference_window_end"],
+                },
+                "distinct_stream_count": corroboration["distinct_stream_count"],
+                "distinct_sensor_family_count": corroboration["distinct_sensor_family_count"],
+                "distinct_modality_count": corroboration["distinct_modality_count"],
+                "max_temporal_offset_days": (
+                    float(corroboration["max_temporal_offset_days"])
+                    if corroboration["max_temporal_offset_days"] is not None
+                    else None
+                ),
+                "member_change_candidate_ids": corroboration_members[str(corroboration["id"])],
+            }
+            for corroboration in corroborations
+        ],
+    }
+
+
 @router.get("/country-status")
 def country_status(
     db: DB,
