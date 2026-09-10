@@ -1,6 +1,6 @@
 {
   "tally": {
-    "success": 979,
+    "success": 1079,
     "partial": 0,
     "no_observation": 28,
     "failed": 2,
@@ -8,7 +8,7 @@
     "deduplicated": 3291,
     "ingest_failed": 0
   },
-  "done": 4300,
+  "done": 4400,
   "total": 14432,
-  "elapsed_s": 2464.39
+  "elapsed_s": 2758.875
 }
