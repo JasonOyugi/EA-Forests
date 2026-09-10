@@ -1,0 +1,1464 @@
+{
+  "Epor": {
+    "streams": {
+      "s2_optical": {
+        "ndvi": {
+          "feature_key": "ndvi",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 1.2022765847933,
+              "change_index": 3,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.704392639560225,
+              "change_index": 2,
+              "persistence": 0.75,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        },
+        "ndmi": {
+          "feature_key": "ndmi",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 1.6052484581851927,
+              "change_index": 3,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.7956618325449303,
+              "change_index": 2,
+              "persistence": 0.75,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        },
+        "nbr": {
+          "feature_key": "nbr",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.2043767896126285,
+              "change_index": 3,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.822443855109297,
+              "change_index": 5,
+              "persistence": 1.0,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        }
+      },
+      "s1_ascending": {
+        "s1_vv": {
+          "feature_key": "s1_vv",
+          "skipped": null,
+          "months": 5,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 1.3591440441611182,
+              "change_index": 2,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 1.8900405328314718,
+              "change_index": 1,
+              "persistence": 0.75,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        },
+        "s1_vh": {
+          "feature_key": "s1_vh",
+          "skipped": null,
+          "months": 5,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 1.114537622519484,
+              "change_index": 1,
+              "persistence": 0.25,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 1.8806952661800556,
+              "change_index": 1,
+              "persistence": 0.75,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        }
+      },
+      "s1_descending": {
+        "s1_vv": {
+          "feature_key": "s1_vv",
+          "skipped": null,
+          "months": 4,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": true,
+              "statistic": 3.859821860006427,
+              "change_index": 3,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": [
+            {
+              "method": "robust_first_difference",
+              "change_candidate_id": "281aaeb6-ab3b-4863-8592-a9a32ddb5c52",
+              "candidate_window_start": "2026-08-01T03:00:00+03:00",
+              "statistic": 3.859821860006427,
+              "persistence": 1.0
+            }
+          ]
+        },
+        "s1_vh": {
+          "feature_key": "s1_vh",
+          "skipped": null,
+          "months": 4,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.7599531936132762,
+              "change_index": 2,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        }
+      }
+    },
+    "corroboration": {
+      "state": "SAR_DESC_ONLY",
+      "offset_days": 0.0,
+      "id": "f3388a1f-8f04-4763-85d0-2e9e25086af3"
+    }
+  },
+  "Zulia": {
+    "streams": {
+      "s2_optical": {
+        "ndvi": {
+          "feature_key": "ndvi",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.0982391469389805,
+              "change_index": 1,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.7047482471966022,
+              "change_index": 2,
+              "persistence": 0.75,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        },
+        "ndmi": {
+          "feature_key": "ndmi",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.8718890844533486,
+              "change_index": 3,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.737042204209396,
+              "change_index": 2,
+              "persistence": 0.75,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        },
+        "nbr": {
+          "feature_key": "nbr",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.8446239477791342,
+              "change_index": 1,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.728432551519388,
+              "change_index": 2,
+              "persistence": 0.75,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        }
+      },
+      "s1_ascending": {
+        "s1_vv": {
+          "feature_key": "s1_vv",
+          "skipped": null,
+          "months": 5,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 1.2817957679000525,
+              "change_index": 1,
+              "persistence": 0.25,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.281144033237756,
+              "change_index": 4,
+              "persistence": 1.0,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        },
+        "s1_vh": {
+          "feature_key": "s1_vh",
+          "skipped": null,
+          "months": 5,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 1.5210032275215069,
+              "change_index": 3,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.3620029513850933,
+              "change_index": 4,
+              "persistence": 1.0,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        }
+      },
+      "s1_descending": {
+        "s1_vv": {
+          "feature_key": "s1_vv",
+          "skipped": null,
+          "months": 4,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.7846313140510187,
+              "change_index": 2,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        },
+        "s1_vh": {
+          "feature_key": "s1_vh",
+          "skipped": null,
+          "months": 4,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.8959696677682313,
+              "change_index": 2,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        }
+      }
+    },
+    "corroboration": {
+      "state": "INSUFFICIENT_EVIDENCE_OR_NO_CANDIDATE"
+    }
+  },
+  "Musamya": {
+    "streams": {
+      "s2_optical": {
+        "ndvi": {
+          "feature_key": "ndvi",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.9099439086691378,
+              "change_index": 1,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.6319257405616407,
+              "change_index": 4,
+              "persistence": 0.5,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        },
+        "ndmi": {
+          "feature_key": "ndmi",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.420713046396625,
+              "change_index": 5,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.854534585642516,
+              "change_index": 4,
+              "persistence": 0.5,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        },
+        "nbr": {
+          "feature_key": "nbr",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.548059425736857,
+              "change_index": 5,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.8058210120291744,
+              "change_index": 4,
+              "persistence": 0.5,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        }
+      },
+      "s1_ascending": {
+        "s1_vv": {
+          "feature_key": "s1_vv",
+          "skipped": null,
+          "months": 4,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": true,
+              "statistic": 4.177633655504798,
+              "change_index": 1,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": [
+            {
+              "method": "robust_first_difference",
+              "change_candidate_id": "3cd44856-8372-4354-be65-dd3ecd54be04",
+              "candidate_window_start": "2025-10-01T03:00:00+03:00",
+              "statistic": 4.177633655504798,
+              "persistence": 1.0
+            }
+          ]
+        },
+        "s1_vh": {
+          "feature_key": "s1_vh",
+          "skipped": null,
+          "months": 4,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 1.7050017990063213,
+              "change_index": 1,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        }
+      },
+      "s1_descending": {
+        "s1_vv": {
+          "feature_key": "s1_vv",
+          "skipped": null,
+          "months": 4,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": true,
+              "statistic": 17.586320757344506,
+              "change_index": 1,
+              "persistence": 0.3333333333333333,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": [
+            {
+              "method": "robust_first_difference",
+              "change_candidate_id": "665b24eb-2db8-4fc9-b131-147d41deb903",
+              "candidate_window_start": "2025-10-01T03:00:00+03:00",
+              "statistic": 17.586320757344506,
+              "persistence": 0.3333333333333333
+            }
+          ]
+        },
+        "s1_vh": {
+          "feature_key": "s1_vh",
+          "skipped": null,
+          "months": 4,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.9961027905421597,
+              "change_index": 1,
+              "persistence": 0.6666666666666666,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        }
+      }
+    },
+    "corroboration": {
+      "state": "MULTI_SENSOR_SUPPORTED",
+      "offset_days": 0,
+      "id": "24cceb5e-9115-486a-8f81-4481dd1ab8d2"
+    }
+  },
+  "Sekazinga": {
+    "streams": {
+      "s2_optical": {
+        "ndvi": {
+          "feature_key": "ndvi",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": true,
+              "statistic": 8.286329111202273,
+              "change_index": 3,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.045401007915453,
+              "change_index": 2,
+              "persistence": 0.75,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": [
+            {
+              "method": "robust_first_difference",
+              "change_candidate_id": "208f2a70-2626-4fb7-ae74-6e1caf94db1b",
+              "candidate_window_start": "2025-12-01T03:00:00+03:00",
+              "statistic": 8.286329111202273,
+              "persistence": 1.0
+            }
+          ]
+        },
+        "ndmi": {
+          "feature_key": "ndmi",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": true,
+              "statistic": 9.359935473738439,
+              "change_index": 3,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.4347327253769406,
+              "change_index": 2,
+              "persistence": 0.75,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": [
+            {
+              "method": "robust_first_difference",
+              "change_candidate_id": "cc624301-5a5f-4265-b820-21b3fd569f4c",
+              "candidate_window_start": "2025-12-01T03:00:00+03:00",
+              "statistic": 9.359935473738439,
+              "persistence": 1.0
+            }
+          ]
+        },
+        "nbr": {
+          "feature_key": "nbr",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": true,
+              "statistic": 13.626107891100098,
+              "change_index": 3,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.3485153037644557,
+              "change_index": 4,
+              "persistence": 0.5,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": [
+            {
+              "method": "robust_first_difference",
+              "change_candidate_id": "0a05dc6d-c82d-470e-b412-c5295e1b3d37",
+              "candidate_window_start": "2025-12-01T03:00:00+03:00",
+              "statistic": 13.626107891100098,
+              "persistence": 1.0
+            }
+          ]
+        }
+      },
+      "s1_ascending": {
+        "s1_vv": {
+          "feature_key": "s1_vv",
+          "skipped": null,
+          "months": 3,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.6745,
+              "change_index": 1,
+              "persistence": 0.5,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        },
+        "s1_vh": {
+          "feature_key": "s1_vh",
+          "skipped": null,
+          "months": 3,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.6745,
+              "change_index": 1,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        }
+      },
+      "s1_descending": {
+        "s1_vv": {
+          "feature_key": "s1_vv",
+          "skipped": null,
+          "months": 3,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.6745,
+              "change_index": 1,
+              "persistence": 0.5,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        },
+        "s1_vh": {
+          "feature_key": "s1_vh",
+          "skipped": null,
+          "months": 3,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.6745,
+              "change_index": 1,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        }
+      }
+    },
+    "corroboration": {
+      "state": "OPTICAL_ONLY",
+      "offset_days": 0.0,
+      "id": "ff1823c7-024c-4f91-9757-047ce8aca95b"
+    }
+  },
+  "Buwaiswa": {
+    "streams": {
+      "s2_optical": {
+        "ndvi": {
+          "feature_key": "ndvi",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.8327587720189038,
+              "change_index": 3,
+              "persistence": 0.6666666666666666,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.052518752478664,
+              "change_index": 4,
+              "persistence": 0.5,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        },
+        "ndmi": {
+          "feature_key": "ndmi",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.9434581576284317,
+              "change_index": 1,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.5682334524159307,
+              "change_index": 4,
+              "persistence": 0.5,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        },
+        "nbr": {
+          "feature_key": "nbr",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 1.0335063290846307,
+              "change_index": 1,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.528906049769681,
+              "change_index": 4,
+              "persistence": 0.5,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        }
+      },
+      "s1_ascending": {
+        "s1_vv": {
+          "feature_key": "s1_vv",
+          "skipped": null,
+          "months": 3,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.6745,
+              "change_index": 1,
+              "persistence": 0.5,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        },
+        "s1_vh": {
+          "feature_key": "s1_vh",
+          "skipped": null,
+          "months": 3,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.6745,
+              "change_index": 1,
+              "persistence": 0.5,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        }
+      },
+      "s1_descending": {
+        "s1_vv": {
+          "feature_key": "s1_vv",
+          "skipped": null,
+          "months": 3,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.6745,
+              "change_index": 1,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        },
+        "s1_vh": {
+          "feature_key": "s1_vh",
+          "skipped": null,
+          "months": 3,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.6744999999999999,
+              "change_index": 1,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        }
+      }
+    },
+    "corroboration": {
+      "state": "INSUFFICIENT_EVIDENCE_OR_NO_CANDIDATE"
+    }
+  },
+  "Ongom": {
+    "streams": {
+      "s2_optical": {
+        "ndvi": {
+          "feature_key": "ndvi",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 1.2200120862883106,
+              "change_index": 5,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.2379958810594944,
+              "change_index": 4,
+              "persistence": 0.5,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        },
+        "ndmi": {
+          "feature_key": "ndmi",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.7530780224136377,
+              "change_index": 4,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.3917713299272023,
+              "change_index": 2,
+              "persistence": 0.75,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        },
+        "nbr": {
+          "feature_key": "nbr",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.9001866441139719,
+              "change_index": 4,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.4025233034780755,
+              "change_index": 5,
+              "persistence": 1.0,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        }
+      },
+      "s1_ascending": {
+        "s1_vv": {
+          "feature_key": "s1_vv",
+          "skipped": null,
+          "months": 4,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 1.1501223619941328,
+              "change_index": 1,
+              "persistence": 0.3333333333333333,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        },
+        "s1_vh": {
+          "feature_key": "s1_vh",
+          "skipped": null,
+          "months": 4,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": true,
+              "statistic": 4.407353845456497,
+              "change_index": 1,
+              "persistence": 0.6666666666666666,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": [
+            {
+              "method": "robust_first_difference",
+              "change_candidate_id": "1811ace0-7b7b-4b89-a79e-65db2e02abf6",
+              "candidate_window_start": "2025-10-01T03:00:00+03:00",
+              "statistic": 4.407353845456497,
+              "persistence": 0.6666666666666666
+            }
+          ]
+        }
+      },
+      "s1_descending": {
+        "s1_vv": {
+          "feature_key": "s1_vv",
+          "skipped": null,
+          "months": 3,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.6745,
+              "change_index": 1,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        },
+        "s1_vh": {
+          "feature_key": "s1_vh",
+          "skipped": null,
+          "months": 3,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.6745,
+              "change_index": 1,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        }
+      }
+    },
+    "corroboration": {
+      "state": "INSUFFICIENT_EVIDENCE_OR_NO_CANDIDATE"
+    }
+  },
+  "Nonve": {
+    "streams": {
+      "s2_optical": {
+        "ndvi": {
+          "feature_key": "ndvi",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.550239971711395,
+              "change_index": 1,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.69466203146343,
+              "change_index": 4,
+              "persistence": 0.5,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        },
+        "ndmi": {
+          "feature_key": "ndmi",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.678108729747898,
+              "change_index": 5,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.6757478333473808,
+              "change_index": 4,
+              "persistence": 0.5,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        },
+        "nbr": {
+          "feature_key": "nbr",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 3.348573536353062,
+              "change_index": 5,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.706804726981467,
+              "change_index": 4,
+              "persistence": 0.5,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        }
+      },
+      "s1_ascending": {
+        "s1_vv": {
+          "feature_key": "s1_vv",
+          "skipped": null,
+          "months": 3,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.6745,
+              "change_index": 1,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        },
+        "s1_vh": {
+          "feature_key": "s1_vh",
+          "skipped": null,
+          "months": 3,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.6745,
+              "change_index": 1,
+              "persistence": 0.5,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        }
+      },
+      "s1_descending": {
+        "s1_vv": {
+          "feature_key": "s1_vv",
+          "skipped": null,
+          "months": 3,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.6745,
+              "change_index": 1,
+              "persistence": 0.5,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        },
+        "s1_vh": {
+          "feature_key": "s1_vh",
+          "skipped": null,
+          "months": 3,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.6745,
+              "change_index": 1,
+              "persistence": 0.5,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        }
+      }
+    },
+    "corroboration": {
+      "state": "INSUFFICIENT_EVIDENCE_OR_NO_CANDIDATE"
+    }
+  },
+  "Budongo": {
+    "streams": {
+      "s2_optical": {
+        "ndvi": {
+          "feature_key": "ndvi",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 1.5510420752144445,
+              "change_index": 5,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.083274278040306,
+              "change_index": 4,
+              "persistence": 0.5,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        },
+        "ndmi": {
+          "feature_key": "ndmi",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": true,
+              "statistic": 3.5221134924851447,
+              "change_index": 5,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.45590215924005,
+              "change_index": 4,
+              "persistence": 0.5,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": [
+            {
+              "method": "robust_first_difference",
+              "change_candidate_id": "e5c5d7ce-e8c2-412c-a251-55b73fd81400",
+              "candidate_window_start": "2026-08-01T03:00:00+03:00",
+              "statistic": 3.5221134924851447,
+              "persistence": 1.0
+            }
+          ]
+        },
+        "nbr": {
+          "feature_key": "nbr",
+          "skipped": null,
+          "months": 6,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 1.7765530334300352,
+              "change_index": 5,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "algorithm": "cusum",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 2.4443673111240556,
+              "change_index": 4,
+              "persistence": 0.5,
+              "notes": "two-sided CUSUM, threshold=4.0 standard deviations"
+            }
+          },
+          "created_candidates": []
+        }
+      },
+      "s1_ascending": {
+        "s1_vv": {
+          "feature_key": "s1_vv",
+          "skipped": null,
+          "months": 4,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 1.6791917560873566,
+              "change_index": 1,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        },
+        "s1_vh": {
+          "feature_key": "s1_vh",
+          "skipped": null,
+          "months": 4,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 1.941041349208733,
+              "change_index": 3,
+              "persistence": 1.0,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        }
+      },
+      "s1_descending": {
+        "s1_vv": {
+          "feature_key": "s1_vv",
+          "skipped": null,
+          "months": 3,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.6745,
+              "change_index": 1,
+              "persistence": 0.5,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        },
+        "s1_vh": {
+          "feature_key": "s1_vh",
+          "skipped": null,
+          "months": 3,
+          "method_summary": {
+            "robust_first_difference": {
+              "algorithm": "robust_first_difference",
+              "algorithm_version": "1",
+              "detected": false,
+              "statistic": 0.6745,
+              "change_index": 1,
+              "persistence": 0.5,
+              "notes": "peak robust z-score of first differences (threshold=3.5)"
+            },
+            "cusum": {
+              "skipped": "insufficient_history"
+            }
+          },
+          "created_candidates": []
+        }
+      }
+    },
+    "corroboration": {
+      "state": "INSUFFICIENT_EVIDENCE_OR_NO_CANDIDATE"
+    }
+  }
+}
