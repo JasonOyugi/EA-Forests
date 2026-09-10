@@ -97,6 +97,8 @@ def main() -> None:
                 geometry_observation_id=str(geometry_row["id"]),
                 analysis_scope=ANALYSIS_SCOPE,
                 provenance_class=provenance_class,
+                country="KE",
+                spatial_type="forest_candidate",
                 name=metadata.get("source_name"),
                 extra_metadata={"source_family": identity["dataset"]},
             )

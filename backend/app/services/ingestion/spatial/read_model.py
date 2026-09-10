@@ -1,6 +1,8 @@
 """Whitelisted display metadata and spatial queries over immutable canonical observations."""
 import json
+
 from sqlalchemy import text
+
 from .registry import load_registry
 
 # The legacy source remains restricted and unchanged. Its already-ingested
@@ -8,7 +10,7 @@ from .registry import load_registry
 LATEST = """
 WITH observations AS (
  SELECT g.*, e.canonical_name, src.publisher, src.uri AS reference_url,
-        src.metadata->'spatial_registry' AS registry,
+        src.metadata->'spatial_registry' AS registry, av.id AS aoi_version_id,
         coalesce(g.metadata->>'spatial_source_key',
             CASE WHEN src.title='generated-boundaries.ts (ugandaCfrs)'
                  THEN 'UG-CFR-REPOSITORY' END) AS source_key,
@@ -22,6 +24,11 @@ WITH observations AS (
  JOIN core.world w ON w.id=g.world_id
  JOIN evidence.source src ON src.id=g.source_id
  JOIN evidence.evidence_item ev ON ev.id=g.evidence_item_id AND ev.source_id=g.source_id
+ -- Nullable: not every commercial-forest polygon has been promoted to an
+ -- EO-processable AOI version. A non-null aoi_version_id is what a caller
+ -- (the frontend Observatory drawer) needs to know EO evidence can exist
+ -- for this polygon at all, before asking for it.
+ LEFT JOIN geo.aoi_version av ON av.geometry_observation_id=g.id AND av.superseded_at IS NULL
  WHERE w.kind='production' AND NOT w.allow_synthetic
    AND src.access IN ('public','restricted')
    AND src.data_class <> 'SYNTHETIC' AND ev.data_class <> 'SYNTHETIC'
@@ -39,6 +46,7 @@ def feature_properties(row, registry):
     definition = registry.get(row["source_key"], {})
     return {
         "entity_id": str(row["entity_id"]), "geometry_observation_id": str(row["id"]),
+        "aoi_version_id": str(row["aoi_version_id"]) if row["aoi_version_id"] else None,
         "name": row["canonical_name"], "source_name": meta.get("source_name", row["canonical_name"]),
         "country": row["country"], "source_key": row["source_key"],
         "source_feature_id": meta.get("source_feature_id", meta.get("boundary_export_id")),

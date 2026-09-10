@@ -15,6 +15,18 @@ router = APIRouter(
     prefix="/api/canonical/eo", tags=["EO observations"], dependencies=[Depends(require_access)]
 )
 
+# Homogeneous-stream identity, never blended (EO observation architecture:
+# S1 ascending/descending are separate lanes on purpose). A caller (this
+# API, the coverage-summary read model, the frontend) must always be able
+# to tell which real sensor lane an observation belongs to -- this is the
+# single source of that mapping, shared by every endpoint below so a
+# recipe added here is visible everywhere at once.
+LANE_BY_RECIPE_KEY = {
+    "s2-sr-optical-v1": "s2_optical",
+    "s1-grd-backscatter-ascending-v1": "s1_ascending",
+    "s1-grd-backscatter-descending-v1": "s1_descending",
+}
+
 
 class Request(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -102,9 +114,18 @@ def _feature_values(db, eo_observation_id):
 
 
 def _observation_summary(row: dict) -> dict:
+    """Every observation carries its real series identity (recipe_key,
+    collection_key, sensor_lane) -- never left for a caller to assume.
+    ``sensor_lane`` is ``None`` for a recipe not yet in LANE_BY_RECIPE_KEY
+    (future sensors), which a caller must treat as "unrecognized", not
+    silently default to optical.
+    """
     return {
         "id": row["id"],
         "series_id": row["series_id"],
+        "recipe_key": row["recipe_key"],
+        "collection_key": row["collection_key"],
+        "sensor_lane": LANE_BY_RECIPE_KEY.get(row["recipe_key"]),
         "window_start": row["window_start"],
         "window_end": row["window_end"],
         "outcome": row["outcome"],
@@ -121,18 +142,36 @@ def _observation_summary(row: dict) -> dict:
     }
 
 
+def _observation_with_series_query():
+    return select(
+        s.eo_observation,
+        s.eo_series.c.recipe_key,
+        s.eo_series.c.collection_key,
+    ).select_from(s.eo_observation.join(s.eo_series, s.eo_observation.c.series_id == s.eo_series.c.id))
+
+
 @router.get("/observations")
 def list_observations(
     db: DB,
     aoi_version_id: UUID | None = None,
     series_id: UUID | None = None,
+    sensor_lane: str | None = None,
     limit: int = Query(50, ge=1, le=500),
 ):
-    query = select(s.eo_observation).order_by(s.eo_observation.c.window_start.desc()).limit(limit)
+    """``sensor_lane`` (``s2_optical``/``s1_ascending``/``s1_descending``)
+    lets a caller ask for exactly one real stream when several exist for
+    the same ``aoi_version_id`` -- never mix them and pick "the latest"
+    across streams, which is what silently mislabeled an S1 observation
+    as Sentinel-2 before this endpoint returned series identity at all.
+    """
+    query = _observation_with_series_query().order_by(s.eo_observation.c.window_start.desc()).limit(limit)
     if series_id:
         query = query.where(s.eo_observation.c.series_id == series_id)
     elif aoi_version_id:
         series_ids = select(s.eo_series.c.id).where(s.eo_series.c.aoi_version_id == aoi_version_id)
+        if sensor_lane:
+            recipe_keys = [k for k, v in LANE_BY_RECIPE_KEY.items() if v == sensor_lane]
+            series_ids = series_ids.where(s.eo_series.c.recipe_key.in_(recipe_keys))
         query = query.where(s.eo_observation.c.series_id.in_(series_ids))
     else:
         raise HTTPException(422, "aoi_version_id or series_id is required")
@@ -148,7 +187,7 @@ def list_observations(
 @router.get("/observations/{observation_id}")
 def get_observation(observation_id: UUID, db: DB):
     row = (
-        db.execute(select(s.eo_observation).where(s.eo_observation.c.id == observation_id))
+        db.execute(_observation_with_series_query().where(s.eo_observation.c.id == observation_id))
         .mappings()
         .one_or_none()
     )
@@ -218,6 +257,111 @@ def get_series(series_id: UUID, db: DB):
             {**_observation_summary(o), "features": _feature_values(db, o["id"])} for o in observations
         ],
     }
+
+
+@router.get("/coverage-summary")
+def coverage_summary(db: DB, country: str, target_months: int = Query(12, ge=1, le=60)):
+    """Map-scale multi-sensor completeness read model (observatory v0.2
+    frontend, section 5): one row per real frozen-cohort member, with
+    S2/S1-ascending/S1-descending completed-month counts and latest
+    outcome -- built server-side from real ``processing.eo_job`` rows so
+    the map never has to issue one request per AOI per sensor. Generic by
+    ``country``; works identically for UG and KE cohorts without
+    country-specific code. Sensor semantics (completed/latest/outcome)
+    are computed here, never re-derived in the frontend.
+    """
+    lane_rows = db.execute(
+        text(
+            """
+            WITH cohort AS (
+                SELECT cm.entity_id, cm.source_record_key, cm.aoi_id, cm.aoi_version_id, e.canonical_name
+                FROM processing.eo_cohort_member cm
+                JOIN processing.eo_cohort c ON c.id = cm.cohort_id AND c.country = :country
+                JOIN core.entity e ON e.id = cm.entity_id
+            ),
+            lane_jobs AS (
+                SELECT
+                    cohort.entity_id,
+                    CASE j.recipe_key
+                        WHEN 's2-sr-optical-v1' THEN 's2_optical'
+                        WHEN 's1-grd-backscatter-ascending-v1' THEN 's1_ascending'
+                        WHEN 's1-grd-backscatter-descending-v1' THEN 's1_descending'
+                    END AS lane,
+                    j.status, j.window_start, o.outcome, o.usable_observation_fraction
+                FROM cohort
+                JOIN processing.eo_job j ON j.aoi_version_id = cohort.aoi_version_id
+                LEFT JOIN observations.eo_observation o ON o.id = j.eo_observation_id
+                WHERE j.recipe_key IN (
+                    's2-sr-optical-v1', 's1-grd-backscatter-ascending-v1', 's1-grd-backscatter-descending-v1'
+                )
+            ),
+            completeness AS (
+                SELECT entity_id, lane, count(DISTINCT date_trunc('month', window_start)) AS completed_months
+                FROM lane_jobs WHERE status = 'succeeded' GROUP BY 1, 2
+            ),
+            latest AS (
+                SELECT DISTINCT ON (entity_id, lane)
+                    entity_id, lane, window_start, outcome, usable_observation_fraction
+                FROM lane_jobs WHERE status = 'succeeded'
+                ORDER BY entity_id, lane, window_start DESC
+            )
+            SELECT
+                cohort.entity_id, cohort.canonical_name, cohort.aoi_id, cohort.aoi_version_id,
+                lanes.lane,
+                coalesce(comp.completed_months, 0) AS completed_months,
+                l.window_start AS latest_window_start, l.outcome AS latest_outcome,
+                l.usable_observation_fraction AS latest_usable_support
+            FROM cohort
+            CROSS JOIN (VALUES ('s2_optical'), ('s1_ascending'), ('s1_descending')) AS lanes(lane)
+            LEFT JOIN completeness comp ON comp.entity_id = cohort.entity_id AND comp.lane = lanes.lane
+            LEFT JOIN latest l ON l.entity_id = cohort.entity_id AND l.lane = lanes.lane
+            """
+        ),
+        {"country": country},
+    ).mappings().all()
+
+    by_entity: dict[str, dict] = {}
+    for row in lane_rows:
+        entity_id = str(row["entity_id"])
+        entry = by_entity.setdefault(
+            entity_id,
+            {
+                "entity_id": entity_id,
+                "name": row["canonical_name"],
+                "aoi_id": str(row["aoi_id"]),
+                "aoi_version_id": str(row["aoi_version_id"]),
+                "country": country,
+                "lanes": {},
+            },
+        )
+        entry["lanes"][row["lane"]] = {
+            "completed_months": row["completed_months"],
+            "target_months": target_months,
+            "latest_observation_month": (
+                row["latest_window_start"].strftime("%Y-%m") if row["latest_window_start"] else None
+            ),
+            "latest_outcome": row["latest_outcome"],
+            "latest_usable_support": (
+                float(row["latest_usable_support"]) if row["latest_usable_support"] is not None else None
+            ),
+        }
+
+    if by_entity:
+        corroboration_rows = db.execute(
+            text(
+                """
+                SELECT DISTINCT ON (entity_id) entity_id, state, reference_window_start
+                FROM processing.cross_sensor_corroboration
+                WHERE entity_id = ANY(:entity_ids)
+                ORDER BY entity_id, reference_window_start DESC
+                """
+            ),
+            {"entity_ids": list(by_entity.keys())},
+        ).mappings().all()
+        for row in corroboration_rows:
+            by_entity[str(row["entity_id"])]["latest_corroboration_state"] = row["state"]
+
+    return list(by_entity.values())
 
 
 @router.get("/change-evidence")

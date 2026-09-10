@@ -42,6 +42,8 @@ def promote_geometry_to_aoi(
     geometry_observation_id: str,
     analysis_scope: str,
     provenance_class: str,
+    country: str,
+    spatial_type: str,
     name: str | None = None,
     extra_metadata: dict | None = None,
 ) -> dict:
@@ -80,7 +82,14 @@ def promote_geometry_to_aoi(
             subject_entity_id=entity_id,
             name=name,
             analysis_scope=analysis_scope,
-            metadata={"eo_scope": True},
+            # country/spatial_type are what GET /api/canonical/spatial-assets
+            # filters on (backend/app/api/canonical.py) -- an AOI created
+            # without them is invisible to every generic asset-lookup caller,
+            # frontend included. Required kwargs here, not an optional extra,
+            # so this cannot be omitted silently again (it was, for the first
+            # Kenya promotion pass; fixed by backfilling those 666 rows once
+            # this function required the fields).
+            metadata={"eo_scope": True, "country": country, "spatial_type": spatial_type},
         )
     )
 

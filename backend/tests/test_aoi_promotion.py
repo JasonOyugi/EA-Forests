@@ -48,6 +48,8 @@ def test_promote_creates_aoi_and_version(db, store):
         geometry_observation_id=str(geometry["id"]),
         analysis_scope="kenya_forest_candidate_eo_mvp",
         provenance_class="third_party_spatial_dataset",
+        country="KE",
+        spatial_type="forest_candidate",
         name="Test Forest",
     )
     assert result["already_promoted"] is False
@@ -60,6 +62,10 @@ def test_promote_creates_aoi_and_version(db, store):
     assert str(row["geometry_observation_id"]) == str(geometry["id"])
     assert row["metadata"]["analysis_scope"] == "kenya_forest_candidate_eo_mvp"
 
+    aoi_row = db.execute(select(s.aoi).where(s.aoi.c.id == result["aoi_id"])).mappings().one()
+    assert aoi_row["metadata"]["country"] == "KE"
+    assert aoi_row["metadata"]["spatial_type"] == "forest_candidate"
+
 
 def test_promoting_same_geometry_twice_is_idempotent(db, store):
     world_id, entity, geometry = _make_entity_with_geometry(db)
@@ -69,6 +75,8 @@ def test_promoting_same_geometry_twice_is_idempotent(db, store):
         "geometry_observation_id": str(geometry["id"]),
         "analysis_scope": "kenya_forest_candidate_eo_mvp",
         "provenance_class": "third_party_spatial_dataset",
+        "country": "KE",
+        "spatial_type": "forest_candidate",
     }
     first = promote_geometry_to_aoi(db, **kwargs)
     second = promote_geometry_to_aoi(db, **kwargs)
@@ -85,5 +93,7 @@ def test_authoritative_provenance_classifies_ready(db, store):
         geometry_observation_id=str(geometry["id"]),
         analysis_scope="kenya_forest_candidate_eo_mvp",
         provenance_class="authoritative_official",
+        country="KE",
+        spatial_type="forest_candidate",
     )
     assert result["eo_readiness"] == "READY"

@@ -6,7 +6,7 @@ from uuid import UUID, uuid4
 
 from fastapi import APIRouter, Depends, Header, HTTPException, Query, Request, Response
 from pydantic import AwareDatetime, BaseModel, ConfigDict, Field
-from sqlalchemy import func, select
+from sqlalchemy import exists, func, select
 from sqlalchemy.exc import DBAPIError, NoResultFound, OperationalError
 from sqlalchemy.orm import Session
 
@@ -353,7 +353,31 @@ def spatial_assets(
     AOI version and geometry, reported vs geometry-derived area, provenance
     and EO readiness. Generic by design -- ``country=UG&spatial_type=reserve``
     is a query, not a dedicated Uganda endpoint.
+
+    ``geo.aoi`` is immutable once created (``history_guard`` blocks every
+    UPDATE), so an AOI promoted before its ``metadata.country``/
+    ``metadata.spatial_type`` were populated (e.g. Kenya's first 666 real
+    promotions) can never be corrected in place. Rather than mutate
+    history, the country/spatial_type match below falls back to the
+    frozen EO cohort's own ``country`` (an already-authoritative signal,
+    set at freeze time) whenever an AOI's own metadata lacks the field --
+    this makes existing rows discoverable without touching them, and
+    still prefers the AOI's own metadata when present.
     """
+    country_match = s.aoi.c.metadata["country"].astext == country
+    spatial_type_match = s.aoi.c.metadata["spatial_type"].astext == spatial_type
+    cohort_country_fallback = (
+        s.aoi.c.metadata["country"].astext.is_(None)
+    ) & exists(
+        select(s.eo_cohort_member.c.id)
+        .select_from(
+            s.eo_cohort_member.join(s.eo_cohort, s.eo_cohort_member.c.cohort_id == s.eo_cohort.c.id)
+        )
+        .where(s.eo_cohort_member.c.aoi_id == s.aoi.c.id, s.eo_cohort.c.country == country)
+    )
+    spatial_type_fallback = (
+        s.aoi.c.metadata["spatial_type"].astext.is_(None)
+    ) & (s.entity.c.entity_type == spatial_type)
     query = (
         select(
             s.entity.c.id.label("entity_id"),
@@ -383,8 +407,8 @@ def spatial_assets(
             s.geometry_observation.c.id == s.aoi_version.c.geometry_observation_id,
         )
         .where(
-            s.aoi.c.metadata["spatial_type"].astext == spatial_type,
-            s.aoi.c.metadata["country"].astext == country,
+            country_match | cohort_country_fallback,
+            spatial_type_match | spatial_type_fallback,
         )
         .order_by(s.entity.c.canonical_name, s.aoi_version.c.revision.desc())
         .limit(limit)
