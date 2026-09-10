@@ -282,7 +282,7 @@ function OpticalPanel({ observations }: { observations: EoObservation[] }) {
       </div>
       <p className="text-xs text-muted-foreground">
         Derived optical observation -- mean and spatial standard deviation over the
-        reserve's valid target cells. Not a forest-condition or forest-health claim.
+        mapped forest's valid target cells. Not a forest-condition or forest-health claim.
       </p>
       {chartData.length > 1 ? (
         <div className="h-[220px] w-full">
@@ -304,7 +304,7 @@ function OpticalPanel({ observations }: { observations: EoObservation[] }) {
         </p>
       )}
       <p className="text-xs text-muted-foreground">
-        {laneCompleteness(observations)}/12 months processed for this reserve so far.
+        {laneCompleteness(observations)}/12 months processed for this asset so far.
       </p>
     </div>
   )
