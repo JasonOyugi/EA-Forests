@@ -32,6 +32,7 @@ from sqlalchemy.orm import Session
 
 from app.db import schema as s
 from app.db.session import engine_for
+from app.db.target_guard import add_expected_database_argument, require_database
 from app.services.eo.cohort import freeze_cohort
 from app.services.ingestion.spatial.aoi_promotion import promote_geometry_to_aoi
 from app.services.state.registry import bootstrap
@@ -59,11 +60,13 @@ def main() -> None:
     parser.add_argument("--cohort-key", required=True)
     parser.add_argument("--definition-version", default="v1")
     parser.add_argument("--output", default=None)
+    add_expected_database_argument(parser)
     args = parser.parse_args()
     datasets = tuple(d.strip() for d in args.datasets.split(",") if d.strip())
 
     database_url = os.environ["CANONICAL_DATABASE_URL"]
     engine = engine_for(database_url)
+    require_database(engine, args.expected_database, label="Forest candidate AOI promotion target")
 
     promoted = 0
     already_promoted = 0

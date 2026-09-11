@@ -26,6 +26,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from sqlalchemy.orm import Session
 
 from app.db.session import engine_for
+from app.db.target_guard import add_expected_database_argument, require_database
 from app.services.eo.ee_provider import (
     COLLECTION_KEY,
     PROVIDER_KEY,
@@ -65,6 +66,7 @@ def main():
     parser.add_argument(
         "--limit", type=int, default=None, help="Process only the first N cohort members (debug)"
     )
+    add_expected_database_argument(parser)
     args = parser.parse_args()
 
     inventory = json.loads(INVENTORY.read_text(encoding="utf-8"))
@@ -93,6 +95,7 @@ def main():
 
     database_url = os.environ["CANONICAL_DATABASE_URL"]
     engine = engine_for(database_url)
+    require_database(engine, args.expected_database, label="Uganda country pass target")
     store = LocalArtifactStore(os.environ.get("CANONICAL_ARTIFACT_ROOT", ".cache/canonical-artifacts"))
     provider = EarthEngineProvider()
 

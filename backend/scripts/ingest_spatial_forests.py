@@ -15,6 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from sqlalchemy.orm import Session
 from app.db.session import database_url, engine_for
+from app.db.target_guard import add_expected_database_argument, require_database
 from app.services.evidence.artifacts import LocalArtifactStore
 from app.services.ingestion.spatial.arcgis import acquire_arcgis
 from app.services.ingestion.spatial.archive import (
@@ -105,7 +106,10 @@ def main():
     parser.add_argument("--max-download-gb", type=float, default=12)
     parser.add_argument("--layer")
     parser.add_argument("--local-file", type=Path, help="Reviewed local SHP/GeoJSON/GDB import")
+    add_expected_database_argument(parser)
     args = parser.parse_args()
+    if args.action in ("ingest", "all"):
+        require_database(engine_for(database_url()), args.expected_database, label="Spatial ingestion target")
     registry = load_registry(args.registry) if args.registry else load_registry()
     sources = args.source or list(registry)
     if args.local_file and len(sources) != 1:
