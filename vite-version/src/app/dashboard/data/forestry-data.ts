@@ -64,6 +64,52 @@ export type ForestrySubBlockRecord = {
   periods: ForestrySubBlockPeriod[]
 }
 
+/**
+ * Provenance for the Asset Intelligence reference-asset reference cases
+ * (Kampimpini, Namavundu, Mbooni South). `geometryTier` distinguishes a
+ * canonical, polygon-linked boundary already reconciled in this repo's
+ * spatial spine from a real source polygon fetched directly from its
+ * registered public dataset but not yet promoted through the canonical
+ * ingestion pipeline. `compartmentsNote` exists because `subBlocks` below
+ * remain scenario/demo inputs -- no real compartment survey exists yet for
+ * any of the three.
+ *
+ * `canonicalIdentity` holds the real `core.entity` row confirmed by a direct,
+ * read-only query against the canonical database on 2026-09-11 (see
+ * docs/data-provenance -- entity_id and geometry_observation_id are real;
+ * aoi_id/aoi_version_id are intentionally absent because `geo.aoi` has zero
+ * rows for ANY entity in that database right now -- none of the three sites
+ * have been promoted to a canonical AOI yet, contradicting an earlier,
+ * unverified assumption that Mbooni South likely already had been. Because
+ * an AOI version is required to resolve EO evidence by id
+ * (`EoEvidenceTarget` with `kind: "id"` needs a real `aoiVersionId`), `eoLink`
+ * below still uses `kind: "name"` -- switching to `kind: "id"` before
+ * promotion exists would not "use direct identity", it would pass an empty
+ * aoiVersionId and break evidence resolution entirely. Flip `eoLink` to
+ * `kind: "id"` once AOI promotion has actually run for these three entities.
+ */
+export type AssetGeometryTier = "canonical_polygon" | "source_verified_polygon"
+
+export type CanonicalEntityIdentity = {
+  entityId: string
+  entityType: string
+  canonicalName: string
+  geometryObservationId: string
+  geometryObservationMethod: string
+  worldId: string
+  aoiPromoted: false
+  confirmedAt: string
+}
+
+export type AssetEvidenceProvenance = {
+  geometryTier: AssetGeometryTier
+  geometryLabel: string
+  geometryNote: string
+  canonicalIdentity?: CanonicalEntityIdentity
+  eoLink?: { cfrName: string; country: "UG" | "KE"; spatialType?: string }
+  compartmentsNote: string
+}
+
 export type ForestrySiteRecord = {
   id: string
   block: string
@@ -72,6 +118,7 @@ export type ForestrySiteRecord = {
   location: string
   country: Country
   mapCenter: [number, number]
+  provenance: AssetEvidenceProvenance
   subBlocks: ForestrySubBlockRecord[]
 }
 
@@ -94,6 +141,7 @@ export type AssetGroup = {
   location: string
   country: Country
   mapCenter: [number, number]
+  provenance: AssetEvidenceProvenance
   subBlocks: AssetSubBlock[]
 }
 
@@ -344,13 +392,32 @@ const portfolioFinancePeriods: Record<number, { cashUsd: number; capitalDeployed
 const siteSeeds: SiteSeed[] = [
   {
     id: "group-1",
-    block: "Amuru-Atiti",
-    summaryTitle: "Amuru-Atiti production grid",
+    block: "Kampimpini",
+    summaryTitle: "Kampimpini reference case",
     summaryDescription:
-      "A broad mixed-species Uganda estate where eucalyptus, corymbia, and pine run in production bands designed for quick stand-by-stand health review.",
-    location: "Albert-Nile, Northern",
+      "One of EA Forests' three gold-standard Asset Intelligence reference cases. canonical_name = \"Kapimpini\" (the real, gazetted Central Forest Reserve in Nakaseke District, National Forestry Authority, designated 1967); display_name/alias = \"Kampimpini\" (the requested demo spelling, a one-letter variant). No second entity was created for the alias. Sub-block layout below is a scenario/demo input, not a surveyed compartment plan.",
+    location: "Nakaseke, Central",
     country: "Uganda",
-    mapCenter: [2.78, 31.47],
+    mapCenter: [0.98736, 32.07765],
+    provenance: {
+      geometryTier: "canonical_polygon",
+      geometryLabel: "Canonical CFR polygon",
+      geometryNote:
+        "Uganda CFR boundary spine (frontend), reconciliation status POLYGON_LINKED, source record \"Kapimpini\" (id cfr-kapimpini). Repo polygon area 6,120.9 ha; NFA/public reporting ~6,068 ha, designated 1967. Note: the canonical database's own geo.geometry_observation for this entity is currently only a lower-precision centroid POINT (method centroid_estimate; its own metadata states \"numeric precision is unknown\") -- the polygon shown on the map comes from this repo's separate, unverified-repository-derived CFR boundary export, not yet reconciled into the canonical DB observation.",
+      canonicalIdentity: {
+        entityId: "51303893-7310-4a59-aaae-0789189c157f",
+        entityType: "reserve",
+        canonicalName: "Kapimpini",
+        geometryObservationId: "a0591a82-b1a3-4be5-a36c-870ac1d99703",
+        geometryObservationMethod: "centroid_estimate",
+        worldId: "6c42dd9e-7635-4f3c-88d6-a52203d52396",
+        aoiPromoted: false,
+        confirmedAt: "2026-09-11",
+      },
+      eoLink: { cfrName: "Kapimpini", country: "UG" },
+      compartmentsNote:
+        "Scenario compartments -- demo model input, not a surveyed compartment plan.",
+    },
     subBlocks: [
       {
         id: "sub-1a",
@@ -437,13 +504,32 @@ const siteSeeds: SiteSeed[] = [
   },
   {
     id: "group-2",
-    block: "Sarora",
-    summaryTitle: "Sarora remote grid",
+    block: "Namavundu",
+    summaryTitle: "Namavundu reference case",
     summaryDescription:
-      "A compact Kenya footprint with pine and teak laid out in clean hectare lanes, making it ideal for fast condition scanning before drilling into sub-compartment detail.",
-    location: "Nandi, Rift Valley",
-    country: "Kenya",
-    mapCenter: [0.42, 35.02],
+      "One of EA Forests' three gold-standard Asset Intelligence reference cases. The canonical, polygon-linked \"Namavundu\" Central Forest Reserve, Jinja District, part of the Kalagala/Itanda Falls conservation landscape. Sub-block layout below is a scenario/demo input, not a surveyed compartment plan.",
+    location: "Jinja, Eastern",
+    country: "Uganda",
+    mapCenter: [0.55347, 33.11138],
+    provenance: {
+      geometryTier: "canonical_polygon",
+      geometryLabel: "Canonical CFR polygon",
+      geometryNote:
+        "Uganda CFR boundary spine (frontend), reconciliation status POLYGON_LINKED, source record \"Namavundu\" (id cfr-namavundu). Repo polygon area 689.6 ha, reported area 689.5 ha; public reporting ~704 ha (Jinja District boundary-reopening coverage). Note: the canonical database's own geo.geometry_observation for this entity is currently only a lower-precision centroid POINT (method centroid_estimate; its own metadata states \"numeric precision is unknown\") -- the polygon shown on the map comes from this repo's separate, unverified-repository-derived CFR boundary export, not yet reconciled into the canonical DB observation.",
+      canonicalIdentity: {
+        entityId: "98c7d633-e3c3-4e93-ac20-5fa9f933dff1",
+        entityType: "reserve",
+        canonicalName: "Namavundu",
+        geometryObservationId: "ce939b19-e031-4ccf-90db-aafd32a2e771",
+        geometryObservationMethod: "centroid_estimate",
+        worldId: "6c42dd9e-7635-4f3c-88d6-a52203d52396",
+        aoiPromoted: false,
+        confirmedAt: "2026-09-11",
+      },
+      eoLink: { cfrName: "Namavundu", country: "UG" },
+      compartmentsNote:
+        "Scenario compartments -- demo model input, not a surveyed compartment plan.",
+    },
     subBlocks: [
       {
         id: "sub-2a",
@@ -503,13 +589,32 @@ const siteSeeds: SiteSeed[] = [
   },
   {
     id: "group-3",
-    block: "Nyakipam-Mtambula",
-    summaryTitle: "Nyakipam-Mtambula canopy grid",
+    block: "Mbooni South",
+    summaryTitle: "Mbooni South reference case",
     summaryDescription:
-      "A larger, more mature Tanzania site anchored by cypress and eucalyptus, where hectare-level patterns help surface the strongest and weakest production pockets quickly.",
-    location: "Mufindi, Iringa",
-    country: "Tanzania",
-    mapCenter: [-8.73, 35.04],
+      "One of EA Forests' three gold-standard Asset Intelligence reference cases. canonical_name = \"MBOONI SOUTH\", a gazetted forest (Makueni County) already ingested into the canonical database (entity + digitised polygon geometry_observation confirmed by direct read-only query), but not yet promoted to a canonical AOI. Sub-block layout below is a scenario/demo input, not a surveyed compartment plan.",
+    location: "Makueni, Eastern",
+    country: "Kenya",
+    mapCenter: [-1.6338, 37.4368],
+    provenance: {
+      geometryTier: "source_verified_polygon",
+      geometryLabel: "Source-verified gazetted polygon",
+      geometryNote:
+        "Kenya KE-GAZETTED-FOREST public ArcGIS layer (FSC International publisher), FOREST=\"MBOONI SOUTH\", FID 234, status Gazetted, polygon area ~206.35 ha, method \"digitised\". Confirmed via direct read-only query against the canonical database on 2026-09-11: the entity and its geometry_observation exist, but geo.aoi has zero rows for this entity (and zero rows total in that database) -- so this record is NOT yet a canonical AOI, correcting an earlier, unverified assumption (based only on an \"already_promoted: 386\" count in outputs/eo/kenya-gazetted-cohort-v1.json) that it likely already was.",
+      canonicalIdentity: {
+        entityId: "2de98a42-9dea-424f-b555-ad1c8352a13a",
+        entityType: "forest_candidate",
+        canonicalName: "MBOONI SOUTH",
+        geometryObservationId: "b82269e1-1192-4d56-ba69-49b5448ab159",
+        geometryObservationMethod: "digitised",
+        worldId: "6c42dd9e-7635-4f3c-88d6-a52203d52396",
+        aoiPromoted: false,
+        confirmedAt: "2026-09-11",
+      },
+      eoLink: { cfrName: "MBOONI SOUTH", country: "KE", spatialType: "forest_candidate" },
+      compartmentsNote:
+        "Scenario compartments -- demo model input, not a surveyed compartment plan.",
+    },
     subBlocks: [
       {
         id: "sub-3a",
@@ -563,72 +668,6 @@ const siteSeeds: SiteSeed[] = [
           { share: 0.31, dbhCm: 21, heightM: 22.7 },
           { share: 0.29, dbhCm: 26, heightM: 27.4 },
           { share: 0.22, dbhCm: 31, heightM: 31.2 },
-        ],
-      },
-    ],
-  },
-  {
-    id: "group-4",
-    block: "Kakosi C",
-    summaryTitle: "Kakosi C field grid",
-    summaryDescription:
-      "A growth-stage Uganda site blending teak and eucalyptus, with active silviculture work that benefits from comparing hectare summaries against opened block detail.",
-    location: "Kaliro, Eastern",
-    country: "Uganda",
-    mapCenter: [1.08, 33.64],
-    subBlocks: [
-      {
-        id: "sub-4a",
-        subBlock: "B4a",
-        variety: "teak",
-        currentManagedAreaHa: 38,
-        currentFinancedAreaHa: 34,
-        currentAge: 4,
-        managedAreaDeltaPerYear: 0.6,
-        managedAreaByYear: { 2025: 39.1, 2026: 38, 2027: 37.1 },
-        financedAreaDeltaPerYear: 0.9,
-        plantedTreesPerHa: 816,
-        defaultContractor: "SylvaOps",
-        activityByYear: {
-          2024: "planting",
-          2025: "planting",
-          2026: "silviculture",
-          2027: "silviculture",
-          2028: "none",
-          2029: "none",
-        },
-        standDistribution2026: [
-          { share: 0.29, dbhCm: 10, heightM: 9.8 },
-          { share: 0.33, dbhCm: 13, heightM: 12.6 },
-          { share: 0.23, dbhCm: 16.5, heightM: 16.1 },
-          { share: 0.15, dbhCm: 20, heightM: 19.3 },
-        ],
-      },
-      {
-        id: "sub-4b",
-        subBlock: "B4b",
-        variety: "eucalyptus",
-        currentManagedAreaHa: 30,
-        currentFinancedAreaHa: 27,
-        currentAge: 3,
-        managedAreaDeltaPerYear: 0.7,
-        managedAreaByYear: { 2025: 31.3, 2026: 30, 2027: 29.1 },
-        financedAreaDeltaPerYear: 0.9,
-        plantedTreesPerHa: 1111,
-        defaultContractor: "Timberline Services",
-        activityByYear: {
-          2024: "planting",
-          2025: "planting",
-          2026: "planting",
-          2027: "silviculture",
-          2028: "silviculture",
-          2029: "none",
-        },
-        standDistribution2026: [
-          { share: 0.27, dbhCm: 9.5, heightM: 9.7 },
-          { share: 0.34, dbhCm: 12.5, heightM: 13.1 },
-          { share: 0.24, dbhCm: 16, heightM: 16.8 },
-          { share: 0.15, dbhCm: 19.5, heightM: 20.4 },
         ],
       },
     ],
@@ -721,6 +760,7 @@ function buildSiteRecord(seed: SiteSeed): ForestrySiteRecord {
     location: seed.location,
     country: seed.country,
     mapCenter: seed.mapCenter,
+    provenance: seed.provenance,
     subBlocks: seed.subBlocks.map((subBlock) => ({
       id: subBlock.id,
       subBlock: subBlock.subBlock,
@@ -899,6 +939,7 @@ function toAssetGroup(record: ForestrySiteRecord): AssetGroup {
     location: record.location,
     country: record.country,
     mapCenter: record.mapCenter,
+    provenance: record.provenance,
     subBlocks: record.subBlocks.map(toAssetSubBlock),
   }
 }

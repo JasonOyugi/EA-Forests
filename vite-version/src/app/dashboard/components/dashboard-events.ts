@@ -118,7 +118,7 @@ export function createDashboardCalendarEvents(): CalendarEvent[] {
         },
       ],
       conferenceLink: "teams://species-rotation-east-valley",
-      assetGroupId: "group-4",
+      assetGroupId: "group-1",
     },
     {
       id: 303,
@@ -189,7 +189,7 @@ export function createDashboardCalendarEvents(): CalendarEvent[] {
       linkedInvoice: "INV-2026-304",
       vendor: "SylvaOps",
       status: "scheduled",
-      assetGroupId: "group-4",
+      assetGroupId: "group-2",
     },
     {
       id: 305,
@@ -222,7 +222,7 @@ export function createDashboardCalendarEvents(): CalendarEvent[] {
       linkedInvoice: "INV-2026-305",
       vendor: "TerrainWorks",
       status: "paid",
-      assetGroupId: "group-4",
+      assetGroupId: "group-3",
     },
     {
       id: 306,

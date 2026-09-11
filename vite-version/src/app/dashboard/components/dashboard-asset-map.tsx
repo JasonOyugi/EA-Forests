@@ -1884,11 +1884,51 @@ export function DashboardAssetMap({
                   <SelectContent>
                     {initialAssetGroups.map((group) => (
                       <SelectItem key={group.id} value={group.id}>
-                        {group.block}
+                        {group.block} - {countryToIso[group.country]}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
+
+                <div className="flex flex-wrap items-center gap-2 px-4 pb-3">
+                  <Badge
+                    variant="outline"
+                    className="cursor-help text-[10px] font-normal uppercase tracking-wide text-muted-foreground"
+                    title={selectedGroup.provenance.geometryNote}
+                  >
+                    {selectedGroup.provenance.geometryLabel}
+                  </Badge>
+                  {selectedGroup.provenance.canonicalIdentity ? (
+                    <Badge
+                      variant="outline"
+                      className="cursor-help text-[10px] font-normal uppercase tracking-wide text-muted-foreground"
+                      title={`entity_id ${selectedGroup.provenance.canonicalIdentity.entityId} -- confirmed in canonical database ${selectedGroup.provenance.canonicalIdentity.confirmedAt}. No AOI promoted yet, so EO evidence below still resolves by name.`}
+                    >
+                      Canonical entity confirmed - AOI pending
+                    </Badge>
+                  ) : null}
+                </div>
+
+                {selectedGroup.provenance.eoLink ? (
+                  <div className="px-4 pb-4">
+                    <EoEvidenceSummary
+                      target={{
+                        kind: "name",
+                        cfrName: selectedGroup.provenance.eoLink.cfrName,
+                        country: selectedGroup.provenance.eoLink.country,
+                        spatialType: selectedGroup.provenance.eoLink.spatialType,
+                      }}
+                      onViewDetails={() =>
+                        setSelectedEoEvidenceTarget({
+                          kind: "name",
+                          cfrName: selectedGroup.provenance.eoLink!.cfrName,
+                          country: selectedGroup.provenance.eoLink!.country,
+                          spatialType: selectedGroup.provenance.eoLink!.spatialType,
+                        })
+                      }
+                    />
+                  </div>
+                ) : null}
               </div>
 
               <SiteMetricChart
@@ -1907,6 +1947,9 @@ export function DashboardAssetMap({
                 !disableBoundaryEffect && "border"
               )}
             >
+              <p className="px-4 pb-1 text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+                {selectedGroup.provenance.compartmentsNote}
+              </p>
               <div className="space-y-3">
                 {selectedGroup.subBlocks.map((subBlock) => (
                   <div key={subBlock.id} className="rounded-2xl px-4 py-3">
