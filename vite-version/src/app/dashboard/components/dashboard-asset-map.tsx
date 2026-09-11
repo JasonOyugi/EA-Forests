@@ -1898,37 +1898,35 @@ export function DashboardAssetMap({
                   >
                     {selectedGroup.provenance.geometryLabel}
                   </Badge>
-                  {selectedGroup.provenance.canonicalIdentity ? (
-                    <Badge
-                      variant="outline"
-                      className="cursor-help text-[10px] font-normal uppercase tracking-wide text-muted-foreground"
-                      title={`entity_id ${selectedGroup.provenance.canonicalIdentity.entityId} -- confirmed in canonical database ${selectedGroup.provenance.canonicalIdentity.confirmedAt}. No AOI promoted yet, so EO evidence below still resolves by name.`}
-                    >
-                      Canonical entity confirmed - AOI pending
-                    </Badge>
-                  ) : null}
+                  <Badge
+                    variant="outline"
+                    className="cursor-help text-[10px] font-normal uppercase tracking-wide text-muted-foreground"
+                    title={`entity_id ${selectedGroup.provenance.canonicalIdentity.entityId} -- aoi_version_id ${selectedGroup.provenance.canonicalIdentity.aoiVersionId} -- confirmed in ${selectedGroup.provenance.canonicalIdentity.operationalDatabase} on ${selectedGroup.provenance.canonicalIdentity.confirmedAt}. Cohort: ${selectedGroup.provenance.canonicalIdentity.cohortKeys.join(", ")}.`}
+                  >
+                    Canonical AOI active - direct ID
+                  </Badge>
                 </div>
 
-                {selectedGroup.provenance.eoLink ? (
-                  <div className="px-4 pb-4">
-                    <EoEvidenceSummary
-                      target={{
-                        kind: "name",
-                        cfrName: selectedGroup.provenance.eoLink.cfrName,
-                        country: selectedGroup.provenance.eoLink.country,
-                        spatialType: selectedGroup.provenance.eoLink.spatialType,
-                      }}
-                      onViewDetails={() =>
-                        setSelectedEoEvidenceTarget({
-                          kind: "name",
-                          cfrName: selectedGroup.provenance.eoLink!.cfrName,
-                          country: selectedGroup.provenance.eoLink!.country,
-                          spatialType: selectedGroup.provenance.eoLink!.spatialType,
-                        })
-                      }
-                    />
-                  </div>
-                ) : null}
+                <div className="px-4 pb-4">
+                  <EoEvidenceSummary
+                    target={{
+                      kind: "id",
+                      entityId: selectedGroup.provenance.canonicalIdentity.entityId,
+                      aoiVersionId: selectedGroup.provenance.canonicalIdentity.aoiVersionId,
+                      name: selectedGroup.provenance.canonicalIdentity.canonicalName,
+                      country: countryToIso[selectedGroup.country],
+                    }}
+                    onViewDetails={() =>
+                      setSelectedEoEvidenceTarget({
+                        kind: "id",
+                        entityId: selectedGroup.provenance.canonicalIdentity.entityId,
+                        aoiVersionId: selectedGroup.provenance.canonicalIdentity.aoiVersionId,
+                        name: selectedGroup.provenance.canonicalIdentity.canonicalName,
+                        country: countryToIso[selectedGroup.country],
+                      })
+                    }
+                  />
+                </div>
               </div>
 
               <SiteMetricChart
