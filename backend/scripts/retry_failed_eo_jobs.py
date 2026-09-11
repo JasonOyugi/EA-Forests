@@ -25,6 +25,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from app.db.session import engine_for
+from app.db.target_guard import add_expected_database_argument, require_database
 from app.services.eo.ee_provider import EarthEngineProvider
 from app.services.eo.worker import execute_claimed_job
 from app.services.evidence.artifacts import LocalArtifactStore
@@ -35,10 +36,12 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--job-ids", nargs="+", required=True)
     parser.add_argument("--worker-id", default="retry-failed-eo-jobs")
+    add_expected_database_argument(parser)
     args = parser.parse_args()
 
     database_url = os.environ["CANONICAL_DATABASE_URL"]
     engine = engine_for(database_url)
+    require_database(engine, args.expected_database, label="Retry-failed-jobs target")
     store = LocalArtifactStore(os.environ.get("CANONICAL_ARTIFACT_ROOT", ".cache/canonical-artifacts"))
     provider = EarthEngineProvider()
 

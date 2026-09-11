@@ -41,6 +41,7 @@ from sqlalchemy.orm import Session
 
 from app.db import schema as s
 from app.db.session import engine_for
+from app.db.target_guard import require_database
 from app.services.eo.change_domain import create_change_candidate, create_cross_sensor_corroboration
 from app.services.eo.change_methods import SeriesPoint, run_methods
 from app.services.eo.cohort import load_cohort
@@ -268,10 +269,14 @@ def _run_stream_feature(db, *, entity_id, world_id, aoi_version_id, stream, reci
 
 
 def main() -> None:
+    # No argparse in this script (positional sys.argv[1] only) -- the guard
+    # is gated by an env var here rather than a --flag for consistency with
+    # the other scripts' opt-in, non-interactive behavior.
     database_url = os.environ["CANONICAL_DATABASE_URL"]
     sample_path = Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_SAMPLE_PATH
     assets = json.loads(sample_path.read_text(encoding="utf-8"))
     engine = engine_for(database_url)
+    require_database(engine, os.environ.get("EXPECTED_DATABASE"), label="Bulk change-generation target")
     report = {}
     corroboration_state_counts = Counter()
 

@@ -31,6 +31,7 @@ from sqlalchemy.orm import Session
 
 from app.db import schema as s
 from app.db.session import engine_for
+from app.db.target_guard import add_expected_database_argument, require_database
 from app.services.eo.cohort import freeze_cohort, resolve_uganda_cfr_candidates
 from app.services.state.registry import bootstrap
 
@@ -46,6 +47,7 @@ def main() -> None:
     parser.add_argument("--cohort-key", default="uganda-cfr-observation-cohort")
     parser.add_argument("--definition-version", default="v1")
     parser.add_argument("--output", default=None)
+    add_expected_database_argument(parser)
     args = parser.parse_args()
 
     inventory = json.loads(INVENTORY.read_text(encoding="utf-8"))
@@ -53,6 +55,7 @@ def main() -> None:
 
     database_url = os.environ["CANONICAL_DATABASE_URL"]
     engine = engine_for(database_url)
+    require_database(engine, args.expected_database, label="Country cohort target")
     with Session(engine) as db:
         db.begin()
         bootstrap(db)
