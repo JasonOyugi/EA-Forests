@@ -70,18 +70,42 @@ export type ForestrySubBlockRecord = {
  * canonical, polygon-linked boundary already reconciled in this repo's
  * spatial spine from a real source polygon fetched directly from its
  * registered public dataset but not yet promoted through the canonical
- * ingestion pipeline. `eoLink` wires the site to the existing EO Observatory
- * name-resolution path (`EoEvidenceTarget` with `kind: "name"`) so the
- * dashboard reuses real evidence components instead of duplicating them.
- * `compartmentsNote` exists because `subBlocks` below remain scenario/demo
- * inputs -- no real compartment survey exists yet for any of the three.
+ * ingestion pipeline. `compartmentsNote` exists because `subBlocks` below
+ * remain scenario/demo inputs -- no real compartment survey exists yet for
+ * any of the three.
+ *
+ * `canonicalIdentity` holds the real `core.entity` row confirmed by a direct,
+ * read-only query against the canonical database on 2026-09-11 (see
+ * docs/data-provenance -- entity_id and geometry_observation_id are real;
+ * aoi_id/aoi_version_id are intentionally absent because `geo.aoi` has zero
+ * rows for ANY entity in that database right now -- none of the three sites
+ * have been promoted to a canonical AOI yet, contradicting an earlier,
+ * unverified assumption that Mbooni South likely already had been. Because
+ * an AOI version is required to resolve EO evidence by id
+ * (`EoEvidenceTarget` with `kind: "id"` needs a real `aoiVersionId`), `eoLink`
+ * below still uses `kind: "name"` -- switching to `kind: "id"` before
+ * promotion exists would not "use direct identity", it would pass an empty
+ * aoiVersionId and break evidence resolution entirely. Flip `eoLink` to
+ * `kind: "id"` once AOI promotion has actually run for these three entities.
  */
 export type AssetGeometryTier = "canonical_polygon" | "source_verified_polygon"
+
+export type CanonicalEntityIdentity = {
+  entityId: string
+  entityType: string
+  canonicalName: string
+  geometryObservationId: string
+  geometryObservationMethod: string
+  worldId: string
+  aoiPromoted: false
+  confirmedAt: string
+}
 
 export type AssetEvidenceProvenance = {
   geometryTier: AssetGeometryTier
   geometryLabel: string
   geometryNote: string
+  canonicalIdentity?: CanonicalEntityIdentity
   eoLink?: { cfrName: string; country: "UG" | "KE"; spatialType?: string }
   compartmentsNote: string
 }
@@ -371,7 +395,7 @@ const siteSeeds: SiteSeed[] = [
     block: "Kampimpini",
     summaryTitle: "Kampimpini reference case",
     summaryDescription:
-      "One of EA Forests' three gold-standard Asset Intelligence reference cases. Matched to the canonical, polygon-linked \"Kapimpini\" Central Forest Reserve (Nakaseke District, National Forestry Authority, designated 1967) -- \"Kampimpini\" is a one-letter spelling variant of this gazetted reserve. Sub-block layout below is a scenario/demo input, not a surveyed compartment plan.",
+      "One of EA Forests' three gold-standard Asset Intelligence reference cases. canonical_name = \"Kapimpini\" (the real, gazetted Central Forest Reserve in Nakaseke District, National Forestry Authority, designated 1967); display_name/alias = \"Kampimpini\" (the requested demo spelling, a one-letter variant). No second entity was created for the alias. Sub-block layout below is a scenario/demo input, not a surveyed compartment plan.",
     location: "Nakaseke, Central",
     country: "Uganda",
     mapCenter: [0.98736, 32.07765],
@@ -379,7 +403,17 @@ const siteSeeds: SiteSeed[] = [
       geometryTier: "canonical_polygon",
       geometryLabel: "Canonical CFR polygon",
       geometryNote:
-        "Uganda CFR boundary spine, reconciliation status POLYGON_LINKED, source record \"Kapimpini\" (id cfr-kapimpini). Repo polygon area 6,120.9 ha; NFA/public reporting ~6,068 ha, designated 1967.",
+        "Uganda CFR boundary spine (frontend), reconciliation status POLYGON_LINKED, source record \"Kapimpini\" (id cfr-kapimpini). Repo polygon area 6,120.9 ha; NFA/public reporting ~6,068 ha, designated 1967. Note: the canonical database's own geo.geometry_observation for this entity is currently only a lower-precision centroid POINT (method centroid_estimate; its own metadata states \"numeric precision is unknown\") -- the polygon shown on the map comes from this repo's separate, unverified-repository-derived CFR boundary export, not yet reconciled into the canonical DB observation.",
+      canonicalIdentity: {
+        entityId: "51303893-7310-4a59-aaae-0789189c157f",
+        entityType: "reserve",
+        canonicalName: "Kapimpini",
+        geometryObservationId: "a0591a82-b1a3-4be5-a36c-870ac1d99703",
+        geometryObservationMethod: "centroid_estimate",
+        worldId: "6c42dd9e-7635-4f3c-88d6-a52203d52396",
+        aoiPromoted: false,
+        confirmedAt: "2026-09-11",
+      },
       eoLink: { cfrName: "Kapimpini", country: "UG" },
       compartmentsNote:
         "Scenario compartments -- demo model input, not a surveyed compartment plan.",
@@ -481,7 +515,17 @@ const siteSeeds: SiteSeed[] = [
       geometryTier: "canonical_polygon",
       geometryLabel: "Canonical CFR polygon",
       geometryNote:
-        "Uganda CFR boundary spine, reconciliation status POLYGON_LINKED, source record \"Namavundu\" (id cfr-namavundu). Repo polygon area 689.6 ha, reported area 689.5 ha; public reporting ~704 ha (Jinja District boundary-reopening coverage).",
+        "Uganda CFR boundary spine (frontend), reconciliation status POLYGON_LINKED, source record \"Namavundu\" (id cfr-namavundu). Repo polygon area 689.6 ha, reported area 689.5 ha; public reporting ~704 ha (Jinja District boundary-reopening coverage). Note: the canonical database's own geo.geometry_observation for this entity is currently only a lower-precision centroid POINT (method centroid_estimate; its own metadata states \"numeric precision is unknown\") -- the polygon shown on the map comes from this repo's separate, unverified-repository-derived CFR boundary export, not yet reconciled into the canonical DB observation.",
+      canonicalIdentity: {
+        entityId: "98c7d633-e3c3-4e93-ac20-5fa9f933dff1",
+        entityType: "reserve",
+        canonicalName: "Namavundu",
+        geometryObservationId: "ce939b19-e031-4ccf-90db-aafd32a2e771",
+        geometryObservationMethod: "centroid_estimate",
+        worldId: "6c42dd9e-7635-4f3c-88d6-a52203d52396",
+        aoiPromoted: false,
+        confirmedAt: "2026-09-11",
+      },
       eoLink: { cfrName: "Namavundu", country: "UG" },
       compartmentsNote:
         "Scenario compartments -- demo model input, not a surveyed compartment plan.",
@@ -548,7 +592,7 @@ const siteSeeds: SiteSeed[] = [
     block: "Mbooni South",
     summaryTitle: "Mbooni South reference case",
     summaryDescription:
-      "One of EA Forests' three gold-standard Asset Intelligence reference cases. Matched to the gazetted \"MBOONI SOUTH\" forest (Makueni County), fetched directly from the same public Kenya gazetted-forest source (FSC International ArcGIS layer, FID 234) already registered for this repo's Kenya EO ingestion; not yet confirmed promoted to the canonical AOI database in this session. Sub-block layout below is a scenario/demo input, not a surveyed compartment plan.",
+      "One of EA Forests' three gold-standard Asset Intelligence reference cases. canonical_name = \"MBOONI SOUTH\", a gazetted forest (Makueni County) already ingested into the canonical database (entity + digitised polygon geometry_observation confirmed by direct read-only query), but not yet promoted to a canonical AOI. Sub-block layout below is a scenario/demo input, not a surveyed compartment plan.",
     location: "Makueni, Eastern",
     country: "Kenya",
     mapCenter: [-1.6338, 37.4368],
@@ -556,7 +600,17 @@ const siteSeeds: SiteSeed[] = [
       geometryTier: "source_verified_polygon",
       geometryLabel: "Source-verified gazetted polygon",
       geometryNote:
-        "Kenya KE-GAZETTED-FOREST public ArcGIS layer (FSC International publisher), FOREST=\"MBOONI SOUTH\", FID 234, status Gazetted, polygon area ~206.3 ha (2,063,437.7 sq m). All 386 identities in this dataset show already_promoted in outputs/eo/kenya-gazetted-cohort-v1.json, so this record is very likely already a canonical AOI, but its specific entity_id/aoi_version_id was not confirmed in this session (admin-gated API, no credentials available).",
+        "Kenya KE-GAZETTED-FOREST public ArcGIS layer (FSC International publisher), FOREST=\"MBOONI SOUTH\", FID 234, status Gazetted, polygon area ~206.35 ha, method \"digitised\". Confirmed via direct read-only query against the canonical database on 2026-09-11: the entity and its geometry_observation exist, but geo.aoi has zero rows for this entity (and zero rows total in that database) -- so this record is NOT yet a canonical AOI, correcting an earlier, unverified assumption (based only on an \"already_promoted: 386\" count in outputs/eo/kenya-gazetted-cohort-v1.json) that it likely already was.",
+      canonicalIdentity: {
+        entityId: "2de98a42-9dea-424f-b555-ad1c8352a13a",
+        entityType: "forest_candidate",
+        canonicalName: "MBOONI SOUTH",
+        geometryObservationId: "b82269e1-1192-4d56-ba69-49b5448ab159",
+        geometryObservationMethod: "digitised",
+        worldId: "6c42dd9e-7635-4f3c-88d6-a52203d52396",
+        aoiPromoted: false,
+        confirmedAt: "2026-09-11",
+      },
       eoLink: { cfrName: "MBOONI SOUTH", country: "KE", spatialType: "forest_candidate" },
       compartmentsNote:
         "Scenario compartments -- demo model input, not a surveyed compartment plan.",

@@ -1898,6 +1898,15 @@ export function DashboardAssetMap({
                   >
                     {selectedGroup.provenance.geometryLabel}
                   </Badge>
+                  {selectedGroup.provenance.canonicalIdentity ? (
+                    <Badge
+                      variant="outline"
+                      className="cursor-help text-[10px] font-normal uppercase tracking-wide text-muted-foreground"
+                      title={`entity_id ${selectedGroup.provenance.canonicalIdentity.entityId} -- confirmed in canonical database ${selectedGroup.provenance.canonicalIdentity.confirmedAt}. No AOI promoted yet, so EO evidence below still resolves by name.`}
+                    >
+                      Canonical entity confirmed - AOI pending
+                    </Badge>
+                  ) : null}
                 </div>
 
                 {selectedGroup.provenance.eoLink ? (
