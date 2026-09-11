@@ -1789,6 +1789,7 @@ export function DashboardAssetMap({
                         setClickedPoint(point)
                         setSelectedActorId(null)
                         setIsTableOpen(true)
+                        setShowRoadAnalysis(true)
                       }}
                     />
                     <MapZoomControl position="top-3 left-3" />

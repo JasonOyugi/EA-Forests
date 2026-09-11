@@ -6,10 +6,10 @@
 
 @theme inline {
   --font-sans: var(--font-canals);
-  --radius-sm: 0;
-  --radius-md: 0;
-  --radius-lg: 0;
-  --radius-xl: 0;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -55,7 +55,7 @@
   --type-heading-leading: 0.94;
   --type-heading-tracking: -0.045em;
   --type-heading-width: 75%;
-  --radius: 0;
+  --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -2156,33 +2156,6 @@ html {
   animation: editorial-grid-enter 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.metric-card-pixel {
-  position: absolute;
-  top: var(--pixel-y);
-  left: var(--pixel-x);
-  width: var(--pixel-size);
-  height: var(--pixel-size);
-  background: color-mix(in srgb, currentColor var(--pixel-accent-share), var(--pixel-tint));
-  opacity: var(--pixel-opacity-min);
-  border-radius: 2px;
-  animation: metric-pixel-pulse var(--pixel-duration) ease-in-out infinite;
-  animation-delay: var(--pixel-delay);
-}
-
-@keyframes metric-pixel-pulse {
-  0%, 100% { opacity: var(--pixel-opacity-min); transform: scale(var(--pixel-scale-min)); }
-  50% { opacity: var(--pixel-opacity-max); transform: scale(var(--pixel-scale-max)); }
-}
-
-.coming-soon-card-tint {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(135deg, rgba(112, 128, 124, 0.68), rgba(6, 78, 59, 0.65));
-  backdrop-filter: saturate(0.4) blur(1px);
-  z-index: 10;
-}
-
 /* Fine-grained row track so xl:row-span-[n] tiles can dense-pack and
    genuinely backfill gaps of matching size (see editorial-landing-section.tsx). */
 @media (min-width: 1280px) {
@@ -2229,8 +2202,7 @@ html {
   }
 
   .editorial-grid-transition,
-  .editorial-focus-surface,
-  .metric-card-pixel {
+  .editorial-focus-surface {
     animation: none;
   }
 }
@@ -2687,11 +2659,4 @@ html {
 .group:hover .motion-paused,
 .group:focus-within .motion-paused {
   animation-play-state: running;
-}
-
-/* Square corners are fixed across presets, imported themes, and component styles. */
-*,
-*::before,
-*::after {
-  border-radius: 0 !important;
 }
