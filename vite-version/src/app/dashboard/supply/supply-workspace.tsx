@@ -13,6 +13,7 @@ import { MetricPortals, type MetricPortal } from "./metric-portals"
 import { SupplyMap } from "./supply-map"
 import { OpportunityRail } from "./opportunity-rail"
 import { SupplyOutlook } from "./supply-outlook"
+import { ZurktModelSummary } from "./zurkt-model-summary"
 import { DashboardViewToggle } from "../components/dashboard-view-toggle"
 import "./supply.css"
 
@@ -54,6 +55,7 @@ export default function SupplyWorkspace() {
         <div className="si-timebar"><span className="si-eyebrow">Availability horizon</span><div role="group" aria-label="Supply time horizon">{([0, 3, 6, 12, 24, 60] as const).map(months => <button key={months} aria-pressed={context.horizonMonths === months} onClick={() => update({ horizonMonths: months })}>{months === 0 ? "Now" : months === 60 ? "5y" : `${months}m`}</button>)}</div><span>As of 7 Sep 2026 · preview</span></div>
       </section>
       <SupplyOutlook />
+      <ZurktModelSummary />
       <section className="si-operations" aria-label="Upcoming operations"><div><span className="si-eyebrow">Next actions</span><h2>On the horizon</h2><Link to="/calendar?source=supply">Open calendar <ArrowUpRight size={15} /></Link></div><div className="si-operation-items">{operations.filter(op => op.event.date >= new Date(`${context.asOf}T00:00:00`)).sort((a, b) => a.event.date.getTime() - b.event.date.getTime()).slice(0, 3).map(op => <button key={op.event.id} onClick={() => setEvent(op.event)}><span className="si-operation-date"><CalendarDays size={15} />{shortDate(op.event.date.toISOString())}</span><strong>{op.event.title.replace("Preview · ", "").replace("Preview forecast · ", "")}</strong><span>Preview · {op.basis === "committed" ? "obligation" : op.basis}<ArrowUpRight size={14} /></span></button>)}</div></section>
       <p className="si-bottom-note">A shared forest state. A processor’s perspective. Evidence and model outputs will enter this workspace through the same stand, specification and provenance contracts.</p>
     </main>

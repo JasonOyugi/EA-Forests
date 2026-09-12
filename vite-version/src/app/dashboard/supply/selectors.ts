@@ -5,7 +5,16 @@ export const pipelineStages = ["identified", "modelled", "verified", "engaged", 
 export const mapModes = ["supply", "cost", "confidence", "opportunity", "operations"] as const
 export const emptyGrades = (): GradeTonnes => ({ G1: 0, G2: 0, G3: 0, unclassified: 0 })
 export const number = (value: number) => new Intl.NumberFormat("en-GB", { maximumFractionDigits: 0 }).format(value)
-export const shortDate = (date: string) => new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", timeZone: "UTC" }).format(new Date(date))
+// Real, IDENTIFIED-but-not-yet-modelled CFRs (Track 19) carry an empty
+// planningDate -- no timing estimate exists yet, which is not the same as
+// an invalid date. Format defensively instead of throwing "Invalid time
+// value" out of Intl.DateTimeFormat for every such lot in the rail.
+export const shortDate = (date: string) => {
+  if (!date) return "Timing TBD"
+  const parsed = new Date(date)
+  if (Number.isNaN(parsed.getTime())) return "Timing TBD"
+  return new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", timeZone: "UTC" }).format(parsed)
+}
 export const quarterKey = (date: string) => `${date.slice(0, 4)}-Q${Math.floor((Number(date.slice(5, 7)) - 1) / 3) + 1}`
 export const quarterLabel = (quarter: string) => `${quarter.slice(5)} ${quarter.slice(0, 4)}`
 
@@ -36,8 +45,15 @@ export function deriveSupply(data: SupplyDataset, context: AnalyticalContext) {
   const window = horizonWindow(data, context)
   const eligible = data.lots.filter(lot => {
     const provenance = lot.gradeTonnes.provenance
+    // A lot with no known planningDate (an IDENTIFIED-but-not-yet-modelled
+    // real CFR -- Track 19) has no harvest window to fall inside or outside
+    // of. Excluding it here would silently equate "missing model output"
+    // with "outside the horizon", which is exactly the bug this guards
+    // against: a real, canonical forest disappearing from the rail because
+    // nothing has estimated when it might supply yet.
+    const hasKnownDate = lot.availability.planningDate !== ""
     return lot.specificationId === data.processor.specification.id &&
-      lot.availability.planningDate >= window.start && lot.availability.planningDate < window.end &&
+      (!hasKnownDate || (lot.availability.planningDate >= window.start && lot.availability.planningDate < window.end)) &&
       (context.speciesFilter === "all" || context.speciesFilter === lot.species) &&
       (context.pipelineStage === "all" ? lot.stage !== "delivered" : lot.stage === context.pipelineStage) &&
       (context.confidenceFilter === "all" || (context.confidenceFilter === "stale" ? provenance.freshness === "stale" : provenance.verification === context.confidenceFilter)) &&
