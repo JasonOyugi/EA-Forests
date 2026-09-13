@@ -38,13 +38,6 @@ import { ForestryServicesCountdownBanner } from "@/components/commerce-ui/forest
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
   Select,
   SelectContent,
   SelectItem,
@@ -70,7 +63,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { deriveEventDates, getRecentPaymentRows, getUpcomingPaymentRows } from "./dashboard-events"
+import { deriveEventDates } from "./dashboard-events"
 import {
   getGroupEstimatedMetrics,
   getSubBlockEstimatedMetrics,
@@ -112,21 +105,6 @@ export type PaymentRow = {
   status: "paid" | "pending" | "overdue" | "received" | "cancelled" | "scheduled"
 }
 
-type ActivityLogRow = {
-  activity: string
-  activityName: string
-  operation: string
-  status: "completed" | "in progress" | "scheduled"
-  contractor: string
-}
-
-type DocumentRow = {
-  date: string
-  document: string
-  status: "verified" | "pending review" | "action required"
-  lastModified: string
-}
-
 type SortColumn =
   | "area"
   | "plantedArea"
@@ -136,6 +114,9 @@ type SortColumn =
   | "investmentPlaced"
 type SortOrder = "asc" | "desc"
 
+/** Real modelled max material-class probability across this asset's
+ * derived zones (0-100), NOT an age in years -- no planting-date record
+ * exists for these real reserves. See AssetSubBlock's docstring. */
 function groupAge(g: AssetGroup) {
   return Math.max(...g.subBlocks.map((s) => s.age))
 }
@@ -221,18 +202,8 @@ export function createPolygon(
   return { outer, inner }
 }
 
-const activityLogs: ActivityLogRow[] = [
-  { activity: "2026-04-08", activityName: "Form pruning pass", operation: "Silviculture", status: "completed", contractor: "GreenCanopy Ltd" },
-  { activity: "2026-04-10", activityName: "Density assessment", operation: "Survey", status: "in progress", contractor: "SylvaOps" },
-  { activity: "2026-04-16", activityName: "Replanting preparation", operation: "Planting", status: "scheduled", contractor: "Timberline Services" },
-  { activity: "2026-04-21", activityName: "Access trail grading", operation: "Infrastructure", status: "scheduled", contractor: "TerrainWorks" },
-]
-
-const documents: DocumentRow[] = [
-  { date: "2026-04-01", document: "Independent valuation report Q1", status: "verified", lastModified: "2026-04-03 14:18" },
-  { date: "2026-03-26", document: "Harvest readiness audit - Pine Hollow D7", status: "pending review", lastModified: "2026-04-07 09:42" },
-  { date: "2026-03-19", document: "Contract amendment - GreenCanopy", status: "action required", lastModified: "2026-04-09 11:05" },
-]
+// Track v5-23: fake activity/document/payment records removed -- no
+// verified operational record exists for these real reference assets.
 
 const countryBoundaryStyle: Record<Country, React.CSSProperties> = {
   Uganda: {
@@ -285,86 +256,7 @@ function CountryStripeBadge({ country }: { country: Country }) {
   )
 }
 
-function statusBadge(status: string) {
-  const styles: Record<string, string> = {
-    paid: "bg-emerald-100 text-emerald-800 border-emerald-300",
-    received: "bg-emerald-100 text-emerald-800 border-emerald-300",
-    pending: "bg-amber-100 text-amber-800 border-amber-300",
-    overdue: "bg-rose-100 text-rose-800 border-rose-300",
-    cancelled: "bg-slate-100 text-slate-800 border-slate-300",
-    scheduled: "bg-blue-100 text-blue-800 border-blue-300",
-    completed: "bg-emerald-100 text-emerald-800 border-emerald-300",
-    "in progress": "bg-sky-100 text-sky-800 border-sky-300",
-    verified: "bg-emerald-100 text-emerald-800 border-emerald-300",
-    "pending review": "bg-amber-100 text-amber-800 border-amber-300",
-    "action required": "bg-rose-100 text-rose-800 border-rose-300",
-  }
-
-  return (
-    <Badge variant="outline" className={styles[status] ?? ""}>
-      {status}
-    </Badge>
-  )
-}
-
-function paymentStatusHoverClass(status: PaymentRow["status"]) {
-  const styles: Record<PaymentRow["status"], string> = {
-    paid: "invoice-run-emerald",
-    received: "invoice-run-emerald",
-    pending: "invoice-run-amber",
-    overdue: "invoice-run-rose",
-    cancelled: "invoice-run-slate",
-    scheduled: "invoice-run-blue",
-  }
-
-  return styles[status]
-}
-
-function PaymentList({
-  title,
-  payments,
-  className,
-}: {
-  title: string
-  payments: PaymentRow[]
-  className?: string
-}) {
-  const navigate = useNavigate()
-
-  return (
-    <Card className={className}>
-      <CardHeader className="pb-3">
-        <CardTitle className="text-base">{title}</CardTitle>
-        <CardDescription>Invoice list</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-3">
-        {payments.map((payment) => (
-          <div
-            key={payment.invoice}
-            onClick={() => navigate(`/invoice/${payment.invoice}`)}
-            className={`invoice-run-card ${paymentStatusHoverClass(payment.status)} flex cursor-pointer items-center justify-between gap-4 rounded-md border p-3 transition-colors hover:bg-muted/50`}
-          >
-            <div className="min-w-0 space-y-1">
-              <p className="text-sm font-medium">{payment.invoice}</p>
-              <p className="truncate text-xs text-muted-foreground">{payment.description}</p>
-              <p className="text-xs text-muted-foreground">Due {payment.dueDate}</p>
-            </div>
-            <div className="shrink-0 space-y-1 text-right">
-              <p className="text-sm font-semibold">
-                {new Intl.NumberFormat("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                  maximumFractionDigits: 0,
-                }).format(payment.amount)}
-              </p>
-              {statusBadge(payment.status)}
-            </div>
-          </div>
-        ))}
-      </CardContent>
-    </Card>
-  )
-}
+// statusBadge/paymentStatusHoverClass/PaymentList removed -- no verified payment/invoice/activity record exists for these real assets (Track v5-23).
 
 type SortableAssetRowProps = {
   group: AssetGroup
@@ -493,13 +385,11 @@ interface DataTableProps {
 export function DataTable({
   activeTab,
   onActiveTabChange,
-  transactionsHighlightKey,
   events,
   onEventsChange,
   onAssetMapOpen,
 }: DataTableProps) {
   const navigate = useNavigate()
-  const [highlightUpcomingPayments, setHighlightUpcomingPayments] = React.useState(false)
 
   const assetGroups = initialAssetGroups
   const [rowOrder, setRowOrder] = React.useState<string[]>(() => initialAssetGroups.map((g) => g.id))
@@ -554,8 +444,6 @@ export function DataTable({
       return sortConfig.order === "asc" ? aVal - bVal : bVal - aVal
     })
   }, [assetGroups, rowOrder, sortConfig])
-  const latestPayments = React.useMemo(() => getRecentPaymentRows(events).slice(0, 3), [events])
-  const upcomingPayments = React.useMemo(() => getUpcomingPaymentRows(events), [events])
   const eventDates = React.useMemo(() => deriveEventDates(events), [events])
 
   function handleDragEnd(event: DragEndEvent) {
@@ -595,13 +483,6 @@ export function DataTable({
     return <span className="ml-1">{sortConfig.order === "asc" ? "^" : "v"}</span>
   }
 
-  React.useEffect(() => {
-    if (activeTab !== "transactions" || transactionsHighlightKey === 0) return
-
-    setHighlightUpcomingPayments(true)
-    const timeout = window.setTimeout(() => setHighlightUpcomingPayments(false), 2200)
-    return () => window.clearTimeout(timeout)
-  }, [activeTab, transactionsHighlightKey])
 
   return (
     <Tabs
@@ -644,7 +525,7 @@ export function DataTable({
                   <TableHead>Country</TableHead>
                   <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("area")}>Area (ha){sortIndicator("area")}</TableHead>
                   <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("plantedArea")}>Planted (ha){sortIndicator("plantedArea")}</TableHead>
-                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("age")}>Age (yr){sortIndicator("age")}</TableHead>
+                  <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("age")}>Top class %{sortIndicator("age")}</TableHead>
                   <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("estimatedVolume")}>Estimated Volume (m3){sortIndicator("estimatedVolume")}</TableHead>
                   <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("estimatedValuation")}>Estimated Valuation (USD){sortIndicator("estimatedValuation")}</TableHead>
                   <TableHead className="cursor-pointer hover:bg-muted" onClick={() => handleColumnSort("investmentPlaced")}>Investment Placed (USD){sortIndicator("investmentPlaced")}</TableHead>
@@ -680,74 +561,20 @@ export function DataTable({
       </TabsContent>
 
       <TabsContent value="transactions" className="px-4 lg:px-6">
-        <div className="grid gap-4 lg:grid-cols-2">
-          <PaymentList title="Latest payments" payments={latestPayments} />
-          <PaymentList
-            title="Upcoming payments"
-            payments={upcomingPayments}
-            className={highlightUpcomingPayments ? "upcoming-payments-flicker" : undefined}
-          />
+        <div className="rounded-lg border p-8 text-center text-sm text-muted-foreground">
+          No verified operational records linked to this asset.
         </div>
       </TabsContent>
 
       <TabsContent value="activity-logs" className="px-4 lg:px-6">
-        <div className="overflow-hidden rounded-lg border">
-          <Table>
-            <TableHeader className="bg-muted/50">
-              <TableRow>
-                <TableHead>Date</TableHead>
-                <TableHead>Activity</TableHead>
-                <TableHead>Operation</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Contractor</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {activityLogs.map((log) => (
-                <TableRow key={`${log.activity}-${log.activityName}`}>
-                  <TableCell>{log.activity}</TableCell>
-                  <TableCell className="font-medium">{log.activityName}</TableCell>
-                  <TableCell>{log.operation}</TableCell>
-                  <TableCell>{statusBadge(log.status)}</TableCell>
-                  <TableCell>{log.contractor}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+        <div className="rounded-lg border p-8 text-center text-sm text-muted-foreground">
+          No verified operational records linked to this asset.
         </div>
       </TabsContent>
 
       <TabsContent value="documents" className="px-4 lg:px-6">
-        <div className="overflow-hidden rounded-lg border">
-          <Table>
-            <TableHeader className="bg-muted/50">
-              <TableRow>
-                <TableHead>Date</TableHead>
-                <TableHead>Document</TableHead>
-                <TableHead>Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {documents.map((doc) => (
-                <TableRow key={doc.document}>
-                  <TableCell>{doc.date}</TableCell>
-                  <TableCell>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <span className="cursor-help font-medium underline decoration-dotted underline-offset-2">
-                          {doc.document}
-                        </span>
-                      </TooltipTrigger>
-                      <TooltipContent side="top" sideOffset={6}>
-                        Last modified: {doc.lastModified}
-                      </TooltipContent>
-                    </Tooltip>
-                  </TableCell>
-                  <TableCell>{statusBadge(doc.status)}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+        <div className="rounded-lg border p-8 text-center text-sm text-muted-foreground">
+          No verified operational records linked to this asset.
         </div>
       </TabsContent>
 

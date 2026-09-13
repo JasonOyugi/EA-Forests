@@ -1,0 +1,149 @@
+{
+  "model_version": "asset-structural-evidence-v1",
+  "assets": [
+    {
+      "canonical_name": "Kapimpini",
+      "buffer_m": 1000,
+      "note": "Stats computed over a 1000m buffer around the asset's reference point -- a coarse proxy for the real canonical polygon (not yet clipped to the exact polygon geometry in this pass).",
+      "chmv2": {
+        "source": "projects/meta-forest-monitoring-okw37/assets/CanopyHeight",
+        "epistemic_status": "EO_DERIVED",
+        "note": "Meta/WRI Canopy Height Model v2 -- CANOPY-SURFACE height structural evidence, NOT ground truth and NOT individual-tree height (cannot separate adjacent crowns in closed canopy).",
+        "stats": {
+          "height_m_count": 3115133,
+          "height_m_mean": 0.847134642774713,
+          "height_m_p10": 0,
+          "height_m_p50": 0,
+          "height_m_p90": 3.0000000000000018,
+          "height_m_p98": 6.277685634739747
+        }
+      },
+      "gedi": {
+        "source_l2a": "LARSE/GEDI/GEDI02_A_002_MONTHLY",
+        "source_l2b": "LARSE/GEDI/GEDI02_B_002_MONTHLY",
+        "epistemic_status": "EO_DERIVED",
+        "note": "Real spaceborne lidar footprints (~25m circular samples), not a census. rh98 = relative height at 98th percentile of returned energy (canopy top proxy); cover/pai/fhd_normal are structural cover/leaf-area/foliage-height-diversity indices. sensitivity flags footprint quality; low-sensitivity footprints are less reliable and not filtered out here (see note).",
+        "stats": {
+          "rh98": {
+            "rh98_count": 488,
+            "rh98_mean": 2.186921248066754
+          },
+          "sensitivity": {
+            "sensitivity_count": 488,
+            "sensitivity_mean": 0.9636346719008421
+          },
+          "cover": {
+            "cover_count": 238,
+            "cover_mean": 0.1107258186685219
+          },
+          "pai": {
+            "pai_count": 238,
+            "pai_mean": 0.32376591648103886
+          },
+          "fhd_normal": {
+            "fhd_normal_count": 238,
+            "fhd_normal_mean": 1.5295190998091206
+          },
+          "l2a_monthly_tiles_intersecting": 64,
+          "l2b_monthly_tiles_intersecting": 64
+        }
+      }
+    },
+    {
+      "canonical_name": "Namavundu",
+      "buffer_m": 1000,
+      "note": "Stats computed over a 1000m buffer around the asset's reference point -- a coarse proxy for the real canonical polygon (not yet clipped to the exact polygon geometry in this pass).",
+      "chmv2": {
+        "source": "projects/meta-forest-monitoring-okw37/assets/CanopyHeight",
+        "epistemic_status": "EO_DERIVED",
+        "note": "Meta/WRI Canopy Height Model v2 -- CANOPY-SURFACE height structural evidence, NOT ground truth and NOT individual-tree height (cannot separate adjacent crowns in closed canopy).",
+        "stats": {
+          "height_m_count": 3114820,
+          "height_m_mean": 2.0983020172979567,
+          "height_m_p10": 0,
+          "height_m_p50": 0,
+          "height_m_p90": 8.291911820289714,
+          "height_m_p98": 12
+        }
+      },
+      "gedi": {
+        "source_l2a": "LARSE/GEDI/GEDI02_A_002_MONTHLY",
+        "source_l2b": "LARSE/GEDI/GEDI02_B_002_MONTHLY",
+        "epistemic_status": "EO_DERIVED",
+        "note": "Real spaceborne lidar footprints (~25m circular samples), not a census. rh98 = relative height at 98th percentile of returned energy (canopy top proxy); cover/pai/fhd_normal are structural cover/leaf-area/foliage-height-diversity indices. sensitivity flags footprint quality; low-sensitivity footprints are less reliable and not filtered out here (see note).",
+        "stats": {
+          "rh98": {
+            "rh98_count": 709,
+            "rh98_mean": 3.2461871689609048
+          },
+          "sensitivity": {
+            "sensitivity_count": 709,
+            "sensitivity_mean": 0.8035540005972502
+          },
+          "cover": {
+            "cover_count": 250,
+            "cover_mean": 0.2631103375474927
+          },
+          "pai": {
+            "pai_count": 250,
+            "pai_mean": 0.9669598915846696
+          },
+          "fhd_normal": {
+            "fhd_normal_count": 250,
+            "fhd_normal_mean": 1.810244416516959
+          },
+          "l2a_monthly_tiles_intersecting": 64,
+          "l2b_monthly_tiles_intersecting": 64
+        }
+      }
+    },
+    {
+      "canonical_name": "MBOONI SOUTH",
+      "buffer_m": 1000,
+      "note": "Stats computed over a 1000m buffer around the asset's reference point -- a coarse proxy for the real canonical polygon (not yet clipped to the exact polygon geometry in this pass).",
+      "chmv2": {
+        "source": "projects/meta-forest-monitoring-okw37/assets/CanopyHeight",
+        "epistemic_status": "EO_DERIVED",
+        "note": "Meta/WRI Canopy Height Model v2 -- CANOPY-SURFACE height structural evidence, NOT ground truth and NOT individual-tree height (cannot separate adjacent crowns in closed canopy).",
+        "stats": {
+          "height_m_count": 3115934,
+          "height_m_mean": 2.805649957048875,
+          "height_m_p10": 0,
+          "height_m_p50": 0,
+          "height_m_p90": 11.000000000000002,
+          "height_m_p98": 23
+        }
+      },
+      "gedi": {
+        "source_l2a": "LARSE/GEDI/GEDI02_A_002_MONTHLY",
+        "source_l2b": "LARSE/GEDI/GEDI02_B_002_MONTHLY",
+        "epistemic_status": "EO_DERIVED",
+        "note": "Real spaceborne lidar footprints (~25m circular samples), not a census. rh98 = relative height at 98th percentile of returned energy (canopy top proxy); cover/pai/fhd_normal are structural cover/leaf-area/foliage-height-diversity indices. sensitivity flags footprint quality; low-sensitivity footprints are less reliable and not filtered out here (see note).",
+        "stats": {
+          "rh98": {
+            "rh98_count": 908,
+            "rh98_mean": 5.33139459540279
+          },
+          "sensitivity": {
+            "sensitivity_count": 908,
+            "sensitivity_mean": 3.2591936866573863
+          },
+          "cover": {
+            "cover_count": 407,
+            "cover_mean": 0.2669913194851939
+          },
+          "pai": {
+            "pai_count": 407,
+            "pai_mean": 0.8100697343098798
+          },
+          "fhd_normal": {
+            "fhd_normal_count": 407,
+            "fhd_normal_mean": 2.1763242430476923
+          },
+          "l2a_monthly_tiles_intersecting": 63,
+          "l2b_monthly_tiles_intersecting": 63
+        }
+      }
+    }
+  ]
+}

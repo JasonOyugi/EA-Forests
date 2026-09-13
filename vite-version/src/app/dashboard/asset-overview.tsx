@@ -2,154 +2,111 @@
 
 import * as React from "react"
 import { BaseLayout } from "@/components/layouts/base-layout"
-import {
-  ChartAreaInteractive,
-  generatePortfolioSeries,
-  portfolioSeriesReferenceDate,
-} from "./components/chart-area-interactive"
+import { ChartAreaInteractive } from "./components/chart-area-interactive"
 import { DashboardAssetMap } from "./components/dashboard-asset-map"
-import { createDashboardCalendarEvents, getUpcomingPaymentRows } from "./components/dashboard-events"
-import { DataTable, groupPlantedSize, groupSize, initialAssetGroups } from "./components/data-table"
+import { createDashboardCalendarEvents } from "./components/dashboard-events"
+import { DataTable } from "./components/data-table"
 import { DashboardViewToggle } from "./components/dashboard-view-toggle"
 import { SectionCards } from "./components/section-cards"
 import { SpeciesAllocation } from "./components/species-allocation"
+import { AssetCurrentBelief } from "./components/asset-current-belief"
+import { initialAssetGroups } from "./data/forestry-data"
 import type { MetricKey } from "./components/chart-area-interactive"
 import type { CalendarEvent } from "@/app/calendar/types"
 
+function fmtUsd(v: number) {
+  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(v)
+}
+function fmtNum(v: number) {
+  return new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 }).format(v)
+}
+
 export default function Page() {
-  const formatCurrencyExact = React.useCallback(
-    (value: number) =>
-      new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }).format(value),
-    []
-  )
-
-  const formatNumberExact = React.useCallback(
-    (value: number) =>
-      new Intl.NumberFormat("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }).format(value),
-    []
-  )
-
   const chartRef = React.useRef<HTMLDivElement | null>(null)
   const assetMapRef = React.useRef<HTMLDivElement | null>(null)
   const tableRef = React.useRef<HTMLDivElement | null>(null)
   const [metric, setMetric] = React.useState<MetricKey>("portfolioValue")
   const [tableTab, setTableTab] = React.useState<"assets" | "transactions" | "activity-logs" | "documents">("assets")
-  const [transactionsHighlightKey, setTransactionsHighlightKey] = React.useState(0)
+  const [transactionsHighlightKey] = React.useState(0)
   const [dashboardEvents, setDashboardEvents] = React.useState<CalendarEvent[]>(() => createDashboardCalendarEvents())
   const [selectedAssetMapId, setSelectedAssetMapId] = React.useState(initialAssetGroups[0]?.id ?? "")
-  const series = React.useMemo(
-    () => generatePortfolioSeries(portfolioSeriesReferenceDate),
-    []
-  )
-  const totals = React.useMemo(() => {
-    const plantedArea = initialAssetGroups.reduce((sum, group) => sum + groupPlantedSize(group), 0)
-    const acquiredArea = initialAssetGroups.reduce((sum, group) => sum + groupSize(group), 0)
-    return { plantedArea, acquiredArea }
-  }, [])
-  const pendingTotals = React.useMemo(() => {
-    const upcomingPayments = getUpcomingPaymentRows(dashboardEvents)
-    const amount = upcomingPayments.reduce((sum, payment) => sum + payment.amount, 0)
-    return { amount, count: upcomingPayments.length }
-  }, [dashboardEvents])
-  const plantedAreaLabel = totals.plantedArea.toFixed(2)
-  const acquiredAreaLabel = totals.acquiredArea.toFixed(2)
 
-  const getPoint = React.useCallback(
-    (label: string) => series.find((point) => point.label === label),
-    [series]
+  const selectedGroup = React.useMemo(
+    () => initialAssetGroups.find((g) => g.id === selectedAssetMapId) ?? initialAssetGroups[0],
+    [selectedAssetMapId]
   )
-  const getTrend = React.useCallback((currentValue: number, previousValue: number) => {
-    if (previousValue === 0) {
-      return { isUp: currentValue >= 0, label: currentValue >= 0 ? "+0.0%" : "-0.0%" }
-    }
-
-    const delta = ((currentValue - previousValue) / Math.abs(previousValue)) * 100
-    const sign = delta >= 0 ? "+" : ""
-    return {
-      isUp: delta >= 0,
-      label: `${sign}${delta.toFixed(2)}%`,
-    }
-  }, [])
-
-  const portfolioPoint = getPoint("T1 2027") ?? series[series.length - 1]
-  const portfolioCurrentTrendPoint = getPoint("T3 2026") ?? series[series.length - 1]
-  const portfolioPreviousPoint = getPoint("T2 2026") ?? series[Math.max(series.length - 2, 0)]
-  const portfolioTrend = getTrend(
-    portfolioCurrentTrendPoint?.portfolioValue ?? 0,
-    portfolioPreviousPoint?.portfolioValue ?? portfolioCurrentTrendPoint?.portfolioValue ?? 0
-  )
-
-  const landPoint = getPoint("T3 2026") ?? series[series.length - 1]
-  const landPreviousPoint = getPoint("T2 2026") ?? series[Math.max(series.length - 2, 0)]
-  const landTrend = getTrend(
-    landPoint?.landManaged ?? 0,
-    landPreviousPoint?.landManaged ?? landPoint?.landManaged ?? 0
-  )
-  const volumeTrend = getTrend(
-    landPoint?.expectedVolume ?? 0,
-    landPreviousPoint?.expectedVolume ?? landPoint?.expectedVolume ?? 0
-  )
+  const state = selectedGroup?.assetState
 
   const handleMetricCardClick = (nextMetric: MetricKey) => {
     setMetric(nextMetric)
     chartRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
   }
-
-  const handlePaymentsCardClick = () => {
-    setTableTab("transactions")
-    setTransactionsHighlightKey((value) => value + 1)
-    tableRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
-  }
-
   const handleAssetMapOpen = (groupId: string) => {
     setSelectedAssetMapId(groupId)
     assetMapRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
   }
 
+  if (!state) return null
+
+  const v = state.volume_state
+  const val = state.valuation_state
+  const netbackP50 = val.netback_usd_per_m3.p50
+
   return (
-    <BaseLayout title="Portfolio Intelligence Preview" description="Illustrative preview of the future forestry portfolio dashboard">
+    <BaseLayout title="Asset Intelligence" description="Real canonical assets, real EO evidence, real modelled state -- no fabricated forestry data">
       <div className="@container/main px-4 lg:px-6 space-y-6 mt-2">
-        <div className="flex justify-end">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap gap-2">
+            {initialAssetGroups.map((g) => (
+              <button
+                key={g.id}
+                onClick={() => setSelectedAssetMapId(g.id)}
+                className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${g.id === selectedGroup.id ? "bg-primary text-primary-foreground" : "bg-background hover:bg-muted"}`}
+              >
+                {g.block} <span className="opacity-60">· {g.country}</span>
+              </button>
+            ))}
+          </div>
           <DashboardViewToggle />
         </div>
+
+        <div className="rounded-2xl border bg-muted/30 px-4 py-3 text-xs text-muted-foreground">
+          <strong className="text-foreground">{selectedGroup.block}</strong> -- {selectedGroup.summaryDescription}
+        </div>
+
         <SectionCards
-          onMetricCardClick={handleMetricCardClick}
-          onPaymentsCardClick={handlePaymentsCardClick}
-          portfolioValue={formatCurrencyExact(portfolioPoint?.portfolioValue ?? 0)}
-          portfolioTrendLabel={portfolioTrend.label}
-          portfolioTrendUp={portfolioTrend.isUp}
-          portfolioSummary={`Derived from ${plantedAreaLabel} ha financed across ${acquiredAreaLabel} ha managed`}
-          landManaged={`${formatNumberExact(landPoint?.landManaged ?? 0)} ha`}
-          landTrendLabel={landTrend.label}
-          landTrendUp={landTrend.isUp}
-          landSummary={`Previous period: ${formatNumberExact(landPreviousPoint?.landManaged ?? 0)} ha across Uganda and Kenya`}
-          estimatedVolume={`${formatNumberExact(landPoint?.expectedVolume ?? 0)} m3`}
-          volumeTrendLabel={volumeTrend.label}
-          volumeTrendUp={volumeTrend.isUp}
-          volumeSummary={`Standing timber estimate at ${landPoint?.label ?? "current horizon"} across planted blocks`}
-          pendingPayments={formatCurrencyExact(pendingTotals.amount)}
-          pendingInvoicesLabel={`${pendingTotals.count} invoices`}
-          pendingSummary={`Scheduled contractor and operations payments awaiting release`}
+          onForestAreaClick={() => handleMetricCardClick("landManaged")}
+          onVolumeClick={() => handleMetricCardClick("expectedVolume")}
+          onNetbackClick={() => handleMetricCardClick("expectedPrice")}
+          onValueClick={() => handleMetricCardClick("portfolioValue")}
+          forestArea={`${fmtNum(state.asset_identity.area_ha)} ha`}
+          forestAreaSummary={`Real canonical AOI polygon area (${state.asset_identity.epistemic_status})`}
+          standingVolume={`${fmtNum(v.merchantable_volume_m3.p50)} m3`}
+          volumeRangeLabel="MODELLED, LOW ID."
+          volumeSummary={`P10 ${fmtNum(v.merchantable_volume_m3.p10)} - P90 ${fmtNum(v.merchantable_volume_m3.p90)} m3 merchantable`}
+          bestNetback={`${fmtUsd(netbackP50)}/m3`}
+          netbackTrendUp={netbackP50 >= 0}
+          netbackSummary={netbackP50 >= 0 ? "Scenario price covers harvest/haul/regulatory cost" : "Scenario price does NOT cover harvest/haul/regulatory cost at this distance -- see market state"}
+          assetValue={`${fmtUsd(val.asset_value_usd.p50)}`}
+          assetValueTrendUp={val.asset_value_usd.p50 >= 0}
+          assetValueSummary={`P10 ${fmtUsd(val.asset_value_usd.p10)} - P90 ${fmtUsd(val.asset_value_usd.p90)} -- ${val.note}`}
         />
+
         <div ref={chartRef} id="portfolio-summary-chart">
           <ChartAreaInteractive metric={metric} onMetricChange={setMetric} />
         </div>
+
+        <AssetCurrentBelief group={selectedGroup} />
+
         <SpeciesAllocation />
+
         <div ref={assetMapRef}>
           <DashboardAssetMap selectedGroupId={selectedAssetMapId} onSelectGroup={setSelectedAssetMapId} />
         </div>
       </div>
       <div ref={tableRef} className="@container/main px-4 lg:px-6" id="dashboard-data-table">
         <div className="pb-3">
-          <h2 className="text-xl font-semibold tracking-tight">Activity table</h2>
+          <h2 className="text-xl font-semibold tracking-tight">Asset records</h2>
         </div>
         <DataTable
           activeTab={tableTab}
