@@ -1,0 +1,234 @@
+{
+  "scenario_version": "zurkt-evergreen-uganda-supply-scenario-v3",
+  "model_version": "zurkt-cfr-monte-carlo-hierarchical-v3",
+  "processor": {
+    "display_name": "Evergreen Wood Industries Ltd (Zurkt-affiliated trade partner)",
+    "epistemic_class": "REPORTED",
+    "location": {
+      "display_name": "Evergreen Wood Industries Ltd (Zurkt-affiliated trade partner)",
+      "canonical_name": "Evergreen Wood Industries Ltd",
+      "alias": "Zurkt Uganda",
+      "epistemic_class": "REPORTED",
+      "location_basis": "Real, independently-verified plywood/veneer manufacturer, Mpigi District, Uganda (Block 116, Plot 49, Sekiwunga Village, Nakirebe Parish, Kiringente Subcounty -- Uganda NEMA record; address independently corroborated by NBD Trade Data customs registration). Coordinates reused from this repo's pre-existing app/services/roundwood_production.py 'Evergreen wood' entry, not independently re-surveyed -- treat as subcounty-level precision (+/- a few km), not a surveyed point.",
+      "group_relationship_basis": "NBD Trade Data customs records name 'SHANDONG ZURKT INTERNATIONAL TRADING CO LTD' (Linyi, China) as a documented trading partner of Evergreen Wood Industries Ltd -- a real, evidenced TRADE relationship, verified 2026-09-13. An OWNERSHIP/subsidiary relationship between Zurkt Group and Evergreen Wood Industries is NOT independently confirmed: Zurkt's own published company history names Uganda only generically as a country with production bases, never explicitly naming Evergreen Wood Industries as its subsidiary. 'Omega Online' is not represented as a physical demand node here -- its only lead is a circumstantial 'sc02omega@zurkt.com' contact address, not confirmed as Uganda-related.",
+      "product_evidence": "Real, independently-verified export records (NBD Trade Data): 'EUCALYPTUS VENEER' (HS 44083900, 'other tropical veneer sheets/sheets for plywood'), 465 trade records, 13 buyers, 12 suppliers as of the retrieval date. This is real evidence the factory processes eucalyptus specifically -- not an assumption.",
+      "retrieved_at": "2026-09-13",
+      "lat": 0.258846,
+      "lon": 32.4077845
+    },
+    "specification_scenarios": [
+      "STANDARD",
+      "LARGE_LOG_STRICT",
+      "LOW_GRADE_FLEXIBLE"
+    ]
+  },
+  "priors": {
+    "relevant_forest_fraction": {
+      "kind": "beta",
+      "params": {
+        "a": 6,
+        "b": 2
+      },
+      "rationale": "Fraction of the gazetted CFR's mapped polygon that is forest/plantable land at all (excludes roads, water, rock, settlement inclusions inside the boundary). Broad conservative placeholder (mean ~0.75); no land-cover classification has been run against these specific polygons yet.",
+      "evidence_class": "ASSUMED"
+    },
+    "stocked_fraction": {
+      "kind": "beta",
+      "params": {
+        "a": 3,
+        "b": 3
+      },
+      "rationale": "Fraction of relevant forest area that still carries standing trees at all, as opposed to cleared/encroached/degraded. Deliberately wide (mean 0.5) -- Uganda CFR encroachment is a real, documented issue for at least some reserves in this catchment (e.g. Kapimpini's own NFA/Wikipedia record notes settlement and deforestation pressure), but no per-CFR encroachment survey exists here.",
+      "evidence_class": "ASSUMED"
+    },
+    "mature_harvestable_fraction": {
+      "kind": "beta",
+      "params": {
+        "a": 2,
+        "b": 3
+      },
+      "rationale": "Fraction of stocked area with trees old/large enough to be harvest-relevant now, as opposed to young regrowth. No age-class survey exists for any of these CFRs; kept broad and below 0.5 on average (mean ~0.4) as a conservative default rather than assuming a mature, fully-stocked estate.",
+      "evidence_class": "ASSUMED"
+    },
+    "commercial_availability_fraction": {
+      "kind": "beta",
+      "params": {
+        "a": 2,
+        "b": 4
+      },
+      "rationale": "Fraction of mature/harvestable volume that is actually legally and commercially accessible (permits, management plan status, landholder/NFA access, no protection overlay). This is explicitly NOT inferred from EO -- EO cannot see legal status. Kept conservative and wide (mean ~0.33) precisely because this is the least EO-informable factor in the whole chain.",
+      "evidence_class": "ASSUMED"
+    },
+    "stems_per_ha": {
+      "kind": "normal",
+      "params": {
+        "mean": 500.0,
+        "std": 150.0,
+        "min": 50.0
+      },
+      "rationale": "Stems/ha for a natural/mixed Uganda CFR stand (lower than an intensive eucalyptus plantation's ~1,100/ha baseline used elsewhere in this repo's AssetGroup scenario data -- these are gazetted natural forest estates, not plantation compartments). Generic placeholder, not surveyed.",
+      "evidence_class": "ASSUMED"
+    },
+    "mean_tree_dbh_cm": {
+      "kind": "normal",
+      "params": {
+        "mean": 25.0,
+        "std": 8.0,
+        "min": 5.0
+      },
+      "rationale": "Mean DBH assumption for mixed natural forest, broad std. Not surveyed.",
+      "evidence_class": "ASSUMED"
+    },
+    "mean_tree_height_m": {
+      "kind": "normal",
+      "params": {
+        "mean": 15.0,
+        "std": 5.0,
+        "min": 3.0
+      },
+      "rationale": "Mean tree height assumption, broad std. Not surveyed.",
+      "evidence_class": "ASSUMED"
+    },
+    "wood_density_t_per_m3": {
+      "kind": "normal",
+      "params": {
+        "mean": 0.55,
+        "std": 0.08,
+        "min": 0.25
+      },
+      "rationale": "Generic mixed tropical hardwood basic density placeholder. Not species-specific because real species composition is unverified for this natural-forest catchment (see module docstring's species simplification).",
+      "evidence_class": "ASSUMED"
+    },
+    "within_stand_dbh_cv": {
+      "kind": "normal",
+      "params": {
+        "mean": 0.35,
+        "std": 0.08,
+        "min": 0.1
+      },
+      "rationale": "Coefficient of variation of individual-tree DBH within a stand around its sampled mean -- captures that a stand with a given *mean* DBH still has some trees above and below a processor's grade threshold, rather than treating the whole stand as one uniform tree. Generic broad-forest placeholder, not measured for these CFRs.",
+      "evidence_class": "ASSUMED"
+    },
+    "stumpage_price_usd_per_m3": {
+      "kind": "normal",
+      "params": {
+        "mean": 12.0,
+        "std": 5.0,
+        "min": 1.0
+      },
+      "rationale": "Standing-timber/procurement price paid at the forest gate before any harvest, extraction, haulage or regulatory cost is incurred -- i.e. what Evergreen (or an intermediary) would pay NFA/the community/private landholder for the standing wood itself. No real Uganda CFR stumpage price observation exists in this repository; this is a broad, conservative placeholder distinct from -- and never blended into -- the harvest/extraction/haulage/regulatory cost lines below, per the sprint's explicit requirement to report procurement cost as its own line item.",
+      "evidence_class": "ASSUMED"
+    }
+  },
+  "hierarchical_uncertainty_model": {
+    "tiers": {
+      "systemic_global": {
+        "description": "One shared draw per Monte Carlo world, applied IDENTICALLY to every CFR -- does not shrink as CFR count grows.",
+        "priors": {
+          "commercial_availability_fraction": "shared national access regime (PRIORS dict)",
+          "stumpage_price_usd_per_m3": "shared national procurement-price regime (PRIORS dict)",
+          "fuel_price_lambda": {
+            "kind": "normal",
+            "params": {
+              "mean": 0.5,
+              "std": 0.25,
+              "min": 0.0,
+              "max": 1.0
+            },
+            "rationale": "SYSTEMIC: one shared fuel-price regime (position within roundwood_production's N_FUEL_L price range) per Monte Carlo world, applied to every CFR's fuel cost line identically -- fuel prices move together nationally, they are not independent CFR-by-CFR."
+          },
+          "avg_truck_speed_kmph": "shared road-quality/fleet-speed regime (see AVG_TRUCK_SPEED_KMPH_PRIOR)",
+          "stocking_model_bias": {
+            "kind": "normal",
+            "params": {
+              "mean": 1.0,
+              "std": 0.15,
+              "min": 0.5,
+              "max": 1.6
+            },
+            "rationale": "SYSTEMIC: one shared multiplicative bias per Monte Carlo world, applied to EVERY CFR's relevant-forest-fraction simultaneously. Represents the possibility that our whole generic land-cover/stocking approach is systematically optimistic or pessimistic for Uganda CFRs as a class -- not an independent per-CFR quantity, so it does not average out across 276 CFRs."
+          },
+          "grade_recovery_dbh_bias_cm": {
+            "kind": "normal",
+            "params": {
+              "mean": 0.0,
+              "std": 3.0
+            },
+            "rationale": "SYSTEMIC: one shared additive DBH bias (cm) per Monte Carlo world, applied to EVERY CFR's sampled mean DBH before grade shares/volume are computed. Represents shared growth/model-form uncertainty (e.g. if typical natural-forest DBH in this catchment differs systematically from the generic prior) -- the same bias applies everywhere in a given world, not drawn per CFR."
+          }
+        }
+      },
+      "regional_cluster": {
+        "description": "One shared draw per (0.5-degree grid cell, world), applied to every CFR in that ~55km cell -- a placeholder for a real ecological/administrative region layer.",
+        "priors": {
+          "stocked_fraction_multiplier": {
+            "kind": "normal",
+            "params": {
+              "mean": 1.0,
+              "std": 0.25,
+              "min": 0.4,
+              "max": 1.8
+            },
+            "rationale": "REGIONAL: one shared multiplicative shock on stocked_fraction per (grid-cell region, world), applied to every CFR in that ~55km cell -- stocking/encroachment plausibly correlates with local rainfall/ecology/management pressure rather than varying independently CFR-by-CFR. Placeholder grid regions (assign_region()), not real ecological/administrative zones."
+          },
+          "maturity_multiplier": {
+            "kind": "normal",
+            "params": {
+              "mean": 1.0,
+              "std": 0.2,
+              "min": 0.4,
+              "max": 1.8
+            },
+            "rationale": "REGIONAL: one shared multiplicative shock on mature_harvestable_fraction per (grid-cell region, world) -- age-class structure plausibly correlates with local management history more than it varies independently CFR-by-CFR."
+          }
+        }
+      },
+      "cfr_specific": {
+        "description": "Independent per-CFR draws -- the ONLY tier in v1/v2. Genuinely averages out across 276 CFRs, unlike the two tiers above.",
+        "priors": [
+          "relevant_forest_fraction",
+          "stocked_fraction",
+          "mature_harvestable_fraction",
+          "stems_per_ha",
+          "mean_tree_dbh_cm",
+          "mean_tree_height_m",
+          "wood_density_t_per_m3",
+          "within_stand_dbh_cv"
+        ]
+      },
+      "measurement": {
+        "description": "CFR-specific but WIDER for CFRs with no EO observations processed yet -- a coarse proxy for 'we know less about this CFR', not a real EO-conditioned posterior.",
+        "widen_factor": 0.6,
+        "applies_to": [
+          "relevant_forest_fraction",
+          "stocked_fraction"
+        ]
+      }
+    },
+    "dependence_structure": "Multiplicative shared shocks (global/regional draws multiply or additively bias each CFR's own CFR-specific draw) rather than a full joint covariance/Gaussian-process model -- a documented first cut per the sprint's own guidance to avoid over-building this for v3."
+  },
+  "annual_harvest_fraction_prior": {
+    "kind": "beta",
+    "params": {
+      "a": 2,
+      "b": 8
+    },
+    "rationale": "Fraction of Zurkt-suitable standing volume harvested in any single year (as opposed to spread across a multi-year rotation). Kept low and conservative (mean 0.2) in the absence of any real harvest-scheduling or management-plan evidence for these CFRs."
+  },
+  "known_simplifications": [
+    "All catchment supply is priced/graded as eucalyptus-equivalent; real species composition of these natural/mixed gazetted CFRs is unverified.",
+    "Stand-level Monte Carlo samples one mean DBH/height/stocking per draw per CFR rather than a full tree-level population per draw (grade shares are then derived analytically from a within-stand DBH spread prior, not from a second level of per-tree sampling).",
+    "10-year outlook uses a single aggregate net-stock-change fraction, not a real age-structured growth model.",
+    "Verification priority uses a transparent proxy, not a formal EVSI/EVPI calculation.",
+    "v2 fix: haulage cost now includes an explicit round-trip driving-time term (2 x haul_km / assumed truck speed), so operator/rental time -- not just fuel -- scales with distance; this replaced a v1 model where haulage was dominated by a fixed per-trip time regardless of distance. Average truck speed is still an ASSUMED broad prior (AVG_TRUCK_SPEED_KMPH_PRIOR in zurkt_scenario.py), not a surveyed route speed, so the curve's overall slope is more realistic but its exact shape is not calibrated against a real haulage contract.",
+    "Standing-timber/procurement cost is a separate ASSUMED line item (stumpage_price_usd_per_m3 prior) with no real Uganda CFR stumpage price observation behind it -- kept broad and distinct from harvest/extraction/haulage/regulatory cost, never blended into one number.",
+    "v3: uncertainty is now hierarchical (systemic/regional/CFR-specific/measurement tiers -- see hierarchical_uncertainty_model above), which is why v3's P10-P90 spread is much wider than v2's despite a similar P50 -- v2's independent-per-CFR-only structure understated real aggregate uncertainty by letting 276 CFRs' noise average out more than our actual knowledge justifies.",
+    "Region assignment (assign_region()) is a 0.5-degree lat/lon grid, not a real ecological, rainfall, forest-type or administrative-management zone -- a placeholder cluster structure, not evidence.",
+    "The access/legal-status search of this repo's ingested data found NO per-CFR license/concession/management-plan/protection-tier records anywhere -- all 276 CFRs carry the SAME generic 'gazetted Central Forest Reserve' designation with no further differentiation, so the commercial_availability_fraction regime is applied uniformly (KNOWN_POTENTIALLY_AVAILABLE: 0, KNOWN_RESTRICTED: 0, UNKNOWN: 276 -- see zurkt-access-state-v3.json). Evidence-supported commercially-addressable supply is therefore 0 m3/yr until real access records are ingested; this is reported explicitly, not hidden.",
+    "Material/species mixture is NOT yet implemented (still a blanket eucalyptus-equivalent assumption for grading/pricing) -- Evergreen's real export records (eucalyptus veneer) make this a credible RELEVANT material class for this specific processor, but do not establish that all 276 CFRs' supply is eucalyptus, nor that current grade thresholds are Evergreen's real buying spec.",
+    "EO-conditioning of CFR priors is NOT yet implemented beyond the binary observed/not-yet-processed MEASUREMENT-tier widening above, despite real per-CFR NDVI/NDMI/NBR time series existing in observations.eo_feature_value for all 276 catchment CFRs -- a genuine, scoped-out opportunity for a follow-up pass (see final report).",
+    "Landsat long-history analysis does NOT exist for Mabira, South Busoga or Buyaga Dam (checked directly) -- the only Landsat long-history output in this repository covers three unrelated CFRs (Epor, Zulia, Musamya) as a standalone file, never written to the canonical database."
+  ],
+  "catchment_size": 276,
+  "economic_screen_threshold_usd_per_m3": 60.0
+}

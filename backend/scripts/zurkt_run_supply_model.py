@@ -98,10 +98,35 @@ def load_eo_conditioned_priors(path: Path | None) -> dict[str, dict[str, float]]
     return _EO_CONDITIONED_PRIORS_CACHE
 
 
+_MATERIAL_CLASS_EVIDENCE_CACHE: dict[str, dict[str, float]] | None = None
+_DEFAULT_MATERIAL_CLASS_EVIDENCE_PATH: Path | None = None
+
+
+def set_default_material_class_evidence_path(path: Path | None) -> None:
+    global _DEFAULT_MATERIAL_CLASS_EVIDENCE_PATH
+    _DEFAULT_MATERIAL_CLASS_EVIDENCE_PATH = path
+
+
+def load_material_class_evidence(path: Path | None) -> dict[str, dict[str, float]]:
+    """Track v4-5: entity_id -> material-class mixture probabilities
+    OVERRIDING zurkt_scenario.DEFAULT_MATERIAL_MIX_PROBS for CFRs with real,
+    documented evidence (e.g. a confirmed plantation). Missing/None path ->
+    empty dict, and every CFR not present here uses the broad default
+    prior -- never silently invents evidence."""
+    global _MATERIAL_CLASS_EVIDENCE_CACHE
+    if path is None:
+        return {}
+    if _MATERIAL_CLASS_EVIDENCE_CACHE is None:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        _MATERIAL_CLASS_EVIDENCE_CACHE = {row["entity_id"]: row["mix_probs"] for row in data["cfrs"]}
+    return _MATERIAL_CLASS_EVIDENCE_CACHE
+
+
 def run_all_cfrs(
     cfrs: list[dict[str, Any]],
     spec_key: str = "STANDARD",
     eo_conditioned_priors_path: Path | None = "__default__",
+    material_class_evidence_path: Path | None = "__default__",
     freeze_target: tuple[str, str] | None = None,
 ) -> list[dict[str, Any]]:
     """Track v3-2/3: samples the SYSTEMIC (global) and REGIONAL tiers ONCE
@@ -111,15 +136,19 @@ def run_all_cfrs(
     not purely independent, uncertainty."""
     if eo_conditioned_priors_path == "__default__":
         eo_conditioned_priors_path = _DEFAULT_EO_CONDITIONED_PRIORS_PATH
+    if material_class_evidence_path == "__default__":
+        material_class_evidence_path = _DEFAULT_MATERIAL_CLASS_EVIDENCE_PATH
     global_draws = sample_global_draws(np.random.default_rng(GLOBAL_DRAWS_SEED), N_DRAWS)
     region_ids = [assign_region(cfr["lat"], cfr["lon"]) for cfr in cfrs]
     regional_draws_by_region = sample_regional_draws_by_region(region_ids, N_DRAWS, REGIONAL_DRAWS_BASE_SEED)
     eo_conditioned = load_eo_conditioned_priors(eo_conditioned_priors_path)
+    material_class_evidence = load_material_class_evidence(material_class_evidence_path)
 
     results = []
     for i, cfr in enumerate(cfrs):
         region_id = region_ids[i]
         eo_nudge = eo_conditioned.get(cfr["entity_id"], {})
+        material_mix_probs = material_class_evidence.get(cfr["entity_id"])
         freeze_variable = freeze_target[1] if freeze_target is not None and freeze_target[0] == cfr["entity_id"] else None
         state, raw = build_cfr_supply_state(
             entity_id=cfr["entity_id"],
@@ -132,6 +161,7 @@ def run_all_cfrs(
             global_draws=global_draws,
             regional_draws=regional_draws_by_region[region_id],
             region_id=region_id,
+            material_mix_probs=material_mix_probs,
             eo_forest_cover_multiplier=eo_nudge.get("forest_cover_multiplier", 1.0),
             eo_maturity_multiplier=eo_nudge.get("maturity_multiplier", 1.0),
             freeze_variable=freeze_variable,
@@ -360,6 +390,92 @@ def build_outlook(results: list[dict[str, Any]], years: int = OUTLOOK_YEARS) -> 
                 "growth. This is a modelling placeholder, not a measured rate.",
             },
             "annual_harvest_fraction": PRIORS_ANNUAL_HARVEST_FRACTION.rationale,
+        },
+        "year_0_available_stock_m3": quantiles(stock0),
+        "years": yearly,
+    }
+
+
+AGE_CLASSES = ["seedling", "young", "mid", "mature", "old"]
+# Broad ASSUMED prior: no real age-class survey exists for any of these 276
+# CFRs. Weighted toward mid/mature (a plausible natural/mixed estate without
+# active plantation-style even-aged management), not toward young growth --
+# documented as a placeholder, not a measurement.
+DEFAULT_AGE_CLASS_VOLUME_FRACTIONS = {"seedling": 0.05, "young": 0.15, "mid": 0.30, "mature": 0.35, "old": 0.15}
+# Expected years spent in each class before "graduating" to the next (used
+# as a per-year transition PROBABILITY = 1/duration) -- ASSUMED generic
+# tropical mixed-forest growth pacing, not species- or CFR-specific.
+AGE_CLASS_DURATION_YEARS = {"seedling": 5, "young": 10, "mid": 15, "mature": 30, "old": None}
+HARVEST_ELIGIBLE_CLASSES = ["mature", "old"]
+REGEN_CREDIT_FRACTION = 0.02  # ASSUMED: regenerated stands start near-zero volume, not a 1:1 area replacement
+
+
+def build_age_structured_outlook(results: list[dict[str, Any]], years: int = OUTLOOK_YEARS) -> dict[str, Any]:
+    """Track v4-9: the first genuine AGE-STRUCTURED cohort model, alongside
+    (not replacing) the depletion stress test above. Splits the same t=0
+    aggregate stock (raw_zurkt_suitable_volume_m3, identical basis to
+    build_outlook()) into 5 age classes via a broad ASSUMED prior, harvests
+    only from the two oldest (harvest-eligible) classes each year, and
+    explicitly models growth as a per-class transition into the next class
+    plus a small regeneration credit into the youngest class from harvested
+    volume. This is still NOT a calibrated forecast -- no real age-class
+    survey, growth-rate, or harvest-scheduling data exists for any of these
+    276 CFRs -- so it is labeled an AGE-STRUCTURED SCENARIO OUTLOOK, not a
+    forecast, exactly like the depletion stress test it sits alongside."""
+    rng = np.random.default_rng(4343)
+    n = N_DRAWS
+    stock0 = np.sum([r["raw"]["raw_zurkt_suitable_volume_m3"] for r in results], axis=0)
+    annual_harvest_frac = PRIORS_ANNUAL_HARVEST_FRACTION.sample(rng, n)
+
+    class_volume = {c: stock0 * frac for c, frac in DEFAULT_AGE_CLASS_VOLUME_FRACTIONS.items()}
+    transition_rate = {c: (1.0 / d if d else 0.0) for c, d in AGE_CLASS_DURATION_YEARS.items()}
+
+    yearly = []
+    cumulative = np.zeros(n)
+    for year in range(1, years + 1):
+        harvestable = class_volume["mature"] + class_volume["old"]
+        harvest = np.maximum(harvestable, 0.0) * annual_harvest_frac
+        cumulative += harvest
+        harvestable_safe = np.maximum(harvestable, 1e-9)
+        for c in HARVEST_ELIGIBLE_CLASSES:
+            share = class_volume[c] / harvestable_safe
+            class_volume[c] = np.maximum(class_volume[c] - harvest * share, 0.0)
+
+        new_volume = {
+            "old": class_volume["old"] + class_volume["mature"] * transition_rate["mature"],
+            "mature": class_volume["mature"] * (1.0 - transition_rate["mature"]) + class_volume["mid"] * transition_rate["mid"],
+            "mid": class_volume["mid"] * (1.0 - transition_rate["mid"]) + class_volume["young"] * transition_rate["young"],
+            "young": class_volume["young"] * (1.0 - transition_rate["young"]) + class_volume["seedling"] * transition_rate["seedling"],
+            "seedling": class_volume["seedling"] * (1.0 - transition_rate["seedling"]) + harvest * REGEN_CREDIT_FRACTION,
+        }
+        class_volume = new_volume
+        total_stock = sum(class_volume.values())
+
+        yearly.append(
+            {
+                "year": year,
+                "annual_supply_m3": quantiles(harvest),
+                "cumulative_supply_m3": quantiles(cumulative),
+                "remaining_stock_m3": quantiles(total_stock),
+                "age_class_volume_m3": {c: quantiles(v) for c, v in class_volume.items()},
+            }
+        )
+
+    return {
+        "scenario_version": SCENARIO_VERSION,
+        "model_version": MODEL_VERSION,
+        "label": "AGE-STRUCTURED SCENARIO OUTLOOK -- not a calibrated forecast (see assumptions below)",
+        "assumptions": {
+            "age_class_volume_fractions_t0": DEFAULT_AGE_CLASS_VOLUME_FRACTIONS,
+            "age_class_duration_years": AGE_CLASS_DURATION_YEARS,
+            "harvest_eligible_classes": HARVEST_ELIGIBLE_CLASSES,
+            "regeneration_credit_fraction": REGEN_CREDIT_FRACTION,
+            "rationale": "ASSUMED. No real age-class survey, growth-rate, or harvest-scheduling data exists for "
+            "any of these 276 CFRs. Age-class split, transition durations and regeneration credit are broad, "
+            "generic tropical mixed-forest placeholders -- this model is structurally richer than the flat "
+            "depletion stress test (real growth/harvest/regeneration dynamics by age class) but is NOT more "
+            "empirically calibrated. Compare its year-1 and year-10 figures against the depletion stress test's "
+            "as two different structural assumptions, not as a forecast vs. a stress test.",
         },
         "year_0_available_stock_m3": quantiles(stock0),
         "years": yearly,
@@ -721,23 +837,24 @@ def _frozen_prior(prior: Any) -> Any:
     return zs.Prior("normal", new_params, "FROZEN for decomposition/EVSI: collapsed to its prior mean.")
 
 
-def freeze_group_and_rerun(cfrs: list[dict[str, Any]], group_key: str) -> np.ndarray:
-    """Rerun the full model with every Prior in one uncertainty GROUP
-    collapsed to its own mean (see UNCERTAINTY_GROUPS), everything else
-    left stochastic, and return the joint aggregate annual-supply draws.
-    Comparing this array's variance against the unperturbed baseline's is a
-    transparent 'grouped collapse' variance-decomposition test (Track
-    v3-18) -- not a formal Sobol index, but a documented, reproducible
-    approximation the sprint explicitly allows."""
+def freeze_groups_and_rerun(cfrs: list[dict[str, Any]], group_keys: list[str]) -> np.ndarray:
+    """Rerun the full model with every Prior in ALL of the given uncertainty
+    GROUPS collapsed to its own mean simultaneously (see UNCERTAINTY_GROUPS),
+    everything else left stochastic, and return the joint aggregate
+    annual-supply draws. Freezing more than one group at once is what makes
+    a proper Shapley-value allocation possible (Track v4-1) -- a single-
+    group version of this is also what the grouped-collapse sensitivity
+    test below uses."""
     import app.services.supply.zurkt_scenario as zs
 
-    group = UNCERTAINTY_GROUPS[group_key]
-    base_priors = {k: zs.PRIORS[k] for k in group["priors"]}
-    base_globals = {name: getattr(zs, name) for name in group["globals"]}
+    all_prior_keys = [k for gk in group_keys for k in UNCERTAINTY_GROUPS[gk]["priors"]]
+    all_global_names = [n for gk in group_keys for n in UNCERTAINTY_GROUPS[gk]["globals"]]
+    base_priors = {k: zs.PRIORS[k] for k in all_prior_keys}
+    base_globals = {name: getattr(zs, name) for name in all_global_names}
     try:
-        for key in group["priors"]:
+        for key in all_prior_keys:
             zs.PRIORS[key] = _frozen_prior(base_priors[key])
-        for name in group["globals"]:
+        for name in all_global_names:
             setattr(zs, name, _frozen_prior(base_globals[name]))
         results = run_all_cfrs(cfrs, "STANDARD")
         return np.sum([r["raw"]["raw_annual_suitable_supply_m3"] for r in results], axis=0)
@@ -748,13 +865,20 @@ def freeze_group_and_rerun(cfrs: list[dict[str, Any]], group_key: str) -> np.nda
             setattr(zs, name, val)
 
 
+def freeze_group_and_rerun(cfrs: list[dict[str, Any]], group_key: str) -> np.ndarray:
+    return freeze_groups_and_rerun(cfrs, [group_key])
+
+
 def build_uncertainty_decomposition(cfrs: list[dict[str, Any]], base_results: list[dict[str, Any]]) -> dict[str, Any]:
-    """Track v3-18. Grouped-collapse variance decomposition: freeze each
-    uncertainty group to its mean in turn, measure how much the aggregate
-    annual-supply variance shrinks, express as a share of total baseline
-    variance. Groups are NOT independent (interactions exist), so shares do
-    not have to sum to exactly 100% -- documented as an approximation, not
-    a formal Sobol/ANOVA decomposition."""
+    """Track v3-18 / v4-1 FIX. The prior report's grouped-collapse numbers
+    were mislabeled '% of variance' -- they are NOT an additive partition
+    (groups interact, so single-group collapses overlap and can sum to more
+    than the total baseline variance). Every field here is now explicitly
+    named and documented as a MARGINAL, non-additive sensitivity: 'how much
+    would aggregate-supply variance shrink if THIS ONE uncertainty family,
+    and only this one, were fully resolved -- with every other family still
+    stochastic.' Use build_shapley_decomposition() (below) for a headline
+    attribution that IS built to sum to ~100% of the resolvable variance."""
     base_draws = np.sum([r["raw"]["raw_annual_suitable_supply_m3"] for r in base_results], axis=0)
     base_var = float(np.var(base_draws))
 
@@ -762,33 +886,114 @@ def build_uncertainty_decomposition(cfrs: list[dict[str, Any]], base_results: li
     for group_key in UNCERTAINTY_GROUPS:
         frozen_draws = freeze_group_and_rerun(cfrs, group_key)
         frozen_var = float(np.var(frozen_draws))
-        variance_removed_fraction = max(0.0, (base_var - frozen_var) / base_var) if base_var > 0 else 0.0
+        marginal_reduction_fraction = max(0.0, (base_var - frozen_var) / base_var) if base_var > 0 else 0.0
         rows.append(
             {
                 "uncertainty_group": group_key,
                 "baseline_variance": round(base_var, 1),
-                "variance_when_frozen": round(frozen_var, 1),
-                "approx_share_of_variance": round(variance_removed_fraction, 4),
+                "variance_when_this_group_alone_is_resolved": round(frozen_var, 1),
+                "marginal_variance_reduction_if_resolved": round(marginal_reduction_fraction, 4),
             }
         )
-    rows.sort(key=lambda r: r["approx_share_of_variance"], reverse=True)
+    rows.sort(key=lambda r: r["marginal_variance_reduction_if_resolved"], reverse=True)
     return {
+        "warning": "These are MARGINAL, OVERLAPPING sensitivities, NOT an additive variance partition -- they "
+        "answer 'how much would variance shrink if ONLY this one family were resolved', not 'what % of variance "
+        "does this family cause'. They can (and typically do) sum to well over 100% because uncertainty families "
+        "interact/substitute for each other. For an allocation that IS built to sum to ~100%, see "
+        "zurkt-shapley-decomposition-<tag>.json.",
         "scenario_version": SCENARIO_VERSION,
         "model_version": MODEL_VERSION,
-        "method": "Grouped-collapse test (Track v3-18): each uncertainty group's Priors are collapsed to their own "
-        "mean (freeze_group_and_rerun), one group at a time, and the resulting drop in aggregate annual-supply "
-        "variance is reported as an approximate share of total variance. Groups can interact, so shares are not "
-        "guaranteed to sum to 100% -- this is a transparent approximation, not a formal Sobol/ANOVA decomposition.",
+        "method": "Grouped-collapse SENSITIVITY test (Track v3-18/v4-1, renamed for accuracy): each uncertainty "
+        "group's Priors are collapsed to their own mean, ONE GROUP AT A TIME, and the resulting drop in aggregate "
+        "annual-supply variance is reported as marginal_variance_reduction_if_resolved. This is useful for 'which "
+        "single family, if I could resolve only one, would help most' -- it is NOT an additive attribution of "
+        "total variance to causes; use it for decision sensitivity, not headline '% of variance' claims.",
         "baseline_variance": round(base_var, 1),
         "groups": rows,
     }
 
 
+def build_shapley_decomposition(cfrs: list[dict[str, Any]], base_results: list[dict[str, Any]], n_permutations: int = 6, seed: int = 777) -> dict[str, Any]:
+    """Track v4-1: a headline attribution that DOES sum to ~100% of the
+    resolvable variance, using the standard permutation-sampling estimator
+    for Shapley values applied to the cooperative 'variance game'
+    v(S) = baseline_variance - variance_with_S_frozen. For each of
+    n_permutations random orderings of the 7 uncertainty groups, walk the
+    ordering and credit each group with the MARGINAL variance reduction of
+    adding it to whatever's already frozen; average each group's marginal
+    contribution across permutations. Coalition values are cached (keyed by
+    the frozenset of groups) since the same coalition can recur across
+    permutations, and v(empty set)=0 and v(full set) are shared constants.
+    This is an approximation (n_permutations is small relative to 7!=5040
+    orderings, for compute-cost reasons), not an exact Shapley value -- but
+    unlike the grouped-collapse test above, IT DOES sum to v(full set) by
+    construction (Shapley efficiency property), giving a defensible
+    additive headline even though each individual estimate has sampling
+    noise from the small permutation count."""
+    base_draws = np.sum([r["raw"]["raw_annual_suitable_supply_m3"] for r in base_results], axis=0)
+    base_var = float(np.var(base_draws))
+    group_keys = list(UNCERTAINTY_GROUPS.keys())
+
+    cache: dict[frozenset, float] = {frozenset(): 0.0}
+
+    def v(coalition: frozenset) -> float:
+        if coalition in cache:
+            return cache[coalition]
+        frozen_draws = freeze_groups_and_rerun(cfrs, list(coalition))
+        value = base_var - float(np.var(frozen_draws))
+        cache[coalition] = value
+        return value
+
+    rng = np.random.default_rng(seed)
+    shapley = {k: 0.0 for k in group_keys}
+    for _ in range(n_permutations):
+        order = list(rng.permutation(len(group_keys)))
+        perm = [group_keys[i] for i in order]
+        coalition = frozenset()
+        prev_value = 0.0
+        for g in perm:
+            coalition = coalition | {g}
+            value = v(coalition)
+            shapley[g] += value - prev_value
+            prev_value = value
+    for k in shapley:
+        shapley[k] /= n_permutations
+
+    full_value = v(frozenset(group_keys))
+    rows = [
+        {
+            "uncertainty_group": g,
+            "shapley_variance_reduction": round(shapley[g], 1),
+            "shapley_share_of_resolvable_variance": round(shapley[g] / full_value, 4) if full_value else None,
+        }
+        for g in group_keys
+    ]
+    rows.sort(key=lambda r: r["shapley_variance_reduction"], reverse=True)
+    shares_sum = sum(r["shapley_share_of_resolvable_variance"] or 0 for r in rows)
+
+    return {
+        "scenario_version": SCENARIO_VERSION,
+        "model_version": MODEL_VERSION,
+        "method": f"Permutation-sampling Shapley approximation ({n_permutations} random orderings of "
+        f"{len(group_keys)} uncertainty groups) over the variance game v(S) = baseline_variance - "
+        "variance_with_S_frozen. By construction (the Shapley efficiency property), these shares sum to "
+        "~100% of the variance resolved by freezing ALL groups simultaneously -- unlike the grouped-collapse "
+        "sensitivity test, this IS an additive attribution, though with sampling noise from the small number of "
+        "permutations used (compute-bounded, not exact).",
+        "baseline_variance": round(base_var, 1),
+        "full_coalition_variance_reduction": round(full_value, 1),
+        "shares_sum_check": round(shares_sum, 4),
+        "n_permutations": n_permutations,
+        "groups": rows,
+    }
+
+
 def build_three_tier_supply_summary(
-    technical_potential: dict[str, Any], curve: dict[str, Any], access_state: dict[str, Any] | None
+    technical_potential: dict[str, Any], curve: dict[str, Any], access_state: dict[str, Any] | None, results: list[dict[str, Any]] | None = None
 ) -> dict[str, Any]:
-    """Track v3-6: keeps three DIFFERENT supply concepts explicit and
-    separate, per the sprint's own naming --
+    """Track v3-6 / v4-2 FIX: keeps three DIFFERENT supply concepts
+    explicit and separate --
 
     A. PHYSICAL/BIOPHYSICAL POTENTIAL   -- technical_potential_m3 (pre-
        access-screen standing/harvestable volume; build_technical_potential()).
@@ -796,31 +1001,64 @@ def build_three_tier_supply_summary(
        suitable_supply_m3, i.e. physical supply after a SCENARIO (ASSUMED,
        not evidence-based) commercial-availability fraction and processor-
        fit screen.
-    C. EVIDENCE-SUPPORTED COMMERCIALLY ADDRESSABLE SUPPLY -- physical
-       supply restricted to ONLY CFRs with a real KNOWN_POTENTIALLY_
-       AVAILABLE access-state record (zurkt_access_state.py). As of this
-       run, zero CFRs have that record (see zurkt-access-state-v3.json) --
-       so this is honestly reported as 0, not silently promoted to B's
-       number. Until real access/legal evidence is ingested, B must NEVER
-       be presented as if it were C."""
+    C. EVIDENCE-CONFIRMED ADDRESSABLE SUPPLY -- physical supply summed ONLY
+       over CFRs with a real KNOWN_POTENTIALLY_AVAILABLE access-state
+       record. FIX (explicitly required): when this is 0 or small because
+       most CFRs are UNKNOWN, the correct status is 'UNRESOLVED' / access
+       evidence is INSUFFICIENT -- NEVER 'confirmed unavailable' or
+       'confirmed zero supply'. A CFR being UNKNOWN means we have not yet
+       established its access status, not that it is inaccessible. This
+       function now reports an explicit `status` enum alongside the number
+       so no caller can render a bare, misleading '0'."""
     b_p50 = curve["aggregate_annual_suitable_supply_m3"]["p50"]
-    known_available_count = access_state["counts"]["KNOWN_POTENTIALLY_AVAILABLE"] if access_state else None
+
+    if access_state is None:
+        return {
+            "scenario_version": SCENARIO_VERSION,
+            "model_version": MODEL_VERSION,
+            "a_physical_biophysical_potential_m3": technical_potential["technical_potential_m3"],
+            "b_scenario_addressable_supply_m3": curve["aggregate_annual_suitable_supply_m3"],
+            "c_status": "NOT_COMPUTED",
+            "c_evidence_confirmed_addressable_supply_m3": None,
+            "c_note": "No access_state input was provided to this run.",
+            "warning": f"B (scenario-addressable, P50={b_p50}) must NEVER be presented as if it were C (evidence-confirmed) -- they answer different questions.",
+        }
+
+    counts = access_state["counts"]
+    known_available_ids = {
+        c["entity_id"] for c in access_state["cfrs"] if c["access_state"] == "KNOWN_POTENTIALLY_AVAILABLE"
+    }
+    unknown_count = counts.get("UNKNOWN", 0)
+    total = sum(counts.values())
+
+    if known_available_ids and results is not None:
+        confirmed_draws = np.sum(
+            [r["raw"]["raw_annual_suitable_supply_m3"] for r in results if r["state"].entity_id in known_available_ids],
+            axis=0,
+        )
+        c_value = quantiles(confirmed_draws)
+        c_status = "PARTIALLY_CONFIRMED" if unknown_count > 0 else "FULLY_CONFIRMED"
+    else:
+        c_value = None
+        c_status = "UNRESOLVED"
+
     return {
         "scenario_version": SCENARIO_VERSION,
         "model_version": MODEL_VERSION,
         "a_physical_biophysical_potential_m3": technical_potential["technical_potential_m3"],
         "b_scenario_addressable_supply_m3": curve["aggregate_annual_suitable_supply_m3"],
-        "c_evidence_supported_addressable_supply_m3": (
-            {"p10": 0.0, "p50": 0.0, "p90": 0.0} if known_available_count == 0 else None
-        ),
+        "c_status": c_status,
+        "c_evidence_confirmed_addressable_supply_m3": c_value,
+        "c_access_state_counts": counts,
         "c_note": (
-            "0 m3/yr: zero of the 276 catchment CFRs currently carry a real, ingested legal/access-permit "
-            "record (see zurkt-access-state-v3.json) -- all 276 are UNKNOWN, not KNOWN_POTENTIALLY_AVAILABLE. "
-            "This is the honest answer to 'how much is evidence-supported', not a placeholder failure."
-            if known_available_count == 0
-            else "access_state input not provided to this run -- evidence-supported tier not computed."
+            f"{c_status}: {len(known_available_ids)} of {total} catchment CFRs have real, evidence-confirmed "
+            f"KNOWN_POTENTIALLY_AVAILABLE access status. {unknown_count} of {total} remain UNKNOWN -- meaning "
+            "access status is UNRESOLVED for them, NOT that they are confirmed unavailable or that their supply "
+            "is zero. This number is a CONFIRMED LOWER BOUND on evidence-backed supply, not an estimate of total "
+            "accessible supply -- more CFRs likely have real access, it simply has not been established yet."
         ),
-        "warning": f"B (scenario-addressable, P50={b_p50}) must NEVER be presented as if it were C (evidence-supported) -- they answer different questions.",
+        "warning": f"B (scenario-addressable, P50={b_p50}) must NEVER be presented as if it were C (evidence-confirmed) -- they answer different questions. "
+        "C must NEVER be rendered as a bare '0' implying evidence of no supply -- always show c_status alongside it.",
     }
 
 
@@ -856,6 +1094,8 @@ def to_cfr_result_row(row: dict[str, Any]) -> dict[str, Any]:
             "regulatory_admin_cost_usd_per_m3": s.regulatory_admin_cost_usd_per_m3,
             "delivered_cost_usd_per_m3": s.delivered_cost_usd_per_m3,
             "annual_suitable_supply_m3": s.annual_suitable_supply_m3,
+            "material_class_probabilities": s.material_class_probabilities,
+            "material_class_evidence": s.material_class_evidence,
         },
         "model_version": MODEL_VERSION,
         "processor_spec": s.processor_spec_key,
@@ -881,6 +1121,21 @@ def main() -> None:
         "(Track v3-10). Omit to run without EO conditioning (every multiplier defaults to 1.0).",
     )
     parser.add_argument(
+        "--material-class-evidence",
+        type=Path,
+        default=None,
+        help="Optional JSON of real, documented per-CFR material-class mixture probabilities (Track v4-5), "
+        "keyed by entity_id -- overrides zurkt_scenario.DEFAULT_MATERIAL_MIX_PROBS for CFRs with evidence. "
+        "Omit to use the broad default prior for every CFR.",
+    )
+    parser.add_argument(
+        "--shapley-permutations",
+        type=int,
+        default=6,
+        help="Number of random permutations for the Shapley-approximation decomposition (Track v4-1). Each "
+        "permutation costs up to 7 full model reruns (fewer with coalition caching) -- keep small.",
+    )
+    parser.add_argument(
         "--access-state",
         type=Path,
         default=None,
@@ -890,6 +1145,7 @@ def main() -> None:
     args = parser.parse_args()
     tag = args.scenario_tag
     set_default_eo_conditioned_priors_path(args.eo_conditioned_priors)
+    set_default_material_class_evidence_path(args.material_class_evidence)
 
     data = load_catchment(args.input)
     cfrs = data["cfrs"]
@@ -1025,18 +1281,24 @@ def main() -> None:
     (args.out_dir / f"zurkt-10yr-outlook-{tag}.json").write_text(json.dumps(outlook, indent=2), encoding="utf-8")
     print(f"Wrote zurkt-10yr-outlook-{tag}.json (year 1 {outlook['years'][0]['annual_supply_m3']}, year 10 {outlook['years'][9]['annual_supply_m3']})")
 
+    print("Building age-structured cohort outlook (Track v4-9, separate comparison)...")
+    age_outlook = build_age_structured_outlook(results)
+    (args.out_dir / f"zurkt-age-structured-outlook-{tag}.json").write_text(json.dumps(age_outlook, indent=2), encoding="utf-8")
+    print(f"Wrote zurkt-age-structured-outlook-{tag}.json (year 1 {age_outlook['years'][0]['annual_supply_m3']}, year 10 {age_outlook['years'][9]['annual_supply_m3']})")
+
     print("Building technical-potential aggregate (joint draws, v3 fix)...")
     technical_potential = build_technical_potential(results)
     (args.out_dir / f"zurkt-technical-potential-{tag}.json").write_text(json.dumps(technical_potential, indent=2), encoding="utf-8")
     print(f"Wrote zurkt-technical-potential-{tag}.json ({technical_potential['technical_potential_m3']})")
 
     access_state = json.loads(args.access_state.read_text(encoding="utf-8")) if args.access_state else None
-    three_tier = build_three_tier_supply_summary(technical_potential, curve, access_state)
+    three_tier = build_three_tier_supply_summary(technical_potential, curve, access_state, results)
     (args.out_dir / f"zurkt-three-tier-supply-{tag}.json").write_text(json.dumps(three_tier, indent=2), encoding="utf-8")
     print(f"Wrote zurkt-three-tier-supply-{tag}.json")
-    print(f"  A physical potential:  {three_tier['a_physical_biophysical_potential_m3']}")
+    print(f"  A physical potential:   {three_tier['a_physical_biophysical_potential_m3']}")
     print(f"  B scenario-addressable: {three_tier['b_scenario_addressable_supply_m3']}")
-    print(f"  C evidence-supported:   {three_tier['c_evidence_supported_addressable_supply_m3']}")
+    print(f"  C status:               {three_tier['c_status']}")
+    print(f"  C evidence-confirmed:   {three_tier['c_evidence_confirmed_addressable_supply_m3']}")
 
     print("Building draw-wise economic dispatch + demand reliability...")
     dispatch = build_drawwise_dispatch(results)
@@ -1060,12 +1322,20 @@ def main() -> None:
     for row in verification["top_verification_targets"][:5]:
         print(f"  #{verification['top_verification_targets'].index(row)+1} {row['canonical_name']}: VOI-proxy {row['value_of_information_proxy']}")
 
-    print("Running uncertainty decomposition (7 grouped-collapse tests)...")
+    print("Running uncertainty decomposition (7 grouped-collapse sensitivity tests, non-additive)...")
     decomposition = build_uncertainty_decomposition(cfrs, results)
     (args.out_dir / f"zurkt-uncertainty-decomposition-{tag}.json").write_text(json.dumps(decomposition, indent=2), encoding="utf-8")
     print(f"Wrote zurkt-uncertainty-decomposition-{tag}.json")
     for row in decomposition["groups"]:
-        print(f"  {row['uncertainty_group']}: ~{round(row['approx_share_of_variance']*100,1)}% of variance")
+        print(f"  {row['uncertainty_group']}: marginal reduction if resolved ~{round(row['marginal_variance_reduction_if_resolved']*100,1)}%")
+
+    print(f"Running Shapley-approximation decomposition ({args.shapley_permutations} permutations, additive)...")
+    shapley = build_shapley_decomposition(cfrs, results, n_permutations=args.shapley_permutations)
+    (args.out_dir / f"zurkt-shapley-decomposition-{tag}.json").write_text(json.dumps(shapley, indent=2), encoding="utf-8")
+    print(f"Wrote zurkt-shapley-decomposition-{tag}.json (shares sum to {shapley['shares_sum_check']})")
+    for row in shapley["groups"]:
+        pct = round((row["shapley_share_of_resolvable_variance"] or 0) * 100, 1)
+        print(f"  {row['uncertainty_group']}: {pct}% (Shapley, additive)")
 
     print("Running EVSI re-simulation (top CFRs x 4 candidate variables)...")
     evsi = build_evsi(cfrs, results, dispatch, top_n_cfrs=5)

@@ -1,0 +1,199 @@
+{
+  "scenario_version": "zurkt-evergreen-uganda-supply-scenario-v3",
+  "model_version": "zurkt-cfr-monte-carlo-hierarchical-v3",
+  "assumptions": {
+    "net_annual_stock_change_fraction": {
+      "mean": -0.01,
+      "std": 0.03,
+      "rationale": "ASSUMED. No real growth-rate or harvest-scheduling data exists for any catchment CFR. Centered slightly negative (net depletion under harvest exceeding regrowth, absent active silviculture) but within a band wide enough to include net growth. This is a modelling placeholder, not a measured rate."
+    },
+    "annual_harvest_fraction": "Fraction of Zurkt-suitable standing volume harvested in any single year (as opposed to spread across a multi-year rotation). Kept low and conservative (mean 0.2) in the absence of any real harvest-scheduling or management-plan evidence for these CFRs."
+  },
+  "year_0_available_stock_m3": {
+    "p10": 224660.25,
+    "p50": 695284.44,
+    "p90": 1541240.71
+  },
+  "years": [
+    {
+      "year": 1,
+      "annual_supply_m3": {
+        "p10": 23745.02,
+        "p50": 107974.6,
+        "p90": 365938.64
+      },
+      "cumulative_supply_m3": {
+        "p10": 23745.02,
+        "p50": 107974.6,
+        "p90": 365938.64
+      },
+      "remaining_stock_m3": {
+        "p10": 174917.23,
+        "p50": 555248.59,
+        "p90": 1258083.72
+      }
+    },
+    {
+      "year": 2,
+      "annual_supply_m3": {
+        "p10": 20776.36,
+        "p50": 86711.3,
+        "p90": 247649.84
+      },
+      "cumulative_supply_m3": {
+        "p10": 44145.59,
+        "p50": 195682.85,
+        "p90": 614992.1
+      },
+      "remaining_stock_m3": {
+        "p10": 127023.56,
+        "p50": 437850.12,
+        "p90": 1056727.83
+      }
+    },
+    {
+      "year": 3,
+      "annual_supply_m3": {
+        "p10": 18343.57,
+        "p50": 67735.55,
+        "p90": 177088.34
+      },
+      "cumulative_supply_m3": {
+        "p10": 62634.96,
+        "p50": 265435.9,
+        "p90": 795551.39
+      },
+      "remaining_stock_m3": {
+        "p10": 89821.79,
+        "p50": 346265.23,
+        "p90": 918953.6
+      }
+    },
+    {
+      "year": 4,
+      "annual_supply_m3": {
+        "p10": 15171.42,
+        "p50": 53099.64,
+        "p90": 133144.89
+      },
+      "cumulative_supply_m3": {
+        "p10": 79819.14,
+        "p50": 323544.21,
+        "p90": 915839.5
+      },
+      "remaining_stock_m3": {
+        "p10": 61099.27,
+        "p50": 272381.57,
+        "p90": 809822.11
+      }
+    },
+    {
+      "year": 5,
+      "annual_supply_m3": {
+        "p10": 11891.04,
+        "p50": 42234.28,
+        "p90": 101114.89
+      },
+      "cumulative_supply_m3": {
+        "p10": 93874.25,
+        "p50": 368339.12,
+        "p90": 1012924.49
+      },
+      "remaining_stock_m3": {
+        "p10": 40918.27,
+        "p50": 221744.43,
+        "p90": 721376.28
+      }
+    },
+    {
+      "year": 6,
+      "annual_supply_m3": {
+        "p10": 9168.72,
+        "p50": 33242.78,
+        "p90": 81769.5
+      },
+      "cumulative_supply_m3": {
+        "p10": 106712.77,
+        "p50": 403212.51,
+        "p90": 1099577.65
+      },
+      "remaining_stock_m3": {
+        "p10": 27411.63,
+        "p50": 180423.17,
+        "p90": 643639.04
+      }
+    },
+    {
+      "year": 7,
+      "annual_supply_m3": {
+        "p10": 6613.66,
+        "p50": 26334.16,
+        "p90": 67995.18
+      },
+      "cumulative_supply_m3": {
+        "p10": 116872.71,
+        "p50": 437608.47,
+        "p90": 1154751.34
+      },
+      "remaining_stock_m3": {
+        "p10": 17516.68,
+        "p50": 145050.17,
+        "p90": 583698.87
+      }
+    },
+    {
+      "year": 8,
+      "annual_supply_m3": {
+        "p10": 4778.72,
+        "p50": 21381.05,
+        "p90": 57305.38
+      },
+      "cumulative_supply_m3": {
+        "p10": 126320.92,
+        "p50": 463182.12,
+        "p90": 1181201.59
+      },
+      "remaining_stock_m3": {
+        "p10": 11300.15,
+        "p50": 120192.28,
+        "p90": 525997.47
+      }
+    },
+    {
+      "year": 9,
+      "annual_supply_m3": {
+        "p10": 3350.27,
+        "p50": 17430.94,
+        "p90": 49314.39
+      },
+      "cumulative_supply_m3": {
+        "p10": 134108.96,
+        "p50": 483005.95,
+        "p90": 1217158.8
+      },
+      "remaining_stock_m3": {
+        "p10": 7273.41,
+        "p50": 97183.06,
+        "p90": 478787.92
+      }
+    },
+    {
+      "year": 10,
+      "annual_supply_m3": {
+        "p10": 2287.12,
+        "p50": 14286.98,
+        "p90": 43561.87
+      },
+      "cumulative_supply_m3": {
+        "p10": 143388.24,
+        "p50": 504048.3,
+        "p90": 1244195.39
+      },
+      "remaining_stock_m3": {
+        "p10": 4854.26,
+        "p50": 79450.83,
+        "p90": 443555.82
+      }
+    }
+  ]
+}

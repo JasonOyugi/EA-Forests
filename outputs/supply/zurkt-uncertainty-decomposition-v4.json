@@ -1,0 +1,51 @@
+{
+  "warning": "These are MARGINAL, OVERLAPPING sensitivities, NOT an additive variance partition -- they answer 'how much would variance shrink if ONLY this one family were resolved', not 'what % of variance does this family cause'. They can (and typically do) sum to well over 100% because uncertainty families interact/substitute for each other. For an allocation that IS built to sum to ~100%, see zurkt-shapley-decomposition-<tag>.json.",
+  "scenario_version": "zurkt-evergreen-uganda-supply-scenario-v3",
+  "model_version": "zurkt-cfr-monte-carlo-hierarchical-v3",
+  "method": "Grouped-collapse SENSITIVITY test (Track v3-18/v4-1, renamed for accuracy): each uncertainty group's Priors are collapsed to their own mean, ONE GROUP AT A TIME, and the resulting drop in aggregate annual-supply variance is reported as marginal_variance_reduction_if_resolved. This is useful for 'which single family, if I could resolve only one, would help most' -- it is NOT an additive attribution of total variance to causes; use it for decision sensitivity, not headline '% of variance' claims.",
+  "baseline_variance": 17058519296.0,
+  "groups": [
+    {
+      "uncertainty_group": "access_legal",
+      "baseline_variance": 17058519296.0,
+      "variance_when_this_group_alone_is_resolved": 6196903131.4,
+      "marginal_variance_reduction_if_resolved": 0.6367
+    },
+    {
+      "uncertainty_group": "growth_stocking_stand",
+      "baseline_variance": 17058519296.0,
+      "variance_when_this_group_alone_is_resolved": 11182107116.4,
+      "marginal_variance_reduction_if_resolved": 0.3445
+    },
+    {
+      "uncertainty_group": "species_grade_recovery",
+      "baseline_variance": 17058519296.0,
+      "variance_when_this_group_alone_is_resolved": 12903993595.3,
+      "marginal_variance_reduction_if_resolved": 0.2435
+    },
+    {
+      "uncertainty_group": "maturity",
+      "baseline_variance": 17058519296.0,
+      "variance_when_this_group_alone_is_resolved": 13083894566.0,
+      "marginal_variance_reduction_if_resolved": 0.233
+    },
+    {
+      "uncertainty_group": "forested_stocked_fraction",
+      "baseline_variance": 17058519296.0,
+      "variance_when_this_group_alone_is_resolved": 15508346920.4,
+      "marginal_variance_reduction_if_resolved": 0.0909
+    },
+    {
+      "uncertainty_group": "procurement_price",
+      "baseline_variance": 17058519296.0,
+      "variance_when_this_group_alone_is_resolved": 17058519296.0,
+      "marginal_variance_reduction_if_resolved": 0.0
+    },
+    {
+      "uncertainty_group": "haulage",
+      "baseline_variance": 17058519296.0,
+      "variance_when_this_group_alone_is_resolved": 17058519296.0,
+      "marginal_variance_reduction_if_resolved": 0.0
+    }
+  ]
+}

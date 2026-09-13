@@ -36,8 +36,9 @@ export function ZurktModelSummary() {
         <div className="zurkt-two-stage-note">
           <p><strong>Three supply concepts, never blended into one number.</strong> A. PHYSICAL POTENTIAL is standing/
           harvestable volume before any access screen. B. SCENARIO-ADDRESSABLE applies an ASSUMED commercial-access
-          fraction (not evidence-based). C. EVIDENCE-SUPPORTED restricts to CFRs with a real, ingested legal/access
-          record -- {m.threeTierSupply.note}</p>
+          fraction (not evidence-based). C. EVIDENCE-CONFIRMED restricts to CFRs with a real, externally-researched
+          KNOWN_POTENTIALLY_AVAILABLE access record. A CFR being UNKNOWN means its access status is UNRESOLVED --
+          NOT that it is confirmed unavailable or that its supply is zero. {m.threeTierSupply.note}</p>
         </div>
       </div>
 
@@ -53,9 +54,9 @@ export function ZurktModelSummary() {
           <span className="zurkt-range">P10 {number(agg.p10)} · P90 {number(agg.p90)}</span>
         </div>
         <div className="zurkt-headline-card">
-          <span className="si-eyebrow">C. Evidence-supported</span>
-          <strong>{m.threeTierSupply.evidenceSupported ? number(m.threeTierSupply.evidenceSupported.p50) : "n/a"} m3</strong>
-          <span className="zurkt-range">{m.accessState.counts.KNOWN_POTENTIALLY_AVAILABLE} / {m.accessState.counts.KNOWN_POTENTIALLY_AVAILABLE + m.accessState.counts.KNOWN_RESTRICTED_OR_UNAVAILABLE + m.accessState.counts.UNKNOWN} CFRs with real access evidence</span>
+          <span className="si-eyebrow">C. Evidence-confirmed</span>
+          <strong>{m.threeTierSupply.confirmedStatus === "UNRESOLVED" ? "Unresolved" : m.threeTierSupply.confirmedSupply ? `${number(m.threeTierSupply.confirmedSupply.p50)} m3` : "n/a"}</strong>
+          <span className="zurkt-range">{m.accessState.counts.KNOWN_POTENTIALLY_AVAILABLE} confirmed available · {m.accessState.counts.KNOWN_RESTRICTED} confirmed restricted (locked to competitors) · {m.accessState.counts.UNKNOWN} unresolved</span>
         </div>
         <div className="zurkt-headline-card">
           <span className="si-eyebrow">Viable source CFRs</span>
@@ -101,9 +102,24 @@ export function ZurktModelSummary() {
 
       <div className="zurkt-chart-block">
         <h3>10-year depletion stress test <span className="si-tag">NOT a forecast</span></h3>
-        <p className="zurkt-caption">No age-structured growth model exists for these CFRs, so this is not a real growth forecast -- it is a stress test of harvest depletion vs. an assumed net stock-change rate. See zurkt-10yr-outlook-v3.json for the exact priors.</p>
+        <p className="zurkt-caption">A stress test of harvest depletion vs. an assumed net stock-change rate (one blended fraction, no age classes). See zurkt-10yr-outlook-v4.json for the exact priors.</p>
         <div className="zurkt-outlook-bars">
           {m.outlookYears.map((y) => (
+            <div key={y.year} className="zurkt-outlook-bar" title={`Year ${y.year}: P10 ${number(y.annual_supply_m3.p10)} · P50 ${number(y.annual_supply_m3.p50)} · P90 ${number(y.annual_supply_m3.p90)} m3`}>
+              <div className="zurkt-outlook-range" style={{ height: `${(y.annual_supply_m3.p90 / outlookMaxP90) * 100}%` }}>
+                <div className="zurkt-outlook-p50" style={{ height: `${(y.annual_supply_m3.p50 / y.annual_supply_m3.p90) * 100}%` }} />
+              </div>
+              <span>Y{y.year}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="zurkt-chart-block">
+        <h3>Age-structured cohort outlook <span className="si-tag">SEPARATE SCENARIO, not a forecast</span></h3>
+        <p className="zurkt-caption">A genuine cohort model (seedling→young→mid→mature→old), harvesting only mature+old stock, with growth transitions and a regeneration credit -- compared alongside, not in place of, the depletion stress test above. Year 1 P50 {number(m.ageStructuredOutlookYears[0]?.annual_supply_m3.p50 ?? 0)} m3 vs. depletion stress test's {number(m.outlookYears[0]?.annual_supply_m3.p50 ?? 0)} m3.</p>
+        <div className="zurkt-outlook-bars">
+          {m.ageStructuredOutlookYears.map((y) => (
             <div key={y.year} className="zurkt-outlook-bar" title={`Year ${y.year}: P10 ${number(y.annual_supply_m3.p10)} · P50 ${number(y.annual_supply_m3.p50)} · P90 ${number(y.annual_supply_m3.p90)} m3`}>
               <div className="zurkt-outlook-range" style={{ height: `${(y.annual_supply_m3.p90 / outlookMaxP90) * 100}%` }}>
                 <div className="zurkt-outlook-p50" style={{ height: `${(y.annual_supply_m3.p50 / y.annual_supply_m3.p90) * 100}%` }} />
@@ -148,16 +164,32 @@ export function ZurktModelSummary() {
       </div>
 
       <div className="zurkt-chart-block">
-        <h3>Uncertainty decomposition <span className="si-tag">grouped-collapse approximation</span></h3>
-        <p className="zurkt-caption">Approximate share of aggregate-supply variance attributable to each uncertainty group -- not satellite/EO uncertainty, but access/legal and stocking that dominate.</p>
+        <h3>Uncertainty attribution <span className="si-tag">Shapley, additive -- sums to ~100%</span></h3>
+        <p className="zurkt-caption">Where our uncertainty actually comes from -- not satellite/EO uncertainty, but access/legal status and stocking/growth that dominate. Permutation-sampled Shapley allocation over the variance game; shares sum to {Math.round((m.uncertaintyShapley.reduce((s, g) => s + (g.shapley_share_of_resolvable_variance ?? 0), 0)) * 100)}% by construction.</p>
+        <div className="zurkt-sensitivity-list">
+          {m.uncertaintyShapley.map((g) => (
+            <div key={g.uncertainty_group} className="zurkt-sensitivity-row">
+              <span className="zurkt-sensitivity-label">{g.uncertainty_group.replaceAll("_", " ")}</span>
+              <div className="zurkt-sensitivity-bar-track">
+                <div className="zurkt-sensitivity-bar is-positive" style={{ width: `${Math.min((g.shapley_share_of_resolvable_variance ?? 0) * 100, 100)}%` }} />
+              </div>
+              <span className="zurkt-sensitivity-value">{Math.round((g.shapley_share_of_resolvable_variance ?? 0) * 100)}%</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="zurkt-chart-block">
+        <h3>Decision sensitivity <span className="si-tag">grouped-collapse, marginal &amp; overlapping -- NOT % of variance</span></h3>
+        <p className="zurkt-caption">"If we could resolve only ONE family, which would help most" -- these overlap with each other by design and can sum to well over 100%. Use the Shapley chart above for a headline "where does uncertainty come from" attribution; use this one for "what should we verify first".</p>
         <div className="zurkt-sensitivity-list">
           {m.uncertaintyDecomposition.map((g) => (
             <div key={g.uncertainty_group} className="zurkt-sensitivity-row">
               <span className="zurkt-sensitivity-label">{g.uncertainty_group.replaceAll("_", " ")}</span>
               <div className="zurkt-sensitivity-bar-track">
-                <div className="zurkt-sensitivity-bar is-positive" style={{ width: `${Math.min(g.approx_share_of_variance * 100, 100)}%` }} />
+                <div className="zurkt-sensitivity-bar is-positive" style={{ width: `${Math.min(g.marginal_variance_reduction_if_resolved * 100, 100)}%` }} />
               </div>
-              <span className="zurkt-sensitivity-value">~{Math.round(g.approx_share_of_variance * 100)}% of variance</span>
+              <span className="zurkt-sensitivity-value">~{Math.round(g.marginal_variance_reduction_if_resolved * 100)}% marginal reduction</span>
             </div>
           ))}
         </div>
@@ -195,7 +227,7 @@ export function ZurktModelSummary() {
 
       <div className="si-rail-note">
         <div className="zurkt-two-stage-note">
-          <p>{m.knownSimplifications.length} documented modelling simplifications (species treated as eucalyptus-equivalent, no age-structured growth model -- the 10-year outlook above is a depletion stress test, not a forecast -- verification priority uses both a transparent proxy AND a real EVSI re-simulation above) -- see zurkt-uganda-scenario-v3.json for the full list and every prior's rationale, including the hierarchical uncertainty model. The v1 Jinja placeholder analysis is preserved untouched in the *-v1.json files, not deleted.</p>
+          <p>{m.knownSimplifications.length} documented modelling simplifications (material/species class now sampled per draw with processor-fit multipliers, not a blanket eucalyptus assumption; both a depletion stress test AND a genuine age-structured cohort outlook are shown above, neither calibrated to real growth data; verification priority uses a transparent proxy AND a real EVSI re-simulation) -- see zurkt-uganda-scenario-v4.json for the full list and every prior's rationale, including the hierarchical uncertainty model. The v1 Jinja and v2/v3 pre-material-mix analyses are preserved untouched in their own *-v1/v2/v3.json files, not deleted.</p>
         </div>
       </div>
     </section>

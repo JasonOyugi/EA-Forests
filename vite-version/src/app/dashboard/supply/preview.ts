@@ -1,22 +1,24 @@
-import zurktCfrResults from "./data/zurkt-cfr-supply-results-v3.json"
-import zurktScenario from "./data/zurkt-uganda-scenario-v3.json"
-import zurktSupplyCurve from "./data/zurkt-delivered-supply-curve-v3.json"
-import zurktOutlook from "./data/zurkt-10yr-outlook-v3.json"
-import zurktSensitivity from "./data/zurkt-sensitivity-v3.json"
-import zurktVerification from "./data/zurkt-verification-priorities-v3.json"
-import zurktDispatch from "./data/zurkt-demand-reliability-v3.json"
-import zurktTechnicalPotential from "./data/zurkt-technical-potential-v3.json"
-import zurktThreeTier from "./data/zurkt-three-tier-supply-v3.json"
-import zurktDecomposition from "./data/zurkt-uncertainty-decomposition-v3.json"
-import zurktEvsi from "./data/zurkt-evsi-v3.json"
-import zurktFieldProgramme from "./data/zurkt-field-programme-v3.json"
-import zurktAccessState from "./data/zurkt-access-state-v3.json"
+import zurktCfrResults from "./data/zurkt-cfr-supply-results-v4.json"
+import zurktScenario from "./data/zurkt-uganda-scenario-v4.json"
+import zurktSupplyCurve from "./data/zurkt-delivered-supply-curve-v4.json"
+import zurktOutlook from "./data/zurkt-10yr-outlook-v4.json"
+import zurktAgeOutlook from "./data/zurkt-age-structured-outlook-v4.json"
+import zurktSensitivity from "./data/zurkt-sensitivity-v4.json"
+import zurktVerification from "./data/zurkt-verification-priorities-v4.json"
+import zurktDispatch from "./data/zurkt-demand-reliability-v4.json"
+import zurktTechnicalPotential from "./data/zurkt-technical-potential-v4.json"
+import zurktThreeTier from "./data/zurkt-three-tier-supply-v4.json"
+import zurktDecomposition from "./data/zurkt-uncertainty-decomposition-v4.json"
+import zurktShapley from "./data/zurkt-shapley-decomposition-v4.json"
+import zurktEvsi from "./data/zurkt-evsi-v4.json"
+import zurktFieldProgramme from "./data/zurkt-field-programme-v4.json"
+import zurktAccessState from "./data/zurkt-access-state-v4.json"
 import type { EvidenceValue, GradeTonnes, Provenance, SupplyDataset, SupplyLot } from "./types"
 
 // Fixed demonstration world. These locations and quantities are not forest observations.
 export const previewProvenance: Provenance = {
-  epistemicClass: "SYNTHETIC", world: { id: "supply-workspace-preview-v3", kind: "experiment" },
-  asOf: "2026-09-13", knownAt: "2026-09-13", source: "Supply workspace demonstration fixture v3",
+  epistemicClass: "SYNTHETIC", world: { id: "supply-workspace-preview-v4", kind: "experiment" },
+  asOf: "2026-09-13", knownAt: "2026-09-13", source: "Supply workspace demonstration fixture v4",
   freshness: "unknown", verification: "unverified", completeness: "partial", evidenceIds: [],
 }
 function value<T>(input: T | null, missingReason?: string): EvidenceValue<T> {
@@ -34,7 +36,7 @@ function value<T>(input: T | null, missingReason?: string): EvidenceValue<T> {
  * carried here only as that trade-partner alias, never as a claim that
  * Zurkt Group owns or operates this factory. See
  * backend/scripts/zurkt_supply_catchment.py's module docstring for the full
- * verification chain, and zurkt-uganda-scenario-v2.json's processor block
+ * verification chain, and zurkt-uganda-scenario-v4.json's processor block
  * for the persisted evidence/rationale. The v1 Jinja placeholder location
  * (no real-world evidence at all) is preserved untouched in the *-v1.json
  * files for reproducibility, not deleted.
@@ -54,7 +56,7 @@ function value<T>(input: T | null, missingReason?: string): EvidenceValue<T> {
  * lot's headline value; the full P10-P90 Monte Carlo interval rides along
  * in `interval` on every modelled EvidenceValue so the UI can show
  * uncertainty, not a false point estimate. epistemicClass is "FORECAST" for
- * modelled outputs (never "OBSERVED") -- see zurkt-uganda-scenario-v2.json
+ * modelled outputs (never "OBSERVED") -- see zurkt-uganda-scenario-v4.json
  * for every prior's exact rationale.
  */
 const modelledProvenance: Provenance = {
@@ -111,22 +113,35 @@ export const zurktSupplyModel = {
   knownSimplifications: zurktScenario.known_simplifications as string[],
   cfrCount: allCfrResults.length,
   viableCfrCount: allCfrResults.filter((c) => c.modelled.delivered_cost_usd_per_m3.p50 <= 60).length,
-  // THREE-tier reporting (Track v3-6, never blended into one number):
+  // THREE-tier reporting (Track v3-6/v4-2, never blended into one number):
   // A. physical/biophysical potential (pre-access-screen), B. scenario-
   // addressable (SCENARIO availability fraction applied), C. evidence-
-  // supported (only CFRs with a real, ingested access/legal record --
-  // currently 0, since the access-evidence pass found none; see
-  // zurktAccessState). All three come straight from the backend's own
-  // joint-draws aggregation, not recomputed here.
+  // confirmed (only CFRs with a real KNOWN_POTENTIALLY_AVAILABLE access
+  // record). A real external-evidence pass now covers the top 15 CFRs:
+  // 4 are KNOWN_RESTRICTED (already committed to competing processors --
+  // Nile Fibre Board, New Forests Company, Green Resources), 3
+  // PARTIALLY_EVIDENCED, 2 UNRESOLVED_CONFLICT, 267 still UNKNOWN -- so C
+  // is status UNRESOLVED (not a confirmed zero). See zurktAccessState.
   technicalPotentialM3: zurktTechnicalPotential.technical_potential_m3 as ZurktQuantile,
   threeTierSupply: {
     physical: zurktThreeTier.a_physical_biophysical_potential_m3 as ZurktQuantile,
     scenarioAddressable: zurktThreeTier.b_scenario_addressable_supply_m3 as ZurktQuantile,
-    evidenceSupported: zurktThreeTier.c_evidence_supported_addressable_supply_m3 as ZurktQuantile | null,
+    // FIX (Track v4-2): status is an explicit enum -- UNRESOLVED/PARTIALLY_CONFIRMED/
+    // FULLY_CONFIRMED/NOT_COMPUTED -- never a bare number that could be misread as
+    // "evidence confirms zero supply". A null confirmedSupply paired with status
+    // UNRESOLVED means "not yet established", not "established at zero".
+    confirmedStatus: zurktThreeTier.c_status as "UNRESOLVED" | "PARTIALLY_CONFIRMED" | "FULLY_CONFIRMED" | "NOT_COMPUTED",
+    confirmedSupply: zurktThreeTier.c_evidence_confirmed_addressable_supply_m3 as ZurktQuantile | null,
     note: zurktThreeTier.c_note as string,
   },
   accessState: {
-    counts: zurktAccessState.counts as { KNOWN_POTENTIALLY_AVAILABLE: number; KNOWN_RESTRICTED_OR_UNAVAILABLE: number; UNKNOWN: number },
+    // 5-state schema (Track v4-3): KNOWN_POTENTIALLY_AVAILABLE / KNOWN_RESTRICTED /
+    // PARTIALLY_EVIDENCED / UNKNOWN / UNRESOLVED_CONFLICT. Real external evidence
+    // (NFA, WDPA, FSC, CAO Ombudsman, news/NGO reporting) now backs the top 15
+    // highest-VOI CFRs -- see zurkt-access-external-evidence-v4.json for full
+    // sources/dates/confidence per CFR.
+    counts: zurktAccessState.counts as { KNOWN_POTENTIALLY_AVAILABLE: number; KNOWN_RESTRICTED: number; PARTIALLY_EVIDENCED: number; UNKNOWN: number; UNRESOLVED_CONFLICT: number },
+    resolutionNote: zurktAccessState.resolution_note as string,
   },
   aggregateAnnualSupplyM3: zurktSupplyCurve.aggregate_annual_suitable_supply_m3 as ZurktQuantile,
   supplyCurve: zurktSupplyCurve.points as {
@@ -147,6 +162,12 @@ export const zurktSupplyModel = {
     top1_share: ZurktQuantile; top5_share: ZurktQuantile; top10_share: ZurktQuantile; note: string
   },
   outlookYears: zurktOutlook.years as { year: number; annual_supply_m3: ZurktQuantile; cumulative_supply_m3: ZurktQuantile; remaining_stock_m3: ZurktQuantile }[],
+  // Age-structured cohort SCENARIO outlook (Track v4-9) -- a SEPARATE
+  // comparison to the depletion stress test above, not a replacement.
+  // Models real growth/harvest/regeneration by age class (seedling -> old),
+  // harvesting only from mature+old cohorts. Still NOT a calibrated
+  // forecast -- see zurkt-age-structured-outlook-v4.json's assumptions.
+  ageStructuredOutlookYears: zurktAgeOutlook.years as { year: number; annual_supply_m3: ZurktQuantile; cumulative_supply_m3: ZurktQuantile; remaining_stock_m3: ZurktQuantile }[],
   sensitivity: zurktSensitivity.one_variable_sensitivities as {
     perturbation: string; supply_change_pct: number | null; cost_change_pct: number | null
   }[],
@@ -164,8 +185,20 @@ export const zurktSupplyModel = {
     required_source_cfr_count: { p10: number | null; p50: number | null; p90: number | null }
     marginal_delivered_cost_usd_per_m3: { p10: number | null; p50: number | null; p90: number | null }
   }[],
+  // FIX (Track v4-1): renamed and re-explained. These are MARGINAL,
+  // OVERLAPPING sensitivities ("how much would variance shrink if only
+  // this ONE family were resolved") -- they can sum to well over 100%
+  // and must never be labeled "% of variance". See uncertaintyShapley
+  // below for the additive headline attribution.
   uncertaintyDecomposition: zurktDecomposition.groups as {
-    uncertainty_group: string; baseline_variance: number; variance_when_frozen: number; approx_share_of_variance: number
+    uncertainty_group: string; baseline_variance: number; variance_when_this_group_alone_is_resolved: number; marginal_variance_reduction_if_resolved: number
+  }[],
+  uncertaintyDecompositionWarning: zurktDecomposition.warning as string,
+  // Shapley-approximation decomposition: DOES sum to ~100% by construction
+  // (the Shapley efficiency property) -- use this for headline "where does
+  // our uncertainty come from" framing, not the grouped-collapse numbers above.
+  uncertaintyShapley: zurktShapley.groups as {
+    uncertainty_group: string; shapley_variance_reduction: number; shapley_share_of_resolvable_variance: number | null
   }[],
   evsi: zurktEvsi.ranked_cfr_variable_pairs as {
     entity_id: string; canonical_name: string; variable: string
@@ -195,14 +228,14 @@ function gradeTonnesFromShares(r: ZurktCfrResult): GradeTonnes {
 
 // Map/list performance: surface the 40 highest-annual-supply CFRs as
 // individual lots (still real, canonical entities -- see
-// zurkt-cfr-supply-results-v2.json and outputs/supply/ for all 276).
+// zurkt-cfr-supply-results-v4.json and outputs/supply/ for all 276).
 const nearestCfrs = allCfrResults.slice(0, 40)
 
 export const supplyPreview: SupplyDataset = {
   provenance: previewProvenance,
   planningStart: "2026-10-01", coverageEnd: "2028-09-30",
   processor: {
-    id: "evergreen-mpigi-v3", name: "Evergreen Wood Industries Ltd", location: "Mpigi District, Uganda · verified plywood/veneer manufacturer",
+    id: "evergreen-mpigi-v4", name: "Evergreen Wood Industries Ltd", location: "Mpigi District, Uganda · verified plywood/veneer manufacturer",
     position: [zurktScenario.processor.location.lat, zurktScenario.processor.location.lon],
     sourcingRadiusKm: value(50),
     specification: {

@@ -1,0 +1,46 @@
+{
+  "scenario_version": "zurkt-evergreen-uganda-supply-scenario-v3",
+  "model_version": "zurkt-cfr-monte-carlo-hierarchical-v3",
+  "method": "Permutation-sampling Shapley approximation (6 random orderings of 7 uncertainty groups) over the variance game v(S) = baseline_variance - variance_with_S_frozen. By construction (the Shapley efficiency property), these shares sum to ~100% of the variance resolved by freezing ALL groups simultaneously -- unlike the grouped-collapse sensitivity test, this IS an additive attribution, though with sampling noise from the small number of permutations used (compute-bounded, not exact).",
+  "baseline_variance": 17058519296.0,
+  "full_coalition_variance_reduction": 16409261688.1,
+  "shares_sum_check": 1.0,
+  "n_permutations": 6,
+  "groups": [
+    {
+      "uncertainty_group": "access_legal",
+      "shapley_variance_reduction": 7334992032.2,
+      "shapley_share_of_resolvable_variance": 0.447
+    },
+    {
+      "uncertainty_group": "growth_stocking_stand",
+      "shapley_variance_reduction": 3098398945.0,
+      "shapley_share_of_resolvable_variance": 0.1888
+    },
+    {
+      "uncertainty_group": "species_grade_recovery",
+      "shapley_variance_reduction": 2626007813.4,
+      "shapley_share_of_resolvable_variance": 0.16
+    },
+    {
+      "uncertainty_group": "maturity",
+      "shapley_variance_reduction": 2272358008.7,
+      "shapley_share_of_resolvable_variance": 0.1385
+    },
+    {
+      "uncertainty_group": "forested_stocked_fraction",
+      "shapley_variance_reduction": 1077504888.8,
+      "shapley_share_of_resolvable_variance": 0.0657
+    },
+    {
+      "uncertainty_group": "procurement_price",
+      "shapley_variance_reduction": 0.0,
+      "shapley_share_of_resolvable_variance": 0.0
+    },
+    {
+      "uncertainty_group": "haulage",
+      "shapley_variance_reduction": 0.0,
+      "shapley_share_of_resolvable_variance": 0.0
+    }
+  ]
+}

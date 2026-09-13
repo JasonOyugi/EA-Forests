@@ -1,0 +1,291 @@
+{
+  "model_version": "eo-belief-heuristic-v1",
+  "method": "Heuristic, bounded-nudge belief conditioning from real Sentinel-2 derived indices (NDVI/NDMI/NBR) in observations.eo_feature_value. NOT a calibrated Bayesian update -- every belief object carries calibrated=false. Multi-INDEX (three Sentinel-2 products), not yet multi-SENSOR (no Sentinel-1 radar or Landsat integration in this model version).",
+  "entities": [
+    {
+      "entity_id": "c7151c94-2797-4dd8-b6c3-b9aea8dda81e",
+      "canonical_name": "Kapimpini",
+      "model_version": "eo-belief-heuristic-v1",
+      "updated_at": "2026-09-13T14:32:39.486479+00:00",
+      "calibrated": false,
+      "update_method": "heuristic_bounded_nudge",
+      "variables": [
+        {
+          "variable": "forested_fraction",
+          "prior": {
+            "kind": "beta",
+            "mean": 0.75,
+            "rationale": "Matches zurkt_scenario.PRIORS['relevant_forest_fraction'] -- broad, not surveyed."
+          },
+          "evidence": {
+            "sensor": "sentinel2",
+            "index": "ndvi",
+            "summary": "mean NDVI=0.603 across 12 observations"
+          },
+          "update_method": "heuristic_bounded_nudge",
+          "conditioned": {
+            "mean": 0.8032,
+            "multiplier_applied": 1.071
+          },
+          "confidence": "evidence_constrained",
+          "updated_at": "2026-09-13T14:32:39.486479+00:00",
+          "model_version": "eo-belief-heuristic-v1"
+        },
+        {
+          "variable": "canopy_persistence",
+          "prior": {
+            "kind": "point",
+            "mean": null,
+            "rationale": "No prior -- this is an EO-native derived quantity, not a physical prior being conditioned."
+          },
+          "evidence": {
+            "sensor": "sentinel2",
+            "index": "ndvi_temporal_cv",
+            "summary": "NDVI coefficient of variation across 12 monthly observations = 0.114"
+          },
+          "update_method": "direct_eo_derived_index",
+          "conditioned": {
+            "persistence_score_0to1": 0.7727
+          },
+          "confidence": "evidence_constrained",
+          "updated_at": "2026-09-13T14:32:39.486479+00:00",
+          "model_version": "eo-belief-heuristic-v1"
+        },
+        {
+          "variable": "disturbance_state",
+          "prior": {
+            "kind": "categorical",
+            "states": [
+              "STABLE",
+              "POSSIBLE_DISTURBANCE",
+              "UNKNOWN"
+            ],
+            "rationale": "No prior belief -- purely evidence-driven categorical flag."
+          },
+          "evidence": {
+            "sensor": "sentinel2",
+            "index": "nbr+ndvi_temporal_cv",
+            "summary": "max-min NBR range across 12 observations = 0.335 (flag threshold 0.15)"
+          },
+          "update_method": "heuristic_threshold_flag",
+          "conditioned": {
+            "state": "STABLE"
+          },
+          "confidence": "evidence_constrained",
+          "updated_at": "2026-09-13T14:32:39.486479+00:00",
+          "model_version": "eo-belief-heuristic-v1"
+        },
+        {
+          "variable": "moisture_confound_check",
+          "prior": {
+            "kind": "point",
+            "mean": null,
+            "rationale": "Diagnostic only -- checks whether NDVI-based greenness could be misread against a moisture-stressed canopy."
+          },
+          "evidence": {
+            "sensor": "sentinel2",
+            "index": "ndmi",
+            "summary": "mean NDMI=0.057 across 12 observations"
+          },
+          "update_method": "direct_eo_derived_index",
+          "conditioned": {
+            "note": "low NDMI alongside high NDVI would flag a stressed-canopy misread; not automatically applied as a correction"
+          },
+          "confidence": "evidence_constrained",
+          "updated_at": "2026-09-13T14:32:39.486479+00:00",
+          "model_version": "eo-belief-heuristic-v1"
+        }
+      ]
+    },
+    {
+      "entity_id": "953552e7-6c06-4e9a-96ac-524239a0772c",
+      "canonical_name": "Namavundu",
+      "model_version": "eo-belief-heuristic-v1",
+      "updated_at": "2026-09-13T14:32:39.487736+00:00",
+      "calibrated": false,
+      "update_method": "heuristic_bounded_nudge",
+      "variables": [
+        {
+          "variable": "forested_fraction",
+          "prior": {
+            "kind": "beta",
+            "mean": 0.75,
+            "rationale": "Matches zurkt_scenario.PRIORS['relevant_forest_fraction'] -- broad, not surveyed."
+          },
+          "evidence": {
+            "sensor": "sentinel2",
+            "index": "ndvi",
+            "summary": "mean NDVI=0.617 across 12 observations"
+          },
+          "update_method": "heuristic_bounded_nudge",
+          "conditioned": {
+            "mean": 0.8093,
+            "multiplier_applied": 1.0791
+          },
+          "confidence": "evidence_constrained",
+          "updated_at": "2026-09-13T14:32:39.487736+00:00",
+          "model_version": "eo-belief-heuristic-v1"
+        },
+        {
+          "variable": "canopy_persistence",
+          "prior": {
+            "kind": "point",
+            "mean": null,
+            "rationale": "No prior -- this is an EO-native derived quantity, not a physical prior being conditioned."
+          },
+          "evidence": {
+            "sensor": "sentinel2",
+            "index": "ndvi_temporal_cv",
+            "summary": "NDVI coefficient of variation across 12 monthly observations = 0.120"
+          },
+          "update_method": "direct_eo_derived_index",
+          "conditioned": {
+            "persistence_score_0to1": 0.7591
+          },
+          "confidence": "evidence_constrained",
+          "updated_at": "2026-09-13T14:32:39.487736+00:00",
+          "model_version": "eo-belief-heuristic-v1"
+        },
+        {
+          "variable": "disturbance_state",
+          "prior": {
+            "kind": "categorical",
+            "states": [
+              "STABLE",
+              "POSSIBLE_DISTURBANCE",
+              "UNKNOWN"
+            ],
+            "rationale": "No prior belief -- purely evidence-driven categorical flag."
+          },
+          "evidence": {
+            "sensor": "sentinel2",
+            "index": "nbr+ndvi_temporal_cv",
+            "summary": "max-min NBR range across 12 observations = 0.337 (flag threshold 0.15)"
+          },
+          "update_method": "heuristic_threshold_flag",
+          "conditioned": {
+            "state": "STABLE"
+          },
+          "confidence": "evidence_constrained",
+          "updated_at": "2026-09-13T14:32:39.487736+00:00",
+          "model_version": "eo-belief-heuristic-v1"
+        },
+        {
+          "variable": "moisture_confound_check",
+          "prior": {
+            "kind": "point",
+            "mean": null,
+            "rationale": "Diagnostic only -- checks whether NDVI-based greenness could be misread against a moisture-stressed canopy."
+          },
+          "evidence": {
+            "sensor": "sentinel2",
+            "index": "ndmi",
+            "summary": "mean NDMI=0.140 across 12 observations"
+          },
+          "update_method": "direct_eo_derived_index",
+          "conditioned": {
+            "note": "low NDMI alongside high NDVI would flag a stressed-canopy misread; not automatically applied as a correction"
+          },
+          "confidence": "evidence_constrained",
+          "updated_at": "2026-09-13T14:32:39.487736+00:00",
+          "model_version": "eo-belief-heuristic-v1"
+        }
+      ]
+    },
+    {
+      "entity_id": "b7738efb-d1fc-4bc8-a56a-dd00886f279c",
+      "canonical_name": "Mbooni South",
+      "model_version": "eo-belief-heuristic-v1",
+      "updated_at": "2026-09-13T14:32:39.488739+00:00",
+      "calibrated": false,
+      "update_method": "heuristic_bounded_nudge",
+      "variables": [
+        {
+          "variable": "forested_fraction",
+          "prior": {
+            "kind": "beta",
+            "mean": 0.75,
+            "rationale": "Matches zurkt_scenario.PRIORS['relevant_forest_fraction'] -- broad, not surveyed."
+          },
+          "evidence": {
+            "sensor": "sentinel2",
+            "index": "ndvi",
+            "summary": "mean NDVI=0.642 across 1 observations"
+          },
+          "update_method": "heuristic_bounded_nudge",
+          "conditioned": {
+            "mean": 0.8188,
+            "multiplier_applied": 1.0917
+          },
+          "confidence": "prior_dominated",
+          "updated_at": "2026-09-13T14:32:39.488739+00:00",
+          "model_version": "eo-belief-heuristic-v1"
+        },
+        {
+          "variable": "canopy_persistence",
+          "prior": {
+            "kind": "point",
+            "mean": null,
+            "rationale": "No prior -- this is an EO-native derived quantity, not a physical prior being conditioned."
+          },
+          "evidence": {
+            "sensor": "sentinel2",
+            "index": "ndvi_temporal_cv",
+            "summary": "NDVI coefficient of variation across 1 monthly observations = 0.000"
+          },
+          "update_method": "direct_eo_derived_index",
+          "conditioned": {
+            "persistence_score_0to1": 1.0
+          },
+          "confidence": "prior_dominated",
+          "updated_at": "2026-09-13T14:32:39.488739+00:00",
+          "model_version": "eo-belief-heuristic-v1"
+        },
+        {
+          "variable": "disturbance_state",
+          "prior": {
+            "kind": "categorical",
+            "states": [
+              "STABLE",
+              "POSSIBLE_DISTURBANCE",
+              "UNKNOWN"
+            ],
+            "rationale": "No prior belief -- purely evidence-driven categorical flag."
+          },
+          "evidence": {
+            "sensor": "sentinel2",
+            "index": "nbr+ndvi_temporal_cv",
+            "summary": "Only 1 NBR observation available -- cannot compute a range, so no disturbance signal either way."
+          },
+          "update_method": "heuristic_threshold_flag",
+          "conditioned": {
+            "state": "UNKNOWN"
+          },
+          "confidence": "prior_dominated",
+          "updated_at": "2026-09-13T14:32:39.488739+00:00",
+          "model_version": "eo-belief-heuristic-v1"
+        },
+        {
+          "variable": "moisture_confound_check",
+          "prior": {
+            "kind": "point",
+            "mean": null,
+            "rationale": "Diagnostic only -- checks whether NDVI-based greenness could be misread against a moisture-stressed canopy."
+          },
+          "evidence": {
+            "sensor": "sentinel2",
+            "index": "ndmi",
+            "summary": "mean NDMI=0.171 across 1 observations"
+          },
+          "update_method": "direct_eo_derived_index",
+          "conditioned": {
+            "note": "low NDMI alongside high NDVI would flag a stressed-canopy misread; not automatically applied as a correction"
+          },
+          "confidence": "evidence_constrained",
+          "updated_at": "2026-09-13T14:32:39.488739+00:00",
+          "model_version": "eo-belief-heuristic-v1"
+        }
+      ]
+    }
+  ]
+}

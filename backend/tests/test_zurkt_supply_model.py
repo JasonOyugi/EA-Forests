@@ -70,11 +70,11 @@ def test_no_unknown_legal_state_silently_becomes_available():
     sys.path.insert(0, str(_BACKEND_ROOT / "scripts"))
     import zurkt_access_state as zas
 
-    state, _ = zas.classify({"spatial_type": "reserve"}, {"source_dataset": "central-forest-reserves"})
+    state, _ = zas.classify_from_database({"spatial_type": "reserve"}, {"source_dataset": "central-forest-reserves"})
     assert state == "UNKNOWN"
 
     # Even a completely empty metadata pair must not default to available.
-    state, _ = zas.classify({}, {})
+    state, _ = zas.classify_from_database({}, {})
     assert state == "UNKNOWN"
 
 
@@ -169,15 +169,46 @@ def test_expected_shortfall_is_monotonically_non_decreasing():
     assert all(shortfalls[i] <= shortfalls[i + 1] + 1e-6 for i in range(len(shortfalls) - 1))
 
 
-def test_three_tier_supply_never_lets_scenario_exceed_physical():
+def test_three_tier_supply_reports_unresolved_not_zero_when_all_unknown():
+    """Track v4-2 regression: when every CFR is UNKNOWN, the evidence-
+    confirmed tier must report status UNRESOLVED with a null value -- NEVER
+    a bare 0 that could be misread as 'evidence confirms no supply'."""
     cfrs = _synthetic_cfrs()
     results = zrm.run_all_cfrs(cfrs, "STANDARD")
     technical_potential = zrm.build_technical_potential(results)
     curve = zrm.build_supply_curve(results)
-    access_state = {"counts": {"KNOWN_POTENTIALLY_AVAILABLE": 0, "KNOWN_RESTRICTED_OR_UNAVAILABLE": 0, "UNKNOWN": len(cfrs)}}
-    summary = zrm.build_three_tier_supply_summary(technical_potential, curve, access_state)
+    access_state = {
+        "counts": {"KNOWN_POTENTIALLY_AVAILABLE": 0, "KNOWN_RESTRICTED": 0, "PARTIALLY_EVIDENCED": 0, "UNKNOWN": len(cfrs), "UNRESOLVED_CONFLICT": 0},
+        "cfrs": [{"entity_id": c["entity_id"], "access_state": "UNKNOWN"} for c in cfrs],
+    }
+    summary = zrm.build_three_tier_supply_summary(technical_potential, curve, access_state, results)
 
+    assert summary["c_status"] == "UNRESOLVED"
+    assert summary["c_evidence_confirmed_addressable_supply_m3"] is None
+    assert "unresolved" in summary["c_note"].lower() or "UNKNOWN" in summary["c_note"]
+    # The note may discuss the "confirmed unavailable" misreading in order to
+    # explicitly rule it out, but must not assert it as the actual finding.
+    assert "not that they are confirmed unavailable" in summary["c_note"].lower()
+
+
+def test_three_tier_supply_computes_real_partial_confirmation():
+    """When SOME CFRs have real KNOWN_POTENTIALLY_AVAILABLE evidence, C must
+    be a real, non-null joint-draws aggregate over exactly that subset --
+    never silently promoted to equal B, and never exceeding A."""
+    cfrs = _synthetic_cfrs()
+    results = zrm.run_all_cfrs(cfrs, "STANDARD")
+    technical_potential = zrm.build_technical_potential(results)
+    curve = zrm.build_supply_curve(results)
+    known_ids = [cfrs[0]["entity_id"], cfrs[1]["entity_id"]]
+    access_state = {
+        "counts": {"KNOWN_POTENTIALLY_AVAILABLE": 2, "KNOWN_RESTRICTED": 0, "PARTIALLY_EVIDENCED": 0, "UNKNOWN": len(cfrs) - 2, "UNRESOLVED_CONFLICT": 0},
+        "cfrs": [{"entity_id": c["entity_id"], "access_state": "KNOWN_POTENTIALLY_AVAILABLE" if c["entity_id"] in known_ids else "UNKNOWN"} for c in cfrs],
+    }
+    summary = zrm.build_three_tier_supply_summary(technical_potential, curve, access_state, results)
+
+    assert summary["c_status"] == "PARTIALLY_CONFIRMED"
+    c = summary["c_evidence_confirmed_addressable_supply_m3"]
     a_p50 = summary["a_physical_biophysical_potential_m3"]["p50"]
     b_p50 = summary["b_scenario_addressable_supply_m3"]["p50"]
-    c = summary["c_evidence_supported_addressable_supply_m3"]
-    assert c["p50"] <= b_p50 <= a_p50
+    assert c is not None
+    assert 0 < c["p50"] <= b_p50 <= a_p50

@@ -353,6 +353,80 @@ def sample_regional_draws_by_region(region_ids: list[str], n: int, base_seed: in
     return out
 
 
+# ---------------------------------------------------------------------------
+# MATERIAL/SPECIES MIX (Track v4-5). Replaces the blanket "eucalyptus-
+# equivalent" assumption with an explicit CATEGORICAL mixture per CFR, per
+# draw -- so an "unresolved/natural forest" CFR does NOT silently inherit
+# eucalyptus-veneer recovery. Real evidence hierarchy, strongest first:
+#   1. direct source/inventory -- none exists for any of these 276 CFRs.
+#   2. plantation datasets -- none ingested in this repo for this catchment.
+#   3. EO structural/temporal pattern -- NOT used to directly classify
+#      species (that would be exactly the "NDVI -> species" shortcut the
+#      sprint explicitly forbids); left for a future, more careful pass.
+#   4. documented plantation history -- real, external, per-CFR evidence
+#      from zurkt_material_class_evidence.py's web-research overlay, where
+#      it exists (see that script; currently populated only for the
+#      highest-VOI CFRs actually researched).
+#   5. broad prior -- DEFAULT_MATERIAL_MIX_PROBS below, for every CFR with
+#      no stronger evidence. Deliberately dominated by "natural/mixed
+#      forest" and "unresolved", NOT eucalyptus, because these are gazetted
+#      Central Forest Reserves (natural estate by default), not enrolled
+#      commercial plantations -- a real minority of Uganda CFRs ARE known
+#      timber plantations (e.g. under NFA-licensed private management), but
+#      asserting that for an unresearched CFR would be fabrication.
+# ---------------------------------------------------------------------------
+MATERIAL_CLASSES = [
+    "eucalyptus_plantation",
+    "pine_plantation",
+    "mixed_plantation",
+    "natural_hardwood_mixed",
+    "degraded_open",
+    "unresolved",
+]
+
+DEFAULT_MATERIAL_MIX_PROBS = {
+    "eucalyptus_plantation": 0.12,
+    "pine_plantation": 0.08,
+    "mixed_plantation": 0.05,
+    "natural_hardwood_mixed": 0.55,
+    "degraded_open": 0.15,
+    "unresolved": 0.05,
+}
+
+# How suitable each material class is for EVERGREEN'S SPECIFIC product
+# (real, evidenced eucalyptus veneer -- see zurkt_supply_catchment.py). This
+# is a processor-fit multiplier applied on TOP of the existing DBH-based
+# grade-share calculation, not a replacement for it -- grade shares answer
+# "is this log big enough", material fit answers "is this log the right
+# species/product for THIS processor at all". Broad, ASSUMED, not measured.
+MATERIAL_PROCESSOR_FIT: dict[str, float] = {
+    "eucalyptus_plantation": 1.0,
+    "pine_plantation": 0.3,
+    "mixed_plantation": 0.5,
+    "natural_hardwood_mixed": 0.2,
+    "degraded_open": 0.05,
+    "unresolved": 0.3,
+}
+
+
+def sample_material_class_indices(rng: np.random.Generator, n: int, mix_probs: dict[str, float] | None = None) -> np.ndarray:
+    """One material-class draw PER Monte Carlo draw for one CFR (not one
+    fixed class for the whole CFR) -- reflects genuine uncertainty about
+    what is actually growing there, not a false point classification."""
+    probs = mix_probs or DEFAULT_MATERIAL_MIX_PROBS
+    classes = list(probs.keys())
+    p = np.array([probs[c] for c in classes], dtype=float)
+    p = p / p.sum()
+    idx = rng.choice(len(classes), size=n, p=p)
+    return idx
+
+
+def material_fit_multiplier(class_indices: np.ndarray, mix_probs: dict[str, float] | None = None) -> np.ndarray:
+    classes = list((mix_probs or DEFAULT_MATERIAL_MIX_PROBS).keys())
+    fit_by_index = np.array([MATERIAL_PROCESSOR_FIT[c] for c in classes])
+    return fit_by_index[class_indices]
+
+
 FORM_FACTOR = 0.45  # reused from roundwood_production.py's own default
 
 HOURS_PER_WORKDAY = 8.0  # ASSUMED, standard rural haulage workday
@@ -418,6 +492,8 @@ class CfrSupplyState:
     regulatory_admin_cost_usd_per_m3: dict[str, float] = field(default_factory=dict)
     delivered_cost_usd_per_m3: dict[str, float] = field(default_factory=dict)
     annual_suitable_supply_m3: dict[str, float] = field(default_factory=dict)
+    material_class_probabilities: dict[str, float] = field(default_factory=dict)
+    material_class_evidence: str = "broad_prior"
 
 
 def quantiles(x: np.ndarray) -> dict[str, float]:
@@ -472,6 +548,7 @@ def build_cfr_supply_state(
     region_id: str,
     eo_forest_cover_multiplier: float = 1.0,
     eo_maturity_multiplier: float = 1.0,
+    material_mix_probs: dict[str, float] | None = None,
     freeze_variable: str | None = None,
     processor_spec_key: str = "STANDARD",
     payload_direct_m3: float = 10.0,
@@ -577,7 +654,19 @@ def build_cfr_supply_state(
     grade_shares = _grade_shares(dbh, dbh_std, spec)
     g1_share = grade_shares["G1"]
     merchantable_share = grade_shares["G1"] + grade_shares["G2"] + grade_shares["G3"]
-    zurkt_suitable_volume_m3 = available_volume_m3 * merchantable_share
+
+    # MATERIAL/SPECIES MIX (Track v4-5): one material-class draw per Monte
+    # Carlo draw, then a processor-fit multiplier specific to THAT class --
+    # an "unresolved"/"natural_hardwood_mixed" draw does NOT get eucalyptus
+    # veneer recovery just because the grading thresholds happen to be
+    # eucalyptus-shaped. CFR-specific rng (its own species mix is local to
+    # the stand, not a national or regional regime).
+    material_class_indices = sample_material_class_indices(rng, n, material_mix_probs)
+    material_fit = material_fit_multiplier(material_class_indices, material_mix_probs)
+    if freeze_variable == "species_processor_fit":
+        material_fit = np.full(n, float(np.mean(material_fit)))
+
+    zurkt_suitable_volume_m3 = available_volume_m3 * merchantable_share * material_fit
 
     # --- Harvest / extraction / loading cost per m3 (Track 8), reusing
     # roundwood_production.py's wage/price tables and quantity ranges, but
@@ -701,6 +790,10 @@ def build_cfr_supply_state(
         regulatory_admin_cost_usd_per_m3=quantiles(reg_admin_cost_per_m3),
         delivered_cost_usd_per_m3=quantiles(delivered_cost_usd_per_m3),
         annual_suitable_supply_m3=quantiles(annual_suitable_supply_m3),
+        material_class_probabilities=(
+            {c: round(float(np.mean(material_class_indices == i)), 4) for i, c in enumerate((material_mix_probs or DEFAULT_MATERIAL_MIX_PROBS).keys())}
+        ),
+        material_class_evidence="external_evidence" if material_mix_probs is not None else "broad_prior",
     ), {
         "region_id": region_id,
         "haul_km_used": haul_km,
