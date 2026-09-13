@@ -32,13 +32,22 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from app.services.supply.zurkt_scenario import (  # noqa: E402
+    GLOBAL_FUEL_PRICE_LAMBDA_PRIOR,
+    GLOBAL_GRADE_RECOVERY_DBH_BIAS_PRIOR,
+    GLOBAL_STOCKING_MODEL_BIAS_PRIOR,
+    MEASUREMENT_WIDEN_FACTOR,
     MODEL_VERSION,
     PRIORS,
     PRIORS_ANNUAL_HARVEST_FRACTION,
     PROCESSOR_SPECIFICATION_SCENARIOS,
+    REGIONAL_MATURITY_MULTIPLIER_PRIOR,
+    REGIONAL_STOCKED_MULTIPLIER_PRIOR,
     SCENARIO_VERSION,
+    assign_region,
     build_cfr_supply_state,
     quantiles,
+    sample_global_draws,
+    sample_regional_draws_by_region,
 )
 
 N_DRAWS = 2_000
@@ -46,15 +55,72 @@ ECONOMIC_SCREEN_MAX_DELIVERED_COST_USD_PER_M3 = 60.0  # scenario threshold, see 
 OUTLOOK_YEARS = 10
 NET_STOCK_CHANGE_FRACTION_MEAN = -0.01  # ASSUMED, see build_outlook()
 NET_STOCK_CHANGE_FRACTION_STD = 0.03
+GLOBAL_DRAWS_SEED = 5000  # ONE fixed seed for the whole run's systemic tier
+REGIONAL_DRAWS_BASE_SEED = 9001
 
 
 def load_catchment(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def run_all_cfrs(cfrs: list[dict[str, Any]], spec_key: str = "STANDARD") -> list[dict[str, Any]]:
+_EO_CONDITIONED_PRIORS_CACHE: dict[str, dict[str, float]] | None = None
+_DEFAULT_EO_CONDITIONED_PRIORS_PATH: Path | None = None
+
+
+def set_default_eo_conditioned_priors_path(path: Path | None) -> None:
+    """Called once by main() so every run_all_cfrs call in this module
+    (including the ones inside build_sensitivity/build_uncertainty_
+    decomposition/perturb_and_rerun, which don't take the path themselves)
+    uses the SAME EO-conditioned nudges as the baseline run -- otherwise a
+    sensitivity/decomposition rerun would silently compare an EO-nudged
+    baseline against a non-nudged perturbation."""
+    global _DEFAULT_EO_CONDITIONED_PRIORS_PATH
+    _DEFAULT_EO_CONDITIONED_PRIORS_PATH = path
+
+
+def load_eo_conditioned_priors(path: Path | None) -> dict[str, dict[str, float]]:
+    """Track v3-10: entity_id -> {forest_cover_multiplier, maturity_multiplier}
+    from zurkt_eo_conditioned_priors.py's output. Missing/None path -> empty
+    dict, and build_cfr_supply_state defaults every multiplier to 1.0 (no
+    nudge) for any CFR not present here -- never silently invents a nudge."""
+    global _EO_CONDITIONED_PRIORS_CACHE
+    if path is None:
+        return {}
+    if _EO_CONDITIONED_PRIORS_CACHE is None:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        _EO_CONDITIONED_PRIORS_CACHE = {
+            row["entity_id"]: {
+                "forest_cover_multiplier": row["forest_cover_multiplier"],
+                "maturity_multiplier": row["maturity_multiplier"],
+            }
+            for row in data["cfrs"]
+        }
+    return _EO_CONDITIONED_PRIORS_CACHE
+
+
+def run_all_cfrs(
+    cfrs: list[dict[str, Any]],
+    spec_key: str = "STANDARD",
+    eo_conditioned_priors_path: Path | None = "__default__",
+    freeze_target: tuple[str, str] | None = None,
+) -> list[dict[str, Any]]:
+    """Track v3-2/3: samples the SYSTEMIC (global) and REGIONAL tiers ONCE
+    per call -- shared identically across every CFR below -- before looping
+    over CFRs for their own CFR-SPECIFIC (+ MEASUREMENT-widened) residual
+    draws. This is what makes cross-CFR aggregation reflect hierarchical,
+    not purely independent, uncertainty."""
+    if eo_conditioned_priors_path == "__default__":
+        eo_conditioned_priors_path = _DEFAULT_EO_CONDITIONED_PRIORS_PATH
+    global_draws = sample_global_draws(np.random.default_rng(GLOBAL_DRAWS_SEED), N_DRAWS)
+    region_ids = [assign_region(cfr["lat"], cfr["lon"]) for cfr in cfrs]
+    regional_draws_by_region = sample_regional_draws_by_region(region_ids, N_DRAWS, REGIONAL_DRAWS_BASE_SEED)
+    eo_conditioned = load_eo_conditioned_priors(eo_conditioned_priors_path)
+
     results = []
     for i, cfr in enumerate(cfrs):
+        region_id = region_ids[i]
+        eo_nudge = eo_conditioned.get(cfr["entity_id"], {})
+        freeze_variable = freeze_target[1] if freeze_target is not None and freeze_target[0] == cfr["entity_id"] else None
         state, raw = build_cfr_supply_state(
             entity_id=cfr["entity_id"],
             canonical_name=cfr["canonical_name"],
@@ -63,9 +129,15 @@ def run_all_cfrs(cfrs: list[dict[str, Any]], spec_key: str = "STANDARD") -> list
             road_km=cfr.get("road_km"),
             route_source=cfr.get("route_source", "unavailable"),
             eo_evidence_status=cfr.get("eo_evidence_status", "not_yet_processed"),
+            global_draws=global_draws,
+            regional_draws=regional_draws_by_region[region_id],
+            region_id=region_id,
+            eo_forest_cover_multiplier=eo_nudge.get("forest_cover_multiplier", 1.0),
+            eo_maturity_multiplier=eo_nudge.get("maturity_multiplier", 1.0),
+            freeze_variable=freeze_variable,
             processor_spec_key=spec_key,
             n_draws=N_DRAWS,
-            rng_seed=1000 + i,  # unique per CFR -> independent draws, valid for cross-CFR aggregation
+            rng_seed=1000 + i,  # unique per CFR -> independent CFR-SPECIFIC residual only
         )
         results.append({"cfr": cfr, "state": state, "raw": raw})
     return results
@@ -418,61 +490,337 @@ def build_verification_priorities(results: list[dict[str, Any]], top_n: int = 15
     }
 
 
+EVSI_VARIABLE_KEYS = ["access_legal_status", "stocked_fraction", "maturity", "species_processor_fit"]
+EVSI_RECOMMENDED_METHOD = {
+    "access_legal_status": "document/legal verification (permit, NFA management-plan, concession registry check)",
+    "stocked_fraction": "rapid reconnaissance transect + drone/very-high-res imagery over the CFR polygon",
+    "maturity": "rapid reconnaissance + a small DBH/age-class plot sample",
+    "species_processor_fit": "species survey (transect) + a DBH sample matched against Evergreen's veneer-log requirements",
+}
+EVSI_REFERENCE_DEMAND_M3_PER_YEAR = 150_000  # a mid-ladder demand level, not the largest or smallest
+
+
+def build_evsi(cfrs: list[dict[str, Any]], base_results: list[dict[str, Any]], base_dispatch: dict[str, Any], top_n_cfrs: int = 5) -> dict[str, Any]:
+    """Track v3-15/16. For the top N CFRs (by the existing VOI-proxy
+    ranking) x all 4 candidate verification variables, simulate 'perfect
+    information about this CFR's true value of this one variable' (see
+    zurkt_scenario.build_cfr_supply_state's freeze_variable) and measure
+    the resulting change in expected shortfall at a reference demand level
+    -- an actual decision-relevant re-simulation, not merely a variance
+    proxy. Ranks CFR+VARIABLE pairs, not just CFRs."""
+    base_row = next(r for r in base_dispatch["demand_reliability"] if r["demand_m3_per_year"] == EVSI_REFERENCE_DEMAND_M3_PER_YEAR)
+    base_shortfall = base_row["expected_shortfall_m3"]
+    base_p_meets = base_row["p_supply_meets_demand"]
+
+    verification_ranking = build_verification_priorities(base_results, top_n=top_n_cfrs)["top_verification_targets"]
+
+    rows = []
+    for target in verification_ranking:
+        entity_id = target["entity_id"]
+        for variable_key in EVSI_VARIABLE_KEYS:
+            frozen_results = run_all_cfrs(cfrs, "STANDARD", freeze_target=(entity_id, variable_key))
+            frozen_dispatch = build_drawwise_dispatch(frozen_results, demand_levels=[EVSI_REFERENCE_DEMAND_M3_PER_YEAR])
+            frozen_row = frozen_dispatch["demand_reliability"][0]
+            shortfall_reduction = base_shortfall - frozen_row["expected_shortfall_m3"]
+            rows.append(
+                {
+                    "entity_id": entity_id,
+                    "canonical_name": target["canonical_name"],
+                    "variable": variable_key,
+                    "base_expected_shortfall_m3": base_shortfall,
+                    "post_verification_expected_shortfall_m3": frozen_row["expected_shortfall_m3"],
+                    "expected_shortfall_reduction_m3": round(shortfall_reduction, 1),
+                    "base_p_supply_meets_demand": base_p_meets,
+                    "post_verification_p_supply_meets_demand": frozen_row["p_supply_meets_demand"],
+                    "reliability_gain": round(frozen_row["p_supply_meets_demand"] - base_p_meets, 4),
+                    "recommended_method": EVSI_RECOMMENDED_METHOD[variable_key],
+                }
+            )
+    rows.sort(key=lambda r: r["expected_shortfall_reduction_m3"], reverse=True)
+    return {
+        "scenario_version": SCENARIO_VERSION,
+        "model_version": MODEL_VERSION,
+        "reference_demand_m3_per_year": EVSI_REFERENCE_DEMAND_M3_PER_YEAR,
+        "method": "For each of the top-VOI CFRs x 4 candidate variables, re-simulate the FULL model with that "
+        "CFR's one variable collapsed to its own realized mean (i.e. as if perfectly verified), everything else "
+        "left stochastic, and re-run the draw-wise dispatch at the reference demand level. Ranked by the "
+        "resulting reduction in expected shortfall -- an actual decision re-simulation, not a variance proxy.",
+        "ranked_cfr_variable_pairs": rows,
+    }
+
+
+def build_field_programme(evsi: dict[str, Any], top_n: int = 10) -> dict[str, Any]:
+    """Track v3-16: a practical field verification plan from the EVSI
+    ranking -- matches METHOD to the kind of uncertainty (never sends an
+    inventory crew to resolve a legal-status question)."""
+    top_pairs = evsi["ranked_cfr_variable_pairs"][:top_n]
+    plan = []
+    for i, pair in enumerate(top_pairs):
+        plan.append(
+            {
+                "priority": i + 1,
+                "canonical_name": pair["canonical_name"],
+                "entity_id": pair["entity_id"],
+                "variable_to_measure": pair["variable"],
+                "why": (
+                    f"Verifying this variable for {pair['canonical_name']} is expected to reduce shortfall at "
+                    f"{EVSI_REFERENCE_DEMAND_M3_PER_YEAR:,} m3/yr demand by ~{pair['expected_shortfall_reduction_m3']:,.0f} m3 "
+                    f"(reliability {pair['base_p_supply_meets_demand']:.0%} -> {pair['post_verification_p_supply_meets_demand']:.0%})."
+                ),
+                "spatial_target": pair["entity_id"],
+                "recommended_method": pair["recommended_method"],
+                "expected_decision_impact": {
+                    "expected_shortfall_reduction_m3": pair["expected_shortfall_reduction_m3"],
+                    "reliability_gain": pair["reliability_gain"],
+                },
+            }
+        )
+    return {
+        "reference_demand_m3_per_year": EVSI_REFERENCE_DEMAND_M3_PER_YEAR,
+        "note": "Method is matched to the uncertainty type -- legal/access questions get document/legal "
+        "verification, never an inventory crew; stocking/species questions get reconnaissance or plot sampling.",
+        "plan": plan,
+    }
+
+
 DEMAND_LADDER_M3_PER_YEAR = [25_000, 50_000, 100_000, 150_000, 200_000, 300_000]
 
 
-def build_demand_ladder(
-    results: list[dict[str, Any]], curve: dict[str, Any], demand_levels: list[int] = DEMAND_LADDER_M3_PER_YEAR
-) -> dict[str, Any]:
-    """Reliability of the addressable supply against a ladder of realistic
-    demand scenarios (NOT fake LOW/MEDIUM/HIGH facts -- Evergreen's real
-    intake capacity is not known, so this reports P(supply>=demand) and
-    shortfall across a spread of plausible plant sizes instead of pretending
-    one number is 'the' demand). Reuses the SAME joint aggregate draws as
-    the supply curve's terminal row, and the SAME cost-ranked cumulative P50
-    curve for required-CFR-count/marginal-cost, so this table can never
-    silently disagree with the curve or the top-level aggregate."""
-    aggregate_draws = np.sum([r["raw"]["raw_annual_suitable_supply_m3"] for r in results], axis=0)
-    points = curve["points"]
+def build_technical_potential(results: list[dict[str, Any]]) -> dict[str, Any]:
+    """Track v3-1: fixes the bug flagged explicitly by the sprint -- the
+    prior report's technical-potential P10/P50/P90 were a sum of each CFR's
+    own quantiles (sum(P50_i) etc.), which is a conservative-ish BOUND, not
+    a true distribution quantile, and is inconsistent with how every other
+    aggregate in this pipeline is computed. Fixed the same way as the
+    commercially-addressable aggregate: sum RAW per-draw arrays first (here,
+    raw_harvestable_volume_m3 -- pre-access-screen biophysical potential),
+    THEN take quantiles of the joint sum."""
+    aggregate_draws = np.sum([r["raw"]["raw_harvestable_volume_m3"] for r in results], axis=0)
+    return {
+        "scenario_version": SCENARIO_VERSION,
+        "model_version": MODEL_VERSION,
+        "method": "sum of raw per-CFR harvestable-volume draws, THEN quantiles of the joint sum -- "
+        "NOT sum(P10_i)/sum(P50_i)/sum(P90_i) (that was the v2 bug; see build_technical_potential() docstring).",
+        "technical_potential_m3": quantiles(aggregate_draws),
+    }
 
-    rows = []
+
+def build_drawwise_dispatch(results: list[dict[str, Any]], demand_levels: list[int] = DEMAND_LADDER_M3_PER_YEAR) -> dict[str, Any]:
+    """Track v3-5: upgrades demand reliability from ranking CFRs ONCE by
+    P50 delivered cost to a genuine per-Monte-Carlo-world dispatch. For
+    EVERY draw j independently: rank all 276 CFRs by THEIR OWN delivered
+    cost in world j (not the P50 cost), cumulatively sum their supply in
+    that same order, and read off (for each demand level) how many CFRs
+    world j needed and at what marginal cost. This is strictly stronger
+    than ranking once by P50 cost: it lets a CFR that happens to be cheap
+    in a below-average-cost world contribute earlier in THAT world's
+    dispatch, and lets source-count/marginal-cost/concentration come out
+    as full distributions instead of single point reads off one curve.
+
+    Because delivered cost and annual supply for every CFR were built from
+    the SAME hierarchical draws (see zurkt_scenario.build_cfr_supply_state),
+    correlated systemic/regional effects are automatically reflected here
+    too -- a high-fuel-price world raises cost for every CFR simultaneously,
+    which changes the RELATIVE ranking far less than it changes the
+    absolute cost level, exactly as it should.
+    """
+    n_cfrs = len(results)
+    cost_matrix = np.array([r["raw"]["raw_delivered_cost_usd_per_m3"] for r in results])  # (n_cfrs, n_draws)
+    supply_matrix = np.array([r["raw"]["raw_annual_suitable_supply_m3"] for r in results])  # (n_cfrs, n_draws)
+    entity_ids = [r["state"].entity_id for r in results]
+
+    order = np.argsort(cost_matrix, axis=0)  # per-draw cost rank
+    sorted_cost = np.take_along_axis(cost_matrix, order, axis=0)
+    sorted_supply = np.take_along_axis(supply_matrix, order, axis=0)
+    cum_supply = np.cumsum(sorted_supply, axis=0)  # (n_cfrs, n_draws)
+    total_supply_per_draw = cum_supply[-1, :]
+
+    # Concentration: a SEPARATE per-draw ranking by volume (largest supplier
+    # first), not the cost ranking above -- same distinction already made
+    # for the P50-only version, now as full per-draw distributions.
+    vol_order = np.argsort(-supply_matrix, axis=0)
+    sorted_by_vol = np.take_along_axis(supply_matrix, vol_order, axis=0)
+    total_safe = np.maximum(total_supply_per_draw, 1e-9)
+    top1_share_per_draw = sorted_by_vol[0, :] / total_safe
+    top5_share_per_draw = sorted_by_vol[: min(5, n_cfrs), :].sum(axis=0) / total_safe
+    top10_share_per_draw = sorted_by_vol[: min(10, n_cfrs), :].sum(axis=0) / total_safe
+
+    demand_rows = []
     for d in demand_levels:
-        p_meets = float(np.mean(aggregate_draws >= d))
-        shortfall = np.maximum(d - aggregate_draws, 0.0)
-        shortfall_p10, shortfall_p50, shortfall_p90 = (round(float(v), 1) for v in np.percentile(shortfall, [10, 50, 90]))
+        reaches = cum_supply >= d  # (n_cfrs, n_draws)
+        any_reach = reaches.any(axis=0)
+        first_idx = np.argmax(reaches, axis=0)  # 0 where never True -- masked out below via any_reach
+        shortfall = np.maximum(d - total_supply_per_draw, 0.0)
 
-        required_n = None
-        marginal_cost = None
-        for i, p in enumerate(points):
-            if p["cumulative_annual_supply_m3_p50"] >= d:
-                required_n = i + 1
-                marginal_cost = p["delivered_cost_usd_per_m3_p50"]
-                break
+        source_count = np.where(any_reach, first_idx + 1, np.nan).astype(float)
+        marginal_cost = np.where(any_reach, np.take_along_axis(sorted_cost, first_idx[None, :], axis=0)[0], np.nan)
 
-        rows.append(
+        def _nanq(arr: np.ndarray) -> dict[str, float | None]:
+            if np.all(np.isnan(arr)):
+                return {"p10": None, "p50": None, "p90": None}
+            p10, p50, p90 = np.nanpercentile(arr, [10, 50, 90])
+            return {"p10": round(float(p10), 1), "p50": round(float(p50), 1), "p90": round(float(p90), 1)}
+
+        demand_rows.append(
             {
                 "demand_m3_per_year": d,
-                "p_supply_meets_demand": round(p_meets, 3),
+                "p_supply_meets_demand": round(float(np.mean(any_reach)), 3),
                 "expected_shortfall_m3": round(float(np.mean(shortfall)), 1),
-                "shortfall_p10_m3": shortfall_p10,
-                "shortfall_p50_m3": shortfall_p50,
-                "shortfall_p90_m3": shortfall_p90,
-                "required_source_cfr_count": required_n,
-                "marginal_delivered_cost_usd_per_m3": marginal_cost,
-                "note_if_unreachable": None if required_n is not None else "No cost-ranked cumulative P50 reaches this demand level within the catchment.",
+                "shortfall_m3": quantiles(shortfall),
+                "required_source_cfr_count": _nanq(source_count),
+                "marginal_delivered_cost_usd_per_m3": _nanq(marginal_cost),
             }
         )
 
     return {
         "scenario_version": SCENARIO_VERSION,
         "model_version": MODEL_VERSION,
-        "method": "P(supply>=demand) and shortfall quantiles from the joint aggregate annual-supply draws "
-        "(identical matrix to the supply curve's terminal row). required_source_cfr_count and "
-        "marginal_delivered_cost_usd_per_m3 are read off the same cost-ranked cumulative P50 curve reported in "
-        "zurkt-delivered-supply-curve. This is a demand LADDER for planning purposes, not a claim about "
-        "Evergreen's actual intake capacity, which is not known.",
+        "method": "Draw-wise economic dispatch (Track v3-5): every Monte Carlo world ranks all CFRs by ITS OWN "
+        "delivered cost, dispatches cheapest-first, and every reported quantity (required source count, marginal "
+        "cost, shortfall, concentration) is a distribution over worlds -- not a single read-off of one P50-ranked "
+        "curve. This is the correct dispatch to use for demand reliability; the P50-cost-ranked "
+        "zurkt-delivered-supply-curve remains useful as a single illustrative curve but understates dispatch "
+        "variability across worlds.",
         "demand_scenarios_m3_per_year": demand_levels,
-        "results": rows,
+        "demand_reliability": demand_rows,
+        "source_concentration_distribution": {
+            "top1_share": quantiles(top1_share_per_draw),
+            "top5_share": quantiles(top5_share_per_draw),
+            "top10_share": quantiles(top10_share_per_draw),
+            "note": "Per-draw shares of the joint aggregate supply held by the single largest / top 5 / top 10 "
+            "suppliers in THAT world -- a distribution, not the single P50-based figure in the supply curve.",
+        },
+        "aggregate_annual_suitable_supply_m3": quantiles(total_supply_per_draw),
+    }
+
+
+UNCERTAINTY_GROUPS: dict[str, dict[str, list[str]]] = {
+    "access_legal": {"priors": ["commercial_availability_fraction"], "globals": []},
+    "forested_stocked_fraction": {"priors": ["relevant_forest_fraction", "stocked_fraction"], "globals": ["GLOBAL_STOCKING_MODEL_BIAS_PRIOR", "REGIONAL_STOCKED_MULTIPLIER_PRIOR"]},
+    "maturity": {"priors": ["mature_harvestable_fraction"], "globals": ["REGIONAL_MATURITY_MULTIPLIER_PRIOR"]},
+    "species_grade_recovery": {"priors": ["within_stand_dbh_cv"], "globals": ["GLOBAL_GRADE_RECOVERY_DBH_BIAS_PRIOR"]},
+    "procurement_price": {"priors": ["stumpage_price_usd_per_m3"], "globals": []},
+    "haulage": {"priors": [], "globals": ["AVG_TRUCK_SPEED_KMPH_PRIOR", "GLOBAL_FUEL_PRICE_LAMBDA_PRIOR"]},
+    "growth_stocking_stand": {"priors": ["stems_per_ha", "mean_tree_dbh_cm", "mean_tree_height_m"], "globals": []},
+}
+
+
+def _frozen_prior(prior: Any) -> Any:
+    """Collapse a Prior to (approximately) a point mass at its own mean --
+    used both for uncertainty decomposition (Track v3-18) and, per-CFR, for
+    EVSI (Track v3-15): 'if this quantity were perfectly known, how much
+    would the decision-relevant output change.'"""
+    import app.services.supply.zurkt_scenario as zs
+
+    if prior.kind == "beta":
+        mean = prior.params["a"] / (prior.params["a"] + prior.params["b"])
+        conc = 1_000_000.0
+        return zs.Prior("beta", {"a": mean * conc, "b": (1 - mean) * conc}, "FROZEN for decomposition/EVSI: collapsed to its prior mean.")
+    new_params = dict(prior.params)
+    new_params["std"] = 1e-9
+    return zs.Prior("normal", new_params, "FROZEN for decomposition/EVSI: collapsed to its prior mean.")
+
+
+def freeze_group_and_rerun(cfrs: list[dict[str, Any]], group_key: str) -> np.ndarray:
+    """Rerun the full model with every Prior in one uncertainty GROUP
+    collapsed to its own mean (see UNCERTAINTY_GROUPS), everything else
+    left stochastic, and return the joint aggregate annual-supply draws.
+    Comparing this array's variance against the unperturbed baseline's is a
+    transparent 'grouped collapse' variance-decomposition test (Track
+    v3-18) -- not a formal Sobol index, but a documented, reproducible
+    approximation the sprint explicitly allows."""
+    import app.services.supply.zurkt_scenario as zs
+
+    group = UNCERTAINTY_GROUPS[group_key]
+    base_priors = {k: zs.PRIORS[k] for k in group["priors"]}
+    base_globals = {name: getattr(zs, name) for name in group["globals"]}
+    try:
+        for key in group["priors"]:
+            zs.PRIORS[key] = _frozen_prior(base_priors[key])
+        for name in group["globals"]:
+            setattr(zs, name, _frozen_prior(base_globals[name]))
+        results = run_all_cfrs(cfrs, "STANDARD")
+        return np.sum([r["raw"]["raw_annual_suitable_supply_m3"] for r in results], axis=0)
+    finally:
+        for key, val in base_priors.items():
+            zs.PRIORS[key] = val
+        for name, val in base_globals.items():
+            setattr(zs, name, val)
+
+
+def build_uncertainty_decomposition(cfrs: list[dict[str, Any]], base_results: list[dict[str, Any]]) -> dict[str, Any]:
+    """Track v3-18. Grouped-collapse variance decomposition: freeze each
+    uncertainty group to its mean in turn, measure how much the aggregate
+    annual-supply variance shrinks, express as a share of total baseline
+    variance. Groups are NOT independent (interactions exist), so shares do
+    not have to sum to exactly 100% -- documented as an approximation, not
+    a formal Sobol/ANOVA decomposition."""
+    base_draws = np.sum([r["raw"]["raw_annual_suitable_supply_m3"] for r in base_results], axis=0)
+    base_var = float(np.var(base_draws))
+
+    rows = []
+    for group_key in UNCERTAINTY_GROUPS:
+        frozen_draws = freeze_group_and_rerun(cfrs, group_key)
+        frozen_var = float(np.var(frozen_draws))
+        variance_removed_fraction = max(0.0, (base_var - frozen_var) / base_var) if base_var > 0 else 0.0
+        rows.append(
+            {
+                "uncertainty_group": group_key,
+                "baseline_variance": round(base_var, 1),
+                "variance_when_frozen": round(frozen_var, 1),
+                "approx_share_of_variance": round(variance_removed_fraction, 4),
+            }
+        )
+    rows.sort(key=lambda r: r["approx_share_of_variance"], reverse=True)
+    return {
+        "scenario_version": SCENARIO_VERSION,
+        "model_version": MODEL_VERSION,
+        "method": "Grouped-collapse test (Track v3-18): each uncertainty group's Priors are collapsed to their own "
+        "mean (freeze_group_and_rerun), one group at a time, and the resulting drop in aggregate annual-supply "
+        "variance is reported as an approximate share of total variance. Groups can interact, so shares are not "
+        "guaranteed to sum to 100% -- this is a transparent approximation, not a formal Sobol/ANOVA decomposition.",
+        "baseline_variance": round(base_var, 1),
+        "groups": rows,
+    }
+
+
+def build_three_tier_supply_summary(
+    technical_potential: dict[str, Any], curve: dict[str, Any], access_state: dict[str, Any] | None
+) -> dict[str, Any]:
+    """Track v3-6: keeps three DIFFERENT supply concepts explicit and
+    separate, per the sprint's own naming --
+
+    A. PHYSICAL/BIOPHYSICAL POTENTIAL   -- technical_potential_m3 (pre-
+       access-screen standing/harvestable volume; build_technical_potential()).
+    B. SCENARIO-ADDRESSABLE SUPPLY       -- the curve's aggregate_annual_
+       suitable_supply_m3, i.e. physical supply after a SCENARIO (ASSUMED,
+       not evidence-based) commercial-availability fraction and processor-
+       fit screen.
+    C. EVIDENCE-SUPPORTED COMMERCIALLY ADDRESSABLE SUPPLY -- physical
+       supply restricted to ONLY CFRs with a real KNOWN_POTENTIALLY_
+       AVAILABLE access-state record (zurkt_access_state.py). As of this
+       run, zero CFRs have that record (see zurkt-access-state-v3.json) --
+       so this is honestly reported as 0, not silently promoted to B's
+       number. Until real access/legal evidence is ingested, B must NEVER
+       be presented as if it were C."""
+    b_p50 = curve["aggregate_annual_suitable_supply_m3"]["p50"]
+    known_available_count = access_state["counts"]["KNOWN_POTENTIALLY_AVAILABLE"] if access_state else None
+    return {
+        "scenario_version": SCENARIO_VERSION,
+        "model_version": MODEL_VERSION,
+        "a_physical_biophysical_potential_m3": technical_potential["technical_potential_m3"],
+        "b_scenario_addressable_supply_m3": curve["aggregate_annual_suitable_supply_m3"],
+        "c_evidence_supported_addressable_supply_m3": (
+            {"p10": 0.0, "p50": 0.0, "p90": 0.0} if known_available_count == 0 else None
+        ),
+        "c_note": (
+            "0 m3/yr: zero of the 276 catchment CFRs currently carry a real, ingested legal/access-permit "
+            "record (see zurkt-access-state-v3.json) -- all 276 are UNKNOWN, not KNOWN_POTENTIALLY_AVAILABLE. "
+            "This is the honest answer to 'how much is evidence-supported', not a placeholder failure."
+            if known_available_count == 0
+            else "access_state input not provided to this run -- evidence-supported tier not computed."
+        ),
+        "warning": f"B (scenario-addressable, P50={b_p50}) must NEVER be presented as if it were C (evidence-supported) -- they answer different questions.",
     }
 
 
@@ -521,12 +869,27 @@ def main() -> None:
     parser.add_argument("--out-dir", required=True, type=Path)
     parser.add_argument(
         "--scenario-tag",
-        default="v2",
+        default="v3",
         help="Suffix for output filenames (e.g. 'v2' -> zurkt-delivered-supply-curve-v2.json). "
         "Never reuse a tag whose files you want to preserve -- v1 outputs must not be overwritten.",
     )
+    parser.add_argument(
+        "--eo-conditioned-priors",
+        type=Path,
+        default=None,
+        help="Optional zurkt_eo_conditioned_priors.py output JSON -- applies real per-CFR NDVI-based nudges "
+        "(Track v3-10). Omit to run without EO conditioning (every multiplier defaults to 1.0).",
+    )
+    parser.add_argument(
+        "--access-state",
+        type=Path,
+        default=None,
+        help="Optional zurkt_access_state.py output JSON -- used only to build the evidence-supported "
+        "three-tier supply summary (Track v3-6); does not change the Monte Carlo itself.",
+    )
     args = parser.parse_args()
     tag = args.scenario_tag
+    set_default_eo_conditioned_priors_path(args.eo_conditioned_priors)
 
     data = load_catchment(args.input)
     cfrs = data["cfrs"]
@@ -560,6 +923,38 @@ def main() -> None:
             key: {"kind": p.kind, "params": p.params, "rationale": p.rationale, "evidence_class": p.evidence_class}
             for key, p in PRIORS.items()
         },
+        "hierarchical_uncertainty_model": {
+            "tiers": {
+                "systemic_global": {
+                    "description": "One shared draw per Monte Carlo world, applied IDENTICALLY to every CFR -- does not shrink as CFR count grows.",
+                    "priors": {
+                        "commercial_availability_fraction": "shared national access regime (PRIORS dict)",
+                        "stumpage_price_usd_per_m3": "shared national procurement-price regime (PRIORS dict)",
+                        "fuel_price_lambda": {"kind": GLOBAL_FUEL_PRICE_LAMBDA_PRIOR.kind, "params": GLOBAL_FUEL_PRICE_LAMBDA_PRIOR.params, "rationale": GLOBAL_FUEL_PRICE_LAMBDA_PRIOR.rationale},
+                        "avg_truck_speed_kmph": "shared road-quality/fleet-speed regime (see AVG_TRUCK_SPEED_KMPH_PRIOR)",
+                        "stocking_model_bias": {"kind": GLOBAL_STOCKING_MODEL_BIAS_PRIOR.kind, "params": GLOBAL_STOCKING_MODEL_BIAS_PRIOR.params, "rationale": GLOBAL_STOCKING_MODEL_BIAS_PRIOR.rationale},
+                        "grade_recovery_dbh_bias_cm": {"kind": GLOBAL_GRADE_RECOVERY_DBH_BIAS_PRIOR.kind, "params": GLOBAL_GRADE_RECOVERY_DBH_BIAS_PRIOR.params, "rationale": GLOBAL_GRADE_RECOVERY_DBH_BIAS_PRIOR.rationale},
+                    },
+                },
+                "regional_cluster": {
+                    "description": "One shared draw per (0.5-degree grid cell, world), applied to every CFR in that ~55km cell -- a placeholder for a real ecological/administrative region layer.",
+                    "priors": {
+                        "stocked_fraction_multiplier": {"kind": REGIONAL_STOCKED_MULTIPLIER_PRIOR.kind, "params": REGIONAL_STOCKED_MULTIPLIER_PRIOR.params, "rationale": REGIONAL_STOCKED_MULTIPLIER_PRIOR.rationale},
+                        "maturity_multiplier": {"kind": REGIONAL_MATURITY_MULTIPLIER_PRIOR.kind, "params": REGIONAL_MATURITY_MULTIPLIER_PRIOR.params, "rationale": REGIONAL_MATURITY_MULTIPLIER_PRIOR.rationale},
+                    },
+                },
+                "cfr_specific": {
+                    "description": "Independent per-CFR draws -- the ONLY tier in v1/v2. Genuinely averages out across 276 CFRs, unlike the two tiers above.",
+                    "priors": ["relevant_forest_fraction", "stocked_fraction", "mature_harvestable_fraction", "stems_per_ha", "mean_tree_dbh_cm", "mean_tree_height_m", "wood_density_t_per_m3", "within_stand_dbh_cv"],
+                },
+                "measurement": {
+                    "description": "CFR-specific but WIDER for CFRs with no EO observations processed yet -- a coarse proxy for 'we know less about this CFR', not a real EO-conditioned posterior.",
+                    "widen_factor": MEASUREMENT_WIDEN_FACTOR,
+                    "applies_to": ["relevant_forest_fraction", "stocked_fraction"],
+                },
+            },
+            "dependence_structure": "Multiplicative shared shocks (global/regional draws multiply or additively bias each CFR's own CFR-specific draw) rather than a full joint covariance/Gaussian-process model -- a documented first cut per the sprint's own guidance to avoid over-building this for v3.",
+        },
         "annual_harvest_fraction_prior": {
             "kind": PRIORS_ANNUAL_HARVEST_FRACTION.kind,
             "params": PRIORS_ANNUAL_HARVEST_FRACTION.params,
@@ -582,6 +977,29 @@ def main() -> None:
             "Standing-timber/procurement cost is a separate ASSUMED line item (stumpage_price_usd_per_m3 prior) "
             "with no real Uganda CFR stumpage price observation behind it -- kept broad and distinct from "
             "harvest/extraction/haulage/regulatory cost, never blended into one number.",
+            "v3: uncertainty is now hierarchical (systemic/regional/CFR-specific/measurement tiers -- see "
+            "hierarchical_uncertainty_model above), which is why v3's P10-P90 spread is much wider than v2's "
+            "despite a similar P50 -- v2's independent-per-CFR-only structure understated real aggregate "
+            "uncertainty by letting 276 CFRs' noise average out more than our actual knowledge justifies.",
+            "Region assignment (assign_region()) is a 0.5-degree lat/lon grid, not a real ecological, rainfall, "
+            "forest-type or administrative-management zone -- a placeholder cluster structure, not evidence.",
+            "The access/legal-status search of this repo's ingested data found NO per-CFR license/concession/"
+            "management-plan/protection-tier records anywhere -- all 276 CFRs carry the SAME generic 'gazetted "
+            "Central Forest Reserve' designation with no further differentiation, so the commercial_availability_"
+            "fraction regime is applied uniformly (KNOWN_POTENTIALLY_AVAILABLE: 0, KNOWN_RESTRICTED: 0, UNKNOWN: "
+            "276 -- see zurkt-access-state-v3.json). Evidence-supported commercially-addressable supply is "
+            "therefore 0 m3/yr until real access records are ingested; this is reported explicitly, not hidden.",
+            "Material/species mixture is NOT yet implemented (still a blanket eucalyptus-equivalent assumption "
+            "for grading/pricing) -- Evergreen's real export records (eucalyptus veneer) make this a credible "
+            "RELEVANT material class for this specific processor, but do not establish that all 276 CFRs' supply "
+            "is eucalyptus, nor that current grade thresholds are Evergreen's real buying spec.",
+            "EO-conditioning of CFR priors is NOT yet implemented beyond the binary observed/not-yet-processed "
+            "MEASUREMENT-tier widening above, despite real per-CFR NDVI/NDMI/NBR time series existing in "
+            "observations.eo_feature_value for all 276 catchment CFRs -- a genuine, scoped-out opportunity for a "
+            "follow-up pass (see final report).",
+            "Landsat long-history analysis does NOT exist for Mabira, South Busoga or Buyaga Dam (checked "
+            "directly) -- the only Landsat long-history output in this repository covers three unrelated CFRs "
+            "(Epor, Zulia, Musamya) as a standalone file, never written to the canonical database.",
         ],
         "catchment_size": len(cfrs),
         "economic_screen_threshold_usd_per_m3": ECONOMIC_SCREEN_MAX_DELIVERED_COST_USD_PER_M3,
@@ -607,13 +1025,26 @@ def main() -> None:
     (args.out_dir / f"zurkt-10yr-outlook-{tag}.json").write_text(json.dumps(outlook, indent=2), encoding="utf-8")
     print(f"Wrote zurkt-10yr-outlook-{tag}.json (year 1 {outlook['years'][0]['annual_supply_m3']}, year 10 {outlook['years'][9]['annual_supply_m3']})")
 
-    print("Building demand ladder (25k-300k m3/yr reliability)...")
-    demand_ladder = build_demand_ladder(results, curve)
-    (args.out_dir / f"zurkt-demand-reliability-{tag}.json").write_text(json.dumps(demand_ladder, indent=2), encoding="utf-8")
+    print("Building technical-potential aggregate (joint draws, v3 fix)...")
+    technical_potential = build_technical_potential(results)
+    (args.out_dir / f"zurkt-technical-potential-{tag}.json").write_text(json.dumps(technical_potential, indent=2), encoding="utf-8")
+    print(f"Wrote zurkt-technical-potential-{tag}.json ({technical_potential['technical_potential_m3']})")
+
+    access_state = json.loads(args.access_state.read_text(encoding="utf-8")) if args.access_state else None
+    three_tier = build_three_tier_supply_summary(technical_potential, curve, access_state)
+    (args.out_dir / f"zurkt-three-tier-supply-{tag}.json").write_text(json.dumps(three_tier, indent=2), encoding="utf-8")
+    print(f"Wrote zurkt-three-tier-supply-{tag}.json")
+    print(f"  A physical potential:  {three_tier['a_physical_biophysical_potential_m3']}")
+    print(f"  B scenario-addressable: {three_tier['b_scenario_addressable_supply_m3']}")
+    print(f"  C evidence-supported:   {three_tier['c_evidence_supported_addressable_supply_m3']}")
+
+    print("Building draw-wise economic dispatch + demand reliability...")
+    dispatch = build_drawwise_dispatch(results)
+    (args.out_dir / f"zurkt-demand-reliability-{tag}.json").write_text(json.dumps(dispatch, indent=2), encoding="utf-8")
     print(f"Wrote zurkt-demand-reliability-{tag}.json")
-    for row in demand_ladder["results"]:
+    for row in dispatch["demand_reliability"]:
         print(f"  {row['demand_m3_per_year']:>7,} m3/yr: P(supply>=demand)={row['p_supply_meets_demand']}, "
-              f"shortfall P50={row['shortfall_p50_m3']}, CFRs needed={row['required_source_cfr_count']}")
+              f"shortfall P50={row['shortfall_m3']['p50']}, CFRs needed(P50)={row['required_source_cfr_count']['p50']}")
 
     print("Running sensitivity analysis (6 one-variable cases)...")
     sensitivity = build_sensitivity(cfrs, results)
@@ -628,6 +1059,24 @@ def main() -> None:
     print(f"Wrote zurkt-verification-priorities-{tag}.json")
     for row in verification["top_verification_targets"][:5]:
         print(f"  #{verification['top_verification_targets'].index(row)+1} {row['canonical_name']}: VOI-proxy {row['value_of_information_proxy']}")
+
+    print("Running uncertainty decomposition (7 grouped-collapse tests)...")
+    decomposition = build_uncertainty_decomposition(cfrs, results)
+    (args.out_dir / f"zurkt-uncertainty-decomposition-{tag}.json").write_text(json.dumps(decomposition, indent=2), encoding="utf-8")
+    print(f"Wrote zurkt-uncertainty-decomposition-{tag}.json")
+    for row in decomposition["groups"]:
+        print(f"  {row['uncertainty_group']}: ~{round(row['approx_share_of_variance']*100,1)}% of variance")
+
+    print("Running EVSI re-simulation (top CFRs x 4 candidate variables)...")
+    evsi = build_evsi(cfrs, results, dispatch, top_n_cfrs=5)
+    (args.out_dir / f"zurkt-evsi-{tag}.json").write_text(json.dumps(evsi, indent=2), encoding="utf-8")
+    print(f"Wrote zurkt-evsi-{tag}.json")
+    for row in evsi["ranked_cfr_variable_pairs"][:5]:
+        print(f"  {row['canonical_name']} / {row['variable']}: shortfall reduction {row['expected_shortfall_reduction_m3']:,.0f} m3")
+
+    field_programme = build_field_programme(evsi)
+    (args.out_dir / f"zurkt-field-programme-{tag}.json").write_text(json.dumps(field_programme, indent=2), encoding="utf-8")
+    print(f"Wrote zurkt-field-programme-{tag}.json")
 
     print("\nDone.")
 

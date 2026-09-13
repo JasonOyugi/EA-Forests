@@ -1,0 +1,136 @@
+{
+  "reference_demand_m3_per_year": 150000,
+  "note": "Method is matched to the uncertainty type -- legal/access questions get document/legal verification, never an inventory crew; stocking/species questions get reconnaissance or plot sampling.",
+  "plan": [
+    {
+      "priority": 1,
+      "canonical_name": "Mabira",
+      "entity_id": "99277e88-e0cc-4798-b155-7505678d7b97",
+      "variable_to_measure": "access_legal_status",
+      "why": "Verifying this variable for Mabira is expected to reduce shortfall at 150,000 m3/yr demand by ~2,129 m3 (reliability 89% -> 92%).",
+      "spatial_target": "99277e88-e0cc-4798-b155-7505678d7b97",
+      "recommended_method": "document/legal verification (permit, NFA management-plan, concession registry check)",
+      "expected_decision_impact": {
+        "expected_shortfall_reduction_m3": 2128.9,
+        "reliability_gain": 0.032
+      }
+    },
+    {
+      "priority": 2,
+      "canonical_name": "Kikonda",
+      "entity_id": "c09fad3b-bcaa-4f40-a4c7-7e0feec59e86",
+      "variable_to_measure": "access_legal_status",
+      "why": "Verifying this variable for Kikonda is expected to reduce shortfall at 150,000 m3/yr demand by ~1,341 m3 (reliability 89% -> 91%).",
+      "spatial_target": "c09fad3b-bcaa-4f40-a4c7-7e0feec59e86",
+      "recommended_method": "document/legal verification (permit, NFA management-plan, concession registry check)",
+      "expected_decision_impact": {
+        "expected_shortfall_reduction_m3": 1341.4,
+        "reliability_gain": 0.017
+      }
+    },
+    {
+      "priority": 3,
+      "canonical_name": "Kasagala",
+      "entity_id": "ae3e0607-069b-4eed-8aab-eb0e1c0b066a",
+      "variable_to_measure": "access_legal_status",
+      "why": "Verifying this variable for Kasagala is expected to reduce shortfall at 150,000 m3/yr demand by ~1,080 m3 (reliability 89% -> 90%).",
+      "spatial_target": "ae3e0607-069b-4eed-8aab-eb0e1c0b066a",
+      "recommended_method": "document/legal verification (permit, NFA management-plan, concession registry check)",
+      "expected_decision_impact": {
+        "expected_shortfall_reduction_m3": 1080.4,
+        "reliability_gain": 0.013
+      }
+    },
+    {
+      "priority": 4,
+      "canonical_name": "South Busoga",
+      "entity_id": "6300a518-b72b-4bc1-9196-4d3fcac51e98",
+      "variable_to_measure": "access_legal_status",
+      "why": "Verifying this variable for South Busoga is expected to reduce shortfall at 150,000 m3/yr demand by ~976 m3 (reliability 89% -> 90%).",
+      "spatial_target": "6300a518-b72b-4bc1-9196-4d3fcac51e98",
+      "recommended_method": "document/legal verification (permit, NFA management-plan, concession registry check)",
+      "expected_decision_impact": {
+        "expected_shortfall_reduction_m3": 975.7,
+        "reliability_gain": 0.013
+      }
+    },
+    {
+      "priority": 5,
+      "canonical_name": "Buyaga Dam",
+      "entity_id": "f218ea0b-49de-4e71-9984-b846aaed4457",
+      "variable_to_measure": "access_legal_status",
+      "why": "Verifying this variable for Buyaga Dam is expected to reduce shortfall at 150,000 m3/yr demand by ~836 m3 (reliability 89% -> 90%).",
+      "spatial_target": "f218ea0b-49de-4e71-9984-b846aaed4457",
+      "recommended_method": "document/legal verification (permit, NFA management-plan, concession registry check)",
+      "expected_decision_impact": {
+        "expected_shortfall_reduction_m3": 836.2,
+        "reliability_gain": 0.01
+      }
+    },
+    {
+      "priority": 6,
+      "canonical_name": "Mabira",
+      "entity_id": "99277e88-e0cc-4798-b155-7505678d7b97",
+      "variable_to_measure": "stocked_fraction",
+      "why": "Verifying this variable for Mabira is expected to reduce shortfall at 150,000 m3/yr demand by ~131 m3 (reliability 89% -> 89%).",
+      "spatial_target": "99277e88-e0cc-4798-b155-7505678d7b97",
+      "recommended_method": "rapid reconnaissance transect + drone/very-high-res imagery over the CFR polygon",
+      "expected_decision_impact": {
+        "expected_shortfall_reduction_m3": 131.4,
+        "reliability_gain": -0.001
+      }
+    },
+    {
+      "priority": 7,
+      "canonical_name": "Mabira",
+      "entity_id": "99277e88-e0cc-4798-b155-7505678d7b97",
+      "variable_to_measure": "species_processor_fit",
+      "why": "Verifying this variable for Mabira is expected to reduce shortfall at 150,000 m3/yr demand by ~104 m3 (reliability 89% -> 89%).",
+      "spatial_target": "99277e88-e0cc-4798-b155-7505678d7b97",
+      "recommended_method": "species survey (transect) + a DBH sample matched against Evergreen's veneer-log requirements",
+      "expected_decision_impact": {
+        "expected_shortfall_reduction_m3": 104.3,
+        "reliability_gain": 0.0
+      }
+    },
+    {
+      "priority": 8,
+      "canonical_name": "Mabira",
+      "entity_id": "99277e88-e0cc-4798-b155-7505678d7b97",
+      "variable_to_measure": "maturity",
+      "why": "Verifying this variable for Mabira is expected to reduce shortfall at 150,000 m3/yr demand by ~93 m3 (reliability 89% -> 90%).",
+      "spatial_target": "99277e88-e0cc-4798-b155-7505678d7b97",
+      "recommended_method": "rapid reconnaissance + a small DBH/age-class plot sample",
+      "expected_decision_impact": {
+        "expected_shortfall_reduction_m3": 93.0,
+        "reliability_gain": 0.003
+      }
+    },
+    {
+      "priority": 9,
+      "canonical_name": "South Busoga",
+      "entity_id": "6300a518-b72b-4bc1-9196-4d3fcac51e98",
+      "variable_to_measure": "stocked_fraction",
+      "why": "Verifying this variable for South Busoga is expected to reduce shortfall at 150,000 m3/yr demand by ~38 m3 (reliability 89% -> 89%).",
+      "spatial_target": "6300a518-b72b-4bc1-9196-4d3fcac51e98",
+      "recommended_method": "rapid reconnaissance transect + drone/very-high-res imagery over the CFR polygon",
+      "expected_decision_impact": {
+        "expected_shortfall_reduction_m3": 38.1,
+        "reliability_gain": -0.001
+      }
+    },
+    {
+      "priority": 10,
+      "canonical_name": "Kikonda",
+      "entity_id": "c09fad3b-bcaa-4f40-a4c7-7e0feec59e86",
+      "variable_to_measure": "maturity",
+      "why": "Verifying this variable for Kikonda is expected to reduce shortfall at 150,000 m3/yr demand by ~34 m3 (reliability 89% -> 89%).",
+      "spatial_target": "c09fad3b-bcaa-4f40-a4c7-7e0feec59e86",
+      "recommended_method": "rapid reconnaissance + a small DBH/age-class plot sample",
+      "expected_decision_impact": {
+        "expected_shortfall_reduction_m3": 33.7,
+        "reliability_gain": 0.001
+      }
+    }
+  ]
+}

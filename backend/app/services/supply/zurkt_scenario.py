@@ -1,25 +1,29 @@
-"""Zurkt Uganda supply scenario -- CFR-level stochastic supply state.
+"""Zurkt/Evergreen Uganda supply scenario -- CFR-level stochastic supply
+state, now with a hierarchical (systemic/regional/CFR-specific/measurement)
+uncertainty model (see SCENARIO_VERSION below).
 
-SCENARIO_VERSION = "zurkt-uganda-supply-scenario-v1"
-
-This module turns the real 274-CFR catchment (zurkt_supply_catchment.py /
+This module turns the real 276-CFR catchment around the verified Evergreen
+Wood Industries Ltd processor node (zurkt_supply_catchment.py /
 zurkt_road_distance.py) into an uncertainty-aware answer to "how much
-roundwood could plausibly reach Zurkt, from where, at what cost" --
+roundwood could plausibly reach Evergreen, from where, at what cost" --
 without ever presenting an assumption as an observation. Four classes of
 quantity are kept explicitly separate throughout (never blurred):
 
   OBSERVED  -- CFR geometry, area, canonical entity/AOI identity, real EO
-              observation counts. Comes straight from the operational
-              canonical database (ea_forests_uganda_country_pass).
+              observation counts (including per-CFR NDVI time series --
+              see the EO-CONDITIONED tier below). Comes straight from the
+              operational canonical database (ea_forests_uganda_country_pass).
   DERIVED   -- straight-line and road-network distance/time (computed from
               OBSERVED geometry via haversine/OSRM, not assumed).
   ASSUMED   -- everything about stand composition, stocking, maturity,
-              commercial availability, and the Zurkt processor's own
-              location/specification. No field inventory exists for any
-              of these 274 CFRs, and no real Zurkt processor fact exists
-              anywhere in this repository -- these are explicit, broad,
-              conservative priors/scenarios, not observations. Every
-              ASSUMED quantity below carries a `rationale` string.
+              commercial availability, and the processor's own
+              specification. No field inventory exists for any of these
+              276 CFRs -- these are explicit, broad, conservative priors/
+              scenarios, not observations. Every ASSUMED quantity below
+              carries a `rationale` string. As of v3, these are organized
+              into hierarchical tiers (systemic/regional/CFR-specific/
+              measurement -- see the HIERARCHICAL UNCERTAINTY block
+              further down) rather than all being independent per-CFR draws.
   MODELLED  -- standing/harvestable/suitable volume, delivered cost, and
               everything derived from running ASSUMED distributions
               through the existing cost/grade engine
@@ -31,19 +35,23 @@ its wage/price/quantity tables, its STANDARD/LARGE_LOG grade specs (for the
 processor-specification scenarios), its tree-volume form factor, and its
 haversine/OSRM routing. Only the *stand* side (what roundwood_production.py
 always took as caller-supplied scenario input) is new here, because no
-caller-supplied stand exists for any of these 274 real forests.
+caller-supplied stand exists for any of these 276 real forests.
 
 KNOWN SIMPLIFICATION (documented, not hidden): roundwood_production.py's
 grade/price library is built for eucalyptus/pine plantation logs. Uganda's
 gazetted Central Forest Reserves are natural/mixed estate whose real
-species composition is unverified. This model prices all catchment supply
-as "eucalyptus-equivalent" for grading/pricing purposes -- a major,
-explicitly-flagged simplification, not a species observation. A follow-up
-with real species survey data should replace this.
+species composition is unverified (though Evergreen's own real export
+records DO confirm eucalyptus veneer as a genuine relevant product for
+this specific processor -- see zurkt_supply_catchment.py). This model
+still prices ALL catchment supply as "eucalyptus-equivalent" for grading/
+pricing purposes -- a major, explicitly-flagged simplification, not a
+species observation for every CFR. A follow-up with real per-CFR species
+survey data should replace this.
 """
 
 from __future__ import annotations
 
+import hashlib
 import math
 from dataclasses import dataclass, field
 from typing import Any, Literal
@@ -59,8 +67,8 @@ from app.services.roundwood_production import (
     retail_quantity_library,
 )
 
-SCENARIO_VERSION = "zurkt-evergreen-uganda-supply-scenario-v2"
-MODEL_VERSION = "zurkt-cfr-monte-carlo-v2"
+SCENARIO_VERSION = "zurkt-evergreen-uganda-supply-scenario-v3"
+MODEL_VERSION = "zurkt-cfr-monte-carlo-hierarchical-v3"
 
 # ---------------------------------------------------------------------------
 # ASSUMED: the Zurkt processor itself. No real Zurkt fact exists anywhere in
@@ -107,7 +115,22 @@ class Prior:
         if self.kind == "beta":
             return rng.beta(self.params["a"], self.params["b"], size=n)
         mean, std = self.params["mean"], self.params["std"]
-        return np.maximum(rng.normal(mean, std, size=n), self.params.get("min", 1e-6))
+        out = np.maximum(rng.normal(mean, std, size=n), self.params.get("min", 1e-6))
+        if "max" in self.params:
+            out = np.minimum(out, self.params["max"])
+        return out
+
+    def widened(self, factor: float) -> "Prior":
+        """Same mean, wider spread -- factor<1 widens a Beta prior (lower
+        a+b concentration, same a/(a+b) mean) or scales a Normal prior's std
+        up by 1/factor. Used for MEASUREMENT-tier uncertainty (Track v3-2):
+        a CFR with no EO observations yet gets a wider, not different-mean,
+        prior than an observed one."""
+        if self.kind == "beta":
+            return Prior("beta", {"a": self.params["a"] * factor, "b": self.params["b"] * factor}, self.rationale, self.evidence_class)
+        new_params = dict(self.params)
+        new_params["std"] = self.params["std"] / max(factor, 1e-6)
+        return Prior("normal", new_params, self.rationale, self.evidence_class)
 
 
 # ---------------------------------------------------------------------------
@@ -190,6 +213,145 @@ PRIORS: dict[str, Prior] = {
         "explicit requirement to report procurement cost as its own line item.",
     ),
 }
+
+# ---------------------------------------------------------------------------
+# HIERARCHICAL UNCERTAINTY (v3). With ~276 independently-drawn CFRs, purely
+# independent per-CFR noise averages out far more aggressively than our real
+# knowledge justifies -- most of what we are actually unsure about is NOT
+# "CFR 143's stocking happens to differ from CFR 144's", it is "our whole
+# approach to estimating stocking/access/pricing across ALL of Uganda's CFRs
+# might be biased in one direction." Four uncertainty tiers, in decreasing
+# order of how much they resist averaging out across CFRs:
+#
+#   SYSTEMIC/GLOBAL   -- one shared draw per Monte Carlo world, applied
+#                        IDENTICALLY to every CFR in that world. Does NOT
+#                        shrink as CFR count grows. See GlobalDraws.
+#   REGIONAL/CLUSTER  -- one shared draw per (grid-cell region, world),
+#                        applied to every CFR in that region. Shrinks with
+#                        the number of INDEPENDENT regions, not CFRs. See
+#                        RegionalDraws / assign_region().
+#   CFR-SPECIFIC      -- the original independent per-CFR Beta/Normal draws
+#                        in PRIORS above. Genuinely averages out across 276
+#                        CFRs (this was the ONLY tier in v1/v2, which is
+#                        exactly the bug this sprint fixes).
+#   MEASUREMENT       -- CFR-specific, but wider for CFRs with no EO
+#                        observations yet (Prior.widened()) -- a coarse,
+#                        transparent proxy for "we know less about this CFR
+#                        specifically," not a fourth independent quantity.
+#
+# A full hierarchical Bayesian model (e.g. a Gaussian process over space)
+# is NOT implemented here -- explicitly out of scope per the sprint's own
+# instruction ("a simple hierarchical random-effect structure is sufficient
+# for v3... do not build a giant Gaussian process unless needed"). Regions
+# are a placeholder 0.5-degree lat/lon grid (~55km cells), not real
+# ecological or administrative zones -- documented as a first cut.
+# ---------------------------------------------------------------------------
+
+REGION_CELL_DEG = 0.5
+
+GLOBAL_STOCKING_MODEL_BIAS_PRIOR = Prior(
+    "normal", {"mean": 1.0, "std": 0.15, "min": 0.5, "max": 1.6},
+    "SYSTEMIC: one shared multiplicative bias per Monte Carlo world, applied to "
+    "EVERY CFR's relevant-forest-fraction simultaneously. Represents the "
+    "possibility that our whole generic land-cover/stocking approach is "
+    "systematically optimistic or pessimistic for Uganda CFRs as a class -- not "
+    "an independent per-CFR quantity, so it does not average out across 276 CFRs.",
+)
+GLOBAL_GRADE_RECOVERY_DBH_BIAS_PRIOR = Prior(
+    "normal", {"mean": 0.0, "std": 3.0},
+    "SYSTEMIC: one shared additive DBH bias (cm) per Monte Carlo world, applied to "
+    "EVERY CFR's sampled mean DBH before grade shares/volume are computed. "
+    "Represents shared growth/model-form uncertainty (e.g. if typical natural-"
+    "forest DBH in this catchment differs systematically from the generic prior) "
+    "-- the same bias applies everywhere in a given world, not drawn per CFR.",
+)
+GLOBAL_FUEL_PRICE_LAMBDA_PRIOR = Prior(
+    "normal", {"mean": 0.5, "std": 0.25, "min": 0.0, "max": 1.0},
+    "SYSTEMIC: one shared fuel-price regime (position within roundwood_production's "
+    "N_FUEL_L price range) per Monte Carlo world, applied to every CFR's fuel cost "
+    "line identically -- fuel prices move together nationally, they are not "
+    "independent CFR-by-CFR.",
+)
+REGIONAL_STOCKED_MULTIPLIER_PRIOR = Prior(
+    "normal", {"mean": 1.0, "std": 0.25, "min": 0.4, "max": 1.8},
+    "REGIONAL: one shared multiplicative shock on stocked_fraction per (grid-cell "
+    "region, world), applied to every CFR in that ~55km cell -- stocking/"
+    "encroachment plausibly correlates with local rainfall/ecology/management "
+    "pressure rather than varying independently CFR-by-CFR. Placeholder grid "
+    "regions (assign_region()), not real ecological/administrative zones.",
+)
+REGIONAL_MATURITY_MULTIPLIER_PRIOR = Prior(
+    "normal", {"mean": 1.0, "std": 0.2, "min": 0.4, "max": 1.8},
+    "REGIONAL: one shared multiplicative shock on mature_harvestable_fraction per "
+    "(grid-cell region, world) -- age-class structure plausibly correlates with "
+    "local management history more than it varies independently CFR-by-CFR.",
+)
+MEASUREMENT_WIDEN_FACTOR = 0.6  # <1 widens a Beta prior's spread while preserving its mean
+
+
+@dataclass
+class GlobalDraws:
+    """SYSTEMIC tier: every array here has the SAME value applied to every
+    CFR at a given draw index -- these do NOT shrink as the CFR count (276)
+    grows, unlike independent CFR-specific noise."""
+
+    commercial_availability_fraction: np.ndarray
+    stumpage_price_usd_per_m3: np.ndarray
+    fuel_price_lambda: np.ndarray
+    avg_truck_speed_kmph: np.ndarray
+    stocking_model_bias: np.ndarray
+    grade_recovery_dbh_bias_cm: np.ndarray
+
+
+def sample_global_draws(rng: np.random.Generator, n: int) -> GlobalDraws:
+    """Sample ONCE per Monte Carlo world (n draws), then pass the SAME
+    object to every CFR's build_cfr_supply_state call so every CFR sees the
+    identical global regime at each draw index."""
+    return GlobalDraws(
+        commercial_availability_fraction=PRIORS["commercial_availability_fraction"].sample(rng, n),
+        stumpage_price_usd_per_m3=PRIORS["stumpage_price_usd_per_m3"].sample(rng, n),
+        fuel_price_lambda=GLOBAL_FUEL_PRICE_LAMBDA_PRIOR.sample(rng, n),
+        avg_truck_speed_kmph=AVG_TRUCK_SPEED_KMPH_PRIOR.sample(rng, n),
+        stocking_model_bias=GLOBAL_STOCKING_MODEL_BIAS_PRIOR.sample(rng, n),
+        grade_recovery_dbh_bias_cm=GLOBAL_GRADE_RECOVERY_DBH_BIAS_PRIOR.sample(rng, n),
+    )
+
+
+@dataclass
+class RegionalDraws:
+    """REGIONAL tier: shared across every CFR assigned to the same grid-cell
+    region, independent of every OTHER region's draws."""
+
+    stocked_fraction_multiplier: np.ndarray
+    maturity_multiplier: np.ndarray
+
+
+def assign_region(lat: float, lon: float, cell_deg: float = REGION_CELL_DEG) -> str:
+    """Placeholder spatial cluster: a 0.5-degree (~55km) lat/lon grid cell.
+    Not a real ecological or administrative region -- a documented first cut
+    (see module note above) standing in for one until a real forest-type/
+    rainfall-zone/management-region layer is ingested."""
+    return f"R{round(lat / cell_deg)}_{round(lon / cell_deg)}"
+
+
+def _deterministic_region_seed(region_id: str, base_seed: int) -> int:
+    """Regions need independent-of-each-other but reproducible-across-runs
+    seeds. Python's built-in hash() is randomized per-process for strings,
+    so it cannot be used here -- sha256 gives the same seed every run."""
+    digest = hashlib.sha256(region_id.encode("utf-8")).hexdigest()
+    return (base_seed + int(digest[:8], 16)) % (2**31 - 1)
+
+
+def sample_regional_draws_by_region(region_ids: list[str], n: int, base_seed: int = 9001) -> dict[str, RegionalDraws]:
+    out: dict[str, RegionalDraws] = {}
+    for region_id in sorted(set(region_ids)):
+        rng = np.random.default_rng(_deterministic_region_seed(region_id, base_seed))
+        out[region_id] = RegionalDraws(
+            stocked_fraction_multiplier=REGIONAL_STOCKED_MULTIPLIER_PRIOR.sample(rng, n),
+            maturity_multiplier=REGIONAL_MATURITY_MULTIPLIER_PRIOR.sample(rng, n),
+        )
+    return out
+
 
 FORM_FACTOR = 0.45  # reused from roundwood_production.py's own default
 
@@ -305,6 +467,12 @@ def build_cfr_supply_state(
     road_km: float | None,
     route_source: str,
     eo_evidence_status: str,
+    global_draws: GlobalDraws,
+    regional_draws: RegionalDraws,
+    region_id: str,
+    eo_forest_cover_multiplier: float = 1.0,
+    eo_maturity_multiplier: float = 1.0,
+    freeze_variable: str | None = None,
     processor_spec_key: str = "STANDARD",
     payload_direct_m3: float = 10.0,
     n_draws: int = 2_000,
@@ -316,21 +484,81 @@ def build_cfr_supply_state(
     to straight-line distance x 1.35 (the same fallback ratio this repo's
     frontend already uses in dashboard-asset-map.tsx), and this is recorded
     in the state, never silently presented as a routed distance.
+
+    global_draws/regional_draws MUST come from the same n_draws-length
+    arrays shared across every CFR in one model run (see
+    sample_global_draws/sample_regional_draws_by_region) -- rng_seed only
+    drives this CFR's own CFR-SPECIFIC residual noise (below), never the
+    global/regional tiers, which is exactly what makes them "hierarchical"
+    rather than independent.
     """
     rng = np.random.default_rng(rng_seed)
     n = int(n_draws)
     spec = PROCESSOR_SPECIFICATION_SCENARIOS[processor_spec_key]
 
-    relevant_frac = PRIORS["relevant_forest_fraction"].sample(rng, n)
-    stocked_frac = PRIORS["stocked_fraction"].sample(rng, n)
-    mature_frac = PRIORS["mature_harvestable_fraction"].sample(rng, n)
-    avail_frac = PRIORS["commercial_availability_fraction"].sample(rng, n)
+    # MEASUREMENT tier (Track v3-2): a CFR with no EO observations processed
+    # yet gets a WIDER (not differently-centered) prior for the two
+    # fractions EO could plausibly help constrain -- forested/stocked
+    # extent and disturbance-adjacent maturity. This is a coarse, transparent
+    # proxy, not a real EO-conditioned posterior (see Track v3-10/11 for why
+    # a full belief object is not attempted here).
+    observed = eo_evidence_status == "observed"
+    relevant_prior = PRIORS["relevant_forest_fraction"] if observed else PRIORS["relevant_forest_fraction"].widened(MEASUREMENT_WIDEN_FACTOR)
+    stocked_prior = PRIORS["stocked_fraction"] if observed else PRIORS["stocked_fraction"].widened(MEASUREMENT_WIDEN_FACTOR)
+
+    # CFR-SPECIFIC tier: independent per-CFR draws (this was the ONLY tier
+    # in v1/v2 -- averages out across 276 CFRs, which is realistic for truly
+    # local variation but was wrongly being applied to systemic/regional
+    # quantities too).
+    relevant_frac_cfr = relevant_prior.sample(rng, n)
+    stocked_frac_cfr = stocked_prior.sample(rng, n)
+    mature_frac_cfr = PRIORS["mature_harvestable_fraction"].sample(rng, n)
     stems_per_ha = PRIORS["stems_per_ha"].sample(rng, n)
-    dbh = PRIORS["mean_tree_dbh_cm"].sample(rng, n)
+    dbh_cfr = PRIORS["mean_tree_dbh_cm"].sample(rng, n)
     height = PRIORS["mean_tree_height_m"].sample(rng, n)
     density = PRIORS["wood_density_t_per_m3"].sample(rng, n)
     dbh_cv = PRIORS["within_stand_dbh_cv"].sample(rng, n)
+
+    # REGIONAL tier: this CFR's grid-cell region's shared shock, applied to
+    # every other CFR in the same region identically at each draw index.
+    stocked_frac = np.clip(stocked_frac_cfr * regional_draws.stocked_fraction_multiplier, 0.0, 1.0)
+    mature_frac = np.clip(mature_frac_cfr * regional_draws.maturity_multiplier, 0.0, 1.0)
+
+    # SYSTEMIC/GLOBAL tier: the SAME draw applied to every CFR in the whole
+    # catchment at each draw index -- does not shrink as CFR count grows.
+    relevant_frac_pre_eo = np.clip(relevant_frac_cfr * global_draws.stocking_model_bias, 0.0, 1.0)
+    dbh = np.maximum(dbh_cfr + global_draws.grade_recovery_dbh_bias_cm, 5.0)
+    avail_frac = global_draws.commercial_availability_fraction
     dbh_std = dbh * dbh_cv
+
+    # EO-CONDITIONED tier (Track v3-10): bounded multipliers derived from
+    # this CFR's REAL NDVI time series (zurkt_eo_conditioned_priors.py) --
+    # applied on top of everything above, never replacing it. Default 1.0
+    # (no nudge) when no EO conditioning was supplied, so this is fully
+    # backward compatible with callers that don't pass it.
+    relevant_frac = np.clip(relevant_frac_pre_eo * eo_forest_cover_multiplier, 0.0, 1.0)
+    stocked_frac = np.clip(stocked_frac * eo_forest_cover_multiplier, 0.0, 1.0)
+    mature_frac = np.clip(mature_frac * eo_maturity_multiplier, 0.0, 1.0)
+
+    # EVSI simulation (Track v3-15): "if we perfectly verified THIS CFR's
+    # true value of one variable, how much would the decision-relevant
+    # output change" -- collapses that ONE variable to its own realized
+    # mean for THIS CFR ONLY (every other CFR, and every other variable for
+    # this CFR, stays fully stochastic). Decoupled from whatever global/
+    # regional regime applied, since a field verification would supersede
+    # both for this specific CFR. None (the default) leaves everything
+    # untouched -- this branch is inert for every normal production run.
+    if freeze_variable == "access_legal_status":
+        avail_frac = np.full(n, float(np.mean(avail_frac)))
+    elif freeze_variable == "stocked_fraction":
+        stocked_frac = np.full(n, float(np.mean(stocked_frac)))
+    elif freeze_variable == "maturity":
+        mature_frac = np.full(n, float(np.mean(mature_frac)))
+    elif freeze_variable == "species_processor_fit":
+        dbh = np.full(n, float(np.mean(dbh)))
+        dbh_std = np.full(n, float(np.mean(dbh_std)))
+    elif freeze_variable is not None:
+        raise ValueError(f"Unknown freeze_variable: {freeze_variable!r}")
 
     relevant_area_ha = gross_area_ha * relevant_frac
     stocked_area_ha = relevant_area_ha * stocked_frac
@@ -362,6 +590,11 @@ def build_cfr_supply_state(
     v_load = rng.random(n)
     allowance = _price("N_CREW_DAYALLOW", rng.random(n))
 
+    # SYSTEMIC fuel-price regime (Track v3-3): the SAME position in the fuel
+    # price range for every CFR in this world, not an independent per-CFR
+    # draw -- fuel prices move together nationally.
+    fuel_price = _price("N_FUEL_L", global_draws.fuel_price_lambda)
+
     vol_safe = np.maximum(zurkt_suitable_volume_m3, 1e-6)
     q_f = _QTY["felling"]["chainsaw"]
     stems_per_crew_day = q_f["stems_per_crew_day"][1] - v_fell * (q_f["stems_per_crew_day"][1] - q_f["stems_per_crew_day"][0])
@@ -371,14 +604,14 @@ def build_cfr_supply_state(
     q_e = _QTY["extraction"]["tractor"]
     op_days_extr = np.ceil(available_area_ha * (q_e["machine_op_days_per_ha"][0] + v_extr * (q_e["machine_op_days_per_ha"][1] - q_e["machine_op_days_per_ha"][0])))
     fuel_extr_l = vol_safe * (q_e["fuel_L_per_m3"][0] + v_extr * (q_e["fuel_L_per_m3"][1] - q_e["fuel_L_per_m3"][0]))
-    extr_cost = op_days_extr * (_wage("L_MACHINE_OPERATOR", lam_wage) + _price("N_RENT_TRACTOR", lam_price)) + fuel_extr_l * _price("N_FUEL_L", lam_price)
+    extr_cost = op_days_extr * (_wage("L_MACHINE_OPERATOR", lam_wage) + _price("N_RENT_TRACTOR", lam_price)) + fuel_extr_l * fuel_price
 
     payload_m3 = max(float(payload_direct_m3), 1e-9)
     trips = np.ceil(vol_safe / payload_m3)
     q_l = _QTY["loading"]["machine"]
     op_days_load = trips * (q_l["machine_op_days_per_trip"][0] + v_load * (q_l["machine_op_days_per_trip"][1] - q_l["machine_op_days_per_trip"][0]))
     fuel_load_l = trips * (q_l["fuel_L_per_trip"][0] + v_load * (q_l["fuel_L_per_trip"][1] - q_l["fuel_L_per_trip"][0]))
-    load_cost = op_days_load * (_wage("L_MACHINE_OPERATOR", lam_wage) + _price("N_RENT_LOADER", lam_price)) + fuel_load_l * _price("N_FUEL_L", lam_price)
+    load_cost = op_days_load * (_wage("L_MACHINE_OPERATOR", lam_wage) + _price("N_RENT_LOADER", lam_price)) + fuel_load_l * fuel_price
 
     hel_cost_per_m3 = (fell_cost + extr_cost + load_cost) / vol_safe
 
@@ -408,11 +641,16 @@ def build_cfr_supply_state(
     # catchment spans a much wider distance range (a few km to 150km) where
     # ignoring driving time materially understates cost for the farthest
     # CFRs and flattens the delivered-cost curve into a near step function.
-    avg_truck_speed_kmph = AVG_TRUCK_SPEED_KMPH_PRIOR.sample(rng, n)
+    # SYSTEMIC truck-speed regime: shared across every CFR (a road-quality/
+    # fleet-speed regime plausibly affects the whole catchment together, not
+    # independently CFR-by-CFR) -- this also means the delivered-cost
+    # curve's overall SLOPE moves together across worlds, which is more
+    # realistic than each CFR getting its own independent speed luck.
+    avg_truck_speed_kmph = global_draws.avg_truck_speed_kmph
     driving_days_per_trip = (2.0 * haul_km) / np.maximum(avg_truck_speed_kmph, 1.0) / HOURS_PER_WORKDAY
     op_days_haul = trips * (dwell_days_per_trip + driving_days_per_trip)
     fuel_haul_l = (trips * haul_km) * (q_h["fuel_L_per_km"][0] + v_haul * (q_h["fuel_L_per_km"][1] - q_h["fuel_L_per_km"][0]))
-    haul_cost = op_days_haul * (_wage("L_MACHINE_OPERATOR", lam_wage) + _price("N_RENT_TRUCK", lam_price)) + fuel_haul_l * _price("N_FUEL_L", lam_price)
+    haul_cost = op_days_haul * (_wage("L_MACHINE_OPERATOR", lam_wage) + _price("N_RENT_TRUCK", lam_price)) + fuel_haul_l * fuel_price
     haul_cost_per_m3 = haul_cost / vol_safe
 
     # Regulatory/admin (Track 9: kept small & separate, never folded
@@ -424,8 +662,10 @@ def build_cfr_supply_state(
     # Standing-timber/procurement cost (Track 9): what is paid for the
     # standing wood itself, BEFORE any harvest/extraction/haulage/regulatory
     # activity cost -- an explicit separate line, never blended into the
-    # activity-cost lines above. See PRIORS["stumpage_price_usd_per_m3"].
-    procurement_cost_per_m3 = PRIORS["stumpage_price_usd_per_m3"].sample(rng, n)
+    # activity-cost lines above. SYSTEMIC (Track v3-3): one shared national
+    # stumpage-price regime per world, not an independent per-CFR draw --
+    # standing-timber prices are set by policy/market, not CFR-by-CFR luck.
+    procurement_cost_per_m3 = global_draws.stumpage_price_usd_per_m3
 
     # NOTE: _wage()/_price() draw from roundwood_production.py's
     # retail_labour_categories()/retail_nonlab_items(), which are already
@@ -462,6 +702,7 @@ def build_cfr_supply_state(
         delivered_cost_usd_per_m3=quantiles(delivered_cost_usd_per_m3),
         annual_suitable_supply_m3=quantiles(annual_suitable_supply_m3),
     ), {
+        "region_id": region_id,
         "haul_km_used": haul_km,
         "haul_km_source": haul_km_source,
         "raw_zurkt_suitable_volume_m3": zurkt_suitable_volume_m3,

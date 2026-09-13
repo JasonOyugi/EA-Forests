@@ -1,0 +1,1666 @@
+{
+  "method": "Searched geo.aoi.metadata and core.entity.metadata for every catchment CFR for any license/concession/management-plan/production-permit/protection-tier evidence. EO evidence is explicitly NOT used to infer legal/access status (Track v3-7 constraint). SCENARIO commercial_availability_fraction applies only to UNKNOWN CFRs, per the sprint's instruction; KNOWN_RESTRICTED_OR_UNAVAILABLE CFRs would be excluded entirely from evidence-supported addressable supply, and KNOWN_POTENTIALLY_AVAILABLE CFRs would bypass the scenario fraction -- neither currently has any members.",
+  "counts": {
+    "KNOWN_POTENTIALLY_AVAILABLE": 0,
+    "KNOWN_RESTRICTED_OR_UNAVAILABLE": 0,
+    "UNKNOWN": 276
+  },
+  "cfrs": [
+    {
+      "entity_id": "f1dc8a53-6a40-449f-a57c-e7808bf69e32",
+      "canonical_name": "Walumwanyi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Walumwanyi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "8e362394-13bf-4ace-811e-00941b788d14",
+      "canonical_name": "Buvuma",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Buvuma'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "9997766a-d5c5-418c-87c0-2c4f80ebe67a",
+      "canonical_name": "Lwamunda",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Lwamunda'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "7c1799aa-b1b0-41f0-a85c-19f573aa3218",
+      "canonical_name": "Lufuka",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Lufuka'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "7c62ce9e-51d0-4516-938d-77a7c3ca64fc",
+      "canonical_name": "Namagaza",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Namagaza'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "ddb2eba5-2776-47d6-afd2-1900110c25bf",
+      "canonical_name": "Semunya",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Semunya'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "c806cbb6-1bd5-4948-ad95-319b1fcc4c48",
+      "canonical_name": "Mako",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mako'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "b93e7628-adc8-41d7-9870-80d87ba7b418",
+      "canonical_name": "Kalandazi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kalandazi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "b3c9607b-9e3d-43a0-ba20-a564cde327cb",
+      "canonical_name": "Nambuga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nambuga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "6c42b1bc-24a2-42e6-8f17-e3d5da72d416",
+      "canonical_name": "Kanjaza",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kanjaza'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "ef453286-32ff-4f32-b48c-84f51cd12f90",
+      "canonical_name": "Kajansi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kajansi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "edff2f78-9f1c-4928-924e-c94a4a09b903",
+      "canonical_name": "Name Unknown - Forest Reserve 5",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Name Unknown - Forest Reserve 5'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "471cd196-21e4-45c2-998f-64756878f5d4",
+      "canonical_name": "Degeya",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Degeya'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "3dad103e-d4ce-49f2-81c5-a5dfbabf3b34",
+      "canonical_name": "Katabalalu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Katabalalu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "f531f15e-19b5-4d28-9a81-91256529f1ec",
+      "canonical_name": "Wantayi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Wantayi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "f5f3fc16-3a99-444b-9378-7aadd8b29067",
+      "canonical_name": "Mugomba",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mugomba'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "b8af5735-144b-4e60-87f1-b3a4e6c4d6fa",
+      "canonical_name": "Nonve",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nonve'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "bc2cfdc3-b3a5-4f7c-b91c-6f655430aa92",
+      "canonical_name": "Nalubaga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nalubaga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "c2c1564a-9718-4f75-8396-bf93b121d5d0",
+      "canonical_name": "Kalangalo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kalangalo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "b573eade-55fa-4cb8-8399-7ac8e3658b93",
+      "canonical_name": "Wakayembe",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Wakayembe'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "ace08551-e706-4f61-81c8-262a00894760",
+      "canonical_name": "Naludugavu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Naludugavu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "b2c23e2d-595e-4cd3-9b39-b14b50925a65",
+      "canonical_name": "Gunda",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Gunda'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "64ab1965-af77-48cb-aa3e-b9ca8bd3a1f3",
+      "canonical_name": "Navugulu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Navugulu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "4c75912b-259b-4a0b-a497-7ce8415baf5a",
+      "canonical_name": "Kisubi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kisubi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "5599fa46-8794-4dbb-8c79-2c96fb146057",
+      "canonical_name": "Nakindiba",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nakindiba'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "f8519d42-d75b-4e43-ad93-c0828dd38125",
+      "canonical_name": "Kinyo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kinyo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "00f94333-8832-4847-bc85-2c5891e3c425",
+      "canonical_name": "Tumbi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Tumbi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "81d9acbf-75a6-4d45-9605-d14728498b21",
+      "canonical_name": "Kitubulu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kitubulu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "c8340b74-7fcc-4ca5-807a-d695f21b2caf",
+      "canonical_name": "Kyansonzi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kyansonzi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "77824ee7-160d-428e-8b76-b92513121435",
+      "canonical_name": "Kyewaga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kyewaga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "db441195-b7bc-4650-a5f9-85bfa8830e1a",
+      "canonical_name": "Nakawa Forestry Research",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nakawa Forestry Research'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "e2f10e43-6875-432d-bcac-8e28282ab439",
+      "canonical_name": "Gangu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Gangu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "61ad3bfd-dc49-444f-82a1-e727faa7cf23",
+      "canonical_name": "Kavunda",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kavunda'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "7a0f46b6-f25a-4069-b131-f334f1bc36a4",
+      "canonical_name": "Banda Nursery",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Banda Nursery'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "da85e5df-5a4c-4488-858b-f72270fa849e",
+      "canonical_name": "Nfuka Magobwa",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nfuka Magobwa'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "1ae9fd73-5d35-42f1-bc30-c28ebd398b6c",
+      "canonical_name": "Nawandigi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nawandigi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "05f844ff-c5cb-4259-8f1d-218cc494e64f",
+      "canonical_name": "Nabanga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nabanga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "f086b260-70fe-4e08-956e-a8df0ba85a9f",
+      "canonical_name": "Luwawa",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Luwawa'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "07cc526c-0556-4a89-bf1f-2c188a5dfdea",
+      "canonical_name": "Namanve",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Namanve'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "212e6ab0-caa1-43c9-a969-e9b26e3619bb",
+      "canonical_name": "Wabinyomo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Wabinyomo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "9a46b5d7-f37f-4e3e-8137-ce35ca39a9a4",
+      "canonical_name": "Makokolero",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Makokolero'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "318481fb-6628-4357-993b-60bfc2530f0a",
+      "canonical_name": "Nakalere",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nakalere'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "1f632281-4aa8-49e9-a428-09c57e68a3f2",
+      "canonical_name": "Nakaga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nakaga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "06410084-f9cb-4fad-9b2c-d77ea0158af5",
+      "canonical_name": "Kifunvwe",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kifunvwe'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "de67d16c-0ee4-4b46-bcb6-116c239be392",
+      "canonical_name": "Buwa",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Buwa'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "beccc60d-c9a9-473f-89cb-2c952ab544ad",
+      "canonical_name": "Kabulego",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kabulego'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "dc7c7e41-a06c-4ac4-8508-6fd73fefe2fa",
+      "canonical_name": "Namyoya",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Namyoya'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "7132f16d-e9a8-4000-a93f-c3495e6b942b",
+      "canonical_name": "Nakaziba",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nakaziba'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "a0607415-eee2-4470-8a69-1dc0fca18fd9",
+      "canonical_name": "Mukambwe",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mukambwe'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "11863775-4933-4e75-ac01-55d8499dc046",
+      "canonical_name": "Nakalanga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nakalanga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "f93f1dac-7ca7-488b-ba6c-a48267a69cc0",
+      "canonical_name": "Wantagalala",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Wantagalala'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "abb21312-83c6-48a2-9b86-395507f36d94",
+      "canonical_name": "Nambale (Kasa South)",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nambale (Kasa South)'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "b5305cda-9b97-4571-ba94-38a914a0a3a1",
+      "canonical_name": "Zirimiti",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Zirimiti'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "b6cbad0d-8598-425e-bd0f-6df3ebd2eac1",
+      "canonical_name": "Kabuye",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kabuye'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "dd8195b2-a538-4ed4-9e24-4ce4261b1d83",
+      "canonical_name": "Kasulo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kasulo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "8e9cb74b-4abb-4a96-93e1-49115b88ccbf",
+      "canonical_name": "Bombo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bombo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "35e8d038-343d-4aa3-b533-25e7cb739440",
+      "canonical_name": "Kasa",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kasa'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "7325185d-a7a3-4fd3-9343-ba48cfe4e2f7",
+      "canonical_name": "Kifu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kifu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "7c766504-dbd7-4ead-9f01-1dcd3af96750",
+      "canonical_name": "Kajonde",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kajonde'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "d5830f01-01dc-4d08-ae1c-a49f5f7d0810",
+      "canonical_name": "Kaswera",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kaswera'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "5bae8471-3006-4220-a92a-acd613b48987",
+      "canonical_name": "Budugade",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Budugade'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "f86ab1ad-bdbc-4ed3-b01b-b00325da8981",
+      "canonical_name": "Mwola",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mwola'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "f5ec5a7e-da88-4df0-8e53-ee924c036193",
+      "canonical_name": "Kasala",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kasala'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "0225baf7-e9a4-4729-8393-6c898fafbe8a",
+      "canonical_name": "Jumbi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Jumbi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "45e48b92-fecc-4c84-885b-6e333a55c267",
+      "canonical_name": "Luwafu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Luwafu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "44539625-d554-45b1-9c55-507e1d1df436",
+      "canonical_name": "Kisakombe",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kisakombe'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "b83ea9c9-b23a-4096-9948-e8582d76aa61",
+      "canonical_name": "Bowa",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bowa'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "1f7438f3-b22a-4ba0-8d9f-b749b1ddf071",
+      "canonical_name": "Musamya",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Musamya'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "499568c5-d617-456c-ae53-da3db5ed49b5",
+      "canonical_name": "Bulondo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bulondo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "3e4daec9-9f94-4f43-a8a4-9753d14a6e32",
+      "canonical_name": "Lukolo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Lukolo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "a33fae9d-9421-453f-a9c6-483427b24e9f",
+      "canonical_name": "Kalagala (Busakwa)",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kalagala (Busakwa)'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "aa67d2c8-30e5-4325-b834-b327f7e625d4",
+      "canonical_name": "Bulijjo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bulijjo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "3cfe21e7-f84f-4246-a523-07bf3a89546e",
+      "canonical_name": "Walugondo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Walugondo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "a25fc75a-8010-4450-a179-b24c70a28b8c",
+      "canonical_name": "Kizinkuba",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kizinkuba'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "3369a343-9a54-461f-8cbd-67605f6b0ff9",
+      "canonical_name": "Nadagi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nadagi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "27025e8e-ffa1-4837-b702-f9dead4d8193",
+      "canonical_name": "Buuka",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Buuka'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "6e149269-2cf1-4f1b-b329-c4b54a7d45c0",
+      "canonical_name": "Natyonko",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Natyonko'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "d39b275a-6c15-488d-9c61-55482f6176b1",
+      "canonical_name": "Kamera",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kamera'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "399188fc-6030-414b-b6df-fe8ebce399a6",
+      "canonical_name": "Nabika",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nabika'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "ea3593ee-038b-480f-bea3-48a616d924c9",
+      "canonical_name": "Wabirago",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Wabirago'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "c77952f9-7df0-44e5-83a2-1dbe6b5d603e",
+      "canonical_name": "Wamasega",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Wamasega'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "5bc843bd-f0c1-4cc7-be86-932425d96b34",
+      "canonical_name": "Kagongo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kagongo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "73762072-d219-47cb-8b86-67ba4f006782",
+      "canonical_name": "Kasozi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kasozi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "091182b7-246a-4644-b55e-05861ed9efe9",
+      "canonical_name": "Bukone",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bukone'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "5d8f6158-52da-4d1f-922c-00bd30d28654",
+      "canonical_name": "Kitonya",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kitonya'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "246b11e7-e4cd-4ac8-9546-b36a7cb943de",
+      "canonical_name": "Kateta",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kateta'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "39e5fb94-6a94-4770-bdb3-20aeeca775b6",
+      "canonical_name": "Kalo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kalo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "661d08e4-4207-4ada-a679-83f61362611f",
+      "canonical_name": "Namatiwa",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Namatiwa'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "c351d3e9-d981-4158-8fef-734126d9de2f",
+      "canonical_name": "Buzimba",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Buzimba'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "7731a76a-2efe-40ff-8cd0-80250cec4faa",
+      "canonical_name": "Lukuga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Lukuga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "13dfc631-393f-4a68-af74-6ffdae03092a",
+      "canonical_name": "Nkogwe",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nkogwe'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "95ffbfe5-72ae-4915-afe4-1c12c93284c5",
+      "canonical_name": "Nimu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nimu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "05c42185-2298-4c73-a910-f282f9ad7e99",
+      "canonical_name": "Kabukira",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kabukira'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "c23a3ae3-32ca-41d1-8823-ba657afeaadb",
+      "canonical_name": "Sembula",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Sembula'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "9153c377-30e0-4cc6-a6a2-fe6bad2cd316",
+      "canonical_name": "Nakwaya",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nakwaya'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "a62728eb-4662-4717-b7fa-48c5a28bc860",
+      "canonical_name": "Kuzito",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kuzito'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "e0177053-7a09-45ed-913f-739b7c995733",
+      "canonical_name": "Mulega",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mulega'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "7353f2a1-bdc2-4e82-8afd-87bbdee1148e",
+      "canonical_name": "Nakiza",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nakiza'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "d51427d0-6fb9-4a66-802d-57676715818e",
+      "canonical_name": "Lutoboka",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Lutoboka'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "6d9d6d07-4c0f-4777-b982-8cc545aaa874",
+      "canonical_name": "Buziga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Buziga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "da1d0cde-55f1-4cea-8c53-0ad0a9ccb559",
+      "canonical_name": "Kagogo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kagogo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "93af8865-9f78-457c-9902-40c13ee20083",
+      "canonical_name": "Busowe",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Busowe'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "7120545d-74a1-4697-aad0-0cff74d814e8",
+      "canonical_name": "Bunjazi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bunjazi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "308a3ef4-f4a4-4e47-9406-5fdb235d54fc",
+      "canonical_name": "Kampala",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kampala'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "99277e88-e0cc-4798-b155-7505678d7b97",
+      "canonical_name": "Mabira",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mabira'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "46b794b9-27d8-42d6-af60-6b79960f257a",
+      "canonical_name": "Towa",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Towa'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "0b75d2cd-6942-4728-ae29-2e509057fca0",
+      "canonical_name": "Luleka",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Luleka'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "460a3a0c-3bb2-4669-a776-04232f9cb1b1",
+      "canonical_name": "Bufumira",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bufumira'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "6204d689-56d0-404b-acba-1ec69093b6a3",
+      "canonical_name": "Kerenge",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kerenge'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "1889bc43-c12c-449e-aa2e-0663f8558256",
+      "canonical_name": "Kubanda",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kubanda'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "e2b4d56b-69b2-4958-b319-709f0c59cace",
+      "canonical_name": "Kisisita",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kisisita'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "f57a6358-fb08-4bf9-bf3f-5e405ffb49cc",
+      "canonical_name": "Nakasenyi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nakasenyi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "45c82a43-c6da-4f54-a343-29d409e29b77",
+      "canonical_name": "Namakupa",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Namakupa'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "080659d5-e115-4d02-98c2-e155ed7d0264",
+      "canonical_name": "Kabugeza (Kasanda)",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kabugeza (Kasanda)'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "49f13ea6-c90f-4994-916d-2003f07aa194",
+      "canonical_name": "Bugana",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bugana'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "f710699f-3d6a-414e-8e47-17c9b7733a0c",
+      "canonical_name": "Wangu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Wangu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "d1676281-b22d-4102-bf02-5c86a625cbec",
+      "canonical_name": "Nkese",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nkese'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "ffe5966b-d688-4698-9854-c385dc79cab6",
+      "canonical_name": "Kijogolo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kijogolo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "658130d5-0f21-4f8a-8289-7f924e628573",
+      "canonical_name": "Name Unknown - Forest Reserve 4",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Name Unknown - Forest Reserve 4'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "1a0d12e4-06a6-4902-9978-fe3f37e4d2cf",
+      "canonical_name": "Kitemu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kitemu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "b9781c04-9792-4d29-8bbf-a986c7030584",
+      "canonical_name": "Jubiya",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Jubiya'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "a352cdfc-1870-4445-bae7-44a425a37c5c",
+      "canonical_name": "Namawanyi and Namananga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Namawanyi and Namananga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "4e2e186d-382a-4ba3-b8f6-ce9ca56f7c71",
+      "canonical_name": "Bukakata",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bukakata'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "2c229f0f-71a1-4e59-9001-841937d864c4",
+      "canonical_name": "Tonde",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Tonde'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "56176d77-310f-4412-b226-e5d59675d7dd",
+      "canonical_name": "Gala",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Gala'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "b25b3c7a-a467-46d6-abbb-f234391ad533",
+      "canonical_name": "Koko",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Koko'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "d8766a2c-1405-4ffa-a561-9bedc3509c8c",
+      "canonical_name": "Nazigo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nazigo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "453b7a83-c365-4884-8ea4-53bc5331f91e",
+      "canonical_name": "Wankweyo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Wankweyo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "db2c9cc6-431c-446b-b924-80dff25b64f7",
+      "canonical_name": "Ngogwe (Bwema Island)",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Ngogwe (Bwema Island)'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "f6ccde25-4982-4743-b603-0dfc76417aa5",
+      "canonical_name": "Kafumbi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kafumbi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "3a9ea28b-104c-40e5-b17b-7fcaeedbfe8d",
+      "canonical_name": "Luwungulu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Luwungulu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "73e0fad1-d33d-4f94-96c0-cedd332d9de4",
+      "canonical_name": "Zimwa",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Zimwa'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "4a51c770-8f1f-40f5-9d93-156fd31187e7",
+      "canonical_name": "Bugonzi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bugonzi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "adb0d2da-2dfa-40b8-8b1c-ddcc1dbb668b",
+      "canonical_name": "Namatembe",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Namatembe'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "f72831c2-fab1-4e9a-89a4-9cff4e69ebea",
+      "canonical_name": "Kalagala Falls",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kalagala Falls'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "4f95b3bc-3e25-4617-ac1f-b79f93d94c58",
+      "canonical_name": "Kisasa",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kisasa'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "40c9d1cb-1671-413b-a709-970b31b82285",
+      "canonical_name": "Nile Bank",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nile Bank'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "b0b95bb9-4b52-461d-bedb-2693a1acd008",
+      "canonical_name": "Nabijoka",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nabijoka'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "f0e1229a-ef43-49fe-8473-b3968b99a837",
+      "canonical_name": "Buga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Buga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "9d818c14-eb22-48a0-a3a5-95749995173d",
+      "canonical_name": "Funve",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Funve'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "b139eeb8-f537-497d-867e-4a094fea25d3",
+      "canonical_name": "Sekazinga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Sekazinga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "05ee3f29-c3c5-4666-a267-8fab4817dd1a",
+      "canonical_name": "Kamukulu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kamukulu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "289c92d6-67d3-438c-bba7-9aab9e4b9d5f",
+      "canonical_name": "Mugoye",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mugoye'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "953552e7-6c06-4e9a-96ac-524239a0772c",
+      "canonical_name": "Namavundu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Namavundu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "1e9f5ba5-0267-4b7a-ac4c-0fdf9c596af6",
+      "canonical_name": "Bwezigolo - Gunga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bwezigolo - Gunga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "c7ead0f0-bdff-4bc4-b97e-b415600c41cf",
+      "canonical_name": "Makoko",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Makoko'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "b4ce5ce1-c41e-42a7-8e24-d214868f723b",
+      "canonical_name": "Lukalu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Lukalu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "7a8ff353-161a-4127-a288-f209c288f8c5",
+      "canonical_name": "Lubani",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Lubani'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "ea178da1-e4db-4633-8593-511366f2cd4b",
+      "canonical_name": "Kalungu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kalungu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "34ce45af-7c65-4ec7-8bf6-7344ff3b3023",
+      "canonical_name": "Kimaka",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kimaka'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "c7151c94-2797-4dd8-b6c3-b9aea8dda81e",
+      "canonical_name": "Kapimpini",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kapimpini'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "93a6de2f-173d-40e6-8f36-9f58a4316e7d",
+      "canonical_name": "Sozi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Sozi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "5f4cc9a7-386b-4bd7-ae88-098e55631e30",
+      "canonical_name": "Nanfuka",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nanfuka'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "62602e7e-d350-4424-8b83-a3d286a01334",
+      "canonical_name": "Kalombi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kalombi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "4bf475e8-7a6b-42bc-97b5-a9f19388fcb4",
+      "canonical_name": "Manwa",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Manwa'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "151d517c-33a4-498e-b5d3-3268f712a02b",
+      "canonical_name": "Banga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Banga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "2c260fa1-3779-49b6-b6d0-cc9391453d8b",
+      "canonical_name": "Kasega",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kasega'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "0c9a19d6-45ea-41af-89ac-7e43c2818aae",
+      "canonical_name": "Bira",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bira'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "dbe25ad0-798d-42e8-ae28-4048c9fbbd3f",
+      "canonical_name": "Kasonke",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kasonke'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "af31bfdd-2399-4d8d-8776-ed68e9d61b35",
+      "canonical_name": "Kabindo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kabindo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "d5871f4e-a436-4aa6-9f60-6c3e47299a70",
+      "canonical_name": "Namwasa",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Namwasa'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "d49b6340-e2d9-4e11-b57c-282cdbfcf5a5",
+      "canonical_name": "Ngereka",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Ngereka'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "2666e3ac-ee34-42b8-a93c-541c751e0249",
+      "canonical_name": "Nsube",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nsube'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "8bab6064-2d21-4cf4-8736-62dcce991475",
+      "canonical_name": "Bukaibale",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bukaibale'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "dfd1572a-6750-4d75-93ca-f4ae050786a3",
+      "canonical_name": "Bugembe",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bugembe'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "3e9e3235-d6e7-4901-a737-a0a9117bf565",
+      "canonical_name": "Buturume",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Buturume'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "cd2cc9d0-ba54-4c69-a895-797f9dddc2c4",
+      "canonical_name": "Kijwiga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kijwiga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "17c676af-ace3-48c0-8d8b-f55cb89afba2",
+      "canonical_name": "Nsowe",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nsowe'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "415d3b73-ff56-4fde-8e0a-57e8059f1c0d",
+      "canonical_name": "Kagoma",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kagoma'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "19987058-10b4-478d-8755-3282e30aae17",
+      "canonical_name": "Nakunyi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nakunyi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "29c846f3-0fe0-4378-9d14-53d7654e9e1c",
+      "canonical_name": "Linga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Linga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "a46ca65e-1377-4a14-8d3b-4a938fc78fa4",
+      "canonical_name": "Kyakumpi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kyakumpi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "b3b52aac-c28c-4940-a110-db295971ff37",
+      "canonical_name": "Mbulamuti",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mbulamuti'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "321555ab-8935-4017-aa26-4dbc40a81356",
+      "canonical_name": "Buloba",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Buloba'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "d9805463-6948-4ae5-b4e7-0983b03484d4",
+      "canonical_name": "Kirigye",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kirigye'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "58a4217d-686d-4604-9c98-fe5969113fb9",
+      "canonical_name": "Mutai",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mutai'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "47544b84-2f22-4a94-b751-6139b8075ff9",
+      "canonical_name": "Izinga Island",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Izinga Island'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "72639dc3-af7a-4d42-8f80-ac510c5d7a24",
+      "canonical_name": "Busegula",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Busegula'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "94815f07-a222-436c-97b9-976cb4f1e7ca",
+      "canonical_name": "Kyampisi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kyampisi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "e932936e-c909-4a4d-b413-74477f7f2a95",
+      "canonical_name": "Mawanga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mawanga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "a3dbce55-4a35-413d-91bc-89f4d007f595",
+      "canonical_name": "Nawaitale",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nawaitale'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "287806a7-929a-4c03-805e-90611eb307c0",
+      "canonical_name": "Namunyoro",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Namunyoro'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "ae060113-644a-4c60-8534-b328c3c6c7ad",
+      "canonical_name": "Name Unknown - Forest Reserve 6",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Name Unknown - Forest Reserve 6'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "c3eeb4f3-30e2-4786-9088-70c02e2c5521",
+      "canonical_name": "Buduli",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Buduli'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "b5d11949-34f7-4c4f-bbf5-c755a2be8f2a",
+      "canonical_name": "Mwiri",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mwiri'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "63cb3eb2-1a96-4509-a86a-9fc6f11ac374",
+      "canonical_name": "Kande",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kande'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "1d5ac743-692d-499b-b74e-a7ce5620004b",
+      "canonical_name": "Nsese",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nsese'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "5dd31e21-0d74-424c-b034-3867aa8d3520",
+      "canonical_name": "Bugusa",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bugusa'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "b6d03012-92cf-4d50-99d5-f5379d69db0b",
+      "canonical_name": "Kakonwa",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kakonwa'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "57a7f332-a26e-4482-85d4-da7b4aac9998",
+      "canonical_name": "Namabowe",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Namabowe'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "356af605-9984-4077-9506-3a63c613712b",
+      "canonical_name": "Katuugo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Katuugo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "0798aece-995f-4915-8e07-904ac50d20b4",
+      "canonical_name": "Kumbu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kumbu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "d300c4ff-0cda-451d-bb07-3443ca3b680f",
+      "canonical_name": "Goyera",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Goyera'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "5c10b753-189c-4bfc-ab22-165a1d35cc40",
+      "canonical_name": "Mpanga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mpanga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "ae3e0607-069b-4eed-8aab-eb0e1c0b066a",
+      "canonical_name": "Kasagala",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kasagala'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "ee5e32d9-e33c-4e9c-9c18-456fcd0084cb",
+      "canonical_name": "Koja",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Koja'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "37eeb517-c2dd-433f-a820-63298042d302",
+      "canonical_name": "Iziru",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Iziru'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "f8932739-d48d-40a8-b20a-cd17bab6c55f",
+      "canonical_name": "Olamusa",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Olamusa'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "5863f66d-5d62-4be5-9580-494f5bde5512",
+      "canonical_name": "Kamigo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kamigo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "398e711a-f860-41c2-b90b-20f78fdd874b",
+      "canonical_name": "Walulumbu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Walulumbu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "49ac3d1f-f4d5-45e2-bd14-8075d5c5a592",
+      "canonical_name": "Namasagali",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Namasagali'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "9c34d8f1-931a-4a61-be55-7361cb0f691d",
+      "canonical_name": "Wabitembe",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Wabitembe'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "e5a10c86-704d-470a-80fe-0575962af1dc",
+      "canonical_name": "Kabwika - Mujwalanganda",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kabwika - Mujwalanganda'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "84cab910-e31f-4bc5-bf03-bb3c90ed23c6",
+      "canonical_name": "Buluku",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Buluku'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "ed48013e-d4de-45f0-a309-aed02b1c49e4",
+      "canonical_name": "Kamusenene",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kamusenene'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "734e3e8a-b360-4446-a218-ab52e8038b96",
+      "canonical_name": "Mateme",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mateme'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "c58e880f-2e7e-44b7-af1b-aa3e9f5e72a1",
+      "canonical_name": "Mbale",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mbale'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "8d7b6069-9a64-45b7-872b-c050ea34df95",
+      "canonical_name": "Namazingiri",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Namazingiri'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "14eaa107-7454-4fec-8188-50bbcb014e0d",
+      "canonical_name": "Luwunga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Luwunga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "b7f71c69-6997-4903-8db8-8fe540cae893",
+      "canonical_name": "Buwaiswa",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Buwaiswa'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "30064b43-116b-4c0c-a41c-9b72004cd48f",
+      "canonical_name": "Buwanzi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Buwanzi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "f7cfe5de-b18f-4a22-ab08-e198bcc78d33",
+      "canonical_name": "Nabukonge",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nabukonge'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "b2f168b5-d688-4da7-8435-bf6e00493ee8",
+      "canonical_name": "Lukale",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Lukale'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "c6ec778b-7d13-458e-acbd-195311d45c86",
+      "canonical_name": "Kasana - Kasambya",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kasana - Kasambya'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "bab50fc0-d4e2-4656-8d43-b641cc29c0dc",
+      "canonical_name": "Mpinve",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mpinve'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "779787b9-d7e9-4e66-87d4-7e08788cb0f7",
+      "canonical_name": "Bugomba",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bugomba'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "d4d517b4-e02d-42f9-86b8-d8673acfe313",
+      "canonical_name": "Lajabwa",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Lajabwa'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "4eb9f1e1-5f58-4028-8b27-67bd529ffc4c",
+      "canonical_name": "Mala Island",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mala Island'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "232e6d23-c40e-45fb-bc4a-aef6da607a99",
+      "canonical_name": "Bukaleba",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bukaleba'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "2cd3e179-7af0-4c50-ad9c-21d84559c773",
+      "canonical_name": "Namafuma",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Namafuma'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "93ce3866-2142-4f00-9896-f819ffef1cb9",
+      "canonical_name": "Kitasi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kitasi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "e615c8e9-48dd-43da-b4b8-9c9370cca70d",
+      "canonical_name": "Name Unknown - Forest Reserve 3",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Name Unknown - Forest Reserve 3'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "5b3975ee-0a6b-4bb9-98d6-a3990ad444e9",
+      "canonical_name": "Namasiga - Kidimbuli",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Namasiga - Kidimbuli'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "a3eda513-309a-4e1c-8670-df205757bfd5",
+      "canonical_name": "Nkose",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nkose'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "65786402-2011-44e7-abad-c3a186f64c54",
+      "canonical_name": "Kyirira",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kyirira'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "9c1d86a6-0fb1-4a32-8441-8195bf67a051",
+      "canonical_name": "Kamuli",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kamuli'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "2c36ea4f-bb67-4f08-8903-0b1882506289",
+      "canonical_name": "Yubwe",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Yubwe'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "d20e8e21-1897-40d0-9cd2-1a084535543a",
+      "canonical_name": "Mutufu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mutufu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "4a0af7ff-f1a1-4ad1-8460-40f47361a69a",
+      "canonical_name": "Mulundu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mulundu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "4307deb9-1c0e-40d0-9010-c0309f3200cb",
+      "canonical_name": "Kisombwa",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kisombwa'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "50a94923-8d36-44f4-b17d-f97a378c0118",
+      "canonical_name": "Bajo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bajo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "4e3a5c91-e084-45d0-aa1b-80b2a8884c55",
+      "canonical_name": "Kaweri",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kaweri'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "1a90be4a-0d3b-40ba-9a19-c5da69318899",
+      "canonical_name": "Kasenyi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kasenyi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "0587bfa4-b348-480e-89a8-bf304d051958",
+      "canonical_name": "Mafudu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mafudu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "544b542c-aeb1-41da-8218-164758db12f6",
+      "canonical_name": "Makoka",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Makoka'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "39f98db5-f149-42e5-a0d2-fbf7b2a5178e",
+      "canonical_name": "Taala",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Taala'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "7a3b0747-c268-4f0a-aa21-258089a7ae55",
+      "canonical_name": "Bulogo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bulogo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "53b31112-6d94-41d0-9a1b-ff56859c4f5a",
+      "canonical_name": "Nakitondo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nakitondo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "aa4edca0-ad3b-4e9a-9c72-0ff648cbf0ea",
+      "canonical_name": "Mujuzi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Mujuzi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "bba8a479-7397-4616-9039-1d3d8c721f12",
+      "canonical_name": "Kanangalo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kanangalo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "f6b30f2d-321e-4303-90c2-1e58125931d3",
+      "canonical_name": "Lusiba",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Lusiba'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "d2a9ec1f-5045-45cc-8ec8-ab4406f238d6",
+      "canonical_name": "Wamale",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Wamale'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "61d647d6-b567-40a9-bd4c-76f43bb90689",
+      "canonical_name": "Kidiki",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kidiki'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "a200de39-ed76-48b1-8451-f38d6fb1fac0",
+      "canonical_name": "Matale",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Matale'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "2f051a5a-855f-4c4a-8bfe-8dc429e31c9e",
+      "canonical_name": "Walugogo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Walugogo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "c818319c-d451-47ff-b611-11366bc20a0c",
+      "canonical_name": "Kasolo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kasolo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "16fe8ec1-13b8-4f50-8000-dad40d036ae1",
+      "canonical_name": "Kiula",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kiula'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "a973c978-d095-4852-bb7b-6aaed6dd46c1",
+      "canonical_name": "Bunafu",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bunafu'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "6300a518-b72b-4bc1-9196-4d3fcac51e98",
+      "canonical_name": "South Busoga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'South Busoga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "7cfa1ca1-b8ed-4773-8a69-8086148d5ebd",
+      "canonical_name": "Ibamba",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Ibamba'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "e212f8ba-a528-419f-ab4e-ac72c07700fd",
+      "canonical_name": "Kigona River",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kigona River'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "9fdc7ef1-90b4-40e4-aedc-892bea7ffc52",
+      "canonical_name": "Kyalubanga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kyalubanga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "337e8ca1-6fa9-429f-bc98-7793cf41d6be",
+      "canonical_name": "Wabisi - Wajala",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Wabisi - Wajala'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "5558aa01-e5b4-4a02-befe-ef45774daed3",
+      "canonical_name": "Lwengo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Lwengo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "f9772116-0d3e-4189-82c1-ac31c041c968",
+      "canonical_name": "Kigona",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kigona'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "41042319-dac0-4fde-ab9b-21bec6ba1a35",
+      "canonical_name": "Kakumiro",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kakumiro'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "f6cd3f87-31d8-44f7-8ccd-ad474105cf94",
+      "canonical_name": "Namalemba",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Namalemba'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "2f198861-5bd3-4b55-acf2-f67bc0012040",
+      "canonical_name": "Bamude - Nchwanga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bamude - Nchwanga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "30e2b908-4289-43df-abbf-7dcd3cf30147",
+      "canonical_name": "Bikira",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Bikira'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "48225194-3b64-4e23-b45b-058830b222bd",
+      "canonical_name": "Ntusi",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Ntusi'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "e6e297f5-1132-4632-9499-be34335ebf4f",
+      "canonical_name": "Namukonge",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Namukonge'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "a016243b-51cb-4179-9db6-ca7c82dbf78b",
+      "canonical_name": "Nabukolyo",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Nabukolyo'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "d5dab4ad-18f4-45cd-8ddd-34241856868d",
+      "canonical_name": "Muinaina",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Muinaina'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "329c9089-13dc-4778-a71b-0adf2fd3b90d",
+      "canonical_name": "Kazooba",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kazooba'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "f152dd1a-9a88-48b5-a441-51930a368726",
+      "canonical_name": "Name Unknown - Forest Reserve 2",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Name Unknown - Forest Reserve 2'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "130834aa-abb8-4db3-9b7a-4fd00b755b3e",
+      "canonical_name": "Wakatanga",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Wakatanga'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "782b9202-061b-4f0e-8edb-1355edfb0648",
+      "canonical_name": "Kabira",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kabira'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "f218ea0b-49de-4e71-9984-b846aaed4457",
+      "canonical_name": "Buyaga Dam",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Buyaga Dam'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "13304352-2d3a-4501-925e-3daeaf0d8941",
+      "canonical_name": "Kaliro",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kaliro'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "1c04947b-773a-4cc1-8efe-093519c80018",
+      "canonical_name": "Namasale",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Namasale'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "27408b3b-0f35-4dc3-a985-d7dfdeffa6b4",
+      "canonical_name": "Guramwa",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Guramwa'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "1b4b7b48-b391-4e74-a897-03e800910c51",
+      "canonical_name": "Kihaimira",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kihaimira'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "c09fad3b-bcaa-4f40-a4c7-7e0feec59e86",
+      "canonical_name": "Kikonda",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Kikonda'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "3572affa-9fe9-4279-a583-8c8417dad537",
+      "canonical_name": "Busembatya",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Busembatya'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "965d64c3-f3f7-4673-8ca5-9cc4d5d75962",
+      "canonical_name": "Rwensambya",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Rwensambya'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    },
+    {
+      "entity_id": "9ef226e9-bafe-4130-9dac-322e8b35a4a3",
+      "canonical_name": "Ajuka",
+      "access_state": "UNKNOWN",
+      "provenance": "No license/concession/management-plan/production-permit/protection-tier evidence exists in this CFR's ingested aoi.metadata={'country': 'UG', 'eo_scope': True, 'spatial_type': 'reserve'} or entity.metadata={'source_dataset': 'central-forest-reserves', 'source_record_key': 'Ajuka'} -- all 276 catchment CFRs share this same undifferentiated 'gazetted Central Forest Reserve' designation."
+    }
+  ]
+}

@@ -1,16 +1,22 @@
-import zurktCfrResults from "./data/zurkt-cfr-supply-results-v2.json"
-import zurktScenario from "./data/zurkt-uganda-scenario-v2.json"
-import zurktSupplyCurve from "./data/zurkt-delivered-supply-curve-v2.json"
-import zurktOutlook from "./data/zurkt-10yr-outlook-v2.json"
-import zurktSensitivity from "./data/zurkt-sensitivity-v2.json"
-import zurktVerification from "./data/zurkt-verification-priorities-v2.json"
-import zurktDemandLadder from "./data/zurkt-demand-reliability-v2.json"
+import zurktCfrResults from "./data/zurkt-cfr-supply-results-v3.json"
+import zurktScenario from "./data/zurkt-uganda-scenario-v3.json"
+import zurktSupplyCurve from "./data/zurkt-delivered-supply-curve-v3.json"
+import zurktOutlook from "./data/zurkt-10yr-outlook-v3.json"
+import zurktSensitivity from "./data/zurkt-sensitivity-v3.json"
+import zurktVerification from "./data/zurkt-verification-priorities-v3.json"
+import zurktDispatch from "./data/zurkt-demand-reliability-v3.json"
+import zurktTechnicalPotential from "./data/zurkt-technical-potential-v3.json"
+import zurktThreeTier from "./data/zurkt-three-tier-supply-v3.json"
+import zurktDecomposition from "./data/zurkt-uncertainty-decomposition-v3.json"
+import zurktEvsi from "./data/zurkt-evsi-v3.json"
+import zurktFieldProgramme from "./data/zurkt-field-programme-v3.json"
+import zurktAccessState from "./data/zurkt-access-state-v3.json"
 import type { EvidenceValue, GradeTonnes, Provenance, SupplyDataset, SupplyLot } from "./types"
 
 // Fixed demonstration world. These locations and quantities are not forest observations.
 export const previewProvenance: Provenance = {
-  epistemicClass: "SYNTHETIC", world: { id: "supply-workspace-preview-v2", kind: "experiment" },
-  asOf: "2026-09-13", knownAt: "2026-09-13", source: "Supply workspace demonstration fixture v2",
+  epistemicClass: "SYNTHETIC", world: { id: "supply-workspace-preview-v3", kind: "experiment" },
+  asOf: "2026-09-13", knownAt: "2026-09-13", source: "Supply workspace demonstration fixture v3",
   freshness: "unknown", verification: "unverified", completeness: "partial", evidenceIds: [],
 }
 function value<T>(input: T | null, missingReason?: string): EvidenceValue<T> {
@@ -105,15 +111,22 @@ export const zurktSupplyModel = {
   knownSimplifications: zurktScenario.known_simplifications as string[],
   cfrCount: allCfrResults.length,
   viableCfrCount: allCfrResults.filter((c) => c.modelled.delivered_cost_usd_per_m3.p50 <= 60).length,
-  // Two-stage reporting (never blended into one number): biophysical/
-  // technical potential is what standing volume exists before any legal/
-  // commercial-access screen; commercially addressable applies the
-  // scenario availability fraction on top. Both come straight from the
-  // backend Monte Carlo, not recomputed here.
-  technicalPotentialM3: {
-    p10: allCfrResults.reduce((s, c) => s + c.modelled.biophysical_technical_potential_m3.p10, 0),
-    p50: allCfrResults.reduce((s, c) => s + c.modelled.biophysical_technical_potential_m3.p50, 0),
-    p90: allCfrResults.reduce((s, c) => s + c.modelled.biophysical_technical_potential_m3.p90, 0),
+  // THREE-tier reporting (Track v3-6, never blended into one number):
+  // A. physical/biophysical potential (pre-access-screen), B. scenario-
+  // addressable (SCENARIO availability fraction applied), C. evidence-
+  // supported (only CFRs with a real, ingested access/legal record --
+  // currently 0, since the access-evidence pass found none; see
+  // zurktAccessState). All three come straight from the backend's own
+  // joint-draws aggregation, not recomputed here.
+  technicalPotentialM3: zurktTechnicalPotential.technical_potential_m3 as ZurktQuantile,
+  threeTierSupply: {
+    physical: zurktThreeTier.a_physical_biophysical_potential_m3 as ZurktQuantile,
+    scenarioAddressable: zurktThreeTier.b_scenario_addressable_supply_m3 as ZurktQuantile,
+    evidenceSupported: zurktThreeTier.c_evidence_supported_addressable_supply_m3 as ZurktQuantile | null,
+    note: zurktThreeTier.c_note as string,
+  },
+  accessState: {
+    counts: zurktAccessState.counts as { KNOWN_POTENTIALLY_AVAILABLE: number; KNOWN_RESTRICTED_OR_UNAVAILABLE: number; UNKNOWN: number },
   },
   aggregateAnnualSupplyM3: zurktSupplyCurve.aggregate_annual_suitable_supply_m3 as ZurktQuantile,
   supplyCurve: zurktSupplyCurve.points as {
@@ -128,6 +141,11 @@ export const zurktSupplyModel = {
   sourceConcentration: zurktSupplyCurve.source_concentration as {
     top1_cfr_share_of_p50_supply: number | null; top5_cfrs_share_of_p50_supply: number | null; top10_cfrs_share_of_p50_supply: number | null
   },
+  // Per-draw concentration distribution (Track v3-5) -- a spread, not a
+  // single P50-based read-off.
+  sourceConcentrationDistribution: zurktDispatch.source_concentration_distribution as {
+    top1_share: ZurktQuantile; top5_share: ZurktQuantile; top10_share: ZurktQuantile; note: string
+  },
   outlookYears: zurktOutlook.years as { year: number; annual_supply_m3: ZurktQuantile; cumulative_supply_m3: ZurktQuantile; remaining_stock_m3: ZurktQuantile }[],
   sensitivity: zurktSensitivity.one_variable_sensitivities as {
     perturbation: string; supply_change_pct: number | null; cost_change_pct: number | null
@@ -137,10 +155,27 @@ export const zurktSupplyModel = {
     relative_uncertainty_cv: number; commercial_contribution_share: number
     distance_km: number; road_km: number | null; recommended_field_variables: string[]
   }[],
-  demandLadder: zurktDemandLadder.results as {
+  // Draw-wise dispatch reliability (Track v3-5): every quantity below is a
+  // P10/P50/P90 DISTRIBUTION over Monte Carlo worlds, not a single number
+  // read off one P50-ranked curve.
+  demandReliability: zurktDispatch.demand_reliability as {
     demand_m3_per_year: number; p_supply_meets_demand: number; expected_shortfall_m3: number
-    shortfall_p10_m3: number; shortfall_p50_m3: number; shortfall_p90_m3: number
-    required_source_cfr_count: number | null; marginal_delivered_cost_usd_per_m3: number | null
+    shortfall_m3: ZurktQuantile
+    required_source_cfr_count: { p10: number | null; p50: number | null; p90: number | null }
+    marginal_delivered_cost_usd_per_m3: { p10: number | null; p50: number | null; p90: number | null }
+  }[],
+  uncertaintyDecomposition: zurktDecomposition.groups as {
+    uncertainty_group: string; baseline_variance: number; variance_when_frozen: number; approx_share_of_variance: number
+  }[],
+  evsi: zurktEvsi.ranked_cfr_variable_pairs as {
+    entity_id: string; canonical_name: string; variable: string
+    expected_shortfall_reduction_m3: number; reliability_gain: number; recommended_method: string
+    base_p_supply_meets_demand: number; post_verification_p_supply_meets_demand: number
+  }[],
+  fieldProgramme: zurktFieldProgramme.plan as {
+    priority: number; canonical_name: string; entity_id: string; variable_to_measure: string
+    why: string; recommended_method: string
+    expected_decision_impact: { expected_shortfall_reduction_m3: number; reliability_gain: number }
   }[],
 }
 
@@ -167,7 +202,7 @@ export const supplyPreview: SupplyDataset = {
   provenance: previewProvenance,
   planningStart: "2026-10-01", coverageEnd: "2028-09-30",
   processor: {
-    id: "evergreen-mpigi-v2", name: "Evergreen Wood Industries Ltd", location: "Mpigi District, Uganda · verified plywood/veneer manufacturer",
+    id: "evergreen-mpigi-v3", name: "Evergreen Wood Industries Ltd", location: "Mpigi District, Uganda · verified plywood/veneer manufacturer",
     position: [zurktScenario.processor.location.lat, zurktScenario.processor.location.lon],
     sourcingRadiusKm: value(50),
     specification: {

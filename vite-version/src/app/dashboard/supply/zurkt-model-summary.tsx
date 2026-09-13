@@ -34,24 +34,28 @@ export function ZurktModelSummary() {
 
       <div className="si-rail-note">
         <div className="zurkt-two-stage-note">
-          <p><strong>Two-stage reporting, never blended into one number.</strong> Technical potential is standing
-          volume before any legal/commercial-access screen. Commercially addressable supply applies a scenario
-          availability fraction on top -- this is NOT inferred from EO or per-CFR verified access status (no such
-          data exists yet); it is a broad ASSUMED fraction applied uniformly because every CFR's real access state
-          is currently unknown, not because access is known to be partial everywhere.</p>
+          <p><strong>Three supply concepts, never blended into one number.</strong> A. PHYSICAL POTENTIAL is standing/
+          harvestable volume before any access screen. B. SCENARIO-ADDRESSABLE applies an ASSUMED commercial-access
+          fraction (not evidence-based). C. EVIDENCE-SUPPORTED restricts to CFRs with a real, ingested legal/access
+          record -- {m.threeTierSupply.note}</p>
         </div>
       </div>
 
       <div className="zurkt-headline-row">
         <div className="zurkt-headline-card">
-          <span className="si-eyebrow">Technical potential (pre-access-screen)</span>
-          <strong>{number(m.technicalPotentialM3.p50)} m3</strong>
-          <span className="zurkt-range">P10 {number(m.technicalPotentialM3.p10)} · P90 {number(m.technicalPotentialM3.p90)}</span>
+          <span className="si-eyebrow">A. Physical potential</span>
+          <strong>{number(m.threeTierSupply.physical.p50)} m3</strong>
+          <span className="zurkt-range">P10 {number(m.threeTierSupply.physical.p10)} · P90 {number(m.threeTierSupply.physical.p90)}</span>
         </div>
         <div className="zurkt-headline-card">
-          <span className="si-eyebrow">Commercially addressable annual supply</span>
+          <span className="si-eyebrow">B. Scenario-addressable</span>
           <strong>{number(agg.p50)} m3</strong>
           <span className="zurkt-range">P10 {number(agg.p10)} · P90 {number(agg.p90)}</span>
+        </div>
+        <div className="zurkt-headline-card">
+          <span className="si-eyebrow">C. Evidence-supported</span>
+          <strong>{m.threeTierSupply.evidenceSupported ? number(m.threeTierSupply.evidenceSupported.p50) : "n/a"} m3</strong>
+          <span className="zurkt-range">{m.accessState.counts.KNOWN_POTENTIALLY_AVAILABLE} / {m.accessState.counts.KNOWN_POTENTIALLY_AVAILABLE + m.accessState.counts.KNOWN_RESTRICTED_OR_UNAVAILABLE + m.accessState.counts.UNKNOWN} CFRs with real access evidence</span>
         </div>
         <div className="zurkt-headline-card">
           <span className="si-eyebrow">Viable source CFRs</span>
@@ -59,14 +63,19 @@ export function ZurktModelSummary() {
           <span className="zurkt-range">delivered cost ≤ $60/m3 (scenario screen)</span>
         </div>
         <div className="zurkt-headline-card">
-          <span className="si-eyebrow">Source concentration</span>
-          <strong>{m.sourceConcentration.top5_cfrs_share_of_p50_supply != null ? `${Math.round(m.sourceConcentration.top5_cfrs_share_of_p50_supply * 100)}%` : "n/a"}</strong>
-          <span className="zurkt-range">top 5 · top 1 {m.sourceConcentration.top1_cfr_share_of_p50_supply != null ? `${Math.round(m.sourceConcentration.top1_cfr_share_of_p50_supply * 100)}%` : "n/a"} · top 10 {m.sourceConcentration.top10_cfrs_share_of_p50_supply != null ? `${Math.round(m.sourceConcentration.top10_cfrs_share_of_p50_supply * 100)}%` : "n/a"}</span>
-        </div>
-        <div className="zurkt-headline-card">
           <span className="si-eyebrow">Marginal CFR</span>
           <strong>{curve.length ? curve[curve.length - 1].canonical_name : "n/a"}</strong>
           <span className="zurkt-range">{curve.length ? `${fmtUsd(curve[curve.length - 1].delivered_cost_usd_per_m3_p50)}/m3` : ""}</span>
+        </div>
+      </div>
+
+      <div className="zurkt-chart-block">
+        <h3>Source concentration <span className="si-tag">per-draw distribution</span></h3>
+        <p className="zurkt-caption">Share of aggregate supply held by the biggest 1/5/10 suppliers -- a spread over Monte Carlo worlds, not one P50 read-off.</p>
+        <div className="zurkt-threshold-row">
+          <div className="zurkt-threshold"><span>Top 1 CFR</span><strong>{Math.round(m.sourceConcentrationDistribution.top1_share.p50 * 100)}%</strong><span className="zurkt-range">P10 {Math.round(m.sourceConcentrationDistribution.top1_share.p10 * 100)}% · P90 {Math.round(m.sourceConcentrationDistribution.top1_share.p90 * 100)}%</span></div>
+          <div className="zurkt-threshold"><span>Top 5 CFRs</span><strong>{Math.round(m.sourceConcentrationDistribution.top5_share.p50 * 100)}%</strong><span className="zurkt-range">P10 {Math.round(m.sourceConcentrationDistribution.top5_share.p10 * 100)}% · P90 {Math.round(m.sourceConcentrationDistribution.top5_share.p90 * 100)}%</span></div>
+          <div className="zurkt-threshold"><span>Top 10 CFRs</span><strong>{Math.round(m.sourceConcentrationDistribution.top10_share.p50 * 100)}%</strong><span className="zurkt-range">P10 {Math.round(m.sourceConcentrationDistribution.top10_share.p10 * 100)}% · P90 {Math.round(m.sourceConcentrationDistribution.top10_share.p90 * 100)}%</span></div>
         </div>
       </div>
 
@@ -92,7 +101,7 @@ export function ZurktModelSummary() {
 
       <div className="zurkt-chart-block">
         <h3>10-year depletion stress test <span className="si-tag">NOT a forecast</span></h3>
-        <p className="zurkt-caption">No age-structured growth model exists for these CFRs, so this is not a real growth forecast -- it is a stress test of harvest depletion vs. an assumed net stock-change rate. See zurkt-10yr-outlook-v2.json for the exact priors.</p>
+        <p className="zurkt-caption">No age-structured growth model exists for these CFRs, so this is not a real growth forecast -- it is a stress test of harvest depletion vs. an assumed net stock-change rate. See zurkt-10yr-outlook-v3.json for the exact priors.</p>
         <div className="zurkt-outlook-bars">
           {m.outlookYears.map((y) => (
             <div key={y.year} className="zurkt-outlook-bar" title={`Year ${y.year}: P10 ${number(y.annual_supply_m3.p10)} · P50 ${number(y.annual_supply_m3.p50)} · P90 ${number(y.annual_supply_m3.p90)} m3`}>
@@ -125,14 +134,30 @@ export function ZurktModelSummary() {
       </div>
 
       <div className="zurkt-chart-block">
-        <h3>Demand reliability <span className="si-tag">ladder, not a fake LOW/MED/HIGH fact</span></h3>
-        <p className="zurkt-caption">Evergreen's real intake capacity is not known -- this reports P(supply≥demand) and shortfall across a spread of plausible plant sizes instead of asserting one.</p>
+        <h3>Demand reliability <span className="si-tag">draw-wise dispatch, not a fake LOW/MED/HIGH fact</span></h3>
+        <p className="zurkt-caption">Evergreen's real intake capacity is not known. Every Monte Carlo world dispatches its own cheapest-first CFR ranking, so required CFR count and marginal cost below are distributions, not single reads off one curve.</p>
         <div className="zurkt-threshold-row">
-          {m.demandLadder.map((d) => (
+          {m.demandReliability.map((d) => (
             <div key={d.demand_m3_per_year} className="zurkt-threshold">
               <span>{number(d.demand_m3_per_year)} m3/yr</span>
               <strong>{Math.round(d.p_supply_meets_demand * 100)}%</strong>
-              <span className="zurkt-range">P(supply≥demand) · {d.required_source_cfr_count ?? "n/a"} CFRs · shortfall P50 {number(d.shortfall_p50_m3)}</span>
+              <span className="zurkt-range">P(supply≥demand) · {d.required_source_cfr_count.p50 ?? "n/a"} CFRs (P50) · shortfall P50 {number(d.shortfall_m3.p50)}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="zurkt-chart-block">
+        <h3>Uncertainty decomposition <span className="si-tag">grouped-collapse approximation</span></h3>
+        <p className="zurkt-caption">Approximate share of aggregate-supply variance attributable to each uncertainty group -- not satellite/EO uncertainty, but access/legal and stocking that dominate.</p>
+        <div className="zurkt-sensitivity-list">
+          {m.uncertaintyDecomposition.map((g) => (
+            <div key={g.uncertainty_group} className="zurkt-sensitivity-row">
+              <span className="zurkt-sensitivity-label">{g.uncertainty_group.replaceAll("_", " ")}</span>
+              <div className="zurkt-sensitivity-bar-track">
+                <div className="zurkt-sensitivity-bar is-positive" style={{ width: `${Math.min(g.approx_share_of_variance * 100, 100)}%` }} />
+              </div>
+              <span className="zurkt-sensitivity-value">~{Math.round(g.approx_share_of_variance * 100)}% of variance</span>
             </div>
           ))}
         </div>
@@ -153,9 +178,24 @@ export function ZurktModelSummary() {
         </div>
       </div>
 
+      <div className="zurkt-chart-block">
+        <h3>Field verification plan <span className="si-tag">EVSI re-simulation, top {m.fieldProgramme.length}</span></h3>
+        <p className="zurkt-caption">Each row re-simulates the full model with that CFR's ONE variable collapsed to its true (verified) value -- ranked by the resulting reduction in expected shortfall at 150,000 m3/yr demand.</p>
+        <div className="si-operation-items zurkt-verification-grid">
+          {m.fieldProgramme.map((f) => (
+            <div key={`${f.entity_id}-${f.variable_to_measure}`} className="zurkt-verification-card">
+              <span className="zurkt-rank">#{f.priority}</span>
+              <strong>{f.canonical_name} · {f.variable_to_measure.replaceAll("_", " ")}</strong>
+              <span className="zurkt-range">{f.recommended_method}</span>
+              <span className="zurkt-range">shortfall −{number(f.expected_decision_impact.expected_shortfall_reduction_m3)} m3 · reliability +{(f.expected_decision_impact.reliability_gain * 100).toFixed(1)}pp</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div className="si-rail-note">
         <div className="zurkt-two-stage-note">
-          <p>{m.knownSimplifications.length} documented modelling simplifications (species treated as eucalyptus-equivalent, no age-structured growth model -- the 10-year outlook above is a depletion stress test, not a forecast -- sensitivity is a one-variable approximation, verification priority is a transparent proxy not formal EVSI) -- see zurkt-uganda-scenario-v2.json for the full list and every prior's rationale. The v1 Jinja placeholder analysis is preserved untouched in the *-v1.json files, not deleted.</p>
+          <p>{m.knownSimplifications.length} documented modelling simplifications (species treated as eucalyptus-equivalent, no age-structured growth model -- the 10-year outlook above is a depletion stress test, not a forecast -- verification priority uses both a transparent proxy AND a real EVSI re-simulation above) -- see zurkt-uganda-scenario-v3.json for the full list and every prior's rationale, including the hierarchical uncertainty model. The v1 Jinja placeholder analysis is preserved untouched in the *-v1.json files, not deleted.</p>
         </div>
       </div>
     </section>
