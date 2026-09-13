@@ -1,0 +1,50 @@
+{
+  "scenario_version": "zurkt-evergreen-uganda-supply-scenario-v3",
+  "model_version": "zurkt-cfr-monte-carlo-hierarchical-v3",
+  "method": "Grouped-collapse test (Track v3-18): each uncertainty group's Priors are collapsed to their own mean (freeze_group_and_rerun), one group at a time, and the resulting drop in aggregate annual-supply variance is reported as an approximate share of total variance. Groups can interact, so shares are not guaranteed to sum to 100% -- this is a transparent approximation, not a formal Sobol/ANOVA decomposition.",
+  "baseline_variance": 136599295979.2,
+  "groups": [
+    {
+      "uncertainty_group": "access_legal",
+      "baseline_variance": 136599295979.2,
+      "variance_when_frozen": 48507297031.1,
+      "approx_share_of_variance": 0.6449
+    },
+    {
+      "uncertainty_group": "growth_stocking_stand",
+      "baseline_variance": 136599295979.2,
+      "variance_when_frozen": 91782907440.0,
+      "approx_share_of_variance": 0.3281
+    },
+    {
+      "uncertainty_group": "species_grade_recovery",
+      "baseline_variance": 136599295979.2,
+      "variance_when_frozen": 106681901526.9,
+      "approx_share_of_variance": 0.219
+    },
+    {
+      "uncertainty_group": "maturity",
+      "baseline_variance": 136599295979.2,
+      "variance_when_frozen": 117175855443.9,
+      "approx_share_of_variance": 0.1422
+    },
+    {
+      "uncertainty_group": "forested_stocked_fraction",
+      "baseline_variance": 136599295979.2,
+      "variance_when_frozen": 130147103393.6,
+      "approx_share_of_variance": 0.0472
+    },
+    {
+      "uncertainty_group": "procurement_price",
+      "baseline_variance": 136599295979.2,
+      "variance_when_frozen": 136599295979.2,
+      "approx_share_of_variance": 0.0
+    },
+    {
+      "uncertainty_group": "haulage",
+      "baseline_variance": 136599295979.2,
+      "variance_when_frozen": 136599295979.2,
+      "approx_share_of_variance": 0.0
+    }
+  ]
+}

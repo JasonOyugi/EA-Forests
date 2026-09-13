@@ -1,0 +1,51 @@
+{
+  "base_case": {
+    "aggregate_annual_supply_m3_p50": 44086.8,
+    "mean_delivered_cost_usd_per_m3_p50": 62.48
+  },
+  "one_variable_sensitivities": [
+    {
+      "perturbation": "standing_volume_lower",
+      "aggregate_annual_supply_m3_p50": 11637.3,
+      "mean_delivered_cost_usd_per_m3_p50": 125.16,
+      "supply_change_pct": -73.6,
+      "cost_change_pct": 100.3
+    },
+    {
+      "perturbation": "stocked_fraction_lower",
+      "aggregate_annual_supply_m3_p50": 23049.0,
+      "mean_delivered_cost_usd_per_m3_p50": 79.16,
+      "supply_change_pct": -47.7,
+      "cost_change_pct": 26.7
+    },
+    {
+      "perturbation": "availability_lower",
+      "aggregate_annual_supply_m3_p50": 24257.0,
+      "mean_delivered_cost_usd_per_m3_p50": 77.5,
+      "supply_change_pct": -45.0,
+      "cost_change_pct": 24.0
+    },
+    {
+      "perturbation": "grade_recovery_lower_large_log_strict",
+      "aggregate_annual_supply_m3_p50": 34625.1,
+      "mean_delivered_cost_usd_per_m3_p50": 68.49,
+      "supply_change_pct": -21.5,
+      "cost_change_pct": 9.6
+    },
+    {
+      "perturbation": "fuel_plus_20pct",
+      "aggregate_annual_supply_m3_p50": 44086.8,
+      "mean_delivered_cost_usd_per_m3_p50": 68.73,
+      "supply_change_pct": 0.0,
+      "cost_change_pct": 10.0
+    },
+    {
+      "perturbation": "road_distance_penalty_20pct",
+      "aggregate_annual_supply_m3_p50": 44086.8,
+      "mean_delivered_cost_usd_per_m3_p50": 67.6,
+      "supply_change_pct": 0.0,
+      "cost_change_pct": 8.2
+    }
+  ],
+  "ranked_by": "absolute pct change in aggregate P50 annual supply"
+}

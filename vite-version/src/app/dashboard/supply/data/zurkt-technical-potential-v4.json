@@ -1,0 +1,10 @@
+{
+  "scenario_version": "zurkt-evergreen-uganda-supply-scenario-v3",
+  "model_version": "zurkt-cfr-monte-carlo-hierarchical-v3",
+  "method": "sum of raw per-CFR harvestable-volume draws, THEN quantiles of the joint sum -- NOT sum(P10_i)/sum(P50_i)/sum(P90_i) (that was the v2 bug; see build_technical_potential() docstring).",
+  "technical_potential_m3": {
+    "p10": 5927136.28,
+    "p50": 8327388.9,
+    "p90": 12130579.43
+  }
+}

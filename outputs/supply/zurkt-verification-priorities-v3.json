@@ -1,0 +1,260 @@
+{
+  "method": "Transparent approximation: (P90-P10)/P50 uncertainty x share of aggregate P50 supply. Not a formal EVSI/EVPI calculation -- no decision-utility function is defined yet to support one.",
+  "top_verification_targets": [
+    {
+      "entity_id": "99277e88-e0cc-4798-b155-7505678d7b97",
+      "canonical_name": "Mabira",
+      "value_of_information_proxy": 0.75696,
+      "relative_uncertainty_cv": 4.978,
+      "commercial_contribution_share": 0.1521,
+      "distance_km": 69.0,
+      "road_km": 119.68,
+      "eo_evidence_status": "observed",
+      "recommended_field_variables": [
+        "stocked area (ground-truth vs. relevant_forest_fraction/stocked_fraction priors)",
+        "age/maturity class (mature_harvestable_fraction)",
+        "species composition (grading/pricing currently assumes eucalyptus-equivalent)",
+        "DBH distribution (mean and within-stand spread)",
+        "commercial/legal access status (never inferable from EO)"
+      ]
+    },
+    {
+      "entity_id": "c09fad3b-bcaa-4f40-a4c7-7e0feec59e86",
+      "canonical_name": "Kikonda",
+      "value_of_information_proxy": 0.28786,
+      "relative_uncertainty_cv": 5.654,
+      "commercial_contribution_share": 0.0509,
+      "distance_km": 145.65,
+      "road_km": 169.2,
+      "eo_evidence_status": "observed",
+      "recommended_field_variables": [
+        "stocked area (ground-truth vs. relevant_forest_fraction/stocked_fraction priors)",
+        "age/maturity class (mature_harvestable_fraction)",
+        "species composition (grading/pricing currently assumes eucalyptus-equivalent)",
+        "DBH distribution (mean and within-stand spread)",
+        "commercial/legal access status (never inferable from EO)"
+      ]
+    },
+    {
+      "entity_id": "ae3e0607-069b-4eed-8aab-eb0e1c0b066a",
+      "canonical_name": "Kasagala",
+      "value_of_information_proxy": 0.20976,
+      "relative_uncertainty_cv": 5.188,
+      "commercial_contribution_share": 0.0404,
+      "distance_km": 102.03,
+      "road_km": 122.23,
+      "eo_evidence_status": "observed",
+      "recommended_field_variables": [
+        "stocked area (ground-truth vs. relevant_forest_fraction/stocked_fraction priors)",
+        "age/maturity class (mature_harvestable_fraction)",
+        "species composition (grading/pricing currently assumes eucalyptus-equivalent)",
+        "DBH distribution (mean and within-stand spread)",
+        "commercial/legal access status (never inferable from EO)"
+      ]
+    },
+    {
+      "entity_id": "6300a518-b72b-4bc1-9196-4d3fcac51e98",
+      "canonical_name": "South Busoga",
+      "value_of_information_proxy": 0.20541,
+      "relative_uncertainty_cv": 5.537,
+      "commercial_contribution_share": 0.0371,
+      "distance_km": 128.28,
+      "road_km": 170.95,
+      "eo_evidence_status": "observed",
+      "recommended_field_variables": [
+        "stocked area (ground-truth vs. relevant_forest_fraction/stocked_fraction priors)",
+        "age/maturity class (mature_harvestable_fraction)",
+        "species composition (grading/pricing currently assumes eucalyptus-equivalent)",
+        "DBH distribution (mean and within-stand spread)",
+        "commercial/legal access status (never inferable from EO)"
+      ]
+    },
+    {
+      "entity_id": "f218ea0b-49de-4e71-9984-b846aaed4457",
+      "canonical_name": "Buyaga Dam",
+      "value_of_information_proxy": 0.19304,
+      "relative_uncertainty_cv": 5.876,
+      "commercial_contribution_share": 0.0329,
+      "distance_km": 138.73,
+      "road_km": 167.0,
+      "eo_evidence_status": "observed",
+      "recommended_field_variables": [
+        "stocked area (ground-truth vs. relevant_forest_fraction/stocked_fraction priors)",
+        "age/maturity class (mature_harvestable_fraction)",
+        "species composition (grading/pricing currently assumes eucalyptus-equivalent)",
+        "DBH distribution (mean and within-stand spread)",
+        "commercial/legal access status (never inferable from EO)"
+      ]
+    },
+    {
+      "entity_id": "d5871f4e-a436-4aa6-9f60-6c3e47299a70",
+      "canonical_name": "Namwasa",
+      "value_of_information_proxy": 0.19089,
+      "relative_uncertainty_cv": 5.65,
+      "commercial_contribution_share": 0.0338,
+      "distance_km": 94.18,
+      "road_km": 129.73,
+      "eo_evidence_status": "observed",
+      "recommended_field_variables": [
+        "stocked area (ground-truth vs. relevant_forest_fraction/stocked_fraction priors)",
+        "age/maturity class (mature_harvestable_fraction)",
+        "species composition (grading/pricing currently assumes eucalyptus-equivalent)",
+        "DBH distribution (mean and within-stand spread)",
+        "commercial/legal access status (never inferable from EO)"
+      ]
+    },
+    {
+      "entity_id": "14eaa107-7454-4fec-8188-50bbcb014e0d",
+      "canonical_name": "Luwunga",
+      "value_of_information_proxy": 0.18315,
+      "relative_uncertainty_cv": 5.803,
+      "commercial_contribution_share": 0.0316,
+      "distance_km": 105.73,
+      "road_km": 133.96,
+      "eo_evidence_status": "observed",
+      "recommended_field_variables": [
+        "stocked area (ground-truth vs. relevant_forest_fraction/stocked_fraction priors)",
+        "age/maturity class (mature_harvestable_fraction)",
+        "species composition (grading/pricing currently assumes eucalyptus-equivalent)",
+        "DBH distribution (mean and within-stand spread)",
+        "commercial/legal access status (never inferable from EO)"
+      ]
+    },
+    {
+      "entity_id": "232e6d23-c40e-45fb-bc4a-aef6da607a99",
+      "canonical_name": "Bukaleba",
+      "value_of_information_proxy": 0.17564,
+      "relative_uncertainty_cv": 5.376,
+      "commercial_contribution_share": 0.0327,
+      "distance_km": 109.49,
+      "road_km": 157.94,
+      "eo_evidence_status": "observed",
+      "recommended_field_variables": [
+        "stocked area (ground-truth vs. relevant_forest_fraction/stocked_fraction priors)",
+        "age/maturity class (mature_harvestable_fraction)",
+        "species composition (grading/pricing currently assumes eucalyptus-equivalent)",
+        "DBH distribution (mean and within-stand spread)",
+        "commercial/legal access status (never inferable from EO)"
+      ]
+    },
+    {
+      "entity_id": "39f98db5-f149-42e5-a0d2-fbf7b2a5178e",
+      "canonical_name": "Taala",
+      "value_of_information_proxy": 0.13469,
+      "relative_uncertainty_cv": 5.555,
+      "commercial_contribution_share": 0.0242,
+      "distance_km": 117.03,
+      "road_km": 149.86,
+      "eo_evidence_status": "observed",
+      "recommended_field_variables": [
+        "stocked area (ground-truth vs. relevant_forest_fraction/stocked_fraction priors)",
+        "age/maturity class (mature_harvestable_fraction)",
+        "species composition (grading/pricing currently assumes eucalyptus-equivalent)",
+        "DBH distribution (mean and within-stand spread)",
+        "commercial/legal access status (never inferable from EO)"
+      ]
+    },
+    {
+      "entity_id": "aa4edca0-ad3b-4e9a-9c72-0ff648cbf0ea",
+      "canonical_name": "Mujuzi",
+      "value_of_information_proxy": 0.12537,
+      "relative_uncertainty_cv": 5.608,
+      "commercial_contribution_share": 0.0224,
+      "distance_km": 117.88,
+      "road_km": 151.75,
+      "eo_evidence_status": "observed",
+      "recommended_field_variables": [
+        "stocked area (ground-truth vs. relevant_forest_fraction/stocked_fraction priors)",
+        "age/maturity class (mature_harvestable_fraction)",
+        "species composition (grading/pricing currently assumes eucalyptus-equivalent)",
+        "DBH distribution (mean and within-stand spread)",
+        "commercial/legal access status (never inferable from EO)"
+      ]
+    },
+    {
+      "entity_id": "9997766a-d5c5-418c-87c0-2c4f80ebe67a",
+      "canonical_name": "Lwamunda",
+      "value_of_information_proxy": 0.11293,
+      "relative_uncertainty_cv": 5.466,
+      "commercial_contribution_share": 0.0207,
+      "distance_km": 9.47,
+      "road_km": 15.48,
+      "eo_evidence_status": "observed",
+      "recommended_field_variables": [
+        "stocked area (ground-truth vs. relevant_forest_fraction/stocked_fraction priors)",
+        "age/maturity class (mature_harvestable_fraction)",
+        "species composition (grading/pricing currently assumes eucalyptus-equivalent)",
+        "DBH distribution (mean and within-stand spread)",
+        "commercial/legal access status (never inferable from EO)"
+      ]
+    },
+    {
+      "entity_id": "e5a10c86-704d-470a-80fe-0575962af1dc",
+      "canonical_name": "Kabwika - Mujwalanganda",
+      "value_of_information_proxy": 0.10473,
+      "relative_uncertainty_cv": 5.297,
+      "commercial_contribution_share": 0.0198,
+      "distance_km": 103.65,
+      "road_km": 145.4,
+      "eo_evidence_status": "observed",
+      "recommended_field_variables": [
+        "stocked area (ground-truth vs. relevant_forest_fraction/stocked_fraction priors)",
+        "age/maturity class (mature_harvestable_fraction)",
+        "species composition (grading/pricing currently assumes eucalyptus-equivalent)",
+        "DBH distribution (mean and within-stand spread)",
+        "commercial/legal access status (never inferable from EO)"
+      ]
+    },
+    {
+      "entity_id": "b9781c04-9792-4d29-8bbf-a986c7030584",
+      "canonical_name": "Jubiya",
+      "value_of_information_proxy": 0.0984,
+      "relative_uncertainty_cv": 5.633,
+      "commercial_contribution_share": 0.0175,
+      "distance_km": 74.53,
+      "road_km": 115.33,
+      "eo_evidence_status": "observed",
+      "recommended_field_variables": [
+        "stocked area (ground-truth vs. relevant_forest_fraction/stocked_fraction priors)",
+        "age/maturity class (mature_harvestable_fraction)",
+        "species composition (grading/pricing currently assumes eucalyptus-equivalent)",
+        "DBH distribution (mean and within-stand spread)",
+        "commercial/legal access status (never inferable from EO)"
+      ]
+    },
+    {
+      "entity_id": "1e9f5ba5-0267-4b7a-ac4c-0fdf9c596af6",
+      "canonical_name": "Bwezigolo - Gunga",
+      "value_of_information_proxy": 0.09631,
+      "relative_uncertainty_cv": 5.843,
+      "commercial_contribution_share": 0.0165,
+      "distance_km": 86.52,
+      "road_km": 115.58,
+      "eo_evidence_status": "observed",
+      "recommended_field_variables": [
+        "stocked area (ground-truth vs. relevant_forest_fraction/stocked_fraction priors)",
+        "age/maturity class (mature_harvestable_fraction)",
+        "species composition (grading/pricing currently assumes eucalyptus-equivalent)",
+        "DBH distribution (mean and within-stand spread)",
+        "commercial/legal access status (never inferable from EO)"
+      ]
+    },
+    {
+      "entity_id": "453b7a83-c365-4884-8ea4-53bc5331f91e",
+      "canonical_name": "Wankweyo",
+      "value_of_information_proxy": 0.08656,
+      "relative_uncertainty_cv": 5.803,
+      "commercial_contribution_share": 0.0149,
+      "distance_km": 78.46,
+      "road_km": 112.64,
+      "eo_evidence_status": "observed",
+      "recommended_field_variables": [
+        "stocked area (ground-truth vs. relevant_forest_fraction/stocked_fraction priors)",
+        "age/maturity class (mature_harvestable_fraction)",
+        "species composition (grading/pricing currently assumes eucalyptus-equivalent)",
+        "DBH distribution (mean and within-stand spread)",
+        "commercial/legal access status (never inferable from EO)"
+      ]
+    }
+  ]
+}

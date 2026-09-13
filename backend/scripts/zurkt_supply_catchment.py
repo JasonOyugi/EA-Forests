@@ -1,29 +1,59 @@
-"""Real Uganda CFR supply catchment for the Zurkt Uganda Supply Intelligence
-reference case (Track G1/G2/G3).
+"""Real Uganda CFR supply catchment for the Zurkt/Evergreen Supply
+Intelligence reference case (Track G1/G2/G3, then superseded by the
+Evergreen-identity calibration sprint).
 
-"Zurkt Uganda" itself is a SCENARIO placeholder -- no real Zurkt processor
-exists anywhere in this repository or its history (confirmed by exhaustive
-search). Its location below is an explicit, labeled assumption (Jinja's
-industrial area, chosen only because it produces the richest real nearby
-CFR catchment among the towns tested). Never present it as an observed
-fact. See vite-version/src/app/dashboard/supply's SYNTHETIC/experiment
-disclosure pattern (the same one already used for the "Shanglong" demo
-processor) -- reuse it, don't invent a second one.
+Two processor definitions are supported, selected by --processor. Never
+overwrite one scenario's output with the other's -- pass distinct
+--output paths (see Usage).
 
-Everything else in this script's output IS real: it queries the
-operational canonical database (ea_forests_uganda_country_pass; see
+  "jinja-v1" (ZURKT_SCENARIO_PROCESSOR_V1, legacy, epistemic_class
+  SCENARIO): a placeholder location with NO real-world evidence at all --
+  chosen only because it produced a rich nearby CFR catchment. Preserved
+  for reproducibility of the v1 analysis; no longer the primary case.
+
+  "evergreen-mpigi-v2" (EVERGREEN_MPIGI_PROCESSOR, default,
+  epistemic_class REPORTED): a real, independently-verified plywood/
+  veneer manufacturer, Evergreen Wood Industries Ltd, Mpigi District,
+  Uganda. Verified 2026-09-13 via three independent sources: (1) Uganda
+  NEMA environmental record naming the exact factory address (Block 116,
+  Plot 49, Sekiwunga Village, Nakirebe Parish, Kiringente Subcounty,
+  Mpigi District); (2) NBD Trade Data customs records (real export
+  shipments, product "EUCALYPTUS VENEER" HS 44083900, registered address
+  "MPIGI MAWOKOTA NORTH KIRINGENTE ... NAKIREBA ... MPIGI" -- matches the
+  NEMA address); (3) the same NBD customs records name "SHANDONG ZURKT
+  INTERNATIONAL TRADING CO LTD" (Linyi, China) as one of Evergreen's
+  documented trading partners -- a real, evidenced TRADE relationship.
+  What is NOT independently confirmed: any OWNERSHIP/subsidiary
+  relationship between Zurkt Group and Evergreen Wood Industries. Zurkt's
+  own published company history/about pages (zurkt.com) name Uganda
+  generically as a country with "production bases and trading companies"
+  but never explicitly name Evergreen Wood Industries as their subsidiary,
+  and no independent source states Zurkt owns or controls it -- treat
+  "Zurkt Uganda" as an alias reflecting a real trade relationship, not a
+  confirmed corporate structure. "Omega Online" (also named in the
+  group's public materials) has only a weak, circumstantial lead (a
+  "sc02omega@zurkt.com" contact address) and is not represented as a
+  physical demand node here.
+  Coordinates reuse this repo's pre-existing "Evergreen wood" processor
+  entry in app/services/roundwood_production.py (lon 32.4077845, lat
+  0.258846), which predates this verification and was not itself
+  re-surveyed -- treat precision as +/- a few km (subcounty-level), not a
+  surveyed point.
+
+Everything else in this script's output IS real regardless of which
+--processor is selected: it queries the operational canonical database
+(ea_forests_uganda_country_pass; see
 docs/architecture/CANONICAL_DATABASE_RUNTIME.md) for every real,
-polygon-backed, promoted Uganda CFR AOI, computes real haversine distance
-from the scenario processor location, and reports each CFR's real EO
-observation coverage (sensor recipes / successful observations) already
-produced by the active Uganda country pass. No stand volume, harvest
-cost, or delivered-cost figure is computed here -- those require either
-real field/inventory data (none exists for these forests) or an explicit,
-separately-labeled scenario stand assumption layered on top of this real
-catchment, which is deliberately out of scope for this script.
+polygon-backed, promoted Uganda CFR AOI, computes real distance from the
+selected processor location, and reports each CFR's real EO observation
+coverage already produced by the active Uganda country pass.
 
 Usage:
-    uv run python scripts/zurkt_supply_catchment.py \
+    uv run python scripts/zurkt_supply_catchment.py --processor evergreen-mpigi-v2 \
+        --output ../outputs/supply/evergreen-uganda-catchment-v2.json \
+        --expected-database ea_forests_uganda_country_pass
+
+    uv run python scripts/zurkt_supply_catchment.py --processor jinja-v1 \
         --output ../outputs/supply/zurkt-uganda-catchment.json \
         --expected-database ea_forests_uganda_country_pass
 """
@@ -44,18 +74,66 @@ from sqlalchemy import text
 from app.db.session import engine_for
 from app.db.target_guard import add_expected_database_argument, require_database
 
-# Explicit scenario assumption -- not a real Zurkt fact. See module docstring.
-ZURKT_SCENARIO_PROCESSOR = {
+# Legacy placeholder -- no real-world evidence, preserved for
+# reproducibility only. See module docstring.
+ZURKT_SCENARIO_PROCESSOR_V1 = {
     "display_name": "Zurkt Uganda",
     "epistemic_class": "SCENARIO",
     "location_basis": (
         "Scenario location (Jinja industrial area, Uganda) -- no real Zurkt "
         "processor facts (address, capacity, species, price) exist in this "
         "repository or its history. Chosen for catchment richness, not "
-        "evidence."
+        "evidence. Superseded by evergreen-mpigi-v2; kept only for v1 "
+        "reproducibility."
     ),
     "lat": 0.4479,
     "lon": 33.2026,
+}
+
+# Evidence-backed v2 identity. See module docstring for the full
+# verification chain and its explicit limits (trade relationship
+# confirmed; ownership/subsidiary relationship NOT confirmed).
+EVERGREEN_MPIGI_PROCESSOR = {
+    "display_name": "Evergreen Wood Industries Ltd (Zurkt-affiliated trade partner)",
+    "canonical_name": "Evergreen Wood Industries Ltd",
+    "alias": "Zurkt Uganda",
+    "epistemic_class": "REPORTED",
+    "location_basis": (
+        "Real, independently-verified plywood/veneer manufacturer, Mpigi District, "
+        "Uganda (Block 116, Plot 49, Sekiwunga Village, Nakirebe Parish, Kiringente "
+        "Subcounty -- Uganda NEMA record; address independently corroborated by NBD "
+        "Trade Data customs registration). Coordinates reused from this repo's "
+        "pre-existing app/services/roundwood_production.py 'Evergreen wood' entry, "
+        "not independently re-surveyed -- treat as subcounty-level precision (+/- a "
+        "few km), not a surveyed point."
+    ),
+    "group_relationship_basis": (
+        "NBD Trade Data customs records name 'SHANDONG ZURKT INTERNATIONAL TRADING CO "
+        "LTD' (Linyi, China) as a documented trading partner of Evergreen Wood "
+        "Industries Ltd -- a real, evidenced TRADE relationship, verified 2026-09-13. "
+        "An OWNERSHIP/subsidiary relationship between Zurkt Group and Evergreen Wood "
+        "Industries is NOT independently confirmed: Zurkt's own published company "
+        "history names Uganda only generically as a country with production bases, "
+        "never explicitly naming Evergreen Wood Industries as its subsidiary. "
+        "'Omega Online' is not represented as a physical demand node here -- its only "
+        "lead is a circumstantial 'sc02omega@zurkt.com' contact address, not confirmed "
+        "as Uganda-related."
+    ),
+    "product_evidence": (
+        "Real, independently-verified export records (NBD Trade Data): 'EUCALYPTUS "
+        "VENEER' (HS 44083900, 'other tropical veneer sheets/sheets for plywood'), "
+        "465 trade records, 13 buyers, 12 suppliers as of the retrieval date. This is "
+        "real evidence the factory processes eucalyptus specifically -- not an "
+        "assumption."
+    ),
+    "retrieved_at": "2026-09-13",
+    "lat": 0.258846,
+    "lon": 32.4077845,
+}
+
+PROCESSOR_SCENARIOS = {
+    "jinja-v1": ZURKT_SCENARIO_PROCESSOR_V1,
+    "evergreen-mpigi-v2": EVERGREEN_MPIGI_PROCESSOR,
 }
 
 DISTANCE_BANDS_KM = [25, 50, 75, 100, 150]
@@ -74,6 +152,12 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument(
+        "--processor",
+        choices=sorted(PROCESSOR_SCENARIOS.keys()),
+        default="evergreen-mpigi-v2",
+        help="Which processor location to build the catchment around (see module docstring)",
+    )
+    parser.add_argument(
         "--analysis-scope",
         default="uganda_cfr_commercial_eo_mvp",
         help="geo.aoi.analysis_scope to draw the candidate CFR population from",
@@ -87,9 +171,11 @@ def main() -> None:
     add_expected_database_argument(parser)
     args = parser.parse_args()
 
+    processor = PROCESSOR_SCENARIOS[args.processor]
+
     database_url = os.environ["CANONICAL_DATABASE_URL"]
     engine = engine_for(database_url)
-    require_database(engine, args.expected_database, label="Zurkt catchment target")
+    require_database(engine, args.expected_database, label="Zurkt/Evergreen catchment target")
 
     with engine.connect() as conn:
         rows = conn.execute(
@@ -114,7 +200,7 @@ def main() -> None:
         catchment = []
         for entity_id, name, aoi_id, aoi_version_id, lat, lon, area_ha in rows:
             distance_km = haversine_km(
-                ZURKT_SCENARIO_PROCESSOR["lat"], ZURKT_SCENARIO_PROCESSOR["lon"], lat, lon
+                processor["lat"], processor["lon"], lat, lon
             )
             if distance_km > args.max_distance_km:
                 continue
@@ -163,7 +249,8 @@ def main() -> None:
         )
 
     output = {
-        "processor": ZURKT_SCENARIO_PROCESSOR,
+        "processor_scenario_key": args.processor,
+        "processor": processor,
         "distance_method": "haversine_straight_line",
         "distance_method_note": (
             "Straight-line only in this pass -- road-network distance/travel "

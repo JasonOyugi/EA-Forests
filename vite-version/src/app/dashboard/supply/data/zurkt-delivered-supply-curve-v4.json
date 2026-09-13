@@ -1,0 +1,2563 @@
+{
+  "scenario_version": "zurkt-evergreen-uganda-supply-scenario-v3",
+  "model_version": "zurkt-cfr-monte-carlo-hierarchical-v3",
+  "ranking_basis": "P50 delivered cost ascending (per-CFR quantile, not a joint aggregate distribution)",
+  "cumulative_method": "cumsum of raw per-CFR draws (ordered by cost rank), quantiles taken per cumulative row -- not sum of per-CFR P50 quantiles. See build_supply_curve() docstring.",
+  "points": [
+    {
+      "entity_id": "8e362394-13bf-4ace-811e-00941b788d14",
+      "canonical_name": "Buvuma",
+      "delivered_cost_usd_per_m3_p50": 30.56,
+      "annual_suitable_supply_m3_p50": 130.7,
+      "cumulative_annual_supply_m3_p10": 7.9,
+      "cumulative_annual_supply_m3_p50": 130.7,
+      "cumulative_annual_supply_m3_p90": 1194.1
+    },
+    {
+      "entity_id": "f1dc8a53-6a40-449f-a57c-e7808bf69e32",
+      "canonical_name": "Walumwanyi",
+      "delivered_cost_usd_per_m3_p50": 31.55,
+      "annual_suitable_supply_m3_p50": 33.3,
+      "cumulative_annual_supply_m3_p10": 31.5,
+      "cumulative_annual_supply_m3_p50": 228.1,
+      "cumulative_annual_supply_m3_p90": 1491.4
+    },
+    {
+      "entity_id": "7c1799aa-b1b0-41f0-a85c-19f573aa3218",
+      "canonical_name": "Lufuka",
+      "delivered_cost_usd_per_m3_p50": 31.78,
+      "annual_suitable_supply_m3_p50": 42.0,
+      "cumulative_annual_supply_m3_p10": 66.0,
+      "cumulative_annual_supply_m3_p50": 369.8,
+      "cumulative_annual_supply_m3_p90": 1835.6
+    },
+    {
+      "entity_id": "471cd196-21e4-45c2-998f-64756878f5d4",
+      "canonical_name": "Degeya",
+      "delivered_cost_usd_per_m3_p50": 32.74,
+      "annual_suitable_supply_m3_p50": 33.7,
+      "cumulative_annual_supply_m3_p10": 94.1,
+      "cumulative_annual_supply_m3_p50": 475.6,
+      "cumulative_annual_supply_m3_p90": 2168.8
+    },
+    {
+      "entity_id": "b93e7628-adc8-41d7-9870-80d87ba7b418",
+      "canonical_name": "Kalandazi",
+      "delivered_cost_usd_per_m3_p50": 32.96,
+      "annual_suitable_supply_m3_p50": 72.4,
+      "cumulative_annual_supply_m3_p10": 143.0,
+      "cumulative_annual_supply_m3_p50": 681.9,
+      "cumulative_annual_supply_m3_p90": 2838.7
+    },
+    {
+      "entity_id": "f5f3fc16-3a99-444b-9378-7aadd8b29067",
+      "canonical_name": "Mugomba",
+      "delivered_cost_usd_per_m3_p50": 33.18,
+      "annual_suitable_supply_m3_p50": 89.0,
+      "cumulative_annual_supply_m3_p10": 211.1,
+      "cumulative_annual_supply_m3_p50": 934.0,
+      "cumulative_annual_supply_m3_p90": 3651.5
+    },
+    {
+      "entity_id": "ddb2eba5-2776-47d6-afd2-1900110c25bf",
+      "canonical_name": "Semunya",
+      "delivered_cost_usd_per_m3_p50": 33.29,
+      "annual_suitable_supply_m3_p50": 88.0,
+      "cumulative_annual_supply_m3_p10": 276.5,
+      "cumulative_annual_supply_m3_p50": 1226.3,
+      "cumulative_annual_supply_m3_p90": 4622.2
+    },
+    {
+      "entity_id": "64ab1965-af77-48cb-aa3e-b9ca8bd3a1f3",
+      "canonical_name": "Navugulu",
+      "delivered_cost_usd_per_m3_p50": 33.29,
+      "annual_suitable_supply_m3_p50": 484.5,
+      "cumulative_annual_supply_m3_p10": 516.4,
+      "cumulative_annual_supply_m3_p50": 2264.8,
+      "cumulative_annual_supply_m3_p90": 8684.2
+    },
+    {
+      "entity_id": "c8340b74-7fcc-4ca5-807a-d695f21b2caf",
+      "canonical_name": "Kyansonzi",
+      "delivered_cost_usd_per_m3_p50": 33.38,
+      "annual_suitable_supply_m3_p50": 102.6,
+      "cumulative_annual_supply_m3_p10": 620.9,
+      "cumulative_annual_supply_m3_p50": 2588.5,
+      "cumulative_annual_supply_m3_p90": 9501.3
+    },
+    {
+      "entity_id": "b8af5735-144b-4e60-87f1-b3a4e6c4d6fa",
+      "canonical_name": "Nonve",
+      "delivered_cost_usd_per_m3_p50": 33.46,
+      "annual_suitable_supply_m3_p50": 83.6,
+      "cumulative_annual_supply_m3_p10": 694.7,
+      "cumulative_annual_supply_m3_p50": 2888.9,
+      "cumulative_annual_supply_m3_p90": 10082.7
+    },
+    {
+      "entity_id": "3dad103e-d4ce-49f2-81c5-a5dfbabf3b34",
+      "canonical_name": "Katabalalu",
+      "delivered_cost_usd_per_m3_p50": 33.58,
+      "annual_suitable_supply_m3_p50": 230.0,
+      "cumulative_annual_supply_m3_p10": 927.1,
+      "cumulative_annual_supply_m3_p50": 3550.9,
+      "cumulative_annual_supply_m3_p90": 12108.6
+    },
+    {
+      "entity_id": "e2f10e43-6875-432d-bcac-8e28282ab439",
+      "canonical_name": "Gangu",
+      "delivered_cost_usd_per_m3_p50": 33.63,
+      "annual_suitable_supply_m3_p50": 166.7,
+      "cumulative_annual_supply_m3_p10": 1075.4,
+      "cumulative_annual_supply_m3_p50": 4052.4,
+      "cumulative_annual_supply_m3_p90": 13505.3
+    },
+    {
+      "entity_id": "6c42b1bc-24a2-42e6-8f17-e3d5da72d416",
+      "canonical_name": "Kanjaza",
+      "delivered_cost_usd_per_m3_p50": 33.71,
+      "annual_suitable_supply_m3_p50": 49.6,
+      "cumulative_annual_supply_m3_p10": 1136.8,
+      "cumulative_annual_supply_m3_p50": 4265.1,
+      "cumulative_annual_supply_m3_p90": 13741.9
+    },
+    {
+      "entity_id": "ace08551-e706-4f61-81c8-262a00894760",
+      "canonical_name": "Naludugavu",
+      "delivered_cost_usd_per_m3_p50": 33.94,
+      "annual_suitable_supply_m3_p50": 21.8,
+      "cumulative_annual_supply_m3_p10": 1181.8,
+      "cumulative_annual_supply_m3_p50": 4319.1,
+      "cumulative_annual_supply_m3_p90": 13811.4
+    },
+    {
+      "entity_id": "c806cbb6-1bd5-4948-ad95-319b1fcc4c48",
+      "canonical_name": "Mako",
+      "delivered_cost_usd_per_m3_p50": 34.02,
+      "annual_suitable_supply_m3_p50": 17.9,
+      "cumulative_annual_supply_m3_p10": 1209.9,
+      "cumulative_annual_supply_m3_p50": 4399.9,
+      "cumulative_annual_supply_m3_p90": 13987.4
+    },
+    {
+      "entity_id": "7c62ce9e-51d0-4516-938d-77a7c3ca64fc",
+      "canonical_name": "Namagaza",
+      "delivered_cost_usd_per_m3_p50": 34.09,
+      "annual_suitable_supply_m3_p50": 20.5,
+      "cumulative_annual_supply_m3_p10": 1227.9,
+      "cumulative_annual_supply_m3_p50": 4499.9,
+      "cumulative_annual_supply_m3_p90": 14145.3
+    },
+    {
+      "entity_id": "f531f15e-19b5-4d28-9a81-91256529f1ec",
+      "canonical_name": "Wantayi",
+      "delivered_cost_usd_per_m3_p50": 34.16,
+      "annual_suitable_supply_m3_p50": 32.4,
+      "cumulative_annual_supply_m3_p10": 1263.7,
+      "cumulative_annual_supply_m3_p50": 4638.6,
+      "cumulative_annual_supply_m3_p90": 14465.1
+    },
+    {
+      "entity_id": "edff2f78-9f1c-4928-924e-c94a4a09b903",
+      "canonical_name": "Name Unknown - Forest Reserve 5",
+      "delivered_cost_usd_per_m3_p50": 34.2,
+      "annual_suitable_supply_m3_p50": 75.8,
+      "cumulative_annual_supply_m3_p10": 1386.6,
+      "cumulative_annual_supply_m3_p50": 4884.5,
+      "cumulative_annual_supply_m3_p90": 14988.6
+    },
+    {
+      "entity_id": "f8519d42-d75b-4e43-ad93-c0828dd38125",
+      "canonical_name": "Kinyo",
+      "delivered_cost_usd_per_m3_p50": 34.37,
+      "annual_suitable_supply_m3_p50": 35.1,
+      "cumulative_annual_supply_m3_p10": 1447.0,
+      "cumulative_annual_supply_m3_p50": 5034.4,
+      "cumulative_annual_supply_m3_p90": 15380.4
+    },
+    {
+      "entity_id": "c2c1564a-9718-4f75-8396-bf93b121d5d0",
+      "canonical_name": "Kalangalo",
+      "delivered_cost_usd_per_m3_p50": 34.68,
+      "annual_suitable_supply_m3_p50": 34.8,
+      "cumulative_annual_supply_m3_p10": 1488.9,
+      "cumulative_annual_supply_m3_p50": 5143.2,
+      "cumulative_annual_supply_m3_p90": 15464.6
+    },
+    {
+      "entity_id": "ef453286-32ff-4f32-b48c-84f51cd12f90",
+      "canonical_name": "Kajansi",
+      "delivered_cost_usd_per_m3_p50": 34.97,
+      "annual_suitable_supply_m3_p50": 28.7,
+      "cumulative_annual_supply_m3_p10": 1539.3,
+      "cumulative_annual_supply_m3_p50": 5276.3,
+      "cumulative_annual_supply_m3_p90": 15760.7
+    },
+    {
+      "entity_id": "61ad3bfd-dc49-444f-82a1-e727faa7cf23",
+      "canonical_name": "Kavunda",
+      "delivered_cost_usd_per_m3_p50": 35.28,
+      "annual_suitable_supply_m3_p50": 23.8,
+      "cumulative_annual_supply_m3_p10": 1567.1,
+      "cumulative_annual_supply_m3_p50": 5390.4,
+      "cumulative_annual_supply_m3_p90": 15865.9
+    },
+    {
+      "entity_id": "b573eade-55fa-4cb8-8399-7ac8e3658b93",
+      "canonical_name": "Wakayembe",
+      "delivered_cost_usd_per_m3_p50": 35.47,
+      "annual_suitable_supply_m3_p50": 19.9,
+      "cumulative_annual_supply_m3_p10": 1592.6,
+      "cumulative_annual_supply_m3_p50": 5508.8,
+      "cumulative_annual_supply_m3_p90": 16236.1
+    },
+    {
+      "entity_id": "5599fa46-8794-4dbb-8c79-2c96fb146057",
+      "canonical_name": "Nakindiba",
+      "delivered_cost_usd_per_m3_p50": 35.52,
+      "annual_suitable_supply_m3_p50": 19.6,
+      "cumulative_annual_supply_m3_p10": 1609.9,
+      "cumulative_annual_supply_m3_p50": 5581.1,
+      "cumulative_annual_supply_m3_p90": 16388.9
+    },
+    {
+      "entity_id": "1ae9fd73-5d35-42f1-bc30-c28ebd398b6c",
+      "canonical_name": "Nawandigi",
+      "delivered_cost_usd_per_m3_p50": 36.03,
+      "annual_suitable_supply_m3_p50": 607.0,
+      "cumulative_annual_supply_m3_p10": 2097.3,
+      "cumulative_annual_supply_m3_p50": 6927.5,
+      "cumulative_annual_supply_m3_p90": 20993.3
+    },
+    {
+      "entity_id": "bc2cfdc3-b3a5-4f7c-b91c-6f655430aa92",
+      "canonical_name": "Nalubaga",
+      "delivered_cost_usd_per_m3_p50": 36.15,
+      "annual_suitable_supply_m3_p50": 34.0,
+      "cumulative_annual_supply_m3_p10": 2170.1,
+      "cumulative_annual_supply_m3_p50": 7046.0,
+      "cumulative_annual_supply_m3_p90": 21063.4
+    },
+    {
+      "entity_id": "00f94333-8832-4847-bc85-2c5891e3c425",
+      "canonical_name": "Tumbi",
+      "delivered_cost_usd_per_m3_p50": 36.18,
+      "annual_suitable_supply_m3_p50": 61.4,
+      "cumulative_annual_supply_m3_p10": 2239.8,
+      "cumulative_annual_supply_m3_p50": 7338.8,
+      "cumulative_annual_supply_m3_p90": 21432.6
+    },
+    {
+      "entity_id": "b3c9607b-9e3d-43a0-ba20-a564cde327cb",
+      "canonical_name": "Nambuga",
+      "delivered_cost_usd_per_m3_p50": 36.21,
+      "annual_suitable_supply_m3_p50": 6.9,
+      "cumulative_annual_supply_m3_p10": 2252.0,
+      "cumulative_annual_supply_m3_p50": 7358.9,
+      "cumulative_annual_supply_m3_p90": 21489.6
+    },
+    {
+      "entity_id": "da85e5df-5a4c-4488-858b-f72270fa849e",
+      "canonical_name": "Nfuka Magobwa",
+      "delivered_cost_usd_per_m3_p50": 36.28,
+      "annual_suitable_supply_m3_p50": 42.9,
+      "cumulative_annual_supply_m3_p10": 2298.5,
+      "cumulative_annual_supply_m3_p50": 7549.4,
+      "cumulative_annual_supply_m3_p90": 21761.4
+    },
+    {
+      "entity_id": "de67d16c-0ee4-4b46-bcb6-116c239be392",
+      "canonical_name": "Buwa",
+      "delivered_cost_usd_per_m3_p50": 36.43,
+      "annual_suitable_supply_m3_p50": 53.3,
+      "cumulative_annual_supply_m3_p10": 2365.4,
+      "cumulative_annual_supply_m3_p50": 7678.4,
+      "cumulative_annual_supply_m3_p90": 22240.3
+    },
+    {
+      "entity_id": "9997766a-d5c5-418c-87c0-2c4f80ebe67a",
+      "canonical_name": "Lwamunda",
+      "delivered_cost_usd_per_m3_p50": 36.68,
+      "annual_suitable_supply_m3_p50": 404.7,
+      "cumulative_annual_supply_m3_p10": 2727.9,
+      "cumulative_annual_supply_m3_p50": 9033.7,
+      "cumulative_annual_supply_m3_p90": 26762.0
+    },
+    {
+      "entity_id": "1f632281-4aa8-49e9-a428-09c57e68a3f2",
+      "canonical_name": "Nakaga",
+      "delivered_cost_usd_per_m3_p50": 36.88,
+      "annual_suitable_supply_m3_p50": 41.1,
+      "cumulative_annual_supply_m3_p10": 2788.5,
+      "cumulative_annual_supply_m3_p50": 9243.9,
+      "cumulative_annual_supply_m3_p90": 26935.3
+    },
+    {
+      "entity_id": "07cc526c-0556-4a89-bf1f-2c188a5dfdea",
+      "canonical_name": "Namanve",
+      "delivered_cost_usd_per_m3_p50": 36.91,
+      "annual_suitable_supply_m3_p50": 210.0,
+      "cumulative_annual_supply_m3_p10": 2918.7,
+      "cumulative_annual_supply_m3_p50": 10014.1,
+      "cumulative_annual_supply_m3_p90": 28972.7
+    },
+    {
+      "entity_id": "f086b260-70fe-4e08-956e-a8df0ba85a9f",
+      "canonical_name": "Luwawa",
+      "delivered_cost_usd_per_m3_p50": 37.22,
+      "annual_suitable_supply_m3_p50": 42.4,
+      "cumulative_annual_supply_m3_p10": 2977.1,
+      "cumulative_annual_supply_m3_p50": 10129.7,
+      "cumulative_annual_supply_m3_p90": 29512.9
+    },
+    {
+      "entity_id": "beccc60d-c9a9-473f-89cb-2c952ab544ad",
+      "canonical_name": "Kabulego",
+      "delivered_cost_usd_per_m3_p50": 37.26,
+      "annual_suitable_supply_m3_p50": 21.1,
+      "cumulative_annual_supply_m3_p10": 3003.4,
+      "cumulative_annual_supply_m3_p50": 10229.7,
+      "cumulative_annual_supply_m3_p90": 29520.5
+    },
+    {
+      "entity_id": "77824ee7-160d-428e-8b76-b92513121435",
+      "canonical_name": "Kyewaga",
+      "delivered_cost_usd_per_m3_p50": 37.73,
+      "annual_suitable_supply_m3_p50": 22.7,
+      "cumulative_annual_supply_m3_p10": 3023.3,
+      "cumulative_annual_supply_m3_p50": 10293.4,
+      "cumulative_annual_supply_m3_p90": 29705.5
+    },
+    {
+      "entity_id": "dc7c7e41-a06c-4ac4-8508-6fd73fefe2fa",
+      "canonical_name": "Namyoya",
+      "delivered_cost_usd_per_m3_p50": 37.75,
+      "annual_suitable_supply_m3_p50": 40.6,
+      "cumulative_annual_supply_m3_p10": 3115.4,
+      "cumulative_annual_supply_m3_p50": 10405.6,
+      "cumulative_annual_supply_m3_p90": 29952.2
+    },
+    {
+      "entity_id": "212e6ab0-caa1-43c9-a969-e9b26e3619bb",
+      "canonical_name": "Wabinyomo",
+      "delivered_cost_usd_per_m3_p50": 37.84,
+      "annual_suitable_supply_m3_p50": 34.8,
+      "cumulative_annual_supply_m3_p10": 3167.6,
+      "cumulative_annual_supply_m3_p50": 10463.2,
+      "cumulative_annual_supply_m3_p90": 30447.9
+    },
+    {
+      "entity_id": "f93f1dac-7ca7-488b-ba6c-a48267a69cc0",
+      "canonical_name": "Wantagalala",
+      "delivered_cost_usd_per_m3_p50": 38.14,
+      "annual_suitable_supply_m3_p50": 28.4,
+      "cumulative_annual_supply_m3_p10": 3190.7,
+      "cumulative_annual_supply_m3_p50": 10609.2,
+      "cumulative_annual_supply_m3_p90": 30523.4
+    },
+    {
+      "entity_id": "35e8d038-343d-4aa3-b533-25e7cb739440",
+      "canonical_name": "Kasa",
+      "delivered_cost_usd_per_m3_p50": 38.34,
+      "annual_suitable_supply_m3_p50": 185.5,
+      "cumulative_annual_supply_m3_p10": 3408.3,
+      "cumulative_annual_supply_m3_p50": 11339.3,
+      "cumulative_annual_supply_m3_p90": 32144.7
+    },
+    {
+      "entity_id": "b6cbad0d-8598-425e-bd0f-6df3ebd2eac1",
+      "canonical_name": "Kabuye",
+      "delivered_cost_usd_per_m3_p50": 38.49,
+      "annual_suitable_supply_m3_p50": 21.6,
+      "cumulative_annual_supply_m3_p10": 3450.8,
+      "cumulative_annual_supply_m3_p50": 11451.3,
+      "cumulative_annual_supply_m3_p90": 32364.1
+    },
+    {
+      "entity_id": "a0607415-eee2-4470-8a69-1dc0fca18fd9",
+      "canonical_name": "Mukambwe",
+      "delivered_cost_usd_per_m3_p50": 38.63,
+      "annual_suitable_supply_m3_p50": 28.2,
+      "cumulative_annual_supply_m3_p10": 3490.1,
+      "cumulative_annual_supply_m3_p50": 11566.1,
+      "cumulative_annual_supply_m3_p90": 32657.2
+    },
+    {
+      "entity_id": "7c766504-dbd7-4ead-9f01-1dcd3af96750",
+      "canonical_name": "Kajonde",
+      "delivered_cost_usd_per_m3_p50": 38.74,
+      "annual_suitable_supply_m3_p50": 51.1,
+      "cumulative_annual_supply_m3_p10": 3583.6,
+      "cumulative_annual_supply_m3_p50": 11714.9,
+      "cumulative_annual_supply_m3_p90": 32837.2
+    },
+    {
+      "entity_id": "9a46b5d7-f37f-4e3e-8137-ce35ca39a9a4",
+      "canonical_name": "Makokolero",
+      "delivered_cost_usd_per_m3_p50": 38.93,
+      "annual_suitable_supply_m3_p50": 9.9,
+      "cumulative_annual_supply_m3_p10": 3583.9,
+      "cumulative_annual_supply_m3_p50": 11799.5,
+      "cumulative_annual_supply_m3_p90": 32927.9
+    },
+    {
+      "entity_id": "318481fb-6628-4357-993b-60bfc2530f0a",
+      "canonical_name": "Nakalere",
+      "delivered_cost_usd_per_m3_p50": 39.06,
+      "annual_suitable_supply_m3_p50": 98.0,
+      "cumulative_annual_supply_m3_p10": 3691.2,
+      "cumulative_annual_supply_m3_p50": 12138.4,
+      "cumulative_annual_supply_m3_p90": 33458.7
+    },
+    {
+      "entity_id": "81d9acbf-75a6-4d45-9605-d14728498b21",
+      "canonical_name": "Kitubulu",
+      "delivered_cost_usd_per_m3_p50": 39.3,
+      "annual_suitable_supply_m3_p50": 7.2,
+      "cumulative_annual_supply_m3_p10": 3701.3,
+      "cumulative_annual_supply_m3_p50": 12168.9,
+      "cumulative_annual_supply_m3_p90": 33511.8
+    },
+    {
+      "entity_id": "3e4daec9-9f94-4f43-a8a4-9753d14a6e32",
+      "canonical_name": "Lukolo",
+      "delivered_cost_usd_per_m3_p50": 39.4,
+      "annual_suitable_supply_m3_p50": 25.9,
+      "cumulative_annual_supply_m3_p10": 3759.2,
+      "cumulative_annual_supply_m3_p50": 12276.4,
+      "cumulative_annual_supply_m3_p90": 33737.0
+    },
+    {
+      "entity_id": "7325185d-a7a3-4fd3-9343-ba48cfe4e2f7",
+      "canonical_name": "Kifu",
+      "delivered_cost_usd_per_m3_p50": 39.47,
+      "annual_suitable_supply_m3_p50": 16.3,
+      "cumulative_annual_supply_m3_p10": 3798.5,
+      "cumulative_annual_supply_m3_p50": 12316.2,
+      "cumulative_annual_supply_m3_p90": 33815.3
+    },
+    {
+      "entity_id": "0225baf7-e9a4-4729-8393-6c898fafbe8a",
+      "canonical_name": "Jumbi",
+      "delivered_cost_usd_per_m3_p50": 39.67,
+      "annual_suitable_supply_m3_p50": 35.0,
+      "cumulative_annual_supply_m3_p10": 3830.0,
+      "cumulative_annual_supply_m3_p50": 12466.9,
+      "cumulative_annual_supply_m3_p90": 33979.9
+    },
+    {
+      "entity_id": "499568c5-d617-456c-ae53-da3db5ed49b5",
+      "canonical_name": "Bulondo",
+      "delivered_cost_usd_per_m3_p50": 39.73,
+      "annual_suitable_supply_m3_p50": 71.3,
+      "cumulative_annual_supply_m3_p10": 3863.3,
+      "cumulative_annual_supply_m3_p50": 12828.0,
+      "cumulative_annual_supply_m3_p90": 34580.4
+    },
+    {
+      "entity_id": "f5ec5a7e-da88-4df0-8e53-ee924c036193",
+      "canonical_name": "Kasala",
+      "delivered_cost_usd_per_m3_p50": 39.86,
+      "annual_suitable_supply_m3_p50": 38.7,
+      "cumulative_annual_supply_m3_p10": 3890.2,
+      "cumulative_annual_supply_m3_p50": 12946.2,
+      "cumulative_annual_supply_m3_p90": 34788.7
+    },
+    {
+      "entity_id": "3369a343-9a54-461f-8cbd-67605f6b0ff9",
+      "canonical_name": "Nadagi",
+      "delivered_cost_usd_per_m3_p50": 40.0,
+      "annual_suitable_supply_m3_p50": 56.1,
+      "cumulative_annual_supply_m3_p10": 4007.8,
+      "cumulative_annual_supply_m3_p50": 13140.7,
+      "cumulative_annual_supply_m3_p90": 35006.9
+    },
+    {
+      "entity_id": "45e48b92-fecc-4c84-885b-6e333a55c267",
+      "canonical_name": "Luwafu",
+      "delivered_cost_usd_per_m3_p50": 40.18,
+      "annual_suitable_supply_m3_p50": 52.4,
+      "cumulative_annual_supply_m3_p10": 4041.3,
+      "cumulative_annual_supply_m3_p50": 13261.3,
+      "cumulative_annual_supply_m3_p90": 35161.7
+    },
+    {
+      "entity_id": "1f7438f3-b22a-4ba0-8d9f-b749b1ddf071",
+      "canonical_name": "Musamya",
+      "delivered_cost_usd_per_m3_p50": 40.24,
+      "annual_suitable_supply_m3_p50": 110.4,
+      "cumulative_annual_supply_m3_p10": 4249.6,
+      "cumulative_annual_supply_m3_p50": 13614.1,
+      "cumulative_annual_supply_m3_p90": 35881.5
+    },
+    {
+      "entity_id": "7132f16d-e9a8-4000-a93f-c3495e6b942b",
+      "canonical_name": "Nakaziba",
+      "delivered_cost_usd_per_m3_p50": 40.7,
+      "annual_suitable_supply_m3_p50": 14.0,
+      "cumulative_annual_supply_m3_p10": 4280.6,
+      "cumulative_annual_supply_m3_p50": 13682.5,
+      "cumulative_annual_supply_m3_p90": 35928.9
+    },
+    {
+      "entity_id": "b5305cda-9b97-4571-ba94-38a914a0a3a1",
+      "canonical_name": "Zirimiti",
+      "delivered_cost_usd_per_m3_p50": 40.72,
+      "annual_suitable_supply_m3_p50": 131.7,
+      "cumulative_annual_supply_m3_p10": 4506.0,
+      "cumulative_annual_supply_m3_p50": 14121.4,
+      "cumulative_annual_supply_m3_p90": 36471.4
+    },
+    {
+      "entity_id": "3cfe21e7-f84f-4246-a523-07bf3a89546e",
+      "canonical_name": "Walugondo",
+      "delivered_cost_usd_per_m3_p50": 41.0,
+      "annual_suitable_supply_m3_p50": 15.7,
+      "cumulative_annual_supply_m3_p10": 4507.7,
+      "cumulative_annual_supply_m3_p50": 14173.5,
+      "cumulative_annual_supply_m3_p90": 36634.1
+    },
+    {
+      "entity_id": "b2c23e2d-595e-4cd3-9b39-b14b50925a65",
+      "canonical_name": "Gunda",
+      "delivered_cost_usd_per_m3_p50": 41.03,
+      "annual_suitable_supply_m3_p50": 6.0,
+      "cumulative_annual_supply_m3_p10": 4515.2,
+      "cumulative_annual_supply_m3_p50": 14197.5,
+      "cumulative_annual_supply_m3_p90": 36719.7
+    },
+    {
+      "entity_id": "6e149269-2cf1-4f1b-b329-c4b54a7d45c0",
+      "canonical_name": "Natyonko",
+      "delivered_cost_usd_per_m3_p50": 41.12,
+      "annual_suitable_supply_m3_p50": 173.1,
+      "cumulative_annual_supply_m3_p10": 4704.3,
+      "cumulative_annual_supply_m3_p50": 14782.2,
+      "cumulative_annual_supply_m3_p90": 37632.8
+    },
+    {
+      "entity_id": "5d8f6158-52da-4d1f-922c-00bd30d28654",
+      "canonical_name": "Kitonya",
+      "delivered_cost_usd_per_m3_p50": 41.19,
+      "annual_suitable_supply_m3_p50": 91.6,
+      "cumulative_annual_supply_m3_p10": 4823.2,
+      "cumulative_annual_supply_m3_p50": 15097.7,
+      "cumulative_annual_supply_m3_p90": 38755.8
+    },
+    {
+      "entity_id": "5bae8471-3006-4220-a92a-acd613b48987",
+      "canonical_name": "Budugade",
+      "delivered_cost_usd_per_m3_p50": 41.25,
+      "annual_suitable_supply_m3_p50": 9.4,
+      "cumulative_annual_supply_m3_p10": 4826.5,
+      "cumulative_annual_supply_m3_p50": 15110.8,
+      "cumulative_annual_supply_m3_p90": 38766.3
+    },
+    {
+      "entity_id": "4c75912b-259b-4a0b-a497-7ce8415baf5a",
+      "canonical_name": "Kisubi",
+      "delivered_cost_usd_per_m3_p50": 41.39,
+      "annual_suitable_supply_m3_p50": 3.4,
+      "cumulative_annual_supply_m3_p10": 4827.8,
+      "cumulative_annual_supply_m3_p50": 15124.6,
+      "cumulative_annual_supply_m3_p90": 38778.1
+    },
+    {
+      "entity_id": "d5830f01-01dc-4d08-ae1c-a49f5f7d0810",
+      "canonical_name": "Kaswera",
+      "delivered_cost_usd_per_m3_p50": 41.42,
+      "annual_suitable_supply_m3_p50": 7.2,
+      "cumulative_annual_supply_m3_p10": 4829.0,
+      "cumulative_annual_supply_m3_p50": 15136.1,
+      "cumulative_annual_supply_m3_p90": 38824.3
+    },
+    {
+      "entity_id": "a25fc75a-8010-4450-a179-b24c70a28b8c",
+      "canonical_name": "Kizinkuba",
+      "delivered_cost_usd_per_m3_p50": 41.58,
+      "annual_suitable_supply_m3_p50": 90.4,
+      "cumulative_annual_supply_m3_p10": 4834.1,
+      "cumulative_annual_supply_m3_p50": 15531.9,
+      "cumulative_annual_supply_m3_p90": 39959.7
+    },
+    {
+      "entity_id": "ea3593ee-038b-480f-bea3-48a616d924c9",
+      "canonical_name": "Wabirago",
+      "delivered_cost_usd_per_m3_p50": 41.96,
+      "annual_suitable_supply_m3_p50": 9.8,
+      "cumulative_annual_supply_m3_p10": 4857.1,
+      "cumulative_annual_supply_m3_p50": 15549.1,
+      "cumulative_annual_supply_m3_p90": 39992.5
+    },
+    {
+      "entity_id": "8e9cb74b-4abb-4a96-93e1-49115b88ccbf",
+      "canonical_name": "Bombo",
+      "delivered_cost_usd_per_m3_p50": 42.11,
+      "annual_suitable_supply_m3_p50": 6.5,
+      "cumulative_annual_supply_m3_p10": 4871.3,
+      "cumulative_annual_supply_m3_p50": 15549.6,
+      "cumulative_annual_supply_m3_p90": 40088.8
+    },
+    {
+      "entity_id": "44539625-d554-45b1-9c55-507e1d1df436",
+      "canonical_name": "Kisakombe",
+      "delivered_cost_usd_per_m3_p50": 42.31,
+      "annual_suitable_supply_m3_p50": 28.3,
+      "cumulative_annual_supply_m3_p10": 4950.3,
+      "cumulative_annual_supply_m3_p50": 15641.1,
+      "cumulative_annual_supply_m3_p90": 40527.4
+    },
+    {
+      "entity_id": "11863775-4933-4e75-ac01-55d8499dc046",
+      "canonical_name": "Nakalanga",
+      "delivered_cost_usd_per_m3_p50": 42.36,
+      "annual_suitable_supply_m3_p50": 209.0,
+      "cumulative_annual_supply_m3_p10": 5316.7,
+      "cumulative_annual_supply_m3_p50": 16279.8,
+      "cumulative_annual_supply_m3_p90": 42022.2
+    },
+    {
+      "entity_id": "aa67d2c8-30e5-4325-b834-b327f7e625d4",
+      "canonical_name": "Bulijjo",
+      "delivered_cost_usd_per_m3_p50": 42.37,
+      "annual_suitable_supply_m3_p50": 14.9,
+      "cumulative_annual_supply_m3_p10": 5329.6,
+      "cumulative_annual_supply_m3_p50": 16327.0,
+      "cumulative_annual_supply_m3_p90": 42042.2
+    },
+    {
+      "entity_id": "c77952f9-7df0-44e5-83a2-1dbe6b5d603e",
+      "canonical_name": "Wamasega",
+      "delivered_cost_usd_per_m3_p50": 42.47,
+      "annual_suitable_supply_m3_p50": 19.9,
+      "cumulative_annual_supply_m3_p10": 5334.6,
+      "cumulative_annual_supply_m3_p50": 16385.0,
+      "cumulative_annual_supply_m3_p90": 42146.4
+    },
+    {
+      "entity_id": "9153c377-30e0-4cc6-a6a2-fe6bad2cd316",
+      "canonical_name": "Nakwaya",
+      "delivered_cost_usd_per_m3_p50": 42.47,
+      "annual_suitable_supply_m3_p50": 57.5,
+      "cumulative_annual_supply_m3_p10": 5391.9,
+      "cumulative_annual_supply_m3_p50": 16652.6,
+      "cumulative_annual_supply_m3_p90": 42846.5
+    },
+    {
+      "entity_id": "661d08e4-4207-4ada-a679-83f61362611f",
+      "canonical_name": "Namatiwa",
+      "delivered_cost_usd_per_m3_p50": 42.59,
+      "annual_suitable_supply_m3_p50": 244.9,
+      "cumulative_annual_supply_m3_p10": 5595.7,
+      "cumulative_annual_supply_m3_p50": 17777.2,
+      "cumulative_annual_supply_m3_p90": 45749.5
+    },
+    {
+      "entity_id": "05f844ff-c5cb-4259-8f1d-218cc494e64f",
+      "canonical_name": "Nabanga",
+      "delivered_cost_usd_per_m3_p50": 42.71,
+      "annual_suitable_supply_m3_p50": 47.9,
+      "cumulative_annual_supply_m3_p10": 5723.8,
+      "cumulative_annual_supply_m3_p50": 17965.9,
+      "cumulative_annual_supply_m3_p90": 45832.5
+    },
+    {
+      "entity_id": "5bc843bd-f0c1-4cc7-be86-932425d96b34",
+      "canonical_name": "Kagongo",
+      "delivered_cost_usd_per_m3_p50": 42.83,
+      "annual_suitable_supply_m3_p50": 20.1,
+      "cumulative_annual_supply_m3_p10": 5758.4,
+      "cumulative_annual_supply_m3_p50": 18019.6,
+      "cumulative_annual_supply_m3_p90": 46113.8
+    },
+    {
+      "entity_id": "73762072-d219-47cb-8b86-67ba4f006782",
+      "canonical_name": "Kasozi",
+      "delivered_cost_usd_per_m3_p50": 42.85,
+      "annual_suitable_supply_m3_p50": 22.3,
+      "cumulative_annual_supply_m3_p10": 5818.4,
+      "cumulative_annual_supply_m3_p50": 18074.8,
+      "cumulative_annual_supply_m3_p90": 46228.8
+    },
+    {
+      "entity_id": "06410084-f9cb-4fad-9b2c-d77ea0158af5",
+      "canonical_name": "Kifunvwe",
+      "delivered_cost_usd_per_m3_p50": 43.01,
+      "annual_suitable_supply_m3_p50": 22.5,
+      "cumulative_annual_supply_m3_p10": 5833.2,
+      "cumulative_annual_supply_m3_p50": 18215.1,
+      "cumulative_annual_supply_m3_p90": 46322.3
+    },
+    {
+      "entity_id": "246b11e7-e4cd-4ac8-9546-b36a7cb943de",
+      "canonical_name": "Kateta",
+      "delivered_cost_usd_per_m3_p50": 43.1,
+      "annual_suitable_supply_m3_p50": 34.3,
+      "cumulative_annual_supply_m3_p10": 5876.3,
+      "cumulative_annual_supply_m3_p50": 18261.4,
+      "cumulative_annual_supply_m3_p90": 46669.5
+    },
+    {
+      "entity_id": "f86ab1ad-bdbc-4ed3-b01b-b00325da8981",
+      "canonical_name": "Mwola",
+      "delivered_cost_usd_per_m3_p50": 43.41,
+      "annual_suitable_supply_m3_p50": 60.5,
+      "cumulative_annual_supply_m3_p10": 5996.1,
+      "cumulative_annual_supply_m3_p50": 18527.3,
+      "cumulative_annual_supply_m3_p90": 46837.9
+    },
+    {
+      "entity_id": "27025e8e-ffa1-4837-b702-f9dead4d8193",
+      "canonical_name": "Buuka",
+      "delivered_cost_usd_per_m3_p50": 43.54,
+      "annual_suitable_supply_m3_p50": 31.1,
+      "cumulative_annual_supply_m3_p10": 6027.5,
+      "cumulative_annual_supply_m3_p50": 18612.2,
+      "cumulative_annual_supply_m3_p90": 47033.8
+    },
+    {
+      "entity_id": "39e5fb94-6a94-4770-bdb3-20aeeca775b6",
+      "canonical_name": "Kalo",
+      "delivered_cost_usd_per_m3_p50": 43.59,
+      "annual_suitable_supply_m3_p50": 9.7,
+      "cumulative_annual_supply_m3_p10": 6029.9,
+      "cumulative_annual_supply_m3_p50": 18620.3,
+      "cumulative_annual_supply_m3_p90": 47042.4
+    },
+    {
+      "entity_id": "05c42185-2298-4c73-a910-f282f9ad7e99",
+      "canonical_name": "Kabukira",
+      "delivered_cost_usd_per_m3_p50": 43.63,
+      "annual_suitable_supply_m3_p50": 48.1,
+      "cumulative_annual_supply_m3_p10": 6086.0,
+      "cumulative_annual_supply_m3_p50": 18858.0,
+      "cumulative_annual_supply_m3_p90": 47335.0
+    },
+    {
+      "entity_id": "7731a76a-2efe-40ff-8cd0-80250cec4faa",
+      "canonical_name": "Lukuga",
+      "delivered_cost_usd_per_m3_p50": 44.07,
+      "annual_suitable_supply_m3_p50": 13.2,
+      "cumulative_annual_supply_m3_p10": 6086.4,
+      "cumulative_annual_supply_m3_p50": 18932.7,
+      "cumulative_annual_supply_m3_p90": 47456.5
+    },
+    {
+      "entity_id": "4a51c770-8f1f-40f5-9d93-156fd31187e7",
+      "canonical_name": "Bugonzi",
+      "delivered_cost_usd_per_m3_p50": 44.14,
+      "annual_suitable_supply_m3_p50": 49.6,
+      "cumulative_annual_supply_m3_p10": 6175.2,
+      "cumulative_annual_supply_m3_p50": 19070.9,
+      "cumulative_annual_supply_m3_p90": 47557.2
+    },
+    {
+      "entity_id": "13dfc631-393f-4a68-af74-6ffdae03092a",
+      "canonical_name": "Nkogwe",
+      "delivered_cost_usd_per_m3_p50": 44.66,
+      "annual_suitable_supply_m3_p50": 39.2,
+      "cumulative_annual_supply_m3_p10": 6197.2,
+      "cumulative_annual_supply_m3_p50": 19213.3,
+      "cumulative_annual_supply_m3_p90": 47964.4
+    },
+    {
+      "entity_id": "7353f2a1-bdc2-4e82-8afd-87bbdee1148e",
+      "canonical_name": "Nakiza",
+      "delivered_cost_usd_per_m3_p50": 45.01,
+      "annual_suitable_supply_m3_p50": 79.0,
+      "cumulative_annual_supply_m3_p10": 6376.0,
+      "cumulative_annual_supply_m3_p50": 19609.5,
+      "cumulative_annual_supply_m3_p90": 48611.1
+    },
+    {
+      "entity_id": "e2b4d56b-69b2-4958-b319-709f0c59cace",
+      "canonical_name": "Kisisita",
+      "delivered_cost_usd_per_m3_p50": 45.05,
+      "annual_suitable_supply_m3_p50": 118.0,
+      "cumulative_annual_supply_m3_p10": 6503.8,
+      "cumulative_annual_supply_m3_p50": 20036.3,
+      "cumulative_annual_supply_m3_p90": 49788.7
+    },
+    {
+      "entity_id": "080659d5-e115-4d02-98c2-e155ed7d0264",
+      "canonical_name": "Kabugeza (Kasanda)",
+      "delivered_cost_usd_per_m3_p50": 45.17,
+      "annual_suitable_supply_m3_p50": 24.9,
+      "cumulative_annual_supply_m3_p10": 6507.7,
+      "cumulative_annual_supply_m3_p50": 20111.4,
+      "cumulative_annual_supply_m3_p90": 49871.5
+    },
+    {
+      "entity_id": "73e0fad1-d33d-4f94-96c0-cedd332d9de4",
+      "canonical_name": "Zimwa",
+      "delivered_cost_usd_per_m3_p50": 45.72,
+      "annual_suitable_supply_m3_p50": 97.7,
+      "cumulative_annual_supply_m3_p10": 6656.4,
+      "cumulative_annual_supply_m3_p50": 20388.8,
+      "cumulative_annual_supply_m3_p90": 50859.6
+    },
+    {
+      "entity_id": "399188fc-6030-414b-b6df-fe8ebce399a6",
+      "canonical_name": "Nabika",
+      "delivered_cost_usd_per_m3_p50": 45.93,
+      "annual_suitable_supply_m3_p50": 9.4,
+      "cumulative_annual_supply_m3_p10": 6683.1,
+      "cumulative_annual_supply_m3_p50": 20416.3,
+      "cumulative_annual_supply_m3_p90": 50875.6
+    },
+    {
+      "entity_id": "0b75d2cd-6942-4728-ae29-2e509057fca0",
+      "canonical_name": "Luleka",
+      "delivered_cost_usd_per_m3_p50": 46.33,
+      "annual_suitable_supply_m3_p50": 48.0,
+      "cumulative_annual_supply_m3_p10": 6788.5,
+      "cumulative_annual_supply_m3_p50": 20637.6,
+      "cumulative_annual_supply_m3_p90": 51088.4
+    },
+    {
+      "entity_id": "c23a3ae3-32ca-41d1-8823-ba657afeaadb",
+      "canonical_name": "Sembula",
+      "delivered_cost_usd_per_m3_p50": 46.35,
+      "annual_suitable_supply_m3_p50": 4.3,
+      "cumulative_annual_supply_m3_p10": 6788.8,
+      "cumulative_annual_supply_m3_p50": 20668.8,
+      "cumulative_annual_supply_m3_p90": 51092.3
+    },
+    {
+      "entity_id": "45c82a43-c6da-4f54-a343-29d409e29b77",
+      "canonical_name": "Namakupa",
+      "delivered_cost_usd_per_m3_p50": 46.41,
+      "annual_suitable_supply_m3_p50": 38.5,
+      "cumulative_annual_supply_m3_p10": 6813.4,
+      "cumulative_annual_supply_m3_p50": 20861.4,
+      "cumulative_annual_supply_m3_p90": 51400.4
+    },
+    {
+      "entity_id": "d5871f4e-a436-4aa6-9f60-6c3e47299a70",
+      "canonical_name": "Namwasa",
+      "delivered_cost_usd_per_m3_p50": 46.6,
+      "annual_suitable_supply_m3_p50": 2886.1,
+      "cumulative_annual_supply_m3_p10": 8428.9,
+      "cumulative_annual_supply_m3_p50": 27357.2,
+      "cumulative_annual_supply_m3_p90": 69837.9
+    },
+    {
+      "entity_id": "da1d0cde-55f1-4cea-8c53-0ad0a9ccb559",
+      "canonical_name": "Kagogo",
+      "delivered_cost_usd_per_m3_p50": 46.65,
+      "annual_suitable_supply_m3_p50": 142.8,
+      "cumulative_annual_supply_m3_p10": 8661.1,
+      "cumulative_annual_supply_m3_p50": 27837.6,
+      "cumulative_annual_supply_m3_p90": 71716.6
+    },
+    {
+      "entity_id": "62602e7e-d350-4424-8b83-a3d286a01334",
+      "canonical_name": "Kalombi",
+      "delivered_cost_usd_per_m3_p50": 46.74,
+      "annual_suitable_supply_m3_p50": 328.8,
+      "cumulative_annual_supply_m3_p10": 8988.8,
+      "cumulative_annual_supply_m3_p50": 28904.0,
+      "cumulative_annual_supply_m3_p90": 73530.7
+    },
+    {
+      "entity_id": "14eaa107-7454-4fec-8188-50bbcb014e0d",
+      "canonical_name": "Luwunga",
+      "delivered_cost_usd_per_m3_p50": 46.79,
+      "annual_suitable_supply_m3_p50": 2810.0,
+      "cumulative_annual_supply_m3_p10": 10626.0,
+      "cumulative_annual_supply_m3_p50": 36020.5,
+      "cumulative_annual_supply_m3_p90": 94972.4
+    },
+    {
+      "entity_id": "b25b3c7a-a467-46d6-abbb-f234391ad533",
+      "canonical_name": "Koko",
+      "delivered_cost_usd_per_m3_p50": 47.11,
+      "annual_suitable_supply_m3_p50": 29.4,
+      "cumulative_annual_supply_m3_p10": 10711.1,
+      "cumulative_annual_supply_m3_p50": 36112.7,
+      "cumulative_annual_supply_m3_p90": 95091.8
+    },
+    {
+      "entity_id": "453b7a83-c365-4884-8ea4-53bc5331f91e",
+      "canonical_name": "Wankweyo",
+      "delivered_cost_usd_per_m3_p50": 47.12,
+      "annual_suitable_supply_m3_p50": 561.5,
+      "cumulative_annual_supply_m3_p10": 11300.2,
+      "cumulative_annual_supply_m3_p50": 38483.2,
+      "cumulative_annual_supply_m3_p90": 100211.1
+    },
+    {
+      "entity_id": "f6ccde25-4982-4743-b603-0dfc76417aa5",
+      "canonical_name": "Kafumbi",
+      "delivered_cost_usd_per_m3_p50": 47.28,
+      "annual_suitable_supply_m3_p50": 40.4,
+      "cumulative_annual_supply_m3_p10": 11358.0,
+      "cumulative_annual_supply_m3_p50": 38501.2,
+      "cumulative_annual_supply_m3_p90": 100340.3
+    },
+    {
+      "entity_id": "d51427d0-6fb9-4a66-802d-57676715818e",
+      "canonical_name": "Lutoboka",
+      "delivered_cost_usd_per_m3_p50": 47.31,
+      "annual_suitable_supply_m3_p50": 55.9,
+      "cumulative_annual_supply_m3_p10": 11391.8,
+      "cumulative_annual_supply_m3_p50": 38726.2,
+      "cumulative_annual_supply_m3_p90": 101135.9
+    },
+    {
+      "entity_id": "4bf475e8-7a6b-42bc-97b5-a9f19388fcb4",
+      "canonical_name": "Manwa",
+      "delivered_cost_usd_per_m3_p50": 47.41,
+      "annual_suitable_supply_m3_p50": 39.1,
+      "cumulative_annual_supply_m3_p10": 11405.4,
+      "cumulative_annual_supply_m3_p50": 38815.8,
+      "cumulative_annual_supply_m3_p90": 101247.6
+    },
+    {
+      "entity_id": "a62728eb-4662-4717-b7fa-48c5a28bc860",
+      "canonical_name": "Kuzito",
+      "delivered_cost_usd_per_m3_p50": 47.54,
+      "annual_suitable_supply_m3_p50": 17.6,
+      "cumulative_annual_supply_m3_p10": 11470.2,
+      "cumulative_annual_supply_m3_p50": 38859.1,
+      "cumulative_annual_supply_m3_p90": 101297.1
+    },
+    {
+      "entity_id": "95ffbfe5-72ae-4915-afe4-1c12c93284c5",
+      "canonical_name": "Nimu",
+      "delivered_cost_usd_per_m3_p50": 47.61,
+      "annual_suitable_supply_m3_p50": 31.4,
+      "cumulative_annual_supply_m3_p10": 11550.8,
+      "cumulative_annual_supply_m3_p50": 39000.9,
+      "cumulative_annual_supply_m3_p90": 101384.4
+    },
+    {
+      "entity_id": "af31bfdd-2399-4d8d-8776-ed68e9d61b35",
+      "canonical_name": "Kabindo",
+      "delivered_cost_usd_per_m3_p50": 47.73,
+      "annual_suitable_supply_m3_p50": 188.4,
+      "cumulative_annual_supply_m3_p10": 11777.5,
+      "cumulative_annual_supply_m3_p50": 39769.1,
+      "cumulative_annual_supply_m3_p90": 102776.1
+    },
+    {
+      "entity_id": "4f95b3bc-3e25-4617-ac1f-b79f93d94c58",
+      "canonical_name": "Kisasa",
+      "delivered_cost_usd_per_m3_p50": 48.01,
+      "annual_suitable_supply_m3_p50": 45.7,
+      "cumulative_annual_supply_m3_p10": 11881.6,
+      "cumulative_annual_supply_m3_p50": 39955.1,
+      "cumulative_annual_supply_m3_p90": 102860.8
+    },
+    {
+      "entity_id": "dbe25ad0-798d-42e8-ae28-4048c9fbbd3f",
+      "canonical_name": "Kasonke",
+      "delivered_cost_usd_per_m3_p50": 48.06,
+      "annual_suitable_supply_m3_p50": 16.4,
+      "cumulative_annual_supply_m3_p10": 11886.3,
+      "cumulative_annual_supply_m3_p50": 40031.0,
+      "cumulative_annual_supply_m3_p90": 103467.7
+    },
+    {
+      "entity_id": "a352cdfc-1870-4445-bae7-44a425a37c5c",
+      "canonical_name": "Namawanyi and Namananga",
+      "delivered_cost_usd_per_m3_p50": 48.36,
+      "annual_suitable_supply_m3_p50": 74.3,
+      "cumulative_annual_supply_m3_p10": 11941.7,
+      "cumulative_annual_supply_m3_p50": 40101.4,
+      "cumulative_annual_supply_m3_p90": 103850.5
+    },
+    {
+      "entity_id": "17c676af-ace3-48c0-8d8b-f55cb89afba2",
+      "canonical_name": "Nsowe",
+      "delivered_cost_usd_per_m3_p50": 48.48,
+      "annual_suitable_supply_m3_p50": 543.5,
+      "cumulative_annual_supply_m3_p10": 12646.4,
+      "cumulative_annual_supply_m3_p50": 42166.8,
+      "cumulative_annual_supply_m3_p90": 107376.6
+    },
+    {
+      "entity_id": "091182b7-246a-4644-b55e-05861ed9efe9",
+      "canonical_name": "Bukone",
+      "delivered_cost_usd_per_m3_p50": 48.6,
+      "annual_suitable_supply_m3_p50": 21.5,
+      "cumulative_annual_supply_m3_p10": 12723.6,
+      "cumulative_annual_supply_m3_p50": 42180.6,
+      "cumulative_annual_supply_m3_p90": 107584.5
+    },
+    {
+      "entity_id": "46b794b9-27d8-42d6-af60-6b79960f257a",
+      "canonical_name": "Towa",
+      "delivered_cost_usd_per_m3_p50": 48.63,
+      "annual_suitable_supply_m3_p50": 248.0,
+      "cumulative_annual_supply_m3_p10": 13036.8,
+      "cumulative_annual_supply_m3_p50": 43258.6,
+      "cumulative_annual_supply_m3_p90": 109001.3
+    },
+    {
+      "entity_id": "1e9f5ba5-0267-4b7a-ac4c-0fdf9c596af6",
+      "canonical_name": "Bwezigolo - Gunga",
+      "delivered_cost_usd_per_m3_p50": 48.66,
+      "annual_suitable_supply_m3_p50": 650.2,
+      "cumulative_annual_supply_m3_p10": 14191.7,
+      "cumulative_annual_supply_m3_p50": 45554.5,
+      "cumulative_annual_supply_m3_p90": 113077.3
+    },
+    {
+      "entity_id": "99277e88-e0cc-4798-b155-7505678d7b97",
+      "canonical_name": "Mabira",
+      "delivered_cost_usd_per_m3_p50": 48.7,
+      "annual_suitable_supply_m3_p50": 4781.5,
+      "cumulative_annual_supply_m3_p10": 17387.3,
+      "cumulative_annual_supply_m3_p50": 55414.7,
+      "cumulative_annual_supply_m3_p90": 146689.5
+    },
+    {
+      "entity_id": "b9781c04-9792-4d29-8bbf-a986c7030584",
+      "canonical_name": "Jubiya",
+      "delivered_cost_usd_per_m3_p50": 48.84,
+      "annual_suitable_supply_m3_p50": 654.2,
+      "cumulative_annual_supply_m3_p10": 18083.5,
+      "cumulative_annual_supply_m3_p50": 58036.6,
+      "cumulative_annual_supply_m3_p90": 152582.8
+    },
+    {
+      "entity_id": "c6ec778b-7d13-458e-acbd-195311d45c86",
+      "canonical_name": "Kasana - Kasambya",
+      "delivered_cost_usd_per_m3_p50": 48.98,
+      "annual_suitable_supply_m3_p50": 575.7,
+      "cumulative_annual_supply_m3_p10": 18602.2,
+      "cumulative_annual_supply_m3_p50": 59928.9,
+      "cumulative_annual_supply_m3_p90": 157226.9
+    },
+    {
+      "entity_id": "d39b275a-6c15-488d-9c61-55482f6176b1",
+      "canonical_name": "Kamera",
+      "delivered_cost_usd_per_m3_p50": 49.0,
+      "annual_suitable_supply_m3_p50": 17.1,
+      "cumulative_annual_supply_m3_p10": 18631.1,
+      "cumulative_annual_supply_m3_p50": 59959.2,
+      "cumulative_annual_supply_m3_p90": 157236.8
+    },
+    {
+      "entity_id": "dd8195b2-a538-4ed4-9e24-4ce4261b1d83",
+      "canonical_name": "Kasulo",
+      "delivered_cost_usd_per_m3_p50": 49.04,
+      "annual_suitable_supply_m3_p50": 5.0,
+      "cumulative_annual_supply_m3_p10": 18633.0,
+      "cumulative_annual_supply_m3_p50": 59991.9,
+      "cumulative_annual_supply_m3_p90": 157246.3
+    },
+    {
+      "entity_id": "94815f07-a222-436c-97b9-976cb4f1e7ca",
+      "canonical_name": "Kyampisi",
+      "delivered_cost_usd_per_m3_p50": 49.1,
+      "annual_suitable_supply_m3_p50": 147.9,
+      "cumulative_annual_supply_m3_p10": 18768.5,
+      "cumulative_annual_supply_m3_p50": 60943.2,
+      "cumulative_annual_supply_m3_p90": 158808.2
+    },
+    {
+      "entity_id": "460a3a0c-3bb2-4669-a776-04232f9cb1b1",
+      "canonical_name": "Bufumira",
+      "delivered_cost_usd_per_m3_p50": 49.15,
+      "annual_suitable_supply_m3_p50": 53.5,
+      "cumulative_annual_supply_m3_p10": 18904.2,
+      "cumulative_annual_supply_m3_p50": 61049.0,
+      "cumulative_annual_supply_m3_p90": 158881.8
+    },
+    {
+      "entity_id": "49f13ea6-c90f-4994-916d-2003f07aa194",
+      "canonical_name": "Bugana",
+      "delivered_cost_usd_per_m3_p50": 49.24,
+      "annual_suitable_supply_m3_p50": 21.5,
+      "cumulative_annual_supply_m3_p10": 18935.0,
+      "cumulative_annual_supply_m3_p50": 61091.4,
+      "cumulative_annual_supply_m3_p90": 158895.7
+    },
+    {
+      "entity_id": "9c34d8f1-931a-4a61-be55-7361cb0f691d",
+      "canonical_name": "Wabitembe",
+      "delivered_cost_usd_per_m3_p50": 49.33,
+      "annual_suitable_supply_m3_p50": 40.9,
+      "cumulative_annual_supply_m3_p10": 18940.2,
+      "cumulative_annual_supply_m3_p50": 61276.3,
+      "cumulative_annual_supply_m3_p90": 159335.1
+    },
+    {
+      "entity_id": "b0b95bb9-4b52-461d-bedb-2693a1acd008",
+      "canonical_name": "Nabijoka",
+      "delivered_cost_usd_per_m3_p50": 49.38,
+      "annual_suitable_supply_m3_p50": 6.2,
+      "cumulative_annual_supply_m3_p10": 18942.2,
+      "cumulative_annual_supply_m3_p50": 61286.8,
+      "cumulative_annual_supply_m3_p90": 159338.0
+    },
+    {
+      "entity_id": "56176d77-310f-4412-b226-e5d59675d7dd",
+      "canonical_name": "Gala",
+      "delivered_cost_usd_per_m3_p50": 49.49,
+      "annual_suitable_supply_m3_p50": 144.3,
+      "cumulative_annual_supply_m3_p10": 19130.7,
+      "cumulative_annual_supply_m3_p50": 61455.4,
+      "cumulative_annual_supply_m3_p90": 159721.2
+    },
+    {
+      "entity_id": "2666e3ac-ee34-42b8-a93c-541c751e0249",
+      "canonical_name": "Nsube",
+      "delivered_cost_usd_per_m3_p50": 49.65,
+      "annual_suitable_supply_m3_p50": 100.7,
+      "cumulative_annual_supply_m3_p10": 19515.6,
+      "cumulative_annual_supply_m3_p50": 61734.3,
+      "cumulative_annual_supply_m3_p90": 160287.2
+    },
+    {
+      "entity_id": "5f4cc9a7-386b-4bd7-ae88-098e55631e30",
+      "canonical_name": "Nanfuka",
+      "delivered_cost_usd_per_m3_p50": 49.71,
+      "annual_suitable_supply_m3_p50": 151.6,
+      "cumulative_annual_supply_m3_p10": 19835.9,
+      "cumulative_annual_supply_m3_p50": 62493.1,
+      "cumulative_annual_supply_m3_p90": 162017.5
+    },
+    {
+      "entity_id": "8bab6064-2d21-4cf4-8736-62dcce991475",
+      "canonical_name": "Bukaibale",
+      "delivered_cost_usd_per_m3_p50": 49.71,
+      "annual_suitable_supply_m3_p50": 146.0,
+      "cumulative_annual_supply_m3_p10": 20123.8,
+      "cumulative_annual_supply_m3_p50": 63298.1,
+      "cumulative_annual_supply_m3_p90": 163055.9
+    },
+    {
+      "entity_id": "db2c9cc6-431c-446b-b924-80dff25b64f7",
+      "canonical_name": "Ngogwe (Bwema Island)",
+      "delivered_cost_usd_per_m3_p50": 49.8,
+      "annual_suitable_supply_m3_p50": 7.7,
+      "cumulative_annual_supply_m3_p10": 20131.7,
+      "cumulative_annual_supply_m3_p50": 63349.6,
+      "cumulative_annual_supply_m3_p90": 163074.0
+    },
+    {
+      "entity_id": "ffe5966b-d688-4698-9854-c385dc79cab6",
+      "canonical_name": "Kijogolo",
+      "delivered_cost_usd_per_m3_p50": 49.83,
+      "annual_suitable_supply_m3_p50": 39.6,
+      "cumulative_annual_supply_m3_p10": 20168.8,
+      "cumulative_annual_supply_m3_p50": 63441.0,
+      "cumulative_annual_supply_m3_p90": 163103.9
+    },
+    {
+      "entity_id": "a33fae9d-9421-453f-a9c6-483427b24e9f",
+      "canonical_name": "Kalagala (Busakwa)",
+      "delivered_cost_usd_per_m3_p50": 49.85,
+      "annual_suitable_supply_m3_p50": 2.1,
+      "cumulative_annual_supply_m3_p10": 20187.4,
+      "cumulative_annual_supply_m3_p50": 63441.1,
+      "cumulative_annual_supply_m3_p90": 163111.8
+    },
+    {
+      "entity_id": "232e6d23-c40e-45fb-bc4a-aef6da607a99",
+      "canonical_name": "Bukaleba",
+      "delivered_cost_usd_per_m3_p50": 49.88,
+      "annual_suitable_supply_m3_p50": 3771.0,
+      "cumulative_annual_supply_m3_p10": 23266.1,
+      "cumulative_annual_supply_m3_p50": 73498.3,
+      "cumulative_annual_supply_m3_p90": 189066.6
+    },
+    {
+      "entity_id": "c7151c94-2797-4dd8-b6c3-b9aea8dda81e",
+      "canonical_name": "Kapimpini",
+      "delivered_cost_usd_per_m3_p50": 49.91,
+      "annual_suitable_supply_m3_p50": 575.3,
+      "cumulative_annual_supply_m3_p10": 23901.1,
+      "cumulative_annual_supply_m3_p50": 75715.3,
+      "cumulative_annual_supply_m3_p90": 192552.8
+    },
+    {
+      "entity_id": "6204d689-56d0-404b-acba-1ec69093b6a3",
+      "canonical_name": "Kerenge",
+      "delivered_cost_usd_per_m3_p50": 49.93,
+      "annual_suitable_supply_m3_p50": 6.9,
+      "cumulative_annual_supply_m3_p10": 23903.3,
+      "cumulative_annual_supply_m3_p50": 75876.0,
+      "cumulative_annual_supply_m3_p90": 192571.0
+    },
+    {
+      "entity_id": "953552e7-6c06-4e9a-96ac-524239a0772c",
+      "canonical_name": "Namavundu",
+      "delivered_cost_usd_per_m3_p50": 50.06,
+      "annual_suitable_supply_m3_p50": 67.5,
+      "cumulative_annual_supply_m3_p10": 23913.6,
+      "cumulative_annual_supply_m3_p50": 76194.0,
+      "cumulative_annual_supply_m3_p90": 194526.0
+    },
+    {
+      "entity_id": "356af605-9984-4077-9506-3a63c613712b",
+      "canonical_name": "Katuugo",
+      "delivered_cost_usd_per_m3_p50": 50.06,
+      "annual_suitable_supply_m3_p50": 495.9,
+      "cumulative_annual_supply_m3_p10": 24501.8,
+      "cumulative_annual_supply_m3_p50": 77122.8,
+      "cumulative_annual_supply_m3_p90": 196665.7
+    },
+    {
+      "entity_id": "d300c4ff-0cda-451d-bb07-3443ca3b680f",
+      "canonical_name": "Goyera",
+      "delivered_cost_usd_per_m3_p50": 50.25,
+      "annual_suitable_supply_m3_p50": 98.2,
+      "cumulative_annual_supply_m3_p10": 24596.9,
+      "cumulative_annual_supply_m3_p50": 77605.2,
+      "cumulative_annual_supply_m3_p90": 196935.9
+    },
+    {
+      "entity_id": "658130d5-0f21-4f8a-8289-7f924e628573",
+      "canonical_name": "Name Unknown - Forest Reserve 4",
+      "delivered_cost_usd_per_m3_p50": 50.27,
+      "annual_suitable_supply_m3_p50": 35.0,
+      "cumulative_annual_supply_m3_p10": 24639.9,
+      "cumulative_annual_supply_m3_p50": 77947.3,
+      "cumulative_annual_supply_m3_p90": 197295.2
+    },
+    {
+      "entity_id": "7120545d-74a1-4697-aad0-0cff74d814e8",
+      "canonical_name": "Bunjazi",
+      "delivered_cost_usd_per_m3_p50": 50.3,
+      "annual_suitable_supply_m3_p50": 14.7,
+      "cumulative_annual_supply_m3_p10": 24684.1,
+      "cumulative_annual_supply_m3_p50": 77950.9,
+      "cumulative_annual_supply_m3_p90": 197307.7
+    },
+    {
+      "entity_id": "c351d3e9-d981-4158-8fef-734126d9de2f",
+      "canonical_name": "Buzimba",
+      "delivered_cost_usd_per_m3_p50": 50.43,
+      "annual_suitable_supply_m3_p50": 2.4,
+      "cumulative_annual_supply_m3_p10": 24685.0,
+      "cumulative_annual_supply_m3_p50": 77957.4,
+      "cumulative_annual_supply_m3_p90": 197316.4
+    },
+    {
+      "entity_id": "1889bc43-c12c-449e-aa2e-0663f8558256",
+      "canonical_name": "Kubanda",
+      "delivered_cost_usd_per_m3_p50": 50.55,
+      "annual_suitable_supply_m3_p50": 28.4,
+      "cumulative_annual_supply_m3_p10": 24690.5,
+      "cumulative_annual_supply_m3_p50": 77959.8,
+      "cumulative_annual_supply_m3_p90": 197583.3
+    },
+    {
+      "entity_id": "0c9a19d6-45ea-41af-89ac-7e43c2818aae",
+      "canonical_name": "Bira",
+      "delivered_cost_usd_per_m3_p50": 50.58,
+      "annual_suitable_supply_m3_p50": 51.1,
+      "cumulative_annual_supply_m3_p10": 24819.1,
+      "cumulative_annual_supply_m3_p50": 78167.3,
+      "cumulative_annual_supply_m3_p90": 197742.7
+    },
+    {
+      "entity_id": "93a6de2f-173d-40e6-8f36-9f58a4316e7d",
+      "canonical_name": "Sozi",
+      "delivered_cost_usd_per_m3_p50": 50.71,
+      "annual_suitable_supply_m3_p50": 30.5,
+      "cumulative_annual_supply_m3_p10": 24883.5,
+      "cumulative_annual_supply_m3_p50": 78358.7,
+      "cumulative_annual_supply_m3_p90": 197810.6
+    },
+    {
+      "entity_id": "d8766a2c-1405-4ffa-a561-9bedc3509c8c",
+      "canonical_name": "Nazigo",
+      "delivered_cost_usd_per_m3_p50": 50.74,
+      "annual_suitable_supply_m3_p50": 5.4,
+      "cumulative_annual_supply_m3_p10": 24904.8,
+      "cumulative_annual_supply_m3_p50": 78366.8,
+      "cumulative_annual_supply_m3_p90": 197818.4
+    },
+    {
+      "entity_id": "5c10b753-189c-4bfc-ab22-165a1d35cc40",
+      "canonical_name": "Mpanga",
+      "delivered_cost_usd_per_m3_p50": 50.88,
+      "annual_suitable_supply_m3_p50": 130.1,
+      "cumulative_annual_supply_m3_p10": 25520.2,
+      "cumulative_annual_supply_m3_p50": 78937.7,
+      "cumulative_annual_supply_m3_p90": 198267.7
+    },
+    {
+      "entity_id": "7a8ff353-161a-4127-a288-f209c288f8c5",
+      "canonical_name": "Lubani",
+      "delivered_cost_usd_per_m3_p50": 51.07,
+      "annual_suitable_supply_m3_p50": 56.4,
+      "cumulative_annual_supply_m3_p10": 25544.6,
+      "cumulative_annual_supply_m3_p50": 79144.3,
+      "cumulative_annual_supply_m3_p90": 198518.1
+    },
+    {
+      "entity_id": "415d3b73-ff56-4fde-8e0a-57e8059f1c0d",
+      "canonical_name": "Kagoma",
+      "delivered_cost_usd_per_m3_p50": 51.13,
+      "annual_suitable_supply_m3_p50": 35.1,
+      "cumulative_annual_supply_m3_p10": 25625.3,
+      "cumulative_annual_supply_m3_p50": 79300.2,
+      "cumulative_annual_supply_m3_p90": 199078.8
+    },
+    {
+      "entity_id": "40c9d1cb-1671-413b-a709-970b31b82285",
+      "canonical_name": "Nile Bank",
+      "delivered_cost_usd_per_m3_p50": 51.18,
+      "annual_suitable_supply_m3_p50": 57.0,
+      "cumulative_annual_supply_m3_p10": 25642.6,
+      "cumulative_annual_supply_m3_p50": 79605.1,
+      "cumulative_annual_supply_m3_p90": 199506.7
+    },
+    {
+      "entity_id": "289c92d6-67d3-438c-bba7-9aab9e4b9d5f",
+      "canonical_name": "Mugoye",
+      "delivered_cost_usd_per_m3_p50": 51.26,
+      "annual_suitable_supply_m3_p50": 116.3,
+      "cumulative_annual_supply_m3_p10": 25682.2,
+      "cumulative_annual_supply_m3_p50": 79890.7,
+      "cumulative_annual_supply_m3_p90": 201376.6
+    },
+    {
+      "entity_id": "adb0d2da-2dfa-40b8-8b1c-ddcc1dbb668b",
+      "canonical_name": "Namatembe",
+      "delivered_cost_usd_per_m3_p50": 51.37,
+      "annual_suitable_supply_m3_p50": 26.7,
+      "cumulative_annual_supply_m3_p10": 25691.0,
+      "cumulative_annual_supply_m3_p50": 80039.9,
+      "cumulative_annual_supply_m3_p90": 201412.2
+    },
+    {
+      "entity_id": "58a4217d-686d-4604-9c98-fe5969113fb9",
+      "canonical_name": "Mutai",
+      "delivered_cost_usd_per_m3_p50": 51.48,
+      "annual_suitable_supply_m3_p50": 22.3,
+      "cumulative_annual_supply_m3_p10": 25798.4,
+      "cumulative_annual_supply_m3_p50": 80222.9,
+      "cumulative_annual_supply_m3_p90": 201450.4
+    },
+    {
+      "entity_id": "93ce3866-2142-4f00-9896-f819ffef1cb9",
+      "canonical_name": "Kitasi",
+      "delivered_cost_usd_per_m3_p50": 51.56,
+      "annual_suitable_supply_m3_p50": 39.0,
+      "cumulative_annual_supply_m3_p10": 25808.2,
+      "cumulative_annual_supply_m3_p50": 80286.6,
+      "cumulative_annual_supply_m3_p90": 201590.2
+    },
+    {
+      "entity_id": "93af8865-9f78-457c-9902-40c13ee20083",
+      "canonical_name": "Busowe",
+      "delivered_cost_usd_per_m3_p50": 51.58,
+      "annual_suitable_supply_m3_p50": 280.1,
+      "cumulative_annual_supply_m3_p10": 26124.5,
+      "cumulative_annual_supply_m3_p50": 81302.0,
+      "cumulative_annual_supply_m3_p90": 203466.8
+    },
+    {
+      "entity_id": "37eeb517-c2dd-433f-a820-63298042d302",
+      "canonical_name": "Iziru",
+      "delivered_cost_usd_per_m3_p50": 51.63,
+      "annual_suitable_supply_m3_p50": 220.8,
+      "cumulative_annual_supply_m3_p10": 26300.2,
+      "cumulative_annual_supply_m3_p50": 82503.4,
+      "cumulative_annual_supply_m3_p90": 204725.5
+    },
+    {
+      "entity_id": "0798aece-995f-4915-8e07-904ac50d20b4",
+      "canonical_name": "Kumbu",
+      "delivered_cost_usd_per_m3_p50": 51.65,
+      "annual_suitable_supply_m3_p50": 6.1,
+      "cumulative_annual_supply_m3_p10": 26302.6,
+      "cumulative_annual_supply_m3_p50": 82519.7,
+      "cumulative_annual_supply_m3_p90": 204738.9
+    },
+    {
+      "entity_id": "f7cfe5de-b18f-4a22-ab08-e198bcc78d33",
+      "canonical_name": "Nabukonge",
+      "delivered_cost_usd_per_m3_p50": 51.67,
+      "annual_suitable_supply_m3_p50": 23.6,
+      "cumulative_annual_supply_m3_p10": 26316.6,
+      "cumulative_annual_supply_m3_p50": 82527.5,
+      "cumulative_annual_supply_m3_p90": 204746.5
+    },
+    {
+      "entity_id": "b6d03012-92cf-4d50-99d5-f5379d69db0b",
+      "canonical_name": "Kakonwa",
+      "delivered_cost_usd_per_m3_p50": 51.7,
+      "annual_suitable_supply_m3_p50": 117.8,
+      "cumulative_annual_supply_m3_p10": 26449.6,
+      "cumulative_annual_supply_m3_p50": 82808.2,
+      "cumulative_annual_supply_m3_p90": 206329.4
+    },
+    {
+      "entity_id": "5b3975ee-0a6b-4bb9-98d6-a3990ad444e9",
+      "canonical_name": "Namasiga - Kidimbuli",
+      "delivered_cost_usd_per_m3_p50": 51.71,
+      "annual_suitable_supply_m3_p50": 50.9,
+      "cumulative_annual_supply_m3_p10": 26475.5,
+      "cumulative_annual_supply_m3_p50": 83034.6,
+      "cumulative_annual_supply_m3_p90": 206419.2
+    },
+    {
+      "entity_id": "b5d11949-34f7-4c4f-bbf5-c755a2be8f2a",
+      "canonical_name": "Mwiri",
+      "delivered_cost_usd_per_m3_p50": 51.84,
+      "annual_suitable_supply_m3_p50": 15.4,
+      "cumulative_annual_supply_m3_p10": 26476.6,
+      "cumulative_annual_supply_m3_p50": 83045.5,
+      "cumulative_annual_supply_m3_p90": 206421.0
+    },
+    {
+      "entity_id": "2c260fa1-3779-49b6-b6d0-cc9391453d8b",
+      "canonical_name": "Kasega",
+      "delivered_cost_usd_per_m3_p50": 51.89,
+      "annual_suitable_supply_m3_p50": 9.3,
+      "cumulative_annual_supply_m3_p10": 26490.1,
+      "cumulative_annual_supply_m3_p50": 83069.1,
+      "cumulative_annual_supply_m3_p90": 206428.3
+    },
+    {
+      "entity_id": "1a0d12e4-06a6-4902-9978-fe3f37e4d2cf",
+      "canonical_name": "Kitemu",
+      "delivered_cost_usd_per_m3_p50": 51.9,
+      "annual_suitable_supply_m3_p50": 8.3,
+      "cumulative_annual_supply_m3_p10": 26491.2,
+      "cumulative_annual_supply_m3_p50": 83086.3,
+      "cumulative_annual_supply_m3_p90": 206437.4
+    },
+    {
+      "entity_id": "f72831c2-fab1-4e9a-89a4-9cff4e69ebea",
+      "canonical_name": "Kalagala Falls",
+      "delivered_cost_usd_per_m3_p50": 51.9,
+      "annual_suitable_supply_m3_p50": 15.2,
+      "cumulative_annual_supply_m3_p10": 26537.6,
+      "cumulative_annual_supply_m3_p50": 83194.7,
+      "cumulative_annual_supply_m3_p90": 206472.8
+    },
+    {
+      "entity_id": "f0e1229a-ef43-49fe-8473-b3968b99a837",
+      "canonical_name": "Buga",
+      "delivered_cost_usd_per_m3_p50": 51.93,
+      "annual_suitable_supply_m3_p50": 24.7,
+      "cumulative_annual_supply_m3_p10": 26543.2,
+      "cumulative_annual_supply_m3_p50": 83316.3,
+      "cumulative_annual_supply_m3_p90": 206607.4
+    },
+    {
+      "entity_id": "4e3a5c91-e084-45d0-aa1b-80b2a8884c55",
+      "canonical_name": "Kaweri",
+      "delivered_cost_usd_per_m3_p50": 51.95,
+      "annual_suitable_supply_m3_p50": 141.3,
+      "cumulative_annual_supply_m3_p10": 26733.9,
+      "cumulative_annual_supply_m3_p50": 83782.9,
+      "cumulative_annual_supply_m3_p90": 208115.3
+    },
+    {
+      "entity_id": "2c229f0f-71a1-4e59-9001-841937d864c4",
+      "canonical_name": "Tonde",
+      "delivered_cost_usd_per_m3_p50": 52.02,
+      "annual_suitable_supply_m3_p50": 7.7,
+      "cumulative_annual_supply_m3_p10": 26734.1,
+      "cumulative_annual_supply_m3_p50": 83810.8,
+      "cumulative_annual_supply_m3_p90": 208214.3
+    },
+    {
+      "entity_id": "321555ab-8935-4017-aa26-4dbc40a81356",
+      "canonical_name": "Buloba",
+      "delivered_cost_usd_per_m3_p50": 52.06,
+      "annual_suitable_supply_m3_p50": 42.8,
+      "cumulative_annual_supply_m3_p10": 26806.1,
+      "cumulative_annual_supply_m3_p50": 83971.1,
+      "cumulative_annual_supply_m3_p90": 208438.9
+    },
+    {
+      "entity_id": "cd2cc9d0-ba54-4c69-a895-797f9dddc2c4",
+      "canonical_name": "Kijwiga",
+      "delivered_cost_usd_per_m3_p50": 52.1,
+      "annual_suitable_supply_m3_p50": 28.5,
+      "cumulative_annual_supply_m3_p10": 26807.9,
+      "cumulative_annual_supply_m3_p50": 84116.8,
+      "cumulative_annual_supply_m3_p90": 208715.7
+    },
+    {
+      "entity_id": "b4ce5ce1-c41e-42a7-8e24-d214868f723b",
+      "canonical_name": "Lukalu",
+      "delivered_cost_usd_per_m3_p50": 52.15,
+      "annual_suitable_supply_m3_p50": 26.5,
+      "cumulative_annual_supply_m3_p10": 26824.9,
+      "cumulative_annual_supply_m3_p50": 84245.7,
+      "cumulative_annual_supply_m3_p90": 208794.1
+    },
+    {
+      "entity_id": "19987058-10b4-478d-8755-3282e30aae17",
+      "canonical_name": "Nakunyi",
+      "delivered_cost_usd_per_m3_p50": 52.19,
+      "annual_suitable_supply_m3_p50": 22.0,
+      "cumulative_annual_supply_m3_p10": 26830.3,
+      "cumulative_annual_supply_m3_p50": 84298.9,
+      "cumulative_annual_supply_m3_p90": 208821.1
+    },
+    {
+      "entity_id": "d49b6340-e2d9-4e11-b57c-282cdbfcf5a5",
+      "canonical_name": "Ngereka",
+      "delivered_cost_usd_per_m3_p50": 52.32,
+      "annual_suitable_supply_m3_p50": 132.8,
+      "cumulative_annual_supply_m3_p10": 26906.7,
+      "cumulative_annual_supply_m3_p50": 84981.2,
+      "cumulative_annual_supply_m3_p90": 209807.5
+    },
+    {
+      "entity_id": "9d818c14-eb22-48a0-a3a5-95749995173d",
+      "canonical_name": "Funve",
+      "delivered_cost_usd_per_m3_p50": 52.42,
+      "annual_suitable_supply_m3_p50": 18.7,
+      "cumulative_annual_supply_m3_p10": 27133.0,
+      "cumulative_annual_supply_m3_p50": 85012.9,
+      "cumulative_annual_supply_m3_p90": 209840.7
+    },
+    {
+      "entity_id": "f710699f-3d6a-414e-8e47-17c9b7733a0c",
+      "canonical_name": "Wangu",
+      "delivered_cost_usd_per_m3_p50": 52.59,
+      "annual_suitable_supply_m3_p50": 3.2,
+      "cumulative_annual_supply_m3_p10": 27133.5,
+      "cumulative_annual_supply_m3_p50": 85022.9,
+      "cumulative_annual_supply_m3_p90": 209842.3
+    },
+    {
+      "entity_id": "57a7f332-a26e-4482-85d4-da7b4aac9998",
+      "canonical_name": "Namabowe",
+      "delivered_cost_usd_per_m3_p50": 52.88,
+      "annual_suitable_supply_m3_p50": 20.5,
+      "cumulative_annual_supply_m3_p10": 27169.1,
+      "cumulative_annual_supply_m3_p50": 85146.5,
+      "cumulative_annual_supply_m3_p90": 210210.7
+    },
+    {
+      "entity_id": "c09fad3b-bcaa-4f40-a4c7-7e0feec59e86",
+      "canonical_name": "Kikonda",
+      "delivered_cost_usd_per_m3_p50": 52.9,
+      "annual_suitable_supply_m3_p50": 4433.4,
+      "cumulative_annual_supply_m3_p10": 30343.8,
+      "cumulative_annual_supply_m3_p50": 99458.9,
+      "cumulative_annual_supply_m3_p90": 243421.8
+    },
+    {
+      "entity_id": "398e711a-f860-41c2-b90b-20f78fdd874b",
+      "canonical_name": "Walulumbu",
+      "delivered_cost_usd_per_m3_p50": 53.08,
+      "annual_suitable_supply_m3_p50": 13.0,
+      "cumulative_annual_supply_m3_p10": 30351.4,
+      "cumulative_annual_supply_m3_p50": 99501.4,
+      "cumulative_annual_supply_m3_p90": 243426.4
+    },
+    {
+      "entity_id": "4307deb9-1c0e-40d0-9010-c0309f3200cb",
+      "canonical_name": "Kisombwa",
+      "delivered_cost_usd_per_m3_p50": 53.09,
+      "annual_suitable_supply_m3_p50": 310.5,
+      "cumulative_annual_supply_m3_p10": 31250.4,
+      "cumulative_annual_supply_m3_p50": 100843.1,
+      "cumulative_annual_supply_m3_p90": 245411.4
+    },
+    {
+      "entity_id": "63cb3eb2-1a96-4509-a86a-9fc6f11ac374",
+      "canonical_name": "Kande",
+      "delivered_cost_usd_per_m3_p50": 53.19,
+      "annual_suitable_supply_m3_p50": 22.0,
+      "cumulative_annual_supply_m3_p10": 31251.5,
+      "cumulative_annual_supply_m3_p50": 100880.6,
+      "cumulative_annual_supply_m3_p90": 245437.9
+    },
+    {
+      "entity_id": "1a90be4a-0d3b-40ba-9a19-c5da69318899",
+      "canonical_name": "Kasenyi",
+      "delivered_cost_usd_per_m3_p50": 53.24,
+      "annual_suitable_supply_m3_p50": 21.7,
+      "cumulative_annual_supply_m3_p10": 31327.5,
+      "cumulative_annual_supply_m3_p50": 100923.6,
+      "cumulative_annual_supply_m3_p90": 245477.9
+    },
+    {
+      "entity_id": "5dd31e21-0d74-424c-b034-3867aa8d3520",
+      "canonical_name": "Bugusa",
+      "delivered_cost_usd_per_m3_p50": 53.29,
+      "annual_suitable_supply_m3_p50": 28.9,
+      "cumulative_annual_supply_m3_p10": 31357.5,
+      "cumulative_annual_supply_m3_p50": 100962.4,
+      "cumulative_annual_supply_m3_p90": 245482.1
+    },
+    {
+      "entity_id": "2cd3e179-7af0-4c50-ad9c-21d84559c773",
+      "canonical_name": "Namafuma",
+      "delivered_cost_usd_per_m3_p50": 53.29,
+      "annual_suitable_supply_m3_p50": 12.5,
+      "cumulative_annual_supply_m3_p10": 31359.3,
+      "cumulative_annual_supply_m3_p50": 101022.9,
+      "cumulative_annual_supply_m3_p90": 245487.2
+    },
+    {
+      "entity_id": "50a94923-8d36-44f4-b17d-f97a378c0118",
+      "canonical_name": "Bajo",
+      "delivered_cost_usd_per_m3_p50": 53.34,
+      "annual_suitable_supply_m3_p50": 325.7,
+      "cumulative_annual_supply_m3_p10": 31726.9,
+      "cumulative_annual_supply_m3_p50": 102331.4,
+      "cumulative_annual_supply_m3_p90": 248772.2
+    },
+    {
+      "entity_id": "53b31112-6d94-41d0-9a1b-ff56859c4f5a",
+      "canonical_name": "Nakitondo",
+      "delivered_cost_usd_per_m3_p50": 53.34,
+      "annual_suitable_supply_m3_p50": 27.1,
+      "cumulative_annual_supply_m3_p10": 31732.9,
+      "cumulative_annual_supply_m3_p50": 102448.5,
+      "cumulative_annual_supply_m3_p90": 248882.1
+    },
+    {
+      "entity_id": "65786402-2011-44e7-abad-c3a186f64c54",
+      "canonical_name": "Kyirira",
+      "delivered_cost_usd_per_m3_p50": 53.42,
+      "annual_suitable_supply_m3_p50": 12.6,
+      "cumulative_annual_supply_m3_p10": 31739.9,
+      "cumulative_annual_supply_m3_p50": 102459.9,
+      "cumulative_annual_supply_m3_p90": 248893.6
+    },
+    {
+      "entity_id": "e5a10c86-704d-470a-80fe-0575962af1dc",
+      "canonical_name": "Kabwika - Mujwalanganda",
+      "delivered_cost_usd_per_m3_p50": 53.6,
+      "annual_suitable_supply_m3_p50": 791.0,
+      "cumulative_annual_supply_m3_p10": 32642.4,
+      "cumulative_annual_supply_m3_p50": 105020.2,
+      "cumulative_annual_supply_m3_p90": 252054.7
+    },
+    {
+      "entity_id": "bab50fc0-d4e2-4656-8d43-b641cc29c0dc",
+      "canonical_name": "Mpinve",
+      "delivered_cost_usd_per_m3_p50": 53.65,
+      "annual_suitable_supply_m3_p50": 159.6,
+      "cumulative_annual_supply_m3_p10": 32718.5,
+      "cumulative_annual_supply_m3_p50": 105277.0,
+      "cumulative_annual_supply_m3_p90": 252438.9
+    },
+    {
+      "entity_id": "337e8ca1-6fa9-429f-bc98-7793cf41d6be",
+      "canonical_name": "Wabisi - Wajala",
+      "delivered_cost_usd_per_m3_p50": 53.66,
+      "annual_suitable_supply_m3_p50": 370.7,
+      "cumulative_annual_supply_m3_p10": 33365.6,
+      "cumulative_annual_supply_m3_p50": 106761.5,
+      "cumulative_annual_supply_m3_p90": 255167.3
+    },
+    {
+      "entity_id": "151d517c-33a4-498e-b5d3-3268f712a02b",
+      "canonical_name": "Banga",
+      "delivered_cost_usd_per_m3_p50": 53.69,
+      "annual_suitable_supply_m3_p50": 28.6,
+      "cumulative_annual_supply_m3_p10": 33377.4,
+      "cumulative_annual_supply_m3_p50": 106785.2,
+      "cumulative_annual_supply_m3_p90": 255183.7
+    },
+    {
+      "entity_id": "84cab910-e31f-4bc5-bf03-bb3c90ed23c6",
+      "canonical_name": "Buluku",
+      "delivered_cost_usd_per_m3_p50": 53.74,
+      "annual_suitable_supply_m3_p50": 29.1,
+      "cumulative_annual_supply_m3_p10": 33451.0,
+      "cumulative_annual_supply_m3_p50": 106967.7,
+      "cumulative_annual_supply_m3_p90": 255318.9
+    },
+    {
+      "entity_id": "b2f168b5-d688-4da7-8435-bf6e00493ee8",
+      "canonical_name": "Lukale",
+      "delivered_cost_usd_per_m3_p50": 53.77,
+      "annual_suitable_supply_m3_p50": 31.2,
+      "cumulative_annual_supply_m3_p10": 33454.0,
+      "cumulative_annual_supply_m3_p50": 107008.0,
+      "cumulative_annual_supply_m3_p90": 255450.2
+    },
+    {
+      "entity_id": "8d7b6069-9a64-45b7-872b-c050ea34df95",
+      "canonical_name": "Namazingiri",
+      "delivered_cost_usd_per_m3_p50": 53.84,
+      "annual_suitable_supply_m3_p50": 19.8,
+      "cumulative_annual_supply_m3_p10": 33482.1,
+      "cumulative_annual_supply_m3_p50": 107173.2,
+      "cumulative_annual_supply_m3_p90": 255606.8
+    },
+    {
+      "entity_id": "f8932739-d48d-40a8-b20a-cd17bab6c55f",
+      "canonical_name": "Olamusa",
+      "delivered_cost_usd_per_m3_p50": 53.9,
+      "annual_suitable_supply_m3_p50": 31.6,
+      "cumulative_annual_supply_m3_p10": 33494.5,
+      "cumulative_annual_supply_m3_p50": 107320.2,
+      "cumulative_annual_supply_m3_p90": 255760.4
+    },
+    {
+      "entity_id": "ee5e32d9-e33c-4e9c-9c18-456fcd0084cb",
+      "canonical_name": "Koja",
+      "delivered_cost_usd_per_m3_p50": 53.94,
+      "annual_suitable_supply_m3_p50": 24.7,
+      "cumulative_annual_supply_m3_p10": 33512.8,
+      "cumulative_annual_supply_m3_p50": 107465.7,
+      "cumulative_annual_supply_m3_p90": 255848.4
+    },
+    {
+      "entity_id": "a3eda513-309a-4e1c-8670-df205757bfd5",
+      "canonical_name": "Nkose",
+      "delivered_cost_usd_per_m3_p50": 54.04,
+      "annual_suitable_supply_m3_p50": 10.6,
+      "cumulative_annual_supply_m3_p10": 33519.7,
+      "cumulative_annual_supply_m3_p50": 107505.8,
+      "cumulative_annual_supply_m3_p90": 255936.7
+    },
+    {
+      "entity_id": "287806a7-929a-4c03-805e-90611eb307c0",
+      "canonical_name": "Namunyoro",
+      "delivered_cost_usd_per_m3_p50": 54.18,
+      "annual_suitable_supply_m3_p50": 13.1,
+      "cumulative_annual_supply_m3_p10": 33523.0,
+      "cumulative_annual_supply_m3_p50": 107619.7,
+      "cumulative_annual_supply_m3_p90": 255949.4
+    },
+    {
+      "entity_id": "e0177053-7a09-45ed-913f-739b7c995733",
+      "canonical_name": "Mulega",
+      "delivered_cost_usd_per_m3_p50": 54.21,
+      "annual_suitable_supply_m3_p50": 15.1,
+      "cumulative_annual_supply_m3_p10": 33552.0,
+      "cumulative_annual_supply_m3_p50": 107758.1,
+      "cumulative_annual_supply_m3_p90": 255996.2
+    },
+    {
+      "entity_id": "30064b43-116b-4c0c-a41c-9b72004cd48f",
+      "canonical_name": "Buwanzi",
+      "delivered_cost_usd_per_m3_p50": 54.24,
+      "annual_suitable_supply_m3_p50": 43.1,
+      "cumulative_annual_supply_m3_p10": 33573.4,
+      "cumulative_annual_supply_m3_p50": 107842.0,
+      "cumulative_annual_supply_m3_p90": 256238.7
+    },
+    {
+      "entity_id": "9fdc7ef1-90b4-40e4-aedc-892bea7ffc52",
+      "canonical_name": "Kyalubanga",
+      "delivered_cost_usd_per_m3_p50": 54.45,
+      "annual_suitable_supply_m3_p50": 381.9,
+      "cumulative_annual_supply_m3_p10": 34235.9,
+      "cumulative_annual_supply_m3_p50": 109400.3,
+      "cumulative_annual_supply_m3_p90": 259441.7
+    },
+    {
+      "entity_id": "308a3ef4-f4a4-4e47-9406-5fdb235d54fc",
+      "canonical_name": "Kampala",
+      "delivered_cost_usd_per_m3_p50": 54.64,
+      "annual_suitable_supply_m3_p50": 15.0,
+      "cumulative_annual_supply_m3_p10": 34235.9,
+      "cumulative_annual_supply_m3_p50": 109409.6,
+      "cumulative_annual_supply_m3_p90": 259480.4
+    },
+    {
+      "entity_id": "779787b9-d7e9-4e66-87d4-7e08788cb0f7",
+      "canonical_name": "Bugomba",
+      "delivered_cost_usd_per_m3_p50": 54.79,
+      "annual_suitable_supply_m3_p50": 24.3,
+      "cumulative_annual_supply_m3_p10": 34241.4,
+      "cumulative_annual_supply_m3_p50": 109432.1,
+      "cumulative_annual_supply_m3_p90": 260456.5
+    },
+    {
+      "entity_id": "7cfa1ca1-b8ed-4773-8a69-8086148d5ebd",
+      "canonical_name": "Ibamba",
+      "delivered_cost_usd_per_m3_p50": 54.8,
+      "annual_suitable_supply_m3_p50": 61.9,
+      "cumulative_annual_supply_m3_p10": 34483.8,
+      "cumulative_annual_supply_m3_p50": 109799.1,
+      "cumulative_annual_supply_m3_p90": 260592.5
+    },
+    {
+      "entity_id": "34ce45af-7c65-4ec7-8bf6-7344ff3b3023",
+      "canonical_name": "Kimaka",
+      "delivered_cost_usd_per_m3_p50": 54.9,
+      "annual_suitable_supply_m3_p50": 4.4,
+      "cumulative_annual_supply_m3_p10": 34494.4,
+      "cumulative_annual_supply_m3_p50": 109800.6,
+      "cumulative_annual_supply_m3_p90": 260606.7
+    },
+    {
+      "entity_id": "3e9e3235-d6e7-4901-a737-a0a9117bf565",
+      "canonical_name": "Buturume",
+      "delivered_cost_usd_per_m3_p50": 54.95,
+      "annual_suitable_supply_m3_p50": 18.7,
+      "cumulative_annual_supply_m3_p10": 34501.0,
+      "cumulative_annual_supply_m3_p50": 109810.7,
+      "cumulative_annual_supply_m3_p90": 260685.4
+    },
+    {
+      "entity_id": "ae3e0607-069b-4eed-8aab-eb0e1c0b066a",
+      "canonical_name": "Kasagala",
+      "delivered_cost_usd_per_m3_p50": 55.05,
+      "annual_suitable_supply_m3_p50": 724.4,
+      "cumulative_annual_supply_m3_p10": 35409.8,
+      "cumulative_annual_supply_m3_p50": 111835.8,
+      "cumulative_annual_supply_m3_p90": 263512.5
+    },
+    {
+      "entity_id": "bba8a479-7397-4616-9039-1d3d8c721f12",
+      "canonical_name": "Kanangalo",
+      "delivered_cost_usd_per_m3_p50": 55.09,
+      "annual_suitable_supply_m3_p50": 265.8,
+      "cumulative_annual_supply_m3_p10": 35827.0,
+      "cumulative_annual_supply_m3_p50": 112958.4,
+      "cumulative_annual_supply_m3_p90": 264541.2
+    },
+    {
+      "entity_id": "6d9d6d07-4c0f-4777-b982-8cc545aaa874",
+      "canonical_name": "Buziga",
+      "delivered_cost_usd_per_m3_p50": 55.14,
+      "annual_suitable_supply_m3_p50": 14.2,
+      "cumulative_annual_supply_m3_p10": 35900.8,
+      "cumulative_annual_supply_m3_p50": 112987.5,
+      "cumulative_annual_supply_m3_p90": 264546.9
+    },
+    {
+      "entity_id": "39f98db5-f149-42e5-a0d2-fbf7b2a5178e",
+      "canonical_name": "Taala",
+      "delivered_cost_usd_per_m3_p50": 55.16,
+      "annual_suitable_supply_m3_p50": 798.9,
+      "cumulative_annual_supply_m3_p10": 36881.8,
+      "cumulative_annual_supply_m3_p50": 114714.2,
+      "cumulative_annual_supply_m3_p90": 271574.1
+    },
+    {
+      "entity_id": "47544b84-2f22-4a94-b751-6139b8075ff9",
+      "canonical_name": "Izinga Island",
+      "delivered_cost_usd_per_m3_p50": 55.17,
+      "annual_suitable_supply_m3_p50": 8.6,
+      "cumulative_annual_supply_m3_p10": 36902.1,
+      "cumulative_annual_supply_m3_p50": 114791.8,
+      "cumulative_annual_supply_m3_p90": 271609.1
+    },
+    {
+      "entity_id": "d2a9ec1f-5045-45cc-8ec8-ab4406f238d6",
+      "canonical_name": "Wamale",
+      "delivered_cost_usd_per_m3_p50": 55.2,
+      "annual_suitable_supply_m3_p50": 159.6,
+      "cumulative_annual_supply_m3_p10": 36910.5,
+      "cumulative_annual_supply_m3_p50": 115486.4,
+      "cumulative_annual_supply_m3_p90": 272741.6
+    },
+    {
+      "entity_id": "a3dbce55-4a35-413d-91bc-89f4d007f595",
+      "canonical_name": "Nawaitale",
+      "delivered_cost_usd_per_m3_p50": 55.25,
+      "annual_suitable_supply_m3_p50": 10.8,
+      "cumulative_annual_supply_m3_p10": 36930.4,
+      "cumulative_annual_supply_m3_p50": 115504.6,
+      "cumulative_annual_supply_m3_p90": 272760.6
+    },
+    {
+      "entity_id": "2f198861-5bd3-4b55-acf2-f67bc0012040",
+      "canonical_name": "Bamude - Nchwanga",
+      "delivered_cost_usd_per_m3_p50": 55.28,
+      "annual_suitable_supply_m3_p50": 47.2,
+      "cumulative_annual_supply_m3_p10": 36947.3,
+      "cumulative_annual_supply_m3_p50": 115540.7,
+      "cumulative_annual_supply_m3_p90": 272871.0
+    },
+    {
+      "entity_id": "d9805463-6948-4ae5-b4e7-0983b03484d4",
+      "canonical_name": "Kirigye",
+      "delivered_cost_usd_per_m3_p50": 55.37,
+      "annual_suitable_supply_m3_p50": 9.0,
+      "cumulative_annual_supply_m3_p10": 36962.4,
+      "cumulative_annual_supply_m3_p50": 115542.1,
+      "cumulative_annual_supply_m3_p90": 273014.8
+    },
+    {
+      "entity_id": "d20e8e21-1897-40d0-9cd2-1a084535543a",
+      "canonical_name": "Mutufu",
+      "delivered_cost_usd_per_m3_p50": 55.56,
+      "annual_suitable_supply_m3_p50": 17.7,
+      "cumulative_annual_supply_m3_p10": 36987.6,
+      "cumulative_annual_supply_m3_p50": 115636.4,
+      "cumulative_annual_supply_m3_p90": 273047.1
+    },
+    {
+      "entity_id": "abb21312-83c6-48a2-9b86-395507f36d94",
+      "canonical_name": "Nambale (Kasa South)",
+      "delivered_cost_usd_per_m3_p50": 55.77,
+      "annual_suitable_supply_m3_p50": 1.5,
+      "cumulative_annual_supply_m3_p10": 36988.6,
+      "cumulative_annual_supply_m3_p50": 115638.1,
+      "cumulative_annual_supply_m3_p90": 273049.5
+    },
+    {
+      "entity_id": "4a0af7ff-f1a1-4ad1-8460-40f47361a69a",
+      "canonical_name": "Mulundu",
+      "delivered_cost_usd_per_m3_p50": 56.01,
+      "annual_suitable_supply_m3_p50": 7.2,
+      "cumulative_annual_supply_m3_p10": 36999.9,
+      "cumulative_annual_supply_m3_p50": 115639.3,
+      "cumulative_annual_supply_m3_p90": 273066.6
+    },
+    {
+      "entity_id": "16fe8ec1-13b8-4f50-8000-dad40d036ae1",
+      "canonical_name": "Kiula",
+      "delivered_cost_usd_per_m3_p50": 56.15,
+      "annual_suitable_supply_m3_p50": 192.3,
+      "cumulative_annual_supply_m3_p10": 37319.5,
+      "cumulative_annual_supply_m3_p50": 116601.5,
+      "cumulative_annual_supply_m3_p90": 274460.0
+    },
+    {
+      "entity_id": "f218ea0b-49de-4e71-9984-b846aaed4457",
+      "canonical_name": "Buyaga Dam",
+      "delivered_cost_usd_per_m3_p50": 56.38,
+      "annual_suitable_supply_m3_p50": 1250.0,
+      "cumulative_annual_supply_m3_p10": 38680.3,
+      "cumulative_annual_supply_m3_p50": 120829.9,
+      "cumulative_annual_supply_m3_p90": 281926.6
+    },
+    {
+      "entity_id": "f57a6358-fb08-4bf9-bf3f-5e405ffb49cc",
+      "canonical_name": "Nakasenyi",
+      "delivered_cost_usd_per_m3_p50": 56.39,
+      "annual_suitable_supply_m3_p50": 1.9,
+      "cumulative_annual_supply_m3_p10": 38681.4,
+      "cumulative_annual_supply_m3_p50": 120871.8,
+      "cumulative_annual_supply_m3_p90": 281936.8
+    },
+    {
+      "entity_id": "6300a518-b72b-4bc1-9196-4d3fcac51e98",
+      "canonical_name": "South Busoga",
+      "delivered_cost_usd_per_m3_p50": 56.91,
+      "annual_suitable_supply_m3_p50": 1486.9,
+      "cumulative_annual_supply_m3_p10": 40639.8,
+      "cumulative_annual_supply_m3_p50": 125532.5,
+      "cumulative_annual_supply_m3_p90": 295335.4
+    },
+    {
+      "entity_id": "f6b30f2d-321e-4303-90c2-1e58125931d3",
+      "canonical_name": "Lusiba",
+      "delivered_cost_usd_per_m3_p50": 57.0,
+      "annual_suitable_supply_m3_p50": 54.0,
+      "cumulative_annual_supply_m3_p10": 40642.6,
+      "cumulative_annual_supply_m3_p50": 125624.2,
+      "cumulative_annual_supply_m3_p90": 295917.3
+    },
+    {
+      "entity_id": "d5dab4ad-18f4-45cd-8ddd-34241856868d",
+      "canonical_name": "Muinaina",
+      "delivered_cost_usd_per_m3_p50": 57.0,
+      "annual_suitable_supply_m3_p50": 90.8,
+      "cumulative_annual_supply_m3_p10": 40949.1,
+      "cumulative_annual_supply_m3_p50": 126090.2,
+      "cumulative_annual_supply_m3_p90": 296843.2
+    },
+    {
+      "entity_id": "2c36ea4f-bb67-4f08-8903-0b1882506289",
+      "canonical_name": "Yubwe",
+      "delivered_cost_usd_per_m3_p50": 57.15,
+      "annual_suitable_supply_m3_p50": 15.2,
+      "cumulative_annual_supply_m3_p10": 41117.8,
+      "cumulative_annual_supply_m3_p50": 126169.8,
+      "cumulative_annual_supply_m3_p90": 296889.3
+    },
+    {
+      "entity_id": "c818319c-d451-47ff-b611-11366bc20a0c",
+      "canonical_name": "Kasolo",
+      "delivered_cost_usd_per_m3_p50": 57.32,
+      "annual_suitable_supply_m3_p50": 303.9,
+      "cumulative_annual_supply_m3_p10": 41259.3,
+      "cumulative_annual_supply_m3_p50": 126945.8,
+      "cumulative_annual_supply_m3_p90": 300048.2
+    },
+    {
+      "entity_id": "e212f8ba-a528-419f-ab4e-ac72c07700fd",
+      "canonical_name": "Kigona River",
+      "delivered_cost_usd_per_m3_p50": 57.32,
+      "annual_suitable_supply_m3_p50": 87.2,
+      "cumulative_annual_supply_m3_p10": 41418.6,
+      "cumulative_annual_supply_m3_p50": 127614.5,
+      "cumulative_annual_supply_m3_p90": 301054.0
+    },
+    {
+      "entity_id": "72639dc3-af7a-4d42-8f80-ac510c5d7a24",
+      "canonical_name": "Busegula",
+      "delivered_cost_usd_per_m3_p50": 57.47,
+      "annual_suitable_supply_m3_p50": 5.6,
+      "cumulative_annual_supply_m3_p10": 41423.3,
+      "cumulative_annual_supply_m3_p50": 127640.9,
+      "cumulative_annual_supply_m3_p90": 301056.4
+    },
+    {
+      "entity_id": "ed48013e-d4de-45f0-a309-aed02b1c49e4",
+      "canonical_name": "Kamusenene",
+      "delivered_cost_usd_per_m3_p50": 57.59,
+      "annual_suitable_supply_m3_p50": 589.9,
+      "cumulative_annual_supply_m3_p10": 41994.5,
+      "cumulative_annual_supply_m3_p50": 129595.5,
+      "cumulative_annual_supply_m3_p90": 302348.9
+    },
+    {
+      "entity_id": "329c9089-13dc-4778-a71b-0adf2fd3b90d",
+      "canonical_name": "Kazooba",
+      "delivered_cost_usd_per_m3_p50": 57.7,
+      "annual_suitable_supply_m3_p50": 584.5,
+      "cumulative_annual_supply_m3_p10": 42464.6,
+      "cumulative_annual_supply_m3_p50": 131406.5,
+      "cumulative_annual_supply_m3_p90": 307579.4
+    },
+    {
+      "entity_id": "1d5ac743-692d-499b-b74e-a7ce5620004b",
+      "canonical_name": "Nsese",
+      "delivered_cost_usd_per_m3_p50": 57.76,
+      "annual_suitable_supply_m3_p50": 4.8,
+      "cumulative_annual_supply_m3_p10": 42465.0,
+      "cumulative_annual_supply_m3_p50": 131408.4,
+      "cumulative_annual_supply_m3_p90": 307609.8
+    },
+    {
+      "entity_id": "c3eeb4f3-30e2-4786-9088-70c02e2c5521",
+      "canonical_name": "Buduli",
+      "delivered_cost_usd_per_m3_p50": 58.34,
+      "annual_suitable_supply_m3_p50": 5.5,
+      "cumulative_annual_supply_m3_p10": 42476.4,
+      "cumulative_annual_supply_m3_p50": 131411.3,
+      "cumulative_annual_supply_m3_p90": 307620.5
+    },
+    {
+      "entity_id": "b3b52aac-c28c-4940-a110-db295971ff37",
+      "canonical_name": "Mbulamuti",
+      "delivered_cost_usd_per_m3_p50": 58.52,
+      "annual_suitable_supply_m3_p50": 2.9,
+      "cumulative_annual_supply_m3_p10": 42479.4,
+      "cumulative_annual_supply_m3_p50": 131419.8,
+      "cumulative_annual_supply_m3_p90": 307627.8
+    },
+    {
+      "entity_id": "965d64c3-f3f7-4673-8ca5-9cc4d5d75962",
+      "canonical_name": "Rwensambya",
+      "delivered_cost_usd_per_m3_p50": 58.65,
+      "annual_suitable_supply_m3_p50": 103.9,
+      "cumulative_annual_supply_m3_p10": 42739.5,
+      "cumulative_annual_supply_m3_p50": 131912.7,
+      "cumulative_annual_supply_m3_p90": 307806.6
+    },
+    {
+      "entity_id": "27408b3b-0f35-4dc3-a985-d7dfdeffa6b4",
+      "canonical_name": "Guramwa",
+      "delivered_cost_usd_per_m3_p50": 58.95,
+      "annual_suitable_supply_m3_p50": 152.3,
+      "cumulative_annual_supply_m3_p10": 43095.1,
+      "cumulative_annual_supply_m3_p50": 132904.9,
+      "cumulative_annual_supply_m3_p90": 308891.3
+    },
+    {
+      "entity_id": "782b9202-061b-4f0e-8edb-1355edfb0648",
+      "canonical_name": "Kabira",
+      "delivered_cost_usd_per_m3_p50": 59.0,
+      "annual_suitable_supply_m3_p50": 13.5,
+      "cumulative_annual_supply_m3_p10": 43095.9,
+      "cumulative_annual_supply_m3_p50": 132945.8,
+      "cumulative_annual_supply_m3_p90": 308924.9
+    },
+    {
+      "entity_id": "aa4edca0-ad3b-4e9a-9c72-0ff648cbf0ea",
+      "canonical_name": "Mujuzi",
+      "delivered_cost_usd_per_m3_p50": 59.61,
+      "annual_suitable_supply_m3_p50": 456.7,
+      "cumulative_annual_supply_m3_p10": 43934.5,
+      "cumulative_annual_supply_m3_p50": 134400.9,
+      "cumulative_annual_supply_m3_p90": 312220.8
+    },
+    {
+      "entity_id": "c58e880f-2e7e-44b7-af1b-aa3e9f5e72a1",
+      "canonical_name": "Mbale",
+      "delivered_cost_usd_per_m3_p50": 59.64,
+      "annual_suitable_supply_m3_p50": 216.5,
+      "cumulative_annual_supply_m3_p10": 44418.3,
+      "cumulative_annual_supply_m3_p50": 135269.7,
+      "cumulative_annual_supply_m3_p90": 316298.5
+    },
+    {
+      "entity_id": "1b4b7b48-b391-4e74-a897-03e800910c51",
+      "canonical_name": "Kihaimira",
+      "delivered_cost_usd_per_m3_p50": 59.72,
+      "annual_suitable_supply_m3_p50": 99.0,
+      "cumulative_annual_supply_m3_p10": 44460.0,
+      "cumulative_annual_supply_m3_p50": 135340.6,
+      "cumulative_annual_supply_m3_p90": 316485.5
+    },
+    {
+      "entity_id": "29c846f3-0fe0-4378-9d14-53d7654e9e1c",
+      "canonical_name": "Linga",
+      "delivered_cost_usd_per_m3_p50": 59.85,
+      "annual_suitable_supply_m3_p50": 5.3,
+      "cumulative_annual_supply_m3_p10": 44460.8,
+      "cumulative_annual_supply_m3_p50": 135346.9,
+      "cumulative_annual_supply_m3_p90": 316486.6
+    },
+    {
+      "entity_id": "f9772116-0d3e-4189-82c1-ac31c041c968",
+      "canonical_name": "Kigona",
+      "delivered_cost_usd_per_m3_p50": 59.91,
+      "annual_suitable_supply_m3_p50": 31.4,
+      "cumulative_annual_supply_m3_p10": 44506.7,
+      "cumulative_annual_supply_m3_p50": 135426.4,
+      "cumulative_annual_supply_m3_p90": 316897.1
+    },
+    {
+      "entity_id": "ea178da1-e4db-4633-8593-511366f2cd4b",
+      "canonical_name": "Kalungu",
+      "delivered_cost_usd_per_m3_p50": 60.05,
+      "annual_suitable_supply_m3_p50": 1.8,
+      "cumulative_annual_supply_m3_p10": 44507.0,
+      "cumulative_annual_supply_m3_p50": 135429.9,
+      "cumulative_annual_supply_m3_p90": 316897.3
+    },
+    {
+      "entity_id": "734e3e8a-b360-4446-a218-ab52e8038b96",
+      "canonical_name": "Mateme",
+      "delivered_cost_usd_per_m3_p50": 60.18,
+      "annual_suitable_supply_m3_p50": 3.9,
+      "cumulative_annual_supply_m3_p10": 44509.4,
+      "cumulative_annual_supply_m3_p50": 135439.2,
+      "cumulative_annual_supply_m3_p90": 316990.9
+    },
+    {
+      "entity_id": "2f051a5a-855f-4c4a-8bfe-8dc429e31c9e",
+      "canonical_name": "Walugogo",
+      "delivered_cost_usd_per_m3_p50": 60.79,
+      "annual_suitable_supply_m3_p50": 4.0,
+      "cumulative_annual_supply_m3_p10": 44519.4,
+      "cumulative_annual_supply_m3_p50": 135440.0,
+      "cumulative_annual_supply_m3_p90": 317031.7
+    },
+    {
+      "entity_id": "c7ead0f0-bdff-4bc4-b97e-b415600c41cf",
+      "canonical_name": "Makoko",
+      "delivered_cost_usd_per_m3_p50": 61.13,
+      "annual_suitable_supply_m3_p50": 3.9,
+      "cumulative_annual_supply_m3_p10": 44522.8,
+      "cumulative_annual_supply_m3_p50": 135502.8,
+      "cumulative_annual_supply_m3_p90": 317096.7
+    },
+    {
+      "entity_id": "f152dd1a-9a88-48b5-a441-51930a368726",
+      "canonical_name": "Name Unknown - Forest Reserve 2",
+      "delivered_cost_usd_per_m3_p50": 61.79,
+      "annual_suitable_supply_m3_p50": 10.2,
+      "cumulative_annual_supply_m3_p10": 44524.1,
+      "cumulative_annual_supply_m3_p50": 135569.1,
+      "cumulative_annual_supply_m3_p90": 317101.3
+    },
+    {
+      "entity_id": "9ef226e9-bafe-4130-9dac-322e8b35a4a3",
+      "canonical_name": "Ajuka",
+      "delivered_cost_usd_per_m3_p50": 61.83,
+      "annual_suitable_supply_m3_p50": 25.8,
+      "cumulative_annual_supply_m3_p10": 44525.9,
+      "cumulative_annual_supply_m3_p50": 135816.2,
+      "cumulative_annual_supply_m3_p90": 317269.3
+    },
+    {
+      "entity_id": "13304352-2d3a-4501-925e-3daeaf0d8941",
+      "canonical_name": "Kaliro",
+      "delivered_cost_usd_per_m3_p50": 61.95,
+      "annual_suitable_supply_m3_p50": 10.6,
+      "cumulative_annual_supply_m3_p10": 44533.8,
+      "cumulative_annual_supply_m3_p50": 135827.1,
+      "cumulative_annual_supply_m3_p90": 317313.8
+    },
+    {
+      "entity_id": "5863f66d-5d62-4be5-9580-494f5bde5512",
+      "canonical_name": "Kamigo",
+      "delivered_cost_usd_per_m3_p50": 62.4,
+      "annual_suitable_supply_m3_p50": 3.3,
+      "cumulative_annual_supply_m3_p10": 44534.2,
+      "cumulative_annual_supply_m3_p50": 135837.0,
+      "cumulative_annual_supply_m3_p90": 317316.2
+    },
+    {
+      "entity_id": "d4d517b4-e02d-42f9-86b8-d8673acfe313",
+      "canonical_name": "Lajabwa",
+      "delivered_cost_usd_per_m3_p50": 62.56,
+      "annual_suitable_supply_m3_p50": 3.5,
+      "cumulative_annual_supply_m3_p10": 44535.3,
+      "cumulative_annual_supply_m3_p50": 135840.4,
+      "cumulative_annual_supply_m3_p90": 317320.3
+    },
+    {
+      "entity_id": "b7f71c69-6997-4903-8db8-8fe540cae893",
+      "canonical_name": "Buwaiswa",
+      "delivered_cost_usd_per_m3_p50": 62.63,
+      "annual_suitable_supply_m3_p50": 4.8,
+      "cumulative_annual_supply_m3_p10": 44536.9,
+      "cumulative_annual_supply_m3_p50": 135860.4,
+      "cumulative_annual_supply_m3_p90": 317370.3
+    },
+    {
+      "entity_id": "130834aa-abb8-4db3-9b7a-4fd00b755b3e",
+      "canonical_name": "Wakatanga",
+      "delivered_cost_usd_per_m3_p50": 62.82,
+      "annual_suitable_supply_m3_p50": 4.5,
+      "cumulative_annual_supply_m3_p10": 44538.3,
+      "cumulative_annual_supply_m3_p50": 135867.2,
+      "cumulative_annual_supply_m3_p90": 317384.3
+    },
+    {
+      "entity_id": "ae060113-644a-4c60-8534-b328c3c6c7ad",
+      "canonical_name": "Name Unknown - Forest Reserve 6",
+      "delivered_cost_usd_per_m3_p50": 63.01,
+      "annual_suitable_supply_m3_p50": 2.2,
+      "cumulative_annual_supply_m3_p10": 44539.3,
+      "cumulative_annual_supply_m3_p50": 135867.4,
+      "cumulative_annual_supply_m3_p90": 317399.1
+    },
+    {
+      "entity_id": "b83ea9c9-b23a-4096-9948-e8582d76aa61",
+      "canonical_name": "Bowa",
+      "delivered_cost_usd_per_m3_p50": 63.61,
+      "annual_suitable_supply_m3_p50": 1.0,
+      "cumulative_annual_supply_m3_p10": 44540.3,
+      "cumulative_annual_supply_m3_p50": 135869.3,
+      "cumulative_annual_supply_m3_p90": 317402.9
+    },
+    {
+      "entity_id": "e615c8e9-48dd-43da-b4b8-9c9370cca70d",
+      "canonical_name": "Name Unknown - Forest Reserve 3",
+      "delivered_cost_usd_per_m3_p50": 63.87,
+      "annual_suitable_supply_m3_p50": 2.6,
+      "cumulative_annual_supply_m3_p10": 44541.3,
+      "cumulative_annual_supply_m3_p50": 135870.9,
+      "cumulative_annual_supply_m3_p90": 317429.6
+    },
+    {
+      "entity_id": "a200de39-ed76-48b1-8451-f38d6fb1fac0",
+      "canonical_name": "Matale",
+      "delivered_cost_usd_per_m3_p50": 64.37,
+      "annual_suitable_supply_m3_p50": 2.5,
+      "cumulative_annual_supply_m3_p10": 44541.5,
+      "cumulative_annual_supply_m3_p50": 135871.5,
+      "cumulative_annual_supply_m3_p90": 317431.4
+    },
+    {
+      "entity_id": "dfd1572a-6750-4d75-93ca-f4ae050786a3",
+      "canonical_name": "Bugembe",
+      "delivered_cost_usd_per_m3_p50": 65.07,
+      "annual_suitable_supply_m3_p50": 1.6,
+      "cumulative_annual_supply_m3_p10": 44541.8,
+      "cumulative_annual_supply_m3_p50": 135873.7,
+      "cumulative_annual_supply_m3_p90": 317495.9
+    },
+    {
+      "entity_id": "30e2b908-4289-43df-abbf-7dcd3cf30147",
+      "canonical_name": "Bikira",
+      "delivered_cost_usd_per_m3_p50": 65.1,
+      "annual_suitable_supply_m3_p50": 3.0,
+      "cumulative_annual_supply_m3_p10": 44543.4,
+      "cumulative_annual_supply_m3_p50": 135877.0,
+      "cumulative_annual_supply_m3_p90": 317505.0
+    },
+    {
+      "entity_id": "f6cd3f87-31d8-44f7-8ccd-ad474105cf94",
+      "canonical_name": "Namalemba",
+      "delivered_cost_usd_per_m3_p50": 65.74,
+      "annual_suitable_supply_m3_p50": 7.7,
+      "cumulative_annual_supply_m3_p10": 44544.8,
+      "cumulative_annual_supply_m3_p50": 136024.0,
+      "cumulative_annual_supply_m3_p90": 317584.6
+    },
+    {
+      "entity_id": "49ac3d1f-f4d5-45e2-bd14-8075d5c5a592",
+      "canonical_name": "Namasagali",
+      "delivered_cost_usd_per_m3_p50": 66.36,
+      "annual_suitable_supply_m3_p50": 6.6,
+      "cumulative_annual_supply_m3_p10": 44548.4,
+      "cumulative_annual_supply_m3_p50": 136027.6,
+      "cumulative_annual_supply_m3_p90": 317599.3
+    },
+    {
+      "entity_id": "a016243b-51cb-4179-9db6-ca7c82dbf78b",
+      "canonical_name": "Nabukolyo",
+      "delivered_cost_usd_per_m3_p50": 67.23,
+      "annual_suitable_supply_m3_p50": 2.9,
+      "cumulative_annual_supply_m3_p10": 44549.1,
+      "cumulative_annual_supply_m3_p50": 136034.9,
+      "cumulative_annual_supply_m3_p90": 317637.0
+    },
+    {
+      "entity_id": "3a9ea28b-104c-40e5-b17b-7fcaeedbfe8d",
+      "canonical_name": "Luwungulu",
+      "delivered_cost_usd_per_m3_p50": 67.35,
+      "annual_suitable_supply_m3_p50": 2.0,
+      "cumulative_annual_supply_m3_p10": 44550.6,
+      "cumulative_annual_supply_m3_p50": 136035.7,
+      "cumulative_annual_supply_m3_p90": 317646.3
+    },
+    {
+      "entity_id": "a973c978-d095-4852-bb7b-6aaed6dd46c1",
+      "canonical_name": "Bunafu",
+      "delivered_cost_usd_per_m3_p50": 69.19,
+      "annual_suitable_supply_m3_p50": 3.4,
+      "cumulative_annual_supply_m3_p10": 44552.0,
+      "cumulative_annual_supply_m3_p50": 136045.8,
+      "cumulative_annual_supply_m3_p90": 317763.2
+    },
+    {
+      "entity_id": "5558aa01-e5b4-4a02-befe-ef45774daed3",
+      "canonical_name": "Lwengo",
+      "delivered_cost_usd_per_m3_p50": 72.35,
+      "annual_suitable_supply_m3_p50": 1.7,
+      "cumulative_annual_supply_m3_p10": 44554.9,
+      "cumulative_annual_supply_m3_p50": 136054.9,
+      "cumulative_annual_supply_m3_p90": 317766.5
+    },
+    {
+      "entity_id": "48225194-3b64-4e23-b45b-058830b222bd",
+      "canonical_name": "Ntusi",
+      "delivered_cost_usd_per_m3_p50": 72.88,
+      "annual_suitable_supply_m3_p50": 2.0,
+      "cumulative_annual_supply_m3_p10": 44556.7,
+      "cumulative_annual_supply_m3_p50": 136055.6,
+      "cumulative_annual_supply_m3_p90": 317814.4
+    },
+    {
+      "entity_id": "41042319-dac0-4fde-ab9b-21bec6ba1a35",
+      "canonical_name": "Kakumiro",
+      "delivered_cost_usd_per_m3_p50": 72.9,
+      "annual_suitable_supply_m3_p50": 2.2,
+      "cumulative_annual_supply_m3_p10": 44559.4,
+      "cumulative_annual_supply_m3_p50": 136058.7,
+      "cumulative_annual_supply_m3_p90": 317821.2
+    },
+    {
+      "entity_id": "3572affa-9fe9-4279-a583-8c8417dad537",
+      "canonical_name": "Busembatya",
+      "delivered_cost_usd_per_m3_p50": 74.51,
+      "annual_suitable_supply_m3_p50": 1.8,
+      "cumulative_annual_supply_m3_p10": 44560.0,
+      "cumulative_annual_supply_m3_p50": 136066.2,
+      "cumulative_annual_supply_m3_p90": 317828.2
+    },
+    {
+      "entity_id": "4e2e186d-382a-4ba3-b8f6-ce9ca56f7c71",
+      "canonical_name": "Bukakata",
+      "delivered_cost_usd_per_m3_p50": 74.98,
+      "annual_suitable_supply_m3_p50": 1.0,
+      "cumulative_annual_supply_m3_p10": 44560.2,
+      "cumulative_annual_supply_m3_p50": 136067.7,
+      "cumulative_annual_supply_m3_p90": 317829.2
+    },
+    {
+      "entity_id": "544b542c-aeb1-41da-8218-164758db12f6",
+      "canonical_name": "Makoka",
+      "delivered_cost_usd_per_m3_p50": 75.55,
+      "annual_suitable_supply_m3_p50": 1.7,
+      "cumulative_annual_supply_m3_p10": 44560.6,
+      "cumulative_annual_supply_m3_p50": 136079.5,
+      "cumulative_annual_supply_m3_p90": 317842.5
+    },
+    {
+      "entity_id": "a46ca65e-1377-4a14-8d3b-4a938fc78fa4",
+      "canonical_name": "Kyakumpi",
+      "delivered_cost_usd_per_m3_p50": 83.39,
+      "annual_suitable_supply_m3_p50": 0.9,
+      "cumulative_annual_supply_m3_p10": 44564.1,
+      "cumulative_annual_supply_m3_p50": 136085.4,
+      "cumulative_annual_supply_m3_p90": 317843.8
+    },
+    {
+      "entity_id": "7a3b0747-c268-4f0a-aa21-258089a7ae55",
+      "canonical_name": "Bulogo",
+      "delivered_cost_usd_per_m3_p50": 85.84,
+      "annual_suitable_supply_m3_p50": 1.2,
+      "cumulative_annual_supply_m3_p10": 44564.7,
+      "cumulative_annual_supply_m3_p50": 136088.2,
+      "cumulative_annual_supply_m3_p90": 317850.3
+    },
+    {
+      "entity_id": "61d647d6-b567-40a9-bd4c-76f43bb90689",
+      "canonical_name": "Kidiki",
+      "delivered_cost_usd_per_m3_p50": 86.31,
+      "annual_suitable_supply_m3_p50": 1.2,
+      "cumulative_annual_supply_m3_p10": 44565.4,
+      "cumulative_annual_supply_m3_p50": 136088.5,
+      "cumulative_annual_supply_m3_p90": 317854.1
+    },
+    {
+      "entity_id": "0587bfa4-b348-480e-89a8-bf304d051958",
+      "canonical_name": "Mafudu",
+      "delivered_cost_usd_per_m3_p50": 86.44,
+      "annual_suitable_supply_m3_p50": 1.1,
+      "cumulative_annual_supply_m3_p10": 44567.3,
+      "cumulative_annual_supply_m3_p50": 136094.3,
+      "cumulative_annual_supply_m3_p90": 317860.7
+    },
+    {
+      "entity_id": "e932936e-c909-4a4d-b413-74477f7f2a95",
+      "canonical_name": "Mawanga",
+      "delivered_cost_usd_per_m3_p50": 89.69,
+      "annual_suitable_supply_m3_p50": 0.8,
+      "cumulative_annual_supply_m3_p10": 44568.2,
+      "cumulative_annual_supply_m3_p50": 136095.9,
+      "cumulative_annual_supply_m3_p90": 317864.0
+    },
+    {
+      "entity_id": "db441195-b7bc-4650-a5f9-85bfa8830e1a",
+      "canonical_name": "Nakawa Forestry Research",
+      "delivered_cost_usd_per_m3_p50": 95.52,
+      "annual_suitable_supply_m3_p50": 0.4,
+      "cumulative_annual_supply_m3_p10": 44568.2,
+      "cumulative_annual_supply_m3_p50": 136098.4,
+      "cumulative_annual_supply_m3_p90": 317864.8
+    },
+    {
+      "entity_id": "1c04947b-773a-4cc1-8efe-093519c80018",
+      "canonical_name": "Namasale",
+      "delivered_cost_usd_per_m3_p50": 105.79,
+      "annual_suitable_supply_m3_p50": 0.8,
+      "cumulative_annual_supply_m3_p10": 44568.2,
+      "cumulative_annual_supply_m3_p50": 136100.4,
+      "cumulative_annual_supply_m3_p90": 317865.4
+    },
+    {
+      "entity_id": "d1676281-b22d-4102-bf02-5c86a625cbec",
+      "canonical_name": "Nkese",
+      "delivered_cost_usd_per_m3_p50": 121.71,
+      "annual_suitable_supply_m3_p50": 0.5,
+      "cumulative_annual_supply_m3_p10": 44568.3,
+      "cumulative_annual_supply_m3_p50": 136101.2,
+      "cumulative_annual_supply_m3_p90": 317866.7
+    },
+    {
+      "entity_id": "9c1d86a6-0fb1-4a32-8441-8195bf67a051",
+      "canonical_name": "Kamuli",
+      "delivered_cost_usd_per_m3_p50": 166.89,
+      "annual_suitable_supply_m3_p50": 0.5,
+      "cumulative_annual_supply_m3_p10": 44569.1,
+      "cumulative_annual_supply_m3_p50": 136101.4,
+      "cumulative_annual_supply_m3_p90": 317866.9
+    },
+    {
+      "entity_id": "05ee3f29-c3c5-4666-a267-8fab4817dd1a",
+      "canonical_name": "Kamukulu",
+      "delivered_cost_usd_per_m3_p50": 169.0,
+      "annual_suitable_supply_m3_p50": 0.4,
+      "cumulative_annual_supply_m3_p10": 44569.3,
+      "cumulative_annual_supply_m3_p50": 136102.6,
+      "cumulative_annual_supply_m3_p90": 317866.9
+    },
+    {
+      "entity_id": "7a0f46b6-f25a-4069-b131-f334f1bc36a4",
+      "canonical_name": "Banda Nursery",
+      "delivered_cost_usd_per_m3_p50": 180.75,
+      "annual_suitable_supply_m3_p50": 0.2,
+      "cumulative_annual_supply_m3_p10": 44569.7,
+      "cumulative_annual_supply_m3_p50": 136102.7,
+      "cumulative_annual_supply_m3_p90": 317867.1
+    },
+    {
+      "entity_id": "e6e297f5-1132-4632-9499-be34335ebf4f",
+      "canonical_name": "Namukonge",
+      "delivered_cost_usd_per_m3_p50": 194.21,
+      "annual_suitable_supply_m3_p50": 0.4,
+      "cumulative_annual_supply_m3_p10": 44569.8,
+      "cumulative_annual_supply_m3_p50": 136103.2,
+      "cumulative_annual_supply_m3_p90": 317867.4
+    },
+    {
+      "entity_id": "4eb9f1e1-5f58-4028-8b27-67bd529ffc4c",
+      "canonical_name": "Mala Island",
+      "delivered_cost_usd_per_m3_p50": 603.77,
+      "annual_suitable_supply_m3_p50": 0.1,
+      "cumulative_annual_supply_m3_p10": 44570.2,
+      "cumulative_annual_supply_m3_p50": 136103.6,
+      "cumulative_annual_supply_m3_p90": 317870.0
+    },
+    {
+      "entity_id": "b139eeb8-f537-497d-867e-4a094fea25d3",
+      "canonical_name": "Sekazinga",
+      "delivered_cost_usd_per_m3_p50": 2286.04,
+      "annual_suitable_supply_m3_p50": 0.0,
+      "cumulative_annual_supply_m3_p10": 44570.2,
+      "cumulative_annual_supply_m3_p50": 136103.7,
+      "cumulative_annual_supply_m3_p90": 317870.0
+    }
+  ],
+  "aggregate_annual_suitable_supply_m3": {
+    "p10": 44570.2,
+    "p50": 136103.7,
+    "p90": 317870.0
+  },
+  "volume_below_cost_threshold": [
+    {
+      "delivered_cost_threshold_usd_per_m3": 20,
+      "contributing_cfrs": 0,
+      "cumulative_annual_supply_m3_p10": 0.0,
+      "cumulative_annual_supply_m3_p50": 0.0,
+      "cumulative_annual_supply_m3_p90": 0.0
+    },
+    {
+      "delivered_cost_threshold_usd_per_m3": 30,
+      "contributing_cfrs": 0,
+      "cumulative_annual_supply_m3_p10": 0.0,
+      "cumulative_annual_supply_m3_p50": 0.0,
+      "cumulative_annual_supply_m3_p90": 0.0
+    },
+    {
+      "delivered_cost_threshold_usd_per_m3": 40,
+      "contributing_cfrs": 52,
+      "cumulative_annual_supply_m3_p10": 4007.8,
+      "cumulative_annual_supply_m3_p50": 13140.7,
+      "cumulative_annual_supply_m3_p90": 35006.9
+    },
+    {
+      "delivered_cost_threshold_usd_per_m3": 50,
+      "contributing_cfrs": 131,
+      "cumulative_annual_supply_m3_p10": 23903.3,
+      "cumulative_annual_supply_m3_p50": 75876.0,
+      "cumulative_annual_supply_m3_p90": 192571.0
+    },
+    {
+      "delivered_cost_threshold_usd_per_m3": 60,
+      "contributing_cfrs": 234,
+      "cumulative_annual_supply_m3_p10": 44506.7,
+      "cumulative_annual_supply_m3_p50": 135426.4,
+      "cumulative_annual_supply_m3_p90": 316897.1
+    },
+    {
+      "delivered_cost_threshold_usd_per_m3": 80,
+      "contributing_cfrs": 262,
+      "cumulative_annual_supply_m3_p10": 44560.6,
+      "cumulative_annual_supply_m3_p50": 136079.5,
+      "cumulative_annual_supply_m3_p90": 317842.5
+    },
+    {
+      "delivered_cost_threshold_usd_per_m3": 100,
+      "contributing_cfrs": 268,
+      "cumulative_annual_supply_m3_p10": 44568.2,
+      "cumulative_annual_supply_m3_p50": 136098.4,
+      "cumulative_annual_supply_m3_p90": 317864.8
+    }
+  ],
+  "source_concentration": {
+    "top1_cfr_share_of_p50_supply": 0.035,
+    "top5_cfrs_share_of_p50_supply": 0.137,
+    "top10_cfrs_share_of_p50_supply": 0.174,
+    "note": "Ranked by each CFR's own P50 annual supply (largest first), not by delivered cost -- concentration measures dependence on the biggest few suppliers. Shares are against the joint aggregate P50 (same cumulative-draws matrix as the curve above), so this is consistent with the curve's own terminal value."
+  },
+  "marginal_cfr": {
+    "entity_id": "b139eeb8-f537-497d-867e-4a094fea25d3",
+    "canonical_name": "Sekazinga",
+    "delivered_cost_usd_per_m3_p50": 2286.04,
+    "annual_suitable_supply_m3_p50": 0.0,
+    "cumulative_annual_supply_m3_p10": 44570.2,
+    "cumulative_annual_supply_m3_p50": 136103.7,
+    "cumulative_annual_supply_m3_p90": 317870.0
+  }
+}

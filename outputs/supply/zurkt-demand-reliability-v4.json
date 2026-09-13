@@ -1,0 +1,158 @@
+{
+  "scenario_version": "zurkt-evergreen-uganda-supply-scenario-v3",
+  "model_version": "zurkt-cfr-monte-carlo-hierarchical-v3",
+  "method": "Draw-wise economic dispatch (Track v3-5): every Monte Carlo world ranks all CFRs by ITS OWN delivered cost, dispatches cheapest-first, and every reported quantity (required source count, marginal cost, shortfall, concentration) is a distribution over worlds -- not a single read-off of one P50-ranked curve. This is the correct dispatch to use for demand reliability; the P50-cost-ranked zurkt-delivered-supply-curve remains useful as a single illustrative curve but understates dispatch variability across worlds.",
+  "demand_scenarios_m3_per_year": [
+    25000,
+    50000,
+    100000,
+    150000,
+    200000,
+    300000
+  ],
+  "demand_reliability": [
+    {
+      "demand_m3_per_year": 25000,
+      "p_supply_meets_demand": 0.963,
+      "expected_shortfall_m3": 300.3,
+      "shortfall_m3": {
+        "p10": 0.0,
+        "p50": 0.0,
+        "p90": 0.0
+      },
+      "required_source_cfr_count": {
+        "p10": 21.0,
+        "p50": 53.0,
+        "p90": 103.6
+      },
+      "marginal_delivered_cost_usd_per_m3": {
+        "p10": 27.9,
+        "p50": 37.6,
+        "p90": 48.4
+      }
+    },
+    {
+      "demand_m3_per_year": 50000,
+      "p_supply_meets_demand": 0.874,
+      "expected_shortfall_m3": 2153.5,
+      "shortfall_m3": {
+        "p10": 0.0,
+        "p50": 0.0,
+        "p90": 5429.85
+      },
+      "required_source_cfr_count": {
+        "p10": 43.0,
+        "p50": 83.0,
+        "p90": 142.0
+      },
+      "marginal_delivered_cost_usd_per_m3": {
+        "p10": 32.1,
+        "p50": 41.9,
+        "p90": 54.4
+      }
+    },
+    {
+      "demand_m3_per_year": 100000,
+      "p_supply_meets_demand": 0.652,
+      "expected_shortfall_m3": 13872.2,
+      "shortfall_m3": {
+        "p10": 0.0,
+        "p50": 0.0,
+        "p90": 55429.85
+      },
+      "required_source_cfr_count": {
+        "p10": 66.0,
+        "p50": 118.0,
+        "p90": 177.0
+      },
+      "marginal_delivered_cost_usd_per_m3": {
+        "p10": 35.4,
+        "p50": 46.2,
+        "p90": 59.6
+      }
+    },
+    {
+      "demand_m3_per_year": 150000,
+      "p_supply_meets_demand": 0.442,
+      "expected_shortfall_m3": 36537.5,
+      "shortfall_m3": {
+        "p10": 0.0,
+        "p50": 13896.32,
+        "p90": 105429.85
+      },
+      "required_source_cfr_count": {
+        "p10": 78.3,
+        "p50": 136.0,
+        "p90": 190.0
+      },
+      "marginal_delivered_cost_usd_per_m3": {
+        "p10": 37.3,
+        "p50": 48.5,
+        "p90": 62.1
+      }
+    },
+    {
+      "demand_m3_per_year": 200000,
+      "p_supply_meets_demand": 0.287,
+      "expected_shortfall_m3": 68477.9,
+      "shortfall_m3": {
+        "p10": 0.0,
+        "p50": 63896.32,
+        "p90": 155429.85
+      },
+      "required_source_cfr_count": {
+        "p10": 81.3,
+        "p50": 147.0,
+        "p90": 200.0
+      },
+      "marginal_delivered_cost_usd_per_m3": {
+        "p10": 39.6,
+        "p50": 49.7,
+        "p90": 63.2
+      }
+    },
+    {
+      "demand_m3_per_year": 300000,
+      "p_supply_meets_demand": 0.119,
+      "expected_shortfall_m3": 149215.2,
+      "shortfall_m3": {
+        "p10": 0.0,
+        "p50": 163896.32,
+        "p90": 255429.85
+      },
+      "required_source_cfr_count": {
+        "p10": 97.8,
+        "p50": 166.0,
+        "p90": 214.0
+      },
+      "marginal_delivered_cost_usd_per_m3": {
+        "p10": 39.0,
+        "p50": 53.4,
+        "p90": 66.9
+      }
+    }
+  ],
+  "source_concentration_distribution": {
+    "top1_share": {
+      "p10": 0.12,
+      "p50": 0.21,
+      "p90": 0.42
+    },
+    "top5_share": {
+      "p10": 0.39,
+      "p50": 0.53,
+      "p90": 0.7
+    },
+    "top10_share": {
+      "p10": 0.56,
+      "p50": 0.67,
+      "p90": 0.8
+    },
+    "note": "Per-draw shares of the joint aggregate supply held by the single largest / top 5 / top 10 suppliers in THAT world -- a distribution, not the single P50-based figure in the supply curve."
+  },
+  "aggregate_annual_suitable_supply_m3": {
+    "p10": 44570.15,
+    "p50": 136103.68,
+    "p90": 317869.98
+  }
+}

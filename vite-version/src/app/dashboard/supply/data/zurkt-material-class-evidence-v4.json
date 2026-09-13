@@ -1,0 +1,66 @@
+{
+  "method": "Real web research (same pass as zurkt-access-external-evidence-v4.json, 2026-09-13). Mixture probabilities below are informed by confirmed species/plantation-status evidence, not a point classification -- residual uncertainty is retained (e.g. a confirmed 'pine + eucalyptus' plantation still carries some probability mass on 'mixed_plantation' and 'unresolved' rather than 100% on one class) because none of these sources give exact species-area breakdowns.",
+  "retrieved_at": "2026-09-13",
+  "cfrs": [
+    {
+      "entity_id": "c09fad3b-bcaa-4f40-a4c7-7e0feec59e86",
+      "canonical_name": "Kikonda",
+      "mix_probs": {"eucalyptus_plantation": 0.35, "pine_plantation": 0.40, "mixed_plantation": 0.15, "natural_hardwood_mixed": 0.05, "degraded_open": 0.0, "unresolved": 0.05},
+      "rationale": "Confirmed 80% planted, pine (P. caribaea, P. oocarpa) + eucalyptus (E. grandis) -- FSC Forest Management certified. Species mix not given as an exact area split, so eucalyptus/pine/mixed retain comparable probability mass."
+    },
+    {
+      "entity_id": "232e6d23-c40e-45fb-bc4a-aef6da607a99",
+      "canonical_name": "Bukaleba",
+      "mix_probs": {"eucalyptus_plantation": 0.55, "pine_plantation": 0.15, "mixed_plantation": 0.20, "natural_hardwood_mixed": 0.05, "degraded_open": 0.0, "unresolved": 0.05},
+      "rationale": "Confirmed hybrid eucalyptus clones (GC/GU) as the primary product line (utility poles, timber), pine present but secondary per Green Resources' own 2024 corporate profile."
+    },
+    {
+      "entity_id": "d5871f4e-a436-4aa6-9f60-6c3e47299a70",
+      "canonical_name": "Namwasa",
+      "mix_probs": {"eucalyptus_plantation": 0.30, "pine_plantation": 0.30, "mixed_plantation": 0.30, "natural_hardwood_mixed": 0.05, "degraded_open": 0.0, "unresolved": 0.05},
+      "rationale": "Confirmed pine + eucalyptus plantation (New Forests Company), no area split by species found -- treated as roughly even mixed plantation."
+    },
+    {
+      "entity_id": "14eaa107-7454-4fec-8188-50bbcb014e0d",
+      "canonical_name": "Luwunga",
+      "mix_probs": {"eucalyptus_plantation": 0.30, "pine_plantation": 0.30, "mixed_plantation": 0.30, "natural_hardwood_mixed": 0.05, "degraded_open": 0.0, "unresolved": 0.05},
+      "rationale": "Same New Forests Company plantation program as Namwasa, same species pattern, no area split by species found."
+    },
+    {
+      "entity_id": "6300a518-b72b-4bc1-9196-4d3fcac51e98",
+      "canonical_name": "South Busoga",
+      "mix_probs": {"eucalyptus_plantation": 0.20, "pine_plantation": 0.02, "mixed_plantation": 0.03, "natural_hardwood_mixed": 0.55, "degraded_open": 0.15, "unresolved": 0.05},
+      "rationale": "Nileply Ltd confirmed to have planted eucalyptus on ~1,500 ha of the 16,382 ha reserve (~9%) -- most of the CFR's area has NOT been confirmed as plantation, so natural/mixed and degraded-open still dominate the mixture."
+    },
+    {
+      "entity_id": "99277e88-e0cc-4798-b155-7505678d7b97",
+      "canonical_name": "Mabira",
+      "mix_probs": {"eucalyptus_plantation": 0.02, "pine_plantation": 0.01, "mixed_plantation": 0.02, "natural_hardwood_mixed": 0.75, "degraded_open": 0.15, "unresolved": 0.05},
+      "rationale": "Confirmed predominantly natural moist semi-deciduous tropical forest, zoned (strict nature reserve / buffer / production), not an enrolled timber plantation."
+    },
+    {
+      "entity_id": "39f98db5-f149-42e5-a0d2-fbf7b2a5178e",
+      "canonical_name": "Taala",
+      "mix_probs": {"eucalyptus_plantation": 0.02, "pine_plantation": 0.01, "mixed_plantation": 0.02, "natural_hardwood_mixed": 0.70, "degraded_open": 0.20, "unresolved": 0.05},
+      "rationale": "Confirmed natural/mixed forest (106 tree species documented), NFA direct management, no plantation evidence found -- weighted toward natural/degraded given noted weak enforcement and encroachment context."
+    },
+    {
+      "entity_id": "ae3e0607-069b-4eed-8aab-eb0e1c0b066a",
+      "canonical_name": "Kasagala",
+      "mix_probs": {"eucalyptus_plantation": 0.02, "pine_plantation": 0.01, "mixed_plantation": 0.02, "natural_hardwood_mixed": 0.30, "degraded_open": 0.55, "unresolved": 0.10},
+      "rationale": "Confirmed severe historical encroachment/clearing, >80% forest cover loss reported for the district, active degazettement directive -- weighted heavily toward degraded/open, not toward any plantation or intact natural class."
+    },
+    {
+      "entity_id": "aa4edca0-ad3b-4e9a-9c72-0ff648cbf0ea",
+      "canonical_name": "Mujuzi",
+      "mix_probs": {"eucalyptus_plantation": 0.02, "pine_plantation": 0.01, "mixed_plantation": 0.02, "natural_hardwood_mixed": 0.35, "degraded_open": 0.50, "unresolved": 0.10},
+      "rationale": "Confirmed ~70% cleared by encroachers per cited environmental reporting -- weighted toward degraded/open."
+    },
+    {
+      "entity_id": "9997766a-d5c5-418c-87c0-2c4f80ebe67a",
+      "canonical_name": "Lwamunda",
+      "mix_probs": {"eucalyptus_plantation": 0.03, "pine_plantation": 0.02, "mixed_plantation": 0.05, "natural_hardwood_mixed": 0.30, "degraded_open": 0.50, "unresolved": 0.10},
+      "rationale": "Academic literature explicitly describes this CFR as 'severely degraded' with active restoration/replanting -- weighted toward degraded/open with some replanting-derived plantation probability."
+    }
+  ]
+}

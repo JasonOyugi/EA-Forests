@@ -1,0 +1,25 @@
+{
+  "scenario_version": "zurkt-evergreen-uganda-supply-scenario-v3",
+  "model_version": "zurkt-cfr-monte-carlo-hierarchical-v3",
+  "a_physical_biophysical_potential_m3": {
+    "p10": 5927136.28,
+    "p50": 8327388.9,
+    "p90": 12130579.43
+  },
+  "b_scenario_addressable_supply_m3": {
+    "p10": 44570.2,
+    "p50": 136103.7,
+    "p90": 317870.0
+  },
+  "c_status": "UNRESOLVED",
+  "c_evidence_confirmed_addressable_supply_m3": null,
+  "c_access_state_counts": {
+    "KNOWN_POTENTIALLY_AVAILABLE": 0,
+    "KNOWN_RESTRICTED": 4,
+    "PARTIALLY_EVIDENCED": 3,
+    "UNKNOWN": 267,
+    "UNRESOLVED_CONFLICT": 2
+  },
+  "c_note": "UNRESOLVED: 0 of 276 catchment CFRs have real, evidence-confirmed KNOWN_POTENTIALLY_AVAILABLE access status. 267 of 276 remain UNKNOWN -- meaning access status is UNRESOLVED for them, NOT that they are confirmed unavailable or that their supply is zero. This number is a CONFIRMED LOWER BOUND on evidence-backed supply, not an estimate of total accessible supply -- more CFRs likely have real access, it simply has not been established yet.",
+  "warning": "B (scenario-addressable, P50=136103.7) must NEVER be presented as if it were C (evidence-confirmed) -- they answer different questions. C must NEVER be rendered as a bare '0' implying evidence of no supply -- always show c_status alongside it."
+}

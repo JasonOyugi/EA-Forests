@@ -62,7 +62,10 @@
       "distance_km": 2.82,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 3.57,
+      "duration_min": 6.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "dfd1572a-6750-4d75-93ca-f4ae050786a3",
@@ -75,7 +78,10 @@
       "distance_km": 3.53,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 7.86,
+      "duration_min": 7.6,
+      "route_source": "osrm"
     },
     {
       "entity_id": "ae060113-644a-4c60-8534-b328c3c6c7ad",
@@ -88,7 +94,10 @@
       "distance_km": 8.96,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 14.54,
+      "duration_min": 18.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "b5d11949-34f7-4c4f-bbf5-c755a2be8f2a",
@@ -101,7 +110,10 @@
       "distance_km": 9.04,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 14.53,
+      "duration_min": 18.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "2666e3ac-ee34-42b8-a93c-541c751e0249",
@@ -114,7 +126,10 @@
       "distance_km": 11.27,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 18.39,
+      "duration_min": 33.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "398e711a-f860-41c2-b90b-20f78fdd874b",
@@ -127,7 +142,10 @@
       "distance_km": 12.05,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 21.94,
+      "duration_min": 30.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "58a4217d-686d-4604-9c98-fe5969113fb9",
@@ -140,7 +158,10 @@
       "distance_km": 14.03,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 19.45,
+      "duration_min": 23.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "415d3b73-ff56-4fde-8e0a-57e8059f1c0d",
@@ -153,7 +174,10 @@
       "distance_km": 15.05,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 19.54,
+      "duration_min": 20.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "953552e7-6c06-4e9a-96ac-524239a0772c",
@@ -166,7 +190,10 @@
       "distance_km": 15.52,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 17.94,
+      "duration_min": 28.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "8d7b6069-9a64-45b7-872b-c050ea34df95",
@@ -179,7 +206,10 @@
       "distance_km": 17.92,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 30.25,
+      "duration_min": 35.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "c3eeb4f3-30e2-4786-9088-70c02e2c5521",
@@ -192,7 +222,11 @@
       "distance_km": 18.83,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.29705850056542,0.3073648666146185?overview=full&geometries=geojson"
     },
     {
       "entity_id": "8bab6064-2d21-4cf4-8736-62dcce991475",
@@ -205,7 +239,11 @@
       "distance_km": 19.13,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.255556945206294,0.28423279001892066?overview=full&geometries=geojson"
     },
     {
       "entity_id": "2cd3e179-7af0-4c50-ad9c-21d84559c773",
@@ -218,7 +256,10 @@
       "distance_km": 19.36,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 22.05,
+      "duration_min": 24.6,
+      "route_source": "osrm"
     },
     {
       "entity_id": "37eeb517-c2dd-433f-a820-63298042d302",
@@ -231,7 +272,10 @@
       "distance_km": 19.37,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 34.43,
+      "duration_min": 47.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "72639dc3-af7a-4d42-8f80-ac510c5d7a24",
@@ -244,7 +288,10 @@
       "distance_km": 19.55,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 25.63,
+      "duration_min": 28.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "5863f66d-5d62-4be5-9580-494f5bde5512",
@@ -257,7 +304,10 @@
       "distance_km": 19.81,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 33.58,
+      "duration_min": 40.3,
+      "route_source": "osrm"
     },
     {
       "entity_id": "e932936e-c909-4a4d-b413-74477f7f2a95",
@@ -270,7 +320,11 @@
       "distance_km": 19.91,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.293409769770065,0.2936041033470482?overview=full&geometries=geojson"
     },
     {
       "entity_id": "93a6de2f-173d-40e6-8f36-9f58a4316e7d",
@@ -283,7 +337,11 @@
       "distance_km": 20.59,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.21596729791258,0.26325780823808126?overview=full&geometries=geojson"
     },
     {
       "entity_id": "5b3975ee-0a6b-4bb9-98d6-a3990ad444e9",
@@ -296,7 +354,10 @@
       "distance_km": 21.43,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 28.49,
+      "duration_min": 30.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "232e6d23-c40e-45fb-bc4a-aef6da607a99",
@@ -309,7 +370,10 @@
       "distance_km": 21.57,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 53.23,
+      "duration_min": 65.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "734e3e8a-b360-4446-a218-ab52e8038b96",
@@ -322,7 +386,10 @@
       "distance_km": 21.86,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 32.12,
+      "duration_min": 36.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "f72831c2-fab1-4e9a-89a4-9cff4e69ebea",
@@ -335,7 +402,10 @@
       "distance_km": 22.42,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 28.29,
+      "duration_min": 37.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "7a8ff353-161a-4127-a288-f209c288f8c5",
@@ -348,7 +418,10 @@
       "distance_km": 22.72,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 25.41,
+      "duration_min": 38.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "0c9a19d6-45ea-41af-89ac-7e43c2818aae",
@@ -361,7 +434,11 @@
       "distance_km": 22.81,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.23793722489175,0.24579224413319398?overview=full&geometries=geojson"
     },
     {
       "entity_id": "a352cdfc-1870-4445-bae7-44a425a37c5c",
@@ -374,7 +451,10 @@
       "distance_km": 23.12,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 26.67,
+      "duration_min": 35.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "99277e88-e0cc-4798-b155-7505678d7b97",
@@ -387,7 +467,10 @@
       "distance_km": 23.76,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 30.78,
+      "duration_min": 49.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "f6ccde25-4982-4743-b603-0dfc76417aa5",
@@ -400,7 +483,10 @@
       "distance_km": 23.84,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 32.55,
+      "duration_min": 50.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "5dd31e21-0d74-424c-b034-3867aa8d3520",
@@ -413,7 +499,11 @@
       "distance_km": 24.13,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.310941365776074,0.2598828956720613?overview=full&geometries=geojson"
     },
     {
       "entity_id": "30064b43-116b-4c0c-a41c-9b72004cd48f",
@@ -426,7 +516,11 @@
       "distance_km": 24.44,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.366944893642966,0.3019815242401029?overview=full&geometries=geojson"
     },
     {
       "entity_id": "b25b3c7a-a467-46d6-abbb-f234391ad533",
@@ -439,7 +533,10 @@
       "distance_km": 24.68,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 30.21,
+      "duration_min": 48.3,
+      "route_source": "osrm"
     },
     {
       "entity_id": "40c9d1cb-1671-413b-a709-970b31b82285",
@@ -452,7 +549,10 @@
       "distance_km": 25.09,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 35.1,
+      "duration_min": 48.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "a3dbce55-4a35-413d-91bc-89f4d007f595",
@@ -465,7 +565,11 @@
       "distance_km": 25.12,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.294430128787184,0.24151476565452723?overview=full&geometries=geojson"
     },
     {
       "entity_id": "d49b6340-e2d9-4e11-b57c-282cdbfcf5a5",
@@ -478,7 +582,10 @@
       "distance_km": 26.86,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 33.98,
+      "duration_min": 40.6,
+      "route_source": "osrm"
     },
     {
       "entity_id": "b6d03012-92cf-4d50-99d5-f5379d69db0b",
@@ -491,7 +598,11 @@
       "distance_km": 27.97,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.31448244520279,0.22261571430349136?overview=full&geometries=geojson"
     },
     {
       "entity_id": "84cab910-e31f-4bc5-bf03-bb3c90ed23c6",
@@ -504,7 +615,11 @@
       "distance_km": 28.01,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.34349620430324,0.23911836923920732?overview=full&geometries=geojson"
     },
     {
       "entity_id": "321555ab-8935-4017-aa26-4dbc40a81356",
@@ -517,7 +632,11 @@
       "distance_km": 28.5,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.28274301289928,0.20440753742759604?overview=full&geometries=geojson"
     },
     {
       "entity_id": "779787b9-d7e9-4e66-87d4-7e08788cb0f7",
@@ -530,7 +649,11 @@
       "distance_km": 29.2,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.384221707368646,0.25821793611556804?overview=full&geometries=geojson"
     },
     {
       "entity_id": "b2f168b5-d688-4da7-8435-bf6e00493ee8",
@@ -543,7 +666,11 @@
       "distance_km": 30.32,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.37366426601738,0.23555297438498846?overview=full&geometries=geojson"
     },
     {
       "entity_id": "1d5ac743-692d-499b-b74e-a7ce5620004b",
@@ -556,7 +683,11 @@
       "distance_km": 30.32,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.30827587418955,0.19652652844108376?overview=full&geometries=geojson"
     },
     {
       "entity_id": "19987058-10b4-478d-8755-3282e30aae17",
@@ -569,7 +700,11 @@
       "distance_km": 30.41,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.269068016588015,0.18261370666720972?overview=full&geometries=geojson"
     },
     {
       "entity_id": "4eb9f1e1-5f58-4028-8b27-67bd529ffc4c",
@@ -582,7 +717,11 @@
       "distance_km": 30.45,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.38518979234506,0.2437541893983881?overview=full&geometries=geojson"
     },
     {
       "entity_id": "287806a7-929a-4c03-805e-90611eb307c0",
@@ -595,7 +734,11 @@
       "distance_km": 30.76,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.2927527102561,0.18640653051099426?overview=full&geometries=geojson"
     },
     {
       "entity_id": "45c82a43-c6da-4f54-a343-29d409e29b77",
@@ -608,7 +751,10 @@
       "distance_km": 30.85,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 38.65,
+      "duration_min": 56.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "d9805463-6948-4ae5-b4e7-0983b03484d4",
@@ -621,7 +767,11 @@
       "distance_km": 31.34,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.283002690077474,0.17779205349947716?overview=full&geometries=geojson"
     },
     {
       "entity_id": "2c36ea4f-bb67-4f08-8903-0b1882506289",
@@ -634,7 +784,11 @@
       "distance_km": 32.08,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.40515099709473,0.24240000119848346?overview=full&geometries=geojson"
     },
     {
       "entity_id": "2f051a5a-855f-4c4a-8bfe-8dc429e31c9e",
@@ -647,7 +801,10 @@
       "distance_km": 34.19,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 37.85,
+      "duration_min": 33.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "d8766a2c-1405-4ffa-a561-9bedc3509c8c",
@@ -660,7 +817,10 @@
       "distance_km": 34.27,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 38.33,
+      "duration_min": 42.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "57a7f332-a26e-4482-85d4-da7b4aac9998",
@@ -673,7 +833,11 @@
       "distance_km": 34.53,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.30999585614177,0.15651460220408162?overview=full&geometries=geojson"
     },
     {
       "entity_id": "e2b4d56b-69b2-4958-b319-709f0c59cace",
@@ -686,7 +850,10 @@
       "distance_km": 35.89,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 49.85,
+      "duration_min": 70.3,
+      "route_source": "osrm"
     },
     {
       "entity_id": "ee5e32d9-e33c-4e9c-9c18-456fcd0084cb",
@@ -699,7 +866,11 @@
       "distance_km": 36.65,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.31849048777929,0.13934507543563215?overview=full&geometries=geojson"
     },
     {
       "entity_id": "246b11e7-e4cd-4ac8-9546-b36a7cb943de",
@@ -712,7 +883,10 @@
       "distance_km": 36.88,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 54.92,
+      "duration_min": 51.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "63cb3eb2-1a96-4509-a86a-9fc6f11ac374",
@@ -725,7 +899,11 @@
       "distance_km": 37.19,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.29243543992109,0.125727908837544?overview=full&geometries=geojson"
     },
     {
       "entity_id": "0b75d2cd-6942-4728-ae29-2e509057fca0",
@@ -738,7 +916,10 @@
       "distance_km": 38.58,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 50.81,
+      "duration_min": 78.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "f8932739-d48d-40a8-b20a-cd17bab6c55f",
@@ -751,7 +932,11 @@
       "distance_km": 40.25,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.316458981186486,0.10429722999347718?overview=full&geometries=geojson"
     },
     {
       "entity_id": "47544b84-2f22-4a94-b751-6139b8075ff9",
@@ -764,7 +949,11 @@
       "distance_km": 41.63,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": null,
+      "duration_min": null,
+      "route_source": "unavailable",
+      "route_error": "HTTPError: 400 Client Error: Bad Request for url: https://router.project-osrm.org/route/v1/driving/33.2026,0.4479;33.26853147337372,0.07938996002630998?overview=full&geometries=geojson"
     },
     {
       "entity_id": "db2c9cc6-431c-446b-b924-80dff25b64f7",
@@ -777,7 +966,10 @@
       "distance_km": 41.7,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 53.4,
+      "duration_min": 78.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "73762072-d219-47cb-8b86-67ba4f006782",
@@ -790,7 +982,10 @@
       "distance_km": 41.77,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 64.57,
+      "duration_min": 61.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "3369a343-9a54-461f-8cbd-67605f6b0ff9",
@@ -803,7 +998,10 @@
       "distance_km": 42.32,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 51.5,
+      "duration_min": 53.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "661d08e4-4207-4ada-a679-83f61362611f",
@@ -816,7 +1014,10 @@
       "distance_km": 42.67,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 60.1,
+      "duration_min": 72.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "7353f2a1-bdc2-4e82-8afd-87bbdee1148e",
@@ -829,7 +1030,10 @@
       "distance_km": 44.07,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 68.86,
+      "duration_min": 81.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "6300a518-b72b-4bc1-9196-4d3fcac51e98",
@@ -842,7 +1046,10 @@
       "distance_km": 45.31,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 66.25,
+      "duration_min": 87.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "6e149269-2cf1-4f1b-b329-c4b54a7d45c0",
@@ -855,7 +1062,10 @@
       "distance_km": 45.38,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 61.94,
+      "duration_min": 67.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "b3b52aac-c28c-4940-a110-db295971ff37",
@@ -868,7 +1078,10 @@
       "distance_km": 46.13,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 61.48,
+      "duration_min": 72.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "13dfc631-393f-4a68-af74-6ffdae03092a",
@@ -881,7 +1094,10 @@
       "distance_km": 47.09,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 64.66,
+      "duration_min": 70.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "a016243b-51cb-4179-9db6-ca7c82dbf78b",
@@ -894,7 +1110,10 @@
       "distance_km": 47.26,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 51.87,
+      "duration_min": 46.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "6204d689-56d0-404b-acba-1ec69093b6a3",
@@ -907,7 +1126,10 @@
       "distance_km": 48.0,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 72.82,
+      "duration_min": 94.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "aa67d2c8-30e5-4325-b834-b327f7e625d4",
@@ -920,7 +1142,10 @@
       "distance_km": 48.26,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 74.32,
+      "duration_min": 60.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "130834aa-abb8-4db3-9b7a-4fd00b755b3e",
@@ -933,7 +1158,10 @@
       "distance_km": 48.58,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 53.9,
+      "duration_min": 53.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "f5ec5a7e-da88-4df0-8e53-ee924c036193",
@@ -946,7 +1174,10 @@
       "distance_km": 48.64,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 66.48,
+      "duration_min": 52.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "b7f71c69-6997-4903-8db8-8fe540cae893",
@@ -959,7 +1190,10 @@
       "distance_km": 48.69,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 55.35,
+      "duration_min": 62.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "544b542c-aeb1-41da-8218-164758db12f6",
@@ -972,7 +1206,10 @@
       "distance_km": 49.16,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 59.57,
+      "duration_min": 74.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "a25fc75a-8010-4450-a179-b24c70a28b8c",
@@ -985,7 +1222,10 @@
       "distance_km": 49.66,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 76.09,
+      "duration_min": 75.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "f57a6358-fb08-4bf9-bf3f-5e405ffb49cc",
@@ -998,7 +1238,10 @@
       "distance_km": 50.22,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 66.3,
+      "duration_min": 77.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "a62728eb-4662-4717-b7fa-48c5a28bc860",
@@ -1011,7 +1254,10 @@
       "distance_km": 50.46,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 74.38,
+      "duration_min": 95.3,
+      "route_source": "osrm"
     },
     {
       "entity_id": "7325185d-a7a3-4fd3-9343-ba48cfe4e2f7",
@@ -1024,7 +1270,10 @@
       "distance_km": 51.43,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 71.23,
+      "duration_min": 57.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "27025e8e-ffa1-4837-b702-f9dead4d8193",
@@ -1037,7 +1286,10 @@
       "distance_km": 52.14,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 83.78,
+      "duration_min": 83.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "61d647d6-b567-40a9-bd4c-76f43bb90689",
@@ -1050,7 +1302,10 @@
       "distance_km": 52.3,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 64.65,
+      "duration_min": 78.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "7a3b0747-c268-4f0a-aa21-258089a7ae55",
@@ -1063,7 +1318,10 @@
       "distance_km": 52.32,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 62.98,
+      "duration_min": 77.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "0587bfa4-b348-480e-89a8-bf304d051958",
@@ -1076,7 +1334,10 @@
       "distance_km": 52.75,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 62.61,
+      "duration_min": 76.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "95ffbfe5-72ae-4915-afe4-1c12c93284c5",
@@ -1089,7 +1350,10 @@
       "distance_km": 53.16,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 77.29,
+      "duration_min": 103.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "44539625-d554-45b1-9c55-507e1d1df436",
@@ -1102,7 +1366,10 @@
       "distance_km": 53.26,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 78.17,
+      "duration_min": 67.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "b5305cda-9b97-4571-ba94-38a914a0a3a1",
@@ -1115,7 +1382,10 @@
       "distance_km": 53.53,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 73.77,
+      "duration_min": 74.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "dc7c7e41-a06c-4ac4-8508-6fd73fefe2fa",
@@ -1128,7 +1398,10 @@
       "distance_km": 54.29,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 68.72,
+      "duration_min": 55.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "a973c978-d095-4852-bb7b-6aaed6dd46c1",
@@ -1141,7 +1414,10 @@
       "distance_km": 54.94,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 69.04,
+      "duration_min": 90.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "06410084-f9cb-4fad-9b2c-d77ea0158af5",
@@ -1154,7 +1430,10 @@
       "distance_km": 55.89,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 76.1,
+      "duration_min": 77.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "f6cd3f87-31d8-44f7-8ccd-ad474105cf94",
@@ -1167,7 +1446,10 @@
       "distance_km": 57.25,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 83.2,
+      "duration_min": 83.3,
+      "route_source": "osrm"
     },
     {
       "entity_id": "11863775-4933-4e75-ac01-55d8499dc046",
@@ -1180,7 +1462,10 @@
       "distance_km": 57.33,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 83.0,
+      "duration_min": 81.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "9c1d86a6-0fb1-4a32-8441-8195bf67a051",
@@ -1193,7 +1478,10 @@
       "distance_km": 57.67,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 64.15,
+      "duration_min": 69.6,
+      "route_source": "osrm"
     },
     {
       "entity_id": "3572affa-9fe9-4279-a583-8c8417dad537",
@@ -1206,7 +1494,10 @@
       "distance_km": 58.28,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 63.67,
+      "duration_min": 57.3,
+      "route_source": "osrm"
     },
     {
       "entity_id": "07cc526c-0556-4a89-bf1f-2c188a5dfdea",
@@ -1219,7 +1510,10 @@
       "distance_km": 58.31,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 68.22,
+      "duration_min": 58.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "13304352-2d3a-4501-925e-3daeaf0d8941",
@@ -1232,7 +1526,10 @@
       "distance_km": 58.47,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 70.24,
+      "duration_min": 68.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "e6e297f5-1132-4632-9499-be34335ebf4f",
@@ -1245,7 +1542,10 @@
       "distance_km": 58.48,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 79.51,
+      "duration_min": 78.6,
+      "route_source": "osrm"
     },
     {
       "entity_id": "f86ab1ad-bdbc-4ed3-b01b-b00325da8981",
@@ -1258,7 +1558,10 @@
       "distance_km": 58.6,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 86.97,
+      "duration_min": 84.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "dd8195b2-a538-4ed4-9e24-4ce4261b1d83",
@@ -1271,7 +1574,10 @@
       "distance_km": 58.74,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 85.42,
+      "duration_min": 83.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "05f844ff-c5cb-4259-8f1d-218cc494e64f",
@@ -1284,7 +1590,10 @@
       "distance_km": 61.4,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 80.22,
+      "duration_min": 91.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "c665bdc1-efe5-446a-9b13-cabb88ae1305",
@@ -1297,7 +1606,10 @@
       "distance_km": 61.84,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 69.95,
+      "duration_min": 70.6,
+      "route_source": "osrm"
     },
     {
       "entity_id": "e4c001c2-9f70-4d74-9121-d776bfffae8b",
@@ -1310,7 +1622,10 @@
       "distance_km": 62.3,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 73.04,
+      "duration_min": 67.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "7a0f46b6-f25a-4069-b131-f334f1bc36a4",
@@ -1323,7 +1638,10 @@
       "distance_km": 64.09,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 71.39,
+      "duration_min": 51.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "c363a1f0-bd85-4970-966b-e887087e95df",
@@ -1336,7 +1654,10 @@
       "distance_km": 65.54,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 72.38,
+      "duration_min": 68.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "c58e880f-2e7e-44b7-af1b-aa3e9f5e72a1",
@@ -1349,7 +1670,10 @@
       "distance_km": 66.2,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 78.52,
+      "duration_min": 94.6,
+      "route_source": "osrm"
     },
     {
       "entity_id": "db441195-b7bc-4650-a5f9-85bfa8830e1a",
@@ -1362,7 +1686,10 @@
       "distance_km": 67.02,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 76.52,
+      "duration_min": 57.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "11b062f5-7e30-4142-b396-c61f862b4d8b",
@@ -1375,7 +1702,10 @@
       "distance_km": 67.15,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 78.59,
+      "duration_min": 82.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "49ac3d1f-f4d5-45e2-bd14-8075d5c5a592",
@@ -1388,7 +1718,10 @@
       "distance_km": 68.62,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 80.42,
+      "duration_min": 95.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "a33fae9d-9421-453f-a9c6-483427b24e9f",
@@ -1401,7 +1734,10 @@
       "distance_km": 69.47,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 101.04,
+      "duration_min": 105.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "a403628b-5d2d-495a-877f-f6458ec7187f",
@@ -1414,7 +1750,10 @@
       "distance_km": 71.62,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 96.63,
+      "duration_min": 95.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "ea65919c-1618-4cff-909a-2392b1f74df7",
@@ -1427,7 +1766,10 @@
       "distance_km": 75.15,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 85.74,
+      "duration_min": 99.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "c66c6cc4-5204-4090-bb78-7f3d7912e01e",
@@ -1440,7 +1782,10 @@
       "distance_km": 75.33,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 86.81,
+      "duration_min": 99.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "8b873485-92cb-4874-8470-c82eed3b3d8c",
@@ -1453,7 +1798,10 @@
       "distance_km": 75.75,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 86.07,
+      "duration_min": 91.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "8e9cb74b-4abb-4a96-93e1-49115b88ccbf",
@@ -1466,7 +1814,10 @@
       "distance_km": 76.35,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 114.14,
+      "duration_min": 91.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "36f3dc65-907c-4054-a7cd-5dd370d747cf",
@@ -1479,7 +1830,10 @@
       "distance_km": 76.38,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 102.69,
+      "duration_min": 119.3,
+      "route_source": "osrm"
     },
     {
       "entity_id": "ef453286-32ff-4f32-b48c-84f51cd12f90",
@@ -1492,7 +1846,10 @@
       "distance_km": 79.24,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 94.39,
+      "duration_min": 72.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "5f76e9a1-f649-4b54-a92d-94ffb012cd4f",
@@ -1505,7 +1862,10 @@
       "distance_km": 80.67,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 100.75,
+      "duration_min": 97.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "05296003-14f4-49db-b2f9-9e327cc2cc13",
@@ -1518,7 +1878,10 @@
       "distance_km": 81.06,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 89.89,
+      "duration_min": 93.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "27025735-57f8-441a-9006-dbdc3dbc754f",
@@ -1531,7 +1894,10 @@
       "distance_km": 81.91,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 113.06,
+      "duration_min": 150.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "4c75912b-259b-4a0b-a497-7ce8415baf5a",
@@ -1544,7 +1910,10 @@
       "distance_km": 83.51,
       "eo_recipe_count": 3,
       "eo_observation_count": 34,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 101.93,
+      "duration_min": 79.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "b83ea9c9-b23a-4096-9948-e8582d76aa61",
@@ -1557,7 +1926,10 @@
       "distance_km": 85.27,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 125.5,
+      "duration_min": 107.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "f5f3fc16-3a99-444b-9378-7aadd8b29067",
@@ -1570,7 +1942,10 @@
       "distance_km": 85.98,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 105.68,
+      "duration_min": 90.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "77824ee7-160d-428e-8b76-b92513121435",
@@ -1583,7 +1958,10 @@
       "distance_km": 88.09,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 110.94,
+      "duration_min": 92.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "f68c0e16-0785-4c10-b59e-07d8d30889f1",
@@ -1596,7 +1974,10 @@
       "distance_km": 88.28,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 101.99,
+      "duration_min": 92.6,
+      "route_source": "osrm"
     },
     {
       "entity_id": "b2c23e2d-595e-4cd3-9b39-b14b50925a65",
@@ -1609,7 +1990,10 @@
       "distance_km": 88.32,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 110.08,
+      "duration_min": 89.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "50a94923-8d36-44f4-b17d-f97a378c0118",
@@ -1622,7 +2006,10 @@
       "distance_km": 89.0,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 106.86,
+      "duration_min": 118.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "81d9acbf-75a6-4d45-9605-d14728498b21",
@@ -1635,7 +2022,10 @@
       "distance_km": 89.63,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 108.98,
+      "duration_min": 85.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "5599fa46-8794-4dbb-8c79-2c96fb146057",
@@ -1648,7 +2038,10 @@
       "distance_km": 89.94,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 107.44,
+      "duration_min": 83.3,
+      "route_source": "osrm"
     },
     {
       "entity_id": "532cbf24-49b1-4e67-aca5-6eafe605f5ec",
@@ -1661,7 +2054,10 @@
       "distance_km": 90.95,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 104.5,
+      "duration_min": 99.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "8e362394-13bf-4ace-811e-00941b788d14",
@@ -1674,7 +2070,10 @@
       "distance_km": 91.27,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 109.21,
+      "duration_min": 92.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "6c42b1bc-24a2-42e6-8f17-e3d5da72d416",
@@ -1687,7 +2086,10 @@
       "distance_km": 91.36,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 112.61,
+      "duration_min": 99.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "b8af5735-144b-4e60-87f1-b3a4e6c4d6fa",
@@ -1700,7 +2102,10 @@
       "distance_km": 91.48,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 107.56,
+      "duration_min": 83.3,
+      "route_source": "osrm"
     },
     {
       "entity_id": "f1dc8a53-6a40-449f-a57c-e7808bf69e32",
@@ -1713,7 +2118,10 @@
       "distance_km": 92.73,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 113.45,
+      "duration_min": 88.6,
+      "route_source": "osrm"
     },
     {
       "entity_id": "ddb2eba5-2776-47d6-afd2-1900110c25bf",
@@ -1726,7 +2134,10 @@
       "distance_km": 93.3,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 111.54,
+      "duration_min": 91.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "36b41396-d0b5-4a5f-9933-ae7383edfda5",
@@ -1739,7 +2150,10 @@
       "distance_km": 94.0,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 107.23,
+      "duration_min": 125.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "b945ff15-03c0-4752-86ec-bc432308f18f",
@@ -1752,7 +2166,10 @@
       "distance_km": 94.39,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 107.55,
+      "duration_min": 104.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "bc2cfdc3-b3a5-4f7c-b91c-6f655430aa92",
@@ -1765,7 +2182,10 @@
       "distance_km": 94.98,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 115.62,
+      "duration_min": 97.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "2aefe5da-4185-450f-b7d2-5f8c801067db",
@@ -1778,7 +2198,10 @@
       "distance_km": 95.26,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 110.56,
+      "duration_min": 101.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "f710699f-3d6a-414e-8e47-17c9b7733a0c",
@@ -1791,7 +2214,10 @@
       "distance_km": 95.72,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 149.62,
+      "duration_min": 130.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "d20e8e21-1897-40d0-9cd2-1a084535543a",
@@ -1804,7 +2230,10 @@
       "distance_km": 95.88,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 141.33,
+      "duration_min": 195.3,
+      "route_source": "osrm"
     },
     {
       "entity_id": "9997766a-d5c5-418c-87c0-2c4f80ebe67a",
@@ -1817,7 +2246,10 @@
       "distance_km": 96.53,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 112.7,
+      "duration_min": 94.3,
+      "route_source": "osrm"
     },
     {
       "entity_id": "7c62ce9e-51d0-4516-938d-77a7c3ca64fc",
@@ -1830,7 +2262,10 @@
       "distance_km": 96.57,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 124.7,
+      "duration_min": 93.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "b93e7628-adc8-41d7-9870-80d87ba7b418",
@@ -1843,7 +2278,10 @@
       "distance_km": 96.9,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 114.97,
+      "duration_min": 97.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "b573eade-55fa-4cb8-8399-7ac8e3658b93",
@@ -1856,7 +2294,10 @@
       "distance_km": 97.52,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 115.07,
+      "duration_min": 101.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "d2a9ec1f-5045-45cc-8ec8-ab4406f238d6",
@@ -1869,7 +2310,10 @@
       "distance_km": 98.1,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 113.55,
+      "duration_min": 124.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "92b35144-e588-421b-b9b8-80a074d75a29",
@@ -1882,7 +2326,10 @@
       "distance_km": 98.31,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 121.51,
+      "duration_min": 145.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "c2c1564a-9718-4f75-8396-bf93b121d5d0",
@@ -1895,7 +2342,10 @@
       "distance_km": 98.35,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 120.52,
+      "duration_min": 104.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "399188fc-6030-414b-b6df-fe8ebce399a6",
@@ -1908,7 +2358,10 @@
       "distance_km": 98.5,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 139.69,
+      "duration_min": 125.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "c806cbb6-1bd5-4948-ad95-319b1fcc4c48",
@@ -1921,7 +2374,10 @@
       "distance_km": 98.71,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 125.65,
+      "duration_min": 98.3,
+      "route_source": "osrm"
     },
     {
       "entity_id": "b3c9607b-9e3d-43a0-ba20-a564cde327cb",
@@ -1934,7 +2390,10 @@
       "distance_km": 98.83,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 117.93,
+      "duration_min": 104.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "32244220-4346-4a3d-9915-f5db89e79a2d",
@@ -1947,7 +2406,10 @@
       "distance_km": 99.29,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 123.4,
+      "duration_min": 128.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "7c1799aa-b1b0-41f0-a85c-19f573aa3218",
@@ -1960,7 +2422,10 @@
       "distance_km": 100.39,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 118.47,
+      "duration_min": 89.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "f086b260-70fe-4e08-956e-a8df0ba85a9f",
@@ -1973,7 +2438,10 @@
       "distance_km": 100.4,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 123.1,
+      "duration_min": 104.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "edff2f78-9f1c-4928-924e-c94a4a09b903",
@@ -1986,7 +2454,10 @@
       "distance_km": 100.65,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 120.43,
+      "duration_min": 102.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "00f94333-8832-4847-bc85-2c5891e3c425",
@@ -1999,7 +2470,10 @@
       "distance_km": 100.66,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 117.94,
+      "duration_min": 106.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "d1676281-b22d-4102-bf02-5c86a625cbec",
@@ -2012,7 +2486,10 @@
       "distance_km": 101.11,
       "eo_recipe_count": 3,
       "eo_observation_count": 34,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 180.08,
+      "duration_min": 795.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "f531f15e-19b5-4d28-9a81-91256529f1ec",
@@ -2025,7 +2502,10 @@
       "distance_km": 101.17,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 118.26,
+      "duration_min": 98.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "3dad103e-d4ce-49f2-81c5-a5dfbabf3b34",
@@ -2038,7 +2518,10 @@
       "distance_km": 103.14,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 123.2,
+      "duration_min": 108.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "471cd196-21e4-45c2-998f-64756878f5d4",
@@ -2051,7 +2534,10 @@
       "distance_km": 103.45,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 123.0,
+      "duration_min": 97.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "f0b6c2b5-eb0e-42eb-bc60-220e4c8596c4",
@@ -2064,7 +2550,10 @@
       "distance_km": 104.32,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 115.79,
+      "duration_min": 118.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "16fe8ec1-13b8-4f50-8000-dad40d036ae1",
@@ -2077,7 +2566,10 @@
       "distance_km": 104.96,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 126.92,
+      "duration_min": 142.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "39f3d514-1012-4169-86e7-65e3257b944b",
@@ -2090,7 +2582,10 @@
       "distance_km": 106.14,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 118.35,
+      "duration_min": 112.6,
+      "route_source": "osrm"
     },
     {
       "entity_id": "1f1a0ddb-46ad-450b-b229-bd4102a83d09",
@@ -2103,7 +2598,10 @@
       "distance_km": 107.04,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 138.09,
+      "duration_min": 130.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "ace08551-e706-4f61-81c8-262a00894760",
@@ -2116,7 +2614,10 @@
       "distance_km": 109.14,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 127.58,
+      "duration_min": 100.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "64ab1965-af77-48cb-aa3e-b9ca8bd3a1f3",
@@ -2129,7 +2630,10 @@
       "distance_km": 110.1,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 130.04,
+      "duration_min": 99.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "ae3e0607-069b-4eed-8aab-eb0e1c0b066a",
@@ -2142,7 +2646,10 @@
       "distance_km": 110.44,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 181.25,
+      "duration_min": 166.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "c8340b74-7fcc-4ca5-807a-d695f21b2caf",
@@ -2155,7 +2662,10 @@
       "distance_km": 111.18,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 130.49,
+      "duration_min": 101.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "45516f63-e7a7-45f8-959d-4c8c5fac1ef1",
@@ -2168,7 +2678,10 @@
       "distance_km": 111.43,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 129.73,
+      "duration_min": 119.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "f8519d42-d75b-4e43-ad93-c0828dd38125",
@@ -2181,7 +2694,10 @@
       "distance_km": 111.54,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 134.88,
+      "duration_min": 108.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "419aaa17-2fde-4a5d-8967-99d292a2cdfd",
@@ -2194,7 +2710,10 @@
       "distance_km": 111.68,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 156.09,
+      "duration_min": 151.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "61ad3bfd-dc49-444f-82a1-e727faa7cf23",
@@ -2207,7 +2726,10 @@
       "distance_km": 113.21,
       "eo_recipe_count": 3,
       "eo_observation_count": 34,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 140.55,
+      "duration_min": 118.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "99e330c8-ef9c-4f1a-8094-283d8afbe65b",
@@ -2220,7 +2742,10 @@
       "distance_km": 113.47,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 209.09,
+      "duration_min": 237.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "81bf6b6a-2c24-4dd0-9e0d-5e52b0f69e68",
@@ -2233,7 +2758,10 @@
       "distance_km": 113.72,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 201.33,
+      "duration_min": 228.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "93868e80-0b83-48e6-a609-13e4dbb21fd6",
@@ -2246,7 +2774,10 @@
       "distance_km": 114.06,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 144.86,
+      "duration_min": 133.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "7120545d-74a1-4697-aad0-0cff74d814e8",
@@ -2259,7 +2790,10 @@
       "distance_km": 115.36,
       "eo_recipe_count": 3,
       "eo_observation_count": 34,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 180.08,
+      "duration_min": 795.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "e5697901-30b8-4a5b-97e9-f4a54989490f",
@@ -2272,7 +2806,10 @@
       "distance_km": 115.39,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 145.76,
+      "duration_min": 143.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "e2f10e43-6875-432d-bcac-8e28282ab439",
@@ -2285,7 +2822,10 @@
       "distance_km": 115.63,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 134.19,
+      "duration_min": 102.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "6a686221-0739-4f73-b3ea-73fd0fbdfd5c",
@@ -2298,7 +2838,10 @@
       "distance_km": 115.64,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 221.6,
+      "duration_min": 251.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "66f44a09-37a4-49a0-b222-d827f0393afe",
@@ -2311,7 +2854,10 @@
       "distance_km": 116.23,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 243.67,
+      "duration_min": 270.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "453b7a83-c365-4884-8ea4-53bc5331f91e",
@@ -2324,7 +2870,10 @@
       "distance_km": 116.3,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 171.66,
+      "duration_min": 169.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "49f13ea6-c90f-4994-916d-2003f07aa194",
@@ -2337,7 +2886,10 @@
       "distance_km": 116.34,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 180.08,
+      "duration_min": 795.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "c17c781c-dcf1-4c04-8a9f-1c79b90e57d9",
@@ -2350,7 +2902,10 @@
       "distance_km": 117.42,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 196.53,
+      "duration_min": 225.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "59c1f8f9-95b8-4ad1-819e-cb134c99a4e3",
@@ -2363,7 +2918,10 @@
       "distance_km": 118.41,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 197.71,
+      "duration_min": 224.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "1a0d12e4-06a6-4902-9978-fe3f37e4d2cf",
@@ -2376,7 +2934,10 @@
       "distance_km": 118.61,
       "eo_recipe_count": 3,
       "eo_observation_count": 34,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 180.08,
+      "duration_min": 795.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "356af605-9984-4077-9506-3a63c613712b",
@@ -2389,7 +2950,10 @@
       "distance_km": 118.74,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 184.59,
+      "duration_min": 167.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "da85e5df-5a4c-4488-858b-f72270fa849e",
@@ -2402,7 +2966,10 @@
       "distance_km": 120.75,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 142.36,
+      "duration_min": 120.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "d39b275a-6c15-488d-9c61-55482f6176b1",
@@ -2415,7 +2982,10 @@
       "distance_km": 121.27,
       "eo_recipe_count": 3,
       "eo_observation_count": 33,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 173.43,
+      "duration_min": 781.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "5d8f6158-52da-4d1f-922c-00bd30d28654",
@@ -2428,7 +2998,10 @@
       "distance_km": 121.73,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 150.73,
+      "duration_min": 132.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "da1d0cde-55f1-4cea-8c53-0ad0a9ccb559",
@@ -2441,7 +3014,10 @@
       "distance_km": 121.82,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 163.07,
+      "duration_min": 169.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "1ae9fd73-5d35-42f1-bc30-c28ebd398b6c",
@@ -2454,7 +3030,10 @@
       "distance_km": 121.97,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 147.62,
+      "duration_min": 121.6,
+      "route_source": "osrm"
     },
     {
       "entity_id": "091182b7-246a-4644-b55e-05861ed9efe9",
@@ -2467,7 +3046,10 @@
       "distance_km": 122.49,
       "eo_recipe_count": 3,
       "eo_observation_count": 33,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 173.29,
+      "duration_min": 780.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "0551b751-2b0a-405d-98c8-3821764731e7",
@@ -2480,7 +3062,10 @@
       "distance_km": 122.53,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 136.52,
+      "duration_min": 124.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "fd08c3f3-267e-45e9-81e0-56e285f781be",
@@ -2493,7 +3078,10 @@
       "distance_km": 122.74,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 224.98,
+      "duration_min": 250.6,
+      "route_source": "osrm"
     },
     {
       "entity_id": "7b059611-9aca-4713-80bf-17fa03773ae6",
@@ -2506,7 +3094,10 @@
       "distance_km": 123.53,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 186.49,
+      "duration_min": 207.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "212e6ab0-caa1-43c9-a969-e9b26e3619bb",
@@ -2519,7 +3110,10 @@
       "distance_km": 124.35,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 153.4,
+      "duration_min": 131.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "9a46b5d7-f37f-4e3e-8137-ce35ca39a9a4",
@@ -2532,7 +3126,10 @@
       "distance_km": 124.43,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 147.51,
+      "duration_min": 132.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "a0607415-eee2-4470-8a69-1dc0fca18fd9",
@@ -2545,7 +3142,10 @@
       "distance_km": 124.84,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 145.03,
+      "duration_min": 128.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "2c229f0f-71a1-4e59-9001-841937d864c4",
@@ -2558,7 +3158,10 @@
       "distance_km": 124.86,
       "eo_recipe_count": 3,
       "eo_observation_count": 34,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 180.08,
+      "duration_min": 795.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "0f93bf35-9579-43ba-bcc6-e66b22ebd257",
@@ -2571,7 +3174,10 @@
       "distance_km": 125.47,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 229.64,
+      "duration_min": 260.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "de67d16c-0ee4-4b46-bcb6-116c239be392",
@@ -2584,7 +3190,10 @@
       "distance_km": 126.1,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 147.43,
+      "duration_min": 116.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "1f632281-4aa8-49e9-a428-09c57e68a3f2",
@@ -2597,7 +3206,10 @@
       "distance_km": 126.45,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 145.99,
+      "duration_min": 114.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "318481fb-6628-4357-993b-60bfc2530f0a",
@@ -2610,7 +3222,10 @@
       "distance_km": 126.5,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 163.59,
+      "duration_min": 142.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "179b048a-be96-4999-8bf5-7e8fdc57dbd7",
@@ -2623,7 +3238,10 @@
       "distance_km": 127.16,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 153.8,
+      "duration_min": 153.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "55ad4d3a-d72d-4a5f-bf29-42b7cdac1da8",
@@ -2636,7 +3254,10 @@
       "distance_km": 127.27,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 200.27,
+      "duration_min": 230.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "beccc60d-c9a9-473f-89cb-2c952ab544ad",
@@ -2649,7 +3270,10 @@
       "distance_km": 127.5,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 148.83,
+      "duration_min": 119.3,
+      "route_source": "osrm"
     },
     {
       "entity_id": "7731a76a-2efe-40ff-8cd0-80250cec4faa",
@@ -2662,7 +3286,10 @@
       "distance_km": 127.83,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 152.38,
+      "duration_min": 129.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "45e48b92-fecc-4c84-885b-6e333a55c267",
@@ -2675,7 +3302,10 @@
       "distance_km": 127.91,
       "eo_recipe_count": 3,
       "eo_observation_count": 33,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 168.16,
+      "duration_min": 144.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "1e1c9f7a-7dbb-4900-b2a6-c2f63cd07f53",
@@ -2688,7 +3318,10 @@
       "distance_km": 128.08,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 227.68,
+      "duration_min": 252.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "9153c377-30e0-4cc6-a6a2-fe6bad2cd316",
@@ -2701,7 +3334,10 @@
       "distance_km": 128.09,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 157.34,
+      "duration_min": 135.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "7132f16d-e9a8-4000-a93f-c3495e6b942b",
@@ -2714,7 +3350,10 @@
       "distance_km": 128.1,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 162.83,
+      "duration_min": 141.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "b6cbad0d-8598-425e-bd0f-6df3ebd2eac1",
@@ -2727,7 +3366,10 @@
       "distance_km": 129.03,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 152.77,
+      "duration_min": 123.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "008a3647-b53c-4ab9-8a16-313637758391",
@@ -2740,7 +3382,10 @@
       "distance_km": 129.13,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 168.66,
+      "duration_min": 187.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "460a3a0c-3bb2-4669-a776-04232f9cb1b1",
@@ -2753,7 +3398,10 @@
       "distance_km": 129.48,
       "eo_recipe_count": 3,
       "eo_observation_count": 34,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 180.08,
+      "duration_min": 795.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "7c766504-dbd7-4ead-9f01-1dcd3af96750",
@@ -2766,7 +3414,10 @@
       "distance_km": 129.52,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 152.69,
+      "duration_min": 138.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "1960b0e5-3da7-4c65-b291-d8b871ed104e",
@@ -2779,7 +3430,10 @@
       "distance_km": 129.9,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 224.47,
+      "duration_min": 261.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "e203ceaf-5687-4cc4-8c5f-42fd4fb2a2ca",
@@ -2792,7 +3446,10 @@
       "distance_km": 129.95,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 154.17,
+      "duration_min": 142.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "abb21312-83c6-48a2-9b86-395507f36d94",
@@ -2805,7 +3462,10 @@
       "distance_km": 130.43,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 167.39,
+      "duration_min": 163.6,
+      "route_source": "osrm"
     },
     {
       "entity_id": "f93f1dac-7ca7-488b-ba6c-a48267a69cc0",
@@ -2818,7 +3478,10 @@
       "distance_km": 130.46,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 153.61,
+      "duration_min": 128.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "05ee3f29-c3c5-4666-a267-8fab4817dd1a",
@@ -2831,7 +3494,10 @@
       "distance_km": 130.57,
       "eo_recipe_count": 3,
       "eo_observation_count": 33,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 195.12,
+      "duration_min": 831.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "d51427d0-6fb9-4a66-802d-57676715818e",
@@ -2844,7 +3510,10 @@
       "distance_km": 131.08,
       "eo_recipe_count": 3,
       "eo_observation_count": 33,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 172.73,
+      "duration_min": 779.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "35e8d038-343d-4aa3-b533-25e7cb739440",
@@ -2857,7 +3526,10 @@
       "distance_km": 131.24,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 160.24,
+      "duration_min": 154.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "d8a6a652-0898-44d3-94ef-47fccde7a43d",
@@ -2870,7 +3542,10 @@
       "distance_km": 131.36,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 169.73,
+      "duration_min": 161.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "f0e1229a-ef43-49fe-8473-b3968b99a837",
@@ -2883,7 +3558,10 @@
       "distance_km": 131.37,
       "eo_recipe_count": 3,
       "eo_observation_count": 34,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 195.12,
+      "duration_min": 831.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "8f4d07ef-5cca-4a61-8e67-acf3371ef5f4",
@@ -2896,7 +3574,10 @@
       "distance_km": 131.81,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 168.63,
+      "duration_min": 157.3,
+      "route_source": "osrm"
     },
     {
       "entity_id": "61588d64-5c3d-4e64-aea4-177c11aa4c35",
@@ -2909,7 +3590,10 @@
       "distance_km": 132.18,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 226.32,
+      "duration_min": 265.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "3e4daec9-9f94-4f43-a8a4-9753d14a6e32",
@@ -2922,7 +3606,10 @@
       "distance_km": 132.43,
       "eo_recipe_count": 3,
       "eo_observation_count": 33,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 159.76,
+      "duration_min": 131.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "499568c5-d617-456c-ae53-da3db5ed49b5",
@@ -2935,7 +3622,10 @@
       "distance_km": 132.81,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 153.51,
+      "duration_min": 143.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "e5a10c86-704d-470a-80fe-0575962af1dc",
@@ -2948,7 +3638,10 @@
       "distance_km": 132.9,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 204.42,
+      "duration_min": 184.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "d5830f01-01dc-4d08-ae1c-a49f5f7d0810",
@@ -2961,7 +3654,10 @@
       "distance_km": 133.02,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 157.99,
+      "duration_min": 137.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "8aed2862-5b5b-4375-a696-03269f5af29e",
@@ -2974,7 +3670,10 @@
       "distance_km": 133.11,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 156.84,
+      "duration_min": 168.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "5bae8471-3006-4220-a92a-acd613b48987",
@@ -2987,7 +3686,10 @@
       "distance_km": 133.17,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 159.94,
+      "duration_min": 138.6,
+      "route_source": "osrm"
     },
     {
       "entity_id": "3cfe21e7-f84f-4246-a523-07bf3a89546e",
@@ -3000,7 +3702,10 @@
       "distance_km": 133.54,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 153.91,
+      "duration_min": 140.6,
+      "route_source": "osrm"
     },
     {
       "entity_id": "b11ee16b-4bee-485a-bdac-82bbe41138db",
@@ -3013,7 +3718,10 @@
       "distance_km": 133.63,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 271.98,
+      "duration_min": 301.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "1c04947b-773a-4cc1-8efe-093519c80018",
@@ -3026,7 +3734,10 @@
       "distance_km": 133.81,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 229.59,
+      "duration_min": 335.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "6a2ddacd-f20d-450c-a017-f64f164c3272",
@@ -3039,7 +3750,10 @@
       "distance_km": 134.14,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 330.19,
+      "duration_min": 350.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "b139eeb8-f537-497d-867e-4a094fea25d3",
@@ -3052,7 +3766,10 @@
       "distance_km": 134.26,
       "eo_recipe_count": 3,
       "eo_observation_count": 33,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 195.12,
+      "duration_min": 831.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "1f7438f3-b22a-4ba0-8d9f-b749b1ddf071",
@@ -3065,7 +3782,10 @@
       "distance_km": 134.46,
       "eo_recipe_count": 3,
       "eo_observation_count": 38,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 163.34,
+      "duration_min": 155.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "337e8ca1-6fa9-429f-bc98-7793cf41d6be",
@@ -3078,7 +3798,10 @@
       "distance_km": 134.96,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 209.44,
+      "duration_min": 214.6,
+      "route_source": "osrm"
     },
     {
       "entity_id": "0225baf7-e9a4-4729-8393-6c898fafbe8a",
@@ -3091,7 +3814,10 @@
       "distance_km": 135.03,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 161.81,
+      "duration_min": 143.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "05c42185-2298-4c73-a910-f282f9ad7e99",
@@ -3104,7 +3830,10 @@
       "distance_km": 135.81,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 163.66,
+      "duration_min": 150.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "c967d6a8-da2a-4447-86ac-a7aaebf92095",
@@ -3117,7 +3846,10 @@
       "distance_km": 135.96,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 309.91,
+      "duration_min": 323.3,
+      "route_source": "osrm"
     },
     {
       "entity_id": "ffe5966b-d688-4698-9854-c385dc79cab6",
@@ -3130,7 +3862,10 @@
       "distance_km": 136.1,
       "eo_recipe_count": 3,
       "eo_observation_count": 34,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 185.73,
+      "duration_min": 807.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "9ef226e9-bafe-4130-9dac-322e8b35a4a3",
@@ -3143,7 +3878,10 @@
       "distance_km": 136.42,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 242.92,
+      "duration_min": 353.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "ac1b6911-a4f2-4238-a533-71b01848e1d0",
@@ -3156,7 +3894,10 @@
       "distance_km": 137.13,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 181.84,
+      "duration_min": 166.6,
+      "route_source": "osrm"
     },
     {
       "entity_id": "46b794b9-27d8-42d6-af60-6b79960f257a",
@@ -3169,7 +3910,10 @@
       "distance_km": 137.59,
       "eo_recipe_count": 3,
       "eo_observation_count": 33,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 183.71,
+      "duration_min": 803.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "cb84e131-ac3c-43d7-91bb-1d7acd08bee4",
@@ -3182,7 +3926,10 @@
       "distance_km": 138.02,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 325.71,
+      "duration_min": 336.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "b315ed3c-126e-49ef-a977-57f2a8314644",
@@ -3195,7 +3942,10 @@
       "distance_km": 138.22,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 222.91,
+      "duration_min": 227.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "c7151c94-2797-4dd8-b6c3-b9aea8dda81e",
@@ -3208,7 +3958,10 @@
       "distance_km": 139.23,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 186.55,
+      "duration_min": 181.6,
+      "route_source": "osrm"
     },
     {
       "entity_id": "f9e90615-4e8a-415a-8ad4-62f63c96afb4",
@@ -3221,7 +3974,10 @@
       "distance_km": 139.93,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 219.59,
+      "duration_min": 222.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "e0177053-7a09-45ed-913f-739b7c995733",
@@ -3234,7 +3990,10 @@
       "distance_km": 140.25,
       "eo_recipe_count": 3,
       "eo_observation_count": 33,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 202.55,
+      "duration_min": 839.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "3f848fc9-dfbf-4f08-ba86-07a3a6d5002a",
@@ -3247,7 +4006,10 @@
       "distance_km": 140.32,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 165.59,
+      "duration_min": 172.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "56176d77-310f-4412-b226-e5d59675d7dd",
@@ -3260,7 +4022,10 @@
       "distance_km": 141.13,
       "eo_recipe_count": 3,
       "eo_observation_count": 33,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 186.95,
+      "duration_min": 807.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "9fdc7ef1-90b4-40e4-aedc-892bea7ffc52",
@@ -3273,7 +4038,10 @@
       "distance_km": 141.32,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 215.06,
+      "duration_min": 200.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "7b29535f-f79c-4902-9c45-0ee3862cd6cd",
@@ -3286,7 +4054,10 @@
       "distance_km": 141.42,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 179.26,
+      "duration_min": 173.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "c8ec08da-3528-4535-9f7f-7b80b521796f",
@@ -3299,7 +4070,10 @@
       "distance_km": 141.43,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 342.65,
+      "duration_min": 361.5,
+      "route_source": "osrm"
     },
     {
       "entity_id": "1ebcdaa4-2127-489a-ab95-101c870349eb",
@@ -3312,7 +4086,10 @@
       "distance_km": 142.26,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 165.36,
+      "duration_min": 170.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "ea3593ee-038b-480f-bea3-48a616d924c9",
@@ -3325,7 +4102,10 @@
       "distance_km": 143.08,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 166.5,
+      "duration_min": 144.7,
+      "route_source": "osrm"
     },
     {
       "entity_id": "c77952f9-7df0-44e5-83a2-1dbe6b5d603e",
@@ -3338,7 +4118,10 @@
       "distance_km": 143.15,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 176.21,
+      "duration_min": 158.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "9d818c14-eb22-48a0-a3a5-95749995173d",
@@ -3351,7 +4134,10 @@
       "distance_km": 143.31,
       "eo_recipe_count": 3,
       "eo_observation_count": 33,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 195.02,
+      "duration_min": 830.8,
+      "route_source": "osrm"
     },
     {
       "entity_id": "d8c4d129-8688-47fe-9586-e7d4ffe30ca8",
@@ -3364,7 +4150,10 @@
       "distance_km": 143.42,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 318.49,
+      "duration_min": 329.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "ed48013e-d4de-45f0-a309-aed02b1c49e4",
@@ -3377,7 +4166,10 @@
       "distance_km": 143.79,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 236.33,
+      "duration_min": 255.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "6d9d6d07-4c0f-4777-b982-8cc545aaa874",
@@ -3390,7 +4182,10 @@
       "distance_km": 144.14,
       "eo_recipe_count": 3,
       "eo_observation_count": 33,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 204.22,
+      "duration_min": 843.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "1889bc43-c12c-449e-aa2e-0663f8558256",
@@ -3403,7 +4198,10 @@
       "distance_km": 144.18,
       "eo_recipe_count": 3,
       "eo_observation_count": 34,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 189.91,
+      "duration_min": 817.3,
+      "route_source": "osrm"
     },
     {
       "entity_id": "5bc843bd-f0c1-4cc7-be86-932425d96b34",
@@ -3416,7 +4214,10 @@
       "distance_km": 144.4,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 178.19,
+      "duration_min": 156.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "93af8865-9f78-457c-9902-40c13ee20083",
@@ -3429,7 +4230,10 @@
       "distance_km": 144.62,
       "eo_recipe_count": 3,
       "eo_observation_count": 33,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 201.97,
+      "duration_min": 843.3,
+      "route_source": "osrm"
     },
     {
       "entity_id": "7cfa1ca1-b8ed-4773-8a69-8086148d5ebd",
@@ -3442,7 +4246,10 @@
       "distance_km": 144.85,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 214.04,
+      "duration_min": 195.2,
+      "route_source": "osrm"
     },
     {
       "entity_id": "adb0d2da-2dfa-40b8-8b1c-ddcc1dbb668b",
@@ -3455,7 +4262,10 @@
       "distance_km": 145.39,
       "eo_recipe_count": 3,
       "eo_observation_count": 33,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 191.81,
+      "duration_min": 808.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "73e0fad1-d33d-4f94-96c0-cedd332d9de4",
@@ -3468,7 +4278,10 @@
       "distance_km": 146.52,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 177.29,
+      "duration_min": 150.0,
+      "route_source": "osrm"
     },
     {
       "entity_id": "b4ce5ce1-c41e-42a7-8e24-d214868f723b",
@@ -3481,7 +4294,10 @@
       "distance_km": 146.99,
       "eo_recipe_count": 3,
       "eo_observation_count": 34,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 194.74,
+      "duration_min": 829.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "023b51ab-340f-458b-83a3-d7c4598803bd",
@@ -3494,7 +4310,10 @@
       "distance_km": 147.42,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 255.89,
+      "duration_min": 268.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "39e5fb94-6a94-4770-bdb3-20aeeca775b6",
@@ -3507,7 +4326,10 @@
       "distance_km": 147.51,
       "eo_recipe_count": 3,
       "eo_observation_count": 35,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 174.95,
+      "duration_min": 156.9,
+      "route_source": "osrm"
     },
     {
       "entity_id": "5822d4f8-d898-47a1-90b1-8fe98f2badb3",
@@ -3520,7 +4342,10 @@
       "distance_km": 148.24,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 336.86,
+      "duration_min": 353.6,
+      "route_source": "osrm"
     },
     {
       "entity_id": "c351d3e9-d981-4158-8fef-734126d9de2f",
@@ -3533,7 +4358,10 @@
       "distance_km": 148.55,
       "eo_recipe_count": 3,
       "eo_observation_count": 34,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 172.54,
+      "duration_min": 151.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "386ae1db-464a-40c2-ad8b-af0874934495",
@@ -3546,7 +4374,10 @@
       "distance_km": 148.8,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 320.68,
+      "duration_min": 333.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "308a3ef4-f4a4-4e47-9406-5fdb235d54fc",
@@ -3559,7 +4390,10 @@
       "distance_km": 148.81,
       "eo_recipe_count": 3,
       "eo_observation_count": 34,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 205.92,
+      "duration_min": 841.3,
+      "route_source": "osrm"
     },
     {
       "entity_id": "3a9ea28b-104c-40e5-b17b-7fcaeedbfe8d",
@@ -3572,7 +4406,10 @@
       "distance_km": 149.47,
       "eo_recipe_count": 3,
       "eo_observation_count": 33,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 203.71,
+      "duration_min": 830.4,
+      "route_source": "osrm"
     },
     {
       "entity_id": "50d377ba-9446-4f45-8dbb-1e29ff317c52",
@@ -3585,7 +4422,10 @@
       "distance_km": 149.64,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 293.35,
+      "duration_min": 302.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "9a88eea2-df9a-4eb2-98b9-8e5dfc85cb81",
@@ -3598,7 +4438,10 @@
       "distance_km": 149.67,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 282.95,
+      "duration_min": 288.1,
+      "route_source": "osrm"
     },
     {
       "entity_id": "aa93d9fe-e532-45eb-ad88-bba76c2ba4f4",
@@ -3611,7 +4454,11 @@
       "distance_km": 149.83,
       "eo_recipe_count": 3,
       "eo_observation_count": 36,
-      "eo_evidence_status": "observed"
+      "eo_evidence_status": "observed",
+      "road_km": 212.81,
+      "duration_min": 214.8,
+      "route_source": "osrm"
     }
-  ]
+  ],
+  "road_distance_note": "road_km comes from OSRM (router.project-osrm.org) when route_source=='osrm'. route_source=='unavailable' means OSRM could not route this centroid; road_km is null there -- straight-line distance_km is NOT substituted silently. No road distance is invented."
 }

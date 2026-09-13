@@ -1,0 +1,154 @@
+{
+  "method": "Real web research (WebSearch/WebFetch) against NFA Uganda, WDPA/Protected Planet, FAO, Ministry of Water & Environment publications, FSC Africa, CAO Ombudsman case records, and news/NGO reporting on Uganda forestry, conducted 2026-09-13. Covers the 15 highest-VOI catchment CFRs only (not all 276) -- prioritized by model contribution per the sprint's explicit instruction. Never infers availability from absence of restriction language; UNRESOLVED_CONFLICT used where sources genuinely disagree.",
+  "retrieved_at": "2026-09-13",
+  "cfrs": [
+    {
+      "entity_id": "99277e88-e0cc-4798-b155-7505678d7b97",
+      "canonical_name": "Mabira",
+      "access_state": "PARTIALLY_EVIDENCED",
+      "rationale": "NFA's own 2024 Forest Management Plan status table lists Mabira as having a currently VALID plan (2016-2026) -- the only one of these 15 CFRs confirmed valid. Zoned into strict nature reserve / buffer / production zones; an ecotourism concession operates under NFA in the western zone (licensee not named). Predominantly natural/mixed moist forest, not eucalyptus plantation -- legally zoned access, not open commercial availability.",
+      "sources": [
+        {"url": "https://nfa.go.ug/forest-management-plans/", "note": "NFA 2024 FMP status table: Mabira listed valid 2016-2026"},
+        {"url": "https://natureuganda.org/portfolio/mabira-forest-reserve-restoration-programme/", "note": "zonation, ecotourism concession under NFA"}
+      ],
+      "confidence": "medium"
+    },
+    {
+      "entity_id": "c09fad3b-bcaa-4f40-a4c7-7e0feec59e86",
+      "canonical_name": "Kikonda",
+      "access_state": "KNOWN_RESTRICTED",
+      "rationale": "50-year NFA tree-farming license (pine + eucalyptus plantation, 80% planted). License held by Global Woods AG until end-2020, then taken over by Nile Fibre Board (NFB), a subsidiary of Nile Plywoods -- a DIRECT COMPETITOR to Evergreen. FSC Forest Management + Chain of Custody certified. NFB operates its own processing plant (Nakasongola) already consuming this output.",
+      "sources": [
+        {"url": "https://global-woods-international.com/kikonda-forest-reserve/", "note": "plantation species/area"},
+        {"url": "https://africa.fsc.org/en-cd/newsfeed/new-fsc-forest-management-certificate-holder-in-east-africa", "note": "2021-04-01, license transfer to Nile Fibre Board, FSC certification"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "entity_id": "ae3e0607-069b-4eed-8aab-eb0e1c0b066a",
+      "canonical_name": "Kasagala",
+      "access_state": "UNRESOLVED_CONFLICT",
+      "rationale": "Area figures conflict across sources (10,298 acres / ~4,167 ha per Wikipedia vs ~2,000 ha per a Monitor report). Presidential directive to degazette the reserve to formalize long-settled occupants. >80% of Nakasongola-area forest cover reportedly lost in the last ~20 years. Very low confidence this CFR contributes real standing roundwood.",
+      "sources": [
+        {"url": "https://en.wikipedia.org/wiki/Kasagala_Central_Forest_Reserve", "note": "area, gazettement 1963"},
+        {"url": "https://www.monitor.co.ug/uganda/news/national/museveni-orders-authorities-to-degazette-forest-reserve-1874192", "note": "presidential degazettement directive"}
+      ],
+      "confidence": "low"
+    },
+    {
+      "entity_id": "6300a518-b72b-4bc1-9196-4d3fcac51e98",
+      "canonical_name": "South Busoga",
+      "access_state": "PARTIALLY_EVIDENCED",
+      "rationale": "16,382 ha, gazetted 1948. Nileply Ltd (Jinja plywood producer -- a DIRECT COMPETITOR to Evergreen) has planted ~1,500 ha of eucalyptus here under a confirmed commercial planting-rights arrangement. Remainder reportedly subject to a degazetting process for resettlement of previously-evicted villages. Mixed status: part committed to a competitor, part contested.",
+      "sources": [
+        {"url": "https://infonile.org/trapped-the-buffer-zone/", "note": "Nileply Ltd planting, degazetting/resettlement context"}
+      ],
+      "confidence": "medium"
+    },
+    {
+      "entity_id": "f218ea0b-49de-4e71-9984-b846aaed4457",
+      "canonical_name": "Buyaga Dam",
+      "access_state": "UNKNOWN",
+      "rationale": "Area independently confirmed via WDPA (158.71 km2 / ~15,871 ha, site ID 40124). No species, management-authority, license, or activity evidence found despite dedicated search. A 2017 NFA lease tender for reserves in Kakumiro/Kibaale/Kagadi districts is geographically plausible but not confirmed to cover this specific reserve.",
+      "sources": [
+        {"url": "https://www.protectedplanet.net/40124", "note": "WDPA record, area, designation"}
+      ],
+      "confidence": "low"
+    },
+    {
+      "entity_id": "d5871f4e-a436-4aa6-9f60-6c3e47299a70",
+      "canonical_name": "Namwasa",
+      "access_state": "KNOWN_RESTRICTED",
+      "rationale": "8,281 ha. 50-year license granted April 2005 to New Forests Company (NFC) -- pine + eucalyptus plantation, part of NFC's combined ~12 million trees planted across 3 sites. NFC is itself the commercial offtake destination (vertically integrated), not available third-party feedstock. Also carries an active CAO (IFC Compliance Advisor Ombudsman) complaint over evictions (filed Dec 2011 by Oxfam/Uganda Land Alliance).",
+      "sources": [
+        {"url": "https://www.cao-ombudsman.org/cases/uganda-agri-vie-02mubende-namwasa", "note": "license date, area, CAO complaint"},
+        {"url": "https://www.wrm.org.uy/bulletin-articles/the-new-forests-company-in-uganda-villages-evicted-deceived-and-dumped-into-poverty", "note": "eviction reporting"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "entity_id": "14eaa107-7454-4fec-8188-50bbcb014e0d",
+      "canonical_name": "Luwunga",
+      "access_state": "KNOWN_RESTRICTED",
+      "rationale": "9,383 ha. Same New Forests Company license program as Namwasa (2005, 50-year, pine + eucalyptus). Vertically integrated to NFC, not available to Evergreen. Same CAO Ombudsman case family (eviction disputes), with a later negotiated agreement recognizing NFC's legal operating rights.",
+      "sources": [
+        {"url": "https://www.cao-ombudsman.org/cases/uganda-agri-vie-01kiboga-luwunga", "note": "license date, area, CAO complaint"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "entity_id": "232e6d23-c40e-45fb-bc4a-aef6da607a99",
+      "canonical_name": "Bukaleba",
+      "access_state": "KNOWN_RESTRICTED",
+      "rationale": "9,165 ha licensed area (~4,300 ha actually planted), 50-year renewable license from 1996 to Busoga Forestry Company (BFC), a subsidiary of Green Resources AS (Norway). Hybrid eucalyptus clones + pine. BFC/Green Resources operates its own integrated products (utility poles, timber, charcoal/briquettes) -- vertically integrated, not available feedstock. Part of the estate is simultaneously being degazetted for resettlement (contested).",
+      "sources": [
+        {"url": "https://www.greenresources.no/wp-content/uploads/2024/02/GRAS_Uganda-Corporate-Profile-2024-final-web.pdf", "note": "license, species, area, 2024 corporate profile"},
+        {"url": "https://www.wrm.org.uy/bulletin-articles/carbon-colonialism-failure-of-green-resources-carbon-offset-project-in-uganda", "note": "eviction/degazetting reporting"}
+      ],
+      "confidence": "high"
+    },
+    {
+      "entity_id": "39f98db5-f149-42e5-a0d2-fbf7b2a5178e",
+      "canonical_name": "Taala",
+      "access_state": "PARTIALLY_EVIDENCED",
+      "rationale": "88.02 km2 (~8,802 ha), gazetted 1968, NFA direct management. Natural/mixed forest (106 tree species cited), with NFA's own description noting weak enforcement capacity. No license, concession, or processor relationship found -- confirmed natural estate under nominal NFA control but no evidence either way on commercial access.",
+      "sources": [
+        {"url": "https://en.wikipedia.org/wiki/Taala_Central_Forest_Reserve", "note": "area, gazettement, biodiversity, NFA management, weak enforcement note"}
+      ],
+      "confidence": "medium"
+    },
+    {
+      "entity_id": "aa4edca0-ad3b-4e9a-9c72-0ff648cbf0ea",
+      "canonical_name": "Mujuzi",
+      "access_state": "UNRESOLVED_CONFLICT",
+      "rationale": "Area figures conflict by ~2.5x across sources (6,079 ha vs ~15,021 ha). ~70% reportedly cleared by encroachers. An active, disputed NFA boundary re-demarcation and a separately reported contested 2022 land (re)allocation ('Mujuzi forest give-away') make this CFR's real status genuinely unresolved between conflicting accounts.",
+      "sources": [
+        {"url": "https://www.monitor.co.ug/uganda/news/national/masaka-leaders-residents-clash-over-kiwumpa-forest-4760348", "note": "boundary dispute"},
+        {"url": "https://www.monitor.co.ug/uganda/news/national/conservationists-protest-mujuzi-forest-give-away-3710842", "note": "contested 2022 allocation"}
+      ],
+      "confidence": "low"
+    },
+    {
+      "entity_id": "9997766a-d5c5-418c-87c0-2c4f80ebe67a",
+      "canonical_name": "Lwamunda",
+      "access_state": "UNKNOWN",
+      "rationale": "Academic (UFRIC) literature describes it as 'severely degraded' with restoration/replanting activity noted qualitatively, split into research sites 'Lwamunda A/B'. No area, license, species mix, or dated harvesting evidence found.",
+      "sources": [],
+      "confidence": "low"
+    },
+    {
+      "entity_id": "e5a10c86-704d-470a-80fe-0575962af1dc",
+      "canonical_name": "Kabwika - Mujwalanganda",
+      "access_state": "UNKNOWN",
+      "rationale": "Only located reference: an academic Acacia senegal distribution paper naming it as an in-situ conservation site -- implies natural savanna/acacia woodland, not plantation, but no management, license, or area data found.",
+      "sources": [],
+      "confidence": "low"
+    },
+    {
+      "entity_id": "b9781c04-9792-4d29-8bbf-a986c7030584",
+      "canonical_name": "Jubiya",
+      "access_state": "UNKNOWN",
+      "rationale": "Only a bare geographic-location hint (Masaka District) found; nothing on area, management, species, or status located despite search.",
+      "sources": [],
+      "confidence": "low"
+    },
+    {
+      "entity_id": "1e9f5ba5-0267-4b7a-ac4c-0fdf9c596af6",
+      "canonical_name": "Bwezigolo - Gunga",
+      "access_state": "UNKNOWN",
+      "rationale": "Area and 1932 gazettement date independently confirmed via WDPA (~51.5-51.85 km2, site ID 40131), NFA-managed per WDPA governance type. A possible NFA budget-document reference to 'inventory of maturing crops in plantations' could not be verified to specifically cover this reserve -- flagged as an unconfirmed lead, not asserted.",
+      "sources": [
+        {"url": "https://www.protectedplanet.net/40131", "note": "WDPA record, area, designation, governance type"}
+      ],
+      "confidence": "low"
+    },
+    {
+      "entity_id": "453b7a83-c365-4884-8ea4-53bc5331f91e",
+      "canonical_name": "Wankweyo",
+      "access_state": "UNKNOWN",
+      "rationale": "Total non-find: not located under any spelling tried in Wikipedia's CFR list, NFA's own CFR catalogue, NFA's 2024 FMP status table, or WDPA/Protected Planet. Flagged for a possible name/spelling mismatch against this repo's own source dataset -- worth checking directly rather than assuming the CFR itself is obscure.",
+      "sources": [],
+      "confidence": "very_low"
+    }
+  ]
+}

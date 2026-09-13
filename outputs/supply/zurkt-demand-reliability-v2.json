@@ -1,0 +1,81 @@
+{
+  "scenario_version": "zurkt-evergreen-uganda-supply-scenario-v2",
+  "model_version": "zurkt-cfr-monte-carlo-v2",
+  "method": "P(supply>=demand) and shortfall quantiles from the joint aggregate annual-supply draws (identical matrix to the supply curve's terminal row). required_source_cfr_count and marginal_delivered_cost_usd_per_m3 are read off the same cost-ranked cumulative P50 curve reported in zurkt-delivered-supply-curve. This is a demand LADDER for planning purposes, not a claim about Evergreen's actual intake capacity, which is not known.",
+  "demand_scenarios_m3_per_year": [
+    25000,
+    50000,
+    100000,
+    150000,
+    200000,
+    300000
+  ],
+  "results": [
+    {
+      "demand_m3_per_year": 25000,
+      "p_supply_meets_demand": 1.0,
+      "expected_shortfall_m3": 0.0,
+      "shortfall_p10_m3": 0.0,
+      "shortfall_p50_m3": 0.0,
+      "shortfall_p90_m3": 0.0,
+      "required_source_cfr_count": 19,
+      "marginal_delivered_cost_usd_per_m3": 28.93,
+      "note_if_unreachable": null
+    },
+    {
+      "demand_m3_per_year": 50000,
+      "p_supply_meets_demand": 1.0,
+      "expected_shortfall_m3": 0.0,
+      "shortfall_p10_m3": 0.0,
+      "shortfall_p50_m3": 0.0,
+      "shortfall_p90_m3": 0.0,
+      "required_source_cfr_count": 51,
+      "marginal_delivered_cost_usd_per_m3": 33.98,
+      "note_if_unreachable": null
+    },
+    {
+      "demand_m3_per_year": 100000,
+      "p_supply_meets_demand": 1.0,
+      "expected_shortfall_m3": 0.0,
+      "shortfall_p10_m3": 0.0,
+      "shortfall_p50_m3": 0.0,
+      "shortfall_p90_m3": 0.0,
+      "required_source_cfr_count": 119,
+      "marginal_delivered_cost_usd_per_m3": 42.69,
+      "note_if_unreachable": null
+    },
+    {
+      "demand_m3_per_year": 150000,
+      "p_supply_meets_demand": 1.0,
+      "expected_shortfall_m3": 0.0,
+      "shortfall_p10_m3": 0.0,
+      "shortfall_p50_m3": 0.0,
+      "shortfall_p90_m3": 0.0,
+      "required_source_cfr_count": 127,
+      "marginal_delivered_cost_usd_per_m3": 43.08,
+      "note_if_unreachable": null
+    },
+    {
+      "demand_m3_per_year": 200000,
+      "p_supply_meets_demand": 1.0,
+      "expected_shortfall_m3": 0.0,
+      "shortfall_p10_m3": 0.0,
+      "shortfall_p50_m3": 0.0,
+      "shortfall_p90_m3": 0.0,
+      "required_source_cfr_count": 143,
+      "marginal_delivered_cost_usd_per_m3": 44.29,
+      "note_if_unreachable": null
+    },
+    {
+      "demand_m3_per_year": 300000,
+      "p_supply_meets_demand": 0.978,
+      "expected_shortfall_m3": 503.3,
+      "shortfall_p10_m3": 0.0,
+      "shortfall_p50_m3": 0.0,
+      "shortfall_p90_m3": 0.0,
+      "required_source_cfr_count": 211,
+      "marginal_delivered_cost_usd_per_m3": 47.91,
+      "note_if_unreachable": null
+    }
+  ]
+}
