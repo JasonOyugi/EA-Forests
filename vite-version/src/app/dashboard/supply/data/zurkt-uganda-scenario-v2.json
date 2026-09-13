@@ -1,0 +1,141 @@
+{
+  "scenario_version": "zurkt-evergreen-uganda-supply-scenario-v2",
+  "model_version": "zurkt-cfr-monte-carlo-v2",
+  "processor": {
+    "display_name": "Evergreen Wood Industries Ltd (Zurkt-affiliated trade partner)",
+    "epistemic_class": "REPORTED",
+    "location": {
+      "display_name": "Evergreen Wood Industries Ltd (Zurkt-affiliated trade partner)",
+      "canonical_name": "Evergreen Wood Industries Ltd",
+      "alias": "Zurkt Uganda",
+      "epistemic_class": "REPORTED",
+      "location_basis": "Real, independently-verified plywood/veneer manufacturer, Mpigi District, Uganda (Block 116, Plot 49, Sekiwunga Village, Nakirebe Parish, Kiringente Subcounty -- Uganda NEMA record; address independently corroborated by NBD Trade Data customs registration). Coordinates reused from this repo's pre-existing app/services/roundwood_production.py 'Evergreen wood' entry, not independently re-surveyed -- treat as subcounty-level precision (+/- a few km), not a surveyed point.",
+      "group_relationship_basis": "NBD Trade Data customs records name 'SHANDONG ZURKT INTERNATIONAL TRADING CO LTD' (Linyi, China) as a documented trading partner of Evergreen Wood Industries Ltd -- a real, evidenced TRADE relationship, verified 2026-09-13. An OWNERSHIP/subsidiary relationship between Zurkt Group and Evergreen Wood Industries is NOT independently confirmed: Zurkt's own published company history names Uganda only generically as a country with production bases, never explicitly naming Evergreen Wood Industries as its subsidiary. 'Omega Online' is not represented as a physical demand node here -- its only lead is a circumstantial 'sc02omega@zurkt.com' contact address, not confirmed as Uganda-related.",
+      "product_evidence": "Real, independently-verified export records (NBD Trade Data): 'EUCALYPTUS VENEER' (HS 44083900, 'other tropical veneer sheets/sheets for plywood'), 465 trade records, 13 buyers, 12 suppliers as of the retrieval date. This is real evidence the factory processes eucalyptus specifically -- not an assumption.",
+      "retrieved_at": "2026-09-13",
+      "lat": 0.258846,
+      "lon": 32.4077845
+    },
+    "specification_scenarios": [
+      "STANDARD",
+      "LARGE_LOG_STRICT",
+      "LOW_GRADE_FLEXIBLE"
+    ]
+  },
+  "priors": {
+    "relevant_forest_fraction": {
+      "kind": "beta",
+      "params": {
+        "a": 6,
+        "b": 2
+      },
+      "rationale": "Fraction of the gazetted CFR's mapped polygon that is forest/plantable land at all (excludes roads, water, rock, settlement inclusions inside the boundary). Broad conservative placeholder (mean ~0.75); no land-cover classification has been run against these specific polygons yet.",
+      "evidence_class": "ASSUMED"
+    },
+    "stocked_fraction": {
+      "kind": "beta",
+      "params": {
+        "a": 3,
+        "b": 3
+      },
+      "rationale": "Fraction of relevant forest area that still carries standing trees at all, as opposed to cleared/encroached/degraded. Deliberately wide (mean 0.5) -- Uganda CFR encroachment is a real, documented issue for at least some reserves in this catchment (e.g. Kapimpini's own NFA/Wikipedia record notes settlement and deforestation pressure), but no per-CFR encroachment survey exists here.",
+      "evidence_class": "ASSUMED"
+    },
+    "mature_harvestable_fraction": {
+      "kind": "beta",
+      "params": {
+        "a": 2,
+        "b": 3
+      },
+      "rationale": "Fraction of stocked area with trees old/large enough to be harvest-relevant now, as opposed to young regrowth. No age-class survey exists for any of these CFRs; kept broad and below 0.5 on average (mean ~0.4) as a conservative default rather than assuming a mature, fully-stocked estate.",
+      "evidence_class": "ASSUMED"
+    },
+    "commercial_availability_fraction": {
+      "kind": "beta",
+      "params": {
+        "a": 2,
+        "b": 4
+      },
+      "rationale": "Fraction of mature/harvestable volume that is actually legally and commercially accessible (permits, management plan status, landholder/NFA access, no protection overlay). This is explicitly NOT inferred from EO -- EO cannot see legal status. Kept conservative and wide (mean ~0.33) precisely because this is the least EO-informable factor in the whole chain.",
+      "evidence_class": "ASSUMED"
+    },
+    "stems_per_ha": {
+      "kind": "normal",
+      "params": {
+        "mean": 500.0,
+        "std": 150.0,
+        "min": 50.0
+      },
+      "rationale": "Stems/ha for a natural/mixed Uganda CFR stand (lower than an intensive eucalyptus plantation's ~1,100/ha baseline used elsewhere in this repo's AssetGroup scenario data -- these are gazetted natural forest estates, not plantation compartments). Generic placeholder, not surveyed.",
+      "evidence_class": "ASSUMED"
+    },
+    "mean_tree_dbh_cm": {
+      "kind": "normal",
+      "params": {
+        "mean": 25.0,
+        "std": 8.0,
+        "min": 5.0
+      },
+      "rationale": "Mean DBH assumption for mixed natural forest, broad std. Not surveyed.",
+      "evidence_class": "ASSUMED"
+    },
+    "mean_tree_height_m": {
+      "kind": "normal",
+      "params": {
+        "mean": 15.0,
+        "std": 5.0,
+        "min": 3.0
+      },
+      "rationale": "Mean tree height assumption, broad std. Not surveyed.",
+      "evidence_class": "ASSUMED"
+    },
+    "wood_density_t_per_m3": {
+      "kind": "normal",
+      "params": {
+        "mean": 0.55,
+        "std": 0.08,
+        "min": 0.25
+      },
+      "rationale": "Generic mixed tropical hardwood basic density placeholder. Not species-specific because real species composition is unverified for this natural-forest catchment (see module docstring's species simplification).",
+      "evidence_class": "ASSUMED"
+    },
+    "within_stand_dbh_cv": {
+      "kind": "normal",
+      "params": {
+        "mean": 0.35,
+        "std": 0.08,
+        "min": 0.1
+      },
+      "rationale": "Coefficient of variation of individual-tree DBH within a stand around its sampled mean -- captures that a stand with a given *mean* DBH still has some trees above and below a processor's grade threshold, rather than treating the whole stand as one uniform tree. Generic broad-forest placeholder, not measured for these CFRs.",
+      "evidence_class": "ASSUMED"
+    },
+    "stumpage_price_usd_per_m3": {
+      "kind": "normal",
+      "params": {
+        "mean": 12.0,
+        "std": 5.0,
+        "min": 1.0
+      },
+      "rationale": "Standing-timber/procurement price paid at the forest gate before any harvest, extraction, haulage or regulatory cost is incurred -- i.e. what Evergreen (or an intermediary) would pay NFA/the community/private landholder for the standing wood itself. No real Uganda CFR stumpage price observation exists in this repository; this is a broad, conservative placeholder distinct from -- and never blended into -- the harvest/extraction/haulage/regulatory cost lines below, per the sprint's explicit requirement to report procurement cost as its own line item.",
+      "evidence_class": "ASSUMED"
+    }
+  },
+  "annual_harvest_fraction_prior": {
+    "kind": "beta",
+    "params": {
+      "a": 2,
+      "b": 8
+    },
+    "rationale": "Fraction of Zurkt-suitable standing volume harvested in any single year (as opposed to spread across a multi-year rotation). Kept low and conservative (mean 0.2) in the absence of any real harvest-scheduling or management-plan evidence for these CFRs."
+  },
+  "known_simplifications": [
+    "All catchment supply is priced/graded as eucalyptus-equivalent; real species composition of these natural/mixed gazetted CFRs is unverified.",
+    "Stand-level Monte Carlo samples one mean DBH/height/stocking per draw per CFR rather than a full tree-level population per draw (grade shares are then derived analytically from a within-stand DBH spread prior, not from a second level of per-tree sampling).",
+    "10-year outlook uses a single aggregate net-stock-change fraction, not a real age-structured growth model.",
+    "Verification priority uses a transparent proxy, not a formal EVSI/EVPI calculation.",
+    "v2 fix: haulage cost now includes an explicit round-trip driving-time term (2 x haul_km / assumed truck speed), so operator/rental time -- not just fuel -- scales with distance; this replaced a v1 model where haulage was dominated by a fixed per-trip time regardless of distance. Average truck speed is still an ASSUMED broad prior (AVG_TRUCK_SPEED_KMPH_PRIOR in zurkt_scenario.py), not a surveyed route speed, so the curve's overall slope is more realistic but its exact shape is not calibrated against a real haulage contract.",
+    "Standing-timber/procurement cost is a separate ASSUMED line item (stumpage_price_usd_per_m3 prior) with no real Uganda CFR stumpage price observation behind it -- kept broad and distinct from harvest/extraction/haulage/regulatory cost, never blended into one number."
+  ],
+  "catchment_size": 276,
+  "economic_screen_threshold_usd_per_m3": 60.0
+}

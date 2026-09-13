@@ -59,8 +59,8 @@ from app.services.roundwood_production import (
     retail_quantity_library,
 )
 
-SCENARIO_VERSION = "zurkt-uganda-supply-scenario-v1"
-MODEL_VERSION = "zurkt-cfr-monte-carlo-v1"
+SCENARIO_VERSION = "zurkt-evergreen-uganda-supply-scenario-v2"
+MODEL_VERSION = "zurkt-cfr-monte-carlo-v2"
 
 # ---------------------------------------------------------------------------
 # ASSUMED: the Zurkt processor itself. No real Zurkt fact exists anywhere in
@@ -178,9 +178,32 @@ PRIORS: dict[str, Prior] = {
         "than treating the whole stand as one uniform tree. Generic broad-forest "
         "placeholder, not measured for these CFRs.",
     ),
+    "stumpage_price_usd_per_m3": Prior(
+        "normal", {"mean": 12.0, "std": 5.0, "min": 1.0},
+        "Standing-timber/procurement price paid at the forest gate before any "
+        "harvest, extraction, haulage or regulatory cost is incurred -- i.e. what "
+        "Evergreen (or an intermediary) would pay NFA/the community/private "
+        "landholder for the standing wood itself. No real Uganda CFR stumpage "
+        "price observation exists in this repository; this is a broad, "
+        "conservative placeholder distinct from -- and never blended into -- the "
+        "harvest/extraction/haulage/regulatory cost lines below, per the sprint's "
+        "explicit requirement to report procurement cost as its own line item.",
+    ),
 }
 
 FORM_FACTOR = 0.45  # reused from roundwood_production.py's own default
+
+HOURS_PER_WORKDAY = 8.0  # ASSUMED, standard rural haulage workday
+AVG_TRUCK_SPEED_KMPH_PRIOR = Prior(
+    "normal", {"mean": 30.0, "std": 8.0, "min": 10.0},
+    "Average round-trip truck speed on Uganda feeder/rural roads between a CFR "
+    "and the Mpigi processor, accounting for a realistic mix of murram and "
+    "tarmac and typical loaded-truck speeds -- not a surveyed speed for any "
+    "specific route. Used to make haulage driving TIME (and therefore "
+    "wage/rental cost, not just fuel) scale with distance -- addressing the "
+    "documented v1 limitation that delivered cost was only weakly "
+    "distance-sensitive.",
+)
 
 # Effort/cost midpoints reused conceptually from roundwood_production.py's
 # retail_quantity_library()/labour/nonlab tables -- this module samples its
@@ -227,8 +250,10 @@ class CfrSupplyState:
     grade_share_g1: dict[str, float] = field(default_factory=dict)
     grade_share_g2: dict[str, float] = field(default_factory=dict)
     grade_share_g3: dict[str, float] = field(default_factory=dict)
+    procurement_cost_usd_per_m3: dict[str, float] = field(default_factory=dict)
     harvest_extract_load_cost_usd_per_m3: dict[str, float] = field(default_factory=dict)
     haulage_cost_usd_per_m3: dict[str, float] = field(default_factory=dict)
+    regulatory_admin_cost_usd_per_m3: dict[str, float] = field(default_factory=dict)
     delivered_cost_usd_per_m3: dict[str, float] = field(default_factory=dict)
     annual_suitable_supply_m3: dict[str, float] = field(default_factory=dict)
 
@@ -369,24 +394,46 @@ def build_cfr_supply_state(
 
     q_h = _QTY["haulage"]
     v_haul = rng.random(n)
-    op_days_haul = trips * (q_h["machine_op_days_per_trip"][0] + v_haul * (q_h["machine_op_days_per_trip"][1] - q_h["machine_op_days_per_trip"][0]))
+    # Dwell time (loading queue/unloading at the mill) -- fixed per trip,
+    # NOT distance-dependent, same range this repo's own
+    # roundwood_production.add_haulage_costs() uses.
+    dwell_days_per_trip = q_h["machine_op_days_per_trip"][0] + v_haul * (q_h["machine_op_days_per_trip"][1] - q_h["machine_op_days_per_trip"][0])
+    # Driving time: an explicit round-trip distance/speed term, ASSUMED
+    # (no real Uganda feeder-road speed survey exists for this catchment) at
+    # a broad, conservative average truck speed accounting for a mix of
+    # murram/tarmac rural roads. This is the fix for the documented v1
+    # limitation that delivered cost was only weakly distance-sensitive --
+    # roundwood_production.py's own add_haulage_costs() has the same gap
+    # (op_days_per_trip is a fixed range there too), but Zurkt/Evergreen's
+    # catchment spans a much wider distance range (a few km to 150km) where
+    # ignoring driving time materially understates cost for the farthest
+    # CFRs and flattens the delivered-cost curve into a near step function.
+    avg_truck_speed_kmph = AVG_TRUCK_SPEED_KMPH_PRIOR.sample(rng, n)
+    driving_days_per_trip = (2.0 * haul_km) / np.maximum(avg_truck_speed_kmph, 1.0) / HOURS_PER_WORKDAY
+    op_days_haul = trips * (dwell_days_per_trip + driving_days_per_trip)
     fuel_haul_l = (trips * haul_km) * (q_h["fuel_L_per_km"][0] + v_haul * (q_h["fuel_L_per_km"][1] - q_h["fuel_L_per_km"][0]))
     haul_cost = op_days_haul * (_wage("L_MACHINE_OPERATOR", lam_wage) + _price("N_RENT_TRUCK", lam_price)) + fuel_haul_l * _price("N_FUEL_L", lam_price)
     haul_cost_per_m3 = haul_cost / vol_safe
 
-    # Standing-timber/procurement + regulatory/admin (kept small & separate
-    # per Track 9 -- not folded silently into one number).
+    # Regulatory/admin (Track 9: kept small & separate, never folded
+    # silently into harvest or haulage).
     q_r = _QTY["regulatory"]
     permit_cost_per_ha = _price("N_NFA_PERMIT", lam_price) / max(q_r["permit_ha_covered"][0], 1.0)
     reg_admin_cost_per_m3 = (available_area_ha * permit_cost_per_ha) / vol_safe
 
+    # Standing-timber/procurement cost (Track 9): what is paid for the
+    # standing wood itself, BEFORE any harvest/extraction/haulage/regulatory
+    # activity cost -- an explicit separate line, never blended into the
+    # activity-cost lines above. See PRIORS["stumpage_price_usd_per_m3"].
+    procurement_cost_per_m3 = PRIORS["stumpage_price_usd_per_m3"].sample(rng, n)
+
     # NOTE: _wage()/_price() draw from roundwood_production.py's
     # retail_labour_categories()/retail_nonlab_items(), which are already
     # USD-denominated (money_columns_to_usd() is applied inside those
-    # functions) -- every cost term above is already in USD. Do not divide
-    # by UGX_PER_USD again here (an earlier version of this module did,
-    # silently shrinking every delivered-cost figure ~3700x).
-    delivered_cost_usd_per_m3 = hel_cost_per_m3 + haul_cost_per_m3 + reg_admin_cost_per_m3
+    # functions) -- every activity-cost term above is already in USD. Do not
+    # divide by UGX_PER_USD again here (an earlier version of this module
+    # did, silently shrinking every delivered-cost figure ~3700x).
+    delivered_cost_usd_per_m3 = procurement_cost_per_m3 + hel_cost_per_m3 + haul_cost_per_m3 + reg_admin_cost_per_m3
 
     annual_suitable_supply_m3 = zurkt_suitable_volume_m3 * PRIORS_ANNUAL_HARVEST_FRACTION.sample(rng, n)
 
@@ -408,8 +455,10 @@ def build_cfr_supply_state(
         grade_share_g1=quantiles(g1_share),
         grade_share_g2=quantiles(grade_shares["G2"]),
         grade_share_g3=quantiles(grade_shares["G3"]),
+        procurement_cost_usd_per_m3=quantiles(procurement_cost_per_m3),
         harvest_extract_load_cost_usd_per_m3=quantiles(hel_cost_per_m3),
         haulage_cost_usd_per_m3=quantiles(haul_cost_per_m3),
+        regulatory_admin_cost_usd_per_m3=quantiles(reg_admin_cost_per_m3),
         delivered_cost_usd_per_m3=quantiles(delivered_cost_usd_per_m3),
         annual_suitable_supply_m3=quantiles(annual_suitable_supply_m3),
     ), {

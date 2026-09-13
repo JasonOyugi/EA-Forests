@@ -90,7 +90,7 @@ def validate_invariants(results: list[dict[str, Any]]) -> list[str]:
             violations.append(f"{name}: annual supply exceeds total suitable volume")
         if s.distance_km < 0 or (s.road_km is not None and s.road_km < 0):
             violations.append(f"{name}: negative distance")
-        for cost_field in ["harvest_extract_load_cost_usd_per_m3", "haulage_cost_usd_per_m3", "delivered_cost_usd_per_m3"]:
+        for cost_field in ["procurement_cost_usd_per_m3", "harvest_extract_load_cost_usd_per_m3", "haulage_cost_usd_per_m3", "regulatory_admin_cost_usd_per_m3", "delivered_cost_usd_per_m3"]:
             vals = getattr(s, cost_field)
             if vals["p50"] < 0:
                 violations.append(f"{name}: negative {cost_field}")
@@ -98,38 +98,44 @@ def validate_invariants(results: list[dict[str, Any]]) -> list[str]:
 
 
 def build_supply_curve(results: list[dict[str, Any]]) -> dict[str, Any]:
-    """Track 11. Ranked by P50 delivered cost; cumulative P50 annual
-    suitable supply. P10/P90 aggregate bands come from summing each CFR's
-    OWN P10/P90 raw draws (valid because each CFR was simulated with an
-    independent rng seed) -- documented as an aggregate band alongside the
-    P50 curve, not as a second curve with its own ranking, which would
-    require a joint delivered-cost ranking under each scenario."""
+    """Track 11. Ranked by P50 delivered cost; cumulative annual suitable
+    supply. Both the curve's cumulative column and the cost-threshold
+    table below are built from a (n_cfrs x n_draws) matrix of each CFR's
+    OWN raw annual-supply draws, ordered by cost rank, with np.cumsum
+    down the CFR axis -- THEN quantiles are taken of each row. This is
+    the same "sum draws first, then quantile" order used for the
+    top-level aggregate and for build_outlook()'s year-1 figure; summing
+    each CFR's own P50 instead (the previous approach here) understates
+    the true joint P50 for right-skewed marginals, and produced a
+    cumulative total at the $100/m3 threshold that silently disagreed
+    with the aggregate P50 reported elsewhere on the same dashboard --
+    exactly the inconsistency this function must not reintroduce. By
+    construction, the final row's P50 here equals aggregate_p50 below
+    (same underlying matrix) -- asserted below, not merely assumed."""
     ranked = sorted(results, key=lambda r: r["state"].delivered_cost_usd_per_m3["p50"])
-    cumulative = 0.0
+    draws_by_rank = np.array([r["raw"]["raw_annual_suitable_supply_m3"] for r in ranked])  # (n_cfrs, n_draws)
+    cumulative_draws = np.cumsum(draws_by_rank, axis=0)  # (n_cfrs, n_draws), row i = sum of the i+1 cheapest CFRs
+    cumulative_quantiles = np.percentile(cumulative_draws, [10, 50, 90], axis=1)  # (3, n_cfrs)
+
     points = []
-    for row in ranked:
+    for i, row in enumerate(ranked):
         s = row["state"]
-        cumulative += s.annual_suitable_supply_m3["p50"]
         points.append(
             {
                 "entity_id": s.entity_id,
                 "canonical_name": s.canonical_name,
                 "delivered_cost_usd_per_m3_p50": s.delivered_cost_usd_per_m3["p50"],
                 "annual_suitable_supply_m3_p50": round(s.annual_suitable_supply_m3["p50"], 1),
-                "cumulative_annual_supply_m3_p50": round(cumulative, 1),
+                "cumulative_annual_supply_m3_p10": round(float(cumulative_quantiles[0, i]), 1),
+                "cumulative_annual_supply_m3_p50": round(float(cumulative_quantiles[1, i]), 1),
+                "cumulative_annual_supply_m3_p90": round(float(cumulative_quantiles[2, i]), 1),
             }
         )
 
-    # Aggregate P10/P50/P90: sum each CFR's OWN raw per-draw array first
-    # (valid because every CFR used an independent rng seed), THEN take
-    # quantiles of the resulting joint sum -- not the sum of each CFR's own
-    # quantiles. For right-skewed per-CFR distributions (mean > median),
-    # summing quantiles systematically understates the true aggregate
-    # median; summing draws first is the statistically correct order and
-    # is what build_outlook() below already does for the 10-year figures --
-    # keeping this consistent so the dashboard never shows two conflicting
-    # "P50 annual supply" numbers computed two different ways.
-    aggregate_draws = np.sum([r["raw"]["raw_annual_suitable_supply_m3"] for r in results], axis=0)
+    # Aggregate P10/P50/P90: the last row of the SAME cumulative-draws
+    # matrix used for the curve above -- not recomputed independently, so
+    # curve and aggregate can never silently disagree.
+    aggregate_draws = cumulative_draws[-1]
     aggregate_p10, aggregate_p50, aggregate_p90 = (
         round(float(v), 1) for v in np.percentile(aggregate_draws, [10, 50, 90])
     )
@@ -137,14 +143,43 @@ def build_supply_curve(results: list[dict[str, Any]]) -> dict[str, Any]:
     thresholds_usd_per_m3 = [20, 30, 40, 50, 60, 80, 100]
     volume_below_threshold = []
     for t in thresholds_usd_per_m3:
-        below = [r for r in ranked if r["state"].delivered_cost_usd_per_m3["p50"] <= t]
+        n_below = sum(1 for r in ranked if r["state"].delivered_cost_usd_per_m3["p50"] <= t)
+        if n_below == 0:
+            volume_below_threshold.append(
+                {
+                    "delivered_cost_threshold_usd_per_m3": t,
+                    "contributing_cfrs": 0,
+                    "cumulative_annual_supply_m3_p10": 0.0,
+                    "cumulative_annual_supply_m3_p50": 0.0,
+                    "cumulative_annual_supply_m3_p90": 0.0,
+                }
+            )
+            continue
+        below_draws = cumulative_draws[n_below - 1]  # cumsum row for the n_below cheapest CFRs
+        p10, p50, p90 = (round(float(v), 1) for v in np.percentile(below_draws, [10, 50, 90]))
         volume_below_threshold.append(
             {
                 "delivered_cost_threshold_usd_per_m3": t,
-                "contributing_cfrs": len(below),
-                "cumulative_annual_supply_m3_p50": round(sum(r["state"].annual_suitable_supply_m3["p50"] for r in below), 1),
+                "contributing_cfrs": n_below,
+                "cumulative_annual_supply_m3_p10": p10,
+                "cumulative_annual_supply_m3_p50": p50,
+                "cumulative_annual_supply_m3_p90": p90,
             }
         )
+
+    # Reconciliation invariant (sprint requirement): the curve's own
+    # terminal cumulative P50 must equal the aggregate P50 reported
+    # alongside it. Both are derived from the same matrix here, but the
+    # check is asserted -- not merely assumed correct by construction --
+    # so a future refactor that breaks the shared derivation aborts the
+    # run instead of silently reintroducing the contradiction.
+    if points:
+        terminal_p50 = points[-1]["cumulative_annual_supply_m3_p50"]
+        if abs(terminal_p50 - aggregate_p50) > max(1.0, 0.001 * aggregate_p50):
+            raise SystemExit(
+                f"Aborting: supply curve terminal cumulative P50 ({terminal_p50}) does not match "
+                f"aggregate P50 ({aggregate_p50}) within tolerance -- reconciliation invariant violated."
+            )
 
     marginal = points[-1] if points else None
 
@@ -158,25 +193,44 @@ def build_supply_curve(results: list[dict[str, Any]]) -> dict[str, Any]:
     # looked like a low-risk reading while the single largest supplier
     # (Mabira) alone was ~14% of aggregate P50 supply.
     by_volume = sorted(results, key=lambda r: r["state"].annual_suitable_supply_m3["p50"], reverse=True)
+    top1_by_volume = by_volume[0]["state"].annual_suitable_supply_m3["p50"] if by_volume else 0.0
     top5_by_volume = sum(r["state"].annual_suitable_supply_m3["p50"] for r in by_volume[:5])
     top10_by_volume = sum(r["state"].annual_suitable_supply_m3["p50"] for r in by_volume[:10])
+    top1_share = round(top1_by_volume / aggregate_p50, 3) if aggregate_p50 else None
+    top5_share = round(top5_by_volume / aggregate_p50, 3) if aggregate_p50 else None
+    top10_share = round(top10_by_volume / aggregate_p50, 3) if aggregate_p50 else None
+
+    # Invariants (sprint requirement): concentration shares must nest
+    # (top1 <= top5 <= top10 <= 1); top5 is by construction the sum of
+    # the five largest individual shares (same sorted list), so that half
+    # of the requirement holds structurally rather than needing a
+    # separate check.
+    if top1_share is not None and top5_share is not None and top10_share is not None:
+        if not (top1_share <= top5_share <= top10_share <= 1.0 + 1e-9):
+            raise SystemExit(
+                f"Aborting: source concentration invariant violated -- "
+                f"top1={top1_share} top5={top5_share} top10={top10_share} (expected top1<=top5<=top10<=1)."
+            )
 
     return {
         "scenario_version": SCENARIO_VERSION,
         "model_version": MODEL_VERSION,
         "ranking_basis": "P50 delivered cost ascending (per-CFR quantile, not a joint aggregate distribution)",
+        "cumulative_method": "cumsum of raw per-CFR draws (ordered by cost rank), quantiles taken per cumulative row -- "
+        "not sum of per-CFR P50 quantiles. See build_supply_curve() docstring.",
         "points": points,
         "aggregate_annual_suitable_supply_m3": {
             "p10": round(aggregate_p10, 1), "p50": round(aggregate_p50, 1), "p90": round(aggregate_p90, 1),
         },
         "volume_below_cost_threshold": volume_below_threshold,
         "source_concentration": {
-            "top5_cfrs_share_of_p50_supply": round(top5_by_volume / aggregate_p50, 3) if aggregate_p50 else None,
-            "top10_cfrs_share_of_p50_supply": round(top10_by_volume / aggregate_p50, 3) if aggregate_p50 else None,
+            "top1_cfr_share_of_p50_supply": top1_share,
+            "top5_cfrs_share_of_p50_supply": top5_share,
+            "top10_cfrs_share_of_p50_supply": top10_share,
             "note": "Ranked by each CFR's own P50 annual supply (largest first), not by delivered cost -- "
-            "concentration measures dependence on the biggest few suppliers. Shares are against the sum of "
-            "each CFR's own P50 (not the joint aggregate P50), consistent with how those per-CFR P50s are "
-            "ranked and summed here.",
+            "concentration measures dependence on the biggest few suppliers. Shares are against the joint "
+            "aggregate P50 (same cumulative-draws matrix as the curve above), so this is consistent with the "
+            "curve's own terminal value.",
         },
         "marginal_cfr": marginal,
     }
@@ -364,6 +418,64 @@ def build_verification_priorities(results: list[dict[str, Any]], top_n: int = 15
     }
 
 
+DEMAND_LADDER_M3_PER_YEAR = [25_000, 50_000, 100_000, 150_000, 200_000, 300_000]
+
+
+def build_demand_ladder(
+    results: list[dict[str, Any]], curve: dict[str, Any], demand_levels: list[int] = DEMAND_LADDER_M3_PER_YEAR
+) -> dict[str, Any]:
+    """Reliability of the addressable supply against a ladder of realistic
+    demand scenarios (NOT fake LOW/MEDIUM/HIGH facts -- Evergreen's real
+    intake capacity is not known, so this reports P(supply>=demand) and
+    shortfall across a spread of plausible plant sizes instead of pretending
+    one number is 'the' demand). Reuses the SAME joint aggregate draws as
+    the supply curve's terminal row, and the SAME cost-ranked cumulative P50
+    curve for required-CFR-count/marginal-cost, so this table can never
+    silently disagree with the curve or the top-level aggregate."""
+    aggregate_draws = np.sum([r["raw"]["raw_annual_suitable_supply_m3"] for r in results], axis=0)
+    points = curve["points"]
+
+    rows = []
+    for d in demand_levels:
+        p_meets = float(np.mean(aggregate_draws >= d))
+        shortfall = np.maximum(d - aggregate_draws, 0.0)
+        shortfall_p10, shortfall_p50, shortfall_p90 = (round(float(v), 1) for v in np.percentile(shortfall, [10, 50, 90]))
+
+        required_n = None
+        marginal_cost = None
+        for i, p in enumerate(points):
+            if p["cumulative_annual_supply_m3_p50"] >= d:
+                required_n = i + 1
+                marginal_cost = p["delivered_cost_usd_per_m3_p50"]
+                break
+
+        rows.append(
+            {
+                "demand_m3_per_year": d,
+                "p_supply_meets_demand": round(p_meets, 3),
+                "expected_shortfall_m3": round(float(np.mean(shortfall)), 1),
+                "shortfall_p10_m3": shortfall_p10,
+                "shortfall_p50_m3": shortfall_p50,
+                "shortfall_p90_m3": shortfall_p90,
+                "required_source_cfr_count": required_n,
+                "marginal_delivered_cost_usd_per_m3": marginal_cost,
+                "note_if_unreachable": None if required_n is not None else "No cost-ranked cumulative P50 reaches this demand level within the catchment.",
+            }
+        )
+
+    return {
+        "scenario_version": SCENARIO_VERSION,
+        "model_version": MODEL_VERSION,
+        "method": "P(supply>=demand) and shortfall quantiles from the joint aggregate annual-supply draws "
+        "(identical matrix to the supply curve's terminal row). required_source_cfr_count and "
+        "marginal_delivered_cost_usd_per_m3 are read off the same cost-ranked cumulative P50 curve reported in "
+        "zurkt-delivered-supply-curve. This is a demand LADDER for planning purposes, not a claim about "
+        "Evergreen's actual intake capacity, which is not known.",
+        "demand_scenarios_m3_per_year": demand_levels,
+        "results": rows,
+    }
+
+
 def to_cfr_result_row(row: dict[str, Any]) -> dict[str, Any]:
     s = row["state"]
     return {
@@ -381,6 +493,8 @@ def to_cfr_result_row(row: dict[str, Any]) -> dict[str, Any]:
             "eo_evidence_status": s.eo_evidence_status,
         },
         "modelled": {
+            "biophysical_technical_potential_m3": s.harvestable_volume_m3,
+            "commercially_addressable_volume_m3": s.zurkt_suitable_volume_m3,
             "relevant_stocked_area_ha": s.relevant_stocked_area_ha,
             "standing_volume_m3": s.standing_volume_m3,
             "harvestable_volume_m3": s.harvestable_volume_m3,
@@ -388,8 +502,10 @@ def to_cfr_result_row(row: dict[str, Any]) -> dict[str, Any]:
             "grade_g1_share": s.grade_share_g1,
             "grade_g2_share": s.grade_share_g2,
             "grade_g3_share": s.grade_share_g3,
+            "procurement_cost_usd_per_m3": s.procurement_cost_usd_per_m3,
             "harvest_extract_load_cost_usd_per_m3": s.harvest_extract_load_cost_usd_per_m3,
             "haulage_cost_usd_per_m3": s.haulage_cost_usd_per_m3,
+            "regulatory_admin_cost_usd_per_m3": s.regulatory_admin_cost_usd_per_m3,
             "delivered_cost_usd_per_m3": s.delivered_cost_usd_per_m3,
             "annual_suitable_supply_m3": s.annual_suitable_supply_m3,
         },
@@ -403,7 +519,14 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", required=True, type=Path)
     parser.add_argument("--out-dir", required=True, type=Path)
+    parser.add_argument(
+        "--scenario-tag",
+        default="v2",
+        help="Suffix for output filenames (e.g. 'v2' -> zurkt-delivered-supply-curve-v2.json). "
+        "Never reuse a tag whose files you want to preserve -- v1 outputs must not be overwritten.",
+    )
     args = parser.parse_args()
+    tag = args.scenario_tag
 
     data = load_catchment(args.input)
     cfrs = data["cfrs"]
@@ -423,14 +546,14 @@ def main() -> None:
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
 
+    processor_doc = dict(data["processor"])
     scenario_doc = {
         "scenario_version": SCENARIO_VERSION,
         "model_version": MODEL_VERSION,
         "processor": {
-            "display_name": "Zurkt Uganda",
-            "epistemic_class": "SCENARIO",
-            "note": "No real Zurkt facts exist anywhere in this repository or its history (exhaustive search, 2026-09-11).",
-            "location": data["processor"],
+            "display_name": processor_doc.get("display_name", "unknown"),
+            "epistemic_class": processor_doc.get("epistemic_class", "UNKNOWN"),
+            "location": processor_doc,
             "specification_scenarios": list(PROCESSOR_SPECIFICATION_SCENARIOS.keys()),
         },
         "priors": {
@@ -450,48 +573,59 @@ def main() -> None:
             "spread prior, not from a second level of per-tree sampling).",
             "10-year outlook uses a single aggregate net-stock-change fraction, not a real age-structured growth model.",
             "Verification priority uses a transparent proxy, not a formal EVSI/EVPI calculation.",
-            "Delivered cost per m3 is only weakly distance-sensitive in this v1 model: haulage cost is dominated "
-            "by fixed per-trip operator/rental time, with only the fuel component scaling with road distance -- so "
-            "most catchment CFRs cluster at a similar delivered cost regardless of how far they are, and the "
-            "delivered-cost supply curve is closer to a step function than a smooth cost-distance gradient. Real "
-            "haulage contracts are usually more distance-sensitive than this; treat the curve's shape, not just "
-            "its endpoints, as a modelling artifact to revisit.",
+            "v2 fix: haulage cost now includes an explicit round-trip driving-time term "
+            "(2 x haul_km / assumed truck speed), so operator/rental time -- not just fuel -- scales with "
+            "distance; this replaced a v1 model where haulage was dominated by a fixed per-trip time regardless "
+            "of distance. Average truck speed is still an ASSUMED broad prior (AVG_TRUCK_SPEED_KMPH_PRIOR in "
+            "zurkt_scenario.py), not a surveyed route speed, so the curve's overall slope is more realistic but "
+            "its exact shape is not calibrated against a real haulage contract.",
+            "Standing-timber/procurement cost is a separate ASSUMED line item (stumpage_price_usd_per_m3 prior) "
+            "with no real Uganda CFR stumpage price observation behind it -- kept broad and distinct from "
+            "harvest/extraction/haulage/regulatory cost, never blended into one number.",
         ],
         "catchment_size": len(cfrs),
         "economic_screen_threshold_usd_per_m3": ECONOMIC_SCREEN_MAX_DELIVERED_COST_USD_PER_M3,
     }
-    (args.out_dir / "zurkt-uganda-scenario-v1.json").write_text(json.dumps(scenario_doc, indent=2), encoding="utf-8")
-    print("Wrote zurkt-uganda-scenario-v1.json")
+    (args.out_dir / f"zurkt-uganda-scenario-{tag}.json").write_text(json.dumps(scenario_doc, indent=2), encoding="utf-8")
+    print(f"Wrote zurkt-uganda-scenario-{tag}.json")
 
     cfr_results_doc = {
         "scenario_version": SCENARIO_VERSION,
         "model_version": MODEL_VERSION,
         "cfrs": [to_cfr_result_row(r) for r in results],
     }
-    (args.out_dir / "zurkt-cfr-supply-results-v1.json").write_text(json.dumps(cfr_results_doc, indent=2), encoding="utf-8")
-    print(f"Wrote zurkt-cfr-supply-results-v1.json ({len(results)} CFRs)")
+    (args.out_dir / f"zurkt-cfr-supply-results-{tag}.json").write_text(json.dumps(cfr_results_doc, indent=2), encoding="utf-8")
+    print(f"Wrote zurkt-cfr-supply-results-{tag}.json ({len(results)} CFRs)")
 
     print("Building delivered-cost supply curve...")
     curve = build_supply_curve(results)
-    (args.out_dir / "zurkt-delivered-supply-curve-v1.json").write_text(json.dumps(curve, indent=2), encoding="utf-8")
-    print(f"Wrote zurkt-delivered-supply-curve-v1.json (P50 aggregate {curve['aggregate_annual_suitable_supply_m3']})")
+    (args.out_dir / f"zurkt-delivered-supply-curve-{tag}.json").write_text(json.dumps(curve, indent=2), encoding="utf-8")
+    print(f"Wrote zurkt-delivered-supply-curve-{tag}.json (P50 aggregate {curve['aggregate_annual_suitable_supply_m3']})")
 
-    print("Building 10-year outlook...")
+    print("Building 10-year outlook (depletion stress test)...")
     outlook = build_outlook(results)
-    (args.out_dir / "zurkt-10yr-outlook-v1.json").write_text(json.dumps(outlook, indent=2), encoding="utf-8")
-    print(f"Wrote zurkt-10yr-outlook-v1.json (year 1 {outlook['years'][0]['annual_supply_m3']}, year 10 {outlook['years'][9]['annual_supply_m3']})")
+    (args.out_dir / f"zurkt-10yr-outlook-{tag}.json").write_text(json.dumps(outlook, indent=2), encoding="utf-8")
+    print(f"Wrote zurkt-10yr-outlook-{tag}.json (year 1 {outlook['years'][0]['annual_supply_m3']}, year 10 {outlook['years'][9]['annual_supply_m3']})")
+
+    print("Building demand ladder (25k-300k m3/yr reliability)...")
+    demand_ladder = build_demand_ladder(results, curve)
+    (args.out_dir / f"zurkt-demand-reliability-{tag}.json").write_text(json.dumps(demand_ladder, indent=2), encoding="utf-8")
+    print(f"Wrote zurkt-demand-reliability-{tag}.json")
+    for row in demand_ladder["results"]:
+        print(f"  {row['demand_m3_per_year']:>7,} m3/yr: P(supply>=demand)={row['p_supply_meets_demand']}, "
+              f"shortfall P50={row['shortfall_p50_m3']}, CFRs needed={row['required_source_cfr_count']}")
 
     print("Running sensitivity analysis (6 one-variable cases)...")
     sensitivity = build_sensitivity(cfrs, results)
-    (args.out_dir / "zurkt-sensitivity-v1.json").write_text(json.dumps(sensitivity, indent=2), encoding="utf-8")
-    print("Wrote zurkt-sensitivity-v1.json")
+    (args.out_dir / f"zurkt-sensitivity-{tag}.json").write_text(json.dumps(sensitivity, indent=2), encoding="utf-8")
+    print(f"Wrote zurkt-sensitivity-{tag}.json")
     for row in sensitivity["one_variable_sensitivities"]:
         print(f"  {row['perturbation']}: supply {row['supply_change_pct']}%, cost {row['cost_change_pct']}%")
 
     print("Ranking verification priorities...")
     verification = build_verification_priorities(results)
-    (args.out_dir / "zurkt-verification-priorities-v1.json").write_text(json.dumps(verification, indent=2), encoding="utf-8")
-    print("Wrote zurkt-verification-priorities-v1.json")
+    (args.out_dir / f"zurkt-verification-priorities-{tag}.json").write_text(json.dumps(verification, indent=2), encoding="utf-8")
+    print(f"Wrote zurkt-verification-priorities-{tag}.json")
     for row in verification["top_verification_targets"][:5]:
         print(f"  #{verification['top_verification_targets'].index(row)+1} {row['canonical_name']}: VOI-proxy {row['value_of_information_proxy']}")
 
