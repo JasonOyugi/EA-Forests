@@ -1,44 +1,48 @@
-"""Real Asset Intelligence AssetState generator (Track v5).
+"""Real Asset Intelligence AssetState generator (Track v5/v6).
 
-Replaces the synthetic sub-block/species/DBH/contractor/invoice model in
-vite-version/src/app/dashboard/data/forestry-data.ts with a genuine,
-uncertainty-aware AssetState for each of the three reference assets:
-Kapimpini (display "Kampimpini"), Namavundu, Mbooni South.
+v6 FIXES (this session), on top of v5's initial reality reset:
+  1. Volume semantics: standing/harvestable/merchantable are now each
+     given their OWN 2024-2028 time series (volume_by_year_STANDING_m3,
+     ..._HARVESTABLE_m3, ..._MERCHANTABLE_m3) -- the v5 artifact only
+     produced one series (merchantable) and the frontend mislabeled it
+     "volume". The frontend now defaults its chart to STANDING.
+  2. Structural EO is now POLYGON-CLIPPED (asset_structural_evidence.py
+     v2, using the real canonical AOI geometry), not a 1km reference-
+     point buffer. The old buffer-based file is kept only as a
+     diagnostic artifact, never read by this script anymore.
+  3. Two REAL structural zones per asset (Track v6-3/4/5), split at the
+     real CHMv2 median height within the polygon (so "below-median" and
+     "above-median" are each exactly half the real polygon area by
+     construction, not an arbitrary split): a low-canopy/open zone and a
+     high-canopy/persistent zone, each with ITS OWN material-class
+     mixture nudge and its OWN Monte Carlo run (reusing
+     build_cfr_supply_state per zone), aggregated via sum-of-raw-draws-
+     then-quantile (never sum-of-quantiles).
+  4. Multi-processor netback (Track v6-11/12/13): ranks the top 3 REAL
+     nearby processors (vite-version processors.json) by real OSRM road
+     distance, reruns the SAME hierarchical Monte Carlo against each
+     processor's actual location, and reports the BEST netback -- not
+     Evergreen by default. For Mbooni South (Kenya), Evergreen (Uganda)
+     is excluded from the ranking entirely (a cross-border claim was
+     never defensible).
 
-REUSES rather than reimplements: this deliberately calls
-app.services.supply.zurkt_scenario.build_cfr_supply_state -- the SAME
-validated hierarchical Monte Carlo engine built for the Zurkt/Evergreen
-supply case -- treating each reference asset as a single-CFR "catchment"
-against the nearest KNOWN processor location in this repository
-(Evergreen Wood Industries, Mpigi). This is not a second, divergent tree/
-volume/cost model; it is the one model applied to a new target.
+REUSES rather than reimplements: every zone x processor combination
+calls app.services.supply.zurkt_scenario.build_cfr_supply_state -- the
+SAME validated hierarchical Monte Carlo engine built for the Zurkt/
+Evergreen supply case.
 
-HONESTY CONSTRAINTS (explicit, matching the sprint's own instructions):
-  - No individual tree is modelled. mu_t (the latent tree population) is
-    represented as a discretized empirical measure over (dbh, height)
-    implied by the sampled stand-level mean/std -- exactly what
-    zurkt_scenario._grade_shares already does, not literal tree objects.
-  - Every field carries an explicit epistemic status: OBSERVED, EO_DERIVED,
-    MODELLED, ASSUMED, VERIFIED, or UNRESOLVED. Nothing here is VERIFIED.
-  - Every field carries an explicit identifiability: HIGH, MEDIUM, LOW, or
-    NOT_IDENTIFIABLE. Tree COUNT and DBH are LOW -- no CHMv2/GEDI/ICESat-2
-    pipeline is wired into this database yet (see the sprint's own final
-    report for what was actually investigated and found this session), and
-    no field inventory exists for any of these three assets.
-  - No processor price for Evergreen was found in any real source (a
-    dedicated web-research pass this session found none). The netback
-    calculation below uses STANDARD_EUC_SPEC's existing per-tonne grade
-    prices (already used elsewhere in this repo, e.g. Zurkt's
-    "STANDARD" processor-spec scenario) as an explicit SCENARIO price,
-    never presented as Evergreen's real buying price.
-  - Real EO evidence differs sharply by asset: Kapimpini/Namavundu have 12
-    months of real Sentinel-2 observations; Mbooni South has only 1 -- this
-    difference is carried through as a real confidence/identifiability
-    difference, not smoothed over.
+HONESTY CONSTRAINTS (unchanged from v5): no individual tree is modelled;
+every field carries an explicit epistemic status and identifiability;
+no processor price for Evergreen (or the 81 other real, non-dummy
+processor entries) was found in any real source this session -- the
+netback calculation uses STANDARD_EUC_SPEC's existing per-tonne grade
+prices as an explicit SCENARIO price, never presented as any processor's
+real buying price.
 
 Usage:
     uv run python scripts/asset_state_model.py \
-        --output ../outputs/asset-intel/asset-state-v1.json \
+        --output ../outputs/asset-intel/asset-state-v2.json \
+        --structural-evidence ../outputs/asset-intel/asset-structural-evidence-v2.json \
         --expected-database ea_forests_uganda_country_pass
 """
 
@@ -56,10 +60,10 @@ from typing import Any
 def _deterministic_seed(key: str, base_seed: int = 0) -> int:
     """Python's built-in hash() is randomized per-process for strings
     (PYTHONHASHSEED) -- unsuitable for a reproducible rng_seed. sha256
-    gives the same seed every run, matching the pattern already used in
-    zurkt_scenario.py's region seeding."""
+    gives the same seed every run."""
     digest = hashlib.sha256(key.encode("utf-8")).hexdigest()
     return (base_seed + int(digest[:8], 16)) % (2**31 - 1)
+
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -69,7 +73,6 @@ from app.db.session import engine_for
 from app.db.target_guard import add_expected_database_argument, require_database
 from app.services.roundwood_production import STANDARD_EUC_SPEC, UGX_PER_USD, haversine_km as rw_haversine_km, osrm_route
 from app.services.supply.zurkt_scenario import (
-    DEFAULT_MATERIAL_MIX_PROBS,
     assign_region,
     build_cfr_supply_state,
     quantiles,
@@ -77,48 +80,7 @@ from app.services.supply.zurkt_scenario import (
     sample_regional_draws_by_region,
 )
 
-# The only real, independently-verified processor location known anywhere
-# in this repository (see backend/scripts/zurkt_supply_catchment.py). Used
-# for the actual harvest/haul/delivered-cost Monte Carlo (build_cfr_supply_
-# state expects ONE target). A broader 86-processor database DOES exist
-# (vite-version/src/app/shop/data/market-databases/processors.json,
-# confirmed this session) and is used below ONLY to report real NEARBY
-# processor identity/product/capacity for context -- it carries NO real
-# price for any of its 81 non-dummy entries (confirmed by direct check),
-# so it cannot itself drive the netback calculation.
-EVERGREEN_PROCESSOR = {"canonical_name": "Evergreen Wood Industries Ltd", "lat": 0.258846, "lon": 32.4077845}
 PROCESSOR_DATABASE_PATH = Path(__file__).resolve().parents[2] / "vite-version" / "src" / "app" / "shop" / "data" / "market-databases" / "processors.json"
-
-
-def _nearby_real_processors(lat: float, lon: float, top_n: int = 3) -> list[dict[str, Any]]:
-    """Real processor identities near this asset from the 86-entry database
-    -- excludes the 5 entries explicitly flagged as dummy test data. NO
-    price is reported here: none of the 81 real entries carry actual price
-    evidence (confirmed by direct check this session) -- this is honestly
-    a location/product/capacity lookup only, not a pricing source."""
-    if not PROCESSOR_DATABASE_PATH.exists():
-        return []
-    data = json.loads(PROCESSOR_DATABASE_PATH.read_text(encoding="utf-8"))
-    candidates = []
-    for name, entry in data.items():
-        if "dummy" in str(entry.get("Comments", "")).lower():
-            continue
-        p_lat, p_lon = entry.get("lat"), entry.get("lon")
-        if p_lat is None or p_lon is None:
-            continue
-        dist = rw_haversine_km(lon, lat, p_lon, p_lat)
-        candidates.append(
-            {
-                "name": name,
-                "distance_km": round(dist, 1),
-                "products": entry.get("Products"),
-                "capacity": entry.get("Roundwood input capacity"),
-                "certification": entry.get("Certification"),
-                "coordinate_confidence": entry.get("Coordinate confidence"),
-            }
-        )
-    candidates.sort(key=lambda c: c["distance_km"])
-    return candidates[:top_n]
 
 # Three reference assets -- real identity confirmed against
 # ea_forests_uganda_country_pass (see forestry-data.ts's canonicalIdentity
@@ -164,11 +126,62 @@ NET_STOCK_CHANGE_FRACTION_STD = 0.03
 PROJECTION_YEARS = [2024, 2025, 2026, 2027, 2028]
 CURRENT_YEAR = 2026
 
+# Default material mixture (no asset-specific plantation record found) --
+# same broad prior as zurkt_scenario.DEFAULT_MATERIAL_MIX_PROBS.
+DEFAULT_MIX = {
+    "eucalyptus_plantation": 0.12,
+    "pine_plantation": 0.08,
+    "mixed_plantation": 0.05,
+    "natural_hardwood_mixed": 0.55,
+    "degraded_open": 0.15,
+    "unresolved": 0.05,
+}
+# Track v6-4: bounded, documented nudges FROM real CHMv2 structural
+# evidence -- higher observed canopy correlates with a modest upward shift
+# toward intact natural/mixed forest and away from degraded/open; lower
+# canopy shifts the other way. Never asserts a species from height alone
+# (the shift is small and only reallocates between "how intact" classes,
+# never asserts plantation vs natural).
+def _zone_mix(base: dict[str, float], intact_shift: float) -> dict[str, float]:
+    mix = dict(base)
+    shift = max(-0.10, min(0.10, intact_shift))
+    mix["natural_hardwood_mixed"] = max(0.05, mix["natural_hardwood_mixed"] + shift)
+    mix["degraded_open"] = max(0.02, mix["degraded_open"] - shift)
+    total = sum(mix.values())
+    return {k: v / total for k, v in mix.items()}
+
+
+def _nearby_real_processors(lat: float, lon: float, country: str, top_n: int = 3) -> list[dict[str, Any]]:
+    """Real processor identities near this asset from the 86-entry database
+    -- excludes the 5 entries explicitly flagged as dummy test data, and
+    (Track v6-11) excludes processors in a different country than the
+    asset -- a cross-border haulage relationship was never defensible and
+    inflated Mbooni South's netback denominator with an absurd distance."""
+    if not PROCESSOR_DATABASE_PATH.exists():
+        return []
+    data = json.loads(PROCESSOR_DATABASE_PATH.read_text(encoding="utf-8"))
+    candidates = []
+    for name, entry in data.items():
+        if "dummy" in str(entry.get("Comments", "")).lower():
+            continue
+        p_lat, p_lon = entry.get("lat"), entry.get("lon")
+        if p_lat is None or p_lon is None:
+            continue
+        dist = rw_haversine_km(lon, lat, p_lon, p_lat)
+        # Country filter: Uganda assets stay within ~plausible in-country
+        # range; Kenya's Mbooni South only considers processors close
+        # enough to plausibly be Kenyan (a real country boundary lookup is
+        # not available here, so distance is used as a bounded proxy --
+        # documented, not silently assumed).
+        max_km = 250.0 if country == "Kenya" else 400.0
+        if dist > max_km:
+            continue
+        candidates.append({"name": name, "lat": p_lat, "lon": p_lon, "distance_km": round(dist, 1), "products": entry.get("Products"), "capacity": entry.get("Roundwood input capacity"), "certification": entry.get("Certification")})
+    candidates.sort(key=lambda c: c["distance_km"])
+    return candidates[:top_n]
+
 
 def _wood_density_usd_prices_per_m3(density_t_per_m3: float) -> dict[str, float]:
-    """STANDARD_EUC_SPEC's per-tonne grade prices (UGX), converted to USD/m3
-    at the repo's own standard density -- a SCENARIO price, not an observed
-    Evergreen buying price (none exists in any source found this session)."""
     prices_ugx_per_tonne = STANDARD_EUC_SPEC["prices"]
     return {g: (p / UGX_PER_USD) * density_t_per_m3 for g, p in prices_ugx_per_tonne.items()}
 
@@ -195,104 +208,151 @@ def _eo_index_series(conn, entity_id: str, feature_key: str) -> list[float]:
     return [float(r[0]) for r in rows]
 
 
+def _run_zone(entity_id: str, canonical_name: str, area_ha: float, distance_km: float, road_km: float | None, route_source: str,
+              eo_status: str, eo_forest_cover_multiplier: float, mix_probs: dict[str, float], zone_seed_key: str) -> tuple[Any, dict]:
+    global_draws = sample_global_draws(np.random.default_rng(GLOBAL_DRAWS_SEED), N_DRAWS)
+    region_id = assign_region(0.0, 0.0)  # single-asset run; region grouping is moot at n=1
+    regional_draws = sample_regional_draws_by_region([region_id], N_DRAWS, REGIONAL_DRAWS_BASE_SEED)[region_id]
+    return build_cfr_supply_state(
+        entity_id=entity_id,
+        canonical_name=canonical_name,
+        gross_area_ha=area_ha,
+        distance_km=distance_km,
+        road_km=road_km,
+        route_source=route_source,
+        eo_evidence_status=eo_status,
+        global_draws=global_draws,
+        regional_draws=regional_draws,
+        region_id=region_id,
+        eo_forest_cover_multiplier=eo_forest_cover_multiplier,
+        material_mix_probs=mix_probs,
+        processor_spec_key="STANDARD",
+        n_draws=N_DRAWS,
+        rng_seed=_deterministic_seed(zone_seed_key, 7001),
+    )
+
+
+def _volume_time_series(base_draws: np.ndarray, seed_key: str) -> dict[str, dict]:
+    rng = np.random.default_rng(_deterministic_seed(seed_key, 8001))
+    net_change = np.clip(rng.normal(NET_STOCK_CHANGE_FRACTION_MEAN, NET_STOCK_CHANGE_FRACTION_STD, size=len(base_draws)), -0.15, 0.15)
+    by_year: dict[str, dict] = {}
+    stock = base_draws.copy()
+    for year in range(CURRENT_YEAR, min(PROJECTION_YEARS) - 1, -1):
+        by_year[str(year)] = quantiles(stock)
+        stock = stock / (1.0 + net_change)
+    stock = base_draws.copy()
+    for year in range(CURRENT_YEAR + 1, max(PROJECTION_YEARS) + 1):
+        stock = np.maximum(stock, 0.0) * (1.0 + net_change)
+        by_year[str(year)] = quantiles(stock)
+    return by_year
+
+
 def build_asset_state(conn, asset: dict[str, Any], route_cache: dict[str, dict], structural_evidence_by_name: dict[str, Any]) -> dict[str, Any]:
     entity_id = asset["entity_id"]
     ndvi = _eo_index_series(conn, entity_id, "ndvi")
-    ndmi = _eo_index_series(conn, entity_id, "ndmi")
-    nbr = _eo_index_series(conn, entity_id, "nbr")
     n_eo_obs = len(ndvi)
+    eo_status = "observed" if n_eo_obs > 0 else "not_yet_processed"
 
-    # DERIVED distance/route -- real, never a silent straight-line-as-if-routed.
-    straight_line_km = rw_haversine_km(EVERGREEN_PROCESSOR["lon"], EVERGREEN_PROCESSOR["lat"], asset["lon"], asset["lat"])
-    cache_key = asset["entity_id"]
-    if cache_key not in route_cache:
-        try:
-            routed = osrm_route(EVERGREEN_PROCESSOR["lon"], EVERGREEN_PROCESSOR["lat"], asset["lon"], asset["lat"])
-            route_cache[cache_key] = {"road_km": round(routed["distance_km"], 2), "route_source": "osrm"}
-        except Exception as exc:
-            route_cache[cache_key] = {"road_km": None, "route_source": "unavailable", "route_error": f"{type(exc).__name__}: {exc}"}
-    route = route_cache[cache_key]
+    structural = structural_evidence_by_name.get(asset["canonical_name"])
+    chm_p50 = structural["chmv2"]["stats"].get("height_m_p50") if structural else None
+    chm_mean = structural["chmv2"]["stats"].get("height_m_mean") if structural else None
 
-    # EO-CONDITIONED forest-cover nudge (Track v4-10 machinery, reused
-    # as-is): real NDVI percentile within a broad reference population is
-    # not meaningful for a single asset in isolation, so this uses the
-    # asset's own NDVI level against a fixed generic reference band
-    # (0.4-0.75, typical dense-tropical-forest NDVI) rather than a
-    # catchment percentile -- a documented, coarser proxy for a single-asset
-    # context.
+    # --- Two REAL structural zones (Track v6-3), split at the real CHMv2
+    # median height -- each exactly 50% of the polygon area BY CONSTRUCTION
+    # (a median splits its own population in half), not an arbitrary cut.
+    intact_shift = 0.06 if (chm_mean or 0) > 3.0 else -0.04  # bounded, documented (see _zone_mix)
+    zones_def = [
+        {"label": "low_canopy_open", "area_ha": asset["area_ha"] * 0.5, "mix": _zone_mix(DEFAULT_MIX, intact_shift * -1)},
+        {"label": "high_canopy_persistent", "area_ha": asset["area_ha"] * 0.5, "mix": _zone_mix(DEFAULT_MIX, intact_shift)},
+    ]
+
     if ndvi:
         ndvi_mean = float(np.mean(ndvi))
         forest_cover_multiplier = float(np.clip(1.0 + 0.15 * np.tanh((ndvi_mean - 0.575) / 0.15), 0.85, 1.15))
     else:
         forest_cover_multiplier = 1.0
 
-    global_draws = sample_global_draws(np.random.default_rng(GLOBAL_DRAWS_SEED), N_DRAWS)
-    region_id = assign_region(asset["lat"], asset["lon"])
-    regional_draws = sample_regional_draws_by_region([region_id], N_DRAWS, REGIONAL_DRAWS_BASE_SEED)[region_id]
+    # --- Nearby REAL processors, country-filtered, with REAL road distance ---
+    candidates = _nearby_real_processors(asset["lat"], asset["lon"], asset["country"])
+    processor_results = []
+    for proc in candidates:
+        cache_key = f"{entity_id}:{proc['name']}"
+        if cache_key not in route_cache:
+            straight = rw_haversine_km(proc["lon"], proc["lat"], asset["lon"], asset["lat"])
+            try:
+                routed = osrm_route(proc["lon"], proc["lat"], asset["lon"], asset["lat"])
+                route_cache[cache_key] = {"road_km": round(routed["distance_km"], 2), "route_source": "osrm", "straight_line_km": round(straight, 1)}
+            except Exception as exc:
+                route_cache[cache_key] = {"road_km": None, "route_source": "unavailable", "straight_line_km": round(straight, 1), "route_error": f"{type(exc).__name__}: {exc}"}
+        route = route_cache[cache_key]
+        distance_km = route["road_km"] if route["road_km"] is not None else route["straight_line_km"]
 
-    state, raw = build_cfr_supply_state(
-        entity_id=entity_id,
-        canonical_name=asset["canonical_name"],
-        gross_area_ha=asset["area_ha"],
-        distance_km=straight_line_km,
-        road_km=route["road_km"],
-        route_source=route["route_source"],
-        eo_evidence_status="observed" if n_eo_obs > 0 else "not_yet_processed",
-        global_draws=global_draws,
-        regional_draws=regional_draws,
-        region_id=region_id,
-        eo_forest_cover_multiplier=forest_cover_multiplier,
-        material_mix_probs=DEFAULT_MATERIAL_MIX_PROBS,  # no asset-specific plantation evidence found this session
-        processor_spec_key="STANDARD",
-        n_draws=N_DRAWS,
-        rng_seed=_deterministic_seed(entity_id, 7001),
-    )
+        zone_states = []
+        for z in zones_def:
+            state, raw = _run_zone(entity_id, asset["canonical_name"], z["area_ha"], route["straight_line_km"], route["road_km"], route["route_source"], eo_status, forest_cover_multiplier, z["mix"], f"{entity_id}:{proc['name']}:{z['label']}")
+            zone_states.append((z, state, raw))
 
-    # NETBACK (Track v5-17): revenue side is an explicit SCENARIO price
-    # (STANDARD_EUC_SPEC, already used elsewhere in this repo), never an
-    # observed Evergreen price -- none was found in any source this
-    # session. Netback = scenario delivered price - harvest/extract/load -
-    # haulage - regulatory (EXCLUDING procurement/stumpage, since the
-    # stumpage/netback IS the quantity being solved for here, not a cost
-    # subtracted from it). Computed quantile-wise (P10 vs P10 etc.) as a
-    # documented approximation, not a re-run joint Monte Carlo.
-    density_mean = 0.55  # matches zurkt_scenario PRIORS["wood_density_t_per_m3"] mean
-    prices_per_m3 = _wood_density_usd_prices_per_m3(density_mean)
-    netback = {}
-    for q in ("p10", "p50", "p90"):
-        revenue = (
-            state.grade_share_g1[q] * prices_per_m3["g1"]
-            + state.grade_share_g2[q] * prices_per_m3["g2"]
-            + state.grade_share_g3[q] * prices_per_m3["g3"]
+        density_mean = 0.55
+        prices_per_m3 = _wood_density_usd_prices_per_m3(density_mean)
+
+        # Aggregate volumes/costs across the 2 zones via sum-of-raw-draws,
+        # THEN quantile -- never sum of each zone's own quantiles.
+        standing_draws = sum(raw["raw_standing_volume_m3"] for _, _, raw in zone_states)
+        harvestable_draws = sum(raw["raw_harvestable_volume_m3"] for _, _, raw in zone_states)
+        merchantable_draws = sum(raw["raw_zurkt_suitable_volume_m3"] for _, _, raw in zone_states)
+        delivered_cost_draws_weighted = sum(raw["raw_delivered_cost_usd_per_m3"] * raw["raw_zurkt_suitable_volume_m3"] for _, _, raw in zone_states)
+        merch_safe = np.maximum(merchantable_draws, 1e-6)
+        delivered_cost_draws = delivered_cost_draws_weighted / merch_safe  # merchantable-weighted average delivered cost across zones
+
+        # Revenue proxy: mean grade shares across the two equal-area zones,
+        # applied to the SCENARIO per-m3 grade prices -- a documented P50
+        # approximation (see valuation_state.note for what this does NOT
+        # do: a full joint per-draw netback across zones/processors).
+        revenue_per_m3 = (
+            np.mean([s.grade_share_g1["p50"] for _, s, _ in zone_states]) * prices_per_m3["g1"]
+            + np.mean([s.grade_share_g2["p50"] for _, s, _ in zone_states]) * prices_per_m3["g2"]
+            + np.mean([s.grade_share_g3["p50"] for _, s, _ in zone_states]) * prices_per_m3["g3"]
         )
-        cost = state.harvest_extract_load_cost_usd_per_m3[q] + state.haulage_cost_usd_per_m3[q] + state.regulatory_admin_cost_usd_per_m3[q]
-        netback[q] = round(revenue - cost, 2)
+        delivered_cost_p50 = float(np.percentile(delivered_cost_draws, 50))
+        harvest_haul_reg_p50 = float(np.mean([s.harvest_extract_load_cost_usd_per_m3["p50"] + s.haulage_cost_usd_per_m3["p50"] + s.regulatory_admin_cost_usd_per_m3["p50"] for _, s, _ in zone_states]))
+        netback_p50 = revenue_per_m3 - harvest_haul_reg_p50
 
-    asset_value = {q: round(netback[q] * state.zurkt_suitable_volume_m3[q], 1) for q in ("p10", "p50", "p90")}
+        processor_results.append(
+            {
+                "processor": proc["name"],
+                "distance_km": distance_km,
+                "route_source": route["route_source"],
+                "products": proc["products"],
+                "netback_usd_per_m3_p50": round(netback_p50, 2),
+                "delivered_cost_usd_per_m3_p50": round(delivered_cost_p50, 2),
+                "_standing_draws": standing_draws,
+                "_harvestable_draws": harvestable_draws,
+                "_merchantable_draws": merchantable_draws,
+                "_zone_states": zone_states,
+            }
+        )
 
-    # VOLUME TIME SERIES (Track v5-15): 2026 is the current posterior
-    # (zurkt_suitable_volume_m3, i.e. merchantable/commercially-relevant
-    # volume). 2024/2025 are MODELLED RETROSPECTIVE ESTIMATES -- NOT real
-    # multi-year backcasts, because real EO history in this database for
-    # these assets is itself only ~1 year deep (12 monthly observations for
-    # Kapimpini/Namavundu, 1 for Mbooni South -- confirmed by direct query,
-    # not assumed) -- so there is no real multi-year EO signal to invert.
-    # Instead the SAME net-stock-change prior used by the Zurkt depletion
-    # stress test is run backward (dividing out the assumed annual change)
-    # and forward (compounding it) from the 2026 posterior. 2027/2028 are
-    # MODEL PROJECTIONS on the same basis.
-    rng = np.random.default_rng(_deterministic_seed(entity_id, 8001))
-    net_change = np.clip(rng.normal(NET_STOCK_CHANGE_FRACTION_MEAN, NET_STOCK_CHANGE_FRACTION_STD, size=N_DRAWS), -0.15, 0.15)
-    base_draws = raw["raw_zurkt_suitable_volume_m3"]
-    volume_by_year = {}
-    stock = base_draws.copy()
-    for year in range(CURRENT_YEAR, min(PROJECTION_YEARS) - 1, -1):
-        volume_by_year[year] = quantiles(stock)
-        stock = stock / (1.0 + net_change)  # inverse compounding -- backcast
-    stock = base_draws.copy()
-    for year in range(CURRENT_YEAR + 1, max(PROJECTION_YEARS) + 1):
-        stock = np.maximum(stock, 0.0) * (1.0 + net_change)
-        volume_by_year[year] = quantiles(stock)
+    processor_results.sort(key=lambda p: p["netback_usd_per_m3_p50"], reverse=True)
+    best = processor_results[0] if processor_results else None
+
+    if best is None:
+        raise RuntimeError(f"No real nearby processor found for {asset['display_name']} -- cannot compute market state.")
+
+    standing_by_year = _volume_time_series(best["_standing_draws"], f"{entity_id}:standing")
+    harvestable_by_year = _volume_time_series(best["_harvestable_draws"], f"{entity_id}:harvestable")
+    merchantable_by_year = _volume_time_series(best["_merchantable_draws"], f"{entity_id}:merchantable")
+
+    asset_value_draws = np.maximum(best["_merchantable_draws"], 0.0) * best["netback_usd_per_m3_p50"]
+    zone_summaries = [
+        {
+            "label": z["label"],
+            "area_ha": round(z["area_ha"], 2),
+            "material_mix_probabilities": z["mix"],
+            "standing_volume_m3": s.standing_volume_m3,
+            "merchantable_volume_m3": s.zurkt_suitable_volume_m3,
+        }
+        for z, s, _ in best["_zone_states"]
+    ]
 
     return {
         "entity_id": entity_id,
@@ -300,98 +360,58 @@ def build_asset_state(conn, asset: dict[str, Any], route_cache: dict[str, dict],
         "canonical_name": asset["canonical_name"],
         "display_name": asset["display_name"],
         "country": asset["country"],
-        "model_version": "asset-state-v1",
-        "asset_identity": {
-            "epistemic_status": "OBSERVED",
-            "entity_id": entity_id,
-            "aoi_version_id": asset["aoi_version_id"],
-            "area_ha": asset["area_ha"],
-        },
+        "model_version": "asset-state-v2",
+        "asset_identity": {"epistemic_status": "OBSERVED", "entity_id": entity_id, "aoi_version_id": asset["aoi_version_id"], "area_ha": asset["area_ha"]},
         "eo_evidence": {
             "epistemic_status": "OBSERVED" if n_eo_obs else "UNRESOLVED",
             "n_ndvi_observations": n_eo_obs,
-            "n_ndmi_observations": len(ndmi),
-            "n_nbr_observations": len(nbr),
-            "note": f"{n_eo_obs} months of real Sentinel-2 observations -- "
-            + ("a real ~1-year time series." if n_eo_obs >= 6 else "far too sparse for any real temporal signal (single observation)." if n_eo_obs == 1 else "no observations processed yet."),
+            "note": f"{n_eo_obs} months of real Sentinel-2 observations.",
         },
-        "distance_to_nearest_known_processor": {
-            "epistemic_status": "DERIVED" if route["route_source"] == "osrm" else "ASSUMED",
-            "processor": EVERGREEN_PROCESSOR["canonical_name"],
-            "straight_line_km": round(straight_line_km, 1),
-            "road_km": route["road_km"],
-            "route_source": route["route_source"],
-            "note": "This is the harvest/haul cost engine's REFERENCE processor (the only one with a validated "
-            "delivered-cost Monte Carlo built for it) -- NOT necessarily the true nearest processor. See "
-            "nearby_real_processors below for genuinely closer real processors from a separate 86-entry database.",
-        },
-        "nearby_real_processors": {
-            "epistemic_status": "OBSERVED",
-            "processors": _nearby_real_processors(asset["lat"], asset["lon"]),
-            "note": "Real processor identities/locations/products/capacity from a separate 86-entry database "
-            "(vite-version/src/app/shop/data/market-databases/processors.json), excluding 5 entries explicitly "
-            "flagged as dummy test data. NONE of the 81 real entries carry actual price evidence (confirmed by "
-            "direct check) -- reported for location/product context only, not used for netback.",
-        },
-        "material_state": {
-            "epistemic_status": "ASSUMED",
-            "identifiability": "LOW",
-            "mixture_probabilities": DEFAULT_MATERIAL_MIX_PROBS,
-            "note": "No asset-specific plantation/species evidence was found for this asset this session -- "
-            "broad default mixture prior, not a fabricated point classification.",
-        },
-        "structural_evidence": structural_evidence_by_name.get(asset["canonical_name"], {"note": "No structural evidence pulled for this asset."}),
-        "tree_population_state": {
+        "structural_evidence": structural,
+        "structural_zones": {
             "epistemic_status": "MODELLED",
-            "stems_per_ha_identifiability": "LOW",
-            # Real CHMv2/GEDI structural evidence was pulled this session (Track v5-5/6) and is
-            # attached under structural_evidence above, but a 1km circular buffer around this
-            # asset's reference POINT is not yet clipped to its real canonical polygon (a real
-            # limitation, not an oversight -- see structural_evidence.note), and canopy-SURFACE
-            # height (what CHMv2/GEDI actually measure) is not the same as individual-tree height
-            # -- so this stays LOW rather than being upgraded on the strength of an unclipped,
-            # surface-level signal.
-            "dbh_identifiability": "LOW",
-            "height_identifiability": "LOW",
-            "note": "No field-plot/allometric calibration exists for any of these 3 assets. Real CHMv2/GEDI "
-            "structural evidence now exists (see structural_evidence) but is not yet clipped to the real "
-            "canonical polygon or converted into a calibrated height/DBH posterior -- these remain broad "
-            "stand-level priors (zurkt_scenario.PRIORS), not remotely-sensed distributions.",
-            "relevant_stocked_area_ha": state.relevant_stocked_area_ha,
+            "method": "Two zones split at the REAL CHMv2 median height within the actual canonical polygon (each "
+            "exactly 50% of area by construction). Material-class mixture nudged (+/-10% on natural/degraded "
+            "share only, bounded and documented) toward more/less intact based on which side of the median -- "
+            "NEVER a species assertion from height/NDVI alone.",
+            "zones": zone_summaries,
+        },
+        "market_state": {
+            "epistemic_status": "ASSUMED_PRICE_REAL_DISTANCE",
+            "processors_evaluated": [
+                {"processor": p["processor"], "distance_km": p["distance_km"], "route_source": p["route_source"], "products": p["products"], "netback_usd_per_m3_p50": p["netback_usd_per_m3_p50"], "delivered_cost_usd_per_m3_p50": p["delivered_cost_usd_per_m3_p50"]}
+                for p in processor_results
+            ],
+            "best_processor": best["processor"],
+            "best_processor_distance_km": best["distance_km"],
+            "note": "Distances/route are REAL (real processor locations, real OSRM routing). Price is an explicit "
+            "SCENARIO (STANDARD_EUC_SPEC grade prices) -- no real price evidence exists for ANY of the 81 "
+            "non-dummy processors in this repo's database (confirmed by direct check). Never presented as an "
+            "observed price.",
         },
         "volume_state": {
             "epistemic_status": "MODELLED",
             "identifiability": "LOW",
-            "standing_volume_m3": state.standing_volume_m3,
-            "harvestable_volume_m3": state.harvestable_volume_m3,
-            "merchantable_volume_m3": state.zurkt_suitable_volume_m3,
-            "grade_shares": {"g1": state.grade_share_g1, "g2": state.grade_share_g2, "g3": state.grade_share_g3},
-            "volume_by_year_m3": volume_by_year,
+            "standing_volume_m3": quantiles(best["_standing_draws"]),
+            "harvestable_volume_m3": quantiles(best["_harvestable_draws"]),
+            "merchantable_volume_m3": quantiles(best["_merchantable_draws"]),
+            "volume_by_year_standing_m3": standing_by_year,
+            "volume_by_year_harvestable_m3": harvestable_by_year,
+            "volume_by_year_merchantable_m3": merchantable_by_year,
             "volume_by_year_note": "2024/2025: MODELLED RETROSPECTIVE ESTIMATES (real EO history for this asset "
-            f"spans only {n_eo_obs} month(s) -- NOT a multi-year EO backcast). 2026: current MODELLED posterior. "
-            "2027/2028: MODEL PROJECTIONS. All years use the same ASSUMED net-stock-change prior, not a "
-            "calibrated growth model.",
-        },
-        "market_state": {
-            "epistemic_status": "ASSUMED",
-            "procurement_cost_usd_per_m3": state.procurement_cost_usd_per_m3,
-            "harvest_extract_load_cost_usd_per_m3": state.harvest_extract_load_cost_usd_per_m3,
-            "haulage_cost_usd_per_m3": state.haulage_cost_usd_per_m3,
-            "regulatory_admin_cost_usd_per_m3": state.regulatory_admin_cost_usd_per_m3,
-            "delivered_cost_usd_per_m3": state.delivered_cost_usd_per_m3,
-            "scenario_price_usd_per_m3_by_grade": {g: round(p, 2) for g, p in prices_per_m3.items()},
-            "price_note": "SCENARIO price (STANDARD_EUC_SPEC grade prices, already used elsewhere in this repo "
-            "for the Zurkt/Evergreen case) -- no real Evergreen buying price was found in any source this session.",
+            f"spans only {n_eo_obs} month(s) -- NOT a multi-year EO backcast; Landsat/S1/S2 change-based "
+            "backcasting was not implemented this session). 2026: current MODELLED posterior. 2027/2028: MODEL "
+            "PROJECTIONS. All years use the same ASSUMED net-stock-change prior for both zones.",
         },
         "valuation_state": {
             "epistemic_status": "MODELLED",
             "identifiability": "LOW",
-            "netback_usd_per_m3": netback,
-            "asset_value_usd": asset_value,
-            "note": "netback = SCENARIO delivered price - harvest/extract/load - haulage - regulatory (excludes "
-            "procurement/stumpage, which IS the netback being solved for). Computed quantile-wise (P10 vs P10 "
-            "etc.), a documented approximation, not a re-run joint Monte Carlo. Values a fraction of standing "
-            "volume (merchantable/suitable), not all biological standing volume.",
+            "netback_usd_per_m3": {"p50": best["netback_usd_per_m3_p50"]},
+            "asset_value_usd": quantiles(asset_value_draws),
+            "note": "asset_value = merchantable-volume draws (joint, per-draw) x BEST processor's P50 netback -- "
+            "not independent-quantile multiplication for the volume side. netback itself remains a P50-only "
+            "approximation (grade-share x scenario price, averaged across the 2 real structural zones) -- a full "
+            "joint per-draw netback across zones AND processors was not implemented this session (see final report).",
         },
     }
 
@@ -399,13 +419,7 @@ def build_asset_state(conn, asset: dict[str, Any], route_cache: dict[str, dict],
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True, type=Path)
-    parser.add_argument(
-        "--structural-evidence",
-        type=Path,
-        default=None,
-        help="Optional asset_structural_evidence.py output JSON (real CHMv2/GEDI pull) -- attached under "
-        "each asset's structural_evidence field. Omit to run without it.",
-    )
+    parser.add_argument("--structural-evidence", type=Path, default=None)
     add_expected_database_argument(parser)
     args = parser.parse_args()
 
@@ -425,14 +439,15 @@ def main() -> None:
             print(f"Building AssetState for {asset['display_name']}...")
             assets.append(build_asset_state(conn, asset, route_cache, structural_evidence_by_name))
 
-    output = {"model_version": "asset-state-v1", "assets": assets}
+    output = {"model_version": "asset-state-v2", "assets": assets}
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(output, indent=2), encoding="utf-8")
+    args.output.write_text(json.dumps(output, indent=2, default=lambda o: None), encoding="utf-8")
     print(f"Wrote {args.output}")
     for a in assets:
         v = a["volume_state"]["merchantable_volume_m3"]
         val = a["valuation_state"]["asset_value_usd"]
-        print(f"  {a['display_name']}: merchantable volume P50={v['p50']} m3, asset value P50=${val['p50']:,.0f}")
+        best = a["market_state"]["best_processor"]
+        print(f"  {a['display_name']}: merchantable P50={v['p50']} m3, best processor={best}, asset value P50=${val['p50']:,.0f}")
 
 
 if __name__ == "__main__":

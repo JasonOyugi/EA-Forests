@@ -4,7 +4,6 @@ import * as React from "react"
 import { BaseLayout } from "@/components/layouts/base-layout"
 import { ChartAreaInteractive } from "./components/chart-area-interactive"
 import { DashboardAssetMap } from "./components/dashboard-asset-map"
-import { createDashboardCalendarEvents } from "./components/dashboard-events"
 import { DataTable } from "./components/data-table"
 import { DashboardViewToggle } from "./components/dashboard-view-toggle"
 import { SectionCards } from "./components/section-cards"
@@ -12,7 +11,6 @@ import { SpeciesAllocation } from "./components/species-allocation"
 import { AssetCurrentBelief } from "./components/asset-current-belief"
 import { initialAssetGroups } from "./data/forestry-data"
 import type { MetricKey } from "./components/chart-area-interactive"
-import type { CalendarEvent } from "@/app/calendar/types"
 
 function fmtUsd(v: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(v)
@@ -26,9 +24,9 @@ export default function Page() {
   const assetMapRef = React.useRef<HTMLDivElement | null>(null)
   const tableRef = React.useRef<HTMLDivElement | null>(null)
   const [metric, setMetric] = React.useState<MetricKey>("portfolioValue")
+  const [volumeTier, setVolumeTier] = React.useState<"standing_volume_m3" | "harvestable_volume_m3" | "merchantable_volume_m3">("standing_volume_m3")
   const [tableTab, setTableTab] = React.useState<"assets" | "transactions" | "activity-logs" | "documents">("assets")
   const [transactionsHighlightKey] = React.useState(0)
-  const [dashboardEvents, setDashboardEvents] = React.useState<CalendarEvent[]>(() => createDashboardCalendarEvents())
   const [selectedAssetMapId, setSelectedAssetMapId] = React.useState(initialAssetGroups[0]?.id ?? "")
 
   const selectedGroup = React.useMemo(
@@ -51,6 +49,12 @@ export default function Page() {
   const v = state.volume_state
   const val = state.valuation_state
   const netbackP50 = val.netback_usd_per_m3.p50
+  const volumeTierLabels: Record<typeof volumeTier, string> = {
+    standing_volume_m3: "Standing",
+    harvestable_volume_m3: "Harvestable",
+    merchantable_volume_m3: "Merchantable",
+  }
+  const selectedVolume = v[volumeTier]
 
   return (
     <BaseLayout title="Asset Intelligence" description="Real canonical assets, real EO evidence, real modelled state -- no fabricated forestry data">
@@ -74,6 +78,19 @@ export default function Page() {
           <strong className="text-foreground">{selectedGroup.block}</strong> -- {selectedGroup.summaryDescription}
         </div>
 
+        <div className="flex items-center gap-2 text-xs">
+          <span className="text-muted-foreground">Volume tier (Track v6-1 fix -- standing/harvestable/merchantable are distinct, never blended):</span>
+          {(["standing_volume_m3", "harvestable_volume_m3", "merchantable_volume_m3"] as const).map((tier) => (
+            <button
+              key={tier}
+              onClick={() => setVolumeTier(tier)}
+              className={`rounded-full border px-3 py-1 font-medium transition-colors ${volumeTier === tier ? "bg-primary text-primary-foreground" : "bg-background hover:bg-muted"}`}
+            >
+              {volumeTierLabels[tier]}
+            </button>
+          ))}
+        </div>
+
         <SectionCards
           onForestAreaClick={() => handleMetricCardClick("landManaged")}
           onVolumeClick={() => handleMetricCardClick("expectedVolume")}
@@ -81,9 +98,9 @@ export default function Page() {
           onValueClick={() => handleMetricCardClick("portfolioValue")}
           forestArea={`${fmtNum(state.asset_identity.area_ha)} ha`}
           forestAreaSummary={`Real canonical AOI polygon area (${state.asset_identity.epistemic_status})`}
-          standingVolume={`${fmtNum(v.merchantable_volume_m3.p50)} m3`}
+          standingVolume={`${fmtNum(selectedVolume.p50)} m3`}
           volumeRangeLabel="MODELLED, LOW ID."
-          volumeSummary={`P10 ${fmtNum(v.merchantable_volume_m3.p10)} - P90 ${fmtNum(v.merchantable_volume_m3.p90)} m3 merchantable`}
+          volumeSummary={`P10 ${fmtNum(selectedVolume.p10)} - P90 ${fmtNum(selectedVolume.p90)} m3 (${volumeTierLabels[volumeTier]})`}
           bestNetback={`${fmtUsd(netbackP50)}/m3`}
           netbackTrendUp={netbackP50 >= 0}
           netbackSummary={netbackP50 >= 0 ? "Scenario price covers harvest/haul/regulatory cost" : "Scenario price does NOT cover harvest/haul/regulatory cost at this distance -- see market state"}
@@ -112,8 +129,6 @@ export default function Page() {
           activeTab={tableTab}
           onActiveTabChange={setTableTab}
           transactionsHighlightKey={transactionsHighlightKey}
-          events={dashboardEvents}
-          onEventsChange={setDashboardEvents}
           onAssetMapOpen={handleAssetMapOpen}
         />
       </div>

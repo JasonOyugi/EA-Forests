@@ -49,12 +49,12 @@ export function AssetCurrentBelief({ group }: { group: AssetGroup }) {
       <CardContent className="space-y-4">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-xl border p-3">
-            <div className="text-xs text-muted-foreground">Material class mixture</div>
-            <IdentifiabilityBadge level={state.material_state.identifiability} />
+            <div className="text-xs text-muted-foreground">Material class mixture (2 real structural zones)</div>
+            <IdentifiabilityBadge level="LOW" />
             <div className="mt-2 space-y-1 text-xs">
-              {zones.slice(0, 3).map((z) => (
+              {zones.slice(0, 4).map((z) => (
                 <div key={z.id} className="flex justify-between">
-                  <span>{formatMaterialClassLabel(z.materialClass)}</span>
+                  <span>{formatMaterialClassLabel(z.materialClass)} <span className="opacity-60">({z.zoneLabel.replace("_", " ")})</span></span>
                   <span className="font-mono">{Math.round(z.probability * 100)}%</span>
                 </div>
               ))}
@@ -62,14 +62,14 @@ export function AssetCurrentBelief({ group }: { group: AssetGroup }) {
           </div>
           <div className="rounded-xl border p-3">
             <div className="text-xs text-muted-foreground">Tree population (stems/DBH/height)</div>
-            <IdentifiabilityBadge level={state.tree_population_state.dbh_identifiability} />
-            <p className="mt-2 text-xs text-muted-foreground">{state.tree_population_state.note}</p>
+            <IdentifiabilityBadge level="LOW" />
+            <p className="mt-2 text-xs text-muted-foreground">No field inventory or calibrated remote-sensing count exists -- broad stand-level priors only, split across the 2 real structural zones.</p>
           </div>
           <div className="rounded-xl border p-3">
             <div className="text-xs text-muted-foreground">Standing volume</div>
             <IdentifiabilityBadge level={state.volume_state.identifiability} />
             <p className="mt-2 text-xs text-muted-foreground">
-              P10 {Math.round(state.volume_state.merchantable_volume_m3.p10)} - P50 {Math.round(state.volume_state.merchantable_volume_m3.p50)} - P90 {Math.round(state.volume_state.merchantable_volume_m3.p90)} m3
+              P10 {Math.round(state.volume_state.standing_volume_m3.p10)} - P50 {Math.round(state.volume_state.standing_volume_m3.p50)} - P90 {Math.round(state.volume_state.standing_volume_m3.p90)} m3
             </p>
           </div>
           <div className="rounded-xl border p-3">
@@ -81,10 +81,27 @@ export function AssetCurrentBelief({ group }: { group: AssetGroup }) {
 
         {state.structural_evidence ? (
           <div className="rounded-xl border p-3 text-xs">
-            <div className="mb-1 font-medium">Real structural evidence (Meta/WRI CHMv2 + GEDI, pulled this session)</div>
-            <p className="text-muted-foreground">{state.structural_evidence.note}</p>
+            <div className="mb-1 font-medium">Real polygon-clipped structural evidence (Meta/WRI CHMv2 + GEDI)</div>
+            <p className="text-muted-foreground">{state.structural_evidence.clip_method}</p>
+            <p className="mt-1 text-muted-foreground">
+              CHMv2 median height (within polygon): {state.structural_evidence.chmv2.stats.height_m_p50}m, P98 {state.structural_evidence.chmv2.stats.height_m_p98}m.
+              GEDI: {state.structural_evidence.gedi.n_shots_quality_flag_1}/{state.structural_evidence.gedi.n_shots_sampled} quality footprints, rh98 mean {state.structural_evidence.gedi.rh98_quality_mean_m}m.
+            </p>
           </div>
         ) : null}
+
+        <div className="rounded-xl border p-3 text-xs">
+          <div className="mb-2 font-medium">Real nearby processors evaluated (ranked by netback, not just distance)</div>
+          <div className="space-y-1">
+            {state.market_state.processors_evaluated.map((p) => (
+              <div key={p.processor} className={`flex items-center justify-between rounded-md px-2 py-1 ${p.processor === state.market_state.best_processor ? "bg-emerald-500/10" : ""}`}>
+                <span>{p.processor} {p.processor === state.market_state.best_processor ? <span className="text-emerald-500">(best)</span> : null} -- {p.distance_km}km ({p.route_source})</span>
+                <span className="font-mono">${p.netback_usd_per_m3_p50}/m3</span>
+              </div>
+            ))}
+          </div>
+          <p className="mt-2 text-muted-foreground">{state.market_state.note}</p>
+        </div>
 
         {belief ? (
           <div className="grid gap-2 sm:grid-cols-2">

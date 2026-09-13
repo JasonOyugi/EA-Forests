@@ -20,7 +20,6 @@ import {
 } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import {
-  CalendarDays,
   ChevronDown,
   ChevronRight,
   MapPinned,
@@ -28,8 +27,6 @@ import {
   Plus,
 } from "lucide-react"
 
-import { Calendar as FullCalendar } from "@/app/calendar/components/calendar"
-import type { CalendarEvent } from "@/app/calendar/types"
 import { ForestsLandTopBanner } from "@/components/commerce-ui/forests-land-top-banner"
 import { ForestryServicesSaleBanner } from "@/components/commerce-ui/forestry-services-sale-banner"
 import SeedlingsBanner from "@/components/commerce-ui/seedlings-banner"
@@ -63,7 +60,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { deriveEventDates } from "./dashboard-events"
 import {
   getGroupEstimatedMetrics,
   getSubBlockEstimatedMetrics,
@@ -377,16 +373,12 @@ interface DataTableProps {
   activeTab: TableView
   onActiveTabChange: (tab: TableView) => void
   transactionsHighlightKey: number
-  events: CalendarEvent[]
-  onEventsChange: (events: CalendarEvent[]) => void
   onAssetMapOpen: (groupId: string) => void
 }
 
 export function DataTable({
   activeTab,
   onActiveTabChange,
-  events,
-  onEventsChange,
   onAssetMapOpen,
 }: DataTableProps) {
   const navigate = useNavigate()
@@ -444,7 +436,6 @@ export function DataTable({
       return sortConfig.order === "asc" ? aVal - bVal : bVal - aVal
     })
   }, [assetGroups, rowOrder, sortConfig])
-  const eventDates = React.useMemo(() => deriveEventDates(events), [events])
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event
@@ -578,26 +569,7 @@ export function DataTable({
         </div>
       </TabsContent>
 
-      <div className="mt-6 grid gap-4 px-4 lg:px-6">
-        <div className="flex items-center gap-2 p-4">
-          <CalendarDays className="h-5 w-5 text-emerald-700" />
-          <div>
-            <button
-              type="button"
-              onClick={() => navigate("/calendar")}
-              className="cursor-pointer underline-offset-4 font-semibold text-xl transition hover:underline"
-            >
-              Calendar
-            </button>
-            <p className="text-xs text-muted-foreground">
-              Planned scenario activity -- demo operations for illustration, not verified field records.
-            </p>
-          </div>
-        </div>
-        <div className="p-0">
-          <FullCalendar events={events} eventDates={eventDates} onEventsChange={onEventsChange} />
-        </div>
-      </div>
+      {/* Track v6-15: demo calendar removed -- no verified operational/field-visit record exists for these assets. */}
       <div className="grid gap-4 px-4 pb-2 lg:px-6">
         <div className=" overflow-hidden rounded-lg">
           <SeedlingsBanner />

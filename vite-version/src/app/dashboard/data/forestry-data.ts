@@ -270,10 +270,13 @@ export function getSubBlockEstimatedMetrics(_group: AssetGroup, subBlock: AssetS
 function scaleAssetMetrics(state: AssetState, share: number): DerivedAreaMetrics {
   const v = state.volume_state.merchantable_volume_m3.p50
   const val = state.valuation_state.asset_value_usd.p50
-  const priceP50 = (state.valuation_state.netback_usd_per_m3.p50 ?? 0) + (state.market_state.delivered_cost_usd_per_m3?.p50 ?? 0)
+  const priceP50 = state.valuation_state.netback_usd_per_m3.p50 ?? 0
+  // Real MODELLED estimate (LOW identifiability -- no field inventory or
+  // calibrated remote-sensing count exists), scaled from the real asset
+  // area, never a fabricated per-cell count.
+  const stemsPerHaAssumed = 500 // ASSUMED broad prior (zurkt_scenario PRIORS["stems_per_ha"] mean)
   return {
-    // Real MODELLED estimate (LOW identifiability -- no field inventory exists), never a fabricated per-cell count.
-    totalTrees: Math.round((state.tree_population_state.relevant_stocked_area_ha.p50 || 0) * share * 500),
+    totalTrees: Math.round(state.asset_identity.area_ha * share * stemsPerHaAssumed),
     estimatedVolume: Math.round(v * share),
     estimatedTonnage: Math.round(v * share * WOOD_DENSITY_T_PER_M3),
     estimatedValuation: Math.round(val * share),
@@ -339,10 +342,13 @@ export type PortfolioPoint = { date: string; label: string; isProjected: boolean
 export const portfolioSeriesReferenceDate = new Date("2026-09-13T00:00:00")
 
 /** Real aggregate across all three assets, by real model year (2024-2028)
- * -- volume/value from asset-state-v1.json, summed; NOT a fabricated
- * random-walk portfolio series. 2024/2025 are MODELLED RETROSPECTIVE
- * ESTIMATES, 2026 the current posterior, 2027/2028 MODEL PROJECTIONS --
- * see each asset's volume_state.volume_by_year_note. */
+ * -- volume/value from asset-state-v2.json, summed; NOT a fabricated
+ * random-walk portfolio series. Uses STANDING volume (Track v6-1 fix --
+ * the v5 chart silently used merchantable/suitable volume and called it
+ * "volume"; standing stock is the correct default for a headline series,
+ * with merchantable/harvestable available as separate toggles in the UI).
+ * 2024/2025 are MODELLED RETROSPECTIVE ESTIMATES, 2026 the current
+ * posterior, 2027/2028 MODEL PROJECTIONS -- see volume_by_year_note. */
 export function generatePortfolioSeries(_referenceDate: Date): PortfolioPoint[] {
   const years = [2024, 2025, 2026, 2027, 2028]
   return years.map((year) => {
@@ -351,12 +357,12 @@ export function generatePortfolioSeries(_referenceDate: Date): PortfolioPoint[] 
     let area = 0
     let priceWeighted = 0
     for (const group of initialAssetGroups) {
-      const q = group.assetState.volume_state.volume_by_year_m3[String(year)]
+      const q = group.assetState.volume_state.volume_by_year_standing_m3[String(year)]
       volume += q?.p50 ?? 0
-      const shareOfCurrent = group.assetState.volume_state.merchantable_volume_m3.p50 > 0 ? (q?.p50 ?? 0) / group.assetState.volume_state.merchantable_volume_m3.p50 : 0
+      const shareOfCurrent = group.assetState.volume_state.standing_volume_m3.p50 > 0 ? (q?.p50 ?? 0) / group.assetState.volume_state.standing_volume_m3.p50 : 0
       value += group.assetState.valuation_state.asset_value_usd.p50 * shareOfCurrent
       area += group.assetState.asset_identity.area_ha
-      priceWeighted += (group.assetState.valuation_state.netback_usd_per_m3.p50 + group.assetState.market_state.delivered_cost_usd_per_m3.p50) * (q?.p50 ?? 0)
+      priceWeighted += group.assetState.valuation_state.netback_usd_per_m3.p50 * (q?.p50 ?? 0)
     }
     const label = `${year}`
     return {
@@ -374,22 +380,32 @@ export function generatePortfolioSeries(_referenceDate: Date): PortfolioPoint[] 
 }
 
 /** Real per-material-class, per-year allocation of the asset's real
- * volume_by_year_m3 / netback / asset-value totals -- an area-weighted
- * split of a real modelled estimate, never a fabricated growth curve. */
+ * STANDING volume_by_year / netback / asset-value totals -- an
+ * area-weighted split of a real modelled estimate, never a fabricated
+ * growth curve. */
 export function buildGroupMetricSeries(group: AssetGroup, metric: SiteMetricKey) {
   const zones = deriveAnalysisZones(group.assetState)
-  const volumeByYear = group.assetState.volume_state.volume_by_year_m3
-  const priceP50 = group.assetState.valuation_state.netback_usd_per_m3.p50 + group.assetState.market_state.delivered_cost_usd_per_m3.p50
+  const volumeByYear = group.assetState.volume_state.volume_by_year_standing_m3
+  const priceP50 = group.assetState.valuation_state.netback_usd_per_m3.p50
   const valueP50 = group.assetState.valuation_state.asset_value_usd.p50
+
+  // Combine the 2 real structural zones' shares of each material class into
+  // ONE asset-wide share per class (summing area across zones, not
+  // overwriting) -- a class can legitimately appear in both zones.
+  const totalAreaHa = group.assetState.asset_identity.area_ha
+  const shareByClass = new Map<string, number>()
+  for (const zone of zones) {
+    shareByClass.set(zone.materialClass, (shareByClass.get(zone.materialClass) ?? 0) + zone.areaHa / Math.max(totalAreaHa, 1e-6))
+  }
 
   return Object.entries(volumeByYear)
     .sort(([a], [b]) => Number(a) - Number(b))
     .map(([year, q]) => {
       const row: Record<string, string | number> = { year }
-      for (const zone of zones) {
-        if (metric === "expectedVolume") row[zone.materialClass] = Math.round(q.p50 * zone.probability)
-        else if (metric === "portfolioPerformance") row[zone.materialClass] = Math.round(valueP50 * zone.probability)
-        else row[zone.materialClass] = Math.round(priceP50 * 100) / 100
+      for (const [materialClass, share] of shareByClass) {
+        if (metric === "expectedVolume") row[materialClass] = Math.round(q.p50 * share)
+        else if (metric === "portfolioPerformance") row[materialClass] = Math.round(valueP50 * share)
+        else row[materialClass] = Math.round(priceP50 * 100) / 100
       }
       return row
     })
