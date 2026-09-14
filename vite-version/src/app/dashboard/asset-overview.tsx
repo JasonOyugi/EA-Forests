@@ -57,7 +57,7 @@ export default function Page() {
   const selectedVolume = v[volumeTier]
 
   return (
-    <BaseLayout title="Asset Intelligence" description="Real canonical assets, real EO evidence, real modelled state -- no fabricated forestry data">
+    <BaseLayout title="Asset Intelligence" description="Real assets, real EO evidence, modelled forest state">
       <div className="@container/main px-4 lg:px-6 space-y-6 mt-2">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap gap-2">
@@ -74,12 +74,15 @@ export default function Page() {
           <DashboardViewToggle />
         </div>
 
-        <div className="rounded-2xl border bg-muted/30 px-4 py-3 text-xs text-muted-foreground">
-          <strong className="text-foreground">{selectedGroup.block}</strong> -- {selectedGroup.summaryDescription}
+        <div className="rounded-2xl border bg-muted/30 px-4 py-3">
+          <div className="text-sm font-semibold text-foreground">{selectedGroup.block}</div>
+          <div className="text-xs text-muted-foreground">
+            {selectedGroup.summaryDescription} · {selectedGroup.entityTypeLabel}
+          </div>
         </div>
 
         <div className="flex items-center gap-2 text-xs">
-          <span className="text-muted-foreground">Volume tier (Track v6-1 fix -- standing/harvestable/merchantable are distinct, never blended):</span>
+          <span className="text-muted-foreground">Volume:</span>
           {(["standing_volume_m3", "harvestable_volume_m3", "merchantable_volume_m3"] as const).map((tier) => (
             <button
               key={tier}
@@ -97,16 +100,16 @@ export default function Page() {
           onNetbackClick={() => handleMetricCardClick("expectedPrice")}
           onValueClick={() => handleMetricCardClick("portfolioValue")}
           forestArea={`${fmtNum(state.asset_identity.area_ha)} ha`}
-          forestAreaSummary={`Real canonical AOI polygon area (${state.asset_identity.epistemic_status})`}
+          forestAreaSummary="Canonical AOI boundary"
           standingVolume={`${fmtNum(selectedVolume.p50)} m3`}
-          volumeRangeLabel="MODELLED, LOW ID."
-          volumeSummary={`P10 ${fmtNum(selectedVolume.p10)} - P90 ${fmtNum(selectedVolume.p90)} m3 (${volumeTierLabels[volumeTier]})`}
+          volumeRangeLabel="MODELLED"
+          volumeSummary={`P10 ${fmtNum(selectedVolume.p10)} - P90 ${fmtNum(selectedVolume.p90)} m3`}
           bestNetback={`${fmtUsd(netbackP50)}/m3`}
           netbackTrendUp={netbackP50 >= 0}
-          netbackSummary={netbackP50 >= 0 ? "Scenario price covers harvest/haul/regulatory cost" : "Scenario price does NOT cover harvest/haul/regulatory cost at this distance -- see market state"}
+          netbackSummary={netbackP50 >= 0 ? "Covers harvest & haul cost" : "Below harvest & haul cost at this distance"}
           assetValue={`${fmtUsd(val.asset_value_usd.p50)}`}
           assetValueTrendUp={val.asset_value_usd.p50 >= 0}
-          assetValueSummary={`P10 ${fmtUsd(val.asset_value_usd.p10)} - P90 ${fmtUsd(val.asset_value_usd.p90)} -- ${val.note}`}
+          assetValueSummary={`P10 ${fmtUsd(val.asset_value_usd.p10)} - P90 ${fmtUsd(val.asset_value_usd.p90)}`}
         />
 
         <div ref={chartRef} id="portfolio-summary-chart">
@@ -115,7 +118,7 @@ export default function Page() {
 
         <AssetCurrentBelief group={selectedGroup} />
 
-        <SpeciesAllocation />
+        <SpeciesAllocation group={selectedGroup} />
 
         <div ref={assetMapRef}>
           <DashboardAssetMap selectedGroupId={selectedAssetMapId} onSelectGroup={setSelectedAssetMapId} />

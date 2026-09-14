@@ -22,6 +22,7 @@ import {
   assetStates,
   deriveAnalysisZones,
   formatMaterialClassLabel,
+  getAssetLandComposition,
   getAssetStateByEntityId,
   MATERIAL_CLASS_COLORS,
   type AssetState,
@@ -71,6 +72,8 @@ export type AssetGroup = {
   block: string
   summaryTitle: string
   summaryDescription: string
+  /** Short, real entity-type label for the header (e.g. "Central Forest Reserve"). */
+  entityTypeLabel: string
   location: string
   country: Country
   mapCenter: [number, number]
@@ -110,12 +113,12 @@ const WOOD_DENSITY_T_PER_M3 = 0.55
  * 2026-09-11 against ea_forests_uganda_country_pass. See
  * docs/architecture/CANONICAL_DATABASE_RUNTIME.md.
  */
-const REFERENCE_ASSET_IDENTITY: Record<string, { block: string; summaryTitle: string; summaryDescription: string; location: string; country: Country; mapCenter: [number, number]; provenance: AssetEvidenceProvenance }> = {
+const REFERENCE_ASSET_IDENTITY: Record<string, { block: string; summaryTitle: string; summaryDescription: string; entityTypeLabel: string; location: string; country: Country; mapCenter: [number, number]; provenance: AssetEvidenceProvenance }> = {
   "c7151c94-2797-4dd8-b6c3-b9aea8dda81e": {
     block: "Kampimpini",
-    summaryTitle: "Kampimpini reference case",
-    summaryDescription:
-      "One of EA Forests' three gold-standard Asset Intelligence reference cases. canonical_name = \"Kapimpini\" (the real, gazetted Central Forest Reserve in Nakaseke District, National Forestry Authority, designated 1967); display_name/alias = \"Kampimpini\". Every operational/forestry number below is now real model output (asset-state-v1.json), not a demo simulation.",
+    summaryTitle: "Kampimpini",
+    summaryDescription: "Nakaseke District, Uganda",
+    entityTypeLabel: "Central Forest Reserve",
     location: "Nakaseke, Central",
     country: "Uganda",
     mapCenter: [0.98736, 32.07765],
@@ -142,9 +145,9 @@ const REFERENCE_ASSET_IDENTITY: Record<string, { block: string; summaryTitle: st
   },
   "953552e7-6c06-4e9a-96ac-524239a0772c": {
     block: "Namavundu",
-    summaryTitle: "Namavundu reference case",
-    summaryDescription:
-      "One of EA Forests' three gold-standard Asset Intelligence reference cases. The canonical, polygon-linked \"Namavundu\" Central Forest Reserve, Jinja District, part of the Kalagala/Itanda Falls conservation landscape. Every operational/forestry number below is now real model output, not a demo simulation.",
+    summaryTitle: "Namavundu",
+    summaryDescription: "Jinja District, Uganda",
+    entityTypeLabel: "Central Forest Reserve",
     location: "Jinja, Eastern",
     country: "Uganda",
     mapCenter: [0.55347, 33.11138],
@@ -171,9 +174,9 @@ const REFERENCE_ASSET_IDENTITY: Record<string, { block: string; summaryTitle: st
   },
   "b7738efb-d1fc-4bc8-a56a-dd00886f279c": {
     block: "Mbooni South",
-    summaryTitle: "Mbooni South reference case",
-    summaryDescription:
-      "One of EA Forests' three gold-standard Asset Intelligence reference cases. canonical_name = \"MBOONI SOUTH\", a gazetted forest (Makueni County) ingested into the canonical database. Every operational/forestry number below is now real model output, not a demo simulation.",
+    summaryTitle: "Mbooni South",
+    summaryDescription: "Makueni County, Kenya",
+    entityTypeLabel: "Gazetted Forest",
     location: "Makueni, Eastern",
     country: "Kenya",
     mapCenter: [-1.6338, 37.4368],
@@ -219,6 +222,7 @@ function toAssetGroup(state: AssetState): AssetGroup {
     block: identity.block,
     summaryTitle: identity.summaryTitle,
     summaryDescription: identity.summaryDescription,
+    entityTypeLabel: identity.entityTypeLabel,
     location: identity.location,
     country: identity.country,
     mapCenter: identity.mapCenter,
@@ -234,8 +238,14 @@ export function formatVarietyLabel(variety: TreeVariety) {
   return formatMaterialClassLabel(variety)
 }
 
+/** Species/cover classes present in this asset, Other-aggregated -- the
+ * real per-asset land composition, not the raw per-zone subBlocks list
+ * (which double-counts a class once per structural zone). */
 export function groupVarieties(group: AssetGroup) {
-  return [...new Set(group.subBlocks.map((subBlock) => subBlock.variety))].map(formatMaterialClassLabel).join(", ")
+  const composition = getAssetLandComposition(group.assetState)
+  const labels = composition.species.map((s) => formatMaterialClassLabel(s.materialClass))
+  if (composition.otherAreaHa > 0) labels.push("Other")
+  return labels.join(", ")
 }
 
 export function getGroupSpecies(group: AssetGroup) {
@@ -261,10 +271,6 @@ export function estimateSubBlockAreaMetrics(subBlock: AssetSubBlock, represented
   const areaHa = group.assetState.asset_identity.area_ha
   const share = areaHa > 0 ? representedArea / areaHa : 0
   return scaleAssetMetrics(group.assetState, share)
-}
-
-export function getSubBlockEstimatedMetrics(_group: AssetGroup, subBlock: AssetSubBlock): DerivedAreaMetrics {
-  return estimateSubBlockAreaMetrics(subBlock, subBlock.plantedSize)
 }
 
 function scaleAssetMetrics(state: AssetState, share: number): DerivedAreaMetrics {
@@ -294,14 +300,22 @@ export function getGroupEstimatedMetrics(group: AssetGroup) {
   return { estimatedVolume: m.estimatedVolume, estimatedValuation: m.estimatedValuation, investmentPlaced: m.investmentPlaced }
 }
 
-/** Real material-class mixture across ALL three assets combined (area-weighted). */
-export function getSpeciesAllocationData(): SpeciesAllocationDatum[] {
+/** Real land composition (species classes + a single Other bucket) for one
+ * asset, or across all three combined (area-weighted) when no group is
+ * given. */
+export function getSpeciesAllocationData(group?: AssetGroup): SpeciesAllocationDatum[] {
+  const groups = group ? [group] : initialAssetGroups
   const totals: Record<string, number> = {}
   let total = 0
-  for (const group of initialAssetGroups) {
-    for (const zone of deriveAnalysisZones(group.assetState)) {
-      totals[zone.materialClass] = (totals[zone.materialClass] ?? 0) + zone.areaHa
-      total += zone.areaHa
+  for (const g of groups) {
+    const composition = getAssetLandComposition(g.assetState)
+    for (const s of composition.species) {
+      totals[s.materialClass] = (totals[s.materialClass] ?? 0) + s.areaHa
+      total += s.areaHa
+    }
+    if (composition.otherAreaHa > 0) {
+      totals.other = (totals.other ?? 0) + composition.otherAreaHa
+      total += composition.otherAreaHa
     }
   }
   return Object.entries(totals)

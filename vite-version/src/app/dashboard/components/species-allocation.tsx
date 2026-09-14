@@ -4,21 +4,21 @@ import * as React from "react"
 import { Label, Pie, PieChart, Sector } from "recharts"
 import type { PieSectorDataItem } from "recharts/types/polar/Pie"
 
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ChartContainer, ChartStyle, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import {
   formatVarietyLabel,
   getSpeciesAllocationData,
+  type AssetGroup,
   type SpeciesAllocationDatum,
   type TreeVariety,
 } from "../data/forestry-data"
 import { dashboardFrameClass, dashboardSurfaceClass } from "./dashboard-shared"
 
-export function SpeciesAllocation() {
+export function SpeciesAllocation({ group }: { group: AssetGroup }) {
   const id = "species-allocation"
-  const speciesAllocationData = React.useMemo(() => getSpeciesAllocationData(), [])
-  const defaultCategory = speciesAllocationData[0]?.category ?? "eucalyptus"
+  const speciesAllocationData = React.useMemo(() => getSpeciesAllocationData(group), [group])
+  const defaultCategory = speciesAllocationData[0]?.category ?? "eucalyptus_plantation"
   const [activeCategory, setActiveCategory] =
     React.useState<TreeVariety>(defaultCategory)
 
@@ -103,21 +103,18 @@ export function SpeciesAllocation() {
         <ChartStyle id={id} config={chartConfig} />
         <CardHeader className="flex flex-col gap-3 pb-3 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <CardTitle>Species Allocation</CardTitle>
+            <CardTitle>Species Composition</CardTitle>
             <CardDescription>
-              Distribution of financed hectares by variety from the shared stand ledger
+              Share of {group.block}&apos;s area by species, with non-forest/unresolved area grouped as Other
             </CardDescription>
           </div>
-          <Button variant="outline" className="cursor-pointer">
-            View report
-          </Button>
         </CardHeader>
 
         <CardContent className="pb-6">
           <div className="rounded-[28px] bg-gradient-to-br from-background via-background to-muted/30 p-5">
             <div className="mb-4 text-center">
               <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
-                Total financed hectares
+                Total area
               </div>
               <div className="mt-2 text-3xl font-semibold">
                 {totalFinancedArea.toFixed(1)} ha
@@ -195,7 +192,7 @@ export function SpeciesAllocation() {
                                 y={(viewBox.cy || 0) + 18}
                                 className="fill-muted-foreground text-[11px] uppercase tracking-[0.24em]"
                               >
-                                financed area
+                                of total area
                               </tspan>
                               <tspan
                                 x={viewBox.cx}

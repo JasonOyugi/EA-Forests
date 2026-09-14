@@ -61,8 +61,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import {
+  formatVarietyLabel,
   getGroupEstimatedMetrics,
-  getSubBlockEstimatedMetrics,
   groupPlantedSize,
   groupSize,
   groupVarieties,
@@ -72,13 +72,13 @@ import type {
   AssetGroup,
   Country,
 } from "../data/forestry-data"
+import { getAssetLandComposition } from "../data/asset-intelligence-data"
 
 export {
   buildGroupMetricSeries,
   formatVarietyLabel,
   getGroupEstimatedMetrics,
   getGroupSpecies,
-  getSubBlockEstimatedMetrics,
   groupPlantedSize,
   groupSize,
   initialAssetGroups,
@@ -131,71 +131,6 @@ function formatTableCurrency(value: number) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(value)
-}
-
-function scalePolygon(
-  positions: [number, number][],
-  ratio: number
-): [number, number][] {
-  const centroid = positions.reduce(
-    (acc, [lat, lng]) => [acc[0] + lat / positions.length, acc[1] + lng / positions.length],
-    [0, 0]
-  ) as [number, number]
-
-  return positions.map(([lat, lng]) => [
-    centroid[0] + (lat - centroid[0]) * ratio,
-    centroid[1] + (lng - centroid[1]) * ratio,
-  ])
-}
-
-function kmToLatitudeDegrees(kilometers: number) {
-  return kilometers / 110.574
-}
-
-function kmToLongitudeDegrees(kilometers: number, latitude: number) {
-  const kilometersPerDegree = 111.32 * Math.max(Math.cos((latitude * Math.PI) / 180), 0.12)
-  return kilometers / kilometersPerDegree
-}
-
-export function createPolygon(
-  center: [number, number],
-  index: number,
-  totalArea: number,
-  plantedArea: number,
-  layoutCount = 1,
-  layoutMaxArea = totalArea
-) {
-  const columns = Math.min(3, Math.max(1, layoutCount))
-  const rows = Math.ceil(layoutCount / columns)
-  const row = Math.floor(index / columns)
-  const column = index % columns
-  const rowItemCount = Math.min(columns, Math.max(layoutCount - row * columns, 1))
-  const maxSideKm = Math.sqrt(Math.max(layoutMaxArea, 0.25) * 0.01)
-  const pitchKm = Math.max(maxSideKm * 1.9, 0.85)
-  const latitudeCenter =
-    center[0] + kmToLatitudeDegrees((rows - 1) / 2 * pitchKm - row * pitchKm)
-  const longitudeCenter =
-    center[1] +
-    kmToLongitudeDegrees((column - (rowItemCount - 1) / 2) * pitchKm, center[0])
-  const areaKm2 = Math.max(totalArea, 0.25) * 0.01
-  const aspectRatio = 0.82 + (index % 3) * 0.16
-  const widthKm = Math.sqrt(areaKm2 * aspectRatio)
-  const heightKm = Math.sqrt(areaKm2 / aspectRatio)
-  const halfHeight = kmToLatitudeDegrees(heightKm / 2)
-  const halfWidth = kmToLongitudeDegrees(widthKm / 2, latitudeCenter)
-
-  const outer = [
-    [latitudeCenter + halfHeight, longitudeCenter - halfWidth],
-    [latitudeCenter + halfHeight, longitudeCenter + halfWidth],
-    [latitudeCenter - halfHeight, longitudeCenter + halfWidth],
-    [latitudeCenter - halfHeight, longitudeCenter - halfWidth],
-  ] as [number, number][]
-
-  const plantedRatio =
-    totalArea > 0 ? Math.sqrt(Math.max(plantedArea, 0.01) / totalArea) : 0.52
-  const inner = scalePolygon(outer, Math.min(Math.max(plantedRatio, 0.12), 0.96))
-
-  return { outer, inner }
 }
 
 // Track v5-23: fake activity/document/payment records removed -- no
@@ -345,26 +280,29 @@ function SortableAssetRow({ group, isExpanded, onToggle, onMapOpen }: SortableAs
       </TableRow>
 
       {isExpanded &&
-        group.subBlocks.map((sub) => {
-          const subMetrics = getSubBlockEstimatedMetrics(group, sub)
-
-          return (
-          <TableRow key={sub.id}>
-            <TableCell className="w-8 px-2" />
-            <TableCell className="w-6 px-1" />
-            <TableCell className="pl-6 text-sm text-muted-foreground">{`${group.block} - ${sub.subBlock}`}</TableCell>
-            <TableCell className="text-sm capitalize">{sub.variety}</TableCell>
-            <TableCell className="text-sm text-muted-foreground">-</TableCell>
-            <TableCell className="text-sm text-muted-foreground">-</TableCell>
-            <TableCell className="text-sm">{formatTableNumber(sub.size)}</TableCell>
-            <TableCell className="text-sm">{formatTableNumber(sub.plantedSize)}</TableCell>
-            <TableCell className="text-sm">{formatTableNumber(sub.age)}</TableCell>
-            <TableCell className="text-sm">{formatTableNumber(subMetrics.estimatedVolume)}</TableCell>
-            <TableCell className="text-sm">{formatTableCurrency(subMetrics.estimatedValuation)}</TableCell>
-            <TableCell className="text-sm">{formatTableCurrency(subMetrics.investmentPlaced)}</TableCell>
-            <TableCell className="text-sm text-muted-foreground">-</TableCell>
-          </TableRow>
-        )})}
+        (() => {
+          const composition = getAssetLandComposition(group.assetState)
+          const rows = composition.otherAreaHa > 0
+            ? [...composition.species, composition.other]
+            : composition.species
+          return rows.map((entry) => (
+            <TableRow key={`${group.id}-${entry.materialClass}`}>
+              <TableCell className="w-8 px-2" />
+              <TableCell className="w-6 px-1" />
+              <TableCell className="pl-6 text-sm text-muted-foreground">{`${group.block} - ${formatVarietyLabel(entry.materialClass)}`}</TableCell>
+              <TableCell className="text-sm capitalize">{formatVarietyLabel(entry.materialClass)}</TableCell>
+              <TableCell className="text-sm text-muted-foreground">-</TableCell>
+              <TableCell className="text-sm text-muted-foreground">-</TableCell>
+              <TableCell className="text-sm">{formatTableNumber(entry.areaHa)}</TableCell>
+              <TableCell className="text-sm text-muted-foreground">-</TableCell>
+              <TableCell className="text-sm">{entry.sharePct.toFixed(0)}%</TableCell>
+              <TableCell className="text-sm text-muted-foreground">-</TableCell>
+              <TableCell className="text-sm text-muted-foreground">-</TableCell>
+              <TableCell className="text-sm text-muted-foreground">-</TableCell>
+              <TableCell className="text-sm text-muted-foreground">-</TableCell>
+            </TableRow>
+          ))
+        })()}
     </>
   )
 }

@@ -89,6 +89,62 @@ export const MATERIAL_CLASS_COLORS: Record<string, string> = {
   natural_hardwood_mixed: "#2f6b4f",
   degraded_open: "#c9a15a",
   unresolved: "#8a8a8a",
+  other: "#94a3b8",
+}
+
+/** Material classes that are not a commercial tree species/cover type --
+ * these roll up into a single "Other" bucket for any user-facing species
+ * mix (composition chart, map legend, species table). "Other" is land
+ * area, never timber: it must never receive a share of standing/
+ * harvestable/merchantable volume or asset value. */
+export const NON_SPECIES_MATERIAL_CLASSES = ["degraded_open", "unresolved"] as const
+
+export function isSpeciesMaterialClass(materialClass: string): boolean {
+  return !(NON_SPECIES_MATERIAL_CLASSES as readonly string[]).includes(materialClass)
+}
+
+export type LandCompositionEntry = { materialClass: string; areaHa: number; sharePct: number }
+export type LandComposition = {
+  totalAreaHa: number
+  productiveForestAreaHa: number
+  otherAreaHa: number
+  species: LandCompositionEntry[]
+  other: LandCompositionEntry
+}
+
+/** Real per-asset land composition: total AOI area split into named
+ * species/commercial-cover classes plus a single "Other" bucket (open,
+ * degraded, unresolved), area-weighted across the asset's real structural
+ * zones. Denominator is the total canonical AOI area (real), matching the
+ * high-level land/species split -- forestry-performance figures (volume,
+ * value) stay asset-level and are never re-derived per class here. */
+export function getAssetLandComposition(state: AssetState): LandComposition {
+  const totalAreaHa = state.asset_identity.area_ha
+  const areaByClass = new Map<string, number>()
+  for (const zone of state.structural_zones.zones) {
+    for (const [materialClass, probability] of Object.entries(zone.material_mix_probabilities)) {
+      areaByClass.set(materialClass, (areaByClass.get(materialClass) ?? 0) + zone.area_ha * probability)
+    }
+  }
+
+  let otherAreaHa = 0
+  const species: LandCompositionEntry[] = []
+  for (const [materialClass, areaHa] of areaByClass) {
+    if (isSpeciesMaterialClass(materialClass)) {
+      species.push({ materialClass, areaHa, sharePct: totalAreaHa > 0 ? (areaHa / totalAreaHa) * 100 : 0 })
+    } else {
+      otherAreaHa += areaHa
+    }
+  }
+  species.sort((a, b) => b.areaHa - a.areaHa)
+
+  return {
+    totalAreaHa,
+    productiveForestAreaHa: Math.max(totalAreaHa - otherAreaHa, 0),
+    otherAreaHa,
+    species,
+    other: { materialClass: "other", areaHa: otherAreaHa, sharePct: totalAreaHa > 0 ? (otherAreaHa / totalAreaHa) * 100 : 0 },
+  }
 }
 
 export function formatMaterialClassLabel(materialClass: string): string {

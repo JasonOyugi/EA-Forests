@@ -89,17 +89,16 @@ import { MapResizeHandle, MapResizeInvalidator } from "@/components/map/map-resi
 import { fetchCountryEoStatus, type CountryEoStatus } from "@/lib/canonical-api"
 import {
   buildGroupMetricSeries,
-  createPolygon,
   formatVarietyLabel,
   getGroupEstimatedMetrics,
   getGroupSpecies,
-  getSubBlockEstimatedMetrics,
   initialAssetGroups,
   speciesProfile,
   type AssetGroup,
   type SiteMetricKey,
 } from "./data-table"
 import type { Country } from "../data/forestry-data"
+import { getAssetLandComposition } from "../data/asset-intelligence-data"
 import {
   compactCurrency,
   compactNumber,
@@ -543,33 +542,30 @@ function getMetricHeadline(group: AssetGroup, metric: SiteMetricKey) {
   }
 }
 
-function getGroupBounds(group: AssetGroup) {
-  const maxSubBlockArea = Math.max(...group.subBlocks.map((subBlock) => subBlock.size), 1)
-  const points = group.subBlocks.flatMap((subBlock, index) =>
-    createPolygon(
-      group.mapCenter,
-      index,
-      subBlock.size,
-      subBlock.plantedSize,
-      group.subBlocks.length,
-      maxSubBlockArea
-    ).outer
-  )
-  const fallback = group.mapCenter
-  const latitudes = points.map(([latitude]) => latitude)
-  const longitudes = points.map(([, longitude]) => longitude)
+function kmToLatitudeDegrees(kilometers: number) {
+  return kilometers / 110.574
+}
 
-  if (points.length === 0) {
-    return [
-      [fallback[0] - 0.04, fallback[1] - 0.04],
-      [fallback[0] + 0.04, fallback[1] + 0.04],
-    ] as [[number, number], [number, number]]
-  }
+function kmToLongitudeDegrees(kilometers: number, latitude: number) {
+  const kilometersPerDegree = 111.32 * Math.max(Math.cos((latitude * Math.PI) / 180), 0.12)
+  return kilometers / kilometersPerDegree
+}
+
+/** Camera-fit only -- an approximate circular radius from the real AOI
+ * area, used to frame the map viewport around the asset's centre. This is
+ * NOT a rendered boundary; the real canonical AOI polygon is drawn by
+ * ForestEvidenceLayer from actual survey/reserve geometry. */
+function getGroupBounds(group: AssetGroup): [[number, number], [number, number]] {
+  const areaHa = group.assetState.asset_identity.area_ha
+  const radiusKm = Math.sqrt(Math.max(areaHa, 1) / 100 / Math.PI) * 1.6
+  const [latitude, longitude] = group.mapCenter
+  const latitudePad = kmToLatitudeDegrees(radiusKm)
+  const longitudePad = kmToLongitudeDegrees(radiusKm, latitude)
 
   return [
-    [Math.min(...latitudes), Math.min(...longitudes)],
-    [Math.max(...latitudes), Math.max(...longitudes)],
-  ] as [[number, number], [number, number]]
+    [latitude - latitudePad, longitude - longitudePad],
+    [latitude + latitudePad, longitude + longitudePad],
+  ]
 }
 
 function MapViewportFocus({
@@ -1425,6 +1421,10 @@ export function DashboardAssetMap({
   const selectedGroup =
     initialAssetGroups.find((group) => group.id === selectedGroupId) ??
     initialAssetGroups[0]
+  const landComposition = React.useMemo(
+    () => getAssetLandComposition(selectedGroup.assetState),
+    [selectedGroup]
+  )
   const availableSpecies = React.useMemo(
     () => getGroupSpecies(selectedGroup),
     [selectedGroup]
@@ -1629,129 +1629,14 @@ export function DashboardAssetMap({
 
                     <ForestEvidenceLayer onViewEoEvidence={setSelectedEoEvidenceTarget} />
 
-                    <MapLayerGroup name="Asset blocks">
-                      {initialAssetGroups.flatMap((group) => {
-                        const maxSubBlockArea = Math.max(
-                          ...group.subBlocks.map((subBlock) => subBlock.size),
-                          1
-                        )
-
-                        return group.subBlocks.flatMap((subBlock, index) => {
-                          const polygons = createPolygon(
-                            group.mapCenter,
-                            index,
-                            subBlock.size,
-                            subBlock.plantedSize,
-                            group.subBlocks.length,
-                            maxSubBlockArea
-                          )
-                          const speciesColor = speciesProfile[subBlock.variety].color
-                          const isSelected = group.id === selectedGroup.id
-                          const subMetrics = getSubBlockEstimatedMetrics(group, subBlock)
-
-                          return [
-                            <MapPolygon
-                              key={`${subBlock.id}-outer`}
-                              positions={polygons.outer}
-                              eventHandlers={{
-                                click: (event) => {
-                                  event.originalEvent.stopPropagation()
-                                  handleSelectGroup(group.id)
-                                },
-                              }}
-                              pathOptions={{
-                                color: speciesColor,
-                                weight: isSelected ? 4 : 2.5,
-                                fillColor: speciesColor,
-                                fill: true,
-                                fillOpacity: isSelected ? 0.22 : 0.11,
-                              }}
-                            >
-                              <MapPopup className="w-[min(28rem,calc(100vw-3rem))] p-0">
-                                <div className="overflow-hidden rounded-[20px] border bg-background">
-                                  <div
-                                    className="px-5 py-4 text-white"
-                                    style={{
-                                      background: `linear-gradient(135deg, ${speciesColor}, color-mix(in oklch, ${speciesColor} 42%, black))`,
-                                    }}
-                                  >
-                                    <div className="text-[11px] font-medium uppercase tracking-[0.18em]">
-                                      {group.block} - {subBlock.subBlock}
-                                    </div>
-                                    <div className="mt-1 text-xl font-semibold capitalize">
-                                      {subBlock.variety}
-                                    </div>
-                                    <div className="text-sm text-white/85">
-                                      {group.location}, {group.country}
-                                    </div>
-                                  </div>
-                                  <div className="grid gap-4 p-5">
-                                    <div className="grid grid-cols-2 gap-3">
-                                      <div className="rounded-xl border bg-muted/20 p-3">
-                                        <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-                                          Managed
-                                        </div>
-                                        <div className="mt-1 text-base font-semibold">
-                                          {subBlock.size.toFixed(2)} ha
-                                        </div>
-                                      </div>
-                                      <div className="rounded-xl border bg-muted/20 p-3">
-                                        <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-                                          Planted
-                                        </div>
-                                        <div className="mt-1 text-base font-semibold">
-                                          {subBlock.plantedSize.toFixed(2)} ha
-                                        </div>
-                                      </div>
-                                      <div className="rounded-xl border bg-muted/20 p-3">
-                                        <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-                                          Expected volume
-                                        </div>
-                                        <div className="mt-1 text-base font-semibold">
-                                          {compactNumber(subMetrics.estimatedVolume)} m3
-                                        </div>
-                                      </div>
-                                      <div className="rounded-xl border bg-muted/20 p-3">
-                                        <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-                                          Expected value
-                                        </div>
-                                        <div className="mt-1 text-base font-semibold">
-                                          {compactCurrency(subMetrics.estimatedValuation)}
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <Button
-                                      size="sm"
-                                      className="w-full cursor-pointer"
-                                      onClick={() => handleSelectGroup(group.id)}
-                                    >
-                                      Focus site
-                                    </Button>
-                                  </div>
-                                </div>
-                              </MapPopup>
-                            </MapPolygon>,
-                            <MapPolygon
-                              key={`${subBlock.id}-inner`}
-                              positions={polygons.inner}
-                              eventHandlers={{
-                                click: (event) => {
-                                  event.originalEvent.stopPropagation()
-                                  handleSelectGroup(group.id)
-                                },
-                              }}
-                              pathOptions={{
-                                color: speciesColor,
-                                weight: isSelected ? 3 : 2,
-                                fillColor: speciesColor,
-                                fill: true,
-                                fillOpacity: isSelected ? 0.56 : 0.32,
-                              }}
-                            />,
-                          ]
-                        })
-                      })}
-                    </MapLayerGroup>
+                    {/* Species/material-class mix has no defensible spatial
+                        geometry (no per-pixel classification, analysis-zone
+                        boundary, or footprint is retained -- see
+                        asset-intelligence-data.ts's getAssetLandComposition).
+                        The real canonical AOI boundary is rendered above by
+                        ForestEvidenceLayer; no synthetic species polygon is
+                        drawn here. See the species composition list below
+                        the map, and the Species Composition chart. */}
 
                     <RegionalBoundariesLayer
                       regions={regionAnalytics}
@@ -1934,34 +1819,41 @@ export function DashboardAssetMap({
               )}
             >
               <p className="px-4 pb-1 text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
-                {selectedGroup.provenance.compartmentsNote}
+                Species composition · spatial distribution not resolved
               </p>
               <div className="space-y-3">
-                {selectedGroup.subBlocks.map((subBlock) => (
-                  <div key={subBlock.id} className="rounded-2xl px-4 py-3">
+                {landComposition.species.map((s) => (
+                  <div key={s.materialClass} className="rounded-2xl px-4 py-3">
                     <div className="flex items-center justify-between gap-3">
                       <div className="flex items-center gap-3">
                         <span
                           className="h-3 w-3 rounded-full"
-                          style={{
-                            backgroundColor: speciesProfile[subBlock.variety].color,
-                          }}
+                          style={{ backgroundColor: speciesProfile[s.materialClass].color }}
                         />
-                        <div>
-                          <div className="font-medium">
-                            {formatVarietyLabel(subBlock.variety)}{" "}
-                            <span className="text-muted-foreground">
-                              {subBlock.subBlock}
-                            </span>
-                          </div>
-                          <div className="text-xs text-muted-foreground">
-                            {subBlock.plantedSize.toFixed(2)} ha (modelled, ~{subBlock.age}% probability -- not a surveyed compartment)
-                          </div>
-                        </div>
+                        <div className="font-medium">{formatVarietyLabel(s.materialClass)}</div>
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {s.areaHa.toFixed(1)} ha · {s.sharePct.toFixed(0)}%
                       </div>
                     </div>
                   </div>
                 ))}
+                {landComposition.otherAreaHa > 0 ? (
+                  <div className="rounded-2xl px-4 py-3">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-3">
+                        <span
+                          className="h-3 w-3 rounded-full"
+                          style={{ backgroundColor: speciesProfile.other.color }}
+                        />
+                        <div className="font-medium">Other</div>
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {landComposition.otherAreaHa.toFixed(1)} ha · {landComposition.other.sharePct.toFixed(0)}%
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
