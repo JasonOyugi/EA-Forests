@@ -106,10 +106,10 @@ export default function Page() {
           volumeSummary={`P10 ${fmtNum(selectedVolume.p10)} - P90 ${fmtNum(selectedVolume.p90)} m3`}
           bestNetback={`${fmtUsd(netbackP50)}/m3`}
           netbackTrendUp={netbackP50 >= 0}
-          netbackSummary={netbackP50 >= 0 ? "Covers harvest & haul cost" : "Below harvest & haul cost at this distance"}
-          assetValue={`${fmtUsd(val.asset_value_usd.p50)}`}
-          assetValueTrendUp={val.asset_value_usd.p50 >= 0}
-          assetValueSummary={`P10 ${fmtUsd(val.asset_value_usd.p10)} - P90 ${fmtUsd(val.asset_value_usd.p90)}`}
+          netbackSummary={netbackP50 >= 0 ? "Covers harvest & haul cost" : `Below harvest & haul cost (margin ${fmtUsd(val.harvest_margin_usd.p50)})`}
+          assetValue={`${fmtUsd(val.asset_option_value_usd.p50)}`}
+          assetValueTrendUp={val.asset_option_value_usd.p50 >= 0}
+          assetValueSummary={`P10 ${fmtUsd(val.asset_option_value_usd.p10)} - P90 ${fmtUsd(val.asset_option_value_usd.p90)} · 2026: ${val.optimal_action_by_year["2026"] ?? "n/a"}`}
         />
 
         <div ref={chartRef} id="portfolio-summary-chart">

@@ -275,20 +275,24 @@ export function estimateSubBlockAreaMetrics(subBlock: AssetSubBlock, represented
 
 function scaleAssetMetrics(state: AssetState, share: number): DerivedAreaMetrics {
   const v = state.volume_state.merchantable_volume_m3.p50
-  const val = state.valuation_state.asset_value_usd.p50
+  // Track v7: headline "value" is now the ASSET OPTION VALUE (value of the
+  // optimal wait/harvest policy), never the current harvest margin, which
+  // may be negative under today's price assumptions without that meaning
+  // the biological asset itself is worth less than zero.
+  const val = state.valuation_state.asset_option_value_usd.p50
   const priceP50 = state.valuation_state.netback_usd_per_m3.p50 ?? 0
-  // Real MODELLED estimate (LOW identifiability -- no field inventory or
-  // calibrated remote-sensing count exists), scaled from the real asset
-  // area, never a fabricated per-cell count.
-  const stemsPerHaAssumed = 500 // ASSUMED broad prior (zurkt_scenario PRIORS["stems_per_ha"] mean)
+  // Real MODELLED tree-population posterior (Track v7 -- an actual
+  // importance-sampling estimate per structural stratum, not a flat assumed
+  // prior) scaled from the real asset area.
+  const tp = state.tree_population_state
   return {
-    totalTrees: Math.round(state.asset_identity.area_ha * share * stemsPerHaAssumed),
+    totalTrees: Math.round(tp.total_stems.p50 * share),
     estimatedVolume: Math.round(v * share),
     estimatedTonnage: Math.round(v * share * WOOD_DENSITY_T_PER_M3),
     estimatedValuation: Math.round(val * share),
     investmentPlaced: 0, // no real capital-deployment record exists for these assets -- honestly zero, not fabricated
-    averageHeight: 15, // ASSUMED broad prior mean (zurkt_scenario PRIORS["mean_tree_height_m"]) -- LOW identifiability
-    averageDbh: 25, // ASSUMED broad prior mean (zurkt_scenario PRIORS["mean_tree_dbh_cm"]) -- LOW identifiability
+    averageHeight: Math.round(tp.height_m.p50 * 10) / 10, // real MODELLED posterior (LOW_BUT_ESTIMATED identifiability)
+    averageDbh: Math.round(tp.dbh_cm.p50 * 10) / 10, // real MODELLED posterior (LOW_BUT_ESTIMATED identifiability)
     survivalRate: 0, // no concept of "survival" applies to natural/mixed reserves with no planting record
     expectedPricePerTonne: Math.round((priceP50 / WOOD_DENSITY_T_PER_M3) * 100) / 100,
     expectedPricePerM3: Math.round(priceP50 * 100) / 100,
@@ -374,7 +378,7 @@ export function generatePortfolioSeries(_referenceDate: Date): PortfolioPoint[] 
       const q = group.assetState.volume_state.volume_by_year_standing_m3[String(year)]
       volume += q?.p50 ?? 0
       const shareOfCurrent = group.assetState.volume_state.standing_volume_m3.p50 > 0 ? (q?.p50 ?? 0) / group.assetState.volume_state.standing_volume_m3.p50 : 0
-      value += group.assetState.valuation_state.asset_value_usd.p50 * shareOfCurrent
+      value += group.assetState.valuation_state.asset_option_value_usd.p50 * shareOfCurrent
       area += group.assetState.asset_identity.area_ha
       priceWeighted += group.assetState.valuation_state.netback_usd_per_m3.p50 * (q?.p50 ?? 0)
     }
@@ -401,7 +405,7 @@ export function buildGroupMetricSeries(group: AssetGroup, metric: SiteMetricKey)
   const zones = deriveAnalysisZones(group.assetState)
   const volumeByYear = group.assetState.volume_state.volume_by_year_standing_m3
   const priceP50 = group.assetState.valuation_state.netback_usd_per_m3.p50
-  const valueP50 = group.assetState.valuation_state.asset_value_usd.p50
+  const valueP50 = group.assetState.valuation_state.asset_option_value_usd.p50
 
   // Combine the 2 real structural zones' shares of each material class into
   // ONE asset-wide share per class (summing area across zones, not
