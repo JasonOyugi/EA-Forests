@@ -91,18 +91,6 @@ export const metricMeta: Record<MetricKey, MetricMeta> = {
     format: (value) => `${formatDecimal(value)} ha`,
     axisTick: (value) => compactNumber(value),
   },
-  cash: {
-    label: "Cash",
-    unit: "$",
-    format: (value) => compactCurrency(value),
-    axisTick: (value) => compactCurrency(value),
-  },
-  capitalDeployed: {
-    label: "Capital deployed",
-    unit: "$",
-    format: (value) => compactCurrency(value),
-    axisTick: (value) => compactCurrency(value),
-  },
 }
 
 const metricOptions: MetricKey[] = [
@@ -110,8 +98,6 @@ const metricOptions: MetricKey[] = [
   "expectedVolume",
   "portfolioValue",
   "landManaged",
-  "cash",
-  "capitalDeployed",
 ]
 
 const chartConfig = Object.fromEntries(

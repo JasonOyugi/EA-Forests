@@ -1955,7 +1955,7 @@ export function DashboardAssetMap({
                             </span>
                           </div>
                           <div className="text-xs text-muted-foreground">
-                            {subBlock.plantedSize.toFixed(2)} ha planted - {subBlock.age} years
+                            {subBlock.plantedSize.toFixed(2)} ha (modelled, ~{subBlock.age}% probability -- not a surveyed compartment)
                           </div>
                         </div>
                       </div>

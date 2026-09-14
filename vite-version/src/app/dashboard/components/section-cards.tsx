@@ -3,7 +3,6 @@ import {
   TrendingDown,
   TrendingUp,
   TriangleAlert,
-  Wallet,
   type LucideIcon,
 } from "lucide-react"
 
@@ -18,26 +17,31 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import type { MetricKey } from "./chart-area-interactive"
 
+/**
+ * Track v5-19 reality reset: replaces the fake portfolio-value/payments-
+ * pending headline cards with the four real asset metrics the sprint asked
+ * for -- forest area, standing volume, best netback price, and asset
+ * value. Every value is a real P50 (with a P10-P90 range shown in the
+ * summary line) from asset-state-v1.json, never a fabricated point
+ * estimate.
+ */
 interface SectionCardsProps {
-  onMetricCardClick: (metric: MetricKey) => void
-  onPaymentsCardClick: () => void
-  portfolioValue: string
-  portfolioTrendLabel: string
-  portfolioTrendUp: boolean
-  portfolioSummary: string
-  landManaged: string
-  landTrendLabel: string
-  landTrendUp: boolean
-  landSummary: string
-  estimatedVolume: string
-  volumeTrendLabel: string
-  volumeTrendUp: boolean
+  onForestAreaClick: () => void
+  onVolumeClick: () => void
+  onNetbackClick: () => void
+  onValueClick: () => void
+  forestArea: string
+  forestAreaSummary: string
+  standingVolume: string
+  volumeRangeLabel: string
   volumeSummary: string
-  pendingPayments: string
-  pendingInvoicesLabel: string
-  pendingSummary: string
+  bestNetback: string
+  netbackTrendUp: boolean
+  netbackSummary: string
+  assetValue: string
+  assetValueTrendUp: boolean
+  assetValueSummary: string
 }
 
 type SummaryCard = {
@@ -82,7 +86,7 @@ function DashboardSummaryCard({
             {value}
           </CardTitle>
           <CardAction>
-            <Badge variant="outline" className="animate-pulse bg-gray">
+            <Badge variant="outline" className="bg-gray">
               {trendUp ? <TrendingUp /> : <TrendingDown />}
               {trendLabel}
             </Badge>
@@ -100,78 +104,68 @@ function DashboardSummaryCard({
 }
 
 export function SectionCards({
-  onMetricCardClick,
-  onPaymentsCardClick,
-  portfolioValue,
-  portfolioTrendLabel,
-  portfolioTrendUp,
-  portfolioSummary,
-  landManaged,
-  landTrendLabel,
-  landTrendUp,
-  landSummary,
-  estimatedVolume,
-  volumeTrendLabel,
-  volumeTrendUp,
+  onForestAreaClick,
+  onVolumeClick,
+  onNetbackClick,
+  onValueClick,
+  forestArea,
+  forestAreaSummary,
+  standingVolume,
+  volumeRangeLabel,
   volumeSummary,
-  pendingPayments,
-  pendingInvoicesLabel,
-  pendingSummary,
+  bestNetback,
+  netbackTrendUp,
+  netbackSummary,
+  assetValue,
+  assetValueTrendUp,
+  assetValueSummary,
 }: SectionCardsProps) {
   const cards: SummaryCard[] = [
     {
-      title: "Projected Portfolio Value",
-      value: portfolioValue,
-      trendLabel: portfolioTrendLabel,
-      trendUp: portfolioTrendUp,
-      summary: portfolioSummary,
+      title: "Forest / Stocked Area",
+      value: forestArea,
+      trendLabel: "OBSERVED",
+      trendUp: true,
+      summary: forestAreaSummary,
       positiveIcon: Rocket,
-      negativeIcon: TriangleAlert,
-      onClick: () => onMetricCardClick("portfolioValue"),
-      toneClassName: portfolioTrendUp
-        ? "bg-emerald-400 investor-card-emerald"
-        : "bg-rose-400 investor-card-rose",
-      decorationAccent: portfolioTrendUp ? "#34d399" : "#fb7185",
+      onClick: onForestAreaClick,
+      toneClassName: "bg-emerald-400 investor-card-emerald",
+      decorationAccent: "#34d399",
     },
     {
-      title: "Land Managed",
-      value: landManaged,
-      trendLabel: landTrendLabel,
-      trendUp: landTrendUp,
-      summary: landSummary,
-      positiveIcon: Rocket,
-      negativeIcon: TriangleAlert,
-      onClick: () => onMetricCardClick("landManaged"),
-      toneClassName: landTrendUp
-        ? "bg-emerald-400 investor-card-emerald"
-        : "bg-rose-400 investor-card-rose",
-      decorationAccent: landTrendUp ? "#34d399" : "#fb7185",
-    },
-    {
-      title: "Estimated Volume",
-      value: estimatedVolume,
-      trendLabel: volumeTrendLabel,
-      trendUp: volumeTrendUp,
+      title: "Standing Volume",
+      value: standingVolume,
+      trendLabel: volumeRangeLabel,
+      trendUp: true,
       summary: volumeSummary,
       positiveIcon: Rocket,
-      negativeIcon: TriangleAlert,
-      onClick: () => onMetricCardClick("expectedVolume"),
-      toneClassName: volumeTrendUp
-        ? "bg-emerald-400 investor-card-emerald"
-        : "bg-rose-300 investor-card-rose",
-      decorationAccent: volumeTrendUp ? "#34d399" : "#fda4af",
+      onClick: onVolumeClick,
+      toneClassName: "bg-emerald-400 investor-card-emerald",
+      decorationAccent: "#34d399",
     },
     {
-      title: "Payments Pending",
-      value: pendingPayments,
-      trendLabel: pendingInvoicesLabel,
-      trendUp: true,
-      summary: pendingSummary,
-      positiveIcon: Wallet,
-      negativeIcon: Wallet,
-      onClick: onPaymentsCardClick,
-      toneClassName: "bg-lime-200 dark:bg-yellow-300 investor-card-lime",
-      decorationAccent: "#bef264",
+      title: "Best Netback Price",
+      value: bestNetback,
+      trendLabel: netbackTrendUp ? "SCENARIO PRICE" : "BELOW COST",
+      trendUp: netbackTrendUp,
+      summary: netbackSummary,
+      positiveIcon: Rocket,
+      negativeIcon: TriangleAlert,
+      onClick: onNetbackClick,
+      toneClassName: netbackTrendUp ? "bg-emerald-400 investor-card-emerald" : "bg-rose-400 investor-card-rose",
+      decorationAccent: netbackTrendUp ? "#34d399" : "#fb7185",
+    },
+    {
+      title: "Asset Value",
+      value: assetValue,
+      trendLabel: assetValueTrendUp ? "MODELLED" : "NEGATIVE"  ,
+      trendUp: assetValueTrendUp,
+      summary: assetValueSummary,
+      positiveIcon: Rocket,
+      negativeIcon: TriangleAlert,
+      onClick: onValueClick,
+      toneClassName: assetValueTrendUp ? "bg-lime-200 dark:bg-yellow-300 investor-card-lime" : "bg-rose-300 investor-card-rose",
+      decorationAccent: assetValueTrendUp ? "#bef264" : "#fda4af",
     },
   ]
 
