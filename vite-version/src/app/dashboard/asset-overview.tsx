@@ -103,10 +103,14 @@ export default function Page() {
           volumeSummary={`P10 ${fmtNum(selectedVolume.p10)} - P90 ${fmtNum(selectedVolume.p90)} m3 (${volumeTierLabels[volumeTier]})`}
           bestNetback={`${fmtUsd(netbackP50)}/m3`}
           netbackTrendUp={netbackP50 >= 0}
-          netbackSummary={netbackP50 >= 0 ? "Scenario price covers harvest/haul/regulatory cost" : "Scenario price does NOT cover harvest/haul/regulatory cost at this distance -- see market state"}
-          assetValue={`${fmtUsd(val.asset_value_usd.p50)}`}
-          assetValueTrendUp={val.asset_value_usd.p50 >= 0}
-          assetValueSummary={`P10 ${fmtUsd(val.asset_value_usd.p10)} - P90 ${fmtUsd(val.asset_value_usd.p90)} -- ${val.note}`}
+          netbackSummary={
+            netbackP50 >= 0
+              ? "Current harvest margin: price evidence covers harvest/haul/regulatory cost"
+              : `Current harvest margin is NEGATIVE (${fmtUsd(val.harvest_margin_usd.p50)}) at this price/distance -- this is a harvest-timing signal, not the asset's biological value (see Asset value card)`
+          }
+          assetValue={`${fmtUsd(val.asset_option_value_usd.p50)}`}
+          assetValueTrendUp={val.asset_option_value_usd.p50 >= 0}
+          assetValueSummary={`Value of the OPTIMAL 2026-2028 wait/harvest policy, not today's harvest margin -- P10 ${fmtUsd(val.asset_option_value_usd.p10)} - P90 ${fmtUsd(val.asset_option_value_usd.p90)}. Optimal action 2026: ${val.optimal_action_by_year["2026"] ?? "n/a"}.`}
         />
 
         <div ref={chartRef} id="portfolio-summary-chart">
