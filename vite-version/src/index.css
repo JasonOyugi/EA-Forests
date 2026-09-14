@@ -788,11 +788,38 @@ html {
 .roundwood-metric-card {
   position: relative;
   overflow: hidden;
+  background: transparent;
   border-color: color-mix(in oklch, var(--metric-color) 28%, transparent);
   transition:
     border-color 220ms ease,
     box-shadow 220ms ease,
     transform 220ms ease;
+}
+
+.sector-summary-flat .roundwood-analysis-shell,
+.sector-summary-flat .roundwood-analysis-shell > div,
+.sector-summary-flat .roundwood-analysis-subcard,
+.sector-summary-flat .roundwood-metric-card,
+.sector-summary-flat .roundwood-species-panel,
+.sector-summary-flat [data-slot="select-trigger"] {
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none;
+}
+
+.sector-summary-flat .roundwood-analysis-subcard:hover,
+.sector-summary-flat .roundwood-analysis-subcard:focus-within,
+.sector-summary-flat .roundwood-metric-card:hover,
+.sector-summary-flat .roundwood-metric-card:focus-within {
+  transform: none;
+  border-color: color-mix(in oklch, var(--primary) 14%, transparent);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.035);
+}
+
+.sector-summary-flat .roundwood-metric-card:hover::before,
+.sector-summary-flat .roundwood-metric-card:focus-within::before {
+  animation: none;
+  opacity: 0.22;
 }
 
 .roundwood-metric-card::before {
@@ -830,6 +857,34 @@ html {
   box-shadow: 0 14px 26px color-mix(in oklch, var(--metric-color) 16%, transparent);
 }
 
+.metric-card-pixel {
+  position: absolute;
+  left: var(--pixel-x);
+  top: var(--pixel-y);
+  width: var(--pixel-size);
+  height: var(--pixel-size);
+  background: color-mix(
+    in srgb,
+    currentColor var(--pixel-accent-share),
+    var(--pixel-tint)
+  );
+  opacity: var(--pixel-opacity-min);
+  transform: translate(-50%, -50%) scale(var(--pixel-scale-min));
+  box-shadow: 0 0 calc(var(--pixel-size) * 0.8) currentColor;
+  animation: metricPixelPulse var(--pixel-duration) ease-in-out var(--pixel-delay) infinite;
+}
+
+@keyframes metricPixelPulse {
+  0%, 100% {
+    opacity: var(--pixel-opacity-min);
+    transform: translate(-50%, -50%) scale(var(--pixel-scale-min));
+  }
+  50% {
+    opacity: var(--pixel-opacity-max);
+    transform: translate(-50%, -50%) scale(var(--pixel-scale-max));
+  }
+}
+
 .roundwood-metric-card:hover::before,
 .roundwood-metric-card:focus-within::before {
   animation: emerald-run 2.2s linear infinite;
@@ -839,8 +894,9 @@ html {
 .roundwood-metric-icon {
   position: relative;
   overflow: hidden;
-  background-color: color-mix(in oklch, var(--metric-color) 20%, white);
-  color: color-mix(in oklch, var(--metric-color) 82%, black);
+  border: 0;
+  background-color: transparent;
+  color: var(--metric-color);
   transition:
     background-color 220ms ease,
     box-shadow 220ms ease,
@@ -909,6 +965,13 @@ html {
       animation-timeline: view();
       animation-range: entry 0% cover 38%;
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .metric-card-pixel {
+    animation: none;
+    opacity: var(--pixel-opacity-max);
   }
 }
 

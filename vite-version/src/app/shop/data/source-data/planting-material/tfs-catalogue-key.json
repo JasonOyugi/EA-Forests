@@ -1,0 +1,26 @@
+{
+  "url": "https://seed.tfs.go.tz/catalog",
+  "accessedAt": "2026-09-12",
+  "notes": "Transcribed from the catalogue's Mwongozo Wa Vifupisho Vilivyotumika legend. English translations accompany the retained source codes; no new biological recommendation is inferred.",
+  "pretreatments": {
+    "a": { "original": "Tumbukiza mbegu kwenye maji yanayochemka kisha uziache ndani ya maji mpaka maji yapoe", "english": "Immerse seeds in boiling water, then leave them in the water until it cools." },
+    "b": { "original": "Toboa gamba la mbegu kwa kutumia kitu chenye ncha kali ili kuruhusu maji yapenye", "english": "Pierce the seed coat with a sharp tool to allow water to penetrate." },
+    "c": { "original": "Loweka mbegu kwenye maji baridi kwa masaa 24 mfululizo", "english": "Soak seeds in cold water for 24 hours." },
+    "d": { "original": "Hakuna umuhimu wa maandalizi ya awali", "english": "No pretreatment is required." },
+    "e": { "original": "Loweka mbegu kwenye maji baridi kwa masaa 6", "english": "Soak seeds in cold water for 6 hours." },
+    "f": { "original": "Bado hakujakuwa na mapendekezo", "english": "No recommendation has been established." },
+    "g": { "original": "Pasua gamba la mbegu kwa uangalifu ili maji yaweze kupenya kwenye mbegu kirahisi", "english": "Carefully crack the seed coat to allow water to penetrate." },
+    "h": { "original": "Loweka mbegu kwenye maji yanayotembea kwa masaa 72", "english": "Soak seeds in running water for 72 hours." }
+  },
+  "uses": {
+    "DW": { "original": "Dawa", "english": "Medicinal use" },
+    "KN": { "original": "Kuni", "english": "Fuelwood" },
+    "KV": { "original": "Kivuli na kukinga upepo mkali", "english": "Shade and wind protection" },
+    "MB": { "original": "Mbao", "english": "Timber" },
+    "MK": { "original": "Mkaa", "english": "Charcoal" },
+    "MP": { "original": "Mapambo", "english": "Ornamental use" },
+    "MPT": { "original": "Kilimo mseto , Mifugo", "english": "Agroforestry and livestock" },
+    "MT": { "original": "Matunda", "english": "Fruit" },
+    "NG": { "original": "Nguzo", "english": "Poles" }
+  }
+}

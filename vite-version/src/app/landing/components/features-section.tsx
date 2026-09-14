@@ -122,7 +122,7 @@ export function FeaturesSection() {
                 src="/video/feature-1.mp4"
               title={<>Trade Forestry Assets</>}
               description="Have a forest? Looking to source roundwood or carbon? Click here to find credible partners asap."
-              href="/shop/sector-map"
+              href="/landing#sector-map"
             />
           </BentoTilt>
         </ScrollReveal>

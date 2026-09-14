@@ -42,6 +42,82 @@
   font-size: var(--text-base);
 }
 
+.landing-page * {
+  border-radius: 0 !important;
+}
+
+.landing-page .sector-map-play {
+  border-radius: 9999px !important;
+}
+
+.model-coming-soon {
+  isolation: isolate;
+}
+
+.model-coming-soon-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  background: color-mix(in oklch, var(--secondary) 62%, transparent);
+  transition: background-color 350ms ease, backdrop-filter 350ms ease;
+}
+
+.model-coming-soon-overlay::after,
+.model-toggle-coming-soon::after {
+  content: "Coming soon";
+  color: var(--secondary-foreground);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  opacity: 0;
+  text-transform: uppercase;
+  transition: opacity 250ms ease;
+}
+
+.model-toggle-coming-soon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: color-mix(in oklch, var(--secondary) 62%, transparent);
+  pointer-events: none;
+  transition: background-color 350ms ease, backdrop-filter 350ms ease;
+}
+
+.model-toggle-coming-soon::after {
+  position: absolute;
+  inset: 0;
+  z-index: 21;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.model-coming-soon:hover .model-coming-soon-overlay,
+.model-coming-soon:focus-within .model-coming-soon-overlay,
+.model-toggle-coming-soon:hover::before,
+.model-toggle-coming-soon:focus-visible::before {
+  background: color-mix(in oklch, var(--secondary) 76%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.model-coming-soon:hover .model-coming-soon-overlay::after,
+.model-coming-soon:focus-within .model-coming-soon-overlay::after,
+.model-toggle-coming-soon:hover::after,
+.model-toggle-coming-soon:focus-visible::after {
+  opacity: 1;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .model-coming-soon-overlay::after,
+  .model-toggle-coming-soon::after {
+    opacity: 1;
+  }
+}
+
 .landing-container {
   width: 100%;
   margin-inline: auto;

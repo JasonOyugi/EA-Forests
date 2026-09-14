@@ -1,12 +1,12 @@
-export type EditorialCategory = "Information" | "Markets" | "Models" | "Investments" | "Videos" | "Events"
+export type EditorialCategory = "Information" | "Markets" | "Investments" | "Videos" | "Events" | "Models"
 
 export const editorialActionLabels: Record<EditorialCategory, string> = {
   Information: "Read more",
   Markets: "Go",
-  Models: "Use",
   Investments: "Learn more",
   Videos: "Watch now",
   Events: "View event",
+  Models: "Coming soon",
 }
 
 export interface EditorialSubsection {
@@ -26,11 +26,6 @@ export const editorialSubsections: Record<EditorialCategory, EditorialSubsection
     { label: "Technology", href: "#brief", topic: "Technology" },
   ],
   Markets: [],
-  Models: [
-    { label: "Genetic Models", href: "#brief", topic: "Genetic" },
-    { label: "Commercial Models", href: "#brief", topic: "Commercial" },
-    { label: "Economic Models", href: "#brief", topic: "Economic" },
-  ],
   Investments: [
     { label: "Core", href: "/shop/forests-land/core-forests" },
     { label: "High Performance", href: "/shop/forests-land/high-performance-forests" },
@@ -42,5 +37,13 @@ export const editorialSubsections: Record<EditorialCategory, EditorialSubsection
     { label: "Trade", href: "#brief" },
     { label: "Policy", href: "#brief" },
     { label: "Technology", href: "#brief" },
+  ],
+  Models: [
+    { label: "Tested Investment", href: "#brief", topic: "Tested Investment" },
+    { label: "Community", href: "#brief", topic: "Community" },
+    { label: "Tools", href: "#brief", topic: "Tools" },
+    { label: "Site × Species", href: "#brief", topic: "Tools" },
+    { label: "Silviculture", href: "#brief", topic: "Tools" },
+    { label: "Roundwood", href: "#brief", topic: "Tools" },
   ],
 }

@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "test:planting": "node --experimental-strip-types --test tests/planting-material.test.ts",
     "validate:evidence": "node scripts/validate-commerce-evidence.mjs",
     "report:uganda-market": "node scripts/report-uganda-seedling-market.mjs",
     "preprocess:ssmt": "node scripts/preprocess-basic-ssmt.mjs",

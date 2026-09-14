@@ -1,3 +1,5 @@
+import type { PlantingMaterialOffer, PlantingMaterialType } from "./data/planting-material-types"
+
 export type ShopSlug =
   | "seedlings"
   | "forests-land"
@@ -178,6 +180,14 @@ export interface ShopItemVariant {
 export interface ShopItemImage {
   url: string
   title?: string
+  source?: string
+  sourcePage?: string
+  creator?: string
+  license?: string
+  licenseUrl?: string
+  specificity?: "variety-level" | "species-level" | "genus-level"
+  depicts?: string
+  objectPosition?: string
 }
 
 export interface ShopItemMetric {
@@ -223,6 +233,8 @@ export interface ShopItem {
   name: string
   species?: string
   materialType?: string
+  plantingMaterialType?: PlantingMaterialType
+  plantingOffers?: PlantingMaterialOffer[]
   nurseryVarietyAliases?: string[]
   supplierCount?: number
   evidenceNote?: string

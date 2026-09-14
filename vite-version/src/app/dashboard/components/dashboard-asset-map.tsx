@@ -85,6 +85,7 @@ import {
   type EoEvidenceTarget,
 } from "@/components/eo/eo-evidence-panel"
 import { ForestEvidenceLayer } from "@/components/map/forest-evidence-layer"
+import { MapResizeHandle, MapResizeInvalidator } from "@/components/map/map-resize-handle"
 import { fetchCountryEoStatus, type CountryEoStatus } from "@/lib/canonical-api"
 import {
   buildGroupMetricSeries,
@@ -976,19 +977,6 @@ function NearestFeatureRoutes({
 
           return [
             <MapPolyline
-              key={`nearest-halo-${feature.id}`}
-              className="fill-transparent"
-              positions={positions}
-              pathOptions={{
-                color,
-                fill: false,
-                lineCap: "round",
-                lineJoin: "round",
-                opacity: index === 0 ? 0.24 : 0.14,
-                weight: index === 0 ? 12 : 9,
-              }}
-            />,
-            <MapPolyline
               key={`nearest-route-${feature.id}`}
               className="fill-transparent"
               positions={positions}
@@ -1255,7 +1243,7 @@ function SiteMetricChart({
               value={metric}
               onValueChange={(value) => onMetricChange(value as SiteMetricKey)}
             >
-              <SelectTrigger className="group h-auto w-full max-w-[360px] rounded-[24px] border-0 p-4 text-left shadow-none">
+              <SelectTrigger className="group h-auto w-full max-w-[360px] rounded-[24px] border-0 bg-card p-4 text-left shadow-sm dark:bg-card">
                 <div className="min-w-0 py-2">
                   <div
                     className={`mt-2 truncate text-xl font-semibold text-foreground ${emeraldGlitterHoverClass}`}
@@ -1426,6 +1414,7 @@ export function DashboardAssetMap({
   )
   const [isRouting, setIsRouting] = React.useState(false)
   const [showRoadAnalysis, setShowRoadAnalysis] = React.useState(false)
+  const [mapHeight, setMapHeight] = React.useState(560)
   // Canonical-identity EO evidence target for the shared ForestEvidenceLayer
   // (UG + KE + any future country's real forests) -- distinct from
   // ActorLayerGroup's own name-based selectedEoCfrName, which stays scoped
@@ -1614,7 +1603,8 @@ export function DashboardAssetMap({
                   center={selectedGroup.mapCenter}
                   zoom={7}
                   maxZoom={18}
-                  className="h-[500px] w-full rounded-none xl:h-[560px]"
+                  className="w-full rounded-none"
+                  style={{ height: mapHeight }}
                 >
                   <MapLayers
                     defaultTileLayer={marketTileLayers[0].name}
@@ -1635,6 +1625,7 @@ export function DashboardAssetMap({
                       group={selectedGroup}
                       focusVersion={focusVersion}
                     />
+                    <MapResizeInvalidator />
 
                     <ForestEvidenceLayer onViewEoEvidence={setSelectedEoEvidenceTarget} />
 
@@ -1789,7 +1780,6 @@ export function DashboardAssetMap({
                         setClickedPoint(point)
                         setSelectedActorId(null)
                         setIsTableOpen(true)
-                        setShowRoadAnalysis(true)
                       }}
                     />
                     <MapZoomControl position="top-3 left-3" />
@@ -1819,12 +1809,8 @@ export function DashboardAssetMap({
                           variant={showRoadAnalysis ? "default" : "secondary"}
                           className="border shadow-sm"
                           aria-label={showRoadAnalysis ? "Hide road analysis" : "Show road analysis"}
-                          title={
-                            showRoadAnalysis
-                              ? "Double-click to hide road analysis"
-                              : "Double-click to show road analysis"
-                          }
-                          onDoubleClick={() => setShowRoadAnalysis((value) => !value)}
+                          title={showRoadAnalysis ? "Hide road analysis" : "Show road analysis"}
+                          onClick={() => setShowRoadAnalysis((value) => !value)}
                         >
                           <Route className="h-4 w-4" />
                         </Button>
@@ -1854,6 +1840,7 @@ export function DashboardAssetMap({
                     ) : null}
                   </MapLayers>
                 </Map>
+                <MapResizeHandle height={mapHeight} onHeightChange={setMapHeight} />
               </div>
 
               <EoEvidenceDetailSheet
@@ -1866,7 +1853,7 @@ export function DashboardAssetMap({
 
               <div className="border-0 bg-background/70">
                 <Select value={selectedGroup.id} onValueChange={handleSelectGroup}>
-                  <SelectTrigger className="group w-full data-[size=default]:h-auto min-h-24 border-0 bg-transparent p-4 text-left shadow-none dark:bg-transparent dark:hover:bg-muted/50">
+                  <SelectTrigger className="group min-h-24 w-full border-0 bg-card p-4 text-left shadow-sm data-[size=default]:h-auto dark:bg-card dark:hover:bg-card">
                     <div className="min-w-0 flex-1 space-y-1">
                       <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
                         Selected site

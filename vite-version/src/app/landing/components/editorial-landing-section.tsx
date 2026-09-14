@@ -1,7 +1,7 @@
 "use client"
 
-import { ArrowRight, CalendarDays, Clock3, ExternalLink, MapPin, MapPinned, Play } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
+import { ArrowRight, CalendarDays, Clock3, ExternalLink, MapPin, Play } from "lucide-react"
+import { lazy, Suspense, useEffect, useRef, useState } from "react"
 import type { MouseEvent } from "react"
 
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
@@ -15,9 +15,15 @@ import { editorialActionLabels, editorialSubsections } from "./editorial-actions
 import type { EditorialCategory } from "./editorial-actions"
 import { InformationLiveHub } from "./information-live-hub"
 import { MetricCardDecoration } from "./metric-card-decoration"
-import { landingContainer, landingDisplayHeadingClass } from "./landing-shared"
+import { landingContainer } from "./landing-shared"
 import { sectorMetrics, sectorPlayers } from "./sector-data"
 import type { SectorMetric, SectorPlayer } from "./sector-data"
+
+const SectorMapExperience = lazy(() =>
+  import("@/app/shop/components/shops/roundwood-shop").then((module) => ({
+    default: module.SectorMapExperience,
+  }))
+)
 
 const normalizedSeedlingsInventory = normalizeSeedlingInventory(seedlingsInventory as ShopItem[])
 const featuredSeedlings = (normalizedSeedlingsInventory
@@ -87,28 +93,28 @@ type EditorialEvent = {
 }
 
 const stories: Story[] = [
-  { title: "Here's how forests make money in East Africa", category: "Models", image: "https://cdn.agriland.ie/uploads/2020/09/Image-source-Veon-2.jpg", href: "/articles/how-forests-make-money-east-africa", updatedAt: "12 Aug 2026" },
+  { title: "Here's how forests make money in East Africa", category: "Models", image: "https://cdn.agriland.ie/uploads/2020/09/Image-source-Veon-2.jpg", href: "/articles/how-forests-make-money-east-africa", updatedAt: "12 Aug 2026", topic: "Community" },
   { title: "Ready to sell your wood?", category: "Markets", image: "https://saforestryonline.co.za/wp-content/uploads/2025/07/The-John-Deere-2144G-tracked-swing-harvester-is-ideal-for-fast-growing-high-yield-plantations-scaled.jpg", href: "/shop/wood-markets-map", updatedAt: "11 Aug 2026" },
   { title: "The best planting material for East Africa", category: "Markets", image: "https://dryrocktreesnursery.com/cdn/shop/files/lodgepoletray.jpg?v=1759249757&width=1946", href: "/shop/seedlings", updatedAt: "10 Aug 2026" },
-  { title: "The ultimate site-species analysis tool", category: "Models", image: "/tz.jpg", href: "/models/site-species-analysis", updatedAt: "9 Aug 2026", topic: "Genetic" },
-  { title: "Start a forestry investment guaranteed to generate returns", category: "Investments", image: "/eucalyptus.jpg", href: "/shop/forests-land/core-forests", updatedAt: "8 Aug 2026" },
-  { title: "Everything you need to know about clonal nursery business ", category: "Models", image: "https://eucalyptusclones.in/images/clonal-gallery-1.png", href: "/models/clonal-eucalyptus-nursery", updatedAt: "7 Aug 2026", topic: "Genetic" },
-  { title: "Build a high-performance forest asset today", category: "Investments", image: "/about.webp", href: "/shop/forests-land/high-performance-forests", updatedAt: "6 Aug 2026" },
+  { title: "The ultimate site-species analysis tool", category: "Models", image: "/tz.jpg", href: "/models/site-species-analysis", updatedAt: "9 Aug 2026", topic: "Tools" },
+  { title: "Start a forestry investment guaranteed to generate returns", category: "Models", image: "/eucalyptus.jpg", href: "/shop/forests-land/core-forests", updatedAt: "8 Aug 2026", topic: "Tested Investment" },
+  { title: "Everything you need to know about clonal nursery business ", category: "Models", image: "https://eucalyptusclones.in/images/clonal-gallery-1.png", href: "/models/clonal-eucalyptus-nursery", updatedAt: "7 Aug 2026", topic: "Community" },
+  { title: "Build a high-performance forest asset today", category: "Models", image: "/about.webp", href: "/shop/forests-land/high-performance-forests", updatedAt: "6 Aug 2026", topic: "Tested Investment" },
   { title: "Find a contractor", category: "Markets", image: "https://cdn.britannica.com/77/213177-138-0C119CB6/Overview-silviculture-lumber-industry.jpg", href: "/shop/forests-land", updatedAt: "5 Aug 2026" },
   { title: "The top nurseries in the world are looking for partnerships in East Africa. Is it you?", category: "Information", image: "https://www.totalenergygroup.com/wp-content/uploads/2018/08/greenhouse_interior.jpg", href: "/articles/nursery-partnerships-east-africa", updatedAt: "4 Aug 2026" },
-  { title: "Model the forest before committing capital", category: "Models", image: "/apps.png", video: "/video/hero-3.mp4", href: "/models/model-2", updatedAt: "3 Aug 2026", topic: "Commercial" },
-  { title: "It is time to restore the drylands profitably", category: "Investments", image: "/drylands.webp", href: "/shop/forests-land/drylands", updatedAt: "2 Aug 2026" },
+  { title: "Model the forest before committing capital", category: "Models", image: "/apps.png", video: "/video/hero-3.mp4", href: "/models/model-2", updatedAt: "3 Aug 2026", topic: "Tools" },
+  { title: "It is time to restore the drylands profitably", category: "Models", image: "/drylands.webp", href: "/shop/forests-land/drylands", updatedAt: "2 Aug 2026", topic: "Community" },
   { title: "Join the people building the sector", category: "Information", image: "/contact-2.webp", href: "#contact", updatedAt: "1 Aug 2026" },
 
   // Models — Commercial group
-  { title: "Map the roundwood value chain before you commit", category: "Models", image: "https://cdn.britannica.com/77/213177-138-0C119CB6/Overview-silviculture-lumber-industry.jpg", href: "/models/model-3", updatedAt: "14 Aug 2026", topic: "Commercial" },
+  { title: "Map the roundwood value chain before you commit", category: "Models", image: "https://cdn.britannica.com/77/213177-138-0C119CB6/Overview-silviculture-lumber-industry.jpg", href: "/models/model-3", updatedAt: "14 Aug 2026", topic: "Tools" },
 
   // Models — Genetic group (in development)
-  { title: "Pine seed orchard model", category: "Models", image: "/tz.jpg", href: "/models/pine-seed-orchard", updatedAt: "14 Aug 2026", topic: "Genetic", badge: "Coming soon" },
-  { title: "EA genetics power rankings", category: "Models", image: "https://eucalyptusclones.in/images/clonal-gallery-1.png", href: "/models/ea-genetics-power-rankings", updatedAt: "14 Aug 2026", topic: "Genetic", badge: "Coming soon" },
+  { title: "Pine seed orchard model", category: "Models", image: "/tz.jpg", href: "/models/pine-seed-orchard", updatedAt: "14 Aug 2026", topic: "Community", badge: "Coming soon" },
+  { title: "EA genetics power rankings", category: "Models", image: "https://eucalyptusclones.in/images/clonal-gallery-1.png", href: "/models/ea-genetics-power-rankings", updatedAt: "14 Aug 2026", topic: "Community", badge: "Coming soon" },
 
   // Models — Economic group (in development)
-  { title: "East Africa forestry macro-economic model", category: "Models", image: "/eucalyptus.jpg", href: "/models/macro-economic-outlook", updatedAt: "14 Aug 2026", topic: "Economic", badge: "Coming soon" },
+  { title: "East Africa forestry macro-economic model", category: "Models", image: "/eucalyptus.jpg", href: "/models/macro-economic-outlook", updatedAt: "14 Aug 2026", topic: "Community", badge: "Coming soon" },
 
 ]
 
@@ -126,13 +132,15 @@ const editorialEvents: EditorialEvent[] = [
   { title: "Dubai WoodShow 2027", date: "6-8 Apr 2027", location: "Dubai, UAE", organizer: "WoodShow Global", description: "The MENA region's B2B marketplace for timber, panels, engineered wood, machinery, buyers, distributors, and exporters.", href: "https://www.woodshowglobal.com/dubai" },
 ]
 
-const editorialCategories: EditorialCategory[] = ["Information", "Models", "Investments", "Videos", "Events"]
+const editorialCategories: EditorialCategory[] = ["Information", "Videos", "Events", "Models"]
 const initialVisibleStoryCount = 8
 const defaultInformationTopic = "Policy & Regulation"
 
 function StoryTile({ story, size }: { story: Story; size?: string }) {
   const mediaRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null)
   const lightRef = useRef<HTMLDivElement | null>(null)
+  const isModel = story.category === "Models"
+  const StoryElement = isModel ? "article" : "a"
 
   const handlePointerMove = (event: MouseEvent<HTMLAnchorElement>) => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
@@ -161,11 +169,12 @@ function StoryTile({ story, size }: { story: Story; size?: string }) {
   }
 
   return (
-    <a
-      href={story.href}
+    <StoryElement
+      {...(!isModel ? { href: story.href } : {})}
+      aria-disabled={isModel || undefined}
       onMouseMove={handlePointerMove}
       onMouseLeave={resetPointerEffect}
-      className={`landing-story-card group relative block overflow-hidden bg-zinc-900 [perspective:1100px] transition-[width,height,transform] duration-500 ${size ?? ""}`}
+      className={`landing-story-card group relative block overflow-hidden bg-zinc-900 [perspective:1100px] transition-[width,height,transform] duration-500 ${isModel ? "model-coming-soon cursor-default" : ""} ${size ?? ""}`}
     >
       {story.video ? (
         <AutoPlayVideo ref={(node) => { mediaRef.current = node }} src={assetUrl(story.video)} poster={assetUrl(story.image)} loop className="absolute inset-0 size-full origin-center object-cover transition-transform ease-out will-change-transform [transform:perspective(1100px)_rotateX(0deg)_rotateY(0deg)_translate3d(0,0,0)_scale(1.02)]" />
@@ -173,7 +182,7 @@ function StoryTile({ story, size }: { story: Story; size?: string }) {
         <img ref={(node) => { mediaRef.current = node }} src={story.image} alt="" className="absolute inset-0 size-full origin-center object-cover transition-transform ease-out will-change-transform [transform:perspective(1100px)_rotateX(0deg)_rotateY(0deg)_translate3d(0,0,0)_scale(1.02)]" loading="lazy" decoding="async" />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/10 transition-colors duration-500 group-hover:from-black/95 group-hover:via-black/45" />
-      {story.badge === "Coming soon" ? <div aria-hidden="true" className="coming-soon-card-tint" /> : null}
+      {isModel ? <div aria-hidden="true" className="model-coming-soon-overlay" /> : null}
       <div ref={lightRef} aria-hidden className="pointer-events-none absolute inset-0 z-[1] opacity-0 transition-opacity duration-300" />
       <span className="absolute left-5 top-5 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/30 px-3 py-1.5 text-xs font-medium text-white/75 backdrop-blur-sm sm:left-7 sm:top-7">
         <Clock3 className="size-3" /> Last updated: {story.updatedAt}
@@ -188,7 +197,7 @@ function StoryTile({ story, size }: { story: Story; size?: string }) {
         <h3 className="landing-story-title mt-3 font-semibold">{story.title}</h3>
         <span className="landing-card-action mt-5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.15em] transition-all duration-500">{editorialActionLabels[story.category]} <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></span>
       </div>
-    </a>
+    </StoryElement>
   )
 }
 
@@ -267,7 +276,7 @@ function MetricTile({
       aria-label={`Open ${metric.informationTopic} information for ${metric.label}`}
       style={{
         borderColor: `color-mix(in srgb, ${metric.accent} 48%, transparent)`,
-        background: `linear-gradient(145deg, color-mix(in srgb, ${metric.accent} 58%, #07110c) 0%, color-mix(in srgb, ${metric.accent} 18%, #07110c) 55%, #050807 100%)`,
+        background: "transparent",
       }}
     >
       <MetricCardDecoration accent={metric.accent} />
@@ -379,26 +388,18 @@ function MetricPair({ metrics, size, onFocus, onSelectInformation }: { metrics: 
 
 export function SectorSearchSection() {
   return (
-    <section id="discover" className="bg-[#07110c] py-16 text-emerald-50 sm:py-20 lg:py-24">
+    <section id="sector-map" className="scroll-mt-16 bg-[#07110c] py-16 text-emerald-50 sm:py-20 lg:py-24">
       <div className={landingContainer}>
         <ScrollReveal className="grid items-stretch" delay={80}>
-          <a href="/shop/sector-map" className="emerald-border-hover group relative min-h-[26rem] overflow-hidden bg-zinc-900 p-5 text-white sm:min-h-[32rem] lg:min-h-[38rem]">
-            <img src="/maps.jpg" alt="East African forestry sector map" className="absolute inset-0 size-full object-cover opacity-55 transition-transform duration-700 group-hover:scale-105" />
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-950/95 via-zinc-950/72 to-black/25" />
-            <div className="relative flex min-h-[23.5rem] flex-col justify-between sm:min-h-[28.5rem] lg:min-h-[34.5rem]">
-              <div className="flex items-center justify-between gap-6 text-xs font-semibold uppercase tracking-[.22em] text-white/70">
-                <span>Explore the ecosystem</span>
-                <MapPinned className="size-7 text-emerald-200 sm:size-8" />
+          <Suspense
+            fallback={
+              <div className="flex min-h-[38rem] items-center justify-center border border-white/10 bg-black/20 text-sm text-white/60">
+                Loading sector map
               </div>
-              <div className="">
-                <h2 className={`${landingDisplayHeadingClass} text-white`}>The map of the sector</h2>
-                <div className="mt-7 grid gap-5 border-t border-white/35 pt-5 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end">
-                  <p className="max-w-2xl text-base leading-7 text-white/78 sm:text-lg sm:leading-8">Explore the people, assets and market activity behind the region&apos;s forestry value chain.</p>
-                  <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[.15em] lg:justify-self-end">Open map <ArrowRight className="size-4 transition-transform group-hover:translate-x-1.5" /></span>
-                </div>
-              </div>
-            </div>
-          </a>
+            }
+          >
+            <SectorMapExperience />
+          </Suspense>
         </ScrollReveal>
       </div>
     </section>
@@ -475,8 +476,12 @@ export function EditorialBriefSection() {
               category={category}
               isActive={activeCategory === category}
               activeTopic={activeCategory === category ? activeTopic : null}
-              onSelect={() => selectCategory(category)}
-              onSelectTopic={(topic) => selectTopic(category, topic)}
+              onSelect={() => {
+                if (category !== "Models") selectCategory(category)
+              }}
+              onSelectTopic={(topic) => {
+                if (category !== "Models") selectTopic(category, topic)
+              }}
             />
           ))}
         </ScrollReveal>
@@ -588,6 +593,7 @@ function CategoryPill({
   onSelectTopic: (topic: string) => void
 }) {
   const subsections = editorialSubsections[category]
+  const isComingSoon = category === "Models"
 
   return (
     <span
@@ -601,7 +607,8 @@ function CategoryPill({
         type="button"
         onClick={onSelect}
         aria-pressed={isActive}
-        className="whitespace-nowrap rounded-full px-5 py-2.5 text-xs font-semibold uppercase tracking-[.12em] transition-colors duration-300"
+        aria-disabled={isComingSoon}
+        className={`relative isolate whitespace-nowrap overflow-hidden rounded-full px-5 py-2.5 text-xs font-semibold uppercase tracking-[.12em] transition-colors duration-300 ${isComingSoon ? "model-toggle-coming-soon" : ""}`}
       >
         {category}
       </button>
@@ -614,6 +621,7 @@ function CategoryPill({
                 type="button"
                 onClick={() => onSelectTopic(sub.topic as string)}
                 aria-pressed={isActive && activeTopic === sub.topic}
+                aria-disabled={isComingSoon}
                 className={`whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-[.1em] transition-colors duration-300 ${
                   isActive && activeTopic === sub.topic
                     ? "bg-white text-emerald-950"

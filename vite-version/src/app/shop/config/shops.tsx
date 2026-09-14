@@ -4,6 +4,7 @@ import forestryServicesInventory from "../data/forestry-services.json"
 import roundwoodInventory from "../data/roundwood.json"
 import { normalizeFlagshipShopItem } from "../lib/flagship-pricing"
 import { normalizeSeedlingInventory } from "../data/nursery-data"
+import { seedInventory } from "../data/seed-data"
 import type { ShopDefinition, ShopItem, ShopSlug } from "../types"
 
 function isProductionShopItem(item: ShopItem) {
@@ -13,8 +14,8 @@ function isProductionShopItem(item: ShopItem) {
 export const shopDefinitions: Record<ShopSlug, ShopDefinition> = {
   seedlings: {
     slug: "seedlings",
-    name: "Seed & Seedlings",
-    shortName: "Seed & Seedlings",
+    name: "Seeds & Seedlings",
+    shortName: "Seeds & Seedlings",
     description: "The best planting material at the right price for forestry and agroforestry establishment.",
     heroTitle: "Seed/Seedling marketplace",
     heroDescription:
@@ -89,7 +90,7 @@ export const shopDefinitions: Record<ShopSlug, ShopDefinition> = {
 }
 
 export const shopInventoryMap: Record<ShopSlug, ShopItem[]> = {
-  seedlings: normalizeSeedlingInventory(seedlingsInventory as ShopItem[]),
+  seedlings: [...normalizeSeedlingInventory(seedlingsInventory as ShopItem[]), ...seedInventory],
   "forests-land": (forestsLandInventory as ShopItem[])
     .filter(isProductionShopItem)
     .map(normalizeFlagshipShopItem),

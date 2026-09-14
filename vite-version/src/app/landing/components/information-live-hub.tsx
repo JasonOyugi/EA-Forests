@@ -81,11 +81,8 @@ function MetricCardTile({ metric }: { metric: InformationMetric }) {
       target="_blank"
       rel="noopener noreferrer"
       className="editorial-metric-tile group relative flex min-h-[21rem] flex-col justify-between overflow-hidden border border-white/12 p-6 transition-[border-color,transform] duration-300 hover:-translate-y-1 sm:p-7 xl:col-span-6"
-      style={{
-        background: `linear-gradient(145deg, color-mix(in srgb, ${metric.accent} 58%, #07110c) 0%, color-mix(in srgb, ${metric.accent} 18%, #07110c) 55%, #050807 100%)`,
-      }}
+      style={{ background: "transparent" }}
     >
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0" style={{ background: `linear-gradient(135deg, color-mix(in srgb, ${metric.accent} 25%, transparent), transparent 75%)` }} />
       <MetricCardDecoration accent={metric.accent} />
       <div className="relative flex items-start justify-between gap-4">
         <span className="inline-flex items-center gap-1.5 text-[.68rem] font-semibold uppercase tracking-[.16em]" style={{ color: metric.accent }}>Did you know?</span>

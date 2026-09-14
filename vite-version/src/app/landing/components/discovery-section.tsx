@@ -28,7 +28,7 @@ export function DiscoverySection() {
 
         <div className="grid gap-6 lg:grid-cols-[1.08fr_.92fr]">
           <ScrollReveal className="h-full" delay={80}>
-            <a href="/shop/sector-map#market-concessions" className="group block h-full">
+            <a href="/landing#sector-map" className="group block h-full">
               <BentoTilt className="h-full">
                 <article className="relative min-h-[360px] h-full overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm">
                   <img src="/maps.jpg" alt="East African forestry sector map" className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105" />

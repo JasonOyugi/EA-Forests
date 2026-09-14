@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react"
+import { cloneElement, type CSSProperties, type ReactElement } from "react"
 
 import { assetUrl } from "@/lib/utils"
 
@@ -16,7 +16,6 @@ type PixelStyle = CSSProperties & {
   "--pixel-delay": string
 }
 
-const pixelCount = 6
 const pixelTints = ["#ffffff", "#f8fafc", "#f5f5f4", "#fefce8"]
 
 function seededRandom(seed: number) {
@@ -56,23 +55,37 @@ function pixelStyle(accent: string, index: number): PixelStyle {
 }
 
 /** Shared section-colored pixels and brand watermark for editorial metrics. */
-export function MetricCardDecoration({ accent = "#10b981" }: { accent?: string }) {
+export function MetricCardDecoration({
+  accent = "#10b981",
+  watermark,
+}: {
+  accent?: string
+  watermark?: ReactElement<{ className?: string }>
+}) {
+  const pixelCount = 3 + Math.floor(seededRandom(accentSeed(accent) + 97) * 4)
+
   return (
     <div aria-hidden="true" className="metric-card-decoration pointer-events-none absolute inset-0 z-0 overflow-hidden" style={{ color: accent }}>
       {Array.from({ length: pixelCount }, (_, index) => (
         <span key={index} className="metric-card-pixel" style={pixelStyle(accent, index)} />
       ))}
-      <span
-        className="absolute -bottom-12 -right-12 size-36 bg-current opacity-35 sm:-bottom-16 sm:-right-16 sm:size-40"
-        style={{
-          maskImage: `url("${assetUrl("/favicon-dark.png")}")`,
-          WebkitMaskImage: `url("${assetUrl("/favicon-dark.png")}")`,
-          maskSize: "contain",
-          WebkitMaskSize: "contain",
-          maskRepeat: "no-repeat",
-          WebkitMaskRepeat: "no-repeat",
-        }}
-      />
+      {watermark ? (
+        cloneElement(watermark, {
+          className: `${watermark.props.className ?? ""} absolute bottom-0 -right-14 text-current opacity-25`,
+        })
+      ) : (
+        <span
+          className="absolute -bottom-12 -right-12 size-36 bg-current opacity-35 sm:-bottom-16 sm:-right-16 sm:size-40"
+          style={{
+            maskImage: `url("${assetUrl("/favicon-dark.png")}")`,
+            WebkitMaskImage: `url("${assetUrl("/favicon-dark.png")}")`,
+            maskSize: "contain",
+            WebkitMaskSize: "contain",
+            maskRepeat: "no-repeat",
+            WebkitMaskRepeat: "no-repeat",
+          }}
+        />
+      )}
     </div>
   )
 }

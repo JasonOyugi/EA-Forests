@@ -1,0 +1,7 @@
+[
+  {
+    "check": "browser sequence",
+    "result": "fail",
+    "detail": "Command '['C:\\\\Users\\\\JasonOyugi\\\\AppData\\\\Local\\\\npm-cache\\\\_npx\\\\6de2aa2fded2970c\\\\node_modules\\\\agent-browser\\\\bin\\\\agent-browser-win32-x64.exe', '--session', 'ea-planting-integration', 'open', 'http://127.0.0.1:5181/shop/seedlings']' timed out after 55 seconds"
+  }
+]

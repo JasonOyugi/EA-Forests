@@ -56,10 +56,10 @@ export function ForestsLandTopBanner({
         </div>
 
         <div className="pointer-events-none absolute left-1/2 top-1/2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <div className="banner-flag-ring absolute h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-black" style={{ animationDelay: "0s" }} />
-          <div className="banner-flag-ring absolute h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-[#FCD116]" style={{ animationDelay: "0.35s" }} />
-          <div className="banner-flag-ring absolute h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-[#D90000]" style={{ animationDelay: "0.7s" }} />
-          <div className="banner-flag-ring absolute h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-black" style={{ animationDelay: "1.05s" }} />
+          <div className="banner-flag-ring absolute h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-none border-[3px] border-black" style={{ animationDelay: "0s" }} />
+          <div className="banner-flag-ring absolute h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-none border-[3px] border-[#FCD116]" style={{ animationDelay: "0.35s" }} />
+          <div className="banner-flag-ring absolute h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-none border-[3px] border-[#D90000]" style={{ animationDelay: "0.7s" }} />
+          <div className="banner-flag-ring absolute h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-none border-[3px] border-black" style={{ animationDelay: "1.05s" }} />
         </div>
 
         <div className="pointer-events-none absolute right-12 top-1/2 hidden -translate-y-1/2 sm:block">

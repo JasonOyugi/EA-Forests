@@ -499,3 +499,374 @@ INFO:     127.0.0.1:53184 - "GET /api/canonical/forest-polygons?bbox=31.67633056
 INFO:     127.0.0.1:56730 - "GET /api/canonical/eo/country-status?country=UG&spatial_type=reserve&limit=1000 HTTP/1.1" 200 OK
 INFO:     127.0.0.1:55447 - "GET /api/canonical/eo/country-status?country=UG&spatial_type=reserve&limit=1000 HTTP/1.1" 200 OK
 INFO:     127.0.0.1:65503 - "GET /api/canonical/forest-polygons?bbox=31.462097167968754%2C0.7951099765582345%2C32.69256591796876%2C1.17957364794926&limit=500&zoom=11 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65491 - "GET /api/canonical/eo/country-status?country=UG&spatial_type=reserve&limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61302 - "GET /api/canonical/session/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63233 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_ascending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63235 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_descending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63232 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s2_optical HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54762 - "GET /api/canonical/forest-polygons?bbox=31.462097167968754%2C0.7951099765582345%2C32.69256591796876%2C1.17957364794926&limit=500&zoom=11 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63238 - "GET /api/canonical/eo/country-status?country=UG&spatial_type=reserve&limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52092 - "GET /api/canonical/eo/country-status?country=UG&spatial_type=reserve&limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62179 - "GET /api/models/roundwood-production/defaults HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54938 - "GET /api/models/roundwood-production/defaults HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62180 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64949 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53877 - "POST /api/models/roundwood-production HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55283 - "GET /api/canonical/session/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53109 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s2_optical HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53111 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_ascending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53112 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_descending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63518 - "GET /api/canonical/forest-polygons?bbox=31.462097167968754%2C0.7951099765582345%2C32.69256591796876%2C1.17957364794926&limit=500&zoom=11 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49821 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49821 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49829 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53113 - "GET /api/canonical/eo/country-status?country=UG&spatial_type=reserve&limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49671 - "GET /api/canonical/eo/country-status?country=UG&spatial_type=reserve&limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56260 - "GET /api/canonical/session/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56271 - "POST /api/canonical/session/bootstrap HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56273 - "GET /api/canonical/session/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58769 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s2_optical HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59217 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_descending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52299 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_ascending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64870 - "GET /api/canonical/forest-polygons?bbox=31.462097167968754%2C0.7951099765582345%2C32.69256591796876%2C1.17957364794926&limit=500&zoom=11 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65387 - "GET /api/canonical/forest-polygons?bbox=31.46896362304688%2C0.7106598781857564%2C32.69943237304688%2C1.0951328975850576&limit=500&zoom=11 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60904 - "GET /api/canonical/forest-polygons?bbox=29.352722167968754%2C-0.019226073857941946%2C34.27459716796876%2C1.518682002452016&limit=500&zoom=9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63364 - "GET /api/canonical/forest-polygons?bbox=29.421386718750004%2C-0.013732910024756182%2C34.34326171875001%2C1.5241732299817299&limit=500&zoom=9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58997 - "GET /api/canonical/forest-polygons?bbox=33.69781494140626%2C-0.23895194403167894%2C38.61968994140626%2C1.2990219972826829&limit=500&zoom=9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49671 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s2_optical HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49674 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_ascending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49676 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_descending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60142 - "GET /api/canonical/forest-polygons?bbox=31.44699096679688%2C0.7951099765582345%2C32.708358764648445%2C1.17957364794926&limit=500&zoom=11 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60777 - "GET /api/canonical/forest-polygons?bbox=30.70266723632813%2C0.5712795966325395%2C33.22540283203126%2C1.3402098002785028&limit=500&zoom=10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51226 - "GET /api/canonical/forest-polygons?bbox=29.215393066406254%2C0.1235960955504786%2C34.26086425781251%2C1.661449236127334&limit=500&zoom=9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59727 - "GET /api/canonical/forest-polygons?bbox=30.956726074218754%2C0.21423289925023814%2C36.00219726562501%2C1.7520462233579808&limit=500&zoom=9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50878 - "GET /api/canonical/forest-polygons?bbox=32.11853027343751%2C-0.08514401163112739%2C37.16400146484376%2C1.4527861981880819&limit=500&zoom=9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55323 - "GET /api/canonical/forest-polygons?bbox=33.04412841796876%2C-0.3872651176859056%2C38.08959960937501%2C1.1507404998678228&limit=500&zoom=9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53328 - "GET /api/canonical/forest-polygons?bbox=33.79394531250001%2C-0.7497954927187406%2C38.83941650390625%2C0.7882441769447703&limit=500&zoom=9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53046 - "GET /api/canonical/forest-polygons?bbox=34.63989257812501%2C-1.3649221509479177%2C39.68536376953126%2C0.17303440494083197&limit=500&zoom=9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50701 - "GET /api/canonical/forest-polygons?bbox=34.34326171875001%2C-1.5571202993274242%2C39.38873291015626%2C-0.019226073857941946&limit=500&zoom=9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56423 - "GET /api/canonical/forest-polygons?bbox=34.67834472656251%2C-2.1583028601797505%2C39.72381591796876%2C-0.6207153969631238&limit=500&zoom=9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53206 - "GET /api/canonical/forest-polygons?bbox=35.78933715820313%2C-1.6985121550953755%2C38.31207275390626%2C-0.9296772205393953&limit=500&zoom=10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57580 - "GET /api/canonical/forest-polygons?bbox=36.32492065429688%2C-1.915384111222661%2C38.84765625000001%2C-1.1466214547504312&limit=500&zoom=10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49676 - "GET /api/canonical/forest-polygons?bbox=36.87629699707032%2C-1.778126371921455%2C38.13766479492188%2C-1.393752905426787&limit=500&zoom=11 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58581 - "GET /api/canonical/forest-polygons?bbox=37.15198516845704%2C-1.7094936248854367%2C37.78266906738282%2C-1.5173091933874727&limit=500&zoom=12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63709 - "GET /api/canonical/eo/observations?aoi_version_id=5e6f31db-a595-4a4a-9f39-108e49df51de&sensor_lane=s1_ascending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63708 - "GET /api/canonical/eo/observations?aoi_version_id=5e6f31db-a595-4a4a-9f39-108e49df51de&sensor_lane=s2_optical HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58796 - "GET /api/canonical/eo/observations?aoi_version_id=5e6f31db-a595-4a4a-9f39-108e49df51de&sensor_lane=s1_descending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62521 - "GET /api/canonical/forest-polygons?bbox=37.15198516845704%2C-1.6477220517969224%2C37.78266906738282%2C-1.4555318956783565&limit=500&zoom=12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54829 - "GET /api/canonical/forest-polygons?bbox=37.15198516845704%2C-1.6261015449368152%2C37.78266906738282%2C-1.433909437942939&limit=500&zoom=12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62199 - "GET /api/canonical/eo/observations?aoi_version_id=5e6f31db-a595-4a4a-9f39-108e49df51de&sensor_lane=s2_optical HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62200 - "GET /api/canonical/eo/observations?aoi_version_id=5e6f31db-a595-4a4a-9f39-108e49df51de&sensor_lane=s1_ascending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61394 - "GET /api/canonical/eo/observations?aoi_version_id=5e6f31db-a595-4a4a-9f39-108e49df51de&sensor_lane=s1_descending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57008 - "GET /api/canonical/eo/observations/e8f9639b-3320-4922-87eb-0bffe76c2311 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54219 - "GET /api/canonical/eo/change-evidence?aoi_version_id=5e6f31db-a595-4a4a-9f39-108e49df51de HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51079 - "GET /api/canonical/eo/change-evidence?aoi_version_id=5e6f31db-a595-4a4a-9f39-108e49df51de HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52302 - "GET /api/canonical/eo/country-status?country=UG&spatial_type=reserve&limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57158 - "GET /api/canonical/eo/country-status?country=UG&spatial_type=reserve&limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58001 - "GET /api/canonical/eo/country-status?country=UG&spatial_type=reserve&limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58000 - "GET /api/canonical/eo/country-status?country=UG&spatial_type=reserve&limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60198 - "GET /api/canonical/eo/change-evidence?aoi_version_id=5e6f31db-a595-4a4a-9f39-108e49df51de HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51040 - "GET /api/canonical/eo/change-evidence?aoi_version_id=5e6f31db-a595-4a4a-9f39-108e49df51de HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60352 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60351 - "GET /api/models/roundwood-production/defaults HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60354 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60356 - "GET /api/models/roundwood-production/defaults HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58789 - "GET /api/canonical/forest-polygons?bbox=34.66186523437501%2C-1.6669400831931047%2C39.70733642578126%2C-0.12908924625577226&limit=500&zoom=9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51652 - "GET /api/canonical/forest-polygons?bbox=34.66186523437501%2C-1.5324100450044358%2C39.70733642578126%2C0.005493164054094371&limit=500&zoom=9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57102 - "GET /api/canonical/session/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57108 - "GET /api/canonical/forest-polygons?bbox=27.833862304687504%2C0.8898568022677679%2C37.91381835937501%2C4.620228796979006&limit=500&zoom=8&country=UG HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59076 - "GET /api/canonical/forest-polygons?bbox=31.843872070312504%2C-3.167940314402757%2C41.92382812500001%2C0.5657867030024479&limit=500&zoom=8&country=KE HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62791 - "GET /api/canonical/forest-polygons?bbox=27.833862304687504%2C0.8898568022677679%2C37.91381835937501%2C4.620228796979006&limit=500&zoom=8&country=UG HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56439 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56440 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63679 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63262 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64505 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64506 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63368 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63369 - "GET /api/models/roundwood-production/defaults HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63371 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63372 - "GET /api/models/roundwood-production/defaults HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49810 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60289 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49683 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49687 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55303 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55304 - "GET /api/models/roundwood-production/defaults HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55306 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55308 - "GET /api/models/roundwood-production/defaults HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52194 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52203 - "GET /api/currency/rates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54405 - "GET /api/canonical/session/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54418 - "POST /api/canonical/session/bootstrap HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54422 - "GET /api/canonical/session/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54425 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_descending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57157 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_ascending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57156 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s2_optical HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62939 - "GET /api/canonical/session/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58825 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_descending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62378 - "GET /api/canonical/forest-polygons?bbox=31.462097167968754%2C0.7951099765582345%2C32.69256591796876%2C1.17957364794926&limit=500&zoom=11 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62381 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_ascending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62382 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s2_optical HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59237 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_descending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59236 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_ascending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59312 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s2_optical HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49196 - "GET /api/canonical/forest-polygons?bbox=31.44699096679688%2C0.7951099765582345%2C32.708358764648445%2C1.17957364794926&limit=500&zoom=11 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54203 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s2_optical HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54204 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_ascending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54205 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_descending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57380 - "GET /api/canonical/forest-polygons?bbox=31.44699096679688%2C0.9935262561298016%2C32.708358764648445%2C1.377964678371303&limit=500&zoom=11 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61088 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s2_optical HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61090 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_descending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61089 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_ascending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54640 - "GET /api/canonical/eo/observations/c0d704bf-4fde-4c09-a43b-ac1fc2ae285d HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60855 - "GET /api/canonical/eo/change-evidence?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57903 - "GET /api/canonical/eo/change-evidence?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61284 - "GET /api/canonical/session/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51781 - "POST /api/canonical/session/bootstrap HTTP/1.1" 403 Forbidden
+INFO:     127.0.0.1:49289 - "GET /api/canonical/forest-polygons?bbox=34.79919433593751%2C-3.167940314402757%2C38.96850585937501%2C0.5657867030024479&limit=500&zoom=8&country=KE HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:60945 - "GET /api/canonical/session/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61349 - "POST /api/canonical/session/bootstrap HTTP/1.1" 403 Forbidden
+INFO:     127.0.0.1:59299 - "GET /api/canonical/forest-polygons?bbox=28.696289062500004%2C-6.391730485481462%2C37.03491210937501%2C1.0656123898763876&limit=500&zoom=7&country=TZ HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:58350 - "GET /api/canonical/session/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62005 - "POST /api/canonical/session/bootstrap HTTP/1.1" 403 Forbidden
+INFO:     127.0.0.1:60152 - "GET /api/canonical/forest-polygons?bbox=28.674316406250004%2C-6.391730485481462%2C37.05688476562501%2C1.0656123898763876&limit=500&zoom=7&country=TZ HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:57295 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57296 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57297 - "GET /struts2-showcase/struts/utils.js HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57298 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57302 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57340 - "GET /js/?${jndi:dns://MDEDiscovery272cef804fSeenInTheWildGet-8000} HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57373 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57377 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57376 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57375 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57379 - "GET /struts2-showcase/struts/tooltip.gif HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57381 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57386 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57387 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57388 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57390 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57394 - "GET /struts2-showcase/struts/domtt.css HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57395 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57396 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57397 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57400 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57404 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57405 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57407 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57411 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57413 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57412 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57414 - "GET /struts2-showcase/struts/domTT.js HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57418 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57421 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57422 - "GET /struts2-showcase/struts/inputtransfersselect.js HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57423 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57426 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57428 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57432 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57434 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57435 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57437 - "GET /struts2-showcase/struts/optiontransferselect.js HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57439 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57440 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57443 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57444 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57445 - "GET /struts2-showcase HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57448 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57449 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57454 - "GET /index.action/struts/utils.js HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57457 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57458 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57459 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57460 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57466 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57467 - "POST /struts2-showcase/token/transfer4.action HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57469 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57468 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57470 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57476 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57475 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57479 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57480 - "GET /struts2-showcase/%24%7Bjndi%3Adns%3A//MDEDiscovery272cef804fApacheStruts2-8000%7D HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57482 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57484 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57485 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57490 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57491 - "POST /struts2-showcase/token/transfer4.action HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57494 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57496 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57497 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57501 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57502 - "POST /analytics/telemetry/ph/api/hyper/send?_c=${jndi:dns://MDEDiscovery272cef804fVMwarevCenter-8000}&i=test HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57506 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57507 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57508 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57511 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57515 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57517 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57518 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57522 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57523 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57524 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57525 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57531 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57532 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57533 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57534 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57537 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57541 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57542 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57543 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57544 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57550 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57551 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57552 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57553 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57556 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57559 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57560 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57561 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57563 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57567 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57569 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57570 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57572 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57574 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57578 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57579 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57581 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57582 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57586 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57587 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57589 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57591 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57592 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57596 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57597 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57598 - "GET /api/v2/%24%7Bjndi%3Adns%3A//MDEDiscovery272cef804fSeenInTheWildGet-8000%7D HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57602 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57603 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57607 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57610 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57609 - "GET /api/?${jndi:dns://MDEDiscovery272cef804fSeenInTheWildGet-8000} HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57612 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57613 - "GET / HTTP/1.1" 404 Not Found
+INFO:     ${jndi:dns://MDEDiscovery272cef804fX-Forwarded-For-8000}:0 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57619 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57621 - "GET /index.html?${jndi:dns://MDEDiscovery272cef804fSeenInTheWildGet-8000} HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57624 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57626 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57631 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57632 - "GET /login HTTP/1.1" 404 Not Found
+INFO:     ${jndi:dns://MDEDiscovery272cef804fX-Forwarded-For-8000}:0 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57634 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57637 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57643 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57644 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57645 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57646 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57647 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57654 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57655 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57657 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57656 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57658 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57664 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57665 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57666 - "POST / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57667 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57668 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57674 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57673 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57677 - "POST /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57678 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57681 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57683 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57684 - "POST /login HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57687 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57688 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57689 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57695 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57696 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57697 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57698 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57699 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57704 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57705 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57706 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57707 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57710 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57715 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57716 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57718 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57719 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57720 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57723 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57724 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57730 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57731 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57732 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57733 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57734 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57739 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57740 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57742 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57744 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57747 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57748 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57752 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57753 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57754 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57755 - "GET /JSPWiki/wiki/%24%7Bjndi%3Adns%3A//MDEDiscovery272cef804fApacheJspWiki-8000%7D HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57758 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57762 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57764 - "GET /webtools/control/main HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57765 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57767 - "GET /cgi-bin/ HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57768 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57769 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57773 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57774 - "POST /broker/xml HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57778 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57780 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57781 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57784 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57788 - "POST /broker/xml HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57789 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57790 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57791 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57794 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57797 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57799 - "GET /portal/info.jsp HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57800 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57802 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57803 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57806 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57808 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57811 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57813 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57816 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57818 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57820 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57823 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57826 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57829 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57831 - "GET /%3Aundefined HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57839 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57842 - "GET /cgi-bin/ HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57852 - "GET /?x=${jndi:dns://MDEDiscovery272cef804fxParam-8000} HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57854 - "POST /?v=${jndi:dns://MDEDiscovery272cef804fvPostParam-8000} HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57856 - "POST /?param=${jndi:dns://MDEDiscovery272cef804fParamUriParam-8000} HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57859 - "GET /?v=${jndi:dns://MDEDiscovery272cef804fvGetParam-8000} HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57861 - "POST / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57863 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63835 - "GET /api/canonical/session/status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60585 - "POST /api/canonical/session/bootstrap HTTP/1.1" 403 Forbidden
+INFO:     127.0.0.1:64175 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s2_optical HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:55454 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_ascending HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:55455 - "GET /api/canonical/eo/observations?aoi_version_id=b8b1656c-4015-41a1-a907-f9866a94dc1e&sensor_lane=s1_descending HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:55457 - "GET /api/canonical/eo/country-status?country=UG&spatial_type=reserve&limit=1000 HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:55458 - "GET /api/canonical/forest-polygons?bbox=24.718226424876555%2C-2.0720981664789457%2C39.440101978467304%2C4.044539893227434&limit=500&zoom=7.007497655761356 HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:57226 - "GET /api/canonical/eo/country-status?country=UG&spatial_type=reserve&limit=1000 HTTP/1.1" 401 Unauthorized

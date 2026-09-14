@@ -53,7 +53,7 @@ const data = {
             },
             {
               title: "Market map",
-              url: "/shop/sector-map",
+              url: "/landing#sector-map",
             },
           ],
         },

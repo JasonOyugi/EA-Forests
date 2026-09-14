@@ -63,9 +63,9 @@ function SeedlingsBanner({ className, onVisibilityChange }: SeedlingsBannerProps
 
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-16 -left-16 h-32 w-32 animate-pulse rounded-full bg-white opacity-100"></div>
-          <div className="absolute top-5 right-10 h-12 w-12 rounded-full bg-emerald-200 opacity-40"></div>
-          <div className="absolute -right-8 -bottom-8 h-32 w-32 animate-pulse rounded-full bg-green-400 opacity-100"></div>
+          <div className="absolute -top-16 -left-16 h-32 w-32 animate-pulse rounded-none bg-white opacity-100"></div>
+          <div className="absolute top-5 right-10 h-12 w-12 rounded-none bg-emerald-200 opacity-40"></div>
+          <div className="absolute -right-8 -bottom-8 h-32 w-32 animate-pulse rounded-none bg-green-400 opacity-100"></div>
         </div>
         <div className="relative z-10 flex flex-col items-center justify-between space-y-6 pr-8 md:flex-row md:space-y-0 md:pr-10">
           <div

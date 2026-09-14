@@ -36,6 +36,8 @@ const getAspectRatioClass = (ratio?: string) => {
   switch (ratio) {
     case "square":
       return "aspect-square"; // 1:1
+    case "hero":
+      return "aspect-[4/3] lg:aspect-auto lg:h-[70vh] lg:min-h-[480px]";
     case "video":
       return "aspect-video"; // 16:9
     case "wide":
@@ -48,7 +50,7 @@ const getAspectRatioClass = (ratio?: string) => {
 };
 
 const ImageContainer: React.FC<{
-  image: { url: string; title?: string };
+  image: CarouselImage;
   alt: string;
   fit?: "cover" | "contain" | "fill";
   aspectRatio?: string;
@@ -73,7 +75,7 @@ const ImageContainer: React.FC<{
     >
       <Dialog>
         <DialogTrigger asChild>
-          <div className={`cursor-pointer`}>
+          <button type="button" aria-label={`Expand ${image.title || alt}`} className="absolute inset-0 h-full w-full cursor-zoom-in">
             <img
               src={image.url}
               alt={image.title || alt}
@@ -87,7 +89,7 @@ const ImageContainer: React.FC<{
                 classNameThumbnail
               )}
             />
-          </div>
+          </button>
         </DialogTrigger>
 
         <DialogPortal>
@@ -108,6 +110,7 @@ const ImageContainer: React.FC<{
               >
                 {({ zoomIn, zoomOut }) => (
                   <>
+                    <div className="relative max-h-[90vh] max-w-[90vw] overflow-hidden rounded-lg">
                     <TransformComponent>
                       {/* You can swap this with your preferred image optization technique, like using  next/image */}
                       <img
@@ -119,8 +122,12 @@ const ImageContainer: React.FC<{
                         )}
                       />
                     </TransformComponent>
+                    {image.caption ? <div className="absolute inset-x-0 bottom-0 z-10 max-h-[30vh] overflow-y-auto bg-black/75 px-4 py-3 text-xs leading-relaxed text-white backdrop-blur-sm" role="note">
+                      {image.caption}
+                    </div> : null}
+                    </div>
                     {showImageControls && (
-                      <div className="absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-2">
+                      <div className={cn("absolute left-1/2 z-10 flex -translate-x-1/2 gap-2", image.caption ? "top-4" : "bottom-4")}>
                         <button
                           onClick={() => zoomOut()}
                           className="cursor-pointer rounded-full bg-black/50 p-2 text-white transition-colors hover:bg-black/70"
@@ -174,6 +181,8 @@ const Thumb: React.FC<ThumbPropType> = (props) => {
         onClick={onClick}
         className="relative w-full cursor-pointer touch-manipulation appearance-none overflow-hidden rounded-md border-0 bg-transparent p-0"
         type="button"
+        aria-label={`Show image ${index + 1}${title ? `: ${title}` : ""}`}
+        aria-pressed={selected}
       >
         <div
           className={cn(
@@ -197,6 +206,7 @@ const Thumb: React.FC<ThumbPropType> = (props) => {
 type CarouselImage = {
   title?: string;
   url: string;
+  caption?: React.ReactNode;
 };
 
 type CarouselImages = CarouselImage[];
@@ -207,7 +217,7 @@ interface ImageCarousel_BasicProps
   showCarouselControls?: boolean;
   showImageControls?: boolean;
   imageFit?: "cover" | "contain" | "fill";
-  aspectRatio?: "square" | "video" | "wide" | "auto";
+  aspectRatio?: "square" | "video" | "wide" | "auto" | "hero";
   thumbPosition?: "bottom" | "top" | "left" | "right";
   showThumbs?: boolean;
   // Controlled mode props

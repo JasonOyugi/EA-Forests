@@ -631,7 +631,7 @@ function FlagshipMarketsMapAd({
 
           <Button className="h-auto cursor-pointer rounded-full p-0 text-sm text-tertiary" asChild>
             <a
-              href="/shop/sector-map"
+              href="/landing#sector-map"
               className="group relative flex min-h-[46px] items-center justify-center overflow-hidden rounded-full px-5 py-3"
             >
               <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
