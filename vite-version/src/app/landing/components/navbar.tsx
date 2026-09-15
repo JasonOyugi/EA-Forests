@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Menu, Github, LayoutDashboard, X, Moon, Sun } from "lucide-react"
+import { Menu, Github, Store, X, Moon, Sun } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   NavigationMenu,
@@ -22,7 +22,7 @@ import { ModeToggle } from "@/components/mode-toggle"
 import { useTheme } from "@/hooks/use-theme"
 
 const navigationItems = [
-  { name: "Investments", href: "#brief" },
+  { name: "Investment Models", href: "#brief" },
   { name: "Contact", href: "#contact" },
 ] as const
 
@@ -225,28 +225,15 @@ export function LandingNavbar() {
               <div className="border-t p-6 space-y-4">
                 <div className="space-y-3">
                   <Button variant="outline" size="lg" asChild className="emerald-border-hover text-base cursor-pointer w-full transition-all duration-300 hover:text-emerald-400 hover:shadow-[0_0_24px_rgba(16,185,129,0.35)]">
-                    <a href={getAppUrl("/dashboard")}>
-                      <LayoutDashboard className="size-4" />
-                      Dashboard
+                    <a href={getAppUrl("/shop")}>
+                      <Store className="size-4" />
+                      Browse markets
                     </a>
                   </Button>
 
-                  <div className="grid grid-cols-2 gap-3">
-                    <Button variant="outline" size="lg" asChild className="cursor-pointer">
-                      <a href={getAppUrl("/auth/sign-in")}>Sign In</a>
-                    </Button>
-                    <Button size="lg" className="text-base cursor-pointer" asChild>
-                      <a
-                        href={getAppUrl("/auth/sign-up")}
-                        className="group relative overflow-hidden"
-                      >
-                        <span className="pointer-events-none absolute inset-y-0 left-0 w-2/3 -translate-x-full bg-gradient-to-r from-emerald-400/25 via-emerald-400/10 to-transparent transition-transform duration-900 group-hover:translate-x-[220%]" />
-                        <span className="relative z-10 inline-flex items-center group-hover:text-emerald-300">
-                          Get Started Free
-                        </span>
-                      </a>
-                    </Button>
-                  </div>
+                  <Button size="lg" className="text-base cursor-pointer w-full" asChild>
+                    <a href="/landing#contact">Contact EA Forests</a>
+                  </Button>
                 </div>
               </div>
             </div>

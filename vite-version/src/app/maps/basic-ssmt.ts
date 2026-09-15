@@ -52,6 +52,9 @@ export interface BasicSsmtChunkMetadata {
   suitability_name: string
   href: string
   feature_count: number
+  source_feature_count?: number
+  repaired_feature_count?: number
+  byte_size?: number
 }
 
 export interface BasicSsmtMetadata {
@@ -120,10 +123,10 @@ export function getSuitabilityStyle(
 export function getDefaultBasicSsmtFilters(
   metadata: BasicSsmtMetadata | null
 ): BasicSsmtFilters {
-  const meliaVolkensii = metadata?.species.find(
+  const defaultSpecies = metadata?.species.find(
     (item) =>
-      item.genus.toLowerCase() === "melia" &&
-      item.species.toLowerCase() === "volkensii"
+      item.genus.toLowerCase() === "eucalyptus" &&
+      item.species.toLowerCase() === "grandis"
   )
   const verySuitable = metadata?.suitability.find(
     (item) => item.name === "Very suitable"
@@ -131,8 +134,8 @@ export function getDefaultBasicSsmtFilters(
 
   return {
     countryCode: "all",
-    genus: meliaVolkensii?.genus ?? "all",
-    speciesName: meliaVolkensii?.species_name ?? "all",
+    genus: defaultSpecies?.genus ?? "all",
+    speciesName: defaultSpecies?.species_name ?? "all",
     suitabilityNames: verySuitable
       ? [verySuitable.name]
       : metadata?.suitability.map((item) => item.name) ?? [],

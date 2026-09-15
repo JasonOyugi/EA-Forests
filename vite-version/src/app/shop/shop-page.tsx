@@ -11,7 +11,11 @@ export default function ShopPage() {
   }
 
   if (shopSlug === "roundwood") {
-    return <Navigate to="/shop/sector-map" replace />
+    return <Navigate to="/landing#sector-map" replace />
+  }
+
+  if (shopSlug === "sector-map") {
+    return <Navigate to="/landing#sector-map" replace />
   }
 
   if (!isValidShopSlug(shopSlug)) {

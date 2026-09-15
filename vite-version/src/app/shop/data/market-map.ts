@@ -132,7 +132,7 @@ export const marketActorLayerMeta: Record<
     shortLabel: "TRIAL",
   },
   forestReserve: {
-    label: "Uganda CFRs",
+    label: "Uganda EO",
     color: "#15803d",
     shortLabel: "CFR",
   },

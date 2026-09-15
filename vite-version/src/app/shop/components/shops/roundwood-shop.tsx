@@ -3,19 +3,17 @@
 import { useEffect, useMemo, useState, type ComponentType, type CSSProperties, type ReactNode } from "react"
 import {
   Building2,
-  CalendarDays,
-  ChevronDown,
   CircleDollarSign,
   FlaskConical,
-  Gavel,
-  Landmark,
   Leaf,
-  ListChecks,
   MapPin,
   MapPinned,
   MousePointerClick,
   PanelRightOpen,
+  Pause,
+  Play,
   Route,
+  RotateCw,
   ShieldCheck,
   Trees,
   X,
@@ -24,10 +22,9 @@ import {
 import { useMap, useMapEvents } from "react-leaflet"
 
 import { MetricCardDecoration } from "@/app/landing/components/metric-card-decoration"
-import { marketConcessions, type MarketConcession } from "@/app/shop/data/concessions"
 import {
   BasicSsmtControlCard,
-  BasicSsmtLayer,
+  BasicSsmtLayerControl,
   useBasicSsmtLayerController,
 } from "@/app/maps/basic-ssmt-layer"
 import {
@@ -51,15 +48,16 @@ import {
   getCentralForestReserveRecord,
 } from "@/app/shop/data/market-databases"
 import { ugandaCfrs, type LatLngTuple } from "@/app/shop/data/generated-boundaries"
-import { ForestsLandTopBanner } from "@/components/commerce-ui/forests-land-top-banner"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { MapResizeHandle, MapResizeInvalidator } from "@/components/map/map-resize-handle"
 import {
   Map,
   MapCircleMarker,
   MapControlContainer,
   MapLayerGroup,
   MapLayers,
+  MapLayersControl,
   MapMarker,
   MapMarkerClusterGroup,
   MapPolygon,
@@ -69,6 +67,12 @@ import {
   MapTooltip,
   MapZoomControl,
 } from "@/components/ui/map"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select"
 import { cn } from "@/lib/utils"
 
 type SelectedPoint = {
@@ -159,14 +163,6 @@ const countryFlagClasses: Record<MarketCountryFilter, string> = {
   All: "",
 }
 
-const countryStrips: Record<MarketCountry, string[]> = {
-  Uganda: ["#111111", "#facc15", "#dc2626"],
-  Kenya: ["#111111", "#dc2626", "#15803d"],
-  Tanzania: ["#16a34a", "#111111", "#2563eb"],
-}
-
-const concessionLayerName = "PPP concessions"
-
 const actorLayerIcons: Record<MarketActorLayer, LucideIcon> = {
   processor: Building2,
   nursery: Leaf,
@@ -175,11 +171,9 @@ const actorLayerIcons: Record<MarketActorLayer, LucideIcon> = {
   forestReserve: ShieldCheck,
 }
 
-const defaultMapLayerGroups = [
-  "Regional boundaries",
-  concessionLayerName,
-  ...actorLayerOrder.map((layer) => marketActorLayerMeta[layer].label),
-]
+function eoLayerNameForScope(country: MarketCountryFilter) {
+  return country === "All" ? "East Africa EO" : `${country} EO`
+}
 
 function formatDistance(distanceKm: number) {
   return distanceKm >= 100
@@ -194,102 +188,6 @@ function formatCoordinate(value: number) {
 function formatArea(value?: number) {
   if (!value) return "Not recorded"
   return `${Math.round(value).toLocaleString()} ha`
-}
-
-function formatConcessionHa(value: number) {
-  return `${Math.round(value).toLocaleString()} ha`
-}
-
-function getCountryStripColors(country: MarketCountryFilter) {
-  if (country === "All") {
-    return (["Uganda", "Kenya", "Tanzania"] as MarketCountry[]).flatMap(
-      (marketCountry) => countryStrips[marketCountry]
-    )
-  }
-
-  return countryStrips[country]
-}
-
-function getCountryAccentColor(country: MarketCountryFilter) {
-  if (country === "All") return "#d97706"
-  return countryStrips[country][1]
-}
-
-function CountryStripeBadge({
-  country,
-  className,
-}: {
-  country: MarketCountryFilter
-  className?: string
-}) {
-  const colors = getCountryStripColors(country)
-
-  return (
-    <span
-      className={cn(
-        "inline-flex items-center gap-1 rounded-none border border-border/70 bg-background/90 px-2 py-1",
-        className
-      )}
-      title={country}
-      aria-label={country}
-    >
-      {colors.map((color, index) => (
-        <span
-          key={`${country}-${color}-${index}`}
-          className="h-2.5 w-4 rounded-[2px]"
-          style={{ backgroundColor: color }}
-        />
-      ))}
-    </span>
-  )
-}
-
-function getConcessionAreaPolygon(concession: MarketConcession): LatLngTuple[] {
-  const seed = Array.from(concession.id).reduce(
-    (total, char) => total + char.charCodeAt(0),
-    0
-  )
-  const areaKm2 = concession.ha / 100
-  const radiusKm = Math.max(2.2, Math.sqrt(areaKm2 / Math.PI))
-  const latitudeKm = 110.574
-  const longitudeKm =
-    111.32 * Math.max(0.25, Math.cos((concession.latitude * Math.PI) / 180))
-
-  return Array.from({ length: 14 }, (_, index) => {
-    const angle = (Math.PI * 2 * index) / 14 + seed * 0.011
-    const wobble =
-      0.78 +
-      (((seed + index * 37) % 9) / 20) +
-      Math.sin(index * 1.7 + seed) * 0.08
-    const latOffset = (Math.sin(angle) * radiusKm * wobble) / latitudeKm
-    const lngOffset = (Math.cos(angle) * radiusKm * wobble) / longitudeKm
-
-    return [
-      Number((concession.latitude + latOffset).toFixed(5)),
-      Number((concession.longitude + lngOffset).toFixed(5)),
-    ] as LatLngTuple
-  })
-}
-
-function getConcessionsForCountry(country: MarketCountryFilter) {
-  return country === "All"
-    ? marketConcessions
-    : marketConcessions.filter((concession) => concession.country === country)
-}
-
-function getConcessionsForScope(scope: MarketAnalyticsScope) {
-  const region = scope.regionId
-    ? marketRegions.find((item) => item.id === scope.regionId)
-    : null
-
-  return getConcessionsForCountry(scope.country).filter((concession) => {
-    if (!region) return true
-
-    return (
-      concession.country === region.country &&
-      pointInMarketRegion(concession.latitude, concession.longitude, region)
-    )
-  })
 }
 
 function haversineKm(
@@ -348,9 +246,10 @@ function getEstimatedNearestFeatures(
 
 function getEstimatedNearestFeatureGroups(
   selectedPoint: SelectedPoint,
-  selectedActor: MarketActor | null
+  selectedActor: MarketActor | null,
+  layers: NearestFeatureLayer[] = nearestFeatureLayers
 ) {
-  return nearestFeatureLayers.reduce<NearestFeatureGroups>((groups, layer) => {
+  return layers.reduce<NearestFeatureGroups>((groups, layer) => {
     groups[layer] = getEstimatedNearestFeatures(
       layer,
       selectedPoint.latitude,
@@ -443,10 +342,11 @@ async function getNearestFeaturesByRoad(
 async function getNearestFeatureGroupsByRoad(
   selectedPoint: SelectedPoint,
   selectedActor: MarketActor | null,
-  signal: AbortSignal
+  signal: AbortSignal,
+  layers: NearestFeatureLayer[] = nearestFeatureLayers
 ) {
   const entries = await Promise.all(
-    nearestFeatureLayers.map(async (layer) => [
+    layers.map(async (layer) => [
       layer,
       await getNearestFeaturesByRoad(
         selectedPoint,
@@ -598,72 +498,6 @@ function ActorPin({
           {highlight.rank}
         </span>
       ) : null}
-    </div>
-  )
-}
-
-function ConcessionPin({ active }: { active: boolean }) {
-  return (
-    <div className="relative flex h-11 w-11 items-center justify-center">
-      <div
-        className={cn(
-          "absolute inset-1 rounded-full bg-amber-300/30 blur-md transition-opacity",
-          active ? "opacity-100" : "opacity-70"
-        )}
-      />
-      <div
-        className={cn(
-          "relative flex h-9 w-9 items-center justify-center rounded-none border-2 border-white bg-amber-600 text-white shadow-md transition-transform",
-          active && "scale-110 ring-2 ring-amber-300 ring-offset-2 ring-offset-background"
-        )}
-      >
-        <Landmark className="h-4 w-4" />
-      </div>
-    </div>
-  )
-}
-
-function ConcessionPopup({
-  concession,
-  active,
-  onSelectConcession,
-}: {
-  concession: MarketConcession
-  active: boolean
-  onSelectConcession: (concession: MarketConcession) => void
-}) {
-  return (
-    <div className="w-80 bg-background">
-      <div className="border-b p-4">
-        <Badge variant="secondary" className="mb-2 text-amber-700">
-          PPP concession
-        </Badge>
-        <h3 className="text-base font-semibold leading-tight">{concession.name}</h3>
-        <p className="mt-2 text-sm leading-5 text-muted-foreground">
-          Land dedicated for public-private partnership forestry development.
-        </p>
-      </div>
-      <div className="space-y-3 p-4">
-        <DetailRows
-          rows={[
-            { label: "Country", value: concession.country },
-            { label: "Area", value: formatConcessionHa(concession.ha) },
-            { label: "Lease term", value: concession.leaseTerm },
-            { label: "Bid window", value: concession.bidWindow },
-            { label: "Current bid", value: concession.currentBid },
-            { label: "Conditions", value: concession.conditions.join("; ") },
-          ]}
-        />
-        <Button
-          size="sm"
-          variant={active ? "default" : "outline"}
-          className="w-full"
-          onClick={() => onSelectConcession(concession)}
-        >
-          <Gavel className="h-4 w-4" />
-          {active ? "Selected" : "Select concession"}
-        </Button>
-      </div>
     </div>
   )
 }
@@ -988,74 +822,11 @@ function RegionalBoundariesLayer({
   )
 }
 
-function ConcessionsLayer({
-  concessions,
-  selectedConcessionId,
-  onSelectConcession,
-}: {
-  concessions: MarketConcession[]
-  selectedConcessionId: string | null
-  onSelectConcession: (concession: MarketConcession) => void
-}) {
-  return (
-    <MapLayerGroup name={concessionLayerName}>
-      {concessions.map((concession) => {
-        const active = concession.id === selectedConcessionId
-        const accentColor = getCountryAccentColor(concession.country)
-        const areaPolygon = getConcessionAreaPolygon(concession)
-
-        return [
-          <MapPolygon
-            key={`${concession.id}-area`}
-            positions={areaPolygon}
-            bubblingMouseEvents={false}
-            eventHandlers={{ click: () => onSelectConcession(concession) }}
-            pathOptions={{
-              color: accentColor,
-              fillColor: accentColor,
-              fillOpacity: active ? 0.28 : 0.16,
-              opacity: active ? 0.95 : 0.72,
-              weight: active ? 3 : 2,
-              dashArray: active ? undefined : "6 5",
-            }}
-          >
-            <MapPopup className="w-80 p-0">
-              <ConcessionPopup
-                concession={concession}
-                active={active}
-                onSelectConcession={onSelectConcession}
-              />
-            </MapPopup>
-          </MapPolygon>,
-          <MapMarker
-            key={`${concession.id}-marker`}
-            position={[concession.latitude, concession.longitude]}
-            icon={<ConcessionPin active={active} />}
-            iconAnchor={[22, 22]}
-            bubblingMouseEvents={false}
-            eventHandlers={{ click: () => onSelectConcession(concession) }}
-          >
-            <MapPopup className="w-80 p-0">
-              <ConcessionPopup
-                concession={concession}
-                active={active}
-                onSelectConcession={onSelectConcession}
-              />
-            </MapPopup>
-            <MapTooltip side="top">
-              {concession.name}
-            </MapTooltip>
-          </MapMarker>,
-        ]
-      })}
-    </MapLayerGroup>
-  )
-}
-
 function ActorLayerGroup({
   layer,
   actors,
   forestReserves = ugandaCfrs,
+  reserveLayerName = "Uganda EO",
   selectedActorId,
   nearestHighlights,
   onSelectActor,
@@ -1063,15 +834,15 @@ function ActorLayerGroup({
   layer: MarketActorLayer
   actors: MarketActor[]
   forestReserves?: typeof ugandaCfrs
+  reserveLayerName?: string
   selectedActorId: string | null
   nearestHighlights: Record<string, NearestHighlight>
   onSelectActor: (actorId: string) => void
 }) {
   const meta = marketActorLayerMeta[layer]
-
   if (layer === "forestReserve") {
     return (
-      <MapLayerGroup name={meta.label}>
+      <MapLayerGroup name={reserveLayerName}>
         {forestReserves.flatMap((cfr) => {
           const record = getCentralForestReserveRecord(
             cfr.name,
@@ -1193,16 +964,18 @@ function ActorLayerGroup({
 
 function NearestFeatureRoutes({
   nearestFeatures,
+  layers,
   selectedActorId,
   onSelectActor,
 }: {
   nearestFeatures: NearestFeatureGroups
+  layers: NearestFeatureLayer[]
   selectedActorId: string | null
   onSelectActor: (actorId: string) => void
 }) {
   return (
     <>
-      {nearestFeatureLayers.flatMap((layer) => {
+      {layers.flatMap((layer) => {
         const color = marketActorLayerMeta[layer].color
 
         return nearestFeatures[layer].flatMap((feature, index) => {
@@ -1210,19 +983,6 @@ function NearestFeatureRoutes({
           if (!positions?.length) return []
 
           return [
-            <MapPolyline
-              key={`nearest-halo-${feature.id}`}
-              className="fill-transparent"
-              positions={positions}
-              pathOptions={{
-                color,
-                fill: false,
-                lineCap: "round",
-                lineJoin: "round",
-                opacity: index === 0 ? 0.24 : 0.14,
-                weight: index === 0 ? 12 : 9,
-              }}
-            />,
             <MapPolyline
               key={`nearest-route-${feature.id}`}
               className="fill-transparent"
@@ -1244,7 +1004,7 @@ function NearestFeatureRoutes({
           ]
         })
       })}
-      {nearestFeatureLayers.flatMap((layer) => {
+      {layers.flatMap((layer) => {
         const color = marketActorLayerMeta[layer].color
 
         return nearestFeatures[layer].map((feature, index) => (
@@ -1263,7 +1023,7 @@ function NearestFeatureRoutes({
               />
             }
             iconAnchor={[20, 20]}
-            zIndexOffset={1000 + (nearestFeatureLayers.length - index) * 10}
+            zIndexOffset={1000 + (layers.length - index) * 10}
             bubblingMouseEvents={false}
             eventHandlers={{ click: () => onSelectActor(feature.id) }}
           >
@@ -1303,15 +1063,10 @@ function MetricPanel({
       className={cn("roundwood-metric-card relative overflow-hidden rounded-none border p-4", className)}
       style={{ "--metric-color": color } as CSSProperties}
     >
-      <MetricCardDecoration accent={color} />
-      <div className="relative z-10 flex items-center gap-3">
-        <span className="roundwood-metric-icon flex h-9 w-9 items-center justify-center rounded-none">
-          <Icon className="h-4 w-4" />
-        </span>
-        <div>
-          <div className="text-2xl font-semibold leading-none">{value}</div>
-          <div className="mt-1 text-sm text-muted-foreground">{label}</div>
-        </div>
+      <MetricCardDecoration accent={color} watermark={<Icon className="size-28" />} />
+      <div className="relative z-10 pr-12">
+        <div className="text-2xl font-semibold leading-none">{value}</div>
+        <div className="mt-1 text-sm text-muted-foreground">{label}</div>
       </div>
       {note ? (
         <p className="relative z-10 mt-3 text-xs leading-5 text-muted-foreground">{note}</p>
@@ -1710,7 +1465,7 @@ function SpeciesDataNotice({
     const totalHa = speciesAreas.reduce((sum, item) => sum + item.hectares, 0)
 
     return (
-      <div className="rounded-none border bg-background/75 p-4">
+      <div className="roundwood-species-panel rounded-none border bg-background/75 p-4">
         <div className="mb-3 flex items-center justify-between gap-3">
           <h3 className="text-sm font-semibold">Large commercial forest species split</h3>
           <span className="text-xs text-muted-foreground">
@@ -1753,7 +1508,7 @@ function SpeciesDataNotice({
   }
 
   return (
-    <div className="rounded-none border border-dashed bg-muted/25 p-4 text-sm leading-6 text-muted-foreground">
+    <div className="roundwood-species-panel rounded-none border border-dashed bg-muted/25 p-4 text-sm leading-6 text-muted-foreground">
       No species-area split is recorded for this scope. Large commercial forest area
       coverage: {commercialForestAreaCount} of {commercialForestTotalCount} mapped
       large commercial forest records include hectares.
@@ -1764,10 +1519,14 @@ function SpeciesDataNotice({
 function MarketAnalysis({
   selectedCountry,
   selectedRegionId,
+  onCountryChange,
+  onRegionChange,
   variant = "sector",
 }: {
   selectedCountry: MarketCountryFilter
   selectedRegionId: string | null
+  onCountryChange: (country: MarketCountryFilter) => void
+  onRegionChange: (regionId: string) => void
   variant?: "sector" | "wood-markets"
 }) {
   const isWoodMarkets = variant === "wood-markets"
@@ -1954,10 +1713,21 @@ function MarketAnalysis({
       )}
     >
       <div className="rounded-[24px] border-0 bg-background/75 p-4">
-        <div className="mb-4 flex items-center gap-2 text-sm font-semibold">
-          <MapPinned className="h-4 w-4 text-muted-foreground" />
-          {selectedCountry} overview
-        </div>
+        <Select value={selectedCountry} onValueChange={(value) => onCountryChange(value as MarketCountryFilter)}>
+          <SelectTrigger className="group h-auto w-full max-w-[420px] rounded-[24px] border-0 bg-card p-4 text-left shadow-sm dark:bg-card" aria-label="Country overview">
+            <div className="min-w-0 py-1">
+              <div className="flex items-center gap-2 text-xl font-semibold text-foreground">
+                <MapPinned className="h-5 w-5 shrink-0 text-muted-foreground" />
+                <span className="truncate">{selectedCountry} overview</span>
+              </div>
+            </div>
+          </SelectTrigger>
+          <SelectContent>
+            {marketCountryFilters.map((country) => (
+              <SelectItem key={country} value={country}>{country} overview</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         <div className={cn("mt-4 grid gap-3", isWoodMarkets ? "grid-cols-1" : "sm:grid-cols-2 xl:grid-cols-3")}>
           {countryMetricCards.map((metric) => (
             <MetricPanel key={metric.label} {...metric} />
@@ -1967,15 +1737,31 @@ function MarketAnalysis({
 
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
         <div className="roundwood-analysis-subcard space-y-4 rounded-[24px] border bg-background/75 p-4">
+          <Select
+            value={selectedRegionId ?? "all"}
+            onValueChange={(value) => onRegionChange(value === "all" ? "" : value)}
+            disabled={selectedCountry === "All"}
+          >
+            <SelectTrigger className="group h-auto w-full max-w-[420px] rounded-[24px] border-0 bg-card p-4 text-left shadow-sm dark:bg-card" aria-label="Regional overview">
+              <div className="min-w-0 py-1">
+                <div className="truncate text-xl font-semibold text-foreground">
+                  {selectedRegion?.name ?? "All regions"}
+                </div>
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All regions</SelectItem>
+              {countryRegions.map((region) => (
+                <SelectItem key={region.id} value={region.id}>{region.name}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           {selectedCountry === "All" ? (
             <div className="rounded-none border border-dashed p-4 text-sm text-muted-foreground">
               Select Uganda, Kenya, or Tanzania to inspect regional analytics.
             </div>
           ) : selectedRegion ? (
             <>
-              <div className="text-sm font-semibold">
-                {selectedRegion.name}
-              </div>
               <div className={cn("grid gap-3", isWoodMarkets ? "grid-cols-1" : "sm:grid-cols-2")}>
                 {regionMetricCards.map((metric) => (
                   <MetricPanel key={metric.label} {...metric} />
@@ -1984,7 +1770,7 @@ function MarketAnalysis({
             </>
           ) : !isWoodMarkets ? (
             <div className="rounded-none border border-dashed p-4 text-sm text-muted-foreground">
-              All regional overlays are visible. Select a region above the map to view its summary.
+              Select a region to view its summary.
             </div>
           ) : null}
         </div>
@@ -2008,169 +1794,13 @@ function MarketAnalysis({
   )
 }
 
-function ConcessionsDatabase({
-  selectedCountry,
-  selectedConcessionId,
-  onSelectConcession,
+function RoundwoodShopBase({
+  variant,
+  summaryDisclosure = false,
 }: {
-  selectedCountry: MarketCountryFilter
-  selectedConcessionId: string | null
-  onSelectConcession: (concession: MarketConcession) => void
+  variant: "sector" | "wood-markets"
+  summaryDisclosure?: boolean
 }) {
-  const [isDatabasePinned, setIsDatabasePinned] = useState(false)
-  const [isDatabaseHovered, setIsDatabaseHovered] = useState(false)
-  const concessions = getConcessionsForCountry(selectedCountry)
-  const totalHa = concessions.reduce((sum, concession) => sum + concession.ha, 0)
-  const isDatabaseExpanded = isDatabasePinned || isDatabaseHovered
-  const metricCards = [
-    {
-      icon: Landmark,
-      label: "PPP concessions",
-      value: String(concessions.length),
-      color: "#d97706",
-    },
-    {
-      icon: ListChecks,
-      label: "Dedicated land",
-      value: formatConcessionHa(totalHa),
-      color: "#16a34a",
-    },
-    {
-      icon: CalendarDays,
-      label: "Bid windows",
-      value: `${concessions.length} active`,
-      color: "#2563eb",
-    },
-  ]
-
-  return (
-    <section id="market-concessions">
-      <div
-        className={cn(
-          "flag-row rounded-[1.75rem] border bg-card p-4 shadow-sm transition-all duration-300 sm:p-5",
-          selectedCountry !== "All" && countryFlagClasses[selectedCountry]
-        )}
-        onMouseEnter={() => setIsDatabaseHovered(true)}
-        onMouseLeave={() => setIsDatabaseHovered(false)}
-      >
-        <Button
-          type="button"
-          variant="ghost"
-          aria-expanded={isDatabaseExpanded}
-          onClick={() => setIsDatabasePinned(true)}
-          onDoubleClick={(event) => {
-            event.preventDefault()
-            setIsDatabasePinned(false)
-            setIsDatabaseHovered(false)
-          }}
-          className="block h-auto w-full cursor-pointer rounded-[1.25rem] bg-transparent p-0 text-left text-foreground hover:bg-transparent focus-visible:bg-transparent"
-        >
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div className="flex items-start gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-none bg-amber-50 text-amber-800">
-                <Landmark className="h-5 w-5" />
-              </span>
-              <div className="space-y-1">
-                <h2 className="text-lg font-semibold">PPP concessions database</h2>
-                <p className="text-sm text-muted-foreground">
-                  Areas of land dedicated for public-private partnerships
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <CountryStripeBadge country={selectedCountry} />
-              <span
-                className={cn(
-                  "flex h-9 w-9 items-center justify-center rounded-full border border-amber-200 bg-amber-50 text-amber-800 transition-transform duration-300",
-                  isDatabaseExpanded ? "rotate-180" : "rotate-0"
-                )}
-              >
-                <ChevronDown className="h-4 w-4" />
-              </span>
-            </div>
-          </div>
-        </Button>
-
-        <div
-          className={cn(
-            "grid overflow-hidden transition-all duration-300",
-            isDatabaseExpanded ? "mt-5 grid-rows-[1fr] opacity-100" : "mt-2 grid-rows-[0fr] opacity-80"
-          )}
-        >
-          <div className="overflow-hidden">
-            <div className="space-y-4 pt-1">
-              <div className="grid gap-3 sm:grid-cols-3">
-                {metricCards.map((metric) => (
-                  <MetricPanel key={metric.label} {...metric} />
-                ))}
-              </div>
-
-              <div className="overflow-hidden rounded-none border bg-background">
-                <div className="overflow-x-auto">
-                  <table className="w-full min-w-[920px] text-left text-sm">
-                    <thead className="border-b bg-muted/70 text-xs uppercase tracking-normal text-muted-foreground">
-                      <tr>
-                        <th className="px-4 py-3 font-semibold">Concession</th>
-                        <th className="px-4 py-3 font-semibold">Country</th>
-                        <th className="px-4 py-3 font-semibold">Ha</th>
-                        <th className="px-4 py-3 font-semibold">Lease term</th>
-                        <th className="px-4 py-3 font-semibold">Bid window</th>
-                        <th className="px-4 py-3 font-semibold">Current bid</th>
-                        <th className="px-4 py-3 font-semibold">Conditions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {concessions.map((concession) => {
-                        const active = concession.id === selectedConcessionId
-
-                        return (
-                          <tr
-                            key={concession.id}
-                            className={cn(
-                              "border-b last:border-b-0",
-                              active ? "bg-primary/10" : "hover:bg-muted/35"
-                            )}
-                          >
-                            <td className="px-4 py-3">
-                              <button
-                                type="button"
-                                className="inline-flex items-center gap-2 font-medium text-foreground hover:text-primary"
-                                onClick={() => onSelectConcession(concession)}
-                              >
-                                <Gavel
-                                  className="h-4 w-4"
-                                  style={{ color: getCountryAccentColor(concession.country) }}
-                                />
-                                {concession.name}
-                              </button>
-                            </td>
-                            <td className="px-4 py-3">
-                              <CountryStripeBadge country={concession.country} />
-                            </td>
-                            <td className="px-4 py-3 font-medium">{formatConcessionHa(concession.ha)}</td>
-                            <td className="px-4 py-3 text-muted-foreground">{concession.leaseTerm}</td>
-                            <td className="px-4 py-3 text-muted-foreground">{concession.bidWindow}</td>
-                            <td className="px-4 py-3 font-medium">{concession.currentBid}</td>
-                            <td className="px-4 py-3 text-muted-foreground">
-                              {concession.conditions.join("; ")}
-                            </td>
-                          </tr>
-                        )
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) {
   const isWoodMarkets = variant === "wood-markets"
   const visibleActorLayers = useMemo<MarketActorLayer[]>(
     () => (isWoodMarkets ? ["processor"] : actorLayerOrder),
@@ -2180,33 +1810,37 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
     () => (isWoodMarkets ? ["processor"] : nearestFeatureLayers),
     [isWoodMarkets]
   )
-  const layerGroupOptions = useMemo(
-    () =>
-      isWoodMarkets
-        ? [marketActorLayerMeta.processor.label]
-        : defaultMapLayerGroups,
-    [isWoodMarkets]
-  )
   const [selectedActorId, setSelectedActorId] = useState<string | null>(null)
   const [clickedPoint, setClickedPoint] = useState<SelectedPoint | null>(null)
   const [isTableOpen, setIsTableOpen] = useState(false)
   const [selectedCountry, setSelectedCountry] =
     useState<MarketCountryFilter>("Uganda")
+  const eoLayerName = eoLayerNameForScope(selectedCountry)
+  const layerGroupOptions = useMemo(
+    () => isWoodMarkets
+      ? [marketActorLayerMeta.processor.label]
+      : [
+          "Regional boundaries",
+          ...actorLayerOrder
+            .filter((layer) => layer !== "forestReserve")
+            .map((layer) => marketActorLayerMeta[layer].label),
+          eoLayerName,
+        ],
+    [eoLayerName, isWoodMarkets]
+  )
   const [selectedRegionId, setSelectedRegionId] = useState<string | null>(
-    isWoodMarkets
-      ? null
-      : marketRegions.find((region) => region.country === "Uganda")?.id ?? null
+    null
   )
   const [nearestFeatures, setNearestFeatures] = useState<NearestFeatureGroups>(
     () => createEmptyNearestFeatureGroups()
   )
   const [isRouting, setIsRouting] = useState(false)
   const [showRoadAnalysis, setShowRoadAnalysis] = useState(false)
-  const [selectedConcessionId, setSelectedConcessionId] = useState<string | null>(null)
+  const [mapHeight, setMapHeight] = useState(680)
+  const [isSummaryPinned, setIsSummaryPinned] = useState(false)
+  const [isMapLive, setIsMapLive] = useState(!summaryDisclosure)
   const [scopeFocusVersion, setScopeFocusVersion] = useState(0)
-  const [activeLayerGroups, setActiveLayerGroups] = useState<string[]>(
-    layerGroupOptions
-  )
+  const [activeLayerGroups, setActiveLayerGroups] = useState<string[]>([])
   const [selectedProcessorCategory, setSelectedProcessorCategory] = useState<
     MarketProcessorCategory | "all"
   >("all")
@@ -2214,11 +1848,11 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
     useState<string>("all")
   const [selectedDiameterFilter, setSelectedDiameterFilter] =
     useState<DiameterFilter>("all")
-  const ssmtController = useBasicSsmtLayerController()
+  const ssmtController = useBasicSsmtLayerController(false)
   const regionAnalytics = useMemo(() => getRegionAnalytics(), [])
 
   useEffect(() => {
-    setActiveLayerGroups(layerGroupOptions)
+    setActiveLayerGroups((groups) => groups.filter((group) => layerGroupOptions.includes(group)))
   }, [layerGroupOptions])
 
   const mapScope = useMemo<MarketAnalyticsScope>(
@@ -2313,10 +1947,6 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
     () => getForestReservesForScope(mapScope),
     [mapScope]
   )
-  const scopedConcessions = useMemo(
-    () => getConcessionsForScope(mapScope),
-    [mapScope]
-  )
   const selectedActor =
     marketActors.find((actor) => actor.id === selectedActorId) ?? null
   const selectedPoint: SelectedPoint | null = selectedActor
@@ -2357,7 +1987,8 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
     setShowRoadAnalysis(true)
     const estimatedFeatures = getEstimatedNearestFeatureGroups(
       selectedPoint,
-      selectedActor
+      selectedActor,
+      visibleNearestFeatureLayers
     )
     const controller = new AbortController()
 
@@ -2367,7 +1998,8 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
     getNearestFeatureGroupsByRoad(
       selectedPoint,
       selectedActor,
-      controller.signal
+      controller.signal,
+      visibleNearestFeatureLayers
     )
       .then((features) => {
         if (!controller.signal.aborted) {
@@ -2381,18 +2013,7 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
       })
 
     return () => controller.abort()
-  }, [selectedPointKey])
-
-  useEffect(() => {
-    if (!selectedConcessionId) return
-
-    const concessionIsVisible = scopedConcessions.some(
-      (concession) => concession.id === selectedConcessionId
-    )
-    if (!concessionIsVisible) {
-      setSelectedConcessionId(null)
-    }
-  }, [scopedConcessions, selectedConcessionId])
+  }, [selectedPointKey, visibleNearestFeatureLayers])
 
   useEffect(() => {
     if (selectedActor && !visibleScopeActors.some((actor) => actor.id === selectedActor.id)) {
@@ -2406,7 +2027,7 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
     () => {
       if (!showRoadAnalysis) return {}
 
-      return nearestFeatureLayers.reduce<Record<string, NearestHighlight>>((highlights, layer) => {
+      return visibleNearestFeatureLayers.reduce<Record<string, NearestHighlight>>((highlights, layer) => {
         const color = marketActorLayerMeta[layer].color
         nearestFeatures[layer].forEach((feature, index) => {
           highlights[feature.id] = {
@@ -2418,7 +2039,7 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
         return highlights
       }, {})
     },
-    [nearestFeatures, showRoadAnalysis]
+    [nearestFeatures, showRoadAnalysis, visibleNearestFeatureLayers]
   )
 
   const focusActor = (actorId: string) => {
@@ -2428,6 +2049,12 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
   }
 
   const changeCountry = (country: MarketCountryFilter) => {
+    const nextEoLayerName = eoLayerNameForScope(country)
+    setActiveLayerGroups((groups) =>
+      groups.includes(eoLayerName)
+        ? [...groups.filter((group) => group !== eoLayerName), nextEoLayerName]
+        : groups
+    )
     setSelectedCountry(country)
     setSelectedRegionId(
       isWoodMarkets || country === "All"
@@ -2442,61 +2069,63 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
     setScopeFocusVersion((version) => version + 1)
   }
 
-  const selectConcession = (concession: MarketConcession) => {
-    setSelectedConcessionId(concession.id)
-    if (selectedCountry !== "All" && selectedCountry !== concession.country) {
-      setSelectedCountry(concession.country)
-    }
+  const summaryExpanded = !summaryDisclosure || (isMapLive && isSummaryPinned)
+
+  const toggleMapLive = () => {
+    setIsMapLive((isLive) => {
+      if (!isLive) setIsSummaryPinned(true)
+      return !isLive
+    })
   }
 
   return (
-    <div className="space-y-8">
-      {!isWoodMarkets ? (
-        <ForestsLandTopBanner
-          targetId="market-concessions"
-          linkLabel="Review concessions"
-        />
-      ) : null}
-
+    <div className={summaryDisclosure ? "space-y-0" : "space-y-8"}>
       <section className="space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-none bg-cyan-50 text-cyan-800">
-              <MapPinned className="h-5 w-5" />
-            </span>
-          </div>
-        </div>
+        {isWoodMarkets ? (
+          <MarketMapControls
+            selectedCountry={selectedCountry}
+            selectedRegionId={selectedRegionId}
+            selectedPoint={selectedPoint}
+            showRoadAnalysis={showRoadAnalysis}
+            activeLayerGroups={activeLayerGroups}
+            layerGroups={layerGroupOptions}
+            ssmtController={ssmtController}
+            showSsmt={false}
+            showRegionFocus={false}
+            showOverlayToggle={false}
+            processorCategoryOptions={processorCategoryOptions}
+            selectedProcessorCategory={selectedProcessorCategory}
+            onProcessorCategoryChange={setSelectedProcessorCategory}
+            speciesOptions={processorSpeciesOptions}
+            selectedProcessorSpecies={selectedProcessorSpecies}
+            onProcessorSpeciesChange={setSelectedProcessorSpecies}
+            selectedDiameterFilter={selectedDiameterFilter}
+            onDiameterFilterChange={setSelectedDiameterFilter}
+            onCountryChange={changeCountry}
+            onRegionChange={changeRegion}
+            onRoadAnalysisChange={setShowRoadAnalysis}
+            onLayerGroupsChange={setActiveLayerGroups}
+          />
+        ) : null}
 
-        <MarketMapControls
-          selectedCountry={selectedCountry}
-          selectedRegionId={selectedRegionId}
-          selectedPoint={selectedPoint}
-          showRoadAnalysis={showRoadAnalysis}
-          activeLayerGroups={activeLayerGroups}
-          layerGroups={layerGroupOptions}
-          ssmtController={ssmtController}
-          showSsmt={!isWoodMarkets}
-          showRegionFocus={!isWoodMarkets}
-          showOverlayToggle={!isWoodMarkets}
-          processorCategoryOptions={isWoodMarkets ? processorCategoryOptions : undefined}
-          selectedProcessorCategory={isWoodMarkets ? selectedProcessorCategory : undefined}
-          onProcessorCategoryChange={isWoodMarkets ? setSelectedProcessorCategory : undefined}
-          speciesOptions={isWoodMarkets ? processorSpeciesOptions : undefined}
-          selectedProcessorSpecies={isWoodMarkets ? selectedProcessorSpecies : undefined}
-          onProcessorSpeciesChange={isWoodMarkets ? setSelectedProcessorSpecies : undefined}
-          selectedDiameterFilter={isWoodMarkets ? selectedDiameterFilter : undefined}
-          onDiameterFilterChange={isWoodMarkets ? setSelectedDiameterFilter : undefined}
-          onCountryChange={changeCountry}
-          onRegionChange={changeRegion}
-          onRoadAnalysisChange={setShowRoadAnalysis}
-          onLayerGroupsChange={setActiveLayerGroups}
-        />
-
-        <div className="relative overflow-hidden rounded-none border bg-background">
-          <Map center={[-2.2, 34.7]} zoom={6} maxZoom={18} className="h-[680px] w-full rounded-none">
+        <div className="sector-map-stage relative overflow-hidden rounded-none border bg-background">
+          <div
+            className={cn(
+              "sector-map-canvas transition-[filter,opacity] duration-700 ease-out",
+              !isMapLive && "pointer-events-none brightness-[.38] saturate-[.72]"
+            )}
+            inert={!isMapLive}
+          >
+            <Map
+              center={[-2.2, 34.7]}
+              zoom={6}
+              maxZoom={18}
+              className="w-full rounded-none"
+              style={{ height: mapHeight }}
+            >
             <MapLayers
               defaultTileLayer={marketTileLayers[0].name}
-              defaultLayerGroups={layerGroupOptions}
+              defaultLayerGroups={[]}
               activeLayerGroups={activeLayerGroups}
               onActiveLayerGroupsChange={setActiveLayerGroups}
             >
@@ -2516,18 +2145,11 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
                 regionId={selectedRegionId}
                 version={scopeFocusVersion}
               />
-              {!isWoodMarkets ? <BasicSsmtLayer controller={ssmtController} /> : null}
+              <MapResizeInvalidator />
+              {!isWoodMarkets ? <BasicSsmtLayerControl position="left-15 top-3" initialEnabled={false} /> : null}
 
               {!isWoodMarkets ? (
                 <RegionalBoundariesLayer regions={scopedRegions} maxCount={maxRegionCount} />
-              ) : null}
-
-              {!isWoodMarkets ? (
-                <ConcessionsLayer
-                  concessions={scopedConcessions}
-                  selectedConcessionId={selectedConcessionId}
-                  onSelectConcession={selectConcession}
-                />
               ) : null}
 
               {visibleActorLayers.map((layer) => (
@@ -2536,6 +2158,7 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
                   layer={layer}
                   actors={actorGroups[layer]}
                   forestReserves={scopedForestReserves}
+                  reserveLayerName={eoLayerName}
                   selectedActorId={selectedActorId}
                   nearestHighlights={nearestHighlights}
                   onSelectActor={focusActor}
@@ -2548,6 +2171,7 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
                   {showRoadAnalysis ? (
                     <NearestFeatureRoutes
                       nearestFeatures={nearestFeatures}
+                      layers={visibleNearestFeatureLayers}
                       selectedActorId={selectedActorId}
                       onSelectActor={focusActor}
                     />
@@ -2563,8 +2187,28 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
                 }}
               />
               <MapZoomControl position="top-3 left-3" />
+              {!isWoodMarkets ? (
+                <MapLayersControl
+                  position="right-3 top-3"
+                  tileLayersLabel="Base map"
+                  layerGroupsLabel="Map overlays"
+                />
+              ) : null}
               <MapControlContainer className="right-16 top-3">
                 <div className="flex gap-2">
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant={showRoadAnalysis ? "default" : "secondary"}
+                    className="border shadow-sm"
+                    aria-pressed={showRoadAnalysis}
+                    aria-label={showRoadAnalysis ? "Hide road analysis" : "Show road analysis"}
+                    title={showRoadAnalysis ? "Hide road analysis" : "Show road analysis"}
+                    disabled={!selectedPoint}
+                    onClick={() => setShowRoadAnalysis((value) => !value)}
+                  >
+                    <Route className="h-4 w-4" />
+                  </Button>
                   <Button
                     type="button"
                     size="icon"
@@ -2592,25 +2236,103 @@ function RoundwoodShopBase({ variant }: { variant: "sector" | "wood-markets" }) 
                 />
               ) : null}
             </MapLayers>
-          </Map>
+            </Map>
+            {!summaryDisclosure ? <MapResizeHandle height={mapHeight} onHeightChange={setMapHeight} /> : null}
+          </div>
+
+          {!isWoodMarkets ? (
+            <>
+              <div
+                aria-hidden={isMapLive}
+                className={cn(
+                  "pointer-events-none absolute inset-0 z-[900] flex flex-col justify-between bg-gradient-to-br from-[#07110c]/82 via-[#07110c]/42 to-black/20 p-6 text-white transition-opacity duration-500 sm:p-9 lg:p-12",
+                  isMapLive ? "opacity-0" : "opacity-100"
+                )}
+              >
+                <div className="flex items-center justify-between gap-6 text-xs font-semibold uppercase tracking-[.22em] text-white/70">
+                  <span>Explore the ecosystem</span>
+                  <MapPinned className="size-7 text-emerald-200 sm:size-8" />
+                </div>
+                <div>
+                  <h2 className="landing-display-title text-white">Map of the Sector</h2>
+                  <p className="mt-7 max-w-2xl border-t border-white/35 pt-5 text-base leading-7 text-white/78 sm:text-lg sm:leading-8">
+                    Explore the people, assets and market activity behind the region&apos;s forestry value chain.
+                  </p>
+                </div>
+              </div>
+
+              {!isMapLive ? (
+                <button
+                  type="button"
+                  onClick={toggleMapLive}
+                  className="absolute inset-0 z-[1050] flex items-center justify-center px-6 text-center text-white sm:hidden [@media_(orientation:landscape)]:hidden"
+                  aria-label="Activate sector map"
+                >
+                  <span className="flex max-w-xs flex-col items-center gap-3 rounded-lg border border-white/20 bg-[#07110c]/78 px-5 py-4 text-sm font-medium shadow-xl backdrop-blur-md">
+                    <RotateCw className="size-6 text-emerald-300" />
+                    Rotate your phone for more map space, then tap to explore
+                  </span>
+                </button>
+              ) : null}
+
+              <Button
+                type="button"
+                size="icon"
+                variant="secondary"
+                onClick={toggleMapLive}
+                aria-label={isMapLive ? "Pause sector map" : "Play sector map"}
+                aria-pressed={isMapLive}
+                className={cn(
+                  "sector-map-play absolute left-1/2 top-4 z-[1100] size-14 -translate-x-1/2 rounded-full border border-emerald-200/55 bg-[#07110c]/78 text-emerald-100 shadow-[0_0_24px_rgba(52,211,153,.38)] backdrop-blur-md transition-all duration-300 hover:bg-emerald-400 hover:text-emerald-950 hover:shadow-[0_0_32px_rgba(52,211,153,.5)]",
+                  isMapLive && "size-11 shadow-[0_0_14px_rgba(52,211,153,.24)]"
+                )}
+              >
+                {isMapLive ? <Pause className="size-4 fill-current" /> : <Play className="ml-0.5 size-5 fill-current" />}
+              </Button>
+            </>
+          ) : null}
         </div>
       </section>
 
-      <MarketAnalysis
-        selectedCountry={selectedCountry}
-        selectedRegionId={selectedRegionId}
-        variant={variant}
-      />
-
-      {!isWoodMarkets ? (
-        <ConcessionsDatabase
+      {summaryDisclosure ? (
+        <section className="border-x border-b border-white/10 bg-[#07110c]">
+          <div
+            id="sector-map-summary"
+            className={cn(
+              "grid transition-[grid-template-rows,opacity] duration-500 ease-out",
+              summaryExpanded
+                ? "grid-rows-[1fr] opacity-100"
+                : "grid-rows-[0fr] opacity-0"
+            )}
+          >
+            <div className="overflow-hidden">
+              <div className="sector-summary-flat px-3 pb-6 sm:px-5 sm:pb-8">
+                <MarketAnalysis
+                  selectedCountry={selectedCountry}
+                  selectedRegionId={selectedRegionId}
+                  onCountryChange={changeCountry}
+                  onRegionChange={changeRegion}
+                  variant={variant}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : (
+        <MarketAnalysis
           selectedCountry={selectedCountry}
-          selectedConcessionId={selectedConcessionId}
-          onSelectConcession={selectConcession}
+          selectedRegionId={selectedRegionId}
+          onCountryChange={changeCountry}
+          onRegionChange={changeRegion}
+          variant={variant}
         />
-      ) : null}
+      )}
     </div>
   )
+}
+
+export function SectorMapExperience() {
+  return <RoundwoodShopBase variant="sector" summaryDisclosure />
 }
 
 export function RoundwoodShop() {

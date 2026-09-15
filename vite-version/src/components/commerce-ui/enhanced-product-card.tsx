@@ -13,6 +13,9 @@ import { formatCurrency } from "@/app/shop/lib/format";
 import { ArrowUpRight, Heart, ShoppingCart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ShopItem } from "@/app/shop/types";
+import type { MaterialFilters, MaterialSelection } from "@/app/shop/data/planting-material-types";
+import { filterOffers, selectionsForOffers } from "@/app/shop/lib/planting-material";
+import { MaterialHeadline, MaterialQuantity } from "@/app/shop/components/planting-controls";
 
 interface EnhancedProductCardProps {
   item: ShopItem;
@@ -29,6 +32,9 @@ interface EnhancedProductCardProps {
   pricePulseOnHover?: boolean;
   runningBorderOnHover?: boolean;
   className?: string;
+  materialFilters?: MaterialFilters;
+  materialSelection?: MaterialSelection;
+  onMaterialSelectionChange?: (selection: MaterialSelection) => void;
 }
 
 export function EnhancedProductCard({
@@ -46,9 +52,17 @@ export function EnhancedProductCard({
   pricePulseOnHover = false,
   runningBorderOnHover = false,
   className,
+  materialFilters = {},
+  materialSelection,
+  onMaterialSelectionChange,
 }: EnhancedProductCardProps) {
   const defaultVariant = item.variants?.[0]
   const [selectedVariant, setSelectedVariant] = React.useState<string>(defaultVariant?.id ?? "")
+  const materialOptions = selectionsForOffers(item.plantingMaterialType ?? "seedling", item.plantingOffers ?? [])
+  const [localSelection, setLocalSelection] = React.useState<MaterialSelection>(materialOptions[0])
+  const activeMaterialSelection = materialSelection ?? localSelection
+  const materialOffers = filterOffers(item.plantingOffers ?? [], materialFilters, activeMaterialSelection)
+  const isPlantingMaterial = !!item.plantingMaterialType
 
   const startingVariant = item.variants?.[0] ?? defaultVariant
   const activeVariant = item.variants?.find((variant) => variant.id === selectedVariant) ?? defaultVariant
@@ -224,19 +238,20 @@ export function EnhancedProductCard({
         aria-hidden
         className="absolute inset-0 overflow-hidden"
       >
-        <img
+        {item.image ? <img
           src={item.image}
           alt=""
           className="size-full object-cover object-center transition-transform duration-300 group-hover:scale-105 [filter:brightness(0.78)_saturate(0.9)_contrast(1.04)]"
           loading="lazy"
           decoding="async"
-        />
+        /> : null}
         <div className={cn("absolute inset-0", overlayClass)} />
       </div>
 
       <div className="relative z-10">
         {/* Badges */}
         <div className="absolute left-3 top-3 z-10 flex flex-col gap-2">
+          {isPlantingMaterial && item.imageGallery?.[0] ? <Badge variant="secondary">{item.imageGallery[0].specificity === "genus-level" ? "Genus reference photo" : "Species reference photo"}</Badge> : null}
           {item.stockStatus === "in-stock" && <Badge className={stockBadgeClass}>In Stock</Badge>}
           {item.tags.includes("featured") && !item.featuredLabel && (
             <Badge variant="secondary" className="!bg-white !text-zinc-950 animate-pulse opacity-100 dark:!bg-white dark:!text-zinc-950">
@@ -280,7 +295,10 @@ export function EnhancedProductCard({
           </Button>
         )}
 
-        <div className="relative z-10 flex min-h-[360px] sm:min-h-[390px] md:min-h-[420px] flex-col justify-between p-3 sm:p-4">
+        <div className={cn("relative z-10 flex flex-col justify-between p-3 sm:p-4",
+          item.plantingMaterialType === "seedling"
+            ? "min-h-[410px] sm:min-h-[450px] md:min-h-[480px]"
+            : "min-h-[360px] sm:min-h-[390px] md:min-h-[420px]") }>
           <div className="flex-1" />
 
           <div className="space-y-3">
@@ -313,12 +331,14 @@ export function EnhancedProductCard({
                   bodyClass
                 )}
               >
-                {item.supplierCount ?? 0} mapped {item.shop === "seedlings" ? "nursery " : ""}supplier
+                {isPlantingMaterial ? new Set(materialOffers.map((offer) => offer.supplier.id)).size : item.supplierCount ?? 0} {item.plantingMaterialType === "seed" ? "seed " : "nursery "}supplier
                 {(item.supplierCount ?? 0) === 1 ? "" : "s"}
               </div>
             ) : null}
 
-            {showVariants && !compact && item.variants?.length ? (
+            {isPlantingMaterial ? <MaterialQuantity options={materialOptions} value={activeMaterialSelection} onDark
+              onChange={(selection) => { setLocalSelection(selection); onMaterialSelectionChange?.(selection) }} /> : null}
+            {!isPlantingMaterial && showVariants && !compact && item.variants?.length ? (
               <div className="space-y-2">
                 <span className={cn("text-sm font-medium drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]", bodyClass)}>
                   {variantSelectorLabel}
@@ -366,7 +386,8 @@ export function EnhancedProductCard({
               </div>
             ) : null}
 
-            <div className={cn("flex items-start justify-between gap-4", compact && "pt-1")}>
+            {isPlantingMaterial ? <MaterialHeadline offers={materialOffers} selection={activeMaterialSelection} className={bodyClass} /> : null}
+            <div className={cn(isPlantingMaterial ? "hidden" : "flex items-start justify-between gap-4", compact && "pt-1")}>
               <div>
                 {featuredStyleCard && item.priceAvailable !== false ? (
                   <div className={cn("text-[10px] font-medium uppercase tracking-[0.18em] drop-shadow-[0_1px_8px_rgba(0,0,0,0.35)]", metaClass)}>

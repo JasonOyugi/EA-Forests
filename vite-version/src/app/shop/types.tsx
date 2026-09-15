@@ -1,3 +1,5 @@
+import type { PlantingMaterialOffer, PlantingMaterialType } from "./data/planting-material-types"
+
 export type ShopSlug =
   | "seedlings"
   | "forests-land"
@@ -81,6 +83,36 @@ export interface AvailabilityEvidence {
   evidence: EvidenceRef
 }
 
+export type RegistrationStatus =
+  | "historically_registered"
+  | "currently_verified"
+  | "current_unverified"
+  | "unknown"
+
+export interface NurseryIdentityEvidence {
+  canonicalId: string
+  canonicalName: string
+  aliases: string[]
+  sourceIds: string[]
+  confidence: number
+  unresolvedDuplicateCandidates?: string[]
+}
+
+export interface NurseryStatusEvidence {
+  historicalRegistration?: RegistrationStatus
+  currentOperatingEvidence?: EvidenceRef
+  currentAvailability?: AvailabilityEvidence
+  lastObservedAt?: string
+}
+
+export interface InferenceAudit {
+  statement: string
+  ruleId: string
+  inputSourceIds: string[]
+  confidence: number
+  evidence: EvidenceRef
+}
+
 export interface NurseryOfferEvidence {
   kind: "nursery-offer"
   entity: string
@@ -148,6 +180,14 @@ export interface ShopItemVariant {
 export interface ShopItemImage {
   url: string
   title?: string
+  source?: string
+  sourcePage?: string
+  creator?: string
+  license?: string
+  licenseUrl?: string
+  specificity?: "variety-level" | "species-level" | "genus-level"
+  depicts?: string
+  objectPosition?: string
 }
 
 export interface ShopItemMetric {
@@ -193,6 +233,8 @@ export interface ShopItem {
   name: string
   species?: string
   materialType?: string
+  plantingMaterialType?: PlantingMaterialType
+  plantingOffers?: PlantingMaterialOffer[]
   nurseryVarietyAliases?: string[]
   supplierCount?: number
   evidenceNote?: string
@@ -219,6 +261,8 @@ export interface ShopItem {
   mapTitle?: string
   mapDescription?: string
   mapPoints?: ShopItemMapPoint[]
+  observedSupplierCount?: number
+  inferredSupplierCount?: number
   evidence?:
     | NurseryOfferEvidence
     | ForestryServiceOfferEvidence

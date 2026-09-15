@@ -1,0 +1,3002 @@
+[
+  {
+    "name": "Diospyros cornii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=1&itemno=ITM00194&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Diospyros mespiliformis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=2&itemno=ITM00195&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Diospyros scabra",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3&itemno=ITM00196&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Dobera glabra",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=4&itemno=ITM00197&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Dodonea viscosa",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=5&itemno=ITM00198&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Dombeya torrida",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=6&itemno=ITM00199&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Dovyalis abyssinica",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=7&itemno=ITM00200&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Dovyalis caffra",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=8&itemno=ITM00201&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Drypetes gerradii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=9&itemno=ITM00202&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Ehretia cymosa",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=10&itemno=ITM00203&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Entada abyssinica",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=11&itemno=ITM00204&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Erythrina abyssinica",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=12&itemno=ITM00205&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Erythrina burttii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=13&itemno=ITM00206&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Erythrophloeum guineese",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=14&itemno=ITM00207&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Eucalyptus camaldulensis)",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=15&itemno=ITM00208&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Eucalyptus ficifolia",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=16&itemno=ITM00209&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Eucalyptus globulus",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=17&itemno=ITM00210&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "brachystigia",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=18&itemno=ITM00211&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Eucalyptus maculata",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=19&itemno=ITM00212&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Eucalyptus paniculata",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=20&itemno=ITM00213&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Eucalyptus regnans",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=21&itemno=ITM00214&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Eucalyptus saligna",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=22&itemno=ITM00215&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Eucalyptus urophylla",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=23&itemno=ITM00216&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Faidhebia albida",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=24&itemno=ITM00217&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Faurea saligna",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=25&itemno=ITM00218&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Flacourtia indica",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=26&itemno=ITM00219&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Fraxinus pennsylvanica",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=27&itemno=ITM00220&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Gardenia volkensii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=28&itemno=ITM00221&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Gmelina arborea",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=29&itemno=ITM00222&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Grevillea robusta",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=30&itemno=ITM00223&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Grewia discolor",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=31&itemno=ITM00224&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Grewia villosa",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=32&itemno=ITM00225&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Gliricidia sepium",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=33&itemno=ITM00226&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Gyrocarpus americanus",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=34&itemno=ITM00227&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Hagenia abyssinica",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=35&itemno=ITM00228&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Hakea saligna",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=36&itemno=ITM00229&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Harungana madagascariensis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=37&itemno=ITM00230&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Hymenaea verrucosa",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=38&itemno=ITM00231&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Hyphaene compressa",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=39&itemno=ITM00232&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Hyphaene coriacea",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=40&itemno=ITM00233&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Jacaranda mimiosifolia",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=41&itemno=ITM00234&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Jatropha curcas",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=42&itemno=ITM00235&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Juniperus procera",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=43&itemno=ITM00236&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Khaya anthotheca",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=44&itemno=ITM00237&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Kigelia africana",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=45&itemno=ITM00238&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Lannea elata",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=46&itemno=ITM00239&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Lawsonia inermis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=47&itemno=ITM00240&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Leucaena diversifolia",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=48&itemno=ITM00241&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Leucaena leucocephala",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=49&itemno=ITM00242&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Leucaena pallida",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=50&itemno=ITM00243&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Leucaena trichandra",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=51&itemno=ITM00244&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Maesopsis eminii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=52&itemno=ITM00245&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Markhamia lutea",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=53&itemno=ITM00246&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Melia azedarach",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=54&itemno=ITM00247&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Melia Volkensii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=55&itemno=ITM00248&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Melia volkensii (Nuts)",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=56&itemno=ITM00249&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Milicia excelsa",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=57&itemno=ITM00250&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Milletia dura",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=58&itemno=ITM00251&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Mimusops kummel",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=59&itemno=ITM00252&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Moringa oleifera",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=60&itemno=ITM00253&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Moringa stenopetala",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=61&itemno=ITM00254&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Myrianthus holstii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=62&itemno=ITM00255&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Mystroxylon aethiopicum",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=63&itemno=ITM00256&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Newtonia buchananii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=64&itemno=ITM00257&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Newtonia hildebrandtii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=65&itemno=ITM00258&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Newtonia paucijuga",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=66&itemno=ITM00259&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Ocotea usambarensis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=67&itemno=ITM00260&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Olea capensis ssp .hochstetteri",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=68&itemno=ITM00261&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Olea capensis ssp .welwitchii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=69&itemno=ITM00262&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Olea europaea ssp. africana",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=70&itemno=ITM00263&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Paramacrolobium coeruleum",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=71&itemno=ITM00264&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Parkinsonia aculeata",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=72&itemno=ITM00265&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Phoenix reclinata",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=73&itemno=ITM00266&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Piliostigma thonningii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=74&itemno=ITM00267&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Pinus caribaea",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=75&itemno=ITM00268&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Pinus patula",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=76&itemno=ITM00269&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Pinus radiata",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=77&itemno=ITM00270&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Pithecellobium dulce",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=78&itemno=ITM00271&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Podocarpus falcatus",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=79&itemno=ITM00272&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Polyscias fulva",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=80&itemno=ITM00273&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Polyscias kikuyuensis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=81&itemno=ITM00274&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Premna maxima",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=82&itemno=ITM00275&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Pyracantha angustifolia",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=83&itemno=ITM00276&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Schinus molle",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=84&itemno=ITM00277&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Sclerocarya birrea",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=85&itemno=ITM00278&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Senna siamea",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=86&itemno=ITM00279&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Senna spectabilis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=87&itemno=ITM00280&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Sesbania grandiflora",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=88&itemno=ITM00281&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Sesbania sesban",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=89&itemno=ITM00282&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Spathodea campanulata",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=90&itemno=ITM00283&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Strychnos henningsii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=91&itemno=ITM00284&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Syncarpia laurifolia",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=92&itemno=ITM00285&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Tamarindus indica",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=93&itemno=ITM00286&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Teclea nobilis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=94&itemno=ITM00287&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Tecoma stans",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=95&itemno=ITM00288&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Tectona grandis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=96&itemno=ITM00289&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Terminali mentalis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=97&itemno=ITM00290&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Terminalia brownii (Extracted)",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=98&itemno=ITM00291&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Terminalia brownii (fruits)",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=99&itemno=ITM00292&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Terminalia prunoides",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=100&itemno=ITM00293&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Terminalia spinosa",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=101&itemno=ITM00294&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Thevetia peruviana",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=102&itemno=ITM00295&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Tipuana tipu",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=103&itemno=ITM00296&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Tristinia conferta",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=104&itemno=ITM00297&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Vangueria madagascariensis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=105&itemno=ITM00298&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Vitex keniensis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=106&itemno=ITM00299&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Vitex payos",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=107&itemno=ITM00300&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Ximenia americana",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=108&itemno=ITM00301&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Zanthoxylum gilletii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=109&itemno=ITM00302&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Ziziphus abyssinica",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=110&itemno=ITM00303&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Ziziphus mauritiana",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=111&itemno=ITM00304&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Ziziphus mucronata",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=112&itemno=ITM00305&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia abyssinica",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=113&itemno=ITM01001&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia brevispica",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=114&itemno=ITM01002&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia drepanolobium",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=115&itemno=ITM01003&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia elatior",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=116&itemno=ITM01004&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia gerrardii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=117&itemno=ITM01005&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia horrida",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=118&itemno=ITM01006&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia kirkii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=119&itemno=ITM01007&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia lahai",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=120&itemno=ITM01008&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia mangium",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=121&itemno=ITM01009&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia mearnsii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=122&itemno=ITM01010&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia melanoxolyn",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=123&itemno=ITM01011&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia mellifera",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=124&itemno=ITM01012&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia nilotica",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=125&itemno=ITM01013&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia nubica",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=126&itemno=ITM01014&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia polyacantha",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=127&itemno=ITM01015&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia reficiens",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=128&itemno=ITM01016&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia Senegal",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=129&itemno=ITM01017&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia seyal",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=130&itemno=ITM01018&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia sieberiana",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=131&itemno=ITM01019&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia tortilis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=132&itemno=ITM01020&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia xanthopholea",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=133&itemno=ITM01021&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia zanzibarica",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=134&itemno=ITM01022&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acokanthera schimperi",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=135&itemno=ITM01023&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acrocarpus fraxinifolius",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=136&itemno=ITM01024&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Adansonia digitata",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=137&itemno=ITM01025&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Adenanthera pavonina",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=138&itemno=ITM01026&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Afzelia quanzensis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=139&itemno=ITM01027&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Albizia coriaria",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=140&itemno=ITM01028&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Albizia grandibracteata",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=141&itemno=ITM01029&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Albizia gummifera",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=142&itemno=ITM01030&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Albizia lebbeck",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=143&itemno=ITM01031&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Albizia lophantha",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=144&itemno=ITM01032&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Albizia procera",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=145&itemno=ITM01033&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Allophylus abyssinicus",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=146&itemno=ITM01034&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Araucaria angustifolia",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=147&itemno=ITM01035&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Araucaria cunninghamii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=148&itemno=ITM01036&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Atriplex numularia",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=149&itemno=ITM01037&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Azanza garckeana",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=150&itemno=ITM01038&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Balanites aegyptiaca",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=151&itemno=ITM01039&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Balanites orbicularis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=152&itemno=ITM01040&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Balanites wilsoniana",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=153&itemno=ITM01041&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Berchemia discolor",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=154&itemno=ITM01042&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Bischofia javanica",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=155&itemno=ITM01043&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Brachychiton acerifolium",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=156&itemno=ITM01044&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Brachylaena huillensis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=157&itemno=ITM01045&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Brachystegia speciformis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=158&itemno=ITM01046&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Caesalpinia volkensii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=159&itemno=ITM01047&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Calliandra calothyrsus",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=160&itemno=ITM01048&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Callistemon citrinus",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=161&itemno=ITM01049&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Callistemon lanceolatus",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=162&itemno=ITM01050&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Callistemon viminalis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=163&itemno=ITM01051&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Callitris robusta",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=164&itemno=ITM01052&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Calodendrum capense",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=165&itemno=ITM01053&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Casearia battiscombe",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=166&itemno=ITM01054&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Casuarina equisetifolia",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=167&itemno=ITM01055&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Casuarina jughuniana",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=168&itemno=ITM01056&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Celtis africana",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=169&itemno=ITM01057&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Chorisia speciosa",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=170&itemno=ITM01058&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Chorisia ventricosa",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=171&itemno=ITM01059&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Combretum schumannii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=172&itemno=ITM01060&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Combretum zeyheri",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=173&itemno=ITM01061&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Commiphora baluensis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=174&itemno=ITM01062&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Conocorpus lancifolius",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=175&itemno=ITM01063&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Cordeuxia edulis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=176&itemno=ITM01064&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Commiphora africana",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=177&itemno=ITM01065&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Cordia monoica",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=178&itemno=ITM01066&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Cordia sinensis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=179&itemno=ITM01067&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Craibia brownii",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=180&itemno=ITM01068&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Croton macrostachyus",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=181&itemno=ITM01069&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Croton megalocarpus",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=182&itemno=ITM01070&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Cryptomeria japonica",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=183&itemno=ITM01071&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Cupressus lusitanica",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=184&itemno=ITM01072&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Cupressus pyramidalis",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=185&itemno=ITM01073&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Dalbergia melanoxylon",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=186&itemno=ITM01074&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Delonix elata",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=187&itemno=ITM01075&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Delonix regia",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=188&itemno=ITM01076&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Dialium orientale",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=189&itemno=ITM01077&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Dichostachys cinerea",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=190&itemno=ITM01078&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Diospyros abyssinica",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=191&itemno=ITM01079&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Seeds",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 8190.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3857&itemno=ITM02357&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Sandalwood seedlings",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 0.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3858&itemno=ITM02720&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Coconut Seeds",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 0.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3859&itemno=ITM02940&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Delonix Regia",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 1000.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3860&itemno=ITM03133&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "3ft x 6ft Bed Mahogany",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 35000.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3861&itemno=ITM03134&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Menilla palm",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 1000.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3862&itemno=ITM03288&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Terminalia Kilmandischarica",
+    "branch": "Nyeri",
+    "material": "seed",
+    "amount": 3000.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3863&itemno=ITM03292&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Warbugia ugandensis",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3365&itemno=ITM00074&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia xanthopholea",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 30.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3366&itemno=ITM00900&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acokanthera schimperi",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3367&itemno=ITM00901&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acrocarpus fraxinifolia",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3368&itemno=ITM00902&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Araucaria cannighamii",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3369&itemno=ITM00903&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Austrarian flame",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3370&itemno=ITM00904&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Avocados",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3371&itemno=ITM00905&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Bambusa Dentrocalamus",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 200.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3372&itemno=ITM00906&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Bambusa Striata",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 150.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3373&itemno=ITM00907&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Bambusa Vulgaris",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 150.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3374&itemno=ITM00908&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Brachyleana huillensis",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3375&itemno=ITM00909&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Cypress lustanica",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3376&itemno=ITM00910&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Cadal nut",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3377&itemno=ITM00911&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Caesalpinia spinosa",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3378&itemno=ITM00912&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Calistemon citrinus",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3379&itemno=ITM00913&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Calistemon lanceolatus",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3380&itemno=ITM00914&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Calondendrum",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3381&itemno=ITM00915&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Casuarina equisetifolia",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3382&itemno=ITM00916&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Casuarina jughuniana",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3383&itemno=ITM00917&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Combretum schumanii",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 0.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3384&itemno=ITM00918&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Cordia abyssinica",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3385&itemno=ITM00919&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Cordia Africana",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3386&itemno=ITM00920&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Croton macrostachyus",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3387&itemno=ITM00921&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Croton Megalocarpus",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 30.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3388&itemno=ITM00922&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Cupressus Lusitanica",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3389&itemno=ITM00923&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Dovyalis caffra",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3390&itemno=ITM00924&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Elacondendron buchananii",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3391&itemno=ITM00925&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Eucalyptus globulus",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3392&itemno=ITM00926&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Eucalyptus Grandis",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3393&itemno=ITM00927&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Eucalyptus maculata",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3394&itemno=ITM00928&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Eucalyptus saligna",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3395&itemno=ITM00929&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Flowers",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3396&itemno=ITM00930&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Gmelina arborea",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3397&itemno=ITM00931&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Gravillea Robusta",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3398&itemno=ITM00932&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Hybiscus",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3399&itemno=ITM00933&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Juniperous Procera",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 30.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3400&itemno=ITM00934&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Kei/Apple",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3401&itemno=ITM00935&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Kigelia africana",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3402&itemno=ITM00936&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Makhamia Lutea",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 30.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3403&itemno=ITM00937&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Melia azedarach",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3404&itemno=ITM00938&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Nandi flame",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3405&itemno=ITM00939&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Olea africana",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3406&itemno=ITM00940&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Passion fruit",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3407&itemno=ITM00941&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Pinus patula",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3408&itemno=ITM00942&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Podocurpus gracillior",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3409&itemno=ITM00943&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Polysias kikuyensis",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3410&itemno=ITM00944&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Premna maxima",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3411&itemno=ITM00945&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Prunus Africana",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3412&itemno=ITM00946&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Royal palm",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3413&itemno=ITM00947&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Schinus Molle",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 30.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3414&itemno=ITM00948&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Spathodea",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 0.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3415&itemno=ITM00949&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "campanulata",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3416&itemno=ITM00950&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Strychnos henningsii",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3417&itemno=ITM00951&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Sysigium Guinensis",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3418&itemno=ITM00952&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Syzygium guineense",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 100.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3419&itemno=ITM00953&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Teclea nobilis",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3420&itemno=ITM00954&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Thika palm",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3421&itemno=ITM00955&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Thuya orintiaris",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3422&itemno=ITM00956&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Tree tomato",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3423&itemno=ITM00957&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Trichilia emetica",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3424&itemno=ITM00958&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Vitex keniensis",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3425&itemno=ITM00959&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Warbugia ugandensis",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3426&itemno=ITM00960&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Yushania Albina",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3427&itemno=ITM00961&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia melifera",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3428&itemno=ITM00962&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Acacia senegal",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3429&itemno=ITM00963&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Aloe vera spp",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 100.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3430&itemno=ITM00964&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Azadirachta indica",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3431&itemno=ITM00965&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Banalite aegyptica",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3432&itemno=ITM00966&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Carica papaya",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3433&itemno=ITM00967&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Cordia sinensis",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3434&itemno=ITM00968&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Delonix regia",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3435&itemno=ITM00969&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Dobera glabra",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3436&itemno=ITM00970&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Luecaena leucocephala",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 50.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3437&itemno=ITM00971&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Melia volkensii",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3438&itemno=ITM00972&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Moringa oloifera",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3439&itemno=ITM00973&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Salvadora persica",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3440&itemno=ITM00974&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Senna siamea",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3441&itemno=ITM00975&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Syzygium cuminii",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3442&itemno=ITM00976&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Terminalia mentalis",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3443&itemno=ITM00977&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Afzuelia quansensis",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3444&itemno=ITM00978&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Brachystegia speciformis",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3445&itemno=ITM00979&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Casuarina equisetifolia",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3446&itemno=ITM00980&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Eucalyptus Camaldulensis",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3447&itemno=ITM00981&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Eucalyptus europhyla",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3448&itemno=ITM00982&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Ficus sycomorus",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3449&itemno=ITM00983&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Hymenia verucosa",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3450&itemno=ITM00984&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Lecanoides fraxinifolius",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3451&itemno=ITM00985&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Majidea zanguebarica",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3452&itemno=ITM00986&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Mimusops fruiticosa",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3453&itemno=ITM00987&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Pleustrolyia africana",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3454&itemno=ITM00988&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Polysphaeria multiflora",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3455&itemno=ITM00989&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Tamarindus indica",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3456&itemno=ITM00990&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Tectona grandis",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3457&itemno=ITM00991&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Terminalia cattapa",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3458&itemno=ITM00992&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Terminalia spinosa",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3459&itemno=ITM00993&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Bischovia javonica",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3460&itemno=ITM00994&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "C. papaya (pawpaw)",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3461&itemno=ITM00995&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Jacaranda mimosifolia",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 20.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3462&itemno=ITM00996&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "P. eguestifolia",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3463&itemno=ITM00997&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Senna spectabillis",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3464&itemno=ITM00998&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Sesbania Sesban",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3465&itemno=ITM00999&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  },
+  {
+    "name": "Spathodea campanulata",
+    "branch": "Muguga",
+    "material": "seedling",
+    "amount": 10.0,
+    "currency": "KES",
+    "url": "https://enterprise.kefri.org/product.php?id=3466&itemno=ITM01000&type=",
+    "catalogueUrl": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12"
+  }
+]

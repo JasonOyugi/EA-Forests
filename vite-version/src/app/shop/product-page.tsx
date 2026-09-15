@@ -1,6 +1,7 @@
 import { useParams, Navigate } from "react-router-dom"
 import { BaseLayout } from "@/components/layouts/base-layout"
 import { ProductPage } from "@/components/commerce-ui/product-page"
+import { PlantingProductPage } from "./components/planting-product-page"
 import { FlagshipInvestmentPage } from "@/app/shop/components/flagship-investment-page"
 import { flagshipPricingCatalog } from "@/app/shop/lib/flagship-pricing"
 import { shopInventoryMap } from "./config/shops"
@@ -26,7 +27,7 @@ export default function ShopProductPage() {
   return (
     <BaseLayout>
       <div className="mx-auto">
-        {isFlagshipProduct ? (
+        {product.plantingMaterialType ? <PlantingProductPage key={product.id} item={product} onBack={() => window.history.back()} /> : isFlagshipProduct ? (
           <FlagshipInvestmentPage
             item={product}
             onBack={() => window.history.back()}
@@ -41,4 +42,3 @@ export default function ShopProductPage() {
     </BaseLayout>
   )
 }
-

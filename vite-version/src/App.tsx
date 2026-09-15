@@ -2,6 +2,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { ThemeProvider } from '@/components/theme-provider'
 import { SidebarConfigProvider } from '@/contexts/sidebar-context'
 import { AppRouter } from '@/components/router/app-router'
+import { PublicMetadata } from '@/components/public-metadata'
 import { useEffect } from 'react'
 import { initGTM } from '@/utils/analytics'
 import { tweakcnThemes } from '@/config/theme-data'
@@ -35,6 +36,7 @@ function App() {
         <NatureThemeDefault />
         <SidebarConfigProvider>
           <Router basename={basename}>
+            <PublicMetadata />
             <AppRouter />
           </Router>
         </SidebarConfigProvider>

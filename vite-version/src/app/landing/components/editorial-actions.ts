@@ -1,10 +1,9 @@
-export type EditorialCategory = "Information" | "Markets" | "Models" | "Investments" | "Videos" | "Events"
+export type EditorialCategory = "Information" | "Markets" | "Investment Models" | "Videos" | "Events"
 
 export const editorialActionLabels: Record<EditorialCategory, string> = {
   Information: "Read more",
   Markets: "Go",
-  Models: "Use",
-  Investments: "Learn more",
+  "Investment Models": "Explore",
   Videos: "Watch now",
   Events: "View event",
 }
@@ -26,15 +25,9 @@ export const editorialSubsections: Record<EditorialCategory, EditorialSubsection
     { label: "Technology", href: "#brief", topic: "Technology" },
   ],
   Markets: [],
-  Models: [
-    { label: "Genetic Models", href: "#brief", topic: "Genetic" },
-    { label: "Commercial Models", href: "#brief", topic: "Commercial" },
-    { label: "Economic Models", href: "#brief", topic: "Economic" },
-  ],
-  Investments: [
-    { label: "Core", href: "/shop/forests-land/core-forests" },
-    { label: "High Performance", href: "/shop/forests-land/high-performance-forests" },
-    { label: "Drylands", href: "/shop/forests-land/dryland-frontier-forests" },
+  "Investment Models": [
+    { label: "Tested Investments", href: "#brief", topic: "Tested Investments" },
+    { label: "Industry Tools", href: "#brief", topic: "Industry Tools" },
   ],
   Videos: [
   ],

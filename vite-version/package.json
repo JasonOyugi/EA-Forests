@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node scripts/prune-public-release.mjs",
     "lint": "eslint .",
     "validate:evidence": "node scripts/validate-commerce-evidence.mjs",
     "preprocess:ssmt": "node scripts/preprocess-basic-ssmt.mjs",
     "preprocess:ssmt:self-test": "node scripts/preprocess-basic-ssmt.mjs --self-test",
+    "optimize:ssmt": "python scripts/optimize-basic-ssmt.py",
     "preview": "vite preview"
   },
   "dependencies": {

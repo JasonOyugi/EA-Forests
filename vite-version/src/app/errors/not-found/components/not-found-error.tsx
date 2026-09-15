@@ -18,7 +18,7 @@ export function NotFoundError() {
         <h2 className="mb-3 text-2xl font-semibold">Page Not Found</h2>
         <p>The page you are looking for doesn't exist or has been moved to another location.</p>
         <div className='mt-6 flex items-center justify-center gap-4 md:mt-8'>
-          <Button className='cursor-pointer' onClick={() => navigate('/dashboard')}>Go Back Home</Button>
+          <Button className='cursor-pointer' onClick={() => navigate('/landing')}>Go Back Home</Button>
           <Button variant='outline' className='flex cursor-pointer items-center gap-1' onClick={() => navigate('#')}>
             Contact Us
           </Button>

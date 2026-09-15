@@ -1,12 +1,13 @@
 "use client"
 
-import { ArrowRight, CalendarDays, Clock3, ExternalLink, MapPin, MapPinned, Play } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
+import { ArrowRight, CalendarDays, Clock3, ExternalLink, MapPin } from "lucide-react"
+import { lazy, Suspense, useEffect, useRef, useState } from "react"
 import type { MouseEvent } from "react"
 
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
 import SeedlingsBanner from "@/components/commerce-ui/seedlings-banner"
 import { AutoPlayVideo } from "@/components/auto-play-video"
+import { YouTubeVideoDialog } from "@/components/youtube-video-dialog"
 import seedlingsInventory from "@/app/shop/data/seedlings.json"
 import { normalizeSeedlingInventory } from "@/app/shop/data/nursery-data"
 import type { ShopItem } from "@/app/shop/types"
@@ -15,9 +16,15 @@ import { editorialActionLabels, editorialSubsections } from "./editorial-actions
 import type { EditorialCategory } from "./editorial-actions"
 import { InformationLiveHub } from "./information-live-hub"
 import { MetricCardDecoration } from "./metric-card-decoration"
-import { landingContainer, landingDisplayHeadingClass } from "./landing-shared"
+import { landingContainer } from "./landing-shared"
 import { sectorMetrics, sectorPlayers } from "./sector-data"
 import type { SectorMetric, SectorPlayer } from "./sector-data"
+
+const SectorMapExperience = lazy(() =>
+  import("@/app/shop/components/shops/roundwood-shop").then((module) => ({
+    default: module.SectorMapExperience,
+  }))
+)
 
 const normalizedSeedlingsInventory = normalizeSeedlingInventory(seedlingsInventory as ShopItem[])
 const featuredSeedlings = normalizedSeedlingsInventory
@@ -52,8 +59,8 @@ type Story = {
 
 type EditorialVideo = {
   title: string
+  videoId: string
   previewSrc: string
-  href: string
   uploadedAt: string
 }
 
@@ -67,36 +74,36 @@ type EditorialEvent = {
 }
 
 const stories: Story[] = [
-  { title: "Here's how forests make money in East Africa", category: "Models", image: "https://cdn.agriland.ie/uploads/2020/09/Image-source-Veon-2.jpg", href: "/articles/how-forests-make-money-east-africa", updatedAt: "12 Aug 2026" },
+  { title: "Here's how forests make money in East Africa", category: "Investment Models", image: "https://cdn.agriland.ie/uploads/2020/09/Image-source-Veon-2.jpg", href: "/articles/how-forests-make-money-east-africa", updatedAt: "12 Aug 2026", topic: "Industry Tools" },
   { title: "Ready to sell your wood?", category: "Markets", image: "https://saforestryonline.co.za/wp-content/uploads/2025/07/The-John-Deere-2144G-tracked-swing-harvester-is-ideal-for-fast-growing-high-yield-plantations-scaled.jpg", href: "/shop/wood-markets-map", updatedAt: "11 Aug 2026" },
   { title: "The best planting material for East Africa", category: "Markets", image: "https://dryrocktreesnursery.com/cdn/shop/files/lodgepoletray.jpg?v=1759249757&width=1946", href: "/shop/seedlings", updatedAt: "10 Aug 2026" },
-  { title: "The ultimate site-species analysis tool", category: "Models", image: "/tz.jpg", href: "/models/site-species-analysis", updatedAt: "9 Aug 2026", topic: "Genetic" },
-  { title: "Start a forestry investment guaranteed to generate returns", category: "Investments", image: "/eucalyptus.jpg", href: "/shop/forests-land/core-forests", updatedAt: "8 Aug 2026" },
-  { title: "Everything you need to know about clonal nursery business ", category: "Models", image: "https://eucalyptusclones.in/images/clonal-gallery-1.png", href: "/models/clonal-eucalyptus-nursery", updatedAt: "7 Aug 2026", topic: "Genetic" },
-  { title: "Build a high-performance forest asset today", category: "Investments", image: "/about.webp", href: "/shop/forests-land/high-performance-forests", updatedAt: "6 Aug 2026" },
+  { title: "The ultimate site-species analysis tool", category: "Investment Models", image: "/tz.jpg", href: "/models/site-species-analysis", updatedAt: "9 Aug 2026", topic: "Industry Tools" },
+  { title: "Start a forestry investment guaranteed to generate returns", category: "Investment Models", image: "/eucalyptus.jpg", href: "/shop/forests-land/core-forests", updatedAt: "8 Aug 2026", topic: "Tested Investments" },
+  { title: "Everything you need to know about clonal nursery business ", category: "Investment Models", image: "https://eucalyptusclones.in/images/clonal-gallery-1.png", href: "/models/clonal-eucalyptus-nursery", updatedAt: "7 Aug 2026", topic: "Industry Tools" },
+  { title: "Build a high-performance forest asset today", category: "Investment Models", image: "/about.webp", href: "/shop/forests-land/high-performance-forests", updatedAt: "6 Aug 2026", topic: "Tested Investments" },
   { title: "Find a contractor", category: "Markets", image: "https://cdn.britannica.com/77/213177-138-0C119CB6/Overview-silviculture-lumber-industry.jpg", href: "/shop/forests-land", updatedAt: "5 Aug 2026" },
   { title: "The top nurseries in the world are looking for partnerships in East Africa. Is it you?", category: "Information", image: "https://www.totalenergygroup.com/wp-content/uploads/2018/08/greenhouse_interior.jpg", href: "/articles/nursery-partnerships-east-africa", updatedAt: "4 Aug 2026" },
-  { title: "Model the forest before committing capital", category: "Models", image: "/apps.png", video: "/video/hero-3.mp4", href: "/models/model-2", updatedAt: "3 Aug 2026", topic: "Commercial" },
-  { title: "It is time to restore the drylands profitably", category: "Investments", image: "/drylands.webp", href: "/shop/forests-land/drylands", updatedAt: "2 Aug 2026" },
+  { title: "Model the forest before committing capital", category: "Investment Models", image: "/apps.png", video: "/video/hero-3.mp4", href: "/models/model-2", updatedAt: "3 Aug 2026", topic: "Industry Tools" },
+  { title: "It is time to restore the drylands profitably", category: "Investment Models", image: "/drylands.webp", href: "/shop/forests-land/drylands", updatedAt: "2 Aug 2026", topic: "Tested Investments" },
   { title: "Join the people building the sector", category: "Information", image: "/contact-2.webp", href: "#contact", updatedAt: "1 Aug 2026" },
 
   // Models — Commercial group
-  { title: "Map the roundwood value chain before you commit", category: "Models", image: "https://cdn.britannica.com/77/213177-138-0C119CB6/Overview-silviculture-lumber-industry.jpg", href: "/models/model-3", updatedAt: "14 Aug 2026", topic: "Commercial" },
+  { title: "Map the roundwood value chain before you commit", category: "Investment Models", image: "https://cdn.britannica.com/77/213177-138-0C119CB6/Overview-silviculture-lumber-industry.jpg", href: "/models/model-3", updatedAt: "14 Aug 2026", topic: "Industry Tools" },
 
   // Models — Genetic group (in development)
-  { title: "Pine seed orchard model", category: "Models", image: "/tz.jpg", href: "/models/pine-seed-orchard", updatedAt: "14 Aug 2026", topic: "Genetic", badge: "Coming soon" },
-  { title: "EA genetics power rankings", category: "Models", image: "https://eucalyptusclones.in/images/clonal-gallery-1.png", href: "/models/ea-genetics-power-rankings", updatedAt: "14 Aug 2026", topic: "Genetic", badge: "Coming soon" },
+  { title: "Pine seed orchard model", category: "Investment Models", image: "/tz.jpg", href: "/models/pine-seed-orchard", updatedAt: "14 Aug 2026", topic: "Industry Tools", badge: "Coming soon" },
+  { title: "EA genetics power rankings", category: "Investment Models", image: "https://eucalyptusclones.in/images/clonal-gallery-1.png", href: "/models/ea-genetics-power-rankings", updatedAt: "14 Aug 2026", topic: "Industry Tools", badge: "Coming soon" },
 
   // Models — Economic group (in development)
-  { title: "East Africa forestry macro-economic model", category: "Models", image: "/eucalyptus.jpg", href: "/models/macro-economic-outlook", updatedAt: "14 Aug 2026", topic: "Economic", badge: "Coming soon" },
+  { title: "East Africa forestry macro-economic model", category: "Investment Models", image: "/eucalyptus.jpg", href: "/models/macro-economic-outlook", updatedAt: "14 Aug 2026", topic: "Industry Tools", badge: "Coming soon" },
 
 ]
 
 const editorialVideos: EditorialVideo[] = [
-  { title: "How to earn money from eucalyptus plantations.", previewSrc: "/video/profit.mp4", href: "https://www.youtube.com/watch?v=pZ7zwi2LU5o", uploadedAt: "16 Jul 2024" },
-  { title: "This Gene-Edited Tree Captures More CO2.", previewSrc: "/video/genetics.mp4", href: "https://www.youtube.com/watch?v=6OknnFuDQE8&t=104s", uploadedAt: "30 Jun 2022" },
-  { title: "Portable Sawmill Demo | Wood-Mizer LT70 Super Hydraulic ", previewSrc: "/video/mill.mp4", href: "https://www.youtube.com/watch?v=GdHRBmweOTY", uploadedAt: "24 Sep 2025" },
-  { title: "FAO: Forests and economies - forests mean business", previewSrc: "/video/vc.mp4", href: "https://www.youtube.com/watch?v=yEVeFWKyLqI", uploadedAt: "19 Feb 2026" },
+  { title: "How to earn money from eucalyptus plantations.", videoId: "pZ7zwi2LU5o", previewSrc: "/video/hero-profit-preview.mp4", uploadedAt: "16 Jul 2024" },
+  { title: "This Gene-Edited Tree Captures More CO2.", videoId: "6OknnFuDQE8", previewSrc: "/video/hero-genetics-preview.mp4", uploadedAt: "30 Jun 2022" },
+  { title: "Portable Sawmill Demo | Wood-Mizer LT70 Super Hydraulic ", videoId: "GdHRBmweOTY", previewSrc: "/video/hero-mill-preview.mp4", uploadedAt: "24 Sep 2025" },
+  { title: "FAO: Forests and economies - forests mean business", videoId: "yEVeFWKyLqI", previewSrc: "/video/hero-vc-preview.mp4", uploadedAt: "19 Feb 2026" },
 ]
 
 const editorialEvents: EditorialEvent[] = [
@@ -106,7 +113,7 @@ const editorialEvents: EditorialEvent[] = [
   { title: "Dubai WoodShow 2027", date: "6-8 Apr 2027", location: "Dubai, UAE", organizer: "WoodShow Global", description: "The MENA region's B2B marketplace for timber, panels, engineered wood, machinery, buyers, distributors, and exporters.", href: "https://www.woodshowglobal.com/dubai" },
 ]
 
-const editorialCategories: EditorialCategory[] = ["Information", "Models", "Investments", "Videos", "Events"]
+const editorialCategories: EditorialCategory[] = ["Information", "Investment Models", "Videos", "Events"]
 const initialVisibleStoryCount = 8
 const defaultInformationTopic = "Policy & Regulation"
 
@@ -174,23 +181,21 @@ function StoryTile({ story, size }: { story: Story; size?: string }) {
 
 function VideoTile({ video, size = "" }: { video: EditorialVideo; size?: string }) {
   return (
-    <a href={video.href} target="_blank" rel="noopener noreferrer" className={`landing-story-card group relative block min-h-[320px] overflow-hidden bg-zinc-900 text-white ${size}`}>
+    <article className={`landing-story-card group relative block min-h-[320px] overflow-hidden bg-zinc-900 text-white ${size}`}>
       <AutoPlayVideo src={assetUrl(video.previewSrc)} loop className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-black/10" />
       <span className="absolute left-5 top-5 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-xs font-medium text-white/80 backdrop-blur-sm">
         <Clock3 className="size-3" /> Last updated: {video.uploadedAt}
       </span>
-      <span className="absolute inset-0 z-10 grid place-items-center" aria-hidden="true">
-        <span className="grid size-14 place-items-center rounded-full border border-white/25 bg-black/45 backdrop-blur transition-transform duration-300 group-hover:scale-110">
-          <Play className="ml-1 size-6 fill-white" />
-        </span>
-      </span>
+      <YouTubeVideoDialog videoId={video.videoId} title={video.title}>
+        <button type="button" className="absolute inset-0 z-10" aria-label={`Watch ${video.title}`} />
+      </YouTubeVideoDialog>
       <div className="absolute inset-x-0 bottom-0 z-20 p-5 sm:p-7">
         <p className="text-xs font-semibold uppercase tracking-[.2em] text-emerald-200">Video</p>
         <h3 className="landing-product-title mt-3 font-semibold">{video.title}</h3>
         <span className="mt-5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.15em] transition-colors group-hover:text-emerald-300">Watch now <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" /></span>
       </div>
-    </a>
+    </article>
   )
 }
 
@@ -231,17 +236,6 @@ function MetricTile({
   onFocus?: () => void
   onSelectInformation?: (topic: string) => void
 }) {
-  const bgImage =
-    metric.informationSlug === "policy-regulation"
-      ? "/forest.webp"
-      : metric.informationSlug === "finance-markets"
-        ? "/eucalyptus.jpg"
-        : metric.informationSlug === "investments"
-          ? "/about.webp"
-          : metric.informationSlug === "genetics"
-            ? "/drylands.webp"
-            : "/maps.jpg"
-
   return (
     <article
       role="button"
@@ -258,19 +252,9 @@ function MetricTile({
       aria-label={`Open ${metric.informationTopic} information for ${metric.label}`}
       style={{
         borderColor: `color-mix(in srgb, ${metric.accent} 48%, transparent)`,
-        background: `linear-gradient(145deg, color-mix(in srgb, ${metric.accent} 58%, #07110c) 0%, color-mix(in srgb, ${metric.accent} 18%, #07110c) 55%, #050807 100%)`,
+        background: "transparent",
       }}
     >
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-        <img
-          src={assetUrl(bgImage)}
-          alt=""
-          className="size-full object-cover opacity-25 transition-transform duration-700 group-hover:scale-105"
-          loading="lazy"
-          decoding="async"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35" />
-      </div>
       <MetricCardDecoration accent={metric.accent} />
       <p className="relative z-10 text-xs font-semibold uppercase tracking-[.2em]" style={{ color: metric.accent }}>Did you know?</p>
       <div className="relative z-10">
@@ -378,26 +362,18 @@ function MetricPair({ metrics, size, onFocus, onSelectInformation }: { metrics: 
 
 export function SectorSearchSection() {
   return (
-    <section id="discover" className="bg-[#07110c] py-16 text-emerald-50 sm:py-20 lg:py-24">
+    <section id="sector-map" className="scroll-mt-16 bg-[#07110c] py-16 text-emerald-50 sm:py-20 lg:py-24">
       <div className={landingContainer}>
         <ScrollReveal className="grid items-stretch" delay={80}>
-          <a href="/shop/sector-map" className="emerald-border-hover group relative min-h-[26rem] overflow-hidden bg-zinc-900 p-5 text-white sm:min-h-[32rem] lg:min-h-[38rem]">
-            <img src="/maps.jpg" alt="East African forestry sector map" className="absolute inset-0 size-full object-cover opacity-55 transition-transform duration-700 group-hover:scale-105" />
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-950/95 via-zinc-950/72 to-black/25" />
-            <div className="relative flex min-h-[23.5rem] flex-col justify-between sm:min-h-[28.5rem] lg:min-h-[34.5rem]">
-              <div className="flex items-center justify-between gap-6 text-xs font-semibold uppercase tracking-[.22em] text-white/70">
-                <span>Explore the ecosystem</span>
-                <MapPinned className="size-7 text-emerald-200 sm:size-8" />
+          <Suspense
+            fallback={
+              <div className="flex min-h-[38rem] items-center justify-center border border-white/10 bg-black/20 text-sm text-white/60">
+                Loading sector map
               </div>
-              <div className="">
-                <h2 className={`${landingDisplayHeadingClass} text-white`}>The map of the sector</h2>
-                <div className="mt-7 grid gap-5 border-t border-white/35 pt-5 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end">
-                  <p className="max-w-2xl text-base leading-7 text-white/78 sm:text-lg sm:leading-8">Explore the people, assets and market activity behind the region&apos;s forestry value chain.</p>
-                  <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[.15em] lg:justify-self-end">Open map <ArrowRight className="size-4 transition-transform group-hover:translate-x-1.5" /></span>
-                </div>
-              </div>
-            </div>
-          </a>
+            }
+          >
+            <SectorMapExperience />
+          </Suspense>
         </ScrollReveal>
       </div>
     </section>
@@ -551,7 +527,7 @@ export function EditorialBriefSection() {
                 <VideoTile video={editorialVideos[3]} size="xl:col-span-8 xl:row-span-[30]" />
               </>
             ) : activeCategory === "Videos" ? (
-              editorialVideos.map((video) => <VideoTile key={video.href} video={video} size="xl:col-span-6 xl:row-span-[36]" />)
+              editorialVideos.map((video) => <VideoTile key={video.videoId} video={video} size="xl:col-span-6 xl:row-span-[36]" />)
             ) : activeCategory === "Events" ? (
               editorialEvents.map((event) => <EventTile key={event.title} event={event} size="xl:col-span-6 xl:row-span-[31]" />)
             ) : (

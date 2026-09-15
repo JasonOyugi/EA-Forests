@@ -122,7 +122,7 @@ export function FeaturesSection() {
                 src="/video/feature-1.mp4"
               title={<>Trade Forestry Assets</>}
               description="Have a forest? Looking to source roundwood or carbon? Click here to find credible partners asap."
-              href="/shop/sector-map"
+              href="/shop/wood-markets-map"
             />
           </BentoTilt>
         </ScrollReveal>
@@ -145,7 +145,7 @@ export function FeaturesSection() {
                 src="/video/feature-3.mp4"
                 title={<>Market Insight Tools</>}
                 description="Forestry on steroids - introduce cutting edge, on-the-ground analysis to calculate the most profitable trades and deals in real-time"
-                href="https://github.com/JasonOyugi/EA-Forestry-Geospatial-Analysis.git"
+                href="/shop/wood-markets-map"
                 status="beta"
               />
             </BentoTilt>

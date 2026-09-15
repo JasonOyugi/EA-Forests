@@ -7,29 +7,30 @@ import { AiFillYoutube } from "react-icons/ai"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { AutoPlayVideo } from "@/components/auto-play-video"
+import { YouTubeVideoDialog } from "@/components/youtube-video-dialog"
 import { assetUrl, getAppUrl } from "@/lib/utils"
 import { landingContainer, landingHeroLeadClass } from "./landing-shared"
 
 const heroVideos = [
   {
-    src: "/video/profit.mp4",
+    src: "/video/hero-profit-preview.mp4",
+    videoId: "pZ7zwi2LU5o",
     previewLabel: "Next video: Profit from Eucalyptus",
-    youtubeUrl: "https://www.youtube.com/watch?v=pZ7zwi2LU5o",
   },
   {
-    src: "/video/genetics.mp4",
+    src: "/video/hero-genetics-preview.mp4",
+    videoId: "6OknnFuDQE8",
     previewLabel: "Next video: Understand Genetics",
-    youtubeUrl: "https://www.youtube.com/watch?v=6OknnFuDQE8&t=104s",
   },
   {
-    src: "/video/mill.mp4",
+    src: "/video/hero-mill-preview.mp4",
+    videoId: "GdHRBmweOTY",
     previewLabel: "Next video: Tree sawmilling",
-    youtubeUrl: "https://www.youtube.com/watch?v=GdHRBmweOTY",
   },
   {
-    src: "/video/vc.mp4",
+    src: "/video/hero-vc-preview.mp4",
+    videoId: "yEVeFWKyLqI",
     previewLabel: "Next video: sector overview (FAO)",
-    youtubeUrl: "https://www.youtube.com/watch?v=yEVeFWKyLqI",
   },
 ] as const
 
@@ -44,7 +45,9 @@ export function HeroSection() {
 
   const openInvestmentsGrid = () => {
     window.dispatchEvent(
-      new CustomEvent("editorial:filter", { detail: "Investments" })
+      new CustomEvent("editorial:filter", {
+        detail: { category: "Investment Models", topic: "Tested Investments" },
+      })
     )
     window.requestAnimationFrame(() => {
       document.getElementById("brief")?.scrollIntoView({
@@ -72,7 +75,13 @@ export function HeroSection() {
       }}
       className="landing-hero-shell landing-hero-height relative isolate overflow-hidden bg-black"
     >
-      <AutoPlayVideo eager key={heroVideos[currentIndex].src} src={assetUrl(heroVideos[currentIndex].src)} loop className="absolute inset-0 -z-30 size-full object-cover object-center" />
+      <AutoPlayVideo
+        eager
+        key={heroVideos[currentIndex].src}
+        src={assetUrl(heroVideos[currentIndex].src)}
+        loop
+        className="absolute inset-0 -z-30 size-full object-cover object-center"
+      />
       <div aria-hidden className="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(3,13,9,.88)_0%,rgba(3,13,9,.64)_42%,rgba(3,13,9,.2)_100%)]" />
       <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-black/70 via-transparent to-black/45" />
 
@@ -123,7 +132,13 @@ export function HeroSection() {
         }}
       >
         {isHovering ? (
-          <AutoPlayVideo eager key={heroVideos[nextIndex].src} src={assetUrl(heroVideos[nextIndex].src)} loop className="size-full scale-110 object-cover" />
+          <AutoPlayVideo
+            eager
+            key={heroVideos[nextIndex].src}
+            src={assetUrl(heroVideos[nextIndex].src)}
+            loop
+            className="size-full scale-110 object-cover"
+          />
         ) : null}
         <span className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
         <span className="absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap border border-white/25 bg-black/35 px-3 py-1 text-xs tracking-[.18em] text-white/90 backdrop-blur-sm">
@@ -131,15 +146,18 @@ export function HeroSection() {
         </span>
       </div>
 
-      <a
-        href={heroVideos[currentIndex].youtubeUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`Watch on YouTube: ${heroVideos[currentIndex].previewLabel}`}
-        className="hero-youtube-badge absolute bottom-5 right-5 z-30 inline-flex size-11 items-center justify-center rounded-full border border-white/25 bg-black/35 text-white shadow-lg backdrop-blur transition-all hover:scale-105 hover:bg-red-600/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 sm:bottom-8 sm:right-8"
+      <YouTubeVideoDialog
+        videoId={heroVideos[currentIndex].videoId}
+        title={heroVideos[currentIndex].previewLabel.replace("Next video: ", "")}
       >
-        <AiFillYoutube className="size-6" />
-      </a>
+        <button
+          type="button"
+          aria-label={`Play video: ${heroVideos[currentIndex].previewLabel}`}
+          className="hero-youtube-badge absolute bottom-5 right-5 z-30 inline-flex size-11 items-center justify-center rounded-full border border-white/25 bg-black/35 text-white shadow-lg backdrop-blur transition-all hover:scale-105 hover:bg-red-600/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 sm:bottom-8 sm:right-8"
+        >
+          <AiFillYoutube className="size-6" />
+        </button>
+      </YouTubeVideoDialog>
     </section>
   )
 }

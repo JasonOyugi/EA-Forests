@@ -1,0 +1,54 @@
+[
+  {
+    "id": "ug-nfa-seedling-price-list-2024",
+    "title": "Pricelist of Assorted Tree Seedlings",
+    "publisher": "National Forestry Authority Uganda",
+    "url": "https://nfa.go.ug/wp-content/uploads/2025/10/NFA_SEEDLINGS_PRICELIST_UPDATED-1.pdf",
+    "publishedAt": "2024-01",
+    "accessedAt": "2026-09-07",
+    "vintage": "2023-2024",
+    "jurisdiction": "Uganda",
+    "adapterId": "UG_NFA_SEEDLING_PRICELIST_PDF_01",
+    "rawLocator": "pages 2-10; rows 1-236"
+  },
+  {
+    "id": "ug-utga-quality-planting-material-2026",
+    "title": "Why Quality Planting Material Matters",
+    "publisher": "Uganda Timber Growers Association",
+    "url": "https://utga.ug/news/why-quality-planting-material-matters",
+    "publishedAt": "2026-07-01",
+    "accessedAt": "2026-09-07",
+    "vintage": "2026",
+    "jurisdiction": "Uganda",
+    "adapterId": "UG_UTGA_PUBLIC_WEB_01"
+  },
+  {
+    "id": "ug-utga-tree-nursery-quality-checklist",
+    "title": "Tree Nursery Quality Checklist",
+    "publisher": "Uganda Timber Growers Association",
+    "url": "https://utga.ug/resources/tree-nursery-quality-checklist",
+    "accessedAt": "2026-09-07",
+    "jurisdiction": "Uganda",
+    "adapterId": "UG_UTGA_PUBLIC_WEB_01"
+  },
+  {
+    "id": "ug-nfa-certified-nurseries-2018-pending",
+    "title": "List of Certified Seedling Nurseries 2018",
+    "publisher": "National Forestry Authority Uganda",
+    "url": "https://fr.scribd.com/document/606572526/List-of-Certified-Seedling-Nurseries-2018",
+    "vintage": "2018",
+    "jurisdiction": "Uganda",
+    "adapterId": "UG_NFA_CERTIFIED_REGISTER_2018_PENDING",
+    "rawLocator": "pending manual retrieval; Scribd access blocked"
+  },
+  {
+    "id": "ug-nfa-certified-clonal-2019-20-pending",
+    "title": "2019-2020 Certified Nursery Operators Seedlings Clonal",
+    "publisher": "National Forestry Authority Uganda",
+    "url": "https://fr.scribd.com/document/799653325/2019-2020-CERTIFIED-NURSERY-OPERATORS-SEEDLINGS-CLONAL",
+    "vintage": "2019-2020",
+    "jurisdiction": "Uganda",
+    "adapterId": "UG_NFA_CERTIFIED_CLONAL_REGISTER_2019_20_PENDING",
+    "rawLocator": "pending manual retrieval; Scribd access blocked"
+  }
+]

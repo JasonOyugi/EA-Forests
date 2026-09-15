@@ -1,0 +1,23 @@
+[
+  {
+    "file": "tfs-catalog.html",
+    "url": "https://seed.tfs.go.tz/catalog",
+    "accessedAt": "2026-09-12",
+    "sha256": "2bc80eb8f5ad2674686b4efe5c84ab9be9681aeffac64482dcd7550547d3c929",
+    "notes": "TLS hostname mismatch during download. Embedded row timestamps are 2017; amounts are historical, not current prices."
+  },
+  {
+    "file": "kefri-nyeri-seeds.html",
+    "url": "https://enterprise.kefri.org/product-category.php?id=33&type=end-category",
+    "accessedAt": "2026-09-12",
+    "sha256": "d1e5f8c744b37aae3dfe7c424bc5d743b8825b4e7593beae2aeb9917be7b249d",
+    "notes": "Official branch catalogue. Seed prices have no stated mass/pack unit. Seedling prices are listed by individual product; confirm stock and final quotation."
+  },
+  {
+    "file": "kefri-muguga-seedlings.html",
+    "url": "https://enterprise.kefri.org/product-category.php?id=135&type=end-category",
+    "accessedAt": "2026-09-12",
+    "sha256": "c0fadf30fda71db7ea373ca84dd8a72256eb814a84e788190734cf780586dcd3",
+    "notes": "Official branch catalogue. Seed prices have no stated mass/pack unit. Seedling prices are listed by individual product; confirm stock and final quotation."
+  }
+]

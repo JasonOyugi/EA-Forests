@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ea-forests-public.vercel.app/sitemap.xml

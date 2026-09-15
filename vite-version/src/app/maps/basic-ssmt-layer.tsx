@@ -185,8 +185,8 @@ export interface BasicSsmtLayerController {
   error: string | null
 }
 
-export function useBasicSsmtLayerController(): BasicSsmtLayerController {
-  const [enabled, setEnabled] = React.useState(true)
+export function useBasicSsmtLayerController(initialEnabled = true): BasicSsmtLayerController {
+  const [enabled, setEnabled] = React.useState(initialEnabled)
   const [open, setOpen] = React.useState(false)
   const [metadata, setMetadata] = React.useState<BasicSsmtMetadata | null>(null)
   const [filters, setFilters] = React.useState<BasicSsmtFilters>(() =>
@@ -538,11 +538,13 @@ export function BasicSsmtLayer({ controller }: { controller: BasicSsmtLayerContr
 export function BasicSsmtLayerControl({
   position = "left-3 top-16",
   className,
+  initialEnabled = true,
 }: {
   position?: string
   className?: string
+  initialEnabled?: boolean
 }) {
-  const controller = useBasicSsmtLayerController()
+  const controller = useBasicSsmtLayerController(initialEnabled)
 
   return (
     <>

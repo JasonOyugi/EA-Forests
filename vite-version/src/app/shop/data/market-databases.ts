@@ -78,6 +78,9 @@ export interface NurseryGenusSupply {
       per500Seedlings: number | null
       per1000Seedlings: number | null
     }
+    priceRangeLabel?: string | null
+    evidenceStatus?: "observed" | "inferred"
+    evidenceNote?: string | null
     capacity: number | null
     availability: string | null
     traceability: string | null
@@ -87,6 +90,8 @@ export interface NurseryGenusSupply {
 export interface NurseryRecord {
   id: string
   name: string
+  aliases?: string[]
+  currency?: string
   lon: number | null
   lat: number | null
   country: string | null

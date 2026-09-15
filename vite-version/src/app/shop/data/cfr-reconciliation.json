@@ -1,0 +1,3968 @@
+[
+  {
+    "boundaryId": "cfr-lodonga",
+    "sourceRecordKey": "Lodonga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ragem",
+    "sourceRecordKey": "Ragem",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-achwera",
+    "sourceRecordKey": "Achwera",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-koreng",
+    "sourceRecordKey": "Koreng",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-koboko",
+    "sourceRecordKey": "Koboko",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-orom",
+    "sourceRecordKey": "Orom",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-oliduro",
+    "sourceRecordKey": "Oliduro",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-adjumani",
+    "sourceRecordKey": "Adjumani",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nebbi",
+    "sourceRecordKey": "Nebbi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nyapea",
+    "sourceRecordKey": "Nyapea",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-gung-gung",
+    "sourceRecordKey": "Gung - Gung",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-adwari",
+    "sourceRecordKey": "Adwari",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-pakwach",
+    "sourceRecordKey": "Pakwach",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ogur",
+    "sourceRecordKey": "Ogur",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-aneneng",
+    "sourceRecordKey": "Aneneng",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-apala",
+    "sourceRecordKey": "Apala",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-aburiburi",
+    "sourceRecordKey": "Aburiburi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nyabiku",
+    "sourceRecordKey": "Nyabiku",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-obule",
+    "sourceRecordKey": "Obule",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-aboke",
+    "sourceRecordKey": "Aboke",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-buwola",
+    "sourceRecordKey": "Buwola",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nawaikona",
+    "sourceRecordKey": "Nawaikona",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-acet",
+    "sourceRecordKey": "Acet",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-obel",
+    "sourceRecordKey": "Obel",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-erusi",
+    "sourceRecordKey": "Erusi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ngeta",
+    "sourceRecordKey": "Ngeta",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-aloli",
+    "sourceRecordKey": "Aloli",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-teiponga",
+    "sourceRecordKey": "Teiponga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-alebtong",
+    "sourceRecordKey": "Alebtong",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ilera",
+    "sourceRecordKey": "Ilera",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-omoro",
+    "sourceRecordKey": "Omoro",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ongom",
+    "sourceRecordKey": "Ongom",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-akileng",
+    "sourceRecordKey": "Akileng",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-okurango",
+    "sourceRecordKey": "Okurango",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-molitar",
+    "sourceRecordKey": "Molitar",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-alungamosimosi",
+    "sourceRecordKey": "Alungamosimosi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-atura",
+    "sourceRecordKey": "Atura",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-abako",
+    "sourceRecordKey": "Abako",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-abunga",
+    "sourceRecordKey": "Abunga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-amaich-h-q",
+    "sourceRecordKey": "Amaich (H/Q)",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-aminkec",
+    "sourceRecordKey": "Aminkec",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-chegere",
+    "sourceRecordKey": "Chegere",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-abuje",
+    "sourceRecordKey": "Abuje",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-gweri",
+    "sourceRecordKey": "Gweri",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ochomai",
+    "sourceRecordKey": "Ochomai",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-palango",
+    "sourceRecordKey": "Palango",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-onekokeo",
+    "sourceRecordKey": "Onekokeo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nabieso",
+    "sourceRecordKey": "Nabieso",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kitgum",
+    "sourceRecordKey": "Kitgum",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mutufu",
+    "sourceRecordKey": "Mutufu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-maracha",
+    "sourceRecordKey": "Maracha",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nsinze",
+    "sourceRecordKey": "Nsinze",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-odruwa",
+    "sourceRecordKey": "Odruwa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-otrevu",
+    "sourceRecordKey": "Otrevu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-acholi-bur",
+    "sourceRecordKey": "Acholi - Bur",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lokiragodo",
+    "sourceRecordKey": "Lokiragodo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-enyau",
+    "sourceRecordKey": "Enyau",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-arua",
+    "sourceRecordKey": "Arua",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-pabbo",
+    "sourceRecordKey": "Pabbo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-giligili",
+    "sourceRecordKey": "Giligili",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-jaka",
+    "sourceRecordKey": "Jaka",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-amuka",
+    "sourceRecordKey": "Amuka",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lagute",
+    "sourceRecordKey": "Lagute",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-sirisiri",
+    "sourceRecordKey": "Sirisiri",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-west-uru",
+    "sourceRecordKey": "West Uru",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-napono",
+    "sourceRecordKey": "Napono",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lopeichubei",
+    "sourceRecordKey": "Lopeichubei",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ayipe",
+    "sourceRecordKey": "Ayipe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-atiya",
+    "sourceRecordKey": "Atiya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kagorra",
+    "sourceRecordKey": "Kagorra",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-agoro-agu",
+    "sourceRecordKey": "Agoro - Agu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-wamale",
+    "sourceRecordKey": "Wamale",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-wati",
+    "sourceRecordKey": "Wati",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-yivu",
+    "sourceRecordKey": "Yivu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ovuju",
+    "sourceRecordKey": "Ovuju",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-budongo",
+    "sourceRecordKey": "Budongo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nyabyeya",
+    "sourceRecordKey": "Nyabyeya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kasongoire",
+    "sourceRecordKey": "Kasongoire",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kikonda",
+    "sourceRecordKey": "Kikonda",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bajo",
+    "sourceRecordKey": "Bajo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kamusenene",
+    "sourceRecordKey": "Kamusenene",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kasagala",
+    "sourceRecordKey": "Kasagala",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bamude-nchwanga",
+    "sourceRecordKey": "Bamude - Nchwanga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-omier",
+    "sourceRecordKey": "Omier",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kasato",
+    "sourceRecordKey": "Kasato",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kyamurangi",
+    "sourceRecordKey": "Kyamurangi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mbale",
+    "sourceRecordKey": "Mbale",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-guramwa",
+    "sourceRecordKey": "Guramwa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lomej",
+    "sourceRecordKey": "Lomej",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-paonyeme",
+    "sourceRecordKey": "Paonyeme",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-taala",
+    "sourceRecordKey": "Taala",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kaliro",
+    "sourceRecordKey": "Kaliro",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kabindo",
+    "sourceRecordKey": "Kabindo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bwezigolo-gunga",
+    "sourceRecordKey": "Bwezigolo - Gunga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-iziru",
+    "sourceRecordKey": "Iziru",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ibambaro",
+    "sourceRecordKey": "Ibambaro",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lotim-puta",
+    "sourceRecordKey": "Lotim - Puta",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ozubu",
+    "sourceRecordKey": "Ozubu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-zulia",
+    "sourceRecordKey": "Zulia",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-palabek",
+    "sourceRecordKey": "Palabek",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lwala",
+    "sourceRecordKey": "Lwala",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lobajo",
+    "sourceRecordKey": "Lobajo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lamwo",
+    "sourceRecordKey": "Lamwo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-eria",
+    "sourceRecordKey": "Eria",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-era",
+    "sourceRecordKey": "Era",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-padibe",
+    "sourceRecordKey": "Padibe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-olia",
+    "sourceRecordKey": "Olia",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lalak",
+    "sourceRecordKey": "Lalak",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-laropi",
+    "sourceRecordKey": "Laropi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-timu",
+    "sourceRecordKey": "Timu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lokung",
+    "sourceRecordKey": "Lokung",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ludara",
+    "sourceRecordKey": "Ludara",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kaabong",
+    "sourceRecordKey": "Kaabong",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-aram",
+    "sourceRecordKey": "Aram",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nyangea-napore",
+    "sourceRecordKey": "Nyangea - Napore",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-naam-okora",
+    "sourceRecordKey": "Naam - Okora",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-pakelle",
+    "sourceRecordKey": "Pakelle",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ayami",
+    "sourceRecordKey": "Ayami",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-liru",
+    "sourceRecordKey": "Liru",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kulua",
+    "sourceRecordKey": "Kulua",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-rom",
+    "sourceRecordKey": "Rom",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-pajimu",
+    "sourceRecordKey": "Pajimu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-labongo",
+    "sourceRecordKey": "Labongo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-barituku",
+    "sourceRecordKey": "Barituku",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-olovu",
+    "sourceRecordKey": "Olovu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-matidi",
+    "sourceRecordKey": "Matidi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-achwa-river",
+    "sourceRecordKey": "Achwa River",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kadre",
+    "sourceRecordKey": "Kadre",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-utumbari",
+    "sourceRecordKey": "Utumbari",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ogili",
+    "sourceRecordKey": "Ogili",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-manibe",
+    "sourceRecordKey": "Manibe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ozu",
+    "sourceRecordKey": "Ozu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mbaraka",
+    "sourceRecordKey": "Mbaraka",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ave",
+    "sourceRecordKey": "Ave",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ngai",
+    "sourceRecordKey": "Ngai",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-parabongo",
+    "sourceRecordKey": "Parabongo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-zoka",
+    "sourceRecordKey": "Zoka",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-suru",
+    "sourceRecordKey": "Suru",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nyio-bamboo",
+    "sourceRecordKey": "Nyio - Bamboo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kilak",
+    "sourceRecordKey": "Kilak",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ogom",
+    "sourceRecordKey": "Ogom",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-labala",
+    "sourceRecordKey": "Labala",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-eruba",
+    "sourceRecordKey": "Eruba",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kuluva",
+    "sourceRecordKey": "Kuluva",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-cwero",
+    "sourceRecordKey": "Cwero",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-wadelai",
+    "sourceRecordKey": "Wadelai",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-wiceri",
+    "sourceRecordKey": "Wiceri",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-enjeva",
+    "sourceRecordKey": "Enjeva",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lukodi",
+    "sourceRecordKey": "Lukodi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-paicho",
+    "sourceRecordKey": "Paicho",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ezuku",
+    "sourceRecordKey": "Ezuku",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-got-gweno",
+    "sourceRecordKey": "Got - Gweno",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-olwal",
+    "sourceRecordKey": "Olwal",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-luku",
+    "sourceRecordKey": "Luku",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-keyo",
+    "sourceRecordKey": "Keyo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-abera",
+    "sourceRecordKey": "Abera",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-gulu",
+    "sourceRecordKey": "Gulu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-logiri",
+    "sourceRecordKey": "Logiri",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-opok",
+    "sourceRecordKey": "Opok",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-namawanyi-and-namananga",
+    "sourceRecordKey": "Namawanyi and Namananga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ajupane",
+    "sourceRecordKey": "Ajupane",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ating",
+    "sourceRecordKey": "Ating",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-laura",
+    "sourceRecordKey": "Laura",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-adilang",
+    "sourceRecordKey": "Adilang",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-alerek",
+    "sourceRecordKey": "Alerek",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-gwengdiya",
+    "sourceRecordKey": "Gwengdiya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kafu",
+    "sourceRecordKey": "Kafu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-abili",
+    "sourceRecordKey": "Abili",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-awere",
+    "sourceRecordKey": "Awere",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-iyi",
+    "sourceRecordKey": "Iyi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-opaka",
+    "sourceRecordKey": "Opaka",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-okavu-reru",
+    "sourceRecordKey": "Okavu - Reru",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kango",
+    "sourceRecordKey": "Kango",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-acwao",
+    "sourceRecordKey": "Acwao",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-awang",
+    "sourceRecordKey": "Awang",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-anaka",
+    "sourceRecordKey": "Anaka",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-koich-goma",
+    "sourceRecordKey": "Koich - Goma",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kano",
+    "sourceRecordKey": "Kano",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lul-oming",
+    "sourceRecordKey": "Lul Oming",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-otukei",
+    "sourceRecordKey": "Otukei",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-akur",
+    "sourceRecordKey": "Akur",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-opit",
+    "sourceRecordKey": "Opit",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ojwiting",
+    "sourceRecordKey": "Ojwiting",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bobi",
+    "sourceRecordKey": "Bobi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-usi",
+    "sourceRecordKey": "Usi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-otwal",
+    "sourceRecordKey": "Otwal",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nangolibwel",
+    "sourceRecordKey": "Nangolibwel",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-abiba",
+    "sourceRecordKey": "Abiba",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-alito",
+    "sourceRecordKey": "Alito",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-atan",
+    "sourceRecordKey": "Atan",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lul-opio",
+    "sourceRecordKey": "Lul Opio",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nyagak",
+    "sourceRecordKey": "Nyagak",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ayito",
+    "sourceRecordKey": "Ayito",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-olilim",
+    "sourceRecordKey": "Olilim",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lendu",
+    "sourceRecordKey": "Lendu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-icheme",
+    "sourceRecordKey": "Icheme",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-orumo",
+    "sourceRecordKey": "Orumo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-moroto",
+    "sourceRecordKey": "Moroto",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-epor",
+    "sourceRecordKey": "Epor",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-anyeke",
+    "sourceRecordKey": "Anyeke",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-achaba",
+    "sourceRecordKey": "Achaba",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lira",
+    "sourceRecordKey": "Lira",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-telwa",
+    "sourceRecordKey": "Telwa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-apworocero",
+    "sourceRecordKey": "Apworocero",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-adekokwok",
+    "sourceRecordKey": "Adekokwok",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-aber",
+    "sourceRecordKey": "Aber",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lul-kayonga",
+    "sourceRecordKey": "Lul Kayonga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-adero",
+    "sourceRecordKey": "Adero",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-alik",
+    "sourceRecordKey": "Alik",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-amugo",
+    "sourceRecordKey": "Amugo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kulo-obia",
+    "sourceRecordKey": "Kulo - Obia",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-amaich-ginnery",
+    "sourceRecordKey": "Amaich (Ginnery)",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-napak",
+    "sourceRecordKey": "Napak",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-achuna",
+    "sourceRecordKey": "Achuna",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-apac",
+    "sourceRecordKey": "Apac",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kachung",
+    "sourceRecordKey": "Kachung",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nyamakere",
+    "sourceRecordKey": "Nyamakere",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-anyara",
+    "sourceRecordKey": "Anyara",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-agwata",
+    "sourceRecordKey": "Agwata",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-aminakulu",
+    "sourceRecordKey": "Aminakulu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-aminteng",
+    "sourceRecordKey": "Aminteng",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-dokolo",
+    "sourceRecordKey": "Dokolo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-awer",
+    "sourceRecordKey": "Awer",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-atigo",
+    "sourceRecordKey": "Atigo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ekwera",
+    "sourceRecordKey": "Ekwera",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kibeka",
+    "sourceRecordKey": "Kibeka",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-amanamana",
+    "sourceRecordKey": "Amanamana",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-alido",
+    "sourceRecordKey": "Alido",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kangai",
+    "sourceRecordKey": "Kangai",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-alit",
+    "sourceRecordKey": "Alit",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-aputi",
+    "sourceRecordKey": "Aputi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kachogogweno",
+    "sourceRecordKey": "Kachogogweno",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-arweny",
+    "sourceRecordKey": "Arweny",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kaduku",
+    "sourceRecordKey": "Kaduku",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-awelo",
+    "sourceRecordKey": "Awelo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-masindi",
+    "sourceRecordKey": "Masindi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-soroti",
+    "sourceRecordKey": "Soroti",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-along-kongo",
+    "sourceRecordKey": "Along - Kongo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-masindi-port",
+    "sourceRecordKey": "Masindi Port",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-onyurut",
+    "sourceRecordKey": "Onyurut",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kirebe",
+    "sourceRecordKey": "Kirebe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-rwensama",
+    "sourceRecordKey": "Rwensama",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kasokwa",
+    "sourceRecordKey": "Kasokwa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-omodoi",
+    "sourceRecordKey": "Omodoi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bululu-hill",
+    "sourceRecordKey": "Bululu Hill",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-achwali",
+    "sourceRecordKey": "Achwali",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kadam",
+    "sourceRecordKey": "Kadam",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kigulya-hill",
+    "sourceRecordKey": "Kigulya Hill",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-maruzi",
+    "sourceRecordKey": "Maruzi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nyakunyu",
+    "sourceRecordKey": "Nyakunyu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kitonya-hill",
+    "sourceRecordKey": "Kitonya Hill",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-atungulo",
+    "sourceRecordKey": "Atungulo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-madoci",
+    "sourceRecordKey": "Madoci",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-fumbya",
+    "sourceRecordKey": "Fumbya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ongwara",
+    "sourceRecordKey": "Ongwara",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nsekuro-hill",
+    "sourceRecordKey": "Nsekuro Hill",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kabula",
+    "sourceRecordKey": null,
+    "status": "POLYGON_ONLY",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ocamo-lum",
+    "sourceRecordKey": "Ocamo - Lum",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kumi",
+    "sourceRecordKey": "Kumi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bugondo-hill",
+    "sourceRecordKey": "Bugondo Hill",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ogera-hill",
+    "sourceRecordKey": "Ogera Hill",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ajuka",
+    "sourceRecordKey": "Ajuka",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ongino",
+    "sourceRecordKey": "Ongino",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-jerere",
+    "sourceRecordKey": "Jerere",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ochomil",
+    "sourceRecordKey": "Ochomil",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kyamugongo",
+    "sourceRecordKey": "Kyamugongo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-musoma",
+    "sourceRecordKey": "Musoma",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-namasale",
+    "sourceRecordKey": "Namasale",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bujawe",
+    "sourceRecordKey": "Bujawe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kyere",
+    "sourceRecordKey": "Kyere",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kagwara",
+    "sourceRecordKey": "Kagwara",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mukihani",
+    "sourceRecordKey": "Mukihani",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-katenta",
+    "sourceRecordKey": "Katenta",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lemutome",
+    "sourceRecordKey": "Lemutome",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kyahaiguru",
+    "sourceRecordKey": "Kyahaiguru",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-hoima",
+    "sourceRecordKey": "Hoima",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-amorokin",
+    "sourceRecordKey": "Amorokin",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-sambwa",
+    "sourceRecordKey": "Sambwa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kijubya",
+    "sourceRecordKey": "Kijubya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kidetok",
+    "sourceRecordKey": "Kidetok",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-abuya",
+    "sourceRecordKey": "Abuya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-binyiny",
+    "sourceRecordKey": "Binyiny",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-wambabya",
+    "sourceRecordKey": "Wambabya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kiula",
+    "sourceRecordKey": "Kiula",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kandanda-ngobya",
+    "sourceRecordKey": "Kandanda - Ngobya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kapchorwa",
+    "sourceRecordKey": "Kapchorwa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ibamba",
+    "sourceRecordKey": "Ibamba",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kyalubanga",
+    "sourceRecordKey": "Kyalubanga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-wabisi-wajala",
+    "sourceRecordKey": "Wabisi - Wajala",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bukedea",
+    "sourceRecordKey": "Bukedea",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kamachya",
+    "sourceRecordKey": "Kamachya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-tebakoli",
+    "sourceRecordKey": "Tebakoli",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kahurukobwire",
+    "sourceRecordKey": "Kahurukobwire",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kachumbala",
+    "sourceRecordKey": "Kachumbala",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-oduarata",
+    "sourceRecordKey": "Oduarata",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kabwika-mujwalanganda",
+    "sourceRecordKey": "Kabwika - Mujwalanganda",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-goligoli",
+    "sourceRecordKey": "Goligoli",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kolonyi",
+    "sourceRecordKey": "Kolonyi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-katuugo",
+    "sourceRecordKey": "Katuugo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-rwengeye",
+    "sourceRecordKey": "Rwengeye",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-jami",
+    "sourceRecordKey": "Jami",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kabuna",
+    "sourceRecordKey": "Kabuna",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bugoma",
+    "sourceRecordKey": "Bugoma",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lumoto",
+    "sourceRecordKey": "Lumoto",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-namasagali",
+    "sourceRecordKey": "Namasagali",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bukigai",
+    "sourceRecordKey": "Bukigai",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-sala",
+    "sourceRecordKey": "Sala",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nakuyazo",
+    "sourceRecordKey": "Nakuyazo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kamuli",
+    "sourceRecordKey": "Kamuli",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ruzaire",
+    "sourceRecordKey": "Ruzaire",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kijuna",
+    "sourceRecordKey": "Kijuna",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bubulo",
+    "sourceRecordKey": "Bubulo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kapimpini",
+    "sourceRecordKey": "Kapimpini",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kagadi",
+    "sourceRecordKey": "Kagadi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bunafu",
+    "sourceRecordKey": "Bunafu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mafudu",
+    "sourceRecordKey": "Mafudu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bulogo",
+    "sourceRecordKey": "Bulogo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-namalemba",
+    "sourceRecordKey": "Namalemba",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-namukonge",
+    "sourceRecordKey": "Namukonge",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-wangu",
+    "sourceRecordKey": "Wangu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kidiki",
+    "sourceRecordKey": "Kidiki",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-wankweyo",
+    "sourceRecordKey": "Wankweyo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kanaga",
+    "sourceRecordKey": "Kanaga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-rukara",
+    "sourceRecordKey": "Rukara",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-makoka",
+    "sourceRecordKey": "Makoka",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-buyenvu",
+    "sourceRecordKey": "Buyenvu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-muhunga",
+    "sourceRecordKey": "Muhunga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-buwaiswa",
+    "sourceRecordKey": "Buwaiswa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-goyera",
+    "sourceRecordKey": "Goyera",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kasega",
+    "sourceRecordKey": "Kasega",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kihaimira",
+    "sourceRecordKey": "Kihaimira",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kanginima",
+    "sourceRecordKey": "Kanginima",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nakwiga",
+    "sourceRecordKey": "Nakwiga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-busumbu",
+    "sourceRecordKey": "Busumbu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mbulamuti",
+    "sourceRecordKey": "Mbulamuti",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kijwiga",
+    "sourceRecordKey": "Kijwiga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-pokoli",
+    "sourceRecordKey": "Pokoli",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bulyabwita",
+    "sourceRecordKey": "Bulyabwita",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nyakarongo",
+    "sourceRecordKey": "Nyakarongo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-budunda",
+    "sourceRecordKey": "Budunda",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-luwunga",
+    "sourceRecordKey": "Luwunga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kibale",
+    "sourceRecordKey": "Kibale",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bugaali",
+    "sourceRecordKey": "Bugaali",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kabango-muntandi",
+    "sourceRecordKey": "Kabango - Muntandi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kakumiro",
+    "sourceRecordKey": "Kakumiro",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kanangalo",
+    "sourceRecordKey": "Kanangalo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-busembatya",
+    "sourceRecordKey": "Busembatya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-zimwa",
+    "sourceRecordKey": "Zimwa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-north-rwenzori",
+    "sourceRecordKey": "North Rwenzori",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-itwara",
+    "sourceRecordKey": "Itwara",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nagongera",
+    "sourceRecordKey": "Nagongera",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mpinve",
+    "sourceRecordKey": "Mpinve",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bundikeki",
+    "sourceRecordKey": "Bundikeki",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nanfuka",
+    "sourceRecordKey": "Nanfuka",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nakasenyi",
+    "sourceRecordKey": "Nakasenyi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-achilet",
+    "sourceRecordKey": "Achilet",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nabika",
+    "sourceRecordKey": "Nabika",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kikumiro",
+    "sourceRecordKey": "Kikumiro",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mataa",
+    "sourceRecordKey": "Mataa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nyaburongo",
+    "sourceRecordKey": "Nyaburongo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nyakikindo",
+    "sourceRecordKey": "Nyakikindo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kyehara",
+    "sourceRecordKey": "Kyehara",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nakwaya",
+    "sourceRecordKey": "Nakwaya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-fort-portal",
+    "sourceRecordKey": "Fort Portal",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-tororo",
+    "sourceRecordKey": "Tororo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kitonya",
+    "sourceRecordKey": "Kitonya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bowa",
+    "sourceRecordKey": "Bowa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mudakoli",
+    "sourceRecordKey": "Mudakoli",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lukuga",
+    "sourceRecordKey": "Lukuga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-wakatanga",
+    "sourceRecordKey": "Wakatanga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nazigo",
+    "sourceRecordKey": "Nazigo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ngereka",
+    "sourceRecordKey": "Ngereka",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-butebe",
+    "sourceRecordKey": "Butebe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-oruha",
+    "sourceRecordKey": "Oruha",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-butiti",
+    "sourceRecordKey": "Butiti",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mateme",
+    "sourceRecordKey": "Mateme",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kalagala-busakwa",
+    "sourceRecordKey": "Kalagala (Busakwa)",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nabukolyo",
+    "sourceRecordKey": "Nabukolyo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nkera",
+    "sourceRecordKey": "Nkera",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-busegula",
+    "sourceRecordKey": "Busegula",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bikira",
+    "sourceRecordKey": "Bikira",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kamigo",
+    "sourceRecordKey": "Kamigo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bombo",
+    "sourceRecordKey": "Bombo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lubani",
+    "sourceRecordKey": "Lubani",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-walugogo",
+    "sourceRecordKey": "Walugogo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nyantungo",
+    "sourceRecordKey": "Nyantungo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-namwasa",
+    "sourceRecordKey": "Namwasa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kagoma",
+    "sourceRecordKey": "Kagoma",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-monikakinei",
+    "sourceRecordKey": "Monikakinei",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nile-bank",
+    "sourceRecordKey": "Nile Bank",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kalagala-falls",
+    "sourceRecordKey": "Kalagala Falls",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-namazingiri",
+    "sourceRecordKey": "Namazingiri",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bugiri",
+    "sourceRecordKey": "Bugiri",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-namasiga-kidimbuli",
+    "sourceRecordKey": "Namasiga - Kidimbuli",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kaweri",
+    "sourceRecordKey": "Kaweri",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-namakupa",
+    "sourceRecordKey": "Namakupa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mutai",
+    "sourceRecordKey": "Mutai",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kabukira",
+    "sourceRecordKey": "Kabukira",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nyakinoni",
+    "sourceRecordKey": "Nyakinoni",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kasenyi",
+    "sourceRecordKey": "Kasenyi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-namavundu",
+    "sourceRecordKey": "Namavundu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nsube",
+    "sourceRecordKey": "Nsube",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nyakigumba",
+    "sourceRecordKey": "Nyakigumba",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-namafuma",
+    "sourceRecordKey": "Namafuma",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kabugeza-kasanda",
+    "sourceRecordKey": "Kabugeza (Kasanda)",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-luwawa",
+    "sourceRecordKey": "Luwawa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-west-bugwe",
+    "sourceRecordKey": "West Bugwe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kyantuhe",
+    "sourceRecordKey": "Kyantuhe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bulondo",
+    "sourceRecordKey": "Bulondo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-sitambogo",
+    "sourceRecordKey": "Sitambogo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kasana-kasambya",
+    "sourceRecordKey": "Kasana - Kasambya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kasozi",
+    "sourceRecordKey": "Kasozi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mwiri",
+    "sourceRecordKey": "Mwiri",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-name-unknown-forest-reserve-6",
+    "sourceRecordKey": "Name Unknown - Forest Reserve 6",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-banda-nursery",
+    "sourceRecordKey": "Banda Nursery",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kateta",
+    "sourceRecordKey": "Kateta",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-katabalalu",
+    "sourceRecordKey": "Katabalalu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-name-unknown-forest-reserve-4",
+    "sourceRecordKey": "Name Unknown - Forest Reserve 4",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-luvunya",
+    "sourceRecordKey": "Luvunya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kifu",
+    "sourceRecordKey": "Kifu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-namanve",
+    "sourceRecordKey": "Namanve",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-buvuma",
+    "sourceRecordKey": "Buvuma",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-buyaga-dam",
+    "sourceRecordKey": "Buyaga Dam",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-name-unknown-forest-reserve-5",
+    "sourceRecordKey": "Name Unknown - Forest Reserve 5",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lwamunda",
+    "sourceRecordKey": "Lwamunda",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kasa",
+    "sourceRecordKey": "Kasa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nambale-kasa-south",
+    "sourceRecordKey": "Nambale (Kasa South)",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-name-unknown-forest-reserve-2",
+    "sourceRecordKey": "Name Unknown - Forest Reserve 2",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-navugulu",
+    "sourceRecordKey": "Navugulu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-namatiwa",
+    "sourceRecordKey": "Namatiwa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kakasi",
+    "sourceRecordKey": "Kakasi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-jubiya",
+    "sourceRecordKey": "Jubiya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mujuzi",
+    "sourceRecordKey": "Mujuzi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-name-unknown-forest-reserve-3",
+    "sourceRecordKey": "Name Unknown - Forest Reserve 3",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lusiba",
+    "sourceRecordKey": "Lusiba",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mafuga",
+    "sourceRecordKey": "Mafuga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kyampisi",
+    "sourceRecordKey": "Kyampisi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bulijjo",
+    "sourceRecordKey": "Bulijjo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-buwanzi",
+    "sourceRecordKey": "Buwanzi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-buhungiro",
+    "sourceRecordKey": "Buhungiro",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bugembe",
+    "sourceRecordKey": "Bugembe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kimaka",
+    "sourceRecordKey": "Kimaka",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-walulumbu",
+    "sourceRecordKey": "Walulumbu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-igwe",
+    "sourceRecordKey": "Igwe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-rwensambya",
+    "sourceRecordKey": "Rwensambya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-irimbi",
+    "sourceRecordKey": "Irimbi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nakindiba",
+    "sourceRecordKey": "Nakindiba",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-muinaina",
+    "sourceRecordKey": "Muinaina",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-tumbi",
+    "sourceRecordKey": "Tumbi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-namyoya",
+    "sourceRecordKey": "Namyoya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-wakayembe",
+    "sourceRecordKey": "Wakayembe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kisombwa",
+    "sourceRecordKey": "Kisombwa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kitubulu",
+    "sourceRecordKey": "Kitubulu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nonve",
+    "sourceRecordKey": "Nonve",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nalubaga",
+    "sourceRecordKey": "Nalubaga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mpara",
+    "sourceRecordKey": "Mpara",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nadagi",
+    "sourceRecordKey": "Nadagi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-walugondo",
+    "sourceRecordKey": "Walugondo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mukambwe",
+    "sourceRecordKey": "Mukambwe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kajonde",
+    "sourceRecordKey": "Kajonde",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kahunge",
+    "sourceRecordKey": "Kahunge",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nakawa-forestry-research",
+    "sourceRecordKey": "Nakawa Forestry Research",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-wantayi",
+    "sourceRecordKey": "Wantayi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nsowe",
+    "sourceRecordKey": "Nsowe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mubuku",
+    "sourceRecordKey": "Mubuku",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kasala",
+    "sourceRecordKey": "Kasala",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bukaleba",
+    "sourceRecordKey": "Bukaleba",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-buduli",
+    "sourceRecordKey": "Buduli",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kasolo",
+    "sourceRecordKey": "Kasolo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mawanga",
+    "sourceRecordKey": "Mawanga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kisangi",
+    "sourceRecordKey": "Kisangi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-musamya",
+    "sourceRecordKey": "Musamya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-sozi",
+    "sourceRecordKey": "Sozi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bukaibale",
+    "sourceRecordKey": "Bukaibale",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bugusa",
+    "sourceRecordKey": "Bugusa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nakaziba",
+    "sourceRecordKey": "Nakaziba",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bugomba",
+    "sourceRecordKey": "Bugomba",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mala-island",
+    "sourceRecordKey": "Mala Island",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-koko",
+    "sourceRecordKey": "Koko",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kifunvwe",
+    "sourceRecordKey": "Kifunvwe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-makokolero",
+    "sourceRecordKey": "Makokolero",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kafumbi",
+    "sourceRecordKey": "Kafumbi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-yubwe",
+    "sourceRecordKey": "Yubwe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bira",
+    "sourceRecordKey": "Bira",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kyabona",
+    "sourceRecordKey": "Kyabona",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nawaitale",
+    "sourceRecordKey": "Nawaitale",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nakunyi",
+    "sourceRecordKey": "Nakunyi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nfuka-magobwa",
+    "sourceRecordKey": "Nfuka Magobwa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nakalere",
+    "sourceRecordKey": "Nakalere",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-buluku",
+    "sourceRecordKey": "Buluku",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nabanga",
+    "sourceRecordKey": "Nabanga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lukale",
+    "sourceRecordKey": "Lukale",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kinyo",
+    "sourceRecordKey": "Kinyo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-zirimiti",
+    "sourceRecordKey": "Zirimiti",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kajansi",
+    "sourceRecordKey": "Kajansi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-wamasega",
+    "sourceRecordKey": "Wamasega",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-walumwanyi",
+    "sourceRecordKey": "Walumwanyi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kakonwa",
+    "sourceRecordKey": "Kakonwa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mpanga",
+    "sourceRecordKey": "Mpanga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-natyonko",
+    "sourceRecordKey": "Natyonko",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-wabinyomo",
+    "sourceRecordKey": "Wabinyomo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-buloba",
+    "sourceRecordKey": "Buloba",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nsese",
+    "sourceRecordKey": "Nsese",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lufuka",
+    "sourceRecordKey": "Lufuka",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-naludugavu",
+    "sourceRecordKey": "Naludugavu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kizinkuba",
+    "sourceRecordKey": "Kizinkuba",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-namunyoro",
+    "sourceRecordKey": "Namunyoro",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kagongo",
+    "sourceRecordKey": "Kagongo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-budugade",
+    "sourceRecordKey": "Budugade",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kisakombe",
+    "sourceRecordKey": "Kisakombe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kisasa",
+    "sourceRecordKey": "Kisasa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kirigye",
+    "sourceRecordKey": "Kirigye",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-south-busoga",
+    "sourceRecordKey": "South Busoga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mako",
+    "sourceRecordKey": "Mako",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nakalanga",
+    "sourceRecordKey": "Nakalanga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kande",
+    "sourceRecordKey": "Kande",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-jumbi",
+    "sourceRecordKey": "Jumbi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-namagaza",
+    "sourceRecordKey": "Namagaza",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-degeya",
+    "sourceRecordKey": "Degeya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kisisita",
+    "sourceRecordKey": "Kisisita",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nambuga",
+    "sourceRecordKey": "Nambuga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kasulo",
+    "sourceRecordKey": "Kasulo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-namabowe",
+    "sourceRecordKey": "Namabowe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-luleka",
+    "sourceRecordKey": "Luleka",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kaswera",
+    "sourceRecordKey": "Kaswera",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kalo",
+    "sourceRecordKey": "Kalo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nawandigi",
+    "sourceRecordKey": "Nawandigi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-buuka",
+    "sourceRecordKey": "Buuka",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kanjaza",
+    "sourceRecordKey": "Kanjaza",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nkogwe",
+    "sourceRecordKey": "Nkogwe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-buzimba",
+    "sourceRecordKey": "Buzimba",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-koja",
+    "sourceRecordKey": "Koja",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-wabirago",
+    "sourceRecordKey": "Wabirago",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mugomba",
+    "sourceRecordKey": "Mugomba",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-semunya",
+    "sourceRecordKey": "Semunya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-olamusa",
+    "sourceRecordKey": "Olamusa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kooga",
+    "sourceRecordKey": "Kooga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kyansonzi",
+    "sourceRecordKey": "Kyansonzi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-gangu",
+    "sourceRecordKey": "Gangu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-wantagalala",
+    "sourceRecordKey": "Wantagalala",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kisubi",
+    "sourceRecordKey": "Kisubi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nakiza",
+    "sourceRecordKey": "Nakiza",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mwola",
+    "sourceRecordKey": "Mwola",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kalombi",
+    "sourceRecordKey": "Kalombi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-sembula",
+    "sourceRecordKey": "Sembula",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-gunda",
+    "sourceRecordKey": "Gunda",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kabulego",
+    "sourceRecordKey": "Kabulego",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kalangalo",
+    "sourceRecordKey": "Kalangalo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kavunda",
+    "sourceRecordKey": "Kavunda",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kalandazi",
+    "sourceRecordKey": "Kalandazi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ngogwe-bwema-island",
+    "sourceRecordKey": "Ngogwe (Bwema Island)",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nakaga",
+    "sourceRecordKey": "Nakaga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kazooba",
+    "sourceRecordKey": "Kazooba",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kuzito",
+    "sourceRecordKey": "Kuzito",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-izinga-island",
+    "sourceRecordKey": "Izinga Island",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kyewaga",
+    "sourceRecordKey": "Kyewaga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nimu",
+    "sourceRecordKey": "Nimu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kerenge",
+    "sourceRecordKey": "Kerenge",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nyabirongo",
+    "sourceRecordKey": "Nyabirongo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ntusi",
+    "sourceRecordKey": "Ntusi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-buwa",
+    "sourceRecordKey": "Buwa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kanyampara",
+    "sourceRecordKey": "Kanyampara",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kabuye",
+    "sourceRecordKey": "Kabuye",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lukolo",
+    "sourceRecordKey": "Lukolo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-luwafu",
+    "sourceRecordKey": "Luwafu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kabula",
+    "sourceRecordKey": null,
+    "status": "POLYGON_ONLY",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ibanda",
+    "sourceRecordKey": "Ibanda",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-rugongi",
+    "sourceRecordKey": "Rugongi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kamera",
+    "sourceRecordKey": "Kamera",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kalungu",
+    "sourceRecordKey": "Kalungu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nabijoka",
+    "sourceRecordKey": "Nabijoka",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mulega",
+    "sourceRecordKey": "Mulega",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-buziga",
+    "sourceRecordKey": "Buziga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bukone",
+    "sourceRecordKey": "Bukone",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bugonzi",
+    "sourceRecordKey": "Bugonzi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kampala",
+    "sourceRecordKey": "Kampala",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-busowe",
+    "sourceRecordKey": "Busowe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bukakata",
+    "sourceRecordKey": "Bukakata",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kyakumpi",
+    "sourceRecordKey": "Kyakumpi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lutoboka",
+    "sourceRecordKey": "Lutoboka",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nkese",
+    "sourceRecordKey": "Nkese",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kasonke",
+    "sourceRecordKey": "Kasonke",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kubanda",
+    "sourceRecordKey": "Kubanda",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bunjazi",
+    "sourceRecordKey": "Bunjazi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-towa",
+    "sourceRecordKey": "Towa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bufumira",
+    "sourceRecordKey": "Bufumira",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bugana",
+    "sourceRecordKey": "Bugana",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kitemu",
+    "sourceRecordKey": "Kitemu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kijogolo",
+    "sourceRecordKey": "Kijogolo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-linga",
+    "sourceRecordKey": "Linga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-luwungulu",
+    "sourceRecordKey": "Luwungulu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-tonde",
+    "sourceRecordKey": "Tonde",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-wabitembe",
+    "sourceRecordKey": "Wabitembe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-gala",
+    "sourceRecordKey": "Gala",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bwizibwera",
+    "sourceRecordKey": "Bwizibwera",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lwengo",
+    "sourceRecordKey": "Lwengo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nabukonge",
+    "sourceRecordKey": "Nabukonge",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-namatembe",
+    "sourceRecordKey": "Namatembe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kyamuhunga",
+    "sourceRecordKey": "Kyamuhunga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kyirira",
+    "sourceRecordKey": "Kyirira",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mulundu",
+    "sourceRecordKey": "Mulundu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-makoko",
+    "sourceRecordKey": "Makoko",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-funve",
+    "sourceRecordKey": "Funve",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kamukulu",
+    "sourceRecordKey": "Kamukulu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kitasi",
+    "sourceRecordKey": "Kitasi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-sekazinga",
+    "sourceRecordKey": "Sekazinga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-buga",
+    "sourceRecordKey": "Buga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-rushaya",
+    "sourceRecordKey": "Rushaya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bwambara",
+    "sourceRecordKey": "Bwambara",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mugoye",
+    "sourceRecordKey": "Mugoye",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-matale",
+    "sourceRecordKey": "Matale",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lukalu",
+    "sourceRecordKey": "Lukalu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-banga",
+    "sourceRecordKey": "Banga",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nakitondo",
+    "sourceRecordKey": "Nakitondo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-buturume",
+    "sourceRecordKey": "Buturume",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kabwohe",
+    "sourceRecordKey": "Kabwohe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mbarara",
+    "sourceRecordKey": "Mbarara",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kijanebalola",
+    "sourceRecordKey": "Kijanebalola",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kyahi",
+    "sourceRecordKey": "Kyahi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-rwengiri",
+    "sourceRecordKey": "Rwengiri",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kaniabizo",
+    "sourceRecordKey": "Kaniabizo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-lajabwa",
+    "sourceRecordKey": "Lajabwa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ihimbo",
+    "sourceRecordKey": "Ihimbo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kigona-river",
+    "sourceRecordKey": "Kigona River",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kyalwamuka",
+    "sourceRecordKey": "Kyalwamuka",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-rakai",
+    "sourceRecordKey": "Rakai",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kabira",
+    "sourceRecordKey": "Kabira",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kigona",
+    "sourceRecordKey": "Kigona",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-nkose",
+    "sourceRecordKey": "Nkose",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kihihi",
+    "sourceRecordKey": "Kihihi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bugamba",
+    "sourceRecordKey": "Bugamba",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kagogo",
+    "sourceRecordKey": "Kagogo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mburamaizi",
+    "sourceRecordKey": "Mburamaizi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-rukungiri",
+    "sourceRecordKey": "Rukungiri",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kyamazzi",
+    "sourceRecordKey": "Kyamazzi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kebisoni",
+    "sourceRecordKey": "Kebisoni",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ntungamo",
+    "sourceRecordKey": "Ntungamo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kalinzu",
+    "sourceRecordKey": "Kalinzu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-namalala",
+    "sourceRecordKey": "Namalala",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-rwoho",
+    "sourceRecordKey": "Rwoho",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-otzi",
+    "sourceRecordKey": "Otzi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kumbu",
+    "sourceRecordKey": "Kumbu",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bala",
+    "sourceRecordKey": "Bala",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-malabigambo",
+    "sourceRecordKey": "Malabigambo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-manwa",
+    "sourceRecordKey": "Manwa",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-aduku",
+    "sourceRecordKey": "Aduku",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-aloro",
+    "sourceRecordKey": "Aloro",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kaiso",
+    "sourceRecordKey": "Kaiso",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-muko",
+    "sourceRecordKey": "Muko",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kabale",
+    "sourceRecordKey": "Kabale",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-name-unknown-forest-reserve-1",
+    "sourceRecordKey": "Name Unknown - Forest Reserve 1",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-bata",
+    "sourceRecordKey": "Bata",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-echuya",
+    "sourceRecordKey": "Echuya",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kagombe",
+    "sourceRecordKey": "Kagombe",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-north-maramagambo",
+    "sourceRecordKey": "North Maramagambo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-south-maramagambo",
+    "sourceRecordKey": "South Maramagambo",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-ayer",
+    "sourceRecordKey": "Ayer",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-tero",
+    "sourceRecordKey": "Tero",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-mabira",
+    "sourceRecordKey": "Mabira",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-kasyoha-kitomi",
+    "sourceRecordKey": "Kasyoha - Kitomi",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  },
+  {
+    "boundaryId": "cfr-maseege",
+    "sourceRecordKey": "Maseege",
+    "status": "POLYGON_LINKED",
+    "reason": null
+  }
+]
