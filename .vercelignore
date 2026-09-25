@@ -12,3 +12,6 @@ vite-version/public/video/genetics.mp4
 vite-version/public/video/mill.mp4
 vite-version/public/video/profit.mp4
 vite-version/public/video/vc.mp4
+# Local scratch files and unreferenced assets: committed for the record, never deployed.
+.tmp-*
+vite-version/public/images/information
