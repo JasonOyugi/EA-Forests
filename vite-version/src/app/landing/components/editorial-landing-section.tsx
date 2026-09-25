@@ -2,7 +2,7 @@
 
 import { ArrowRight, CalendarDays, Clock3, ExternalLink, MapPin } from "lucide-react"
 import { lazy, Suspense, useEffect, useRef, useState } from "react"
-import type { MouseEvent } from "react"
+import type { CSSProperties, MouseEvent } from "react"
 import { useSearchParams } from "react-router-dom"
 
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
@@ -12,7 +12,8 @@ import { YouTubeVideoDialog } from "@/components/youtube-video-dialog"
 import { assetUrl } from "@/lib/utils"
 import { editorialActionLabels, editorialSubsections } from "./editorial-actions"
 import type { EditorialCategory } from "./editorial-actions"
-import { InformationLiveHub } from "./information-live-hub"
+import { InformationLiveHub, ResearchCardTile } from "./information-live-hub"
+import { informationHubTopics } from "@/app/information/data"
 import { MetricTile } from "./metric-tile"
 import { landingContainer } from "./landing-shared"
 import { sectorMetrics, sectorPlayers } from "./sector-data"
@@ -125,6 +126,10 @@ const editorialEvents: EditorialEvent[] = [
 
 const editorialCategories: EditorialCategory[] = ["Information", "Investment Models", "Videos", "Events"]
 const initialVisibleStoryCount = 8
+
+// The Information Hub's Iran-war timeline, surfaced in the "All" mosaic in its topic's accent.
+const policyTopic = informationHubTopics["policy-regulation"]
+const iranWarCard = policyTopic.cards.find((card) => card.id === "iran-war-forestry-timeline")
 const defaultInformationTopic = "Policy & Regulation"
 
 function StoryTile({ story, size }: { story: Story; size?: string }) {
@@ -508,7 +513,12 @@ export function EditorialBriefSection() {
                 <EventTile event={editorialEvents[3]} size="xl:col-span-3 xl:row-span-[30]" />
                 <VideoTile video={editorialVideos[2]} size="xl:col-span-9 xl:row-span-[30]" />
                 <EventTile event={editorialEvents[2]} size="xl:col-span-3 xl:row-span-[30]" />
-                <VideoTile video={editorialVideos[3]} size="xl:col-span-8 xl:row-span-[30]" />
+                {iranWarCard ? (
+                  <div className="xl:col-span-12 xl:row-span-[136]" style={{ "--information-accent": policyTopic.accent } as CSSProperties}>
+                    <ResearchCardTile card={iranWarCard} className="h-full" />
+                  </div>
+                ) : null}
+                <VideoTile video={editorialVideos[3]} size="xl:col-span-12 xl:row-span-[30]" />
               </>
             ) : activeCategory === "Videos" ? (
               editorialVideos.map((video) => <VideoTile key={video.videoId} video={video} size="xl:col-span-6 xl:row-span-[36]" />)

@@ -75,7 +75,7 @@ function CardKindIcon({ kind }: { kind: ResearchCardKind }) {
   return <Globe2 className="size-3.5" />
 }
 
-function ResearchCardTile({ card, className = "" }: { card: ResearchCard; className?: string }) {
+export function ResearchCardTile({ card, className = "" }: { card: ResearchCard; className?: string }) {
   if (card.kind === "timeline" && card.timeline) {
     return (
       <article className={`group relative overflow-hidden border border-emerald-900/20 bg-transparent dark:border-white/12 ${className}`}>

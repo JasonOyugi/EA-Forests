@@ -1,15 +1,16 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowRight, Play, Star } from "lucide-react"
+import type { MouseEvent } from "react"
+import { useSearchParams } from "react-router-dom"
+import { ArrowRight, Star } from "lucide-react"
 import { AiFillYoutube } from "react-icons/ai"
 
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { AutoPlayVideo } from "@/components/auto-play-video"
 import { YouTubeVideoDialog } from "@/components/youtube-video-dialog"
 import { assetUrl, getAppUrl } from "@/lib/utils"
-import { landingContainer, landingHeroLeadClass } from "./landing-shared"
+import { landingContainer } from "./landing-shared"
 
 const heroVideos = [
   {
@@ -38,24 +39,19 @@ export function HeroSection() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isHovering, setIsHovering] = useState(false)
   const [pointer, setPointer] = useState({ x: 50, y: 50 })
+  const [, setSearchParams] = useSearchParams()
+
+  // The "Pine Hybrids" badge opens the Markets atlas below on the Seeds & Seedlings market.
+  const openSeedlingsMarket = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return
+    event.preventDefault()
+    setSearchParams({ market: "seedlings" }, { replace: true, preventScrollReset: true })
+    document.getElementById("sector-map")?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
 
   const nextIndex = (currentIndex + 1) % heroVideos.length
   const tiltX = (pointer.y - 50) * -0.12
   const tiltY = (pointer.x - 50) * 0.12
-
-  const openInvestmentsGrid = () => {
-    window.dispatchEvent(
-      new CustomEvent("editorial:filter", {
-        detail: { category: "Investment Models", topic: "Tested Investments" },
-      })
-    )
-    window.requestAnimationFrame(() => {
-      document.getElementById("brief")?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      })
-    })
-  }
 
   return (
     <section
@@ -88,7 +84,7 @@ export function HeroSection() {
       <div className={`${landingContainer} landing-hero-height relative z-20 flex items-center py-16 text-left sm:py-20 lg:py-24`}>
         <div className="w-full">
           <div className="landing-fade-up landing-delay-1 mb-8 flex justify-start">
-            <a href={getAppUrl("/shop/seedlings#featured-products")} className="group inline-flex">
+            <a href={getAppUrl("/landing?market=seedlings#sector-map")} onClick={openSeedlingsMarket} className="group inline-flex">
               <Badge variant="outline" className="badge-emerald-run max-w-full whitespace-normal rounded-lg border border-emerald-300/50 bg-black/20 px-2 py-2 text-left text-sm leading-5 text-emerald-50 backdrop-blur transition-shadow duration-300 hover:bg-emerald-400/10 hover:shadow-[0_0_22px_rgba(16,185,129,.3)] sm:text-xs">
                 <span className="hero-badge-star-shell mr-2 inline-flex size-5 items-center justify-center rounded-full"><Star className="h-3 w-3 fill-current" /></span>
                 New: Pine Hybrids in stock!!
