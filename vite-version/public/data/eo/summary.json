@@ -1,0 +1,57 @@
+{
+  "UG": {
+    "polygons": 651,
+    "observed": 651,
+    "areaHa": 1239289,
+    "latestMonth": "2026-08",
+    "months": [
+      "2025-09",
+      "2025-10",
+      "2025-11",
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04",
+      "2026-05",
+      "2026-06",
+      "2026-07",
+      "2026-08"
+    ],
+    "classes": [
+      "official_forest_reserve"
+    ],
+    "withChangeEvidence": 31
+  },
+  "KE": {
+    "polygons": 386,
+    "observed": 386,
+    "areaHa": 1859073,
+    "latestMonth": "2026-08",
+    "months": [
+      "2025-09",
+      "2026-03",
+      "2026-07",
+      "2026-08"
+    ],
+    "classes": [
+      "gazetted_forest"
+    ],
+    "withChangeEvidence": 0
+  },
+  "TZ": {
+    "polygons": 571,
+    "observed": 571,
+    "areaHa": 13624756,
+    "latestMonth": "2026-08",
+    "months": [
+      "2025-09",
+      "2026-03",
+      "2026-08"
+    ],
+    "classes": [
+      "forest_candidate"
+    ],
+    "withChangeEvidence": 0
+  }
+}

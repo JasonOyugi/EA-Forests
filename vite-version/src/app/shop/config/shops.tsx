@@ -99,8 +99,11 @@ export const shopInventoryMap: Record<ShopSlug, ShopItem[]> = {
   "wood-markets-map": roundwoodInventory as ShopItem[],
 }
 
+// Land parcels/managed-forest-block commerce is no longer a market (superseded by the Forestry
+// Services Market Atlas); "sector-map" duplicates "wood-markets-map" and was already unreachable
+// via routing.
 export const shopList = Object.values(shopDefinitions).filter(
-  (shop) => shop.slug !== "forestry-services"
+  (shop) => shop.slug !== "forests-land" && shop.slug !== "sector-map"
 )
 
 export function isValidShopSlug(value: string): value is ShopSlug {

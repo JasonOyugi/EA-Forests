@@ -86,7 +86,7 @@
 }
 
 .landing-hero-title {
-  --landing-hero-title-scale-y: 1;
+  --landing-hero-title-scale-y: 1.2;
   --landing-fade-scale-y: var(--landing-hero-title-scale-y);
   font-size: var(--landing-title-hero);
   line-height: 0.82;

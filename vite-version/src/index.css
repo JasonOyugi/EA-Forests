@@ -56,37 +56,37 @@
   --type-heading-tracking: -0.045em;
   --type-heading-width: 75%;
   --radius: 0;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --background: oklch(0.975 0.022 155);
+  --foreground: oklch(0.27 0.07 155);
+  --card: oklch(0.99 0.012 155);
+  --card-foreground: oklch(0.27 0.07 155);
+  --popover: oklch(0.99 0.012 155);
+  --popover-foreground: oklch(0.27 0.07 155);
+  --primary: oklch(0.34 0.1 155);
+  --primary-foreground: oklch(0.99 0.012 155);
+  --secondary: oklch(0.94 0.035 155);
+  --secondary-foreground: oklch(0.27 0.07 155);
+  --muted: oklch(0.94 0.035 155);
+  --muted-foreground: oklch(0.45 0.06 155);
+  --accent: oklch(0.92 0.045 155);
+  --accent-foreground: oklch(0.27 0.07 155);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --border: oklch(0.86 0.045 155);
+  --input: oklch(0.86 0.045 155);
+  --ring: oklch(0.48 0.1 155);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: oklch(0.965 0.026 155);
+  --sidebar-foreground: oklch(0.27 0.07 155);
+  --sidebar-primary: oklch(0.34 0.1 155);
+  --sidebar-primary-foreground: oklch(0.99 0.012 155);
+  --sidebar-accent: oklch(0.92 0.045 155);
+  --sidebar-accent-foreground: oklch(0.27 0.07 155);
+  --sidebar-border: oklch(0.86 0.045 155);
+  --sidebar-ring: oklch(0.48 0.1 155);
 }
 
 .dark {
@@ -121,6 +121,163 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+/*
+ * Market Atlas tokens: one hue per sub-market (seed & seedlings share one emerald/green scheme;
+ * silviculture=teal, harvest & haulage=violet/indigo, wood=amber), each with an evidence A-D shade
+ * ramp (A darkest/most resolved -> D palest). `--market-*` is the live, transitioning set of
+ * tokens the shell actually renders with; `.market-atlas[data-market="…"]` below picks which
+ * palette feeds it, so switching markets only reassigns custom properties (animatable) instead
+ * of re-styling every element by hand.
+ */
+:root {
+  --market-seed-accent: oklch(0.5 0.1 155);
+  --market-seed-accent-soft: oklch(0.5 0.1 155 / 12%);
+  --market-seed-a: oklch(0.36 0.09 155);
+  --market-seed-b: oklch(0.5 0.1 155);
+  --market-seed-c: oklch(0.68 0.075 155);
+  --market-seed-d: oklch(0.85 0.04 155);
+  --market-seed-canvas: oklch(0.955 0.028 155);
+
+  --market-seedlings-accent: oklch(0.55 0.16 155);
+  --market-seedlings-accent-soft: oklch(0.55 0.16 155 / 12%);
+  --market-seedlings-a: oklch(0.4 0.15 155);
+  --market-seedlings-b: oklch(0.55 0.16 155);
+  --market-seedlings-c: oklch(0.72 0.12 155);
+  --market-seedlings-d: oklch(0.88 0.06 155);
+  --market-seedlings-canvas: oklch(0.95 0.045 155);
+
+  --market-silviculture-accent: oklch(0.55 0.1 195);
+  --market-silviculture-accent-soft: oklch(0.55 0.1 195 / 12%);
+  --market-silviculture-a: oklch(0.4 0.09 195);
+  --market-silviculture-b: oklch(0.55 0.1 195);
+  --market-silviculture-c: oklch(0.72 0.07 195);
+  --market-silviculture-d: oklch(0.88 0.035 195);
+  --market-silviculture-canvas: oklch(0.955 0.035 195);
+
+  --market-harvest-accent: oklch(0.5 0.13 295);
+  --market-harvest-accent-soft: oklch(0.5 0.13 295 / 12%);
+  --market-harvest-a: oklch(0.38 0.12 295);
+  --market-harvest-b: oklch(0.5 0.13 295);
+  --market-harvest-c: oklch(0.68 0.1 295);
+  --market-harvest-d: oklch(0.85 0.05 295);
+  --market-harvest-canvas: oklch(0.95 0.035 295);
+
+  --market-wood-accent: oklch(0.6 0.11 70);
+  --market-wood-accent-soft: oklch(0.6 0.11 70 / 12%);
+  --market-wood-a: oklch(0.44 0.1 70);
+  --market-wood-b: oklch(0.6 0.11 70);
+  --market-wood-c: oklch(0.75 0.09 70);
+  --market-wood-d: oklch(0.89 0.045 70);
+  --market-wood-canvas: oklch(0.95 0.045 70);
+
+  --market-canvas: oklch(1 0 0);
+}
+
+.dark {
+  --market-seed-accent: oklch(0.68 0.09 155);
+  --market-seed-a: oklch(0.8 0.06 155);
+  --market-seed-b: oklch(0.68 0.09 155);
+  --market-seed-c: oklch(0.52 0.09 155);
+  --market-seed-d: oklch(0.38 0.075 155);
+  --market-seed-canvas: oklch(0.235 0.035 155);
+
+  --market-seedlings-accent: oklch(0.72 0.15 155);
+  --market-seedlings-a: oklch(0.85 0.09 155);
+  --market-seedlings-b: oklch(0.72 0.15 155);
+  --market-seedlings-c: oklch(0.55 0.14 155);
+  --market-seedlings-d: oklch(0.4 0.11 155);
+  --market-seedlings-canvas: oklch(0.235 0.055 155);
+
+  --market-silviculture-accent: oklch(0.72 0.09 195);
+  --market-silviculture-a: oklch(0.85 0.055 195);
+  --market-silviculture-b: oklch(0.72 0.09 195);
+  --market-silviculture-c: oklch(0.55 0.085 195);
+  --market-silviculture-d: oklch(0.4 0.07 195);
+  --market-silviculture-canvas: oklch(0.235 0.045 195);
+
+  --market-harvest-accent: oklch(0.68 0.12 295);
+  --market-harvest-a: oklch(0.82 0.07 295);
+  --market-harvest-b: oklch(0.68 0.12 295);
+  --market-harvest-c: oklch(0.5 0.12 295);
+  --market-harvest-d: oklch(0.36 0.1 295);
+  --market-harvest-canvas: oklch(0.235 0.05 295);
+
+  --market-wood-accent: oklch(0.75 0.1 70);
+  --market-wood-a: oklch(0.86 0.06 70);
+  --market-wood-b: oklch(0.75 0.1 70);
+  --market-wood-c: oklch(0.58 0.1 70);
+  --market-wood-d: oklch(0.42 0.08 70);
+  --market-wood-canvas: oklch(0.24 0.055 70);
+
+  --market-canvas: oklch(0.16 0 0);
+}
+
+.market-atlas {
+  --market-accent: var(--market-seedlings-accent);
+  --market-accent-soft: var(--market-seedlings-accent-soft, oklch(from var(--market-accent) l c h / 12%));
+  --market-marker-a: var(--market-seedlings-a);
+  --market-marker-b: var(--market-seedlings-b);
+  --market-marker-c: var(--market-seedlings-c);
+  --market-marker-d: var(--market-seedlings-d);
+  --market-canvas: var(--market-seedlings-canvas);
+  background-color: var(--market-canvas);
+  transition: background-color 0.4s ease;
+}
+.market-atlas[data-market="seed"] {
+  --market-accent: var(--market-seed-accent);
+  --market-accent-soft: var(--market-seed-accent-soft);
+  --market-marker-a: var(--market-seed-a);
+  --market-marker-b: var(--market-seed-b);
+  --market-marker-c: var(--market-seed-c);
+  --market-marker-d: var(--market-seed-d);
+  --market-canvas: var(--market-seed-canvas);
+}
+.market-atlas[data-market="seedlings"] {
+  --market-accent: var(--market-seedlings-accent);
+  --market-accent-soft: var(--market-seedlings-accent-soft);
+  --market-marker-a: var(--market-seedlings-a);
+  --market-marker-b: var(--market-seedlings-b);
+  --market-marker-c: var(--market-seedlings-c);
+  --market-marker-d: var(--market-seedlings-d);
+  --market-canvas: var(--market-seedlings-canvas);
+}
+.market-atlas[data-market="silviculture"] {
+  --market-accent: var(--market-silviculture-accent);
+  --market-accent-soft: var(--market-silviculture-accent-soft);
+  --market-marker-a: var(--market-silviculture-a);
+  --market-marker-b: var(--market-silviculture-b);
+  --market-marker-c: var(--market-silviculture-c);
+  --market-marker-d: var(--market-silviculture-d);
+  --market-canvas: var(--market-silviculture-canvas);
+}
+.market-atlas[data-market="harvest_haulage"] {
+  --market-accent: var(--market-harvest-accent);
+  --market-accent-soft: var(--market-harvest-accent-soft);
+  --market-marker-a: var(--market-harvest-a);
+  --market-marker-b: var(--market-harvest-b);
+  --market-marker-c: var(--market-harvest-c);
+  --market-marker-d: var(--market-harvest-d);
+  --market-canvas: var(--market-harvest-canvas);
+}
+.market-atlas[data-market="wood"] {
+  --market-accent: var(--market-wood-accent);
+  --market-accent-soft: var(--market-wood-accent-soft);
+  --market-marker-a: var(--market-wood-a);
+  --market-marker-b: var(--market-wood-b);
+  --market-marker-c: var(--market-wood-c);
+  --market-marker-d: var(--market-wood-d);
+  --market-canvas: var(--market-wood-canvas);
+}
+.market-atlas * {
+  transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, fill 0.3s ease, stroke 0.3s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .market-atlas,
+  .market-atlas * {
+    transition: none !important;
+  }
 }
 
 @layer base {

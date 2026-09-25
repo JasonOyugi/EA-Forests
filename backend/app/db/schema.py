@@ -49,6 +49,7 @@ SCHEMAS = (
     "verification",
     "decision",
     "audit",
+    "processing",
 )
 
 
@@ -289,7 +290,7 @@ geometry_observation = table(
     col("original_srid", Integer, server_default=text("4326")),
     choice(
         "method",
-        "surveyed gps official_kml digitised remote_sensing geocoded reported_coordinate centroid_estimate display_offset",
+        "surveyed gps official_kml digitised remote_sensing geocoded reported_coordinate centroid_estimate display_offset repository_derived",
     ),
     number("precision_m", minimum=0),
     col("precision_description"),
@@ -302,6 +303,42 @@ geometry_observation = table(
     CheckConstraint("ST_CoveredBy(geometry, ST_MakeEnvelope(-180,-90,180,90,4326))"),
 )
 Index("ix_geometry_observation_geometry", geometry_observation.c.geometry, postgresql_using="gist")
+
+# Stable analysis-area identity (EO observation architecture section 6, decision D3).
+# An AOI never stores geometry itself; it names one geometry-owning entity and,
+# optionally, the distinct canonical asset/stand/plot the analysis is about.
+aoi = table(
+    "geo",
+    "aoi",
+    fk("world_id", "core.world.id"),
+    fk("geometry_owner_entity_id", "core.entity.id"),
+    fk("subject_entity_id", "core.entity.id", True),
+    col("name", nullable=True),
+    col("analysis_scope"),
+    ts("created_at", default=True),
+    js(),
+)
+# Immutable boundary selection. Corrections append a new revision; they never
+# rewrite a prior geometry_observation_id or area_m2.
+aoi_version = table(
+    "geo",
+    "aoi_version",
+    fk("aoi_id", "geo.aoi.id"),
+    fk("world_id", "core.world.id"),
+    Column("revision", Integer, nullable=False),
+    fk("geometry_observation_id", "geo.geometry_observation.id"),
+    col("geometry_hash"),
+    col("normalization_version"),
+    number("area_m2"),
+    js("bounds"),
+    fk("predecessor_aoi_version_id", "geo.aoi_version.id", True),
+    col("correction_reason", nullable=True),
+    *provenance(),
+    *temporal(),
+    js(),
+    UniqueConstraint("aoi_id", "revision", name="uq_aoi_version_aoi_id_revision"),
+    CheckConstraint("area_m2 > 0"),
+)
 
 
 def fact(name):
@@ -896,6 +933,310 @@ change_event = table(
     col("superseded_record_id", UUID(as_uuid=True), True),
     ts("recorded_at", default=True),
     js("details"),
+)
+
+# --- EO observation pipeline (Sentinel-2 vertical slice; EO observation
+# architecture sections 7, 8, 12). Processing is deterministic derivation
+# (D16), never a model posterior: processing.version/run/input are separate
+# from models.model_version/model_run and never referenced by belief tables.
+eo_source_item = table(
+    "evidence",
+    "eo_source_item",
+    col("provider_key"),
+    col("collection_key"),
+    col("item_id"),
+    ts("sensing_start"),
+    ts("sensing_end", True),
+    col("platform", nullable=True),
+    col("processing_baseline", nullable=True),
+    js("properties"),
+    ts("discovered_at", default=True),
+    UniqueConstraint(
+        "provider_key", "collection_key", "item_id", name="uq_eo_source_item_identity"
+    ),
+)
+processing_version = table(
+    "processing",
+    "version",
+    col("recipe_key"),
+    col("recipe_version"),
+    col("code_hash"),
+    col("git_commit_sha", nullable=True),
+    js("environment"),
+    col("configuration_schema_version"),
+    ts("created_at", default=True),
+    UniqueConstraint(
+        "recipe_key", "recipe_version", "code_hash", name="uq_processing_version_identity"
+    ),
+)
+processing_run = table(
+    "processing",
+    "run",
+    fk("processing_version_id", "processing.version.id"),
+    fk("world_id", "core.world.id"),
+    js("configuration"),
+    ts("started_at", True),
+    ts("completed_at", True),
+    choice("outcome", "success partial no_observation failed", nullable=True),
+    js("reason_codes"),
+    col("output_manifest_hash", nullable=True),
+    ts("created_at", default=True),
+)
+processing_input = table(
+    "processing",
+    "input",
+    fk("processing_run_id", "processing.run.id"),
+    choice("input_kind", "aoi_version source_item"),
+    fk("aoi_version_id", "geo.aoi_version.id", True),
+    fk("eo_source_item_id", "evidence.eo_source_item.id", True),
+    col("role"),
+    CheckConstraint("num_nonnulls(aoi_version_id,eo_source_item_id) = 1"),
+)
+eo_series = table(
+    "observations",
+    "eo_series",
+    fk("aoi_version_id", "geo.aoi_version.id"),
+    fk("world_id", "core.world.id"),
+    col("provider_key"),
+    col("collection_key"),
+    col("recipe_key"),
+    col("recipe_version"),
+    col("qa_profile_key"),
+    col("qa_profile_version"),
+    col("statistics_profile"),
+    ts("created_at", default=True),
+    UniqueConstraint(
+        "aoi_version_id",
+        "provider_key",
+        "collection_key",
+        "recipe_key",
+        "recipe_version",
+        "qa_profile_key",
+        "qa_profile_version",
+        "statistics_profile",
+        name="uq_eo_series_identity",
+    ),
+)
+eo_observation = table(
+    "observations",
+    "eo_observation",
+    fk("series_id", "observations.eo_series.id"),
+    fk("world_id", "core.world.id"),
+    fk("processing_run_id", "processing.run.id"),
+    ts("window_start"),
+    ts("window_end"),
+    choice("support_kind", "acquisition composite", "composite"),
+    choice("outcome", "success partial no_observation failed"),
+    js("reason_codes"),
+    number("source_coverage_fraction", minimum=0, maximum=1),
+    number("clear_pixel_fraction", minimum=0, maximum=1),
+    number("usable_observation_fraction", minimum=0, maximum=1),
+    Column("acquisition_count", Integer, nullable=False),
+    Column("eligible_acquisition_count", Integer, nullable=False),
+    col("applied_qa_profile"),
+    js("discovery_manifest"),
+    ts("recorded_at", default=True),
+    js(),
+    UniqueConstraint(
+        "series_id",
+        "window_start",
+        "window_end",
+        "processing_run_id",
+        name="uq_eo_observation_period_run",
+    ),
+    CheckConstraint("window_start < window_end"),
+)
+eo_feature_set = table(
+    "observations",
+    "eo_feature_set",
+    fk("eo_observation_id", "observations.eo_observation.id", unique=True),
+    col("feature_recipe_key"),
+    col("feature_recipe_version"),
+    col("statistics_profile"),
+    ts("created_at", default=True),
+)
+eo_feature_value = table(
+    "observations",
+    "eo_feature_value",
+    fk("eo_feature_set_id", "observations.eo_feature_set.id"),
+    col("feature_key"),
+    col("feature_version"),
+    choice("value_statistic", "mean", "mean"),
+    number("value"),
+    col("unit"),
+    number("variance"),
+    number("standard_deviation"),
+    Column("valid_pixel_count", Integer, nullable=True),
+    Column("total_pixel_count", Integer, nullable=True),
+    number("effective_area_m2", minimum=0),
+    number("source_coverage_fraction", minimum=0, maximum=1),
+    number("usable_fraction", minimum=0, maximum=1),
+    choice("missingness", "UNKNOWN NOT_APPLICABLE NOT_MEASURED", nullable=True),
+    js("reason_codes"),
+    UniqueConstraint(
+        "eo_feature_set_id",
+        "feature_key",
+        "feature_version",
+        "value_statistic",
+        name="uq_eo_feature_value_identity",
+    ),
+)
+# Mutable execution coordination (architecture section 13); the scientific
+# record it produces (processing.run/observations.eo_observation) is sealed
+# and immutable, but this row itself is not -- it is a job, not evidence.
+eo_job = table(
+    "processing",
+    "eo_job",
+    col("request_hash", unique=True),
+    fk("world_id", "core.world.id"),
+    fk("aoi_version_id", "geo.aoi_version.id"),
+    ts("window_start"),
+    ts("window_end"),
+    col("provider_key"),
+    col("collection_key"),
+    col("recipe_key"),
+    col("recipe_version"),
+    col("qa_profile_key"),
+    col("qa_profile_version"),
+    col("statistics_profile"),
+    choice("status", "queued running succeeded retry_wait failed cancelled", "queued"),
+    Column("attempts", Integer, nullable=False, server_default=text("0")),
+    Column("max_attempts", Integer, nullable=False, server_default=text("3")),
+    fk("processing_run_id", "processing.run.id", True),
+    fk("eo_observation_id", "observations.eo_observation.id", True),
+    ts("requested_at", default=True),
+    ts("started_at", True),
+    ts("completed_at", True),
+    col("error", nullable=True),
+    ts("lease_expires_at", True),
+    Column("fencing_token", Integer, nullable=False, server_default=text("0")),
+    col("worker_id", nullable=True),
+    ts("retry_not_before", True),
+    col("last_reason_code", nullable=True),
+    js(),
+)
+eo_job_attempt = table(
+    "processing",
+    "eo_job_attempt",
+    fk("eo_job_id", "processing.eo_job.id"),
+    Column("attempt_number", Integer, nullable=False),
+    col("worker_id"),
+    ts("started_at"),
+    ts("completed_at", True),
+    choice("outcome", "succeeded retry_wait failed"),
+    col("reason_code", nullable=True),
+    col("error", nullable=True),
+    ts("recorded_at", default=True),
+    UniqueConstraint("eo_job_id", "attempt_number"),
+)
+
+# Frozen EO execution cohort: names existing geo.aoi_version rows a sensor
+# backfill should run against, separately from the canonical ingestion that
+# created them (observatory v1, section 1). Never stores or derives geometry.
+eo_cohort = table(
+    "processing",
+    "eo_cohort",
+    fk("world_id", "core.world.id"),
+    col("country"),
+    col("cohort_key"),
+    col("definition_version"),
+    ts("created_at", default=True),
+    col("note", nullable=True),
+    js(),
+    UniqueConstraint("country", "cohort_key", "definition_version", name="uq_eo_cohort_identity"),
+)
+eo_cohort_member = table(
+    "processing",
+    "eo_cohort_member",
+    fk("cohort_id", "processing.eo_cohort.id"),
+    fk("entity_id", "core.entity.id"),
+    fk("aoi_id", "geo.aoi.id"),
+    fk("aoi_version_id", "geo.aoi_version.id"),
+    col("source_record_key"),
+    col("geometry_hash"),
+    col("eligibility_status"),
+    ts("created_at", default=True),
+    UniqueConstraint("cohort_id", "source_record_key", name="uq_eo_cohort_member_identity"),
+)
+
+# Change-assessment domain (observatory v1, section 4): DERIVED evidence
+# about the observation process changing, never a forest-state observation.
+# interpretation_class is constrained to a single value at the DB level --
+# this schema cannot express a biological label even if application code
+# tried to write one.
+change_candidate = table(
+    "processing",
+    "change_candidate",
+    fk("entity_id", "core.entity.id"),
+    fk("aoi_version_id", "geo.aoi_version.id"),
+    fk("world_id", "core.world.id"),
+    col("sensor_stream"),
+    js("features"),
+    ts("baseline_window_start"),
+    ts("baseline_window_end"),
+    ts("candidate_window_start"),
+    ts("candidate_window_end"),
+    col("algorithm"),
+    col("algorithm_version"),
+    col("config_version"),
+    js("method_config"),
+    number("statistic", nullable=False),
+    number("persistence"),
+    number("common_support_fraction", minimum=0, maximum=1),
+    Column("baseline_acquisition_count", Integer, nullable=True),
+    Column("candidate_acquisition_count", Integer, nullable=True),
+    choice("status", "active retracted", "active"),
+    choice("interpretation_class", "OBSERVATION_CHANGE", "OBSERVATION_CHANGE"),
+    ts("created_at", default=True),
+    js(),
+    CheckConstraint("baseline_window_start < baseline_window_end"),
+    CheckConstraint("candidate_window_start < candidate_window_end"),
+    CheckConstraint("baseline_window_end <= candidate_window_start"),
+)
+change_candidate_source_observation = table(
+    "processing",
+    "change_candidate_source_observation",
+    fk("change_candidate_id", "processing.change_candidate.id"),
+    fk("eo_observation_id", "observations.eo_observation.id"),
+    choice("role", "baseline candidate"),
+    UniqueConstraint(
+        "change_candidate_id", "eo_observation_id", "role", name="uq_change_candidate_source_observation"
+    ),
+)
+cross_sensor_corroboration = table(
+    "processing",
+    "cross_sensor_corroboration",
+    fk("entity_id", "core.entity.id"),
+    fk("aoi_version_id", "geo.aoi_version.id"),
+    fk("world_id", "core.world.id"),
+    ts("reference_window_start"),
+    ts("reference_window_end"),
+    # SINGLE_STREAM / WITHIN_SENSOR_MULTI_STREAM_SUPPORTED / CROSS_SENSOR_SUPPORTED /
+    # CROSS_MODALITY_SUPPORTED / SENSOR_DISAGREEMENT / INSUFFICIENT_COMMON_SUPPORT /
+    # INSUFFICIENT_EVIDENCE (migration 0012) -- replaces the original 0011
+    # vocabulary, which let two streams of the SAME sensor (S1 ascending +
+    # descending) satisfy "MULTI_SENSOR_SUPPORTED". Distinct stream/sensor-
+    # family/modality counts (below) are the evidence for the classification,
+    # not decoration -- enforced by CHECK constraints in the raw migration SQL.
+    choice(
+        "state",
+        "SINGLE_STREAM WITHIN_SENSOR_MULTI_STREAM_SUPPORTED CROSS_SENSOR_SUPPORTED "
+        "CROSS_MODALITY_SUPPORTED SENSOR_DISAGREEMENT INSUFFICIENT_COMMON_SUPPORT INSUFFICIENT_EVIDENCE",
+    ),
+    number("max_temporal_offset_days"),
+    Column("distinct_stream_count", Integer, nullable=True),
+    Column("distinct_sensor_family_count", Integer, nullable=True),
+    Column("distinct_modality_count", Integer, nullable=True),
+    ts("created_at", default=True),
+    js(),
+    CheckConstraint("reference_window_start < reference_window_end"),
+)
+cross_sensor_corroboration_member = table(
+    "processing",
+    "cross_sensor_corroboration_member",
+    fk("corroboration_id", "processing.cross_sensor_corroboration.id"),
+    fk("change_candidate_id", "processing.change_candidate.id"),
+    UniqueConstraint("corroboration_id", "change_candidate_id", name="uq_cross_sensor_corroboration_member"),
 )
 
 # Foreign key indexes are intentionally systematic; history gets both range and current indexes.

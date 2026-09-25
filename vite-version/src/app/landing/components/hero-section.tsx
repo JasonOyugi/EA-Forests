@@ -98,26 +98,10 @@ export function HeroSection() {
           </div>
 
           <h1 className="landing-hero-title landing-fade-up landing-delay-2 text-white">
-            Profit From Forestry in{" "}
-            <span className="emerald-glitter-text bg-gradient-to-r from-emerald-200 via-emerald-400 to-emerald-100 bg-clip-text text-transparent">East Africa</span>{" "}
-            Today
+            {" "}
+            <span className="emerald-glitter-text bg-gradient-to-r from-emerald-200 via-emerald-400 to-emerald-100 bg-clip-text text-transparent">East Africa Forestry:</span>{" "}
+            All in one place
           </h1>
-
-          <p className={`landing-fade-up landing-delay-3 text-white/85 ${landingHeroLeadClass}`}>
-            Start generating cash from forestry now!
-          </p>
-
-          <div className="landing-fade-up landing-delay-4 flex flex-col justify-start gap-4 sm:flex-row">
-            <Button variant="outline" size="lg" asChild className="h-auto min-h-11 cursor-pointer whitespace-normal border-white/50 bg-white/8 px-5 py-3 text-xs text-white transition-all duration-300 hover:bg-white/14 hover:text-emerald-100 hover:shadow-[0_0_24px_rgba(16,185,129,.35)] sm:px-7 sm:text-xs">
-              <a
-                href="#brief"
-                onClick={(event) => {
-                  event.preventDefault()
-                  openInvestmentsGrid()
-                }}
-              ><Play className="mr-2 h-4 w-4" />Plant A Commercial Forest</a>
-            </Button>
-          </div>
         </div>
       </div>
 

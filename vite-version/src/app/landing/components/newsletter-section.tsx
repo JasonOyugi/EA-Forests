@@ -157,9 +157,9 @@ export function NewsletterSection() {
   }
 
   return (
-    <section id="newsletter" className="overflow-hidden bg-[#070907] text-[#f4f0e8]">
-      <div className="border-y border-white/15 px-4 pb-8 pt-10 sm:px-6 sm:pb-10 sm:pt-14 lg:px-8">
-        <div className="flex items-center justify-between gap-6 text-xs font-semibold uppercase tracking-[.22em] text-white/60">
+    <section id="newsletter" className="overflow-hidden bg-emerald-100 text-emerald-950 dark:bg-[#070907] dark:text-[#f4f0e8]">
+      <div className="border-y border-emerald-900/20 px-4 pb-8 pt-10 sm:px-6 sm:pb-10 sm:pt-14 lg:px-8 dark:border-white/15">
+        <div className="flex items-center justify-between gap-6 text-xs font-semibold uppercase tracking-[.22em] text-emerald-800 dark:text-white/60">
           <p>EA Forests — Field intelligence</p>
         </div>
 
@@ -172,19 +172,19 @@ export function NewsletterSection() {
       </div>
 
       <div className="hidden lg:block">
-        <div className="grid grid-cols-[auto_1fr_auto] items-center gap-5 border-t border-white/15 px-5 py-5 lg:px-8">
-          <span className="min-w-20 text-xs font-semibold tracking-[.18em] text-white/65">
+        <div className="grid grid-cols-[auto_1fr_auto] items-center gap-5 border-t border-emerald-900/20 px-5 py-5 lg:px-8 dark:border-white/15">
+          <span className="min-w-20 text-xs font-semibold tracking-[.18em] text-emerald-800 dark:text-white/65">
             {chapterNumber(selectedIndex)} / {String(newsletterStories.length).padStart(2, "0")}
           </span>
-          <div className="relative h-px overflow-hidden bg-white/20">
+          <div className="relative h-px overflow-hidden bg-emerald-900/20 dark:bg-white/20">
             <span
               className="absolute inset-y-0 left-0 bg-[#3fe3bf] transition-[width] duration-500 motion-reduce:transition-none"
               style={{ width: `${((selectedIndex + 1) / newsletterStories.length) * 100}%` }}
             />
           </div>
           <div className="flex gap-2">
-            <button type="button" disabled={selectedIndex === 0} onClick={() => moveTo(selectedIndex - 1)} aria-label="Previous forestry brief" className="grid size-11 place-items-center border border-white/30 transition-colors hover:border-[#3fe3bf] hover:bg-[#3fe3bf] focus-visible:border-[#3fe3bf] focus-visible:bg-[#3fe3bf] disabled:cursor-not-allowed disabled:opacity-25 motion-reduce:transition-none"><ArrowLeft className="size-4" /></button>
-            <button type="button" disabled={selectedIndex === newsletterStories.length - 1} onClick={() => moveTo(selectedIndex + 1)} aria-label="Next forestry brief" className="grid size-11 place-items-center border border-white/30 transition-colors hover:border-[#3fe3bf] hover:bg-[#3fe3bf] focus-visible:border-[#3fe3bf] focus-visible:bg-[#3fe3bf] disabled:cursor-not-allowed disabled:opacity-25 motion-reduce:transition-none"><ArrowRight className="size-4" /></button>
+            <button type="button" disabled={selectedIndex === 0} onClick={() => moveTo(selectedIndex - 1)} aria-label="Previous forestry brief" className="grid size-11 place-items-center border border-emerald-900/30 transition-colors hover:border-[#3fe3bf] hover:bg-[#3fe3bf] focus-visible:border-[#3fe3bf] focus-visible:bg-[#3fe3bf] disabled:cursor-not-allowed disabled:opacity-25 motion-reduce:transition-none dark:border-white/30"><ArrowLeft className="size-4" /></button>
+            <button type="button" disabled={selectedIndex === newsletterStories.length - 1} onClick={() => moveTo(selectedIndex + 1)} aria-label="Next forestry brief" className="grid size-11 place-items-center border border-emerald-900/30 transition-colors hover:border-[#3fe3bf] hover:bg-[#3fe3bf] focus-visible:border-[#3fe3bf] focus-visible:bg-[#3fe3bf] disabled:cursor-not-allowed disabled:opacity-25 motion-reduce:transition-none dark:border-white/30"><ArrowRight className="size-4" /></button>
           </div>
         </div>
         <div

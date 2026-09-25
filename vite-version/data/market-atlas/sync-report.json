@@ -1,0 +1,3020 @@
+{
+  "generatedAt": "2026-09-25T16:14:22.160Z",
+  "sourceHash": "320d4b8ce8851095ef4263fe650c45027f4fa1573f3d5231474af5d59b7f5b3c",
+  "masterActorCount": 420,
+  "publishedActorCount": 725,
+  "providerOnlyCount": 305,
+  "mergedProviderCount": 78,
+  "actorsWithRegionAssignment": 472,
+  "actorsWithPreciseCoordinates": 0,
+  "validationErrors": [],
+  "reconciliation": [
+    {
+      "providerId": "PRV0001",
+      "actorId": "provider:PRV0001",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0002",
+      "actorId": "provider:PRV0002",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0003",
+      "actorId": "provider:PRV0003",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0004",
+      "actorId": "provider:PRV0004",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0005",
+      "actorId": "provider:PRV0005",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0006",
+      "actorId": "provider:PRV0006",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0007",
+      "actorId": "provider:PRV0007",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0008",
+      "actorId": "provider:PRV0008",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0009",
+      "actorId": "provider:PRV0009",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0010",
+      "actorId": "provider:PRV0010",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0011",
+      "actorId": "provider:PRV0011",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0012",
+      "actorId": "provider:PRV0012",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0013",
+      "actorId": "provider:PRV0013",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0014",
+      "actorId": "provider:PRV0014",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0015",
+      "actorId": "provider:PRV0015",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0016",
+      "actorId": "provider:PRV0016",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0017",
+      "actorId": "provider:PRV0017",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0018",
+      "actorId": "provider:PRV0018",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0019",
+      "actorId": "provider:PRV0019",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0020",
+      "actorId": "provider:PRV0020",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0021",
+      "actorId": "provider:PRV0021",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0022",
+      "actorId": "provider:PRV0022",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0023",
+      "actorId": "provider:PRV0023",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0024",
+      "actorId": "provider:PRV0024",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0025",
+      "actorId": "provider:PRV0025",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0026",
+      "actorId": "provider:PRV0026",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0027",
+      "actorId": "provider:PRV0027",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0028",
+      "actorId": "provider:PRV0028",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0029",
+      "actorId": "provider:PRV0029",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0030",
+      "actorId": "provider:PRV0030",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0031",
+      "actorId": "provider:PRV0031",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0032",
+      "actorId": "provider:PRV0032",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0033",
+      "actorId": "provider:PRV0033",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0034",
+      "actorId": "provider:PRV0034",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0035",
+      "actorId": "provider:PRV0035",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0036",
+      "actorId": "provider:PRV0036",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0037",
+      "actorId": "provider:PRV0037",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0038",
+      "actorId": "provider:PRV0038",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0039",
+      "actorId": "provider:PRV0039",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0040",
+      "actorId": "provider:PRV0040",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0041",
+      "actorId": "provider:PRV0041",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0042",
+      "actorId": "provider:PRV0042",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0043",
+      "actorId": "provider:PRV0043",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0044",
+      "actorId": "provider:PRV0044",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0045",
+      "actorId": "provider:PRV0045",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0046",
+      "actorId": "provider:PRV0046",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0047",
+      "actorId": "provider:PRV0047",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0048",
+      "actorId": "provider:PRV0048",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0049",
+      "actorId": "provider:PRV0049",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0050",
+      "actorId": "provider:PRV0050",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0051",
+      "actorId": "provider:PRV0051",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0052",
+      "actorId": "provider:PRV0052",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0053",
+      "actorId": "provider:PRV0053",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0054",
+      "actorId": "provider:PRV0054",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0055",
+      "actorId": "provider:PRV0055",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0056",
+      "actorId": "provider:PRV0056",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0057",
+      "actorId": "provider:PRV0057",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0058",
+      "actorId": "provider:PRV0058",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0059",
+      "actorId": "provider:PRV0059",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0060",
+      "actorId": "provider:PRV0060",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0061",
+      "actorId": "provider:PRV0061",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0062",
+      "actorId": "provider:PRV0062",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0063",
+      "actorId": "provider:PRV0063",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0064",
+      "actorId": "provider:PRV0064",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0065",
+      "actorId": "provider:PRV0065",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0066",
+      "actorId": "provider:PRV0066",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0067",
+      "actorId": "provider:PRV0067",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0068",
+      "actorId": "provider:PRV0068",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0069",
+      "actorId": "provider:PRV0069",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0070",
+      "actorId": "provider:PRV0070",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0071",
+      "actorId": "provider:PRV0071",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0072",
+      "actorId": "provider:PRV0072",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0073",
+      "actorId": "provider:PRV0073",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0074",
+      "actorId": "provider:PRV0074",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0075",
+      "actorId": "provider:PRV0075",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0076",
+      "actorId": "provider:PRV0076",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0077",
+      "actorId": "provider:PRV0077",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0078",
+      "actorId": "provider:PRV0078",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0079",
+      "actorId": "provider:PRV0079",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0080",
+      "actorId": "provider:PRV0080",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0081",
+      "actorId": "provider:PRV0081",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0082",
+      "actorId": "provider:PRV0082",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0083",
+      "actorId": "provider:PRV0083",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0084",
+      "actorId": "provider:PRV0084",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0085",
+      "actorId": "provider:PRV0085",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0086",
+      "actorId": "provider:PRV0086",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0087",
+      "actorId": "provider:PRV0087",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0088",
+      "actorId": "provider:PRV0088",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0089",
+      "actorId": "provider:PRV0089",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0090",
+      "actorId": "provider:PRV0090",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0091",
+      "actorId": "provider:PRV0091",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0092",
+      "actorId": "provider:PRV0092",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0093",
+      "actorId": "provider:PRV0093",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0094",
+      "actorId": "provider:PRV0094",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0095",
+      "actorId": "provider:PRV0095",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0096",
+      "actorId": "provider:PRV0096",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0097",
+      "actorId": "provider:PRV0097",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0098",
+      "actorId": "provider:PRV0098",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0099",
+      "actorId": "provider:PRV0099",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0100",
+      "actorId": "provider:PRV0100",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0101",
+      "actorId": "provider:PRV0101",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0102",
+      "actorId": "provider:PRV0102",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0103",
+      "actorId": "provider:PRV0103",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0104",
+      "actorId": "provider:PRV0104",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0105",
+      "actorId": "provider:PRV0105",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0106",
+      "actorId": "EAFA0298",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0107",
+      "actorId": "provider:PRV0107",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0108",
+      "actorId": "provider:PRV0108",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0109",
+      "actorId": "provider:PRV0109",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0110",
+      "actorId": "provider:PRV0110",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0111",
+      "actorId": "provider:PRV0111",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0112",
+      "actorId": "provider:PRV0112",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0113",
+      "actorId": "provider:PRV0113",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0114",
+      "actorId": "provider:PRV0114",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0115",
+      "actorId": "provider:PRV0115",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0116",
+      "actorId": "provider:PRV0116",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0117",
+      "actorId": "provider:PRV0117",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0118",
+      "actorId": "provider:PRV0118",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0119",
+      "actorId": "provider:PRV0119",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0120",
+      "actorId": "provider:PRV0120",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0121",
+      "actorId": "provider:PRV0121",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0122",
+      "actorId": "provider:PRV0122",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0123",
+      "actorId": "provider:PRV0123",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0124",
+      "actorId": "provider:PRV0124",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0125",
+      "actorId": "provider:PRV0125",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0126",
+      "actorId": "EAFA0301",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0127",
+      "actorId": "EAFA0302",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0128",
+      "actorId": "EAFA0295",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0129",
+      "actorId": "EAFA0292",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0130",
+      "actorId": "EAFA0304",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0131",
+      "actorId": "EAFA0294",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0132",
+      "actorId": "EAFA0289",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0133",
+      "actorId": "provider:PRV0133",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0134",
+      "actorId": "EAFA0300",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0135",
+      "actorId": "EAFA0306",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0136",
+      "actorId": "EAFA0305",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0137",
+      "actorId": "EAFA0296",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0138",
+      "actorId": "EAFA0303",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0139",
+      "actorId": "EAFA0309",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0140",
+      "actorId": "EAFA0290",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0141",
+      "actorId": "EAFA0307",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0142",
+      "actorId": "EAFA0299",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0143",
+      "actorId": "EAFA0310",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0144",
+      "actorId": "EAFA0297",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0145",
+      "actorId": "EAFA0291",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0146",
+      "actorId": "provider:PRV0146",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0147",
+      "actorId": "provider:PRV0147",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0148",
+      "actorId": "provider:PRV0148",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0149",
+      "actorId": "provider:PRV0149",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0150",
+      "actorId": "provider:PRV0150",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0151",
+      "actorId": "provider:PRV0151",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0152",
+      "actorId": "provider:PRV0152",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0153",
+      "actorId": "provider:PRV0153",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0154",
+      "actorId": "provider:PRV0154",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0155",
+      "actorId": "provider:PRV0155",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0156",
+      "actorId": "provider:PRV0156",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0157",
+      "actorId": "provider:PRV0157",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0158",
+      "actorId": "provider:PRV0158",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0159",
+      "actorId": "provider:PRV0159",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0160",
+      "actorId": "provider:PRV0160",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0161",
+      "actorId": "provider:PRV0161",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0162",
+      "actorId": "provider:PRV0162",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0163",
+      "actorId": "EAFA0356",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0164",
+      "actorId": "EAFA0354",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0165",
+      "actorId": "provider:PRV0165",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0166",
+      "actorId": "EAFA0288",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0167",
+      "actorId": "provider:PRV0167",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0168",
+      "actorId": "EAFA0249",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0169",
+      "actorId": "EAFA0256",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0170",
+      "actorId": "EAFA0223",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0171",
+      "actorId": "EAFA0075",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0172",
+      "actorId": "EAFA0269",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0173",
+      "actorId": "EAFA0229",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0174",
+      "actorId": "provider:PRV0174",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0175",
+      "actorId": "EAFA0221",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0176",
+      "actorId": "EAFA0246",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0177",
+      "actorId": "EAFA0158",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0178",
+      "actorId": "EAFA0242",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0179",
+      "actorId": "EAFA0052",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0180",
+      "actorId": "EAFA0196",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0181",
+      "actorId": "EAFA0177",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0182",
+      "actorId": "EAFA0265",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0183",
+      "actorId": "EAFA0079",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0184",
+      "actorId": "EAFA0019",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0185",
+      "actorId": "provider:PRV0185",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0186",
+      "actorId": "EAFA0062",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0187",
+      "actorId": "EAFA0237",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0188",
+      "actorId": "EAFA0059",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0189",
+      "actorId": "EAFA0108",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0190",
+      "actorId": "EAFA0047",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0191",
+      "actorId": "EAFA0029",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0192",
+      "actorId": "provider:PRV0192",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0193",
+      "actorId": "EAFA0070",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0194",
+      "actorId": "provider:PRV0194",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0195",
+      "actorId": "EAFA0217",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0196",
+      "actorId": "EAFA0073",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0197",
+      "actorId": "EAFA0135",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0198",
+      "actorId": "EAFA0268",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0199",
+      "actorId": "EAFA0179",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0200",
+      "actorId": "EAFA0106",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0201",
+      "actorId": "EAFA0067",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0202",
+      "actorId": "provider:PRV0202",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0203",
+      "actorId": "provider:PRV0203",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0204",
+      "actorId": "provider:PRV0204",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0205",
+      "actorId": "provider:PRV0205",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0206",
+      "actorId": "provider:PRV0206",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0207",
+      "actorId": "provider:PRV0207",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0208",
+      "actorId": "provider:PRV0208",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0209",
+      "actorId": "provider:PRV0209",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0210",
+      "actorId": "provider:PRV0210",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0211",
+      "actorId": "provider:PRV0211",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0212",
+      "actorId": "provider:PRV0212",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0213",
+      "actorId": "provider:PRV0213",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0214",
+      "actorId": "provider:PRV0214",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0215",
+      "actorId": "provider:PRV0215",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0216",
+      "actorId": "provider:PRV0216",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0217",
+      "actorId": "provider:PRV0217",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0218",
+      "actorId": "provider:PRV0218",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0219",
+      "actorId": "provider:PRV0219",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0220",
+      "actorId": "provider:PRV0220",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0221",
+      "actorId": "provider:PRV0221",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0222",
+      "actorId": "provider:PRV0222",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0223",
+      "actorId": "provider:PRV0223",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0224",
+      "actorId": "provider:PRV0224",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0225",
+      "actorId": "provider:PRV0225",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0226",
+      "actorId": "provider:PRV0226",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0227",
+      "actorId": "provider:PRV0227",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0228",
+      "actorId": "provider:PRV0228",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0229",
+      "actorId": "provider:PRV0229",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0230",
+      "actorId": "provider:PRV0230",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0231",
+      "actorId": "provider:PRV0231",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0232",
+      "actorId": "provider:PRV0232",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0233",
+      "actorId": "provider:PRV0233",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0234",
+      "actorId": "provider:PRV0234",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0235",
+      "actorId": "provider:PRV0235",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0236",
+      "actorId": "provider:PRV0236",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0237",
+      "actorId": "provider:PRV0237",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0238",
+      "actorId": "provider:PRV0238",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0239",
+      "actorId": "provider:PRV0239",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0240",
+      "actorId": "provider:PRV0240",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0241",
+      "actorId": "provider:PRV0241",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0242",
+      "actorId": "provider:PRV0242",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0243",
+      "actorId": "provider:PRV0243",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0244",
+      "actorId": "provider:PRV0244",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0245",
+      "actorId": "provider:PRV0245",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0246",
+      "actorId": "provider:PRV0246",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0247",
+      "actorId": "provider:PRV0247",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0248",
+      "actorId": "provider:PRV0248",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0249",
+      "actorId": "provider:PRV0249",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0250",
+      "actorId": "provider:PRV0250",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0251",
+      "actorId": "provider:PRV0251",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0252",
+      "actorId": "provider:PRV0252",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0253",
+      "actorId": "provider:PRV0253",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0254",
+      "actorId": "provider:PRV0254",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0255",
+      "actorId": "provider:PRV0255",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0256",
+      "actorId": "provider:PRV0256",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0257",
+      "actorId": "provider:PRV0257",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0258",
+      "actorId": "provider:PRV0258",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0259",
+      "actorId": "provider:PRV0259",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0260",
+      "actorId": "provider:PRV0260",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0261",
+      "actorId": "provider:PRV0261",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0262",
+      "actorId": "provider:PRV0262",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0263",
+      "actorId": "provider:PRV0263",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0264",
+      "actorId": "provider:PRV0264",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0265",
+      "actorId": "provider:PRV0265",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0266",
+      "actorId": "provider:PRV0266",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0267",
+      "actorId": "provider:PRV0267",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0268",
+      "actorId": "provider:PRV0268",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0269",
+      "actorId": "provider:PRV0269",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0270",
+      "actorId": "provider:PRV0270",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0271",
+      "actorId": "provider:PRV0271",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0272",
+      "actorId": "provider:PRV0272",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0273",
+      "actorId": "provider:PRV0273",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0274",
+      "actorId": "provider:PRV0274",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0275",
+      "actorId": "provider:PRV0275",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0276",
+      "actorId": "provider:PRV0276",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0277",
+      "actorId": "provider:PRV0277",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0278",
+      "actorId": "provider:PRV0278",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0279",
+      "actorId": "provider:PRV0279",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0280",
+      "actorId": "provider:PRV0280",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0281",
+      "actorId": "provider:PRV0281",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0282",
+      "actorId": "provider:PRV0282",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0283",
+      "actorId": "provider:PRV0283",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0284",
+      "actorId": "provider:PRV0284",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0285",
+      "actorId": "provider:PRV0285",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0286",
+      "actorId": "provider:PRV0286",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0287",
+      "actorId": "provider:PRV0287",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0288",
+      "actorId": "provider:PRV0288",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0289",
+      "actorId": "provider:PRV0289",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0290",
+      "actorId": "provider:PRV0290",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0291",
+      "actorId": "provider:PRV0291",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0292",
+      "actorId": "provider:PRV0292",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0293",
+      "actorId": "provider:PRV0293",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0294",
+      "actorId": "provider:PRV0294",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0295",
+      "actorId": "provider:PRV0295",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0296",
+      "actorId": "provider:PRV0296",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0297",
+      "actorId": "provider:PRV0297",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0298",
+      "actorId": "provider:PRV0298",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0299",
+      "actorId": "provider:PRV0299",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0300",
+      "actorId": "provider:PRV0300",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0301",
+      "actorId": "provider:PRV0301",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0302",
+      "actorId": "provider:PRV0302",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0303",
+      "actorId": "provider:PRV0303",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0304",
+      "actorId": "provider:PRV0304",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0305",
+      "actorId": "provider:PRV0305",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0306",
+      "actorId": "provider:PRV0306",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0307",
+      "actorId": "provider:PRV0307",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0308",
+      "actorId": "provider:PRV0308",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0309",
+      "actorId": "provider:PRV0309",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0310",
+      "actorId": "provider:PRV0310",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0311",
+      "actorId": "provider:PRV0311",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0312",
+      "actorId": "provider:PRV0312",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0313",
+      "actorId": "provider:PRV0313",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0314",
+      "actorId": "provider:PRV0314",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0315",
+      "actorId": "provider:PRV0315",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0316",
+      "actorId": "EAFA0093",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0317",
+      "actorId": "EAFA0080",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0318",
+      "actorId": "EAFA0060",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0319",
+      "actorId": "EAFA0219",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0320",
+      "actorId": "provider:PRV0320",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0321",
+      "actorId": "EAFA0214",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0322",
+      "actorId": "EAFA0262",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0323",
+      "actorId": "provider:PRV0323",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0324",
+      "actorId": "EAFA0230",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0325",
+      "actorId": "EAFA0028",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0326",
+      "actorId": "EAFA0208",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0327",
+      "actorId": "EAFA0184",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0328",
+      "actorId": "EAFA0025",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0329",
+      "actorId": "EAFA0039",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0330",
+      "actorId": "EAFA0207",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0331",
+      "actorId": "EAFA0227",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0332",
+      "actorId": "EAFA0109",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0333",
+      "actorId": "EAFA0245",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0334",
+      "actorId": "EAFA0137",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0335",
+      "actorId": "EAFA0099",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0336",
+      "actorId": "EAFA0220",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0337",
+      "actorId": "EAFA0243",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0338",
+      "actorId": "EAFA0006",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0339",
+      "actorId": "provider:PRV0339",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0340",
+      "actorId": "EAFA0281",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0341",
+      "actorId": "provider:PRV0341",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0342",
+      "actorId": "provider:PRV0342",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0343",
+      "actorId": "provider:PRV0343",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0344",
+      "actorId": "provider:PRV0344",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0345",
+      "actorId": "provider:PRV0345",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0346",
+      "actorId": "provider:PRV0346",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0347",
+      "actorId": "provider:PRV0347",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0348",
+      "actorId": "provider:PRV0348",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0349",
+      "actorId": "provider:PRV0349",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0350",
+      "actorId": "provider:PRV0350",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0351",
+      "actorId": "provider:PRV0351",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0352",
+      "actorId": "EAFA0384",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0353",
+      "actorId": "EAFA0388",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0354",
+      "actorId": "provider:PRV0354",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0355",
+      "actorId": "provider:PRV0355",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0356",
+      "actorId": "EAFA0393",
+      "status": "merged"
+    },
+    {
+      "providerId": "PRV0357",
+      "actorId": "provider:PRV0357",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0358",
+      "actorId": "provider:PRV0358",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0359",
+      "actorId": "provider:PRV0359",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0360",
+      "actorId": "provider:PRV0360",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0361",
+      "actorId": "provider:PRV0361",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0362",
+      "actorId": "provider:PRV0362",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0363",
+      "actorId": "provider:PRV0363",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0364",
+      "actorId": "provider:PRV0364",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0365",
+      "actorId": "provider:PRV0365",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0366",
+      "actorId": "provider:PRV0366",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0367",
+      "actorId": "provider:PRV0367",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0368",
+      "actorId": "provider:PRV0368",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0369",
+      "actorId": "provider:PRV0369",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0370",
+      "actorId": "provider:PRV0370",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0371",
+      "actorId": "provider:PRV0371",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0372",
+      "actorId": "provider:PRV0372",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0373",
+      "actorId": "provider:PRV0373",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0374",
+      "actorId": "provider:PRV0374",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0375",
+      "actorId": "provider:PRV0375",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0376",
+      "actorId": "provider:PRV0376",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0377",
+      "actorId": "provider:PRV0377",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0378",
+      "actorId": "provider:PRV0378",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0379",
+      "actorId": "provider:PRV0379",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0380",
+      "actorId": "provider:PRV0380",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0381",
+      "actorId": "provider:PRV0381",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0382",
+      "actorId": "provider:PRV0382",
+      "status": "provider-only"
+    },
+    {
+      "providerId": "PRV0383",
+      "actorId": "provider:PRV0383",
+      "status": "provider-only"
+    }
+  ],
+  "reviewCandidates": [
+    {
+      "providerId": "PRV0005",
+      "name": "Divine Bamboo Group Limited",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0321"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0006",
+      "name": "Evergro Forestry Solutions Limited",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0325"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0007",
+      "name": "Green Spirit Forestry Services Limited",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0330"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0011",
+      "name": "NARAEC Research and Consultant Group Limited",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0340"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0013",
+      "name": "Sanitel Worldwide Services Limited",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0349"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0022",
+      "name": "CoreWoods Limited",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0320"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0029",
+      "name": "Tree Growers Nursery Limited",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0351"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0031",
+      "name": "WND Forestry Services Limited",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0355"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0035",
+      "name": "Busoga Forestry Company Limited",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0318"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0047",
+      "name": "Garden of Africa",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0326"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0050",
+      "name": "JC Forestry Enterprise Nursery",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0333"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0051",
+      "name": "Jollian & Sons Quality Tree Nursery Limited",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0334"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0053",
+      "name": "Nile Forestry Agro Inputs and Engineering Services Limited",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0344"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0055",
+      "name": "Schnelle Aufforstung und Projects Limited",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0350"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0056",
+      "name": "Tropical Farm Supplies",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0352"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0058",
+      "name": "Green Life International Limited",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0329"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0061",
+      "name": "Jane-Kidi Memorial Tree Planting Group",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0332"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0062",
+      "name": "Nyakuni and Sons Enterprises Limited",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0345"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0066",
+      "name": "BENECO Limited",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0317"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0070",
+      "name": "NAWID Company Limited",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0342"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0076",
+      "name": "Gatsby Nursery Tree Projects",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0327"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0077",
+      "name": "Jose Limited",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0335"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0080",
+      "name": "Nabotha Trees Enterprises",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0339"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0087",
+      "name": "Enviro Green Trust Limited",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0324"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0089",
+      "name": "Ferdsult Engineering Services Limited",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0361"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0102",
+      "name": "Buyindi Farmers' Eye",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0319"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0119",
+      "name": "Uganda Timber Growers Association",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0353"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0149",
+      "name": "Green Life",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0297"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0165",
+      "name": "Greening Uganda / Greening Forestry Services",
+      "country": "Uganda",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0312"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0202",
+      "name": "Centre for Ecosystem Restoration Limited",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0032"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0203",
+      "name": "Root & Grow",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0234"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0204",
+      "name": "Vivace buds",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0272"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0205",
+      "name": "Rejesha society",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0228"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0206",
+      "name": "Kogonda tree nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0127"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0207",
+      "name": "Zanya Nurseries",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0279"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0208",
+      "name": "T.NJOKI NURSERY",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0253"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0210",
+      "name": "Ndete",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0185"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0211",
+      "name": "Farmers Tent",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0058"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0213",
+      "name": "Talies Africa",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0254"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0214",
+      "name": "Flamingo Tree Seedlings",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0061"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0216",
+      "name": "KAAKDANAS LIMITED",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0105"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0217",
+      "name": "Garissa Million Trees",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0069"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0218",
+      "name": "my nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0182"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0219",
+      "name": "Little Forest Nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0140"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0220",
+      "name": "Keljin Tree Nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0114"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0221",
+      "name": "Koitaleel Samoei University College, Mosoriot Campus",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0128"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0222",
+      "name": "Environice East Africa Limited Nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0053"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0223",
+      "name": "Josh tree nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0103"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0224",
+      "name": "Joseph Mulei",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0101"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0225",
+      "name": "NIPE NIKUPE",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0189"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0226",
+      "name": "Nyakoe riverbank tree nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0197"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0227",
+      "name": "Urban Farm",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0271"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0228",
+      "name": "Jorgs Ark Greens",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0100"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0229",
+      "name": "Plus One Tree Initiative",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0222"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0231",
+      "name": "Korir Nurseries",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0130"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0232",
+      "name": "FRUIT-TREE NURSERY JILORE",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0065"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0233",
+      "name": "Mabbi ENTERPRISES Ltd",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0143"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0234",
+      "name": "Maishomo seedlings",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0146"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0236",
+      "name": "GREEN DWELLERS",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0077"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0237",
+      "name": "Cherop GreenPrint",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0034"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0238",
+      "name": "Coupon Investments",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0040"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0239",
+      "name": "Amboseli (Ilkangere)",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0020"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0240",
+      "name": "Dentro Nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0044"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0242",
+      "name": "Gitau Indigenous & Exotic Tree Nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0072"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0243",
+      "name": "Karren Owango",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0111"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0244",
+      "name": "Onestop nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0212"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0245",
+      "name": "Kuhuru Technologies & Supplies LTD",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0132"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0246",
+      "name": "Fresh forest tree center",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0063"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0247",
+      "name": "Africa Terra And Aqua Silviculture LTD",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0009"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0248",
+      "name": "Propagators and Breeders",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0224"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0249",
+      "name": "Africa Terra and Aqua",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0008"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0250",
+      "name": "IRD Tree Nursery & Seedballs",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0088"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0251",
+      "name": "Highland Eco-Ventures",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0084"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0252",
+      "name": "Wakambuni Farm",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0275"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0253",
+      "name": "Mawego 4k club nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0169"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0254",
+      "name": "GECA TREE NURSERY LTD",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0071"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0255",
+      "name": "Sacred Essence",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0238"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0256",
+      "name": "Green Cast Seedlings",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0076"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0257",
+      "name": "Rural Ram Youth Ventures",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0236"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0258",
+      "name": "Mizizi Seedlings",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0173"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0259",
+      "name": "Life & Leaf Nurseries",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0139"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0260",
+      "name": "Njora demo farm nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0190"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0261",
+      "name": "teekay nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0257"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0262",
+      "name": "Thayu tree nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0260"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0263",
+      "name": "Jole's Farm",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0098"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0265",
+      "name": "THE CONSERVATOR GARDENS",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0261"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0266",
+      "name": "MASINGA TREE NURSERY",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0161"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0267",
+      "name": "Kianjogu SHG tree nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0118"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0268",
+      "name": "Kirimunge Green Gold Tree Nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0125"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0269",
+      "name": "Thayu Gicuna tree nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0259"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0270",
+      "name": "Maua Kamburi tree nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0167"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0271",
+      "name": "Kiathi Wendani tree nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0119"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0272",
+      "name": "Mwiganania Kiaga Tree Nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0180"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0273",
+      "name": "Kirima Disability tree Nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0124"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0274",
+      "name": "Kibereini women tree Nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0120"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0275",
+      "name": "Difadhas Kamunyange Kambiti Tree nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0045"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0276",
+      "name": "Baraka Seedlings tree nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0024"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0277",
+      "name": "Gakuu Mburi Tree Nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0068"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0278",
+      "name": "Kianduce Urumwe tree nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0117"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0279",
+      "name": "Kariru Women tree nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0110"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0280",
+      "name": "Mwihangiri",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0181"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0281",
+      "name": "EKASALA TREE NURSERY",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0048"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0298",
+      "name": "Tunatenda Wema Enterprise",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0266"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0299",
+      "name": "Abiclif General Design Investment",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0004"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0302",
+      "name": "Okoyot Tree Farm",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0204"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0304",
+      "name": "Bidii Tree Nursery",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0026"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0315",
+      "name": "Omia Malo Agroforestry group",
+      "country": "Kenya",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0210"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0357",
+      "name": "Mufindi Holdings Company Limited",
+      "country": "Tanzania",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0383"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    },
+    {
+      "providerId": "PRV0358",
+      "name": "MISITU Tanzania / MiCL",
+      "country": "Tanzania",
+      "status": "review",
+      "candidateActorIds": [
+        "EAFA0385"
+      ],
+      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
+    }
+  ]
+}

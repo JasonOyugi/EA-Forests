@@ -31,9 +31,5 @@ export const editorialSubsections: Record<EditorialCategory, EditorialSubsection
   ],
   Videos: [
   ],
-  Events: [
-    { label: "Trade", href: "#brief" },
-    { label: "Policy", href: "#brief" },
-    { label: "Technology", href: "#brief" },
-  ],
+  Events: [],
 }

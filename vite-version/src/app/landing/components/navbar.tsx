@@ -1,14 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Menu, Github, Store, X, Moon, Sun } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu"
 import {
   Sheet,
   SheetContent,
@@ -16,21 +10,8 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
-import { getAppUrl } from "@/lib/utils"
 import { Logo } from "@/components/logo"
 import { ModeToggle } from "@/components/mode-toggle"
-import { useTheme } from "@/hooks/use-theme"
-
-const navigationItems = [
-  { name: "Investment Models", href: "#brief" },
-  { name: "Contact", href: "#contact" },
-] as const
-
-const marketsToggleItems = [
-  { name: "Seed & Seedlings", href: getAppUrl("/shop/seedlings") },
-  { name: "Land & Services", href: getAppUrl("/shop/forests-land") },
-  { name: "Wood Markets", href: getAppUrl("/shop/wood-markets-map") },
-] as const
 
 const smoothScrollTo = (targetId: string) => {
   if (!targetId.startsWith("#")) return
@@ -42,7 +23,6 @@ const smoothScrollTo = (targetId: string) => {
 export function LandingNavbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [heroProgress, setHeroProgress] = useState(0)
-  const { setTheme, theme } = useTheme()
 
   useEffect(() => {
     const updateHeroProgress = () => {
@@ -81,160 +61,62 @@ export function LandingNavbar() {
         className="navbar-map-tint absolute inset-0 transition-opacity duration-300"
         style={{ opacity: 0.06 + heroProgress * 0.34 }}
       />
-      <div className="container relative z-10 mx-auto flex h-16 items-center justify-between px-2">
-        {/* Logo */}
-        <div className="flex items-center space-x-2">
-          <a
-            href="#hero"
-            className="flex items-center space-x-2 cursor-pointer"
+      <div className="container relative z-10 mx-auto flex h-16 items-center justify-between px-4">
+        <a href="#hero" className="flex items-center gap-2">
+          <Logo size={32} />
+          <span className="font-bold">EA Forests</span>
+        </a>
+
+        <div className="hidden items-center gap-2 sm:flex">
+          <Button
+            variant="ghost"
+            onClick={(event) => {
+              event.preventDefault()
+              smoothScrollTo("#contact")
+            }}
           >
-            <Logo size={32} />
-            <span className="font-bold">EA Forests</span>
-          </a>
-        </div>
-
-        {/* Desktop Navigation */}
-        <NavigationMenu className="hidden xl:flex">
-          <NavigationMenuList>
-            {navigationItems.map((item) => (
-              <NavigationMenuItem key={item.name}>
-                <NavigationMenuLink
-                  className="group inline-flex h-10 w-max items-center justify-center px-4 py-2 text-sm font-medium transition-colors hover:text-tertiary focus:text-primary focus:outline-none cursor-pointer"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    if (item.href.startsWith("#")) smoothScrollTo(item.href)
-                    else if (item.href.startsWith("http")) window.open(item.href, "_blank", "noopener,noreferrer")
-                    else window.location.href = item.href
-                  }}
-                >
-                  {item.name}
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuList>
-        </NavigationMenu>
-
-        <div className="hidden xl:flex items-center gap-1 rounded-full border border-border/70 bg-background/70 p-1 shadow-sm backdrop-blur-sm">
-          {marketsToggleItems.map((item) => (
-            <Button key={item.name} variant="ghost" size="sm" asChild className="rounded-full px-3 text-xs font-medium sm:text-sm">
-              <a href={item.href}>{item.name}</a>
-            </Button>
-          ))}
-        </div>
-
-        <div className="hidden xl:flex items-center space-x-2">
+            Contact
+          </Button>
           <ModeToggle variant="ghost" />
         </div>
 
-        {/* Mobile Menu */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild className="xl:hidden">
-            <Button variant="ghost" size="icon" className="cursor-pointer">
+          <SheetTrigger asChild className="sm:hidden">
+            <Button variant="ghost" size="icon" aria-label="Open menu">
               <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle menu</span>
             </Button>
           </SheetTrigger>
-
-          <SheetContent
-            side="right"
-            className="w-full sm:w-[400px] p-0 gap-0 [&>button]:hidden overflow-hidden flex flex-col"
-          >
+          <SheetContent side="right" className="w-full sm:w-[320px] p-0 gap-0 [&>button]:hidden overflow-hidden flex flex-col">
             <div className="flex flex-col h-full">
-              {/* Header */}
               <SheetHeader className="space-y-0 p-4 pb-2 border-b">
                 <div className="flex items-center gap-2">
-                  <div className="p-2 rounded-lg">
-                    <Logo size={16} />
-                  </div>
+                  <Logo size={16} />
                   <SheetTitle className="text-sm">EA Forests</SheetTitle>
-
-                  <div className="ml-auto flex items-center gap-2">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-                      className="cursor-pointer h-8 w-8"
-                    >
-                      <Moon className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                      <Sun className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                    </Button>
-
-                    <Button variant="ghost" size="icon" asChild className="cursor-pointer h-8 w-8">
-                      <a
-                        href="https://github.com/JasonOyugi/EA_Forests"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="GitHub Repository"
-                      >
-                        <Github className="h-4 w-4" />
-                      </a>
-                    </Button>
-
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => setIsOpen(false)}
-                      className="cursor-pointer h-8 w-8"
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setIsOpen(false)}
+                    className="ml-auto h-8 w-8"
+                    aria-label="Close menu"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
                 </div>
               </SheetHeader>
 
-              {/* Navigation Links */}
-              <div className="flex-1 overflow-y-auto">
-                <nav className="p-6 space-y-1">
-                  {navigationItems.map((item) => (
-                    <div key={item.name}>
-                      <a
-                        href={item.href}
-                        {...(item.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                        className="flex items-center px-4 py-3 text-base font-medium rounded-lg transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer"
-                        onClick={(e) => {
-                          setIsOpen(false)
-                          if (item.href.startsWith("#")) {
-                            e.preventDefault()
-                            setTimeout(() => smoothScrollTo(item.href), 100)
-                          }
-                        }}
-                      >
-                        {item.name}
-                      </a>
-                    </div>
-                  ))}
-                </nav>
-
-                <div className="px-6 pb-6">
-                  <div className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-                    Markets
-                  </div>
-                  <div className="grid gap-2">
-                    {marketsToggleItems.map((item) => (
-                      <Button key={item.name} variant="outline" asChild className="justify-start rounded-full">
-                        <a href={item.href} onClick={() => setIsOpen(false)}>
-                          {item.name}
-                        </a>
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Footer Actions */}
-              <div className="border-t p-6 space-y-4">
-                <div className="space-y-3">
-                  <Button variant="outline" size="lg" asChild className="emerald-border-hover text-base cursor-pointer w-full transition-all duration-300 hover:text-emerald-400 hover:shadow-[0_0_24px_rgba(16,185,129,0.35)]">
-                    <a href={getAppUrl("/shop")}>
-                      <Store className="size-4" />
-                      Browse markets
-                    </a>
-                  </Button>
-
-                  <Button size="lg" className="text-base cursor-pointer w-full" asChild>
-                    <a href="/landing#contact">Contact EA Forests</a>
-                  </Button>
-                </div>
+              <div className="flex flex-1 flex-col justify-between p-6">
+                <Button
+                  variant="ghost"
+                  size="lg"
+                  className="justify-start text-base"
+                  onClick={() => {
+                    setIsOpen(false)
+                    setTimeout(() => smoothScrollTo("#contact"), 100)
+                  }}
+                >
+                  Contact
+                </Button>
+                <div className="flex justify-center"><ModeToggle variant="outline" /></div>
               </div>
             </div>
           </SheetContent>

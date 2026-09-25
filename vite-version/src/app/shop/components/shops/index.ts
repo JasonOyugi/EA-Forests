@@ -1,8 +1,11 @@
 import type { ShopSlug, ShopDefinition, ShopItem } from "@/app/shop/types"
-import { SeedlingsShop } from "./seedlings-shop"
 import { ForestsLandShop } from "./forests-land-shop"
-import { ForestryServicesShop } from "./forestry-services-shop"
-import { RoundwoodShop, WoodMarketsMap } from "./roundwood-shop"
+import { RoundwoodShop } from "./roundwood-shop"
+import {
+  ForestryServicesMarketAtlasPage,
+  SeedlingsMarketAtlasPage,
+  WoodMarketsAtlasPage,
+} from "@/app/shop/market-atlas/route-pages"
 
 export interface ShopPageProps {
   shop: ShopDefinition
@@ -10,9 +13,11 @@ export interface ShopPageProps {
 }
 
 export const shopPageComponents: Record<ShopSlug, React.ComponentType<ShopPageProps>> = {
-  seedlings: SeedlingsShop,
+  seedlings: SeedlingsMarketAtlasPage,
+  // Kept only so a direct hit on the old URL still renders something before the redirect in
+  // shop-page.tsx sends it to /shop/forestry-services — land parcels are no longer a market.
   "forests-land": ForestsLandShop,
-  "forestry-services": ForestryServicesShop,
+  "forestry-services": ForestryServicesMarketAtlasPage,
   "sector-map": RoundwoodShop,
-  "wood-markets-map": WoodMarketsMap,
+  "wood-markets-map": WoodMarketsAtlasPage,
 }

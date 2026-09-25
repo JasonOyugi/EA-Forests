@@ -19,7 +19,7 @@ export default function LandingPage() {
   const [themeCustomizerOpen, setThemeCustomizerOpen] = React.useState(false)
 
   return (
-    <div className="landing-page min-h-screen bg-[#07110c] text-emerald-50">
+    <div className="landing-page min-h-screen bg-emerald-100 text-emerald-950 dark:bg-[#07110c] dark:text-emerald-50">
       <LandingNavbar />
 
       <main>
