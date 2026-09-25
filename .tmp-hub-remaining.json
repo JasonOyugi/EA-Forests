@@ -1,0 +1,81 @@
+[
+  {
+    "id": "nfc-company",
+    "source": "https://newforests.earth/",
+    "images": []
+  },
+  {
+    "id": "miti-repo",
+    "source": "https://github.com/DeKUT-DSAIL/miti360",
+    "images": [
+      "https://opengraph.githubassets.com/e913c826015bf3b08de91dda2c2c910c59f23c64199c1337416cd691457b0722/DeKUT-DSAIL/miti360",
+      "https://camo.githubusercontent.com/59896db2b47e60cf6b6cdd3af4bc9ec3e8d290389a9d3ce7cdb95a955e9d0923/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4c6963656e73652d43432532304259253230342e302d6c69676874677265792e737667"
+    ]
+  },
+  {
+    "id": "miti-paper",
+    "source": "https://arxiv.org/pdf/2606.29447",
+    "images": []
+  },
+  {
+    "id": "processing-paper",
+    "source": "https://www.eajsti.org/index.php/EAJSTI/article/download/1948/401/9308",
+    "images": []
+  },
+  {
+    "id": "sepal-docs",
+    "source": "https://docs.sepal.io/en/latest/setup/presentation.html",
+    "images": [
+      "https://docs.sepal.io/en/latest/_static/sepal_light.png",
+      "https://docs.sepal.io/en/latest/_static/sepal_dark.png",
+      "https://docs.sepal.io/en/latest/_images/sepal_login1.png",
+      "https://docs.sepal.io/en/latest/_images/sepal_home1.png",
+      "https://docs.sepal.io/en/latest/_images/user_report_panel1.png",
+      "https://docs.sepal.io/en/latest/_images/process_tab_location1.png",
+      "https://docs.sepal.io/en/latest/_images/files_menu1.png",
+      "https://docs.sepal.io/en/latest/_images/terminal3.png",
+      "https://docs.sepal.io/en/latest/_images/apps_interface1.png"
+    ]
+  },
+  {
+    "id": "kenya-carbon-guide",
+    "source": "https://www.businessdailyafrica.com/bd/markets/commodities/kenya-caps-carbon-credit-exports-to-shield-domestic-goals-5546344",
+    "images": [
+      "https://www.businessdailyafrica.com/resource/image/5546358/landscape_ratio3x2/1200/800/e2d2ba438987ae55c3f90490608ef97c/Pz/carbon-credit.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5546358/landscape_ratio2x1/320/160/2fa93e574ec03cf0b97cc2b48911c380/rM/carbon-credit.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5546358/landscape_ratio2x1/640/320/2fa93e574ec03cf0b97cc2b48911c380/Gz/carbon-credit.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5546358/landscape_ratio2x1/720/360/2fa93e574ec03cf0b97cc2b48911c380/HC/carbon-credit.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5546358/landscape_ratio2x1/960/480/2fa93e574ec03cf0b97cc2b48911c380/dz/carbon-credit.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5546358/landscape_ratio2x1/1280/640/2fa93e574ec03cf0b97cc2b48911c380/tN/carbon-credit.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5070152/portrait_ratio1x1/150/150/14a5d3580c4d4e2dda60cd1a23f02042/Qa/ken-gen.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5070152/portrait_ratio1x1/300/300/14a5d3580c4d4e2dda60cd1a23f02042/jL/ken-gen.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5070152/portrait_ratio1x1/480/480/14a5d3580c4d4e2dda60cd1a23f02042/NM/ken-gen.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5070152/portrait_ratio1x1/645/645/14a5d3580c4d4e2dda60cd1a23f02042/lf/ken-gen.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5070152/portrait_ratio1x1/1290/1290/14a5d3580c4d4e2dda60cd1a23f02042/Ew/ken-gen.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5516340/portrait_ratio1x1/150/150/ad254484720bb7ed47963adffe4a538c/Mr/mainda.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5516340/portrait_ratio1x1/300/300/ad254484720bb7ed47963adffe4a538c/uA/mainda.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5516340/portrait_ratio1x1/480/480/ad254484720bb7ed47963adffe4a538c/gh/mainda.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5516340/portrait_ratio1x1/645/645/ad254484720bb7ed47963adffe4a538c/fY/mainda.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5516340/portrait_ratio1x1/1290/1290/ad254484720bb7ed47963adffe4a538c/BN/mainda.jpg",
+      "https://mcusercontent.com/0fd426a35325118486f65036d/images/4ac273fd-cf92-83ba-f626-b33e3c6ea688.png",
+      "https://www.businessdailyafrica.com/resource/image/5609382/portrait_ratio1x1/150/150/986bfd142cd2fe54e4a6a2a8f97832c5/aG/travel.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5609370/portrait_ratio1x1/150/150/cedd915e76731f4f0c728fe9970bf2ef/Jl/quickmart.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5609292/portrait_ratio1x1/150/150/572ab780414b7b5f06aba0783683024/FR/solar.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5545924/portrait_ratio1x1/150/150/9dda986eaa361601e9386fd32e0fb0db/TW/cbk-clear-pic.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5609292/landscape_ratio16x9/300/168/37b43ebfe7e8675a4e59e5bec6e4ab2a/hl/solar.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5609382/landscape_ratio16x9/300/168/8f5c8d65359e0e3d85a0d30136e6166e/Tp/travel.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5033994/landscape_ratio16x9/300/168/e786a5941bfaa230fa8c1fd62ee6cc02/uG/trump.jpg",
+      "https://www.businessdailyafrica.com/resource/image/5348516/landscape_ratio16x9/300/168/7f64e8009c693df0804c8b6b08799845/fo/molenje.jpg"
+    ]
+  },
+  {
+    "id": "kenya-rules-pdf",
+    "source": "https://forestry.go.ke/sites/default/files/2026-02/Forest%20conservation%20and%20Management%20Act%2C%202016_0.pdf",
+    "images": []
+  },
+  {
+    "id": "kenya-concessions-pdf",
+    "source": "https://forestry.go.ke/sites/default/files/2026-02/The%20Forests%20%28Harvesting%29%20Rules%20Rev%202022.pdf",
+    "images": []
+  }
+]

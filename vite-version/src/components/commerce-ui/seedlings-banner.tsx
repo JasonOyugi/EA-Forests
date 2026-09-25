@@ -29,14 +29,21 @@ function SeedlingsBanner({ className, onVisibilityChange }: SeedlingsBannerProps
 
   if (!isVisible) return null;
 
+  // Always leads to the landing footer (sign-up/contact): smooth-scroll when it is already on
+  // this page, otherwise navigate there.
+  const goToFooter = () => {
+    const footer = document.getElementById("footer");
+    if (footer) footer.scrollIntoView({ behavior: "smooth" });
+    else window.location.href = "/landing#footer";
+  };
+
   return (
     <BentoTilt>
       <div className={cn("relative w-full overflow-hidden rounded-lg bg-gradient-to-r from-emerald-100 via-emerald-200 to-aquamarine-100 p-8 text-slate-900 shadow-xl", className)}
-           onClick={() => {
-              const target = document.getElementById("new-arrivals-section");
-              if (target) target.scrollIntoView({ behavior: "smooth" });
-              else window.location.href = "/shop/seedlings#new-arrivals-section";
-            }}>
+           role="link"
+           tabIndex={0}
+           onClick={goToFooter}
+           onKeyDown={(event) => { if (event.key === "Enter") goToFooter(); }}>
         <button
           className="absolute right-3 top-3 z-20 flex h-7 w-7 items-center justify-center rounded-full border border-emerald-800/10 bg-white/70 text-emerald-900/70 transition hover:bg-white hover:text-emerald-950 focus:outline-none"
           onClick={(event) => {
@@ -72,13 +79,13 @@ function SeedlingsBanner({ className, onVisibilityChange }: SeedlingsBannerProps
             className={`transition-all duration-700 ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
           >
             <p className="mb-3 inline-block rounded-full bg-white/60 px-3 py-1 text-sm font-semibold tracking-wider text-emerald-950 backdrop-blur-sm">
-              JUST RELEASED
+              STAY INFORMED!
             </p>
             <h2 className="text-[clamp(2.75rem,6vw,6.5rem)] font-semibold uppercase leading-[.8] tracking-[-.065em] [font-stretch:condensed]">
-              New Seedling <span className="text-emerald-700"> Varieties Launch</span>
+              Information is <span className="text-emerald-700"> Money</span>
             </h2>
             <p className="type-body-copy mt-4 max-w-3xl text-slate-700">
-              High-performance planting stock from South Africa now available for different sites.
+              The sector changes FAST! Stay ahead and subscribe for updates before they even happen! 
             </p>
           </div>
 

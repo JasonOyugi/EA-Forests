@@ -1,0 +1,962 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" data-theme="auto">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="apple-touch-icon" href="../_static/apple-touch-icon.png" sizes="180x180" type="image/png">
+    <link href="../_static/favicon-32x32.png" sizes="32x32" rel="icon" type="image/png">
+    <link href="../_static/favicon-16x16.png" sizes="16x16" rel="icon" type="image/png">
+    <link rel="mask-icon" href="../_static/safari-pinned-tab.svg" color="#186691" type="image/svg+xml">
+    <title>Introduction to SEPAL &#8212; SEPAL  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "auto";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "auto";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="/home/docs/checkouts/readthedocs.org/user_builds/sepal-doc/envs/latest/lib/python3.9/site-packages/sphinxcontrib/icon/node_modules/@fortawesome/fontawesome-free/css/all.min.css?v=53359634" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.min.css?v=6e7d0de0" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/pointer.css?v=c97663ff" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=aa2304e8" />
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="/home/docs/checkouts/readthedocs.org/user_builds/sepal-doc/envs/latest/lib/python3.9/site-packages/sphinxcontrib/icon/node_modules/@fortawesome/fontawesome-free/js/all.min.js?v=ec35c6c9"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js?v=f0ca4bb6"></script>
+    <script src="../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js?v=12818e64"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'setup/presentation';</script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="../_static/js/custom.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Use GEE with SEPAL" href="gee.html" />
+    <link rel="prev" title="Register" href="register.html" />
+<meta name="msapplication-TileColor" content="#186691" />
+<meta name="theme-color" content="#ffffff" />
+
+  <script async type="text/javascript" src="/_/static/javascript/readthedocs-addons.js"></script><meta name="readthedocs-project-slug" content="sepal-doc" /><meta name="readthedocs-version-slug" content="latest" /><meta name="readthedocs-resolver-filename" content="/setup/presentation.html" /><meta name="readthedocs-http-status" content="200" /></head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="auto">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/sepal_light.png" class="logo__image only-light" alt="SEPAL  documentation - Home"/>
+    <img src="../_static/sepal_dark.png" class="logo__image only-dark pst-js-only" alt="SEPAL  documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../cookbook/index.html">
+    Cookbook
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../modules/index.html">
+    Modules
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../workflows/index.html">
+    Workflows
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../feature/index.html">
+    Features
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../troubleshooting/index.html">
+    Troubleshooting
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../developers/index.html">
+    Developers
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../team/index.html">
+     
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/openforis/sepal" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/OpenForis" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://www.linkedin.com/company/open-foris/" title="LinkedIn" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-linkedin fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">LinkedIn</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://www.youtube.com/channel/UCtpxScciUj0fjMmhpYsAZbA/featured" title="Youtube" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-youtube fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Youtube</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../cookbook/index.html">
+    Cookbook
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../modules/index.html">
+    Modules
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../workflows/index.html">
+    Workflows
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../feature/index.html">
+    Features
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../troubleshooting/index.html">
+    Troubleshooting
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../developers/index.html">
+    Developers
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../team/index.html">
+     
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/openforis/sepal" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/OpenForis" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-twitter fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://www.linkedin.com/company/open-foris/" title="LinkedIn" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-linkedin fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">LinkedIn</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://www.youtube.com/channel/UCtpxScciUj0fjMmhpYsAZbA/featured" title="Youtube" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-youtube fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Youtube</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="register.html">Register</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to SEPAL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gee.html">Use GEE with SEPAL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nicfi.html">Use NICFI–PlanetLab data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resource.html">Manage your resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage.html">Manage Disk Usage</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="filezilla.html">Exchange files with SEPAL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="password.html">Reset password</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Getting started</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Introduction to SEPAL</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="introduction-to-sepal">
+<h1>Introduction to SEPAL<a class="headerlink" href="#introduction-to-sepal" title="Link to this heading">#</a></h1>
+<p><em>Learn the basics of the platform and how to access features</em></p>
+<p>In this article, learn to:</p>
+<ul class="simple">
+<li><p>navigate the interface</p></li>
+<li><p>use the functionalities of the platform</p></li>
+</ul>
+<p>Prequisities include:</p>
+<ul class="simple">
+<li><p>internet access</p></li>
+<li><p>SEPAL account (see <a class="reference external" href="https://docs.sepal.io/en/latest/setup/register.html">Register</a>)</p></li>
+</ul>
+<section id="access-sepal">
+<h2>Access SEPAL<a class="headerlink" href="#access-sepal" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Go to <a class="reference external" href="https://sepal.io/">sepal.io</a>.</p></li>
+<li><p>Select <strong>Launch</strong>.</p></li>
+<li><p>Enter your username and password.</p></li>
+<li><p>Select <span class="guilabel"><span >Login</span></span>.</p></li>
+</ol>
+<a class=""
+               data-lightbox="group-90a400f6-4497-42ee-b01b-08e42f4dcc51"
+               href="../_images/sepal_login1.png"
+               title="SEPAL login page"
+               data-title="SEPAL login page"
+               
+               ><img src="../_images/sepal_login1.png"
+                     class="align-center"
+                     width="70%"
+                     height="auto"
+                     alt=""/>
+                </a><div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>When working in SEPAL, do not use your browser’s <strong>Back</strong> function. Instead, use the buttons within the SEPAL interface to navigate to previous pages. In some instances, you may find an arrow in the upper-left or upper-right corner of the interface to navigate to a previous window.</p>
+</div>
+</section>
+<section id="select-language-preference">
+<h2>Select language preference<a class="headerlink" href="#select-language-preference" title="Link to this heading">#</a></h2>
+<p>Choose a language for your SEPAL environment by following the instructions in the video below.</p>
+<div class="video_wrapper" style="">
+<iframe allowfullscreen="true" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/Lv0HwPDQx50" style="border: 0; height: 345px; width: 560px">
+</iframe></div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Language preferences can always be changed from the platform’s <a class="reference external" href="https://sepal.io/">launch page</a></p>
+</div>
+<p>The default language in SEPAL is English; however, other languages are available (currently French and Spanish).</p>
+<p>To change the language to either French or Spanish:</p>
+<ol class="arabic simple">
+<li><p>Go to <a class="reference external" href="http://sepal.io">http://sepal.io</a>.</p></li>
+<li><p>Select <code class="code docutils literal notranslate"><span class="pre">Launch</span></code>.</p></li>
+<li><p>In the upper-right corner, select <strong>EN</strong>, <strong>ES</strong> or <strong>FR</strong> (English, Spanish and French, respectively).</p></li>
+</ol>
+</section>
+<section id="sepal-interface">
+<h2>SEPAL interface<a class="headerlink" href="#sepal-interface" title="Link to this heading">#</a></h2>
+<section id="home">
+<h3>Home<a class="headerlink" href="#home" title="Link to this heading">#</a></h3>
+<p>After logging in, you will see the following screen.</p>
+<a class=""
+               data-lightbox="group-2fc532b7-00f0-47a5-a885-72d8ca505156"
+               href="../_images/sepal_home1.png"
+               title="SEPAL home screen"
+               data-title="SEPAL home screen"
+               
+               ><img src="../_images/sepal_home1.png"
+                     class="align-center"
+                     width="70%"
+                     height="auto"
+                     alt=""/>
+                </a><p>On the left, there are four main navigation buttons in the vertical <strong>Tabs</strong> bar (from top to bottom):</p>
+<ul class="simple">
+<li><p><strong>Process</strong>: Select imagery and create mosaics.</p></li>
+<li><p><strong>Files</strong>: Navigate through your personal SEPAL folders, where you can download, delete and visualize data using the <strong>Data visualization</strong> link.</p></li>
+<li><p><strong>Terminal</strong>: Access the command line for the LINUX server.</p></li>
+<li><p><strong>Apps</strong>: Follow links to a variety of preloaded tools.</p></li>
+</ul>
+<p>Below the vertical <strong>Tabs</strong> bar – on the left – is another button:</p>
+<ul class="simple">
+<li><p><strong>Tasks</strong>: View a list of currently running tasks.</p></li>
+</ul>
+<p>In the lower-right corner there are four buttons (from right to left):</p>
+<ul class="simple">
+<li><p><strong>Log out from SEPAL</strong> (displayed as a door with an arrow)</p></li>
+<li><p><strong>User details</strong> (displayed as your username)</p></li>
+<li><p><strong>User report</strong> (displayed as <strong>$ 0/h</strong>)</p></li>
+<li><p><strong>User messages</strong> (displayed as a bell)</p></li>
+</ul>
+<p>In the <strong>User details</strong> pop-up window, you can:</p>
+<ul class="simple">
+<li><p>view and edit user account information (e.g. name, password, email, organization; username can not be edited); and</p></li>
+<li><p>link your GEE and SEPAL accounts by selecting <strong>Use my own Google account</strong> and following the instructions.</p></li>
+</ul>
+<p>If your GEE and SEPAL accounts are connected, SEPAL uses your Google Drive as a temporary storage space for data downloaded to your SEPAL workspace (e.g. any imagery tiles or mosaics that you “retrieve to SEPAL workspace” will first be saved to your Google Drive account before being saved in your SEPAL workspace).</p>
+<p>If your GEE and SEPAL accounts are not linked, data downloads to your SEPAL workspace will still be possible and the data will pass through SEPAL’s Google Drive account.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Unlinking your GEE and SEPAL accounts for downloading to SEPAL workspace may help if you do not have sufficient space available in your personal Google Drive.</p>
+</div>
+<p>Linking your GEE and SEPAL accounts will allow you to read and write from your GEE assets. To save data created in SEPAL as a GEE asset or to use your existing GEE assets in classifications or further processing in SEPAL, you will need to have your GEE and SEPAL accounts linked.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Link your SEPAL and GEE accounts in order to read and write to GEE assets from SEPAL.</p>
+</div>
+<p>In the <strong>User report</strong> pop-up window, you can view the status (used/available) of your processing and storage resources:</p>
+<ul class="simple">
+<li><p><strong>Instance spending</strong> refers to the resources used/available to start and run cloud computers;</p></li>
+<li><p><strong>Storage spending</strong> and <strong>Storage space</strong> refer to the resources used/available for storage in your SEPAL workspace; and</p></li>
+<li><p><strong>Sessions</strong> refers to any processes in your current session, if you are running any.</p></li>
+</ul>
+<a class=""
+               data-lightbox="group-540849ea-6b2e-4867-8ab7-24cd4b8860e4"
+               href="../_images/user_report_panel1.png"
+               title="User report panel"
+               data-title="User report panel"
+               
+               ><img src="../_images/user_report_panel1.png"
+                     class="align-center"
+                     width="350px"
+                     height="auto"
+                     alt=""/>
+                </a><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>SEPAL should not be used for long-term data storage, as this is costly. The platform is best used by storing only the data necessary for processing. After processing and producing a product, data should be downloaded to your personal computer and deleted from SEPAL storage.</p>
+</div>
+</section>
+<section id="process">
+<h3>Process<a class="headerlink" href="#process" title="Link to this heading">#</a></h3>
+<p>In the vertical <strong>Tabs</strong> bar on the left, select the <code class="code docutils literal notranslate"><span class="pre">Process</span></code> button.</p>
+<a class=""
+               data-lightbox="group-ab94fa9f-f0ad-4b89-9ab0-eec50bb8a014"
+               href="../_images/process_tab_location1.png"
+               title="Arrow pointing to the process tab location"
+               data-title="Arrow pointing to the process tab location"
+               
+               ><img src="../_images/process_tab_location1.png"
+                     class="align-center"
+                     width="70%"
+                     height="auto"
+                     alt=""/>
+                </a><p>You should now see many options in the centre of the screen:</p>
+<ul class="simple">
+<li><p><strong>Optical mosaic</strong>: Create a mosaic using Landsat and/or Sentinel-2 data (for guidance, see <strong>Exercise 1.2</strong>).</p></li>
+<li><p><strong>Radar mosaic</strong>: Create a mosaic using Sentinel-1 data.</p></li>
+<li><p><strong>Planet mosaic</strong>: Create a mosaic using NICFI–Planet basemaps (if you have permission from NICFI-Planet).</p></li>
+<li><p><strong>Classification</strong>: Use a random forest model to classify images from SEPAL or GEE (for guidance, see <strong>Module 2</strong>).</p></li>
+<li><p><strong>Time series</strong>: Download time series information to your SEPAL storage.</p></li>
+<li><p><strong>CCDC</strong>: Create a Continuous Change Detection and Classification (CCDC) asset from a time series.</p></li>
+<li><p><strong>CCDC slice</strong>: Create a slice of a CCDC asset for a specific date or date range.</p></li>
+<li><p><strong>Class change</strong>: Create a class change map from two categorical images (either SEPAL recipes or GEE assets).</p></li>
+<li><p><strong>Index change</strong>: Create an index change map from two single-band images (either SEPAL recipes or GEE assets).</p></li>
+<li><p><strong>Remapping</strong>: Remap categorical or continuous image bands into new categories.</p></li>
+</ul>
+<p>When you select one of these options, a new tab will open with the graphical user interface (GUI) that allows you to specify your desired options.</p>
+</section>
+<section id="files">
+<h3>Files<a class="headerlink" href="#files" title="Link to this heading">#</a></h3>
+<p>In the vertical <strong>Tabs</strong> bar on the left, select the <code class="code docutils literal notranslate"><span class="pre">Files</span></code> button to display all files stored in your SEPAL workspace.</p>
+<p>For example, select the <code class="code docutils literal notranslate"><span class="pre">Downloads</span></code> folder to display the folders containing any of the data you have downloaded in SEPAL. If you have not downloaded mosaics in SEPAL yet, this folder will be empty.</p>
+<a class=""
+               data-lightbox="group-63fdb89c-e59d-445a-990b-f2c5095f5284"
+               href="../_images/files_menu1.png"
+               title="The Files menu"
+               data-title="The Files menu"
+               
+               ><img src="../_images/files_menu1.png"
+                     class="align-center"
+                     width="50%"
+                     height="auto"
+                     alt=""/>
+                </a><p>In the upper right, there are four buttons (from left to right; the three right-most buttons will be inactive until you select a file):</p>
+<ul class="simple">
+<li><p>The first button will show hidden files (files and folder names starting with <strong>.</strong>).</p></li>
+<li><p>The second button will download selected data to your local computer.</p></li>
+<li><p>The third button will delete the selected folder or file.</p></li>
+<li><p>The last button will clear your selection.</p></li>
+</ul>
+</section>
+<section id="terminal">
+<h3>Terminal<a class="headerlink" href="#terminal" title="Link to this heading">#</a></h3>
+<p>In the vertical <strong>Tabs</strong> bar on the left, select the <code class="code docutils literal notranslate"><span class="pre">Terminal</span></code> button.</p>
+<p>This links you to the Linux command line that you can use in a variety of ways to manage data, load data from an outside location or process data using a series of commands.</p>
+<p>When you initially load the <strong>Terminal</strong>, you will see information about your usage and the available types of instances you can initialize.</p>
+<p>One of the most important features of the <strong>Terminal</strong> is the ability to start and stop instances.</p>
+<p>To start an instance:</p>
+<ol class="arabic simple">
+<li><p>Examine the <strong>Available instance types</strong> table (updated periodically; see example from September 2020 below).</p></li>
+<li><p>Choose an <strong>Instance type</strong> that fits your needs (normally, a <strong>t2</strong> instance or <strong>m2</strong> instance is sufficient and cost-effective).</p></li>
+<li><p>Next to <strong>Select (t1)</strong>, enter <strong>t2</strong> (or your chosen instance type).</p></li>
+<li><p>Press <strong>Enter</strong> on your keyboard and wait for the instance to start, which will take several minutes.</p></li>
+</ol>
+<p>To stop an instance:</p>
+<ul class="simple">
+<li><p>enter <strong>exit</strong> into the command line (you can then refresh the terminal page to start a new instance); or</p></li>
+<li><p>open your <strong>User report</strong> by selecting the <strong>$ 0/h</strong> icon in the lower-right corner, then selecting the trashcan icon under <strong>Sessions</strong>.</p></li>
+</ul>
+<p>Once an instance has stopped, you can follow the instance start-up steps again to select a larger instance, if necessary.</p>
+<a class=""
+               data-lightbox="group-b66e2931-ef16-4891-88db-35c054adfc5a"
+               href="../_images/terminal3.png"
+               title="The Terminal page, including an example of changing the instance"
+               data-title="The Terminal page, including an example of changing the instance"
+               
+               ><img src="../_images/terminal3.png"
+                     class="align-center"
+                     width="450"
+                     height="auto"
+                     alt=""/>
+                </a></section>
+<section id="apps">
+<h3>Apps<a class="headerlink" href="#apps" title="Link to this heading">#</a></h3>
+<p>In the vertical <strong>Tabs</strong> bar on the left, select the <strong>Apps</strong> button to display applications accessible through SEPAL (for more information about each app, select the rightmost <strong>i</strong> button).</p>
+<p>Applications are preprogrammed (typically using R or Python) to perform specific useful tasks, making use of instances (running them will use your SEPAL computing resources).</p>
+<a class=""
+               data-lightbox="group-cda8cc0a-bbda-49c0-ae36-b00ae4608f7c"
+               href="../_images/apps_interface1.png"
+               title="The Apps interface"
+               data-title="The Apps interface"
+               
+               ><img src="../_images/apps_interface1.png"
+                     class="align-center"
+                     width="70%"
+                     height="auto"
+                     alt=""/>
+                </a><p>Some of the apps include:</p>
+<ul class="simple">
+<li><p><strong>R Studio</strong>: Provides access to the R environment, where you can run processing scripts and upload data to your SEPAL folder.</p></li>
+<li><p><strong>JupyterLab</strong>: Provides access to the Python environment where you can run complex data workflows.</p></li>
+<li><p><strong>BFAST GPU</strong>: Graphics processing unit (GPU) implementation of the Breaks for Additive Season and Trend (BFAST) algorithm to analyse time series.</p></li>
+<li><p><strong>Deforestation alert analysis</strong>: Retrieves any type of alert on a selected area of interest (AOI).</p></li>
+<li><p><strong>MGCI</strong>: Calculates Sustainable Development Goal (SDG) 15.4.2: Mountain Green Cover Index (MGCI) at national/subregional scale.</p></li>
+<li><p><strong>SMFM Biota</strong>: Calculates biomass change over time using ALOS PALSAR data (SMFM refers to Satellite Monitoring for Forest Management).</p></li>
+</ul>
+<p>For more information on available apps, see <a class="reference internal" href="../modules/index.html"><span class="doc">Modules</span></a>.</p>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="register.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Register</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="gee.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Use GEE with SEPAL</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#access-sepal">Access SEPAL</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#select-language-preference">Select language preference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sepal-interface">SEPAL interface</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#home">Home</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#process">Process</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#files">Files</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#terminal">Terminal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apps">Apps</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/openforis/sepal-doc/edit/main/docs/source/setup/presentation.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/setup/presentation.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2020-2026, the SEPAL development team.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.4.7.
+    <br/>
+  </p>
+</div>
+      
+        <div class="footer-item"><!-- display the licensing information in the footer -->
+<a href="https://github.com/openforis/sepal-doc/blob/master/LICENSE">
+  <i class="fa-brands fa-creative-commons"></i>
+  <i class="fa-brands fa-creative-commons-by"></i>
+  <i class="fa-brands fa-creative-commons-sa"></i>
+</a></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__center">
+      
+        <div class="footer-item"><div class="community">
+  <a href="https://groups.google.com/g/sepal-users">
+    <span class="mr-1"
+      >For general support, ask the Google Group community</span
+    >
+    <i class="fa-solid fa-comments"></i>
+  </a>
+</div></div>
+      
+        <div class="footer-item"><div class="issue-tracker">
+  <a href="https://github.com/openforis/sepal/issues">
+    <span class="mr-1"
+      >For documentation improvement, use the GitHub Issue Tracker</span
+    >
+    <i class="fa-brands fa-github"></i>
+  </a>
+</div></div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><div class="e-learning">
+  <a href="https://www.fao.org/in-action/sepal/resources/certified-course/en">
+    <span class="mr-1">For training, register for the e-learning course</span>
+    <i class="fa-solid fa-book-open"></i>
+  </a>
+</div></div>
+      
+        <div class="footer-item"><div class="gis-stackexchange">
+  <a href="https://gis.stackexchange.com/questions/tagged/sepal">
+    <span class="mr-1">For usage questions, ask the GIS community</span>
+    <i class="fa-brands fa-stack-exchange"></i>
+  </a>
+</div></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

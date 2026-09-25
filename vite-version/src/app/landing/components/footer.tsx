@@ -1,6 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useEffect } from "react"
 import type { ComponentType } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -73,6 +74,14 @@ const socialLinks = [
 ] as const
 
 export function LandingFooter() {
+  // The landing page renders client-side, after the browser's own #hash scroll has already run,
+  // so links like the seedlings banner's "/landing#footer" need an explicit scroll on mount.
+  useEffect(() => {
+    if (window.location.hash !== "#footer") return
+    const frame = requestAnimationFrame(() => document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" }))
+    return () => cancelAnimationFrame(frame)
+  }, [])
+
   const newsletterForm = useForm<z.infer<typeof newsletterSchema>>({
     resolver: zodResolver(newsletterSchema),
     defaultValues: { email: "" },
@@ -94,6 +103,8 @@ export function LandingFooter() {
 
   return (
     <footer id="contact" className="section-map-shell section-map-footer relative overflow-hidden border-t bg-background">
+      {/* Separate "#footer" anchor: the element id is already "contact", which Contact links use. */}
+      <span id="footer" aria-hidden className="absolute top-0" />
       <div aria-hidden className="section-map-bg absolute inset-0" />
       <div aria-hidden className="section-map-tint absolute inset-0" />
 

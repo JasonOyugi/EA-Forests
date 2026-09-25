@@ -1,0 +1,59 @@
+[
+  {
+    "id": "kenya-forest-regulator",
+    "source": "https://forestry.go.ke/he-president-william-s-ruto-phd-cgh-assents-forest-conservation-and-management-amendment-act-2025",
+    "images": [
+      "https://forestry.go.ke/sites/default/files/forest_0.png",
+      "https://forestry.go.ke/sites/default/files/2026-06/WhatsApp%20Image%202026-06-09%20at%2001.50.57.jpeg"
+    ]
+  },
+  {
+    "id": "oromia-alt",
+    "source": "https://www.biocarbonfund-isfl.org/ethiopia",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "nfc-alt",
+    "source": "https://impactfund.dk/news/impact-fund-denmark-takes-out-eu-backed-guarantee-for-investment-in-sustainable-forestry/",
+    "images": [
+      "https://impactfund.dk/wp-content/uploads/2025/11/13/saiff-ii-scaled.avif",
+      "https://impactfund.dk/wp-content/themes/impactfund/assets/dist/img/logo-dark.svg",
+      "https://impactfund.dk/wp-content/themes/impactfund/assets/dist/img/logo.svg",
+      "https://impactfund.dk/wp-content/uploads/2025/11/13/saiff-ii-1024x575.avif",
+      "https://impactfund.dk/wp-content/uploads/2025/11/13/saiff-ii-1024x576.avif",
+      "https://impactfund.dk/wp-content/uploads/2025/11/13/saiff-ii-300x168.avif",
+      "https://impactfund.dk/wp-content/uploads/2025/11/13/saiff-ii-768x431.avif",
+      "https://impactfund.dk/wp-content/uploads/2025/11/13/saiff-ii-1536x863.avif",
+      "https://impactfund.dk/wp-content/uploads/2025/11/13/saiff-ii-2048x1150.avif",
+      "https://impactfund.dk/wp-content/uploads/2025/11/13/saiff-ii-1920x1078.avif",
+      "https://impactfund.dk/wp-content/uploads/2026/05/29/eu-edfi-1024x244.avif",
+      "https://impactfund.dk/wp-content/uploads/2026/05/29/eu-edfi-300x72.avif",
+      "https://impactfund.dk/wp-content/uploads/2026/05/29/eu-edfi-768x183.avif",
+      "https://impactfund.dk/wp-content/uploads/2026/05/29/eu-edfi.avif",
+      "https://impactfund.dk/wp-content/uploads/2025/09/03/thoger-kirk-external-communications-director-375x500.avif",
+      "https://impactfund.dk/wp-content/uploads/2026/08/28/otim1-420x315.avif",
+      "https://impactfund.dk/wp-content/uploads/2025/11/13/saiff-ii-420x315.avif",
+      "https://impactfund.dk/wp-content/uploads/2026/08/19/sofie-morten-3-420x315.avif"
+    ]
+  },
+  {
+    "id": "kenya-carbon-alt",
+    "source": "https://abcnews.com/International/wireStory/kenya-unveils-carbon-market-rule-book-caps-overseas-135362523",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "id": "miti360-paper",
+    "source": "https://arxiv.org/html/2606.29447v1",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "id": "rwanda-coffee-alt",
+    "source": "https://journalijecc.com/index.php/IJECC/article/view/5561",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "id": "quality-tree-alt",
+    "source": "https://www.cifor-icraf.org/quality-tree-seed-for-africa/",
+    "error": "HTTP Error 403: Forbidden"
+  }
+]
