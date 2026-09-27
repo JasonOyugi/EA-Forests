@@ -34,7 +34,6 @@ import {
 import { ModelAssumptionsDisclosure } from "@/app/models/components/model-assumptions-disclosure"
 import { MetricCardDecoration } from "@/app/landing/components/metric-card-decoration"
 import { BaseLayout } from "@/components/layouts/base-layout"
-import { ComingSoonPreview } from "@/components/coming-soon-preview"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -799,11 +798,7 @@ export default function ClonalEucalyptusNurseryPage() {
     <BaseLayout
       title="Clonal Eucalyptus Nursery Model"
     >
-      <ComingSoonPreview
-        title="Clonal Nursery Model — Coming Soon"
-        description="Nursery production, OPEX, CAPEX, investment metrics, and one-way sensitivity for a pragmatic rural clonal eucalyptus nursery."
-        links={[{ label: "All models", href: "/models" }]}
-      >
+      <>
       <div className="@container/main min-w-0 max-w-full overflow-hidden px-4 lg:px-6">
         <div className="grid min-w-0 max-w-full gap-4">
           <div className="min-w-0 space-y-4">
@@ -1376,7 +1371,7 @@ export default function ClonalEucalyptusNurseryPage() {
           </div>
         </div>
       </div>
-      </ComingSoonPreview>
+      </>
     </BaseLayout>
   )
 }

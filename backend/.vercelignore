@@ -1,0 +1,13 @@
+.venv
+.cache
+.env
+.env.*
+!.env.example
+tests
+migrations
+scripts
+**/__pycache__
+*.err
+*.log
+Dockerfile
+.dockerignore

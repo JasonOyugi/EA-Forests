@@ -1,11 +1,14 @@
+import logging
 import os
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.canonical import router as canonical_router
 from app.api.eo import router as eo_router
 from app.api.eo_public import router as eo_public_router
+from app.api.models_registry import ModelRunError, execute_model
+from app.api.models_registry import router as models_router
 
 from app.schemas import (
     ClonalEucalyptusNurseryRequest,
@@ -15,25 +18,14 @@ from app.schemas import (
     RoundwoodProductionRequest,
     SiteClassificationRequest,
 )
-from app.services.clonal_nursery import (
-    clonal_nursery_default_library,
-    run_clonal_eucalyptus_nursery,
-)
-from app.services.commercial_viability import (
-    commercial_forest_viability_default_library,
-    run_commercial_forest_viability,
-)
+from app.services.clonal_nursery import clonal_nursery_default_library
+from app.services.commercial_viability import commercial_forest_viability_default_library
 from app.services.currency import get_currency_rates
 from app.services.genetics import get_genetics_catalog, list_genetics_varieties
-from app.services.roundwood_production import (
-    roundwood_production_default_library,
-    run_roundwood_production,
-)
-from app.services.site_classification import (
-    EarthEngineAuthenticationError,
-    get_earth_engine_status,
-    run_site_classification,
-)
+from app.services.roundwood_production import roundwood_production_default_library
+from app.services.site_classification import get_earth_engine_status
+
+logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"))
 
 def _split_csv_env(value: str | None) -> list[str]:
     if not value:
@@ -65,6 +57,7 @@ app = FastAPI(title="EA Forests Models Backend", version="0.1.0")
 app.include_router(canonical_router)
 app.include_router(eo_router)
 app.include_router(eo_public_router)
+app.include_router(models_router)
 
 app.add_middleware(
     CORSMiddleware,
@@ -82,7 +75,14 @@ def health() -> dict[str, str]:
 
 @app.get("/api/earth-engine/status", response_model=EarthEngineStatusResponse)
 def earth_engine_status() -> EarthEngineStatusResponse:
-    return EarthEngineStatusResponse(**get_earth_engine_status())
+    status = get_earth_engine_status()
+    if not status["authenticated"]:
+        # The service message carries local setup instructions; keep those in server logs.
+        logging.getLogger("ea_forests.models").warning("Earth Engine status: %s", status["message"])
+        status["message"] = (
+            "Satellite and climate data (Google Earth Engine) is not connected on this server yet."
+        )
+    return EarthEngineStatusResponse(**status)
 
 
 @app.get("/api/currency/rates")
@@ -100,26 +100,24 @@ def genetics_varieties() -> list[dict]:
     return list_genetics_varieties()
 
 
-@app.post("/api/models/site-classification")
-def site_classification(payload: SiteClassificationRequest) -> dict:
+def _legacy_run(model_id: str, payload, request: Request):
+    """Legacy per-model routes return the bare result the existing pages parse."""
     try:
-        return run_site_classification(payload)
-    except EarthEngineAuthenticationError as exc:
-        raise HTTPException(status_code=424, detail=str(exc)) from exc
-    except ValueError as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
-    except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc)) from exc
+        result, _cached = execute_model(model_id, payload, request)
+        return result
+    except ModelRunError as exc:
+        # Keep the `detail` shape the existing pages read, with a user-safe message.
+        raise HTTPException(status_code=exc.status_code, detail=exc.message) from exc
+
+
+@app.post("/api/models/site-classification")
+def site_classification(payload: SiteClassificationRequest, request: Request) -> dict:
+    return _legacy_run("site-classification", payload, request)
 
 
 @app.post("/api/models/commercial-forest-viability")
-def commercial_forest_viability(payload: CommercialForestViabilityRequest) -> dict:
-    try:
-        return run_commercial_forest_viability(payload)
-    except ValueError as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
-    except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc)) from exc
+def commercial_forest_viability(payload: CommercialForestViabilityRequest, request: Request) -> dict:
+    return _legacy_run("commercial-forest-viability", payload, request)
 
 
 @app.get("/api/models/commercial-forest-viability/defaults")
@@ -131,13 +129,8 @@ def commercial_forest_viability_defaults(rotation_year: int = 8) -> dict:
 
 
 @app.post("/api/models/roundwood-production")
-def roundwood_production(payload: RoundwoodProductionRequest) -> dict:
-    try:
-        return run_roundwood_production(payload)
-    except ValueError as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
-    except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc)) from exc
+def roundwood_production(payload: RoundwoodProductionRequest, request: Request) -> dict:
+    return _legacy_run("roundwood-production", payload, request)
 
 
 @app.get("/api/models/roundwood-production/defaults")
@@ -146,13 +139,8 @@ def roundwood_production_defaults() -> dict:
 
 
 @app.post("/api/models/clonal-eucalyptus-nursery")
-def clonal_eucalyptus_nursery(payload: ClonalEucalyptusNurseryRequest) -> dict:
-    try:
-        return run_clonal_eucalyptus_nursery(payload)
-    except ValueError as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
-    except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc)) from exc
+def clonal_eucalyptus_nursery(payload: ClonalEucalyptusNurseryRequest, request: Request) -> dict:
+    return _legacy_run("clonal-eucalyptus-nursery", payload, request)
 
 
 @app.get("/api/models/clonal-eucalyptus-nursery/defaults")

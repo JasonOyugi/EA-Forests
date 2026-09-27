@@ -123,13 +123,17 @@ export function NewsletterSection() {
     if (event.button !== 0) return
     pointerStartRef.current = event.clientX
     pointerDraggedRef.current = false
-    event.currentTarget.setPointerCapture(event.pointerId)
   }
 
   const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
     if (pointerStartRef.current === null) return
     const offset = event.clientX - pointerStartRef.current
-    if (Math.abs(offset) > 5) pointerDraggedRef.current = true
+    // Capture only once this is a drag: capturing on pointerdown retargets the click to the
+    // container, so card links would never receive it.
+    if (Math.abs(offset) > 5 && !pointerDraggedRef.current) {
+      pointerDraggedRef.current = true
+      event.currentTarget.setPointerCapture(event.pointerId)
+    }
     setDragOffset(Math.max(-100, Math.min(100, offset * 0.42)))
   }
 

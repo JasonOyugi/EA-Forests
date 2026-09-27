@@ -27,7 +27,6 @@ import {
 
 import { BaseLayout } from "@/components/layouts/base-layout"
 import { MetricCardDecoration } from "@/app/landing/components/metric-card-decoration"
-import { ComingSoonPreview } from "@/components/coming-soon-preview"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -879,11 +878,7 @@ export default function ModelThreePage() {
       title="Roundwood production"
       description="Harvesting, haulage, processor buyer specs, grade yields, and factory-gate cashflow from a selected map coordinate."
     >
-      <ComingSoonPreview
-        title="Roundwood Production — Coming Soon"
-        description="Map-driven harvesting and haulage model with processor buyer specs, grade yields, and factory-gate cashflow comparison."
-        links={[{ label: "All models", href: "/models" }]}
-      >
+      <>
       <div className="@container/main min-w-0 max-w-full overflow-hidden px-4 lg:px-6">
         <div className="grid min-w-0 max-w-full gap-4">
           <Card className="min-w-0 gap-4 border-border/70 bg-background/75 py-5">
@@ -1631,7 +1626,7 @@ export default function ModelThreePage() {
           </div>
         </div>
       </div>
-      </ComingSoonPreview>
+      </>
     </BaseLayout>
   )
 }

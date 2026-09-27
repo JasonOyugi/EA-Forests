@@ -11,7 +11,7 @@ from sqlalchemy.exc import DBAPIError, NoResultFound, OperationalError
 from sqlalchemy.orm import Session
 
 from app.db import schema as s
-from app.db.session import session_scope
+from app.db.session import database_url, session_scope
 from app.domain.values import FactCreate
 from app.schemas import RoundwoodProductionRequest
 from app.services.evidence.artifacts import LocalArtifactStore
@@ -30,6 +30,10 @@ def require_access(authorization: str | None = Header(default=None)):
 
 
 def database():
+    try:
+        database_url()
+    except RuntimeError as exc:
+        raise HTTPException(503, "Canonical datastore is not configured") from exc
     try:
         yield from session_scope()
     except OperationalError as exc:

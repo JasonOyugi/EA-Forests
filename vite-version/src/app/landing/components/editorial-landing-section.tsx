@@ -123,11 +123,60 @@ const editorialEvents: EditorialEvent[] = [
 
 const editorialCategories: EditorialCategory[] = ["Information", "Investment Models", "Videos", "Events"]
 const initialVisibleStoryCount = 8
-
-// The Information Hub's Iran-war timeline, surfaced in the "All" mosaic in its topic's accent.
-const policyTopic = informationHubTopics["policy-regulation"]
-const iranWarCard = policyTopic.cards.find((card) => card.id === "iran-war-forestry-timeline")
 const defaultInformationTopic = "Policy & Regulation"
+
+/**
+ * "All" mosaic layout. Each slot takes the NEXT unused item of its kind (stories, videos, events…)
+ * in list order. Stories not placed by a slot are appended after the layout automatically, so adding
+ * to `stories` is enough to show a card; add/move a slot here only to control its placement.
+ * Sizes are xl grid spans (12 columns, 4px rows).
+ */
+type MosaicSlot =
+  | { kind: "story" | "resource" | "player" | "video" | "event" | "banner"; size: string }
+  | { kind: "metrics"; size: string }
+  | { kind: "eo"; country: keyof typeof eoCountries; size: string }
+  | { kind: "research"; topic: keyof typeof informationHubTopics; cardId: string; size: string }
+
+const allMosaicLayout: MosaicSlot[] = [
+  { kind: "story", size: "xl:col-span-8 xl:row-span-[48]" },
+  { kind: "metrics", size: "xl:col-span-4 xl:row-span-[48]" },
+  { kind: "resource", size: "xl:col-span-4 xl:row-span-[36]" },
+  { kind: "story", size: "xl:col-span-8 xl:row-span-[36]" },
+  { kind: "metrics", size: "xl:col-span-4 xl:row-span-[48]" },
+  { kind: "story", size: "xl:col-span-8 xl:row-span-[36]" },
+  { kind: "story", size: "xl:col-span-4 xl:row-span-[36]" },
+  { kind: "player", size: "xl:col-span-4 xl:row-span-[36]" },
+  { kind: "video", size: "xl:col-span-4 xl:row-span-[60]" },
+  { kind: "player", size: "xl:col-span-4 xl:row-span-[36]" },
+  { kind: "event", size: "xl:col-span-4 xl:row-span-[36]" },
+  { kind: "banner", size: "xl:col-span-12 xl:row-span-[21]" },
+  { kind: "eo", country: "UG", size: "xl:col-span-12 xl:row-span-[48]" },
+  { kind: "resource", size: "xl:col-span-6 xl:row-span-[36]" },
+  { kind: "player", size: "xl:col-span-3 xl:row-span-[36]" },
+  { kind: "story", size: "xl:col-span-12 xl:row-span-[60]" },
+  { kind: "player", size: "xl:col-span-3 xl:row-span-[36]" },
+  { kind: "story", size: "xl:col-span-9 xl:row-span-[30]" },
+  { kind: "resource", size: "xl:col-span-4 xl:row-span-[36]" },
+  { kind: "event", size: "xl:col-span-4 xl:row-span-[36]" },
+  { kind: "video", size: "xl:col-span-8 xl:row-span-[30]" },
+  { kind: "eo", country: "KE", size: "xl:col-span-12 xl:row-span-[48]" },
+  { kind: "metrics", size: "xl:col-span-4 xl:row-span-[36]" },
+  { kind: "story", size: "xl:col-span-8 xl:row-span-[60]" },
+  { kind: "player", size: "xl:col-span-4 xl:row-span-[30]" },
+  { kind: "story", size: "xl:col-span-4 xl:row-span-[30]" },
+  { kind: "player", size: "xl:col-span-4 xl:row-span-[30]" },
+  { kind: "eo", country: "TZ", size: "xl:col-span-12 xl:row-span-[48]" },
+  { kind: "event", size: "xl:col-span-3 xl:row-span-[30]" },
+  { kind: "video", size: "xl:col-span-9 xl:row-span-[30]" },
+  { kind: "event", size: "xl:col-span-3 xl:row-span-[30]" },
+  { kind: "research", topic: "policy-regulation", cardId: "iran-war-forestry-timeline", size: "xl:col-span-12 xl:row-span-[136]" },
+  { kind: "video", size: "xl:col-span-12 xl:row-span-[30]" },
+  { kind: "story", size: "xl:col-span-12 xl:row-span-[60]" },
+]
+
+// Size for stories appended after the layout; a lone final card spans the full row.
+const overflowStorySize = "xl:col-span-6 xl:row-span-[40]"
+const overflowStoryFullSize = "xl:col-span-12 xl:row-span-[48]"
 
 function StoryTile({ story, size }: { story: Story; size?: string }) {
   const mediaRef = useRef<HTMLImageElement | HTMLVideoElement | null>(null)
@@ -412,6 +461,76 @@ export function EditorialBriefSection() {
     setFocusMode((currentMode) => currentMode === nextMode ? null : nextMode)
   }
 
+  const renderAllMosaic = () => {
+    const cursor = { story: 0, metrics: 0, resource: 0, player: 0, video: 0, event: 0 }
+    const take = <T,>(list: T[], kind: keyof typeof cursor, count = 1) => {
+      const items = list.slice(cursor[kind], cursor[kind] + count)
+      cursor[kind] += count
+      return items
+    }
+
+    const tiles = allMosaicLayout.map((slot, index) => {
+      const key = `${slot.kind}-${index}`
+      switch (slot.kind) {
+        case "story": {
+          const [story] = take(stories, "story")
+          return story ? <StoryTile key={key} story={story} size={slot.size} /> : null
+        }
+        case "metrics": {
+          const metrics = take(sectorMetrics, "metrics", 2)
+          return metrics.length ? <MetricPair key={key} metrics={metrics} size={slot.size} onFocus={() => toggleFocus("metrics")} onSelectInformation={selectInformationTopic} /> : null
+        }
+        case "resource": {
+          const [resource] = take(forestryResources, "resource")
+          return resource ? <ResourceTile key={key} resource={resource} size={slot.size} onFocus={() => toggleFocus("products")} /> : null
+        }
+        case "player": {
+          const [player] = take(sectorPlayers, "player")
+          return player ? <PlayerTile key={key} player={player} size={slot.size} onFocus={() => toggleFocus("players")} /> : null
+        }
+        case "video": {
+          const [video] = take(editorialVideos, "video")
+          return video ? <VideoTile key={key} video={video} size={slot.size} /> : null
+        }
+        case "event": {
+          const [event] = take(editorialEvents, "event")
+          return event ? <EventTile key={key} event={event} size={slot.size} /> : null
+        }
+        case "banner":
+          return bannerVisible ? (
+            <div key={key} className={`min-h-[240px] ${slot.size}`}>
+              <SeedlingsBanner className="h-full min-h-[240px] rounded-none" onVisibilityChange={setBannerVisible} />
+            </div>
+          ) : null
+        case "eo":
+          return <EoTile key={key} config={eoCountries[slot.country]} size={slot.size} />
+        case "research": {
+          const topic = informationHubTopics[slot.topic]
+          const card = topic.cards.find((item) => item.id === slot.cardId)
+          return card ? (
+            <div key={key} className={slot.size} style={{ "--information-accent": topic.accent } as CSSProperties}>
+              <ResearchCardTile card={card} className="h-full" />
+            </div>
+          ) : null
+        }
+      }
+    })
+
+    const overflow = stories.slice(cursor.story)
+    return (
+      <>
+        {tiles}
+        {overflow.map((story, index) => (
+          <StoryTile
+            key={story.title}
+            story={story}
+            size={overflow.length % 2 === 1 && index === overflow.length - 1 ? overflowStoryFullSize : overflowStorySize}
+          />
+        ))}
+      </>
+    )
+  }
+
   return (
     <section id="brief" className="border-t border-emerald-900/30 bg-emerald-100 pb-20 pt-16 text-emerald-950 dark:border-emerald-900/60 dark:bg-[#07110c] dark:text-emerald-50 sm:pb-24 sm:pt-20 lg:pb-28 lg:pt-24">
       <div className={landingContainer}>
@@ -465,59 +584,7 @@ export function EditorialBriefSection() {
           ) : (
             <div key={activeCategory} className="editorial-mosaic-grid grid grid-cols-1 gap-2 xl:grid-cols-12 xl:[grid-auto-flow:dense]">
             {activeCategory === "All" ? (
-              <>
-                <StoryTile story={visibleStories[0]} size="xl:col-span-8 xl:row-span-[48]" />
-                <MetricPair metrics={sectorMetrics.slice(0, 2)} size="xl:col-span-4 xl:row-span-[48]" onFocus={() => toggleFocus("metrics")} onSelectInformation={selectInformationTopic} />
-
-                <ResourceTile resource={forestryResources[0]} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("products")} />
-                <StoryTile story={visibleStories[1]} size="xl:col-span-8 xl:row-span-[36]" />
-
-                <MetricPair metrics={sectorMetrics.slice(2, 4)} size="xl:col-span-4 xl:row-span-[48]" onFocus={() => toggleFocus("metrics")} onSelectInformation={selectInformationTopic} />
-                <StoryTile story={visibleStories[2]} size="xl:col-span-8 xl:row-span-[36]" />
-                <StoryTile story={visibleStories[3]} size="xl:col-span-4 xl:row-span-[36]" />
-                <PlayerTile player={sectorPlayers[0]} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("players")} />
-                <VideoTile video={editorialVideos[0]} size="xl:col-span-4 xl:row-span-[60]" />
-                <PlayerTile player={sectorPlayers[1]} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("players")} />
-                <EventTile event={editorialEvents[0]} size="xl:col-span-4 xl:row-span-[36]" />
-
-                {bannerVisible ? (
-                  <div className="min-h-[240px] xl:col-span-12 xl:row-span-[21]">
-                    <SeedlingsBanner className="h-full min-h-[240px] rounded-none" onVisibilityChange={setBannerVisible} />
-                  </div>
-                ) : null}
-
-                <EoTile config={eoCountries.UG} size="xl:col-span-12 xl:row-span-[48]" />
-
-                <ResourceTile resource={forestryResources[1]} size="xl:col-span-6 xl:row-span-[36]" onFocus={() => toggleFocus("products")} />
-                <PlayerTile player={sectorPlayers[2]} size="xl:col-span-3 xl:row-span-[36]" onFocus={() => toggleFocus("players")} />
-                <StoryTile story={visibleStories[4]} size="xl:col-span-12 xl:row-span-[60]" />
-                <PlayerTile player={sectorPlayers[3]} size="xl:col-span-3 xl:row-span-[36]" onFocus={() => toggleFocus("players")} />
-
-                <StoryTile story={visibleStories[5]} size="xl:col-span-9 xl:row-span-[30]" />
-                <ResourceTile resource={forestryResources[2]} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("products")} />
-
-                <EventTile event={editorialEvents[1]} size="xl:col-span-4 xl:row-span-[36]" />
-                <VideoTile video={editorialVideos[1]} size="xl:col-span-8 xl:row-span-[30]" />
-
-                <EoTile config={eoCountries.KE} size="xl:col-span-12 xl:row-span-[48]" />
-
-                <MetricPair metrics={sectorMetrics.slice(4, 6)} size="xl:col-span-4 xl:row-span-[36]" onFocus={() => toggleFocus("metrics")} onSelectInformation={selectInformationTopic} />
-                <StoryTile story={visibleStories[6]} size="xl:col-span-8 xl:row-span-[60]" />
-                <PlayerTile player={sectorPlayers[4]} size="xl:col-span-4 xl:row-span-[30]" onFocus={() => toggleFocus("players")} />
-                <StoryTile story={visibleStories[7]} size="xl:col-span-4 xl:row-span-[30]" />
-                <PlayerTile player={sectorPlayers[5]} size="xl:col-span-4 xl:row-span-[30]" onFocus={() => toggleFocus("players")} />
-                <EoTile config={eoCountries.TZ} size="xl:col-span-12 xl:row-span-[48]" />
-                <EventTile event={editorialEvents[3]} size="xl:col-span-3 xl:row-span-[30]" />
-                <VideoTile video={editorialVideos[2]} size="xl:col-span-9 xl:row-span-[30]" />
-                <EventTile event={editorialEvents[2]} size="xl:col-span-3 xl:row-span-[30]" />
-                {iranWarCard ? (
-                  <div className="xl:col-span-12 xl:row-span-[136]" style={{ "--information-accent": policyTopic.accent } as CSSProperties}>
-                    <ResearchCardTile card={iranWarCard} className="h-full" />
-                  </div>
-                ) : null}
-                <VideoTile video={editorialVideos[3]} size="xl:col-span-12 xl:row-span-[30]" />
-                <StoryTile story={visibleStories[7]} size="xl:col-span-12 xl:row-span-[60]" />
-              </>
+              renderAllMosaic()
             ) : activeCategory === "Videos" ? (
               editorialVideos.map((video) => <VideoTile key={video.videoId} video={video} size="xl:col-span-6 xl:row-span-[36]" />)
             ) : activeCategory === "Events" ? (
@@ -529,7 +596,7 @@ export function EditorialBriefSection() {
           )}
         </div>
 
-        {activeCategory !== "Information" && activeCategory !== "Videos" && activeCategory !== "Events" && visibleCount < filteredStories.length ? (
+        {activeCategory !== "All" && activeCategory !== "Information" && activeCategory !== "Videos" && activeCategory !== "Events" && visibleCount < filteredStories.length ? (
           <ScrollReveal className="mt-10 border-t border-emerald-900 pt-6 text-center" delay={140}>
             <button type="button" onClick={() => setVisibleCount(filteredStories.length)} className="group inline-flex items-center gap-3 text-sm text-primary uppercase tracking-[.16em]">Load more <ArrowRight className="size-4 rotate-90 transition-transform group-hover:translate-y-1" /></button>
           </ScrollReveal>
