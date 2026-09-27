@@ -45,7 +45,7 @@
     "classes": [
       "gazetted_forest"
     ],
-    "withChangeEvidence": 0
+    "withChangeEvidence": 378
   },
   "TZ": {
     "polygons": 571,
@@ -63,11 +63,12 @@
       "2026-04",
       "2026-05",
       "2026-06",
+      "2026-07",
       "2026-08"
     ],
     "classes": [
       "forest_candidate"
     ],
-    "withChangeEvidence": 0
+    "withChangeEvidence": 571
   }
 }
