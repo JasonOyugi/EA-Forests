@@ -63,7 +63,7 @@ type EditorialEvent = {
 }
 
 const stories: Story[] = [
-  { title: "Here's how forests make money in East Africa", category: "Investment Models", image: "https://cdn.agriland.ie/uploads/2020/09/Image-source-Veon-2.jpg", href: "/articles/how-forests-make-money-east-africa", updatedAt: "12 Aug 2026", topic: "Industry Tools" },
+  { title: "Here's how forests make money in East Africa", category: "Investment Models", image: "https://cdn.agriland.ie/uploads/2020/09/Image-source-Veon-2.jpg", href: "/models/model-3", updatedAt: "12 Aug 2026", topic: "Industry Tools" },
   { title: "Ready to sell your wood?", category: "Markets", image: "https://saforestryonline.co.za/wp-content/uploads/2025/07/The-John-Deere-2144G-tracked-swing-harvester-is-ideal-for-fast-growing-high-yield-plantations-scaled.jpg", href: "/landing?market=wood-markets-map#sector-map", market: "wood-markets-map", updatedAt: "11 Aug 2026" },
   { title: "The best planting material for East Africa", category: "Markets", image: "https://dryrocktreesnursery.com/cdn/shop/files/lodgepoletray.jpg?v=1759249757&width=1946", href: "/landing?market=seedlings#sector-map", market: "seedlings", updatedAt: "10 Aug 2026" },
   { title: "The ultimate site-species analysis tool", category: "Investment Models", image: "/tz.jpg", href: "/models/site-species-analysis", updatedAt: "9 Aug 2026", topic: "Industry Tools" },
@@ -75,9 +75,6 @@ const stories: Story[] = [
   { title: "Model the forest before committing capital", category: "Investment Models", image: "/apps.png", video: "/video/hero-3.mp4", href: "/models/model-2", updatedAt: "3 Aug 2026", topic: "Industry Tools" },
   { title: "It is time to restore the drylands profitably", category: "Investment Models", image: "/drylands.webp", href: "/shop/forests-land/drylands", updatedAt: "2 Aug 2026", topic: "Tested Investments" },
   { title: "Join the people building the sector", category: "Information", image: "/contact-2.webp", href: "#contact", updatedAt: "1 Aug 2026" },
-
-  // Models — Commercial group
-  { title: "Map the roundwood value chain before you commit", category: "Investment Models", image: "https://cdn.britannica.com/77/213177-138-0C119CB6/Overview-silviculture-lumber-industry.jpg", href: "/models/model-3", updatedAt: "14 Aug 2026", topic: "Industry Tools" },
 
   // Models — Genetic group (in development)
   { title: "Pine seed orchard model", category: "Investment Models", image: "/tz.jpg", href: "/models/pine-seed-orchard", updatedAt: "14 Aug 2026", topic: "Industry Tools", badge: "Coming soon" },
@@ -519,6 +516,7 @@ export function EditorialBriefSection() {
                   </div>
                 ) : null}
                 <VideoTile video={editorialVideos[3]} size="xl:col-span-12 xl:row-span-[30]" />
+                <StoryTile story={visibleStories[7]} size="xl:col-span-12 xl:row-span-[60]" />
               </>
             ) : activeCategory === "Videos" ? (
               editorialVideos.map((video) => <VideoTile key={video.videoId} video={video} size="xl:col-span-6 xl:row-span-[36]" />)

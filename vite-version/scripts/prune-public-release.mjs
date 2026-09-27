@@ -5,10 +5,6 @@ import path from "node:path"
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const distRoot = path.join(projectRoot, "dist")
 const releaseExcludedPaths = [
-  "dashboard-dark.png",
-  "dashboard-light.png",
-  "dashboard.png",
-  "Gatsby-Africa.png",
   "feature-1.mp4",
   "feature-2.mp4",
   "feature-3.mp4",

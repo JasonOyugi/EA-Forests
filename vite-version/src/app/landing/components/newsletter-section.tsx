@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
-import type { KeyboardEvent, PointerEvent, WheelEvent } from "react"
+import type { KeyboardEvent, MouseEvent, PointerEvent, WheelEvent } from "react"
 import { ArrowLeft, ArrowRight, Mail } from "lucide-react"
 
 const newsletterStories = [
@@ -12,7 +12,8 @@ const newsletterStories = [
     summary: "From fuel prices to trade decisions, track every effect the war in Iran has on East African forestry.",
     location: "East Africa",
     image: "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA28mi8n.img?w=2048&h=1365&m=4&q=81",
-    href: "/articles",
+    href: "#brief",
+    infoTopic: "Policy & Regulation",
     accent: "#e96e65",
   },
   {
@@ -52,10 +53,19 @@ const newsletterStories = [
     summary: "Follow the latest developments in geospatial intelligence relevant to forestry in East Africa",
     location: "East Africa",
     image: "https://eros.usgs.gov/doi-remote-sensing-activities/sites/default/files/public/USGS/Wu_lidar.png",
-    href: "https://eaforests.org/ea-forests-live/geospatial-intelligence-forestry",
+    href: "#brief",
+    infoTopic: "Technology",
     accent: "#8d92d1",
   },
 ] as const
+
+/** Opens the editorial Information hub below, filtered to a topic, instead of navigating away. */
+function openInformationTopic(event: MouseEvent<HTMLAnchorElement>, story: (typeof newsletterStories)[number]) {
+  if (!("infoTopic" in story)) return
+  event.preventDefault()
+  window.dispatchEvent(new CustomEvent("editorial:filter", { detail: { category: "Information", topic: story.infoTopic } }))
+  document.getElementById("brief")?.scrollIntoView({ behavior: "smooth", block: "start" })
+}
 
 const chapterNumber = (value: number) => String(value + 1).padStart(2, "0")
 const stackWidth = "clamp(52px, 5vw, 82px)"
@@ -244,7 +254,9 @@ export function NewsletterSection() {
                     if (!isActive) {
                       event.preventDefault()
                       moveTo(index)
+                      return
                     }
+                    openInformationTopic(event, story)
                   }}
                   className="group relative block size-full overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white"
                   aria-label={isActive ? `Read the ${story.chapter} brief` : `Show chapter ${index + 1}: ${story.chapter}`}
@@ -301,7 +313,7 @@ export function NewsletterSection() {
       <div className="lg:hidden">
         {newsletterStories.map((story, index) => (
           <article key={story.chapter} className="relative min-h-[100svh] border-b border-white/20">
-            <a href={story.href} className="group absolute inset-0 block overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white">
+            <a href={story.href} onClick={(event) => openInformationTopic(event, story)} className="group absolute inset-0 block overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white">
               <img src={story.image} alt="" className="absolute inset-0 size-full object-cover transition-transform duration-1000 group-hover:scale-105 motion-reduce:transition-none" />
               <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(2,4,3,.94)_0%,rgba(2,4,3,.42)_62%,rgba(2,4,3,.2)_100%)]" />
               <div className="absolute inset-0 grid grid-rows-[auto_1fr] p-2">

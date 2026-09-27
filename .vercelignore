@@ -3,10 +3,6 @@ docs
 outputs
 tmp
 vite-version/docs
-vite-version/public/dashboard-dark.png
-vite-version/public/dashboard-light.png
-vite-version/public/dashboard.png
-vite-version/public/Gatsby-Africa.png
 vite-version/public/*.mp4
 vite-version/public/video/genetics.mp4
 vite-version/public/video/mill.mp4
