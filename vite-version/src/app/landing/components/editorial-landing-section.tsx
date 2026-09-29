@@ -10,7 +10,8 @@ import SeedlingsBanner from "@/components/commerce-ui/seedlings-banner"
 import { AutoPlayVideo } from "@/components/auto-play-video"
 import { YouTubeVideoDialog } from "@/components/youtube-video-dialog"
 import { assetUrl } from "@/lib/utils"
-import { editorialActionLabels, editorialSubsections } from "./editorial-actions"
+import { EDITORIAL_FILTER_EVENT, EDITORIAL_STATE_EVENT, editorialActionLabels, editorialFilterCategories, editorialSubsections } from "./editorial-actions"
+import type { EditorialSelection } from "./editorial-actions"
 import type { EditorialCategory } from "./editorial-actions"
 import { InformationLiveHub, ResearchCardTile } from "./information-live-hub"
 import { informationHubTopics } from "@/app/information/data"
@@ -36,7 +37,8 @@ type Story = {
   category: EditorialCategory
   image: string
   href: string
-  updatedAt: string
+  /** Omitted for cards with nothing to date yet (e.g. coming-soon products). */
+  updatedAt?: string
   video?: string
   /** Sub-tag used for in-grid filtering. */
   topic?: string
@@ -71,13 +73,13 @@ const stories: Story[] = [
   { title: "The best planting material for East Africa", category: "Markets", image: "https://dryrocktreesnursery.com/cdn/shop/files/lodgepoletray.jpg?v=1759249757&width=1946", href: "/landing?market=seedlings#sector-map", market: "seedlings", updatedAt: "10 Aug 2026" },
   { title: "The ultimate site-species analysis tool", category: "Investments", image: "/tz.jpg", href: "/models/site-species-analysis", updatedAt: "9 Aug 2026", topic: "Industry Tools" },
   // Feature 4, first 5 s. Portrait clip on black, so it is shown uncropped (`videoFit`) and blends with the card.
-  { title: "EA forestry expert chatbot", category: "Investments", image: "/video/chatbot-preview.webp", video: "/video/chatbot-preview.mp4", videoFit: "contain", href: "/models/ea-forestry-expert-chatbot", updatedAt: "2026", topic: "Industry Tools", badge: comingSoonLabel(launchDates.eaForestryExpertChatbot) },
+  { title: "EA forestry expert chatbot", category: "Investments", image: "/video/chatbot-preview.webp", video: "/video/chatbot-preview.mp4", videoFit: "contain", href: "/models/ea-forestry-expert-chatbot", topic: "Industry Tools", badge: comingSoonLabel(launchDates.eaForestryExpertChatbot) },
   { title: "Build a high-performance forest asset today", category: "Investments", image: "/about.webp", href: "/shop/forests-land/high-performance-forests", updatedAt: "6 Aug 2026", topic: "Tested Investments" },
   { title: "Everything you need to know about clonal nursery business ", category: "Investments", image: "https://eucalyptusclones.in/images/clonal-gallery-1.png", href: "/models/clonal-eucalyptus-nursery", updatedAt: "7 Aug 2026", topic: "Industry Tools" },
   { title: "Find a contractor", category: "Markets", image: "https://cdn.britannica.com/77/213177-138-0C119CB6/Overview-silviculture-lumber-industry.jpg", href: "/landing?market=forestry-services#sector-map", market: "forestry-services", updatedAt: "5 Aug 2026" },
   { title: "It is time to restore the drylands profitably", category: "Investments", image: "/drylands.webp", href: "/shop/forests-land/dryland-frontier-forests", updatedAt: "2 Aug 2026", topic: "Tested Investments" },
-  { title: "Model the forest before committing capital", category: "Investments", image: "https://eros.usgs.gov/doi-remote-sensing-activities/sites/default/files/public/USGS/Wu_lidar.png", video: "/feature-3.mp4", href: "/models/model-2", updatedAt: "3 Aug 2026", topic: "Industry Tools" },
-  { title: "The top nurseries in the world are looking for partnerships in East Africa. Is it you?", category: "Information", image: "https://www.totalenergygroup.com/wp-content/uploads/2018/08/greenhouse_interior.jpg", href: "/articles/nursery-partnerships-east-africa", updatedAt: "4 Aug 2026" },
+  { title: "Model the forest before committing capital", category: "Investments", image: "/video/model-forest-preview.webp", video: "/video/model-forest-preview.mp4", href: "/models/model-2", updatedAt: "3 Aug 2026", topic: "Industry Tools" },
+  { title: "Here's how forests make money in East Africa", category: "Investments", image: "https://cdn.agriland.ie/uploads/2020/09/Image-source-Veon-2.jpg", href: "/models/model-3", updatedAt: "12 Aug 2026", topic: "Industry Tools" },
   { title: "Join the people building the sector", category: "Information", image: "/contact-2.webp", href: "#contact", updatedAt: "1 Aug 2026" },
 
   // Models — Genetic group (in development)
@@ -125,7 +127,7 @@ const editorialEvents: EditorialEvent[] = [
   { title: "Woodrise 2027", date: "25-29 Oct 2027", location: "Nara, Japan", tag: "Mass Timber", description: "International wood and timber-construction event already listed on ITTO's 2027 calendar.", href: "https://www.itto.int/events/55th_session_of_the_international_tropical_timber_council_and_sessions_of_t" },
 ]
 
-const editorialCategories: EditorialCategory[] = ["Information", "Investments", "Videos", "Events"]
+const editorialCategories: EditorialCategory[] = [...editorialFilterCategories]
 const initialVisibleStoryCount = 8
 const defaultInformationTopic = "Policy & Regulation"
 
@@ -240,9 +242,11 @@ function StoryTile({ story, size }: { story: Story; size?: string }) {
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/10 transition-colors duration-500 group-hover:from-black/95 group-hover:via-black/45" />
       {story.badge === "Coming soon" ? <div aria-hidden="true" className="coming-soon-card-tint" /> : null}
       <div ref={lightRef} aria-hidden className="pointer-events-none absolute inset-0 z-[1] opacity-0 transition-opacity duration-300" />
-      <span className="absolute left-5 top-5 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/30 px-3 py-1.5 text-xs font-medium text-white/75 backdrop-blur-sm sm:left-7 sm:top-7">
-        <Clock3 className="size-3" /> Last updated: {story.updatedAt}
-      </span>
+      {story.updatedAt ? (
+        <span className="absolute left-5 top-5 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/30 px-3 py-1.5 text-xs font-medium text-white/75 backdrop-blur-sm sm:left-7 sm:top-7">
+          <Clock3 className="size-3" /> Last updated: {story.updatedAt}
+        </span>
+      ) : null}
       {story.badge ? (
         <span className="absolute right-5 top-5 z-10 inline-flex items-center gap-1.5 rounded-full border border-emerald-300/40 bg-emerald-500/25 px-3 py-1.5 text-xs font-semibold uppercase tracking-[.14em] text-emerald-100 backdrop-blur-sm sm:right-7 sm:top-7">
           {story.badge}
@@ -428,21 +432,26 @@ export function EditorialBriefSection() {
 
   useEffect(() => {
     const handleEditorialFilter = (event: Event) => {
-      const detail = (event as CustomEvent<EditorialCategory | { category: EditorialCategory; topic?: string }>).detail
+      const detail = (event as CustomEvent<EditorialCategory | "All" | { category: EditorialCategory | "All"; topic?: string }>).detail
       const category = typeof detail === "string" ? detail : detail.category
       const topic = typeof detail === "string"
         ? category === "Information" ? defaultInformationTopic : null
         : detail.topic ?? (category === "Information" ? defaultInformationTopic : null)
-      if (!editorialCategories.includes(category)) return
+      if (category !== "All" && !editorialCategories.includes(category)) return
       setActiveCategory(category)
       setActiveTopic(topic)
       setVisibleCount(initialVisibleStoryCount)
       setFocusMode(null)
     }
 
-    window.addEventListener("editorial:filter", handleEditorialFilter)
-    return () => window.removeEventListener("editorial:filter", handleEditorialFilter)
+    window.addEventListener(EDITORIAL_FILTER_EVENT, handleEditorialFilter)
+    return () => window.removeEventListener(EDITORIAL_FILTER_EVENT, handleEditorialFilter)
   }, [])
+
+  // Let the mobile menu mirror the current selection.
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent<EditorialSelection>(EDITORIAL_STATE_EVENT, { detail: { category: activeCategory, topic: activeTopic } }))
+  }, [activeCategory, activeTopic])
 
   const selectCategory = (category: EditorialCategory | "All") => {
     setActiveCategory(category)

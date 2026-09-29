@@ -14,6 +14,7 @@ import {
 import { CommandSearch, SearchTrigger } from "@/components/command-search"
 import { ModeToggle } from "@/components/mode-toggle"
 import { getAppUrl } from "@/lib/utils"
+import { SAMPLE_DASHBOARD_PATH } from "@/app/asset-intelligence-sample/paths"
 
 const marketsNavItems = [
   { label: "Seed & Seedlings", href: "/shop/seedlings" },
@@ -111,13 +112,11 @@ export function SiteHeader() {
             </NavigationMenuList>
           </NavigationMenu>
           <div className="ml-auto flex items-center gap-2">
-            <PreviewWrap>
-              <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
-                <Link to="/dashboard" className="dark:text-foreground">
-                  Dashboard
-                </Link>
-              </Button>
-            </PreviewWrap>
+            <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
+              <Link to={SAMPLE_DASHBOARD_PATH} className="dark:text-foreground">
+                Dashboard
+              </Link>
+            </Button>
             <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
               <a
                 href={getAppUrl("/landing")}

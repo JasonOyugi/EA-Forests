@@ -8,6 +8,15 @@ export const editorialActionLabels: Record<EditorialCategory, string> = {
   Events: "View event",
 }
 
+/** Categories that filter the editorial grid (Markets opens the atlas instead). */
+export const editorialFilterCategories = ["Information", "Investments", "Videos", "Events"] as const satisfies readonly EditorialCategory[]
+
+/** Window events shared by the grid's toggles and the mobile menu. */
+export const EDITORIAL_FILTER_EVENT = "editorial:filter"
+export const EDITORIAL_STATE_EVENT = "editorial:state"
+
+export type EditorialSelection = { category: EditorialCategory | "All"; topic: string | null }
+
 export interface EditorialSubsection {
   label: string
   href: string

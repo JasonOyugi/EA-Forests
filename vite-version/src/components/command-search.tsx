@@ -24,6 +24,7 @@ import {
 
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { cn } from "@/lib/utils"
+import { SAMPLE_DASHBOARD_PATH } from "@/app/asset-intelligence-sample/paths"
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
@@ -127,7 +128,7 @@ export function CommandSearch({ open, onOpenChange }: CommandSearchProps) {
 
   const searchItems: SearchItem[] = [
     // Dashboards
-    { title: "Dashboard", url: "/dashboard", group: "Dashboards", icon: LayoutDashboard },
+    { title: "Asset Intelligence (sample)", url: SAMPLE_DASHBOARD_PATH, group: "Dashboards", icon: LayoutDashboard },
 
     // Apps
     { title: "Calendar", url: "/calendar", group: "Apps", icon: Calendar },

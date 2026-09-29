@@ -10,6 +10,8 @@ export function cn(...inputs: ClassValue[]) {
  * Handles both development and production asset paths
  */
 export function assetUrl(path: string): string {
+  // Absolute (https:, data:, blob:) and protocol-relative URLs are already complete.
+  if (/^([a-z][a-z\d+.-]*:|\/\/)/i.test(path)) return path
   const baseUrl = import.meta.env.BASE_URL || '/'
   const cleanPath = path.startsWith('/') ? path.slice(1) : path
   return baseUrl + cleanPath
