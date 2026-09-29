@@ -31,3 +31,28 @@ def configure_earth_engine_network() -> None:
 
 def earth_engine_project() -> str | None:
     return os.getenv("EARTH_ENGINE_PROJECT") or os.getenv("GOOGLE_CLOUD_PROJECT")
+
+
+SERVICE_ACCOUNT_KEY_ENV = "EARTH_ENGINE_SERVICE_ACCOUNT_KEY"
+_EE_SCOPES = (
+    "https://www.googleapis.com/auth/earthengine",
+    "https://www.googleapis.com/auth/cloud-platform",
+)
+
+
+def earth_engine_credentials():
+    """Server-side credentials, or None to let `ee` use local login / Application Default Credentials.
+
+    Hosts without an attached Google identity (e.g. Vercel) supply a service-account key as JSON in
+    EARTH_ENGINE_SERVICE_ACCOUNT_KEY — a server-only secret, never a VITE_/NEXT_PUBLIC_ variable.
+    On Cloud Run leave it unset and attach the service account to the service instead.
+    """
+    raw = os.getenv(SERVICE_ACCOUNT_KEY_ENV)
+    if not raw:
+        return None
+
+    import json
+
+    from google.oauth2 import service_account
+
+    return service_account.Credentials.from_service_account_info(json.loads(raw), scopes=_EE_SCOPES)

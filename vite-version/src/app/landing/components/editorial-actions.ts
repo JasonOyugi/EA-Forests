@@ -1,9 +1,9 @@
-export type EditorialCategory = "Information" | "Markets" | "Investment Models" | "Videos" | "Events"
+export type EditorialCategory = "Information" | "Markets" | "Investments" | "Videos" | "Events"
 
 export const editorialActionLabels: Record<EditorialCategory, string> = {
   Information: "Read more",
   Markets: "Go",
-  "Investment Models": "Explore",
+  Investments: "Explore",
   Videos: "Watch now",
   Events: "View event",
 }
@@ -25,7 +25,7 @@ export const editorialSubsections: Record<EditorialCategory, EditorialSubsection
     { label: "Technology", href: "#brief", topic: "Technology" },
   ],
   Markets: [],
-  "Investment Models": [
+  Investments: [
     { label: "Tested Investments", href: "#brief", topic: "Tested Investments" },
     { label: "Industry Tools", href: "#brief", topic: "Industry Tools" },
   ],

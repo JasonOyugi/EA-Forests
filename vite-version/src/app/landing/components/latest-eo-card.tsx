@@ -2,7 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { GeoJSON, useMap } from "react-leaflet"
 import type { Feature, FeatureCollection } from "geojson"
 import { geoJSON as leafletGeoJson, type Layer, type LeafletMouseEvent, type Path, type PathOptions } from "leaflet"
-import { Map } from "@/components/ui/map"
+import { LocateFixed, Minus, Plus } from "lucide-react"
+import { Map, MapControlContainer } from "@/components/ui/map"
 import { BasemapLayers } from "@/components/map/basemap-layers"
 import { useLazyMount } from "@/hooks/use-lazy-mount"
 import { assetUrl } from "@/lib/utils"
@@ -55,16 +56,68 @@ function featureStyle(feature?: Feature): PathOptions {
 }
 
 
+const FIT_PADDING: [number, number] = [12, 12]
+
 /** Frames the card on the country's actual polygons — a fixed center/zoom leaves most of a
- * small card showing neighbouring countries. */
+ * small card showing neighbouring countries. That country view is also the zoom-out floor. */
 function FitToForests({ forests }: { forests: FeatureCollection }) {
   const map = useMap()
   useEffect(() => {
     const bounds = leafletGeoJson(forests).getBounds()
-    if (bounds.isValid()) map.fitBounds(bounds, { padding: [12, 12], animate: false })
+    if (!bounds.isValid()) return
+    map.fitBounds(bounds, { padding: FIT_PADDING, animate: false })
+    map.setMinZoom(map.getZoom())
   }, [map, forests])
   return null
 }
+
+const controlButtonClass =
+  "flex size-9 items-center justify-center text-white transition-colors hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-emerald-300 disabled:opacity-40"
+
+/** Zoom in/out plus a reset back to the country framing. */
+function EoZoomControls({ forests, country }: { forests: FeatureCollection; country: string }) {
+  const map = useMap()
+  // The floor changes without the zoom changing (FitToForests), so track all three.
+  const readZoom = () => ({ zoom: map.getZoom(), min: map.getMinZoom(), max: map.getMaxZoom() })
+  const [{ zoom, min, max }, setZoomState] = useState(readZoom)
+
+  useEffect(() => {
+    const sync = () =>
+      setZoomState((prev) => {
+        const next = { zoom: map.getZoom(), min: map.getMinZoom(), max: map.getMaxZoom() }
+        return prev.zoom === next.zoom && prev.min === next.min && prev.max === next.max ? prev : next
+      })
+    map.on("zoomend zoomlevelschange", sync)
+    sync() // FitToForests (an earlier sibling) may already have framed the country.
+    return () => {
+      map.off("zoomend zoomlevelschange", sync)
+    }
+  }, [map])
+
+  const reset = () => {
+    const bounds = leafletGeoJson(forests).getBounds()
+    if (bounds.isValid()) map.fitBounds(bounds, { padding: FIT_PADDING })
+  }
+
+  return (
+    <MapControlContainer className="right-1 top-12">
+      <div role="group" aria-label={`${country} map zoom`} className="flex flex-col divide-y divide-white/15 overflow-hidden rounded-md border border-white/15 bg-black/70 backdrop-blur-sm">
+        <button type="button" className={controlButtonClass} aria-label="Zoom in" title="Zoom in" disabled={zoom >= max} onClick={() => map.zoomIn()}>
+          <Plus className="size-4" aria-hidden="true" />
+        </button>
+        <button type="button" className={controlButtonClass} aria-label="Zoom out" title="Zoom out" disabled={zoom <= min} onClick={() => map.zoomOut()}>
+          <Minus className="size-4" aria-hidden="true" />
+        </button>
+        <button type="button" className={controlButtonClass} aria-label={`Reset to ${country}`} title={`Reset to ${country}`} onClick={reset}>
+          <LocateFixed className="size-4" aria-hidden="true" />
+        </button>
+      </div>
+    </MapControlContainer>
+  )
+}
+
+/** Mouse users can drag to pan; on touch screens one finger keeps scrolling the page and pinch zooms. */
+const canDragMap = typeof window !== "undefined" && window.matchMedia("(pointer: fine)").matches
 
 let summaryPromise: Promise<Record<string, EoCountrySummary>> | null = null
 
@@ -123,12 +176,13 @@ export function EoTile({ config, size = "" }: { config: EoCountryConfig; size?: 
     const onEachFeature = (feature: Feature, layer: Layer) => {
       const name = (feature.properties?.name as string | undefined) ?? "Forest"
       const key = feature.properties?.key as string | undefined
+      const areaHa = feature.properties?.areaHa as number | undefined
       layer.bindTooltip(name, { sticky: true })
       if (!key) return
       layer.on({
         click: (event: LeafletMouseEvent) => {
           event.originalEvent.stopPropagation()
-          setSelection({ countryCode: countryCodeRef.current, key, name })
+          setSelection({ countryCode: countryCodeRef.current, key, name, areaHa })
         },
         mouseover: () => (layer as Path).setStyle({ fillOpacity: 0.45, weight: 2.4 }),
         mouseout: () => (layer as Path).setStyle(featureStyle(feature)),
@@ -138,16 +192,17 @@ export function EoTile({ config, size = "" }: { config: EoCountryConfig; size?: 
       <>
         <GeoJSON data={forests} style={featureStyle} onEachFeature={onEachFeature} />
         <FitToForests forests={forests} />
+        <EoZoomControls forests={forests} country={config.country} />
       </>
     )
-  }, [forests])
+  }, [forests, config.country])
 
   return (
     <article ref={ref} className={`landing-story-card group relative block overflow-hidden bg-zinc-900 ${size}`}>
       {!shouldMount || state.status === "loading" ? (
         <div className="absolute inset-0 animate-pulse bg-zinc-800" />
       ) : state.status === "ready" ? (
-        <Map center={config.center} zoom={config.zoom} className="absolute inset-0 min-h-0 rounded-none" dragging={false} scrollWheelZoom={false} doubleClickZoom={false} touchZoom={false} boxZoom={false} keyboard={false}>
+        <Map center={config.center} zoom={config.zoom} className="absolute inset-0 min-h-0 rounded-none" dragging={canDragMap} scrollWheelZoom={false} doubleClickZoom touchZoom boxZoom={false} keyboard={false}>
           <BasemapLayers>{geoJson}</BasemapLayers>
         </Map>
       ) : (
@@ -167,7 +222,7 @@ export function EoTile({ config, size = "" }: { config: EoCountryConfig; size?: 
           </p>
         ) : null}
         <p className="mt-1 text-xs text-white/45">Boundaries: {config.source}</p>
-        {state.status === "ready" ? <p className="mt-1 text-xs text-emerald-200/80">Click any forest for its EO evidence</p> : null}
+        {state.status === "ready" ? <p className="mt-1 text-xs text-emerald-200/80">Click any forest for its EO evidence · zoom with + / −</p> : null}
       </div>
 
       <EoEvidenceSheet selection={selection} onClose={() => setSelection(null)} />

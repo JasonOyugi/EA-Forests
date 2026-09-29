@@ -2,15 +2,16 @@
 
 import * as React from "react"
 import { useParams, Navigate, Link } from "react-router-dom"
-import { ArrowLeft, Hourglass, type LucideIcon, LineChart, Dna, Trophy } from "lucide-react"
+import { ArrowLeft, Bot, Hourglass, type LucideIcon, LineChart, Dna, Trophy } from "lucide-react"
 
 import { BaseLayout } from "@/components/layouts/base-layout"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { launchDates } from "@/config/launch-dates"
 
 interface ComingSoonModelConfig {
   title: string
-  category: "Genetic" | "Commercial" | "Economic"
+  category: "Genetic" | "Commercial" | "Economic" | "Advisory"
   description: string
   /** ISO date string the model is expected to ship. */
   expectedAt: string
@@ -41,6 +42,14 @@ const comingSoonModels: Record<string, ComingSoonModelConfig> = {
       "Region-wide supply/demand, price, and land-use projections for the East African forestry sector, built on trade, FX, and land-cost data.",
     expectedAt: "2027-05-31",
     icon: LineChart,
+  },
+  "ea-forestry-expert-chatbot": {
+    title: "EA forestry expert chatbot",
+    category: "Advisory",
+    description:
+      "A chat assistant for East African forestry questions (species and site choice, silviculture, markets and investment basics), drawing on EA Forests' models and market data.",
+    expectedAt: launchDates.eaForestryExpertChatbot,
+    icon: Bot,
   },
 }
 

@@ -47,6 +47,12 @@ export interface EoEvidenceSelection {
   countryCode: string
   key: string
   name: string
+  /** Mapped polygon area, from the forest boundary snapshot. */
+  areaHa?: number
+}
+
+function formatPolygonArea(areaHa: number) {
+  return areaHa < 1 ? "< 1 ha" : `${Math.round(areaHa).toLocaleString("en-US")} ha`
 }
 
 const WINDOW_MONTHS = 12
@@ -296,6 +302,12 @@ export function EoEvidenceSheet({ selection, onClose }: { selection: EoEvidenceS
             ) : null}
           </div>
           <SheetTitle className="text-xl">{selection?.name}</SheetTitle>
+          {typeof selection?.areaHa === "number" ? (
+            <p className="text-sm">
+              <span className="text-muted-foreground">Mapped area </span>
+              <span className="font-semibold tabular-nums">{formatPolygonArea(selection.areaHa)}</span>
+            </p>
+          ) : null}
           <SheetDescription>
             Real Sentinel-1/2 earth-observation evidence for this forest: not a forest-health, timber, or supply claim.
           </SheetDescription>

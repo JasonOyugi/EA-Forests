@@ -24,15 +24,15 @@ export default function ShopProductPage() {
 
   const isFlagshipProduct = productSlug in flagshipPricingCatalog
 
+  // Investment pathways are a focused journey with their own minimal shell (no site-wide header).
+  if (isFlagshipProduct && !product.plantingMaterialType) {
+    return <FlagshipInvestmentPage item={product} onBack={() => window.history.back()} />
+  }
+
   return (
     <BaseLayout>
       <div className="mx-auto">
-        {product.plantingMaterialType ? <PlantingProductPage key={product.id} item={product} onBack={() => window.history.back()} /> : isFlagshipProduct ? (
-          <FlagshipInvestmentPage
-            item={product}
-            onBack={() => window.history.back()}
-          />
-        ) : (
+        {product.plantingMaterialType ? <PlantingProductPage key={product.id} item={product} onBack={() => window.history.back()} /> : (
           <ProductPage
             item={product}
             onBack={() => window.history.back()}

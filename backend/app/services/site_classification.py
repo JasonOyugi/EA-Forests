@@ -19,6 +19,7 @@ from app.schemas import SiteClassificationRequest
 from app.earth_engine import (
     USE_SYSTEM_PROXY_ENV,
     configure_earth_engine_network,
+    earth_engine_credentials,
     earth_engine_project,
 )
 
@@ -246,7 +247,10 @@ def ensure_earth_engine_initialized() -> bool:
     project = earth_engine_project()
 
     try:
-        if project:
+        credentials = earth_engine_credentials()
+        if credentials is not None:
+            ee.Initialize(credentials=credentials, project=project or credentials.project_id)
+        elif project:
             ee.Initialize(project=project)
         else:
             ee.Initialize()

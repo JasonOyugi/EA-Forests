@@ -11,6 +11,8 @@ const Model2 = lazy(() => import('@/app/models/model-2/page'))
 const Model3 = lazy(() => import('@/app/models/model-3/page'))
 const ClonalEucalyptusNursery = lazy(() => import('@/app/models/clonal-eucalyptus-nursery/page'))
 const ModelComingSoon = lazy(() => import('@/app/models/coming-soon/page'))
+const AssetIntelligenceSample = lazy(() => import('@/app/asset-intelligence-sample/page'))
+const AssetIntelligenceSampleMap = lazy(() => import('@/app/asset-intelligence-sample/assets-map/page'))
 const NotFound = lazy(() => import('@/app/errors/not-found/page'))
 
 export interface RouteConfig {
@@ -83,6 +85,15 @@ export const routes: RouteConfig[] = [
   {
     path: "/models/:modelSlug",
     element: <ModelComingSoon />
+  },
+  // Isolated sample of the pre-EO Asset Intelligence dashboard (synthetic data only).
+  {
+    path: "/asset-intelligence/sample",
+    element: <AssetIntelligenceSample />
+  },
+  {
+    path: "/asset-intelligence/sample/assets-map",
+    element: <AssetIntelligenceSampleMap />
   },
   {
     path: "/errors/not-found",

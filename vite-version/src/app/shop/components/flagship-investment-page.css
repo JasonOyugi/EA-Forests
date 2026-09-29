@@ -1,0 +1,796 @@
+/*
+ * Investment pathway pages (Basic / Improved / Drylands).
+ *
+ * Composition: one fixed map layer sits behind the whole page. The navbar and footer show that
+ * live map directly; content sections sit on the normal page surface (`.ip-surface`), which lets
+ * only a trace of the map through; the Premium Investment band (`.ip-map-band`) drops the surface
+ * so the map is revealed. Colours derive from the theme tokens so light and dark are both designed.
+ *
+ * Note: alpha mixes use `in srgb`. Mixing a colour with `transparent` in oklch drops its hue to
+ * `none`, which Chrome renders as hue 0 (pink).
+ */
+
+.investment-page {
+  --ip-surface: color-mix(in srgb, var(--background) 94%, transparent);
+  --ip-map-tint: color-mix(in srgb, var(--primary) 16%, transparent);
+  --ip-map-veil: color-mix(in srgb, var(--background) 30%, transparent);
+  --ip-map-filter: saturate(0.55) contrast(0.96);
+  --ip-card-shadow: 0 20px 40px color-mix(in srgb, var(--primary) 14%, transparent);
+  --ip-glow-edge: color-mix(in srgb, var(--ip-accent-500) 34%, transparent);
+  --ip-glow-soft: color-mix(in srgb, var(--ip-accent-500) 14%, transparent);
+  --ip-glow-text: color-mix(in srgb, var(--ip-accent-500) 50%, transparent);
+  --ip-band-scrim-color: color-mix(in srgb, var(--foreground) 69%, transparent);
+  --ip-band-fg: var(--primary-foreground);
+  --ip-nav-fade: 1.5rem;
+  /* The Premium band's scrim: one even tone (no directional light), shared by navbar, band and footer. */
+  --ip-band-scrim: linear-gradient(var(--ip-band-scrim-color), var(--ip-band-scrim-color));
+
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  color: var(--foreground);
+  background: transparent;
+}
+
+.dark .investment-page {
+  --ip-surface: color-mix(in srgb, var(--background) 95%, transparent);
+  --ip-map-tint: color-mix(in srgb, var(--primary) 10%, transparent);
+  --ip-map-veil: color-mix(in srgb, var(--background) 45%, transparent);
+  /* The topographic sheets are light paper maps: invert them into a night map for dark mode. */
+  --ip-map-filter: invert(1) hue-rotate(180deg) saturate(0.5) brightness(0.78);
+  --ip-card-shadow: 0 20px 40px rgb(0 0 0 / 0.32);
+  --ip-glow-edge: color-mix(in srgb, var(--ip-accent-400) 30%, transparent);
+  --ip-glow-soft: color-mix(in srgb, var(--ip-accent-400) 12%, transparent);
+  --ip-glow-text: color-mix(in srgb, var(--ip-accent-400) 55%, transparent);
+  --ip-band-scrim-color: color-mix(in srgb, var(--background) 64%, transparent);
+  --ip-band-fg: var(--foreground);
+}
+
+/* Pathway colour schemes -------------------------------------------------------------
+ * Each pathway takes the colour of its timber. Basic keeps the site's nature/emerald theme
+ * (OKLCH hue ~151); Improved is eucalyptus blue (hue ~218, muted chroma); Drylands is mahogany
+ * (red-brown hue ~33 in light, copper hue ~46 in dark, warm-cream surfaces). Tokens are derived
+ * from Basic's at the same OKLCH lightness, so contrast matches Basic; all text pairs >= 4.5:1. */
+
+.investment-page {
+  --ip-accent-500: #10b981;
+  --ip-accent-400: #34d399;
+  --ip-accent-300: #6ee7b7;
+  --ip-accent-100: #d1fae5;
+}
+
+.investment-page[data-pathway="improved"] {
+  --background: #eef7fa;
+  --foreground: #1d383e;
+  --card: #f8fcfd;
+  --card-foreground: #1d383e;
+  --primary: #305c6a;
+  --primary-foreground: #f8fcfd;
+  --secondary: #dff0f4;
+  --secondary-foreground: #1d383e;
+  --muted: #e7f3f6;
+  --muted-foreground: #455e67;
+  --accent: #d0eaf1;
+  --accent-foreground: #1d383e;
+  --border: #bedae1;
+  --input: #bedae1;
+  --ring: #457789;
+  --ip-accent-500: #66a8be;
+  --ip-accent-400: #7cc1d8;
+  --ip-accent-300: #9dd6eb;
+  --ip-accent-100: #d9f4fc;
+}
+
+.dark .investment-page[data-pathway="improved"] {
+  --background: #1d282b;
+  --foreground: #e8edee;
+  --card: #2d383b;
+  --card-foreground: #e8edee;
+  --primary: #59a2ba;
+  --primary-foreground: #091d21;
+  --secondary: #3d484b;
+  --secondary-foreground: #d6dfe1;
+  --muted: #2d383b;
+  --muted-foreground: #c9d2d4;
+  --accent: #448398;
+  --accent-foreground: #e8edee;
+  --border: #3d484b;
+  --input: #3d484b;
+  --ring: #59a2ba;
+}
+
+.investment-page[data-pathway="drylands"] {
+  --background: #f9f4f1;
+  --foreground: #3d3028;
+  --card: #fdfbf9;
+  --card-foreground: #3d3028;
+  --primary: #7d4235;
+  --primary-foreground: #fdfbf9;
+  --secondary: #f4eae4;
+  --secondary-foreground: #3d3028;
+  --muted: #f5efeb;
+  --muted-foreground: #744f46;
+  --accent: #f0e2d8;
+  --accent-foreground: #3d3028;
+  --border: #e0d1c7;
+  --input: #e0d1c7;
+  --ring: #9f5a4b;
+  --ip-accent-500: #cd8b6c;
+  --ip-accent-400: #e8a281;
+  --ip-accent-300: #f9bca0;
+  --ip-accent-100: #fbebe1;
+}
+
+.dark .investment-page[data-pathway="drylands"] {
+  --background: #2b2521;
+  --foreground: #eeebe9;
+  --card: #3b3531;
+  --card-foreground: #eeebe9;
+  --primary: #c88362;
+  --primary-foreground: #211711;
+  --secondary: #4b4541;
+  --secondary-foreground: #e1dcd9;
+  --muted: #3b3531;
+  --muted-foreground: #d4cfcc;
+  --accent: #a3684c;
+  --accent-foreground: #eeebe9;
+  --border: #4b4541;
+  --input: #4b4541;
+  --ring: #c88362;
+}
+
+/* Shared badge / shimmer utilities are emerald site-wide; retint them per pathway here. */
+.investment-page .badge-emerald-run::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--ip-accent-500) 20%, transparent),
+    color-mix(in srgb, var(--ip-accent-500) 90%, transparent),
+    color-mix(in srgb, var(--ip-accent-500) 20%, transparent),
+    transparent
+  );
+  background-size: 300% 100%;
+}
+
+.ip-shimmer {
+  background: linear-gradient(
+    to right,
+    color-mix(in srgb, var(--ip-accent-400) 25%, transparent),
+    color-mix(in srgb, var(--ip-accent-400) 10%, transparent),
+    transparent
+  );
+}
+
+/* Persistent environmental layer. Fixed pseudo-elements are composited once: no scroll listeners. */
+.investment-page::before,
+.investment-page::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.investment-page::before {
+  background: var(--background) var(--investment-map-image) center / cover no-repeat;
+  filter: var(--ip-map-filter);
+  transform: translateZ(0);
+}
+
+.investment-page::after {
+  background:
+    linear-gradient(var(--ip-map-tint), var(--ip-map-tint)),
+    linear-gradient(var(--ip-map-veil), var(--ip-map-veil));
+}
+
+/* Navbar: the same live map + scrim as the Premium Investment band, so the two are identical. */
+.investment-page .focused-nav {
+  isolation: isolate;
+  background: transparent;
+  color: var(--ip-band-fg);
+  border-color: transparent;
+}
+
+.investment-page .focused-nav a {
+  color: inherit;
+}
+
+.investment-page .focused-nav a:hover {
+  color: var(--ip-accent-300);
+}
+
+/* The band is dark in both themes, so always use the light logo variant here. */
+.investment-page .focused-nav-logo img:first-child { display: none; }
+.investment-page .focused-nav-logo img:last-child { display: block; }
+
+/* Both layers run 1.5rem past the bar and are masked out, so the edge dissolves whether the
+   section underneath is the solid surface or the exposed map. */
+.investment-page .focused-nav::before,
+.investment-page .focused-nav::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 calc(-1 * var(--ip-nav-fade)) 0;
+  z-index: -1;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - var(--ip-nav-fade)), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - var(--ip-nav-fade)), transparent);
+}
+
+.investment-page .focused-nav::before {
+  background: var(--background) var(--investment-map-image) center / cover no-repeat fixed;
+  filter: var(--ip-map-filter);
+}
+
+.investment-page .focused-nav::after {
+  background:
+    var(--ip-band-scrim),
+    linear-gradient(var(--ip-map-tint), var(--ip-map-tint)),
+    linear-gradient(var(--ip-map-veil), var(--ip-map-veil));
+}
+
+/* Layout ------------------------------------------------------------ */
+
+.ip-container {
+  width: 100%;
+  max-width: 90rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 640px) {
+  .ip-container { padding-inline: 1.5rem; }
+}
+
+@media (min-width: 1024px) {
+  .ip-container { padding-inline: 2.5rem; }
+}
+
+.ip-surface {
+  position: relative;
+  background: var(--ip-surface);
+}
+
+/* Hero image: stretches with the copy column on desktop, down to the metric cards. */
+.ip-hero-figure {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  aspect-ratio: 16 / 10;
+  max-height: 24rem;
+  background: var(--muted);
+}
+
+@media (min-width: 1024px) {
+  .ip-hero-figure {
+    /* No intrinsic height: the grid row (set by the copy column) decides, so the image always
+       ends exactly where the metric cards end. */
+    aspect-ratio: auto;
+    max-height: none;
+  }
+}
+
+/* Type -------------------------------------------------------------- */
+
+.ip-hero-title,
+.ip-section-title {
+  font-family: var(--font-canals);
+  font-stretch: condensed;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  color: var(--foreground);
+}
+
+.ip-hero-title {
+  font-size: clamp(2.75rem, 5.6vw, 6rem);
+  line-height: 0.86;
+  letter-spacing: -0.055em;
+}
+
+.ip-section-title {
+  font-size: clamp(2.25rem, 4.6vw, 4.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+
+.ip-lead {
+  font-size: clamp(1rem, 1.1vw, 1.125rem);
+  line-height: 1.65;
+  color: var(--muted-foreground);
+}
+
+/* Badges: the earlier running-border badges, recoloured from the theme instead of neon fills. */
+.ip-badge {
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--primary);
+  border-color: color-mix(in srgb, var(--primary) 28%, transparent);
+  background: color-mix(in srgb, var(--primary) 7%, transparent);
+}
+
+.ip-badge--solid {
+  background: color-mix(in srgb, var(--primary) 13%, var(--background));
+  border-color: color-mix(in srgb, var(--primary) 38%, transparent);
+}
+
+.ip-badge--band {
+  color: var(--ip-accent-100);
+  border-color: color-mix(in srgb, var(--ip-accent-300) 45%, transparent);
+  background: color-mix(in srgb, var(--ip-accent-500) 16%, transparent);
+}
+
+/* Cards: restored hover-card language ------------------------------ */
+
+.flagship-premium-hover-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid transparent;
+  background: transparent;
+  box-shadow: none;
+  transition:
+    transform 280ms ease,
+    border-color 280ms ease,
+    background-color 280ms ease,
+    box-shadow 280ms ease;
+}
+
+/* Running accent edge on hover / focus. */
+.flagship-premium-hover-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--ip-accent-500) 18%, transparent),
+    color-mix(in srgb, var(--ip-accent-500) 92%, transparent),
+    color-mix(in srgb, var(--ip-accent-500) 20%, transparent),
+    transparent
+  );
+  background-size: 300% 100%;
+  opacity: 0;
+  transition: opacity 220ms ease;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.flagship-premium-hover-card:hover,
+.flagship-premium-hover-card:focus-within {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--ip-accent-500) 55%, transparent);
+  box-shadow:
+    var(--ip-card-shadow),
+    0 0 28px color-mix(in srgb, var(--ip-accent-500) 20%, transparent),
+    inset 0 0 22px var(--ip-glow-soft);
+}
+
+/* Titles and icons light up with the card. */
+.flagship-premium-hover-card :is(h3, h4, dt, dd, .ip-glow, .ip-price-amount, .ip-value-title) {
+  transition: text-shadow 280ms ease;
+}
+
+.flagship-premium-hover-card:is(:hover, :focus-within) :is(h3, h4, dt, dd, .ip-glow, .ip-price-amount, .ip-value-title) {
+  text-shadow: 0 0 16px var(--ip-glow-text);
+}
+
+.flagship-premium-hover-card .flagship-card-icon svg {
+  transition: filter 280ms ease;
+}
+
+.flagship-premium-hover-card:is(:hover, :focus-within) .flagship-card-icon svg {
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--ip-accent-400) 85%, transparent));
+}
+
+.flagship-premium-hover-card:hover::before,
+.flagship-premium-hover-card:focus-within::before {
+  animation: emerald-run 2s linear infinite;
+  opacity: 1;
+}
+
+.flagship-card-icon {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 280ms ease,
+    box-shadow 280ms ease;
+}
+
+.flagship-card-icon::after {
+  content: "";
+  position: absolute;
+  inset: -45%;
+  background: linear-gradient(120deg, transparent 30%, rgb(255 255 255 / 0.78), transparent 68%);
+  transform: translateX(-120%) rotate(14deg);
+  opacity: 0;
+}
+
+.flagship-premium-hover-card:hover .flagship-card-icon,
+.flagship-premium-hover-card:focus-within .flagship-card-icon {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 24px color-mix(in srgb, var(--ip-accent-500) 14%, transparent);
+}
+
+.flagship-premium-hover-card:hover .flagship-card-icon::after,
+.flagship-premium-hover-card:focus-within .flagship-card-icon::after {
+  animation: flagshipIconGlisten 0.95s ease;
+  opacity: 1;
+}
+
+@keyframes flagshipIconGlisten {
+  0% { transform: translateX(-120%) rotate(14deg); }
+  100% { transform: translateX(140%) rotate(14deg); }
+}
+
+/* Prices ------------------------------------------------------------ */
+
+.ip-price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.35rem;
+  color: var(--primary);
+}
+
+.ip-price-approx {
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+.ip-price-amount {
+  font-family: var(--font-canals);
+  font-stretch: condensed;
+  font-size: clamp(2.1rem, 3.6vw, 3rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ip-price-unit {
+  font-size: 0.95rem;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+/* Premium investment band: the map is revealed -------------------- */
+
+.ip-map-band {
+  position: relative;
+  color: var(--ip-band-fg);
+}
+
+/* Scrim over the map, with soft edges so the surface dissolves into it rather than stopping. */
+.ip-map-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, var(--ip-surface), transparent clamp(3rem, 8vw, 7rem)),
+    linear-gradient(to top, var(--ip-surface), transparent clamp(3rem, 8vw, 7rem)),
+    var(--ip-band-scrim);
+}
+
+.ip-map-band .ip-section-title {
+  color: inherit;
+}
+
+.ip-band-muted {
+  opacity: 0.78;
+}
+
+.ip-stage-card {
+  color: inherit;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.07), rgb(255 255 255 / 0.03));
+}
+
+.ip-stage-card:hover,
+.ip-stage-card:focus-within {
+  border-color: color-mix(in srgb, var(--ip-accent-400) 60%, transparent);
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.05));
+  box-shadow:
+    0 20px 40px rgb(5 16 24 / 0.22),
+    0 0 24px color-mix(in srgb, var(--ip-accent-500) 10%, transparent);
+}
+
+.flagship-premium-badge {
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.12);
+}
+
+.flagship-premium-badge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--ip-accent-300) 22%, transparent), color-mix(in srgb, var(--ip-accent-500) 95%, transparent), color-mix(in srgb, var(--ip-accent-300) 22%, transparent), transparent);
+  background-size: 300% 100%;
+  animation: emerald-run 2.4s linear infinite;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.flagship-progression-shell {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--ip-accent-500) 45%, transparent) transparent;
+}
+
+.flagship-progress-arrow {
+  color: var(--progress-accent);
+  transition: transform 260ms ease, filter 260ms ease;
+}
+
+.flagship-progress-arrow svg {
+  transition: transform 260ms ease, filter 260ms ease;
+  filter:
+    drop-shadow(0 0 10px var(--progress-accent-soft))
+    drop-shadow(0 0 16px color-mix(in srgb, var(--progress-accent) 32%, transparent));
+}
+
+.flagship-progression-shell:hover .flagship-progress-arrow svg,
+.flagship-progression-shell:focus-within .flagship-progress-arrow svg {
+  transform: translateX(6px) scale(1.16);
+}
+
+.ip-signal-pill {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid;
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.ip-signal-pill--light {
+  border-color: rgb(15 23 42 / 0.15);
+  background: rgb(255 255 255);
+  color: rgb(2 6 23);
+}
+
+.ip-signal-pill--dark {
+  border-color: rgb(255 255 255 / 0.15);
+  background: rgb(2 6 23);
+  color: rgb(255 255 255);
+}
+
+.ip-productivity {
+  background: transparent;
+  color: inherit;
+  transition: box-shadow 280ms ease;
+}
+
+.ip-productivity .ip-productivity-label {
+  opacity: 0.68;
+}
+
+.chart-card-running-boundary:is(:hover, :focus-within) .ip-productivity {
+  box-shadow:
+    0 0 28px color-mix(in srgb, var(--ip-accent-500) 20%, transparent),
+    inset 0 0 22px var(--ip-glow-soft);
+}
+
+.chart-card-running-boundary:is(:hover, :focus-within) :is(dt, dd) {
+  text-shadow: 0 0 16px var(--ip-glow-text);
+}
+
+/* Valuation cards: the photograph is the card, copy sits on a scrim --- */
+
+.ip-value-card {
+  color: rgb(255 255 255);
+  text-decoration: none;
+  background: rgb(3 8 15);
+}
+
+.ip-value-card:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.ip-value-scrim {
+  background: linear-gradient(to top, rgb(3 8 15 / 0.92) 0%, rgb(3 8 15 / 0.72) 38%, rgb(3 8 15 / 0.12) 72%, transparent 100%);
+}
+
+.ip-value-kicker { color: rgb(255 255 255 / 0.72); }
+.ip-value-copy { color: rgb(255 255 255 / 0.84); }
+.ip-value-cta { color: var(--ip-accent-300); }
+
+.ip-value-image {
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ip-value-card:hover .ip-value-image,
+.ip-value-card:focus-visible .ip-value-image {
+  transform: scale(1.05);
+}
+
+.ip-value-arrow {
+  transition: transform 200ms ease;
+}
+
+.ip-value-card:hover .ip-value-arrow,
+.ip-value-card:focus-visible .ip-value-arrow {
+  transform: translateX(4px);
+}
+
+/* Invest now disclosure --------------------------------------------- */
+
+.ip-contact-option {
+  display: flex;
+  min-height: 3.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid transparent;
+  background: transparent;
+  padding-inline: 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--foreground);
+  text-decoration: none;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.ip-contact-option:hover {
+  border-color: color-mix(in srgb, var(--ip-accent-500) 60%, transparent);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--ip-accent-500) 22%, transparent);
+  text-shadow: 0 0 14px var(--ip-glow-text);
+}
+
+.ip-contact-option:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* Footer: numbered notes on the live map ---------------------------- */
+
+.ip-map-footer {
+  position: relative;
+  color: var(--ip-band-fg);
+  background:
+    linear-gradient(to bottom, var(--ip-surface), transparent clamp(3rem, 8vw, 7rem)),
+    var(--ip-band-scrim);
+}
+
+.ip-map-footer .ip-fn-back {
+  color: inherit;
+  opacity: 0.72;
+}
+
+.ip-map-footer .ip-fn-back:hover {
+  color: var(--ip-accent-300);
+  opacity: 1;
+}
+
+/* Footnotes --------------------------------------------------------- */
+
+.ip-fn-ref {
+  font-size: 0.7em;
+  line-height: 0;
+  vertical-align: super;
+  margin-inline-start: 0.1em;
+}
+
+/* Small glyph, comfortable hit area. */
+.ip-fn-ref a {
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0.55em 0.25em;
+  margin: -0.55em -0.2em;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--primary);
+  text-decoration: none;
+  scroll-margin-top: 6rem;
+}
+
+.ip-map-band .ip-fn-ref a,
+.ip-signal-pill .ip-fn-ref a {
+  color: inherit;
+}
+
+.ip-fn-ref a:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.ip-fn-ref a:focus-visible,
+.ip-fn-back:focus-visible,
+.ip-dot:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 1px;
+}
+
+.ip-fn {
+  scroll-margin-top: 6rem;
+  border-radius: 0.5rem;
+  transition: background-color 400ms ease;
+}
+
+.ip-fn:target {
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  outline: 4px solid color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+.ip-fn-back {
+  display: inline-block;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+  text-align: center;
+  line-height: 1.5rem;
+  color: var(--muted-foreground);
+  text-decoration: none;
+}
+
+.ip-fn-back:hover {
+  color: var(--primary);
+}
+
+/* Motion ------------------------------------------------------------ */
+
+/* Keep the shared reveal language, minus the blur (expensive to animate across large panels). */
+.investment-page .scroll-reveal {
+  filter: none;
+  transform: translate3d(0, var(--reveal-distance, 16px), 0);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: auto;
+}
+
+.investment-page .scroll-reveal.is-visible {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .investment-page .scroll-reveal,
+  .flagship-premium-hover-card,
+  .flagship-card-icon,
+  .ip-value-image,
+  .ip-value-arrow,
+  .ip-contact-option,
+  .ip-fn {
+    transition: none;
+  }
+
+  .flagship-premium-hover-card:hover,
+  .flagship-premium-hover-card:focus-within,
+  .ip-value-card:hover .ip-value-image {
+    transform: none;
+  }
+
+  .investment-page .badge-emerald-run::before,
+  .investment-page .flagship-premium-badge::before,
+  .investment-page .flagship-premium-hover-card::before,
+  .investment-page .flagship-card-icon::after {
+    animation: none;
+  }
+}

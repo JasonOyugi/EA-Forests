@@ -21,6 +21,7 @@ import type { SectorMetric, SectorPlayer } from "./sector-data"
 import { forestryResources } from "../data/forestry-resources"
 import { EoTile, eoCountries } from "./latest-eo-card"
 import type { MarketId } from "@/app/shop/market-atlas/types"
+import { comingSoonLabel, launchDates } from "@/config/launch-dates"
 
 const MarketAtlasShell = lazy(() =>
   import("@/app/shop/market-atlas/components/market-atlas-shell").then((module) => ({
@@ -41,6 +42,8 @@ type Story = {
   topic?: string
   /** Optional status ribbon shown over the card. */
   badge?: string
+  /** "contain" shows the whole video (for clips with their own backdrop) instead of cropping to fill. */
+  videoFit?: "cover" | "contain"
   /** Market atlas to open inline (Markets stories only). */
   market?: MarketId
 }
@@ -63,25 +66,26 @@ type EditorialEvent = {
 }
 
 const stories: Story[] = [
-  { title: "Here's how forests make money in East Africa", category: "Investment Models", image: "https://cdn.agriland.ie/uploads/2020/09/Image-source-Veon-2.jpg", href: "/models/model-3", updatedAt: "12 Aug 2026", topic: "Industry Tools" },
+  { title: "Start a forestry investment guaranteed to generate returns", category: "Investments", image: "/eucalyptus.jpg", href: "/shop/forests-land/core-forests", updatedAt: "8 Aug 2026", topic: "Tested Investments" },
   { title: "Ready to sell your wood?", category: "Markets", image: "https://saforestryonline.co.za/wp-content/uploads/2025/07/The-John-Deere-2144G-tracked-swing-harvester-is-ideal-for-fast-growing-high-yield-plantations-scaled.jpg", href: "/landing?market=wood-markets-map#sector-map", market: "wood-markets-map", updatedAt: "11 Aug 2026" },
   { title: "The best planting material for East Africa", category: "Markets", image: "https://dryrocktreesnursery.com/cdn/shop/files/lodgepoletray.jpg?v=1759249757&width=1946", href: "/landing?market=seedlings#sector-map", market: "seedlings", updatedAt: "10 Aug 2026" },
-  { title: "The ultimate site-species analysis tool", category: "Investment Models", image: "/tz.jpg", href: "/models/site-species-analysis", updatedAt: "9 Aug 2026", topic: "Industry Tools" },
-  { title: "Start a forestry investment guaranteed to generate returns", category: "Investment Models", image: "/eucalyptus.jpg", href: "/shop/forests-land/core-forests", updatedAt: "8 Aug 2026", topic: "Tested Investments" },
-  { title: "Everything you need to know about clonal nursery business ", category: "Investment Models", image: "https://eucalyptusclones.in/images/clonal-gallery-1.png", href: "/models/clonal-eucalyptus-nursery", updatedAt: "7 Aug 2026", topic: "Industry Tools" },
-  { title: "Build a high-performance forest asset today", category: "Investment Models", image: "/about.webp", href: "/shop/forests-land/high-performance-forests", updatedAt: "6 Aug 2026", topic: "Tested Investments" },
+  { title: "The ultimate site-species analysis tool", category: "Investments", image: "/tz.jpg", href: "/models/site-species-analysis", updatedAt: "9 Aug 2026", topic: "Industry Tools" },
+  // Feature 4, first 5 s. Portrait clip on black, so it is shown uncropped (`videoFit`) and blends with the card.
+  { title: "EA forestry expert chatbot", category: "Investments", image: "/video/chatbot-preview.webp", video: "/video/chatbot-preview.mp4", videoFit: "contain", href: "/models/ea-forestry-expert-chatbot", updatedAt: "2026", topic: "Industry Tools", badge: comingSoonLabel(launchDates.eaForestryExpertChatbot) },
+  { title: "Build a high-performance forest asset today", category: "Investments", image: "/about.webp", href: "/shop/forests-land/high-performance-forests", updatedAt: "6 Aug 2026", topic: "Tested Investments" },
+  { title: "Everything you need to know about clonal nursery business ", category: "Investments", image: "https://eucalyptusclones.in/images/clonal-gallery-1.png", href: "/models/clonal-eucalyptus-nursery", updatedAt: "7 Aug 2026", topic: "Industry Tools" },
   { title: "Find a contractor", category: "Markets", image: "https://cdn.britannica.com/77/213177-138-0C119CB6/Overview-silviculture-lumber-industry.jpg", href: "/landing?market=forestry-services#sector-map", market: "forestry-services", updatedAt: "5 Aug 2026" },
+  { title: "It is time to restore the drylands profitably", category: "Investments", image: "/drylands.webp", href: "/shop/forests-land/dryland-frontier-forests", updatedAt: "2 Aug 2026", topic: "Tested Investments" },
+  { title: "Model the forest before committing capital", category: "Investments", image: "/apps.png", video: "/feature-3.mp4", href: "/models/model-2", updatedAt: "3 Aug 2026", topic: "Industry Tools" },
   { title: "The top nurseries in the world are looking for partnerships in East Africa. Is it you?", category: "Information", image: "https://www.totalenergygroup.com/wp-content/uploads/2018/08/greenhouse_interior.jpg", href: "/articles/nursery-partnerships-east-africa", updatedAt: "4 Aug 2026" },
-  { title: "Model the forest before committing capital", category: "Investment Models", image: "/apps.png", video: "/video/hero-3.mp4", href: "/models/model-2", updatedAt: "3 Aug 2026", topic: "Industry Tools" },
-  { title: "It is time to restore the drylands profitably", category: "Investment Models", image: "/drylands.webp", href: "/shop/forests-land/drylands", updatedAt: "2 Aug 2026", topic: "Tested Investments" },
   { title: "Join the people building the sector", category: "Information", image: "/contact-2.webp", href: "#contact", updatedAt: "1 Aug 2026" },
 
   // Models — Genetic group (in development)
-  { title: "Pine seed orchard model", category: "Investment Models", image: "/tz.jpg", href: "/models/pine-seed-orchard", updatedAt: "14 Aug 2026", topic: "Industry Tools", badge: "Coming soon" },
-  { title: "EA genetics power rankings", category: "Investment Models", image: "https://eucalyptusclones.in/images/clonal-gallery-1.png", href: "/models/ea-genetics-power-rankings", updatedAt: "14 Aug 2026", topic: "Industry Tools", badge: "Coming soon" },
+  { title: "Pine seed orchard model", category: "Investments", image: "/tz.jpg", href: "/models/pine-seed-orchard", updatedAt: "14 Aug 2026", topic: "Industry Tools", badge: "Coming soon" },
+  { title: "EA genetics power rankings", category: "Investments", image: "https://eucalyptusclones.in/images/clonal-gallery-1.png", href: "/models/ea-genetics-power-rankings", updatedAt: "14 Aug 2026", topic: "Industry Tools", badge: "Coming soon" },
 
   // Models — Economic group (in development)
-  { title: "East Africa forestry macro-economic model", category: "Investment Models", image: "/eucalyptus.jpg", href: "/models/macro-economic-outlook", updatedAt: "14 Aug 2026", topic: "Industry Tools", badge: "Coming soon" },
+  { title: "East Africa forestry macro-economic model", category: "Investments", image: "/eucalyptus.jpg", href: "/models/macro-economic-outlook", updatedAt: "14 Aug 2026", topic: "Industry Tools", badge: "Coming soon" },
 
 ]
 
@@ -121,7 +125,7 @@ const editorialEvents: EditorialEvent[] = [
   { title: "Woodrise 2027", date: "25-29 Oct 2027", location: "Nara, Japan", tag: "Mass Timber", description: "International wood and timber-construction event already listed on ITTO's 2027 calendar.", href: "https://www.itto.int/events/55th_session_of_the_international_tropical_timber_council_and_sessions_of_t" },
 ]
 
-const editorialCategories: EditorialCategory[] = ["Information", "Investment Models", "Videos", "Events"]
+const editorialCategories: EditorialCategory[] = ["Information", "Investments", "Videos", "Events"]
 const initialVisibleStoryCount = 8
 const defaultInformationTopic = "Policy & Regulation"
 
@@ -153,7 +157,8 @@ const allMosaicLayout: MosaicSlot[] = [
   { kind: "eo", country: "UG", size: "xl:col-span-12 xl:row-span-[48]" },
   { kind: "resource", size: "xl:col-span-6 xl:row-span-[36]" },
   { kind: "player", size: "xl:col-span-3 xl:row-span-[36]" },
-  { kind: "story", size: "xl:col-span-12 xl:row-span-[60]" },
+  { kind: "story", size: "xl:col-span-4 xl:row-span-[60]" },
+  { kind: "story", size: "xl:col-span-8 xl:row-span-[60]" },
   { kind: "player", size: "xl:col-span-3 xl:row-span-[36]" },
   { kind: "story", size: "xl:col-span-9 xl:row-span-[30]" },
   { kind: "resource", size: "xl:col-span-4 xl:row-span-[36]" },
@@ -161,13 +166,13 @@ const allMosaicLayout: MosaicSlot[] = [
   { kind: "video", size: "xl:col-span-8 xl:row-span-[30]" },
   { kind: "eo", country: "KE", size: "xl:col-span-12 xl:row-span-[48]" },
   { kind: "metrics", size: "xl:col-span-4 xl:row-span-[36]" },
-  { kind: "story", size: "xl:col-span-8 xl:row-span-[60]" },
   { kind: "player", size: "xl:col-span-4 xl:row-span-[30]" },
   { kind: "story", size: "xl:col-span-4 xl:row-span-[30]" },
   { kind: "player", size: "xl:col-span-4 xl:row-span-[30]" },
   { kind: "eo", country: "TZ", size: "xl:col-span-12 xl:row-span-[48]" },
-  { kind: "event", size: "xl:col-span-3 xl:row-span-[30]" },
-  { kind: "video", size: "xl:col-span-9 xl:row-span-[30]" },
+  { kind: "event", size: "xl:col-span-4 xl:row-span-[30]" },
+  { kind: "video", size: "xl:col-span-12 xl:row-span-[30]" },
+  { kind: "story", size: "xl:col-span-12 xl:row-span-[60]" },
   { kind: "event", size: "xl:col-span-3 xl:row-span-[30]" },
   { kind: "research", topic: "policy-regulation", cardId: "iran-war-forestry-timeline", size: "xl:col-span-12 xl:row-span-[136]" },
   { kind: "video", size: "xl:col-span-12 xl:row-span-[30]" },
@@ -228,7 +233,7 @@ function StoryTile({ story, size }: { story: Story; size?: string }) {
       className={`landing-story-card group relative block overflow-hidden bg-zinc-900 [perspective:1100px] transition-[width,height,transform] duration-500 ${size ?? ""}`}
     >
       {story.video ? (
-        <AutoPlayVideo ref={(node) => { mediaRef.current = node }} src={assetUrl(story.video)} poster={assetUrl(story.image)} loop className="absolute inset-0 size-full origin-center object-cover transition-transform ease-out will-change-transform [transform:perspective(1100px)_rotateX(0deg)_rotateY(0deg)_translate3d(0,0,0)_scale(1.02)]" />
+        <AutoPlayVideo ref={(node) => { mediaRef.current = node }} src={assetUrl(story.video)} poster={assetUrl(story.image)} loop className={`absolute inset-0 size-full origin-center ${story.videoFit === "contain" ? "bg-black object-contain" : "object-cover"} transition-transform ease-out will-change-transform [transform:perspective(1100px)_rotateX(0deg)_rotateY(0deg)_translate3d(0,0,0)_scale(1.02)]`} />
       ) : (
         <img ref={(node) => { mediaRef.current = node }} src={story.image} alt="" className="absolute inset-0 size-full origin-center object-cover transition-transform ease-out will-change-transform [transform:perspective(1100px)_rotateX(0deg)_rotateY(0deg)_translate3d(0,0,0)_scale(1.02)]" loading="lazy" decoding="async" />
       )}

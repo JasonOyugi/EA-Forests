@@ -21,6 +21,17 @@ export const AutoPlayVideo = forwardRef<HTMLVideoElement, AutoPlayVideoProps>(
     const videoRef = useRef<HTMLVideoElement>(null)
     const [shouldLoad, setShouldLoad] = useState(eager)
     const [shouldPlay, setShouldPlay] = useState(eager)
+    // With reduced motion the video still loads (so its first frame shows) but never plays.
+    const [reduceMotion, setReduceMotion] = useState(
+      () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    )
+
+    useEffect(() => {
+      const query = window.matchMedia("(prefers-reduced-motion: reduce)")
+      const onChange = () => setReduceMotion(query.matches)
+      query.addEventListener("change", onChange)
+      return () => query.removeEventListener("change", onChange)
+    }, [])
 
     useImperativeHandle(
       forwardedRef,
@@ -53,24 +64,24 @@ export const AutoPlayVideo = forwardRef<HTMLVideoElement, AutoPlayVideoProps>(
       const video = videoRef.current
       if (!video || !shouldLoad) return
 
-      if (shouldPlay) {
+      if (shouldPlay && !reduceMotion) {
         void video.play().catch(() => {
           // Muted autoplay can still be deferred by browser power-saving modes.
         })
       } else {
         video.pause()
       }
-    }, [shouldLoad, shouldPlay])
+    }, [shouldLoad, shouldPlay, reduceMotion])
 
     return (
       <video
         {...props}
         ref={videoRef}
         src={shouldLoad ? src : undefined}
-        autoPlay={eager}
+        autoPlay={eager && !reduceMotion}
         muted
         playsInline
-        preload={eager ? "metadata" : "none"}
+        preload={eager || reduceMotion ? "metadata" : "none"}
       />
     )
   }

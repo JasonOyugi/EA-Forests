@@ -8,10 +8,21 @@ export function NotFoundError() {
 
   return (
     <div className='mx-auto flex min-h-dvh flex-col items-center justify-center gap-8 p-8 md:gap-12 md:p-16'>
-      <img
-        src='https://static.vecteezy.com/system/resources/previews/068/805/532/non_2x/minimalist-line-art-ghost-silhouette-with-spooky-expression-icon-vector.jpg'
-        alt='placeholder image'
-        className='aspect-video w-240 rounded-xl object-cover dark:brightness-[0.95] dark:invert'
+      {/* Line art used as a mask, so it has no backdrop and takes the theme's text colour. */}
+      <span
+        role='img'
+        aria-label='Illustration of a ghost'
+        className='block aspect-[688/752] w-44 bg-foreground sm:w-56'
+        style={{
+          maskImage: "url(/errors/ghost-mask.png)",
+          WebkitMaskImage: "url(/errors/ghost-mask.png)",
+          maskSize: "contain",
+          WebkitMaskSize: "contain",
+          maskRepeat: "no-repeat",
+          WebkitMaskRepeat: "no-repeat",
+          maskPosition: "center",
+          WebkitMaskPosition: "center",
+        }}
       />
       <div className='text-center'>
         <h1 className='mb-4 text-3xl font-bold'>404</h1>
