@@ -24,6 +24,7 @@ import type { ShopItem } from "@/app/shop/types"
 import { SAMPLE_DASHBOARD_PATH } from "@/app/asset-intelligence-sample/paths"
 import { AutoPlayVideo } from "@/components/auto-play-video"
 import { WhatsAppIcon } from "@/components/brand-icons"
+import { callHref, eaForestsContact, whatsappHref } from "@/config/contact"
 import { FocusedNav } from "@/components/layouts/focused-nav"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -424,12 +425,6 @@ const stageIcons: { icon: LucideIcon; hoverIcon: LucideIcon }[] = [
   { icon: TrendingUp, hoverIcon: Coins },
 ]
 
-/** Same channels as the landing-page footer. */
-const investmentTeamContacts = {
-  call: "tel:+254700000000",
-  text: "https://wa.me/254700000000",
-}
-
 /** Shared across all three pathways: how an asset becomes commercially legible. */
 const valuationSteps = [
   {
@@ -510,7 +505,8 @@ function ProductivityTable({
 }
 
 /** One primary action; the two ways to reach the team unfold beneath it. */
-function InvestNowDisclosure() {
+/** `pathway` pre-fills the WhatsApp message so the team knows which page the visitor came from. */
+function InvestNowDisclosure({ pathway }: { pathway: string }) {
   const [isOpen, setIsOpen] = useState(false)
   const panelId = useId()
 
@@ -544,13 +540,17 @@ function InvestNowDisclosure() {
       >
         <div className="-mx-3 overflow-hidden px-3 pb-3">
           <div className="grid gap-2 pt-2">
-            <a href={investmentTeamContacts.call} className="ip-contact-option">
-              <span>Call the investment team</span>
+            <a href={callHref} className="ip-contact-option">
+              <span>
+                Call the investment team
+                <span className="ip-contact-number">{eaForestsContact.call.display}</span>
+              </span>
               <Phone aria-hidden="true" className="h-5 w-5" />
             </a>
-            <a href={investmentTeamContacts.text} target="_blank" rel="noopener noreferrer" className="ip-contact-option">
+            <a href={whatsappHref(`Hi EA Forests, I'm interested in the ${pathway} investment pathway.`)} target="_blank" rel="noopener noreferrer" className="ip-contact-option">
               <span>
                 Text the investment team
+                <span className="ip-contact-number">{eaForestsContact.whatsapp.display}</span>
                 <span className="sr-only"> on WhatsApp (opens in a new tab)</span>
               </span>
               <WhatsAppIcon aria-hidden="true" className="h-5 w-5 text-[#25D366]" />
@@ -935,7 +935,7 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
               </p>
             </div>
             <div className="flex lg:col-span-5 lg:justify-end">
-              <InvestNowDisclosure />
+              <InvestNowDisclosure pathway={item.name} />
             </div>
           </div>
         </section>

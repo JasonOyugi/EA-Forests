@@ -20,6 +20,7 @@ import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 import { Logo } from "@/components/logo"
 import { DiscordIcon, TelegramIcon, WhatsAppIcon } from "@/components/brand-icons"
+import { callHref, eaForestsContact, whatsappHref } from "@/config/contact"
 import { landingContainer, landingEyebrowClass } from "./landing-shared"
 
 type FlipContactProps = {
@@ -124,8 +125,8 @@ export function LandingFooter() {
             </p>
 
             <div className="mt-4 flex flex-wrap gap-2">
-              <FlipContact href="https://wa.me/254700000000" label="WhatsApp" value="+254 700 000 000" icon={WhatsAppIcon} external />
-              <FlipContact href="tel:+254700000000" label="Call us" value="+254 700 000 000" icon={Phone} />
+              <FlipContact href={whatsappHref("Hi EA Forests, I found you on eaforests.com.")} label="WhatsApp" value={eaForestsContact.whatsapp.display} icon={WhatsAppIcon} external />
+              <FlipContact href={callHref} label="Call us" value={eaForestsContact.call.display} icon={Phone} />
               <FlipContact href="mailto:hello@eaforests.com" label="Email us" value="hello@eaforests.com" icon={Mail} wide />
             </div>
 

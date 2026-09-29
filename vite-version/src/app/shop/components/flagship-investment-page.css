@@ -663,6 +663,15 @@
   text-shadow: 0 0 14px var(--ip-glow-text);
 }
 
+.ip-contact-number {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--muted-foreground);
+  font-variant-numeric: tabular-nums;
+}
+
 .ip-contact-option:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;

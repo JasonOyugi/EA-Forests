@@ -76,7 +76,7 @@ const stories: Story[] = [
   { title: "Everything you need to know about clonal nursery business ", category: "Investments", image: "https://eucalyptusclones.in/images/clonal-gallery-1.png", href: "/models/clonal-eucalyptus-nursery", updatedAt: "7 Aug 2026", topic: "Industry Tools" },
   { title: "Find a contractor", category: "Markets", image: "https://cdn.britannica.com/77/213177-138-0C119CB6/Overview-silviculture-lumber-industry.jpg", href: "/landing?market=forestry-services#sector-map", market: "forestry-services", updatedAt: "5 Aug 2026" },
   { title: "It is time to restore the drylands profitably", category: "Investments", image: "/drylands.webp", href: "/shop/forests-land/dryland-frontier-forests", updatedAt: "2 Aug 2026", topic: "Tested Investments" },
-  { title: "Model the forest before committing capital", category: "Investments", image: "/apps.png", video: "/feature-3.mp4", href: "/models/model-2", updatedAt: "3 Aug 2026", topic: "Industry Tools" },
+  { title: "Model the forest before committing capital", category: "Investments", image: "https://eros.usgs.gov/doi-remote-sensing-activities/sites/default/files/public/USGS/Wu_lidar.png", video: "/feature-3.mp4", href: "/models/model-2", updatedAt: "3 Aug 2026", topic: "Industry Tools" },
   { title: "The top nurseries in the world are looking for partnerships in East Africa. Is it you?", category: "Information", image: "https://www.totalenergygroup.com/wp-content/uploads/2018/08/greenhouse_interior.jpg", href: "/articles/nursery-partnerships-east-africa", updatedAt: "4 Aug 2026" },
   { title: "Join the people building the sector", category: "Information", image: "/contact-2.webp", href: "#contact", updatedAt: "1 Aug 2026" },
 
