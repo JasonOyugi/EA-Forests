@@ -1,4 +1,6 @@
 import { BrowserRouter as Router } from 'react-router-dom'
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 import { ThemeProvider } from '@/components/theme-provider'
 import { SidebarConfigProvider } from '@/contexts/sidebar-context'
 import { AppRouter } from '@/components/router/app-router'
@@ -39,6 +41,9 @@ function App() {
             <PublicMetadata />
             <AppRouter />
           </Router>
+          {/* Vercel Web Analytics (cookieless) and Speed Insights; both only report from Vercel deployments. */}
+          <Analytics />
+          <SpeedInsights />
         </SidebarConfigProvider>
       </ThemeProvider>
     </div>
