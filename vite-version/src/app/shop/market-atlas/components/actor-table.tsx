@@ -7,6 +7,12 @@ function actorLocationLabel(actor: Actor) {
   return [actor.townSite, actor.districtCounty, actor.regionState, actor.country].filter(Boolean)[0] ?? actor.country
 }
 
+/** Compact, capitalised list ("Sawn timber, Poles"); em dash when nothing is evidenced yet. */
+function listCell(values: string[]) {
+  if (!values.length) return <span className="text-sm text-muted-foreground">—</span>
+  return <span className="text-sm">{values.map((value) => value.charAt(0).toUpperCase() + value.slice(1)).join(", ")}</span>
+}
+
 function buildColumns(mode: ActorMode): ColumnDef<Actor>[] {
   const nameColumn: ColumnDef<Actor> = {
     id: "name",
@@ -98,27 +104,11 @@ function buildColumns(mode: ActorMode): ColumnDef<Actor>[] {
     ]
   }
 
-  // wood
+  // wood: what each processor makes, and what it therefore buys.
   return [
     { ...nameColumn, header: "Processor" },
-    { id: "product", header: "Product / raw material", cell: ({ row }) => <span className="text-sm">{row.original.processorProducts ?? row.original.rawMaterialSpecies ?? "—"}</span> },
-    {
-      id: "capacity",
-      header: "Capacity / utilisation",
-      cell: ({ row }) => {
-        const capacity = row.original.annualCapacityM3
-        const utilisation = row.original.utilisationPct
-        if (capacity == null && utilisation == null) return <span className="text-sm text-muted-foreground">—</span>
-        return (
-          <span className="text-sm">
-            {capacity != null ? `${capacity.toLocaleString()} m³/yr` : null}
-            {capacity != null && utilisation != null ? " · " : null}
-            {utilisation != null ? `${utilisation}% utilised` : null}
-          </span>
-        )
-      },
-    },
-    { id: "radius", header: "Sourcing radius", cell: ({ row }) => <span className="text-sm">{row.original.sourcingRadiusKm != null ? `${row.original.sourcingRadiusKm} km` : "—"}</span> },
+    { id: "endProduct", header: "End product", cell: ({ row }) => listCell(row.original.processorEndProducts) },
+    { id: "input", header: "Input", cell: ({ row }) => listCell(row.original.processorInputs) },
     locationColumn,
     contactColumn,
     evidenceColumn,
@@ -140,10 +130,9 @@ function dropEmptyColumns(columns: ColumnDef<Actor>[], actors: Actor[]): ColumnD
           return !!(actor.website || actor.email || actor.phone)
         case "services":
           return !!(actor.silvicultureServices || actor.harvestHaulageServices || actor.primaryRole)
-        case "product":
-          return !!(actor.processorProducts || actor.rawMaterialSpecies)
-        case "radius":
-          return actor.sourcingRadiusKm != null
+        case "endProduct":
+        case "input":
+          return true
         case "offering":
           return !!actor.actorType
         default:

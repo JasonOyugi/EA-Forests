@@ -67,7 +67,9 @@ export function ActorDetailDrawer({ actor, onClose }: { actor: Actor | null; onC
                 <Field label="Certification / status" value={actor.seedlingCertification ?? actor.certifications} />
                 <Field label="Silviculture services" value={actor.silvicultureServices} />
                 <Field label="Harvest & haulage services" value={actor.harvestHaulageServices} />
-                <Field label="Processor products" value={actor.processorProducts} />
+                <Field label="End products" value={actor.processorEndProducts.join(", ") || null} />
+                <Field label="Inputs" value={actor.processorInputs.join(", ") || null} />
+                <Field label="Processor products (as described by the source)" value={actor.processorProducts} />
                 <Field label="Raw material / species" value={actor.rawMaterialSpecies} />
                 <Field label="Log specifications" value={actor.logSpecs} />
                 <Field

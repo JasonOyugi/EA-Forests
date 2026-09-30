@@ -122,6 +122,13 @@ export function reconcileProviders(actors, sheets) {
     actorsByNormName.get(key).push(actor)
   }
 
+  // Researched links recorded on the actor (Master_Actors.provider_ids) always win.
+  const actorByLinkedProvider = new Map()
+  for (const actor of actors) {
+    for (const linked of actor.linkedProviderIds ?? []) actorByLinkedProvider.set(linked, actor)
+    delete actor.linkedProviderIds
+  }
+
   const reviewCandidates = []
   const reconciliation = []
   const providerOnlyActors = []
@@ -145,14 +152,15 @@ export function reconcileProviders(actors, sheets) {
       ...certs.map((r) => providerOffering("certification", r)),
     ]
 
-    if (candidates.length === 1 && corroborates(provider, candidates[0])) {
-      const actor = candidates[0]
+    const linkedActor = actorByLinkedProvider.get(providerId)
+    if (linkedActor || (candidates.length === 1 && corroborates(provider, candidates[0]))) {
+      const actor = linkedActor ?? candidates[0]
       actor.providerIds.push(providerId)
       actor.offerings.push(...offerings)
       for (const mode of providerModes(services)) {
         if (!actor.modes.includes(mode)) actor.modes.push(mode)
       }
-      reconciliation.push({ providerId, actorId: actor.id, status: "merged" })
+      reconciliation.push({ providerId, actorId: actor.id, status: linkedActor ? "merged (explicit link)" : "merged" })
       continue
     }
 
@@ -257,6 +265,8 @@ function buildProviderOnlyActor(provider, { offerings, providerLocations, source
     silvicultureServices: services.filter((s) => (SERVICE_CATEGORY_TO_MODE[s.service_category] ?? DEFAULT_SERVICE_MODE) === "silviculture").map((s) => s.service_detail).filter(Boolean).join("; ") || null,
     harvestHaulageServices: services.filter((s) => SERVICE_CATEGORY_TO_MODE[s.service_category] === "harvest_haulage").map((s) => s.service_detail).filter(Boolean).join("; ") || null,
     processorProducts: null,
+    processorEndProducts: [],
+    processorInputs: [],
     rawMaterialSpecies: null,
     logSpecs: null,
     annualCapacityM3: null,

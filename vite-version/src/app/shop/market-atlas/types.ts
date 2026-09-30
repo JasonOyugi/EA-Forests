@@ -2,6 +2,9 @@
 // with `scripts/market-atlas/lib/schema.mjs` (the zod schema that validates the generated JSON).
 export type ActorMode = "seeds" | "seedlings" | "silviculture" | "harvest_haulage" | "wood"
 export type EvidenceClass = "A" | "B" | "C" | "D"
+/** Mirrors scripts/market-atlas/lib/wood-products.mjs. */
+export type WoodEndProduct = "sawn timber" | "wood fuel" | "veneer/plywood" | "mdf/fibreboards" | "poles"
+export type WoodInput = "logs" | "wood chips" | "poles"
 
 export interface ActorLocation {
   country: string | null
@@ -59,6 +62,10 @@ export interface Actor {
   silvicultureServices: string | null
   harvestHaulageServices: string | null
   processorProducts: string | null
+  /** What the processor makes from roundwood (structured; empty when not yet evidenced). */
+  processorEndProducts: WoodEndProduct[]
+  /** Derived from end products: logs always; wood chips for MDF/fibreboard or wood fuel; poles for poles. */
+  processorInputs: WoodInput[]
   rawMaterialSpecies: string | null
   logSpecs: string | null
   annualCapacityM3: number | null

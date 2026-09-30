@@ -232,7 +232,7 @@
 
 .ip-container {
   width: 100%;
-  max-width: 90rem;
+  max-width: 120rem;
   margin-inline: auto;
   padding-inline: 1rem;
 }
@@ -242,7 +242,7 @@
 }
 
 @media (min-width: 1024px) {
-  .ip-container { padding-inline: 2.5rem; }
+  .ip-container { padding-inline: 2rem; }
 }
 
 .ip-surface {

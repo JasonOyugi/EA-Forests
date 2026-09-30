@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-27T17:36:23.165Z",
-  "sourceHash": "320d4b8ce8851095ef4263fe650c45027f4fa1573f3d5231474af5d59b7f5b3c",
-  "masterActorCount": 420,
-  "publishedActorCount": 725,
-  "providerOnlyCount": 305,
+  "generatedAt": "2026-09-30T06:50:13.699Z",
+  "sourceHash": "a975fa8b38793df41abb96daf4d8c53dad7b62dec79c3beccfd5d37bf50d7f07",
+  "masterActorCount": 505,
+  "publishedActorCount": 787,
+  "providerOnlyCount": 282,
   "mergedProviderCount": 78,
-  "actorsWithRegionAssignment": 472,
+  "actorsWithRegionAssignment": 677,
   "actorsWithPreciseCoordinates": 0,
   "validationErrors": [],
   "reconciliation": [
@@ -86,8 +86,8 @@
     },
     {
       "providerId": "PRV0016",
-      "actorId": "provider:PRV0016",
-      "status": "provider-only"
+      "actorId": "EAFA0504",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0017",
@@ -236,8 +236,8 @@
     },
     {
       "providerId": "PRV0046",
-      "actorId": "provider:PRV0046",
-      "status": "provider-only"
+      "actorId": "EAFA0293",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0047",
@@ -271,8 +271,8 @@
     },
     {
       "providerId": "PRV0053",
-      "actorId": "provider:PRV0053",
-      "status": "provider-only"
+      "actorId": "EAFA0344",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0054",
@@ -631,8 +631,8 @@
     },
     {
       "providerId": "PRV0125",
-      "actorId": "provider:PRV0125",
-      "status": "provider-only"
+      "actorId": "EAFA0496",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0126",
@@ -671,8 +671,8 @@
     },
     {
       "providerId": "PRV0133",
-      "actorId": "provider:PRV0133",
-      "status": "provider-only"
+      "actorId": "EAFA0308",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0134",
@@ -736,88 +736,88 @@
     },
     {
       "providerId": "PRV0146",
-      "actorId": "provider:PRV0146",
-      "status": "provider-only"
+      "actorId": "EAFA0291",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0147",
-      "actorId": "provider:PRV0147",
-      "status": "provider-only"
+      "actorId": "EAFA0491",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0148",
-      "actorId": "provider:PRV0148",
-      "status": "provider-only"
+      "actorId": "EAFA0492",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0149",
-      "actorId": "provider:PRV0149",
-      "status": "provider-only"
+      "actorId": "EAFA0297",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0150",
-      "actorId": "provider:PRV0150",
-      "status": "provider-only"
+      "actorId": "EAFA0307",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0151",
-      "actorId": "provider:PRV0151",
-      "status": "provider-only"
+      "actorId": "EAFA0294",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0152",
-      "actorId": "provider:PRV0152",
-      "status": "provider-only"
+      "actorId": "EAFA0493",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0153",
-      "actorId": "provider:PRV0153",
-      "status": "provider-only"
+      "actorId": "EAFA0494",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0154",
-      "actorId": "provider:PRV0154",
-      "status": "provider-only"
+      "actorId": "EAFA0309",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0155",
-      "actorId": "provider:PRV0155",
-      "status": "provider-only"
+      "actorId": "EAFA0298",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0156",
-      "actorId": "provider:PRV0156",
-      "status": "provider-only"
+      "actorId": "EAFA0299",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0157",
-      "actorId": "provider:PRV0157",
-      "status": "provider-only"
+      "actorId": "EAFA0306",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0158",
-      "actorId": "provider:PRV0158",
-      "status": "provider-only"
+      "actorId": "EAFA0344",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0159",
-      "actorId": "provider:PRV0159",
-      "status": "provider-only"
+      "actorId": "EAFA0495",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0160",
-      "actorId": "provider:PRV0160",
-      "status": "provider-only"
+      "actorId": "EAFA0497",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0161",
-      "actorId": "provider:PRV0161",
-      "status": "provider-only"
+      "actorId": "EAFA0499",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0162",
-      "actorId": "provider:PRV0162",
-      "status": "provider-only"
+      "actorId": "EAFA0498",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0163",
@@ -1776,8 +1776,8 @@
     },
     {
       "providerId": "PRV0354",
-      "actorId": "provider:PRV0354",
-      "status": "provider-only"
+      "actorId": "EAFA0470",
+      "status": "merged (explicit link)"
     },
     {
       "providerId": "PRV0355",
@@ -2047,16 +2047,6 @@
       "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
     },
     {
-      "providerId": "PRV0053",
-      "name": "Nile Forestry Agro Inputs and Engineering Services Limited",
-      "country": "Uganda",
-      "status": "review",
-      "candidateActorIds": [
-        "EAFA0344"
-      ],
-      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
-    },
-    {
       "providerId": "PRV0055",
       "name": "Schnelle Aufforstung und Projects Limited",
       "country": "Uganda",
@@ -2193,16 +2183,6 @@
       "status": "review",
       "candidateActorIds": [
         "EAFA0353"
-      ],
-      "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
-    },
-    {
-      "providerId": "PRV0149",
-      "name": "Green Life",
-      "country": "Uganda",
-      "status": "review",
-      "candidateActorIds": [
-        "EAFA0297"
       ],
       "reason": "Exact name/country without corroborating contact (website/phone); no merge performed."
     },

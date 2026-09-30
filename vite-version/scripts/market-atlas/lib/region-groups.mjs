@@ -90,6 +90,79 @@ const tanzaniaDistrictToRegion = {
   "Kilolo": "Iringa",
   "Njombe": "Njombe",
   "Kilombero Valley": "Morogoro",
+  // Forestry districts/towns, each unambiguously inside one region.
+  "Sao Hill": "Iringa", "Iringa": "Iringa", "Makambako": "Njombe", "Wanging'ombe": "Njombe", "Ludewa": "Njombe",
+  "Mbeya": "Mbeya", "Rungwe": "Mbeya", "Tukuyu": "Mbeya", "Kilombero": "Morogoro", "Ifakara": "Morogoro",
+  "Morogoro": "Morogoro", "Dar es Salaam": "Dar es Salaam", "Arusha": "Arusha", "Moshi": "Kilimanjaro",
+  "Tanga": "Tanga", "Muheza": "Tanga", "Korogwe": "Tanga", "Lushoto": "Tanga", "Songea": "Ruvuma",
+  "Mbinga": "Ruvuma", "Mwanza": "Mwanza", "Kigoma": "Kigoma", "Dodoma": "Dodoma", "Tabora": "Tabora",
+}
+
+// Kenyan towns that sit unambiguously in one county (the actor sheets often give a town, not a county).
+const kenyaTownToCounty = {
+  "Eldoret": "Uasin Gishu", "Kitale": "Trans Nzoia", "Nanyuki": "Laikipia", "Nyahururu": "Laikipia",
+  "Thika": "Kiambu", "Limuru": "Kiambu", "Molo": "Nakuru", "Gilgil": "Nakuru", "Elburgon": "Nakuru",
+  "Naivasha": "Nakuru", "Njoro": "Nakuru", "Londiani": "Kericho", "Lessos": "Nandi", "Kapsabet": "Nandi",
+  "Timau": "Meru", "Karatina": "Nyeri", "Maragua": "Murang'a", "Kiganjo": "Nyeri", "Athi River": "Machakos",
+  "Mlolongo": "Machakos", "Ruiru": "Kiambu", "Kikuyu": "Kiambu", "Bomet": "Bomet", "Kisii": "Kisii",
+}
+
+// Uganda districts (and a few well-known towns) by UBOS statistical region, the same four-region
+// split the map's ADM1 geometry uses.
+const ugandaDistrictToAdm1 = Object.fromEntries([
+  ["Central Region", ["Kampala", "Wakiso", "Mukono", "Mpigi", "Mityana", "Mubende", "Kassanda", "Masaka", "Luwero", "Luweero",
+    "Nakaseke", "Kayunga", "Buikwe", "Kalangala", "Kalungu", "Lwengo", "Rakai", "Sembabule", "Ssembabule", "Gomba", "Butambala",
+    "Kiboga", "Kyankwanzi", "Nakasongola", "Buvuma", "Lyantonde", "Kyotera", "Bukomansimbi", "Entebbe", "Namanve", "Lugazi",
+    "Bombo", "Kyenda", "Kalwana", "Nalugazi"]],
+  ["Eastern Region", ["Jinja", "Iganga", "Mbale", "Tororo", "Soroti", "Busia", "Kamuli", "Mayuge", "Bugiri", "Namayingo", "Luuka",
+    "Buyende", "Kaliro", "Pallisa", "Kumi", "Serere", "Kapchorwa", "Sironko", "Masese", "Bukaleba", "Kakira"]],
+  ["Northern Region", ["Gulu", "Lira", "Kitgum", "Arua", "Adjumani", "Apac", "Kole", "Oyam", "Pader", "Nebbi", "Moyo", "Yumbe",
+    "Koboko", "Amuru", "Nwoya", "Zombo", "Kotido", "Moroto", "Agago", "Dokolo", "Alebtong"]],
+  ["Western Region", ["Mbarara", "Kabale", "Hoima", "Masindi", "Kasese", "Fort Portal", "Kabarole", "Kyenjojo", "Kanungu",
+    "Bushenyi", "Ibanda", "Isingiro", "Kiruhura", "Ntungamo", "Rukungiri", "Kibaale", "Kagadi", "Kakumiro", "Kyegegwa",
+    "Kamwenge", "Bundibugyo", "Buliisa", "Kiryandongo", "Kigumba", "Sheema", "Mitooma", "Rubirizi", "Buhweju", "Kisoro",
+    "Rubanda", "Kikonda"]],
+].flatMap(([region, places]) => places.map((place) => [place.toLowerCase(), region])))
+
+/** Whole-word matches of known place names inside messy free text ("Chepsir, Kericho", "Namanve, Mukono"). */
+function placesIn(text) {
+  return (text ?? "")
+    .split(/[;,/()]|\s-\s|\band\b/i)
+    .map((part) => part.trim())
+    .filter(Boolean)
+}
+
+function matchKenyaCounty(text) {
+  for (const part of placesIn(text)) {
+    const county = canonicalKenyaCounty(part.replace(/\s+County$/i, ""))
+    if (findGroup(kenyaRegionGroups, county)) return county
+    for (const [town, townCounty] of Object.entries(kenyaTownToCounty)) {
+      if (new RegExp(`\\b${town}\\b`, "i").test(part)) return townCounty
+    }
+  }
+  return null
+}
+
+function matchUgandaRegion(text) {
+  for (const part of placesIn(text)) {
+    const words = part.replace(/\s+(District|City|Municipality|Town)$/i, "")
+    const hit = ugandaDistrictToAdm1[words.toLowerCase()]
+    if (hit) return hit
+    for (const [place, region] of Object.entries(ugandaDistrictToAdm1)) {
+      if (new RegExp(`\\b${place}\\b`, "i").test(part)) return region
+    }
+  }
+  return null
+}
+
+function matchTanzaniaRegion(text) {
+  const exact = tanzaniaDistrictToRegion[(text ?? "").trim()]
+  if (exact) return exact
+  for (const part of placesIn(text)) {
+    if (tanzaniaDistrictToRegion[part]) return tanzaniaDistrictToRegion[part]
+    if (tanzaniaRegionGroups.some((group) => group.members.includes(part))) return part
+  }
+  return null
 }
 
 /**
@@ -100,26 +173,23 @@ const tanzaniaDistrictToRegion = {
  */
 export function resolveRegionId(country, rawRegionState, rawDistrictCounty) {
   if (country === "Kenya") {
-    const raw = (rawRegionState ?? "").trim()
-    if (!raw) return { regionId: null, regionName: null }
-    // Some rows list multiple counties (e.g. "Kiambu; Machakos") — use the first for map bucketing,
+    // Some rows list multiple counties (e.g. "Kiambu; Machakos") — the first match buckets the actor;
     // the full original text is preserved separately in the actor's `fields.region_state`.
-    const first = canonicalKenyaCounty(raw.split(";")[0].trim())
-    const group = findGroup(kenyaRegionGroups, first)
+    const county = matchKenyaCounty(rawRegionState) ?? matchKenyaCounty(rawDistrictCounty)
+    const group = county ? findGroup(kenyaRegionGroups, county) : null
     if (!group) return { regionId: null, regionName: null }
     return { regionId: `kenya-${slugifyRegion(group.name)}`, regionName: group.name }
   }
 
   if (country === "Uganda") {
     const raw = (rawRegionState ?? "").split(";")[0].trim()
-    const adm1Name = ugandaSubregionToAdm1[raw]
+    const adm1Name = ugandaSubregionToAdm1[raw] ?? matchUgandaRegion(rawRegionState) ?? matchUgandaRegion(rawDistrictCounty)
     if (!adm1Name) return { regionId: null, regionName: null }
     return { regionId: `uganda-${slugifyRegion(adm1Name)}`, regionName: adm1Name }
   }
 
   if (country === "Tanzania") {
-    const district = (rawDistrictCounty ?? "").trim()
-    const regionName = tanzaniaDistrictToRegion[district]
+    const regionName = matchTanzaniaRegion(rawDistrictCounty) ?? matchTanzaniaRegion(rawRegionState)
     if (!regionName) return { regionId: null, regionName: null }
     const group = findGroup(tanzaniaRegionGroups, regionName)
     if (!group) return { regionId: null, regionName: null }

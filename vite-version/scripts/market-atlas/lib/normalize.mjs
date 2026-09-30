@@ -1,4 +1,5 @@
 import { resolveRegionId } from "./region-groups.mjs"
+import { inputsForEndProducts, parseEndProducts } from "./wood-products.mjs"
 
 const MODE_FLAGS = [
   ["seed_supplier", "seeds"],
@@ -109,6 +110,8 @@ function normalizeMasterRow(row, lookups) {
     silvicultureServices: clean(row.silvi_services),
     harvestHaulageServices: clean(row.hh_services),
     processorProducts: clean(row.processor_products),
+    processorEndProducts: parseEndProducts(row.processor_end_products),
+    processorInputs: inputsForEndProducts(parseEndProducts(row.processor_end_products)),
     rawMaterialSpecies: clean(row.raw_material_species),
     logSpecs: clean(row.log_specs),
     annualCapacityM3: toNumber(row.annual_capacity_m3),
@@ -133,6 +136,8 @@ function normalizeMasterRow(row, lookups) {
     offerings,
     sources,
     providerIds: [],
+    // Explicit, researched links to Providers-workbook records (merged by reconcile regardless of name).
+    linkedProviderIds: (clean(row.provider_ids) ?? "").split(";").map((s) => s.trim()).filter(Boolean),
     images: { imageUrl: null, logoUrl: null, imageSourceUrl: null, imageAlt: null, imageStatus: "placeholder" },
     issues: [],
   }

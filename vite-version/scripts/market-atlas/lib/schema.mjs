@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { END_PRODUCTS, INPUTS } from "./wood-products.mjs"
 
 const locationSchema = z.object({
   country: z.string().nullable(),
@@ -56,6 +57,8 @@ export const actorSchema = z.object({
   silvicultureServices: z.string().nullable(),
   harvestHaulageServices: z.string().nullable(),
   processorProducts: z.string().nullable(),
+  processorEndProducts: z.array(z.enum(END_PRODUCTS)),
+  processorInputs: z.array(z.enum(INPUTS)),
   rawMaterialSpecies: z.string().nullable(),
   logSpecs: z.string().nullable(),
   annualCapacityM3: z.number().nullable(),

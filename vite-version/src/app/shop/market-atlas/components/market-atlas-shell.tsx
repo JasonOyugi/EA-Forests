@@ -28,6 +28,8 @@ interface MarketAtlasShellProps {
   linkMode?: "route" | "query"
 }
 
+const UNASSIGNED_REGION = "unassigned"
+
 export function MarketAtlasShell({ marketId, linkMode = "route" }: MarketAtlasShellProps) {
   const navigate = useNavigate()
   const [params, setParams] = useSearchParams()
@@ -62,11 +64,14 @@ export function MarketAtlasShell({ marketId, linkMode = "route" }: MarketAtlasSh
   )
   const countryRegions = useMemo(() => marketRegions.filter((region) => region.country === country), [country])
 
+  // "unassigned" is a pseudo-region: actors whose source location is too coarse to place on the map.
+  const showUnassigned = regionId === UNASSIGNED_REGION
   const tableActors = useMemo(() => {
     if (search.trim()) return countryActors
+    if (regionId === UNASSIGNED_REGION) return getUnassignedActors(countryActors, country)
     if (regionId) return getActorsForRegion(countryActors, regionId)
     return []
-  }, [countryActors, regionId, search])
+  }, [countryActors, country, regionId, search])
 
   const unassignedCount = useMemo(() => getUnassignedActors(countryActors, country).length, [countryActors, country])
 
@@ -135,7 +140,19 @@ export function MarketAtlasShell({ marketId, linkMode = "route" }: MarketAtlasSh
         />
         <p className="text-sm text-muted-foreground">
           {countryActors.length} actor{countryActors.length === 1 ? "" : "s"} in {country}
-          {unassignedCount > 0 ? ` · ${unassignedCount} without a mapped region` : ""}
+          {unassignedCount > 0 ? (
+            <>
+              {" · "}
+              <button
+                type="button"
+                onClick={() => updateParams({ region: showUnassigned ? null : UNASSIGNED_REGION, actor: null })}
+                className="underline underline-offset-4 transition-colors hover:text-foreground"
+                aria-pressed={showUnassigned}
+              >
+                {unassignedCount} without a mapped region
+              </button>
+            </>
+          ) : null}
         </p>
       </div>
 
@@ -145,7 +162,7 @@ export function MarketAtlasShell({ marketId, linkMode = "route" }: MarketAtlasSh
         regions={countryRegions}
         actorsByMode={actorsByMode}
         activeMode={activeMode}
-        selectedRegionId={regionId}
+        selectedRegionId={showUnassigned ? null : regionId}
         onRegionSelect={(id) => updateParams({ region: id, actor: null })}
         selectedActorId={actorId}
         onActorSelect={(id) => updateParams({ actor: id })}
@@ -155,7 +172,7 @@ export function MarketAtlasShell({ marketId, linkMode = "route" }: MarketAtlasSh
 
       {regionId && (
         <p className="text-sm font-medium">
-          Actors in {countryRegions.find((r) => r.id === regionId)?.name ?? "selected region"}
+          {showUnassigned ? `Actors in ${country} without a mapped region` : `Actors in ${countryRegions.find((r) => r.id === regionId)?.name ?? "selected region"}`}
           <span className="ml-2 text-muted-foreground">{tableActors.length}</span>
         </p>
       )}

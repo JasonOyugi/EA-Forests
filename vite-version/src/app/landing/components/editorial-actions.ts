@@ -36,7 +36,7 @@ export const editorialSubsections: Record<EditorialCategory, EditorialSubsection
   Markets: [],
   Investments: [
     { label: "Tested Investments", href: "#brief", topic: "Tested Investments" },
-    { label: "Industry Tools", href: "#brief", topic: "Industry Tools" },
+    { label: "Models", href: "#brief", topic: "Models" },
   ],
   Videos: [
   ],
