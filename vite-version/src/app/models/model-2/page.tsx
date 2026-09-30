@@ -24,7 +24,7 @@ import {
   YAxis,
 } from "recharts"
 
-import { BaseLayout } from "@/components/layouts/base-layout"
+import { ModelLayout } from "@/app/models/components/model-layout"
 import { MetricCardDecoration } from "@/app/landing/components/metric-card-decoration"
 import { Button } from "@/components/ui/button"
 import {
@@ -764,7 +764,7 @@ export default function ModelTwoPage() {
   }
 
   return (
-    <BaseLayout
+    <ModelLayout
       title="Silvicultural models"
       description="Simulate silvicultural scenarios and analyze their economic outcomes
       (note: quantity and wage weights move assumptions from low to high input/cost cases; 
@@ -1438,6 +1438,6 @@ export default function ModelTwoPage() {
         </div>
       </div>
       </>
-    </BaseLayout>
+    </ModelLayout>
   )
 }

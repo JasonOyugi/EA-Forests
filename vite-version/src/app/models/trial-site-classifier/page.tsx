@@ -23,7 +23,7 @@ import {
   YAxis,
 } from "recharts"
 
-import { BaseLayout } from "@/components/layouts/base-layout"
+import { ModelLayout } from "@/app/models/components/model-layout"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -1604,12 +1604,12 @@ export function TrialSiteClassifierAnalysis({
 
 export default function TrialSiteClassifierPage() {
   return (
-    <BaseLayout
+    <ModelLayout
       title="Trial-site classifier"
       description="Match selected sites to analogue trials and rank varieties using precomputed performance evidence."
     >
       <TrialSiteClassifierAnalysis />
-    </BaseLayout>
+    </ModelLayout>
   )
 }
 

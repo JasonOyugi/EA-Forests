@@ -25,7 +25,7 @@ import {
   YAxis,
 } from "recharts"
 
-import { BaseLayout } from "@/components/layouts/base-layout"
+import { ModelLayout } from "@/app/models/components/model-layout"
 import { MetricCardDecoration } from "@/app/landing/components/metric-card-decoration"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -72,7 +72,8 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import { marketActors, marketTileLayers } from "@/app/shop/data/market-map"
+import { marketTileLayers } from "@/app/shop/data/market-map"
+import { ForestsLandTopBanner } from "@/components/commerce-ui/forests-land-top-banner"
 import {
   convertMoney,
   CurrencySelect,
@@ -250,7 +251,19 @@ const defaultForm: RoundwoodForm = {
   nDraws: 30000,
 }
 
-const processorActors = marketActors.filter((actor) => actor.layer === "processor")
+/** Uganda's extent; the roundwood simulation only runs inside Uganda. */
+const UGANDA_MAP_BOUNDS: [[number, number], [number, number]] = [[-1.6, 29.4], [4.4, 35.2]]
+
+type SimulatedProcessor = { name: string; lat: number; lon: number }
+
+/** Processor markers come from the API's anonymised simulation catalog ("Processor N"). */
+function simulatedProcessors(rows: TableRowRecord[] | undefined): SimulatedProcessor[] {
+  return (rows ?? []).flatMap((row) => {
+    const lat = Number(row.lat)
+    const lon = Number(row.lon)
+    return typeof row.name === "string" && Number.isFinite(lat) && Number.isFinite(lon) ? [{ name: row.name, lat, lon }] : []
+  })
+}
 const defaultTileLayer = marketTileLayers[0]
 
 const processorChartConfig = {
@@ -691,6 +704,7 @@ export default function ModelThreePage() {
   const [runError, setRunError] = React.useState<string | null>(null)
   const [currency, setCurrency] = React.useState<CurrencyCode>("USD")
   const [libraries, setLibraries] = React.useState<RoundwoodLibraries | null>(null)
+  const [processorCatalog, setProcessorCatalog] = React.useState<SimulatedProcessor[]>([])
 
   const apiBaseUrl = React.useMemo(
     () => (import.meta.env.VITE_API_URL?.replace(/\/$/, "") || "/api"),
@@ -785,6 +799,7 @@ export default function ModelThreePage() {
     void (async () => {
       try {
         const defaults = await loadDefaultLibraries()
+        setProcessorCatalog(simulatedProcessors(defaults.processor_catalog))
         setLibraries({
           labour_categories: defaults.labour_categories,
           non_labour_items: defaults.non_labour_items,
@@ -874,13 +889,14 @@ export default function ModelThreePage() {
   )
 
   return (
-    <BaseLayout
-      title="Roundwood production"
+    <ModelLayout
+      title="UG Roundwood Production Model"
       description="Harvesting, haulage, processor buyer specs, grade yields, and factory-gate cashflow from a selected map coordinate."
     >
       <>
       <div className="@container/main min-w-0 max-w-full overflow-hidden px-4 lg:px-6">
         <div className="grid min-w-0 max-w-full gap-4">
+          <ForestsLandTopBanner message={<span className="font-bold">Uganda Simulation</span>} badgeLabel={null} linkLabel={null} dismissible={false} />
           <Card className="min-w-0 gap-4 border-border/70 bg-background/75 py-5">
             <CardHeader className="px-5">
               <div className="flex items-start justify-between gap-3">
@@ -1144,7 +1160,7 @@ export default function ModelThreePage() {
               </CardHeader>
               <CardContent className="px-5">
                 <div className="h-[520px] min-w-0 overflow-hidden rounded-lg border border-border/70">
-                  <Map center={[0.6, 32.3]} zoom={7} className="min-h-[520px] rounded-lg">
+                  <Map center={[1.35, 32.3]} zoom={7} minZoom={6} maxBounds={UGANDA_MAP_BOUNDS} maxBoundsViscosity={1} className="min-h-[520px] rounded-lg">
                     <CoordinateMapEvents onCoordinateLock={handleCoordinateLock} />
                     <CoordinateFocus coordinate={lockedCoordinate} />
                     <MapTileLayer
@@ -1152,14 +1168,14 @@ export default function ModelThreePage() {
                       url={defaultTileLayer.url}
                       attribution={defaultTileLayer.attribution}
                     />
-                    {processorActors.map((actor) => {
+                    {(result ? simulatedProcessors(result.library.processor_catalog) : processorCatalog).map((actor) => {
                       const isReturned = result?.processors.some(
                         (processor) => processor.processor === actor.name
                       )
                       return (
                         <MapMarker
-                          key={actor.id}
-                          position={[actor.latitude, actor.longitude]}
+                          key={actor.name}
+                          position={[actor.lat, actor.lon]}
                           icon={
                             <div className={`flex h-7 w-7 items-center justify-center rounded-full border-2 bg-background ${isReturned ? "border-emerald-600 text-emerald-700" : "border-red-500 text-red-600"}`}>
                               <Factory className="h-4 w-4" />
@@ -1169,7 +1185,7 @@ export default function ModelThreePage() {
                           <MapPopup>
                             <div className="space-y-1 text-sm">
                               <div className="font-semibold">{actor.name}</div>
-                              <div className="text-muted-foreground">{actor.region}</div>
+                              <div className="text-muted-foreground">Simulated processor</div>
                             </div>
                           </MapPopup>
                         </MapMarker>
@@ -1627,6 +1643,6 @@ export default function ModelThreePage() {
         </div>
       </div>
       </>
-    </BaseLayout>
+    </ModelLayout>
   )
 }

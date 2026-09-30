@@ -122,19 +122,49 @@ def processor(lon: float, lat: float, euc_spec: dict[str, Any], pine_spec: dict[
     return {"lon": lon, "lat": lat, "buyer_specs": {"euc": euc_spec, "pine": pine_spec}}
 
 
-CHINESE_PROCESSORS = {
-    "Shanglong Industry Company": processor(31.6226227, 1.0989088, STANDARD_EUC_SPEC, STANDARD_PINE_SPEC),
-    "Golden Homes factory": processor(31.894878, -0.138642, STANDARD_EUC_SPEC, STANDARD_PINE_SPEC),
-    "(Timber Paper) Sino-Uganda Mbale Industrial Park": processor(34.1382243, 1.0758414, STANDARD_EUC_SPEC, STANDARD_PINE_SPEC),
-    "Evergreen wood": processor(32.4077845, 0.258846, PREMIUM_EUC_SPEC, PREMIUM_PINE_SPEC),
-    "Brother wood": processor(32.8081847, 0.2253216, STANDARD_EUC_SPEC, STANDARD_PINE_SPEC),
-    "Honghai PLY": processor(32.8245749, 0.3714341, STANDARD_EUC_SPEC, STANDARD_PINE_SPEC),
-    "Zhong Ding Construction Materials": processor(32.36385, 0.4393071, STANDARD_EUC_SPEC, STANDARD_PINE_SPEC),
-    "Zhong Bang Wood": processor(32.0203333, -0.0235833, LARGE_LOG_EUC_SPEC, LARGE_LOG_PINE_SPEC),
-    "Acacia Wood factory": processor(31.36237, 0.658842, STANDARD_EUC_SPEC, STANDARD_PINE_SPEC),
-    "CFID factory": processor(32.2329796, 0.7449337, CFID_EUC_SPEC, CFID_PINE_SPEC),
-    "Guo Hau factory": processor(30.444508, -0.582692, STANDARD_EUC_SPEC, STANDARD_PINE_SPEC),
-}
+# Buyer-spec profiles observed at Ugandan processors. The public model is a Uganda *simulation*:
+# processor identities and exact sites are not published, so each profile is shown as
+# "Processor N" at a different Ugandan town (road-connected, so haulage routing stays valid).
+_BUYER_PROFILES = [
+    (STANDARD_EUC_SPEC, STANDARD_PINE_SPEC),
+    (STANDARD_EUC_SPEC, STANDARD_PINE_SPEC),
+    (STANDARD_EUC_SPEC, STANDARD_PINE_SPEC),
+    (PREMIUM_EUC_SPEC, PREMIUM_PINE_SPEC),
+    (STANDARD_EUC_SPEC, STANDARD_PINE_SPEC),
+    (STANDARD_EUC_SPEC, STANDARD_PINE_SPEC),
+    (STANDARD_EUC_SPEC, STANDARD_PINE_SPEC),
+    (LARGE_LOG_EUC_SPEC, LARGE_LOG_PINE_SPEC),
+    (STANDARD_EUC_SPEC, STANDARD_PINE_SPEC),
+    (CFID_EUC_SPEC, CFID_PINE_SPEC),
+    (STANDARD_EUC_SPEC, STANDARD_PINE_SPEC),
+]
+
+# Approximate town centres (lon, lat).
+_UGANDA_TOWNS = [
+    ("Mbarara", 30.6545, -0.6072), ("Masaka", 31.7349, -0.3379), ("Mubende", 31.3950, 0.5570),
+    ("Hoima", 31.3526, 1.4331), ("Lira", 32.8997, 2.2499), ("Gulu", 32.2881, 2.7724),
+    ("Jinja", 33.2041, 0.4244), ("Mukono", 32.7553, 0.3533), ("Mityana", 32.0420, 0.4175),
+    ("Fort Portal", 30.2750, 0.6710), ("Soroti", 33.6111, 1.7146), ("Mbale", 34.1750, 1.0827),
+    ("Kabale", 29.9894, -1.2486), ("Luwero", 32.4731, 0.8492), ("Kasese", 30.0869, 0.1830),
+    ("Iganga", 33.4686, 0.6092), ("Masindi", 31.7150, 1.6744),
+]
+
+
+def _simulated_processors() -> dict[str, Any]:
+    """Fixed seed: the same anonymised names/towns on every run and deployment."""
+    import random
+
+    rng = random.Random(20260930)
+    profiles = list(_BUYER_PROFILES)
+    rng.shuffle(profiles)
+    towns = rng.sample(_UGANDA_TOWNS, len(profiles))
+    return {
+        f"Processor {index}": processor(lon, lat, euc_spec, pine_spec)
+        for index, ((euc_spec, pine_spec), (_town, lon, lat)) in enumerate(zip(profiles, towns), start=1)
+    }
+
+
+SIMULATED_PROCESSORS = _simulated_processors()
 
 
 def processor_prices_to_usd(processor_db: dict[str, Any]) -> dict[str, Any]:
@@ -160,7 +190,7 @@ def processor_prices_to_usd(processor_db: dict[str, Any]) -> dict[str, Any]:
     return out
 
 
-CHINESE_PROCESSORS = processor_prices_to_usd(CHINESE_PROCESSORS)
+SIMULATED_PROCESSORS = processor_prices_to_usd(SIMULATED_PROCESSORS)
 
 
 def copy_processor_db() -> dict[str, Any]:
@@ -180,7 +210,7 @@ def copy_processor_db() -> dict[str, Any]:
                 for species, spec in data["buyer_specs"].items()
             },
         }
-        for name, data in CHINESE_PROCESSORS.items()
+        for name, data in SIMULATED_PROCESSORS.items()
     }
 
 
@@ -363,6 +393,16 @@ def validate_lon_lat(lon: float, lat: float) -> tuple[float, float]:
     if not (-90 <= lat <= 90):
         raise ValueError(f"Latitude must be between -90 and 90. Received {lat}.")
     return lon, lat
+
+
+# Uganda's bounding box; the roundwood simulation only covers Uganda.
+UGANDA_BOUNDS = {"lon_min": 29.5, "lon_max": 35.1, "lat_min": -1.5, "lat_max": 4.3}
+
+
+def validate_uganda(lon: float, lat: float) -> None:
+    b = UGANDA_BOUNDS
+    if not (b["lon_min"] <= lon <= b["lon_max"] and b["lat_min"] <= lat <= b["lat_max"]):
+        raise ValueError("This roundwood simulation covers Uganda only. Pick a location inside Uganda.")
 
 
 def retail_labour_categories() -> pd.DataFrame:
@@ -932,7 +972,7 @@ def haversine_km(lon1: float, lat1: float, lon2: float, lat2: float) -> float:
 
 
 def processor_catalog(processor_db: dict[str, Any] | None = None) -> list[dict[str, Any]]:
-    db = processor_db or CHINESE_PROCESSORS
+    db = processor_db or SIMULATED_PROCESSORS
     rows = []
     for name, data in db.items():
         rows.append(
@@ -981,7 +1021,7 @@ def nearest_processors(
     payload: RoundwoodProductionRequest,
     processor_db: dict[str, Any] | None = None,
 ) -> tuple[list[dict[str, Any]], list[str]]:
-    db = processor_db or CHINESE_PROCESSORS
+    db = processor_db or SIMULATED_PROCESSORS
     lon, lat = validate_lon_lat(payload.lon, payload.lat)
     requested_names = [name for name in payload.processor_names if name]
     unknown = [name for name in requested_names if name not in db]
@@ -1272,6 +1312,7 @@ def build_assumptions(payload: RoundwoodProductionRequest) -> list[str]:
 
 def run_roundwood_production(payload: RoundwoodProductionRequest) -> dict[str, Any]:
     lon, lat = validate_lon_lat(payload.lon, payload.lat)
+    validate_uganda(lon, lat)
     processor_db = processor_db_from_buyer_specs(payload.buyer_specs)
     processors, warnings = nearest_processors(payload, processor_db)
     labour_df = coerce_retail_library_df(

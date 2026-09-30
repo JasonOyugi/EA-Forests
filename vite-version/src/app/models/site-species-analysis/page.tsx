@@ -2,7 +2,7 @@
 
 import * as React from "react"
 
-import { BaseLayout } from "@/components/layouts/base-layout"
+import { ModelLayout } from "@/app/models/components/model-layout"
 
 import {
   SiteClassificationAnalysis,
@@ -51,7 +51,7 @@ export default function SiteSpeciesAnalysisPage() {
   )
 
   return (
-    <BaseLayout
+    <ModelLayout
       title="Site-species analysis"
       description="Select analysis period and then double click on map."
     >
@@ -82,6 +82,6 @@ export default function SiteSpeciesAnalysisPage() {
         />
       </div>
       </>
-    </BaseLayout>
+    </ModelLayout>
   )
 }

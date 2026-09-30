@@ -11,7 +11,7 @@ import {
   Settings,
 } from "lucide-react"
 
-import { BaseLayout } from "@/components/layouts/base-layout"
+import { ModelLayout } from "@/app/models/components/model-layout"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -1455,11 +1455,11 @@ export function SiteClassificationAnalysis({
 
 export default function SiteClassificationPage() {
   return (
-    <BaseLayout
+    <ModelLayout
       title="Site classification"
       description="Double-click anywhere on the map to lock coordinates, choose the model parameters, then run the model to fully classify your site."
     >
       <SiteClassificationAnalysis />
-    </BaseLayout>
+    </ModelLayout>
   )
 }

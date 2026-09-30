@@ -3,7 +3,7 @@
 import { ArrowRight, MapPinned, Sprout, Trees, Workflow } from "lucide-react"
 import { Link } from "react-router-dom"
 
-import { BaseLayout } from "@/components/layouts/base-layout"
+import { ModelLayout } from "@/app/models/components/model-layout"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -51,7 +51,7 @@ const modelCards = [
 
 export default function ModelsPage() {
   return (
-    <BaseLayout
+    <ModelLayout
       title="Models"
       description="Central home for notebook-driven model pages in the app."
     >
@@ -81,6 +81,6 @@ export default function ModelsPage() {
           ))}
         </div>
       </div>
-    </BaseLayout>
+    </ModelLayout>
   )
 }

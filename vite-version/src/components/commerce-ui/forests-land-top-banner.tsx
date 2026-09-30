@@ -1,13 +1,19 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, type ReactNode } from "react"
 import { BentoTilt } from "@/components/ui/bento-tilt"
 
 interface ForestsLandTopBannerProps {
   rightIconSrc?: string
   rightIconAlt?: string
   targetId?: string
-  linkLabel?: string
+  /** Pass null to hide the in-banner link. */
+  linkLabel?: string | null
+  /** Replaces the default "Ugandan Concessions…" sentence. */
+  message?: ReactNode
+  /** Pass null to hide the "NEW" pill. */
+  badgeLabel?: string | null
+  dismissible?: boolean
   onVisibilityChange?: (isVisible: boolean) => void
 }
 
@@ -16,6 +22,9 @@ export function ForestsLandTopBanner({
   rightIconAlt = "Crested crane",
   targetId = "featured-products",
   linkLabel = "View featured opportunities",
+  message,
+  badgeLabel = "NEW",
+  dismissible = true,
   onVisibilityChange,
 }: ForestsLandTopBannerProps) {
   const [isVisible, setIsVisible] = useState(true)
@@ -29,6 +38,7 @@ export function ForestsLandTopBanner({
   return (
     <BentoTilt>
       <div className="group uganda-banner relative overflow-hidden rounded-xl border border-white/10 bg-black px-4 py-3 shadow-md">
+        {dismissible ? (
         <button
           className="absolute right-3 top-3 z-20 flex h-7 w-7 items-center justify-center rounded-full border border-white/15 bg-black/35 text-white/85 transition hover:bg-black/55 hover:text-white focus:outline-none"
           onClick={() => setIsVisible(false)}
@@ -49,6 +59,7 @@ export function ForestsLandTopBanner({
             />
           </svg>
         </button>
+        ) : null}
 
         <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
           <div className="uganda-banner-boundary absolute inset-0 rounded-xl" />
@@ -114,11 +125,18 @@ export function ForestsLandTopBanner({
             </div>
 
             <p className="flex items-center text-sm font-medium text-white">
-              <span className="mr-2 rounded-full bg-black px-2 py-0.5 text-xs font-bold uganda-badge uganda-badge-glow">
-                NEW
-              </span>
+              {badgeLabel ? (
+                <span className="mr-2 rounded-full bg-black px-2 py-0.5 text-xs font-bold uganda-badge uganda-badge-glow">
+                  {badgeLabel}
+                </span>
+              ) : null}
               <span>
-                <span className="font-bold">Ugandan Concessions</span> are now available for review and acquisition.
+                {message ?? (
+                  <>
+                    <span className="font-bold">Ugandan Concessions</span> are now available for review and acquisition.
+                  </>
+                )}
+                {linkLabel ? (
                 <a
                   href={`#${targetId}`}
                   className="ml-1.5 whitespace-nowrap underline hover:text-yellow-200"
@@ -129,6 +147,7 @@ export function ForestsLandTopBanner({
                 >
                   {linkLabel}
                 </a>
+                ) : null}
               </span>
             </p>
           </div>

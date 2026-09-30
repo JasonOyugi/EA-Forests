@@ -4,7 +4,7 @@ import * as React from "react"
 import { useParams, Navigate, Link } from "react-router-dom"
 import { ArrowLeft, Bot, Hourglass, type LucideIcon, LineChart, Dna, Trophy } from "lucide-react"
 
-import { BaseLayout } from "@/components/layouts/base-layout"
+import { ModelLayout } from "@/app/models/components/model-layout"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { launchDates } from "@/config/launch-dates"
@@ -84,13 +84,15 @@ export default function ModelComingSoonPage() {
   const { modelSlug } = useParams()
   const config = modelSlug ? comingSoonModels[modelSlug] : undefined
 
+  // Hooks run on every render (before any early return) to keep React's hook order stable.
+  const { days, hours, minutes, seconds, isDone } = useCountdown(config?.expectedAt ?? "")
+
   if (!config) return <Navigate to="/errors/not-found" replace />
 
-  const { days, hours, minutes, seconds, isDone } = useCountdown(config.expectedAt)
   const expectedLabel = new Date(config.expectedAt).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })
 
   return (
-    <BaseLayout title={config.title} description={config.description}>
+    <ModelLayout title={config.title} description={config.description}>
       <div className="@container/main px-4 lg:px-6">
         <Link to="/models" className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.12em] text-muted-foreground hover:text-emerald-700">
           <ArrowLeft className="size-4" /> Back to models
@@ -132,6 +134,6 @@ export default function ModelComingSoonPage() {
           </CardContent>
         </Card>
       </div>
-    </BaseLayout>
+    </ModelLayout>
   )
 }

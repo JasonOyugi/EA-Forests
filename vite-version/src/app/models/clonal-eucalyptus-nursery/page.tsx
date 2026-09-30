@@ -33,7 +33,7 @@ import {
 } from "@/app/models/currency"
 import { ModelAssumptionsDisclosure } from "@/app/models/components/model-assumptions-disclosure"
 import { MetricCardDecoration } from "@/app/landing/components/metric-card-decoration"
-import { BaseLayout } from "@/components/layouts/base-layout"
+import { ModelLayout } from "@/app/models/components/model-layout"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -795,7 +795,7 @@ export default function ClonalEucalyptusNurseryPage() {
   }
 
   return (
-    <BaseLayout
+    <ModelLayout
       title="Clonal Eucalyptus Nursery Model"
     >
       <>
@@ -1372,6 +1372,6 @@ export default function ClonalEucalyptusNurseryPage() {
         </div>
       </div>
       </>
-    </BaseLayout>
+    </ModelLayout>
   )
 }
