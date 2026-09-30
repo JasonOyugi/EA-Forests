@@ -165,7 +165,7 @@ const allMosaicLayout: MosaicSlot[] = [
   { kind: "story", size: "xl:col-span-8 xl:row-span-[36]" },
   { kind: "resource", size: "xl:col-span-4 xl:row-span-[36]" },
   { kind: "event", size: "xl:col-span-4 xl:row-span-[36]" },
-  { kind: "video", size: "xl:col-span-8 xl:row-span-[30]" },
+  { kind: "video", size: "xl:col-span-8 xl:row-span-[36]" },
   { kind: "eo", country: "KE", size: "xl:col-span-12 xl:row-span-[48]" },
   { kind: "metrics", size: "xl:col-span-3 xl:row-span-[36]" },
   { kind: "player", size: "xl:col-span-4 xl:row-span-[30]" },
