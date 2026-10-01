@@ -63,4 +63,3 @@ jobs:
         env:
           EARTH_ENGINE_PROJECT: ee-example-project
         run: uv run python -m app.check_backend
-
