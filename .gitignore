@@ -62,6 +62,7 @@ coverage/
 # Temporary folders
 tmp/
 temp/
+.tmp-*
 
 # ESLint cache
 .eslintcache
