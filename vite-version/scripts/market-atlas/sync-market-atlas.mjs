@@ -44,9 +44,14 @@ async function main() {
   const masterActors = normalizeActorMaster(actorSheets)
   const { actors, reconciliation, reviewCandidates } = reconcileProviders(masterActors, providerSheets)
 
+  // Rows kept in the workbooks for audit but never published (e.g. catalog_status
+  // "exclude_placeholder" for registry test entries with dummy names/numbers).
+  const excluded = actors.filter((a) => /^exclude/i.test(a.catalogStatus ?? ""))
+  const publishable = actors.filter((a) => !/^exclude/i.test(a.catalogStatus ?? ""))
+
   const validated = []
   const validationErrors = []
-  for (const actor of actors) {
+  for (const actor of publishable) {
     const result = actorSchema.safeParse(actor)
     if (result.success) {
       validated.push(result.data)
@@ -85,6 +90,7 @@ async function main() {
     masterActorCount: masterActors.length,
     publishedActorCount: validated.length,
     providerOnlyCount: validated.filter((a) => a.id.startsWith("provider:")).length,
+    excludedActors: excluded.map((a) => ({ id: a.id, name: a.name, catalogStatus: a.catalogStatus })),
     mergedProviderCount: reconciliation.filter((r) => r.status === "merged").length,
     actorsWithRegionAssignment: withRegion,
     actorsWithPreciseCoordinates: withCoords,

@@ -1,0 +1,2481 @@
+Measure-Valued Stochastic Control and Matching in
+Spatial Forestry Markets
+McKean–Vlasov Growth, Unbalanced Transport, Bayesian Learning, and Risk-Sensitive
+Regime Switching
+Mathematical working paper
+August 2026
+
+Abstract
+We study a partially observed stochastic control problem for a spatial forestry system whose
+economically relevant state is a time-varying distribution of tree sizes, qualities, locations, log
+recoveries, processor specifications, and operating capacities. Standing-tree state is represented
+by a finite positive measure on a marked tree space. Conditional McKean–Vlasov dynamics
+describe size and quality evolution under common environmental noise and idiosyncratic variation,
+while harvest and bucking induce a finite measure of heterogeneous logs. Processor demand is
+represented by specification sets and grade-dependent price schedules; allocation of logs through
+spatially heterogeneous operators is a capacitated partial-transport problem. The dual of this
+matching problem yields marginal values of compatible supply, demand, and operating capacity.
+Because both the physical state and structural parameters are imperfectly observed, the sufficient
+decision state is a posterior law on a product of measure spaces. We formulate the resulting Bayesadaptive problem, characterize the topological and convexity structure of its components, state
+the Wasserstein-space HJB equation for the conditional-law subproblem, and separate convex
+inner allocation from non-convex learning and discrete regime decisions. A reduced-order East
+African calibration is introduced only after the structural model is specified, and is interpreted
+as prior-predictive evidence rather than as a primitive assumption. The framework therefore
+treats biological growth, log recovery, processor compatibility, spatial transport, bargaining,
+observation, and regime transition as distinct operators to be identified from data.
+
+Keywords: stochastic control; McKean–Vlasov dynamics; Wasserstein geometry; unbalanced
+optimal transport; Bayesian experimental design; distributionally robust optimization; forestry.
+Suggested arXiv categories: math.OC, math.PR, stat.AP. Throughout, R+ := [0, ∞).
+
+1
+
+Introduction
+
+A forestry market is a coupled biological and spatial allocation system. Standing trees evolve
+stochastically; harvesting transforms trees into logs; logs are heterogeneous in diameter, length,
+species, moisture, and quality; processors accept different subsets of that log space and attach
+different prices to different grades. Transport and operating costs depend on location and contractor
+productivity. The relevant market object is therefore a distribution of feasible material, not a scalar
+inventory of hectares or cubic metres.
+The mathematical problem has three nested layers. The first is a state-estimation problem:
+infer the distribution of future tree and log attributes from incomplete inventory, remote sensing,
+1
+
+management records, and operational observations. The second is a matching problem: allocate
+heterogeneous supply to processor-specific demand subject to spatial costs and quality constraints.
+The third is a sequential control problem: choose sensing, matching exposure, contract variables, and
+discrete regime transitions while the parameters governing growth, recovery, acceptance, response,
+and operating cost are unknown.
+The analysis is deliberately agnostic about a particular institutional or commercial implementation
+until section 8. The objective is to identify the smallest mathematical structure that preserves the features which matter for optimization. The resulting model combines four familiar objects: controlled
+McKean–Vlasov dynamics on Wasserstein space, finite-measure geometry for birth/death/harvest,
+convex optimal transport for market matching, and Bayesian control on a belief space. Dynamic
+programming for McKean–Vlasov control on probability-measure spaces is developed in Pham and
+Wei (2016); Djete et al. (2019); unbalanced optimal transport between arbitrary finite positive
+measures is developed in Chizat et al. (2015); Liero et al. (2015); and the control/learning coupling is
+the classical dual-control phenomenon, reviewed recently by Meijer and Rantzer (2026) and studied
+in active-learning form by Li et al. (2023).
+The main contributions are analytical. First, we make the primitive state spaces and their
+topology explicit, separating probability-law geometry from finite-mass geometry. Second, we
+connect stochastic tree growth to processor economics through a harvest/bucking kernel and
+specification-dependent log prices. Third, we formulate processor allocation as a convex unbalanced
+transport problem and use its dual to define marginal supply value. Fourth, we formulate partial
+observation over both physical state and structural parameters, rather than treating the physical
+asset map as known. Fifth, we isolate which subproblems are convex and which are intrinsically
+non-convex. Finally, we show how the existing hectare-level model is obtained as a coarse projection
+of the richer state system and use East African data for a prior-predictive numerical calibration.
+
+2
+
+Mathematical setting and geometry
+
+2.1
+
+Primitive state spaces
+
+Let (D, dD ) be a compact geographic metric space. The metric may be Euclidean at coarse
+resolution or a road-network/travel metric when delivered cost is evaluated. Let G be a finite set of
+species/genetic classes, QT ⊂ RqT and QL ⊂ RqL compact tree- and log-quality state spaces, and
+M ⊂ RqM a compact management-state space. For positivity of diameter and height, write tree size
+in logarithmic coordinates s = (sd , sh ) = (log d, log h) ∈ R2 . A marked tree state is
+ξ = (ℓ, a, s, g, q, m) ∈ ET := D × R+ × R2 × G × QT × M,
+
+(1)
+
+where ℓ is location, a is age, g is species/genetics, q contains physical quality/form attributes
+(straightness, defect or density-related states when observed), and m is management condition.
+Epistemic confidence is represented by the observation model and posterior, rather than embedded
+in the physical state.
+A harvested log is represented by
+λ = (ℓ, ds , dℓ , LL , g, qL , w) ∈ EL := D × R3+ × G × QL × [0, 1],
+
+(2)
+
+where ds and dℓ are small- and large-end diameters, LL is log length, qL is a vector of grade-relevant
+quality attributes, and w is moisture fraction or another density-relevant condition. A reference
+
+2
+
+diameter can be recovered as a measurable function of (ds , dℓ , LL ). Let mL (λ) ≥ 0 denote log mass
+in tonnes, with strict positivity on physically admissible logs. A generic representation is
+mL (λ) = ϱ(g, qL , w) VL (ds , dℓ , LL , qL ),
+
+(3)
+
+with ϱ the relevant density map and VL a taper/volume map. This avoids a universal cubic-metreto-tonne conversion and makes the tree-to-log map compatible with processor specifications stated
+in dimensions, quality and mass.
+Let CP be a compact metric specification-parameter space. A point σjspec ∈ CP encodes a
+finite number of grades, diameter/length thresholds, accepted species/quality classes, and the
+corresponding grade/quantity value schedule. Processor j has state
+yj = (ℓj , Qj , σjspec , υj , Rjsrc ) ∈ EP := D × R+ × CP × [0, 1] × R+ ,
+
+(4)
+
+where Qj is desired procurement flow after normalization to tonnes per unit time, υj is utilisation,
+and Rjsrc is an economically tolerable sourcing radius. If a source reports demand in cubic metres,
+the normalization is state-dependent through (3); no universal volume-to-mass coefficient is assumed.
+The specification family Sj and price schedule pj used below are measurable functions of σjspec .
+Operator k has state
+zk = (ℓk , Kk , ϑk , φk , ck , ηkcomp ) ∈ EO := D × R4+ × [0, 1],
+
+(5)
+
+where Kk is capacity, ϑk productivity, φk equipment/fuel intensity, ck operating cost, and ηkcomp a
+compliance/quality mark.
+We assume ET , EL , EP , EO are Polish under their product metrics. Discrete species and grade
+marks are endowed with the discrete topology.
+
+2.2
+
+Stratification by biological marks
+
+The discrete biological marks should not be silently treated as Euclidean coordinates. For each
+g ∈ G, define the continuous tree and log strata
+EgT := D × R+ × R2 × QT × M,
+
+EgL := D × R3+ × QL × [0, 1],
+
+(6)
+
+and identify ET = g∈G EgT and EL = g∈G EgL . A finite disjoint union of Polish spaces is Polish. It
+is generally not geodesic across distinct species strata under the discrete mark metric, even when
+each continuous stratum is geodesic. Consequently, species change is not modeled as transport
+through the state space.
+For measure geometry it is therefore useful to identify a standing-tree measure with the vector
+µ = (µg )g∈G , µg ∈ M+ (EgT ), and use the product metric
+F
+
+F
+
+dHK,G (µ, η)2 :=
+
+X
+
+HK(µg , η g )2 .
+
+(7)
+
+g∈G
+
+The same construction applies to logs. This separates continuous growth and transport within
+a biological class from discrete transitions that must be introduced explicitly through a mutation/reclassification kernel if they are scientifically meaningful. The resulting state space is best
+viewed as a finite collection of continuous metric strata coupled by discrete kernels, rather than as a
+single smooth manifold.
+3
+
+2.3
+
+Finite measures, Wasserstein geometry, and changing mass
+
+Let M+ (E) denote the cone of finite nonnegative Radon measures on a Polish space E. Fixing a
+base point x0 ∈ E, write
+
+
+M2,+ (E) := µ ∈ M+ (E) :
+
+Z
+
+
+
+dE (x, x0 )2 µ(dx) < ∞ .
+
+(8)
+
+The moment condition is independent of the chosen base point. Let nP and nO denote the numbers
+of active processors and operators. The standing-tree, harvested-log, processor, and operator states
+are respectively
+µt ∈ M+ (ET ),
+
+Λt ∈ M+ (EL ),
+
+νt =
+
+nP
+X
+
+δyj (t) ,
+
+nO
+X
+
+κt =
+
+j=1
+
+δzk (t) .
+
+(9)
+
+k=1
+
+The total mass of µt is an intensity/count (or an area-weighted count under a chosen sampling
+convention), not a probability. Whenever µt (ET ) > 0, define its normalized law by
+µ̄t :=
+
+µt
+∈ P2 (ET ),
+µt (ET )
+
+(10)
+
+provided the second moment is finite.
+Two geometries are required and should not be conflated. The quadratic Wasserstein metric W2
+acts on P2 (ET ) and is natural for the conditional distribution of a representative surviving tree.
+Harvesting, mortality, recruitment, and unmatched market supply alter total mass, so arbitrary
+finite measures are instead endowed with a mass-varying metric. We use the Hellinger–Kantorovich
+metric HK, equivalently an entropy-transport/unbalanced-transport geometry, which combines
+displacement with creation or destruction of mass (Chizat et al., 2015; Liero et al., 2015). On
+geodesic ground strata these metric spaces admit non-Euclidean geodesics; HK also has a cone
+representation and a dynamic transport–reaction formulation. Its geodesics and geodesic convexity
+have been characterized in substantially greater detail in Liero et al. (2022); Gallouët et al. (2021).
+Entropic formulations admit scalable Sinkhorn-type algorithms (Chizat et al., 2016). No global
+geodesic property is assumed when the geographic metric or discrete mark structure fails to be
+geodesic.
+Assume each ground space is complete and separable under the stated product metric, and
+equip each finite-measure component with the standard HK topology. Let R be a finite set of
+observation/coverage regimes and Z ⊂ Rd a Polish finite-dimensional state. Define
+X = M+ (ET ) × M+ (EP ) × M+ (EO ) × R × Z.
+
+(11)
+
+The harvested-log measure Λt is treated here as an endogenous flow generated from the persistent
+standing-tree state by the harvest/bucking operator in section 3; it can be appended as an additional
+M+ (EL ) coordinate without changing the product-space arguments below when inventory-in-process
+must itself be persistent.
+Proposition 1 (Polish product and belief spaces). Under the preceding assumptions, X is Polish
+under any compatible product metric. If Θ ⊂ Rp is closed and dX is such a metric, then
+
+
+P2 (X × Θ) := π :
+
+Z
+
+2
+
+dX (x, x0 ) + ∥θ∥
+
+2
+
+
+
+π(dx, dθ) < ∞
+
+is Polish under the quadratic Wasserstein metric induced by the product ground metric.
+4
+
+(12)
+
+Proof. Finite products of Polish spaces are Polish. The second assertion is the standard completeness
+and separability result for P2 over a Polish ground space, restricted to laws with finite second
+moment.
+There are also two distinct convexity notions. First, M+ (E), and hence M2,+ (E), is a convex
+cone under linear interpolation (1 − ϑ)µ0 + ϑµ1 . Second, whenever the relevant ground stratum is
+geodesic, P2 (E) and the corresponding finite-measure space admit non-Euclidean geodesics under
+W2 and HK, respectively. Linear convexity and geodesic (displacement) convexity are not equivalent.
+This distinction matters for existence, regularity, and algorithms on measure spaces: linear mixtures
+are natural for relaxed controls and resource measures, whereas Wasserstein/HK geodesics are
+natural for transport and gradient-flow structure (Bolley and Carrillo, 2013; Liero et al., 2015).
+Definition 1 (Metric geodesic convexity). Let (Y, d) be a geodesic metric space. A functional
+F : Y → (−∞, ∞] is λ-geodesically convex if for every pair y0 , y1 there exists a constant-speed
+geodesic (ys )s∈[0,1] such that
+F(ys ) ≤ (1 − s)F(y0 ) + sF(y1 ) −
+
+λ
+s(1 − s)d(y0 , y1 )2 .
+2
+
+(13)
+
+For λ > 0, geodesic convexity gives uniqueness of a minimizer along the admissible geodesic
+class whenever a minimizer exists; lower semicontinuity and compact/coercive sublevel conditions
+provide the corresponding direct-method existence route. In the present system, this structure can
+be exploited for smooth transport–reaction or regularized inference functionals, but it is not claimed
+for hard processor thresholds, discrete harvest rules, or impulse decisions. The distinction between
+linear and metric convexity is therefore part of the model specification rather than a stylistic choice.
+For a fixed discrete regime and biological stratum, the continuous part of the state inherits a
+length-space geometry whenever the ground metric spaces do. The global state remains stratified
+because regime labels and species marks are discrete. Thus a single global Hessian or geodesicconvexity claim would be inappropriate: second-order analysis is performed on continuous strata,
+while discrete transitions are handled by impulse or switching operators. This stratified viewpoint
+is also useful numerically because the convex transport subproblem can be solved separately on
+each species/grade stratum and then coupled through processor and operator capacity constraints.
+
+2.4
+
+Tangent geometry and mass-changing continuity equations
+
+On the continuous coordinates of P2 (Rd ), the formal Wasserstein tangent space at an absolutely
+continuous law µ is
+L2 (µ)
+
+Tµ P2 (Rd ) = {∇φ : φ ∈ Cc∞ (Rd )}
+
+.
+
+(14)
+
+An absolutely continuous curve (µt ) admits a velocity field vt ∈ Tµt P2 satisfying the continuity
+equation
+∂t µt + ∇· (vt µt ) = 0
+(15)
+in the weak sense, with metric speed determined by the minimum L2 (µt ) norm of admissible velocity
+fields. This is the geometric basis for Wasserstein gradients and Lions derivatives in the HJB layer
+below.
+For the finite-mass forestry state, pure transport is insufficient. A generalized continuity equation
+has the form
+∂t µt + ∇· (vt µt ) = αtrxn µt + Bt ,
+(16)
+5
+
+where αtrxn is a signed reaction rate (negative for mortality/harvest removal) and Bt is a nonnegative
+source-rate measure representing recruitment/planting. Hellinger–Kantorovich geometry metrizes
+precisely this combination of transport and mass change through an action involving both displacement and reaction terms, up to the chosen normalization convention (Chizat et al., 2015; Liero
+et al., 2015). In the forestry interpretation, growth moves mass through size–quality space, while
+mortality, harvest, and recruitment change mass. Thus the geometry is not decorative: it matches
+the decomposition of the physical dynamics.
+Geodesic convexity is not assumed globally. Processor grade thresholds, discrete species marks,
+harvest impulses, and regime impulses generate nonsmooth or non-convex structure. Where a
+functional is geodesically convex, Wasserstein/HK first-order methods can exploit that structure;
+elsewhere the model relies on convexification, decomposition, or discrete optimization.
+
+2.5
+
+Control topology and convexification
+
+Let AG be a compact metric biological-action space and let Uc be a compact metric space of
+continuous information/market actions. The full decision space is U = Uc × I, where I is a finite
+impulse set for discrete regime changes. More generally, for any compact metric action space A, a
+strict control is a progressively measurable A-valued process. Following the standard control-space
+construction used in conditional McKean–Vlasov problems, one may metrize strict controls by
+"Z
+
+∆(α, β) := E
+
+#
+
+T
+
+dA (αt , βt ) dt .
+
+(17)
+
+0
+
+A related internal theoretical note uses this Krylov-type metric with a Polish control space and
+Wasserstein-Lipschitz state coefficients (Misoka Ltd., 2025). When the strict action set is non-convex,
+relaxed controls take values in P(A). Since A is compact, P(A) is compact under weak convergence
+and is convex. If the local drift and cost are affine in the relaxed control, this convexification is
+especially useful for existence and numerical optimization.
+For orientation, the convexity structure of the model is summarized in table 1.
+Table 1: Convex and non-convex components of the model.
+Object
+
+Structure
+
+Consequence
+
+Finite positive measures
+
+Supports mixtures and
+mass-changing transport
+
+Log–processor–operator allocation set
+
+Convex cone; HK metric, geodesic on suitable
+ground strata
+Convex, weakly compact
+for compact A
+Convex
+
+CVaR epigraph
+
+Convex for convex loss
+
+Grade thresholds / discrete regime
+
+Mixed discrete-continuous
+
+Endogenous adoption and network feedback
+
+Generally non-convex
+
+Chance constraints
+
+Generally non-convex
+
+Relaxed control set P(A)
+
+6
+
+Useful
+existence/relaxation device
+Inner allocation is a continuous linear/convex program
+Tractable risk constraints
+in scenario programs
+Outer problem is generally
+non-convex
+Requires global, dynamic,
+or decomposition methods
+Approximation or distributionally robust reformulation required
+
+The optimization architecture follows this geometry. Conditional on a biological stratum, a fixed
+discrete regime, and fixed processor grade labels, the allocation variable lies in a convex cone of finite
+measures and the capacity constraints are affine. Continuous measurement-error regularization and
+concave quantity-value functions therefore preserve a convex inner problem. Biological impulses,
+hard grade labels, endogenous participation, and regime switching are retained outside that convex
+core. Convexification is used only where it preserves the physical state variables, rather than by
+averaging away processor specifications or log quality.
+
+3
+
+Stochastic tree growth and the log-supply map
+
+3.1
+
+Conditional McKean–Vlasov growth
+
+Fix a complete product probability space
+(Ω, F, P) = (Ω0 × Ω1 , F 0 ⊗ F 1 , P0 ⊗ P1 ),
+
+(18)
+
+where Ω0 supports the common Brownian motion W 0 and Ω1 supports the idiosyncratic Brownian
+motion B, with the usual completed filtrations. For a representative surviving tree, let
+Ξt = (sd,t , sh,t , qt ) ∈ R2+qT ,
+
+dat = dt,
+
+(19)
+
+where sd = log d, sh = log h, and at = a0 + t along a cohort. Conditional on fixed marks ς = (ℓ, g, m)
+and a progressively measurable biological/management action aG
+t ∈ AG , consider
+G
+G
+bG
+bG
+dΞt = bG (Ξt , µ
+t , at , ς, at ) dt + σG (Ξt , µ
+t , at , ς, at ) dBt
+
+(20)
+
+0
+G
+0
+bG
++ σG
+(Ξt , µ
+t , at , ς, at ) dWt ,
+
+with conditional law
+0
+2+qT
+bG
+µ
+).
+t := L(Ξt | Ft ) ∈ P2 (R
+
+(21)
+
+bG
+For a fixed mark class ς, µ
+t is the size–quality conditional law; the normalized full marked-tree
+law µ̄t in (10) is obtained by mixing these conditional laws over age, location, species/genetics, and
+management marks. The action aG
+t can represent silvicultural decisions when the biological layer
+is optimized jointly; if such decisions are outside the controller’s scope, aG
+t is fixed or treated as
+an exogenous management process. The common noise W 0 can represent site-year climatic shocks,
+bG
+the law argument µ
+t can encode competition or stand-density effects, and B captures tree-level
+heterogeneity. Quality therefore evolves jointly with diameter and height rather than being attached
+ex post at harvest. The product-space/common-noise construction, a Polish control space, and
+Wasserstein-Lipschitz regularity are precisely the standard conditional McKean–Vlasov setting used
+in the accompanying theoretical note (Misoka Ltd., 2025) and in the control literature (Pham and
+Wei, 2016; Djete et al., 2019).
+
+Assumption 1 (Growth regularity). There exists L < ∞ such that, uniformly on finite-age intervals
+in (a, ς, aG ),
+∥bG (x, µ, a, ς, aG ) − bG (x′ , µ′ , a, ς, aG )∥ + ∥σG (x, µ, a, ς, aG ) − σG (x′ , µ′ , a, ς, aG )∥
+0
+0
++ ∥σG
+(x, µ, a, ς, aG ) − σG
+(x′ , µ′ , a, ς, aG )∥ ≤ L ∥x − x′ ∥ + W2 (µ, µ′ ) ,
+
+
+
+and the coefficients have linear growth and are continuous in aG .
+7
+
+(22)
+
+Proposition 2 (Well-posed conditional-law dynamics). Under the growth regularity assumption, a
+square-integrable initial condition, and an admissible aG , (20) admits a unique strong solution on a
+finite horizon. Its conditional law flow lies in P2 (R2+qT ).
+Proof sketch. Apply the standard fixed-point argument for McKean–Vlasov SDEs with Lipschitz
+dependence on state and conditional law under W2 ; common noise is handled through conditioning
+on Ft0 . See Pham and Wei (2016).
+Log-size coordinates preserve positivity under Gaussian perturbations. Equation (20) is not
+intended to force a particular growth law: deterministic increment models, Gaussian-process drift
+surfaces, jump mortality, or size-structured branching models can replace the diffusion provided
+they induce a predictive law on harvestable size and quality. The market layer below depends on
+that induced law, not on the choice of biological parametrization itself.
+
+3.2
+
+Harvest, mortality, and bucking
+
+Let λH
+t (ξ; ut ) ≥ 0 be a predictable harvest hazard/intensity under decision ut , and let Bt ∈ M+ (ET )
+denote a predictable recruitment/planting-rate measure. Mortality is represented by a second hazard
+λM
+t (ξ). These source and sink terms make total standing-tree mass non-conservative, which is why
+the finite-measure geometry of section 2 is retained alongside the normalized law used in (20).
+On a fixed mark class ς, write µςt for the corresponding finite measure on size–quality state and
+Btς for the restricted recruitment-rate measure. Define the time-dependent diffusion generator
+G
+
+G
+bG
+Lς,a
+φ(x) := bG (x, µ
+t , at , ς, a ) · ∇φ(x)
+t
+i
+h
+1
+G
+2
+⊤
+0
+0 ⊤
+bG
+,
+a
+,
+ς,
+a
+)D
+φ(x)
+.
++ σG
+(σG
+) (x, µ
++ Tr σG σG
+t
+t
+2
+
+(23)
+
+For a smooth compactly supported test function φ, the conditional finite-measure dynamics then
+have the weak form
+h
+
+ς,aG
+
+i
+
+ς
+ς
+M
+d⟨φ, µςt ⟩ = ⟨Lt t φ, µςt ⟩ − ⟨(λH
+t + λt )φ, µt ⟩ + ⟨φ, Bt ⟩ dt
+
+D
+
+E
+
+ς
+0
+G ⊤
+0
+bG
++ σG
+(·, µ
+t , at , ς, at ) ∇φ, µt · dWt .
+
+(24)
+
+The drift part is a transport–diffusion–reaction equation; the final term is the common-noise
+stochastic transport term. Equation (24) makes explicit the link between the normalized conditionallaw SDE and the mass-changing geometry in (16).
+Let KB (dλ | ξ, βtB ) be a bucking kernel: conditional on harvested-tree state ξ and bucking rule
+B
+βt , it returns a finite measure of log types. Over a short decision interval, the expected log-count
+intensity is
+Z
+Λt (A) =
+ET
+
+B
+λH
+t (ξ; ut )KB (A | ξ, βt ) µt (dξ),
+
+A ∈ B(EL ).
+
+(25)
+
+The corresponding tonne-weighted measure is
+e (dλ) = m (λ) Λ (dλ).
+Λ
+t
+t
+L
+
+(26)
+
+Thus commercially available mass is an image of the stochastic tree-size/quality measure under
+harvest timing, bucking, species-dependent density, moisture, and operational feasibility. A scalar
+e .
+hectares-to-tonnes coefficient is only a reduced-order approximation to the map µt 7→ Λ
+t
+8
+
+3.3
+
+Controlled bucking kernel and downstream value
+
+The bucking map need not be exogenous. Let AB (ξ) be the nonempty compact set of feasible cutting
+patterns for a harvested tree in state ξ, constrained by stem length, taper, defect positions and
+minimum piece dimensions. For a bounded upper-semicontinuous downstream log-value function
+vL
+t : EL → R, define
+Z
+JB (ξ, β; vL
+t ) :=
+
+EL
+
+vL
+t (λ) KB (dλ | ξ, β) − cB (ξ, β),
+
+(27)
+
+where cB is bucking/processing cost. A downstream-value-optimal bucking rule satisfies
+βtB,∗ (ξ) ∈ arg max JB (ξ, β; vL
+t ).
+
+(28)
+
+β∈AB (ξ)
+
+The downstream value vL
+t may be taken from the dual value of the downstream matching problem,
+so the optimal cut pattern can depend on current processor specifications and spatial scarcity rather
+than on volume recovery alone.
+Proposition 3 (Existence of a measurable bucking selector). Suppose the graph of ξ 7→ AB (ξ) is
+measurable with nonempty compact values and (ξ, β) 7→ JB (ξ, β; vL
+t ) is measurable in ξ and upper
+semicontinuous in β. Then the argmax in (28) is nonempty and admits a measurable selector.
+Proof sketch. Compactness and upper semicontinuity give pointwise attainment; a measurable
+maximum/selection theorem yields a measurable maximizer under the stated graph and measurability
+assumptions.
+
+4
+
+Processor specifications, matching, and price formation
+
+4.1
+
+Specification sets and grade-dependent price schedules
+nG
+
+spec
+j
+For processor j, let nG
+, and let {Sjr }r=1
+be Borel
+j be the number of active grades encoded by σj
+grade sets in log space, ordered from highest to lowest value. A representative grade set is
+min
+Sjr = {λ ∈ EL : ds ≥ dmin
+jr , LL ≥ Ljr , g ∈ Gjr , qL ∈ Qjr },
+
+(29)
+
+where Gjr ⊆ G and Qjr ⊆ QL are the accepted species/genetic and quality sets. A processor may
+additionally impose upper diameter bounds, taper constraints involving (ds , dℓ ), moisture bands,
+defect limits, or piece-count conditions; these are represented by further measurable inequalities
+in λ. When the continuous quality set is convex and the dimensional restrictions are affine, each
+fixed-species grade cell is convex in the continuous log coordinates. The finite union over species
+and grades is generally non-convex, and hard grade boundaries induce nonsmooth value functions.
+To avoid ambiguity on overlaps, define the grade map by the highest-valued admissible grade,
+gj (λ) := min{r ∈ {1, . . . , nG
+j } : λ ∈ Sjr },
+
+min ∅ := ∅.
+
+(30)
+
+For a posted schedule quoted per tonne,
+(
+
+p0j (λ) =
+
+pj,gj (λ) , gj (λ) ̸= ∅,
+0,
+gj (λ) = ∅.
+
+9
+
+(31)
+
+Here pjr ≥ 0 is the posted per-tonne value for grade r. Thus per-tonne value is a measurable
+function of physical dimensions, species and quality rather than a scalar attached to undifferentiated
+volume.
+Procurement value may also depend on accepted quantity, and the dependence can differ by
+marg
+grade. Let πjr
+: [0, Qj ] → R+ be processor j’s marginal willingness to pay for an additional tonne
+of grade r, and define the cumulative grade-value function
+Z m
+
+Φjr (m) :=
+0
+
+marg
+πjr
+(z) dz,
+
+0 ≤ m ≤ Qj .
+
+(32)
+
+marg
+marg
+The posted schedule (31) is the special case πjr
+≡ pjr . If πjr
+is nonincreasing, then Φjr is
+concave, so diminishing marginal procurement value can be represented without destroying convexity
+of the continuous allocation layer. Conversely, minimum lots, take-or-pay clauses, or increasing
+marginal price blocks can generate non-convex or mixed-integer structure.
+Hard specifications are also statistically delicate because inventory and intake measurements are
+noisy. For grade r, let aηjr (λ) ∈ [0, 1] be the continuous probability that log state λ is classified into
+P
+grade r after convolution with a measurement-error kernel of scale η > 0, with r aηjr (λ) ≤ 1. Define
+P
+total compatibility aηj (λ) := r aηjr (λ) and the measurement-error-regularized expected posted value
+nG
+
+p̄ηj (λ) :=
+
+j
+X
+
+pjr aηjr (λ).
+
+(33)
+
+r=1
+
+Away from grade boundaries, the hard classification is recovered as η ↓ 0 under a consistent
+measurement-error model. This distinction matters computationally: weak convergence of a log
+measure need not produce continuous changes in a hard-threshold grade count when positive mass
+lies on a specification boundary, whereas bounded continuous compatibility kernels do.
+Proposition 4 (Continuity of smoothed compatible supply). Let kj,r : EL → [0, 1] be bounded and
+continuous and define
+Z
+η
+Sjr
+(Λ) :=
+
+kj,r (λ)aηjr (λ) Λ(dλ),
+
+(34)
+
+η
+η
+where aηjr is bounded and continuous. If Λn → Λ narrowly, then Sjr
+(Λn ) → Sjr
+(Λ). Hence the
+same conclusion holds for any stronger state topology under which convergence implies narrow
+convergence. For hard indicators, continuity holds at Λ whenever the relevant grade and distance
+sets are Λ-continuity sets.
+
+Proof. The first statement follows from narrow convergence applied to the bounded continuous
+integrand kj,r aηjr . The second is immediate by composition. The final statement is the Portmanteau
+theorem.
+The existing computational schema represents processor demand through dimensional thresholds,
+species, grade and per-tonne price fields; repository records explicitly marked as test data are
+excluded from empirical calibration, but the schema identifies the relevant state variables (EA
+Forests, 2026).
+Let ct (λ, j, k) be the non-stumpage cost per tonne of processing and delivering log type λ to
+processor j through operator k. It may include felling, extraction, loading, haulage, quality assurance,
+compliance, and risk terms:
+extract
+ct = cfell
++ cload
++ chaul
++ cQA
++ ccomp
++ crisk
+t + ct
+t
+t
+t .
+t
+t
+
+10
+
+(35)
+
+Define the compatible delivered surplus density
+st (λ, j, k) = p0j (λ) − ct (λ, j, k),
+
+(36)
+
+and set st = −∞ (or equivalently forbid the edge) when log λ fails processor j’s specification or
+operator k is infeasible for that movement.
+
+4.2
+
+Capacitated partial transport through operators
+
+Let Jt and Kt denote the active processor and operator index sets. Define demand and operatorcapacity measures
+X
+X
+Dt =
+Qj δj ,
+Ot =
+Kk δk ,
+(37)
+j∈Jt
+
+k∈Kt
+
+where both Qj and Kk are tonnes per decision period. An allocation is a nonnegative measure Γ on
+EL × Jt × Kt . The unregularized allocation problem is
+e , D , O ) = sup
+V (Λ
+t
+
+t
+
+t
+
+t
+
+Z
+
+st (λ, j, k) Γ(dλ, dj, dk)
+(38)
+
+Γ≥0
+
+e ,
+s.t. ΓL ≤ Λ
+t
+
+ΓJ ≤ Dt ,
+
+ΓK ≤ Ot ,
+
+where ΓL , ΓJ , ΓK are the three marginals. This is a continuous linear program: unmatched logs,
+unsatisfied processor demand, and idle operator capacity are allowed.
+To retain grade-specific quantity effects, define
+η
+Mjr
+(Γ) :=
+
+Z
+
+aηjr (λ) Γ(dλ, {j}, dk),
+
+η
+η
+Mηj (Γ) := (Mj1
+(Γ), . . . , Mjn
+G (Γ)).
+
+(39)
+
+j
+
+The quantity-sensitive extension is
+
+nG
+
+j
+X X
+
+η
+
+Φjr (Mjr (Γ)) −
+ j r=1
+Γ≥0 
+
+sup
+
+Z
+
+ct (λ, j, k) dΓ
+
+
+
+
+
+subject to the marginal constraints in (38). (40)
+
+
+
+
+If every Φjr is upper semicontinuous and concave, (40) is a convex optimization problem in the
+standard sense of maximizing a concave functional over a convex feasible set. Strict concavity
+identifies the optimal expected grade-quantity vector even when the transporting allocation itself is
+not unique.
+For computation, let Rt be a finite reference measure with full support on the feasible set of
+triples. A smooth entropy-transport relaxation is
+Z
+
+inf
+
+Γ≥0
+
+−st dΓ + εΓ KL(Γ∥Rt )
+
+(41)
+
+e ) + ε KL(Γ ∥D ) + ε KL(Γ ∥O ),
++ εL KL(ΓL ∥Λ
+t
+t
+t
+D
+J
+O
+K
+
+with positive regularization/relaxation parameters εΓ , εL , εD , εO , and where KL denotes the generalized relative entropy for finite positive measures. This is an entropy-transport problem on finite
+positive measures (Chizat et al., 2015; Liero et al., 2015).
+e , D , O are finite and
+Proposition 5 (Existence and convexity of the inner allocation). Assume Λ
+t
+t
+t
+the feasible relation in EL × Jt × Kt is closed. If st is bounded above and upper semicontinuous on
+that relation, the feasible set of (38) is convex and narrowly compact and an optimizer exists. If
+each Φjr in (40) is upper semicontinuous and concave, the quantity-sensitive extension also attains
+its optimum. The objective in (41) is convex in Γ; if an active entropy term is strictly convex on
+the effective support, the regularized optimizer is unique there.
+
+11
+
+Proof. Marginalization is linear, hence the marginal inequalities define a convex feasible set. Their
+finite upper bounds imply tightness; closedness of the marginal constraints and feasible relation
+gives narrow closedness, hence compactness by Prokhorov’s theorem. Upper semicontinuity of the
+η
+linear integral functional yields existence. The maps Γ 7→ Mjr
+(Γ) are linear and narrowly continuous
+η
+because ajr is bounded and continuous; composition with upper-semicontinuous concave Φjr preserves
+upper semicontinuity and concavity, so the direct method also applies to (40). Kullback–Leibler
+divergence is convex in its first argument, and composition with linear marginal maps preserves
+convexity; strict convexity gives uniqueness on the effective support.
+Proposition 6 (Concavity and homogeneity of matching value). For fixed surplus kernel st , let
+S ∈ M+ (EL ), D ∈ M+ (Jt ), and O ∈ M+ (Kt ) be generic supply, demand, and operator-capacity
+resource measures. Then the value Vt (S, D, O) of (38) is jointly concave in (S, D, O). Moreover,
+for a ≥ 0,
+Vt (aS, aD, aO) = a Vt (S, D, O).
+(42)
+Proof. If Γ1 and Γ2 are feasible for resource triples (S1 , D1 , O1 ) and (S2 , D2 , O2 ), then ϑΓ1 +(1−ϑ)Γ2
+is feasible for the convex combination of the resource triples and achieves the corresponding convex
+combination of objective values. Taking suprema proves concavity. Scaling a feasible allocation by
+a proves positive homogeneity in both directions.
+The matched tonne flow into processor j and its demand-coverage ratio are
+(
+
+Mj (t) := Γ∗J ({j}),
+
+χj (t) :=
+
+Mj (t)/Qj , Qj > 0,
+0,
+Qj = 0.
+
+(43)
+
+By construction 0 ≤ χj ≤ 1. This is the endogenous notion of commercially useful supply: it
+depends simultaneously on size, quality, location, processor specification, operator capacity, and
+delivered cost.
+
+4.3
+
+Dual values, outside options, and bargaining
+
+The linear-program dual of (38) is
+Z
+
+inf
+
+ϕ,ψ,ω≥0
+
+e (dλ) +
+ϕ(λ) Λ
+t
+
+X
+
+ψj Qj +
+
+j
+
+s.t. ϕ(λ) + ψj + ωk ≥ st (λ, j, k)
+
+X
+
+ωk Kk
+(44)
+
+k
+
+on feasible triples.
+
+At points of differentiability, optimal dual variables are the marginal values of additional compatible
+log supply, processor demand, and operator capacity; more generally they form supergradients of
+the concave resource-value function in the corresponding directions. Consequently, an inventory
+observation is valuable not merely when it discovers tonnes, but when it discovers tonnes in regions
+of log space with high dual value.
+Transport shadow values are not negotiated stumpage prices. Fix processor j. Let the seller’s
+best credible alternative net value be
+oj (λ) = sup sup p0j ′ (λ) − ct (λ, j ′ , k) + .
+
+
+
+
+(45)
+
+j ′ ̸=j k∈Kt
+
+Let the best feasible net value with buyer j be
+vj (λ) = sup p0j (λ) − ct (λ, j, k) .
+
+
+
+
+k∈Kt
+
+12
+
+(46)
+
+When vj (λ) > oj (λ), a stylized Nash split with seller bargaining weight βbarg ∈ [0, 1] gives a
+forest-gate net value
+
+pFG
+(47)
+j (λ) = oj (λ) + βbarg vj (λ) − oj (λ) .
+To make the spatial and specification effects explicit, for a sourcing radius R > 0 define the
+grade-resolved compatible local supply vector
+Z
+
+Sjr (R) :=
+EL
+
+e (dλ),
+1{dD (ℓ, ℓj ) ≤ R}1{gj (λ) = r} Λ
+t
+
+Sj (R) := (Sj1 (R), . . . , SjnG (R)).
+j
+
+(48)
+
+PnG
+
+j
+srch (S (R)) be a procurement/search-risk premium that is
+Let Sj (R) :=
+j
+r=1 Sjr (R). Let ϖj
+nonincreasing in compatible supply in the relevant grade coordinates. For a compatible log of grade
+r = gj (λ), define the least non-stumpage delivered cost
+
+c⋆j (λ) := inf ct (λ, j, k)
+
+(49)
+
+k∈Kt
+
+and the quantity-sensitive processor reservation net value
+marg
+η
+v̄j (λ, Sj (R), Mηj ) := πjr
+(Mjr
+) − c⋆j (λ) − ϖjsrch (Sj (R)).
+
+(50)
+
+marg
+When πjr
+≡ pjr and the search-risk term vanishes, this reduces to the best compatible posted-value
+net of delivered cost. Replacing vj in (47) by v̄j gives
+η
+pFG
+j (λ, Sj (R), Mj ) = oj (λ) + βbarg v̄j − oj (λ) .
+
+
+
+(51)
+
+Proposition 7 (Information, local scarcity, and negotiated value). Fix a compatible grade r, log
+state λ, and radius R. Suppose all terms are differentiable along a scalar information state z on a
+region where v̄j > oj . Then
+η
+
+dpFG
+dc⋆j
+doj
+j
+marg ′
+η dMjr
+= (1 − βbarg )
++ βbarg (πjr
+) (Mjr
+)
+−
+dz
+dz
+dz
+dz
+"
+
+dSj (R)
+− ∇ϖjsrch (Sj (R)) ·
+dz
+
+#
+
+(52)
+
+.
+
+Hence improved information raises negotiated value whenever the combined outside-option, deliveredcost, and search-risk gains dominate any reduction in marginal procurement value caused by quantity
+saturation.
+marg ′
+Proof. Differentiate (51) and (50). If marginal willingness to pay is nonincreasing then (πjr
+) ≤0
+srch
+wherever differentiable, while coordinatewise nonincreasing search risk gives ∇ϖj ≤ 0. The stated
+sign condition follows term by term.
+
+Thus a mapped cluster of mature, high-quality trees close to a processor is valuable for mathematically distinct reasons: it can reduce delivered/search cost, increase feasible matched surplus,
+and, when the same material is compatible with alternative buyers, improve the seller-side outside
+option. If the mapping reveals previously unknown compatible stock without immediately increasing contracted quantity, the search-risk term can raise processor reservation value. If supply is
+already abundant relative to demand, diminishing marginal procurement value or monopsony can
+instead dominate. Negotiating leverage is therefore a property of the local compatibility graph,
+grade-resolved quantity state, and their shadow values, not of hectares alone.
+13
+
+5
+
+Partial observation and Bayes-adaptive control
+
+5.1
+
+Latent state, observations, and belief state
+
+The physical state is not observed exactly. Let
+Xt = (µt , νt , κt , rt , ζt ) ∈ X
+
+(53)
+
+where rt ∈ R is a discrete observation/coverage regime and ζt collects finite-dimensional auxiliary
+states such as sensing backlog, active spatial domain, and computational or contractual states.
+Let θ ∈ Θ contain unknown structural parameters: growth and quality-transition coefficients,
+bucking/recovery parameters, operator-productivity coefficients, processor acceptance and priceresponse parameters, observation-error parameters, and marginal sensing/operating costs.
+At decision time t, let
+exp match contract cov
+ut = (aobs
+, at
+, at , ιt ) ∈ U,
+t , at , at
+
+(54)
+
+where the continuous components control sensing/verification, designed experiments, exposure of
+feasible matches, contract or posted-price variables, and spatial coverage intensity; ιt is a discrete
+regime impulse. This control vector is distinct from the biological management action aG
+t in (20).
+No particular institutional objective is imposed: the one-step loss below may represent negative
+matched surplus plus sensing/operating cost, a planner objective, or another specified criterion.
+The state and observation kernels are
+Xt+1 ∼ Pθ (· | Xt , ut ),
+
+Yt+1 ∼ Gθ (· | Xt , ut , Xt+1 ).
+
+(55)
+
+Observations may include plot measurements, processor intake/acceptance, grade outcomes, contractor productivity, delivered-cost components, contract responses, repeated procurement decisions,
+or realised matches.
+Let It be the observation/control filtration. The correct information state is the joint posterior
+
+
+πt (dx, dθ) := P (Xt , θ) ∈ dx × dθ | It ∈ P2 (X × Θ),
+
+(56)
+
+not merely a posterior over parameters conditional on a perfectly known physical map.
+Proposition 8 (Belief-state sufficiency). If (Pθ , Gθ ) are Borel Markov kernels and admissible actions
+are measurable functions of the information history, then πt is a controlled Markov information
+state. Any finite-horizon history-dependent policy has an equivalent policy measurable with respect
+to πt .
+Proof. The posterior predictive law of (Xt+1 , Yt+1 , θ) is obtained by integrating the kernels against
+πt . Bayes’ rule maps (πt , ut , Yt+1 ) to πt+1 ; hence future conditional laws depend on the past only
+through (πt , ut ).
+
+5.2
+
+Bellman equation and the Wasserstein HJB layer
+R
+
+Let L(x, θ, u) be one-step loss, let L̄(π, u) = L(x, θ, u) π(dx, dθ), and fix a discount factor γ ∈
+(0, 1]. If K(dπ ′ | π, u) is the Bayesian filtering kernel, let U(π) ⊆ U denote the admissible action
+correspondence at belief π. The finite-horizon belief-state recursion is
+
+
+Vt (π) = inf
+
+u∈U(π)
+
+Z
+
+L̄(π, u) + γ
+14
+
+
+
+Vt+1 (π ′ ) K(dπ ′ | π, u) .
+
+(57)
+
+Proposition 9 (Attainment in the belief-state Bellman step). Fix t. Suppose U(π) is nonempty
+compact with closed graph, L̄(π, u) is lower semicontinuous, K is weakly continuous in (π, u), and
+Vt+1 is lower semicontinuous and bounded below. Then the Bellman objective in (57) is lower
+semicontinuous in u and its infimum is attained for every π.
+Proof. Weak continuity of K and lower semicontinuity of Vt+1 , together with the lower bound, imply
+lower semicontinuity of the continuation integral by the Portmanteau theorem. Adding L̄ preserves
+lower semicontinuity. Compactness of U(π) gives attainment.
+The continuous biological layer has its own infinite-dimensional dynamic-programming geometry.
+Suppose that µ ∈ P2 (Rd ) is the conditional tree law, that a biological control aG ∈ AG enters the
+coefficients of (20), and that VG (t, µ) is smooth in the Lions sense. For a fixed mark class ς and
+0.
+deterministic age path, write bG (t, x, µ, aG ) := bG (x, µ, at , ς, aG ), and analogously for σG and σG
+G
+Let FG (t, µ, a ) be the running biological objective and GT (µ) the terminal objective. Formally,
+(
+
+0 = ∂t VG (t, µ) + inf
+
+aG ∈AG
+
+1
++
+2
++
+
+1
+2
+
+Z
+
+Z
+
+G
+
+FG (t, µ, a ) +
+
+∂µ VG (t, µ)(x) · bG (t, x, µ, aG ) µ(dx)
+
+h
+
+i
+
+⊤
+0
+0 ⊤
+Tr (σG σG
++ σG
+(σG
+) )(t, x, µ, aG ) ∂x ∂µ VG (t, µ)(x) µ(dx)
+
+ZZ
+
+h
+
+i
+
+(58)
+)
+
+0
+0
+2
+Tr σG
+(t, x, µ, aG )σG
+(t, y, µ, aG )⊤ ∂µµ
+VG (t, µ)(x, y) µ(dx)µ(dy) ,
+
+with VG (T, µ) = GT (µ). Fixed site/species/management marks have been suppressed in (58) for
+readability. The second Lions-derivative term is generated by common noise. Under suitable
+regularity assumptions, this DPP/HJB structure is rigorous; see Pham and Wei (2016); Djete et
+al. (2019). Intrinsic viscosity formulations on Wasserstein space and fully second-order equations
+generated by common noise are developed in Burzoni et al. (2019); Soner and Yan (2022); Bayraktar
+et al. (2025). The equation is used here to expose the geometry and derivative structure, not to
+assert that the full partially observed market-control problem has a closed-form HJB.
+
+5.3
+
+Risk and distributional robustness
+
+For dynamic risk, use a one-step conditional risk map ρπ,u . A nested expectation–CVaR recursion is
+Vtρ (π) = inf
+
+u∈U(π)
+
+n
+
+ρ
+L̄(π, u) + γρπ,u Vt+1
+(πt+1 )
+
+o
+
+,
+
+(59)
+
+where
+ρπ,u (Z) = (1 − λR )E[Z | π, u] + λR CVaRαR (Z | π, u),
+
+λR ∈ [0, 1],
+
+αR ∈ (0, 1).
+
+(60)
+
+Nested conditional risk measures preserve time consistency in the dynamic setting (Yu and Shen,
+2023). For one-period loss,
+1
+CVaRαR (Z) = min z +
+E[(Z − z)+ ] ,
+z∈R
+1 − αR
+
+
+
+
+whose epigraph is convex whenever Z is convex in the decision variables.
+
+15
+
+(61)
+
+Posterior uncertainty does not protect against model misspecification. Let Pb (· | π, u) be a
+posterior predictive law on the next belief state, with W2 induced by a compatible ground metric
+on the belief space, and define the ambiguity set
+PDR (π, u) = {Q : W2 (Q, Pb (· | π, u)) ≤ εDR (π, u)}.
+
+(62)
+
+The robust Bellman operator replaces the expectation in (57) by the worst-case expectation over
+PDR . Wasserstein distributionally robust programs can admit finite convex reformulations under
+useful structural assumptions (Esfahani and Kuhn, 2015); distributionally robust chance constraints
+are also consistent under suitable sampling assumptions (Cherukuri and Hota, 2020).
+
+5.4
+
+Dual control and experimental design
+
+Because ut changes the observation distribution, actions alter both current payoff and future
+posterior uncertainty. Let Vt+1 (πtfreeze ) denote continuation value if the next observation is ignored.
+Under a loss convention, define the endogenous learning value
+h
+
+i
+
+freeze
+Dt (π, u) = E Vt+1 (πt+1
+) − Vt+1 (πt+1 ) | πt = π, ut = u .
+
+(63)
+
+If the controller may ignore information, Dt (π, u) ≥ 0 whenever the observation has no additional
+cost beyond that already charged in L. This is the dual-control effect: a price experiment, contractorinstrumentation protocol, or targeted inventory sample may have lower immediate contribution
+but higher continuation value because it changes the next action set through learning (Meijer and
+Rantzer, 2026; Li et al., 2023).
+Let e ∈ Eexp denote an admissible experiment/instrumentation design. An information-theoretic
+design criterion is
+
+
+EIG(e) = EY |e KL π(· | Y, e)∥π(·) ,
+(64)
+while a decision-focused expected value of sample information under the loss convention can be
+written
+h
+i
+EVSI(e) := inf E[L | π] − EY |e inf E[L | Y, e, π] ,
+(65)
+u
+
+u
+
+for the relevant decision horizon (or with L replaced by continuation value in the dynamic problem).
+EIG and EVSI need not select the same experiment; the latter is the more direct criterion when
+observations affect an irreversible regime transition. Bayesian experimental-design methods provide
+tractable approximations to these nested expectations (Tsilifis et al., 2015; Foster et al., 2019;
+Rainforth et al., 2024).
+
+5.5
+
+Discrete regime switching as impulse control
+
+Let R = {r1 , r2 , r3 } be a finite ordered set of observation/coverage regimes and let Xr ⊆ X denote
+the physical state space conditional on regime r ∈ R. For an admissible transition r → r+ , let
+Kr,r+ ≥ 0 be its impulse cost and let
+Rr→r+ : P2 (Xr × Θ) −→ P2 (Xr+ × Θ)
+
+(66)
+
+be a measurable posterior embedding/prediction operator. Let Cr denote the Bellman continuation
+operator when the regime is held fixed and let Vrstop be a specified terminal/abandonment value.
+The quasi-variational recursion is
+n
+
+o
+
+Vr (π) = min (Cr Vr )(π), Kr,r+ + Vr+ (Rr→r+ π), Vrstop (π) .
+16
+
+(67)
+
+The value of waiting is therefore an optimal-stopping object generated by information and irreversibility: a transition is selected only when the posterior value of the enlarged feasible state/action
+region exceeds both within-regime continuation and the impulse cost.
+
+6
+
+A coarse finite-dimensional projection of the structural model
+
+The preceding model is the structural object. For current data, a lower-dimensional projection is
+required. Let H denote covered hectares, NA paying asset accounts, NP paying processors, and let
+Mj be matched/visible processor tonnes from (43). Define operating surplus
+Π = RA + RS − C.
+
+6.1
+
+(68)
+
+Coarse asset functional and adoption response
+
+For asset account i, let Aha
+i be hectares, Si annual managed forestry expenditure per hectare,
+asset
+Vi
+standing asset value per hectare, δiop the proportional operational improvement enabled by
+information, and λloss
+avoidable annual loss/risk. A value envelope is
+i
+
+
+
+
+VA,i = Aha
+Si δiop + Viasset λloss
+.
+i
+i
+
+(69)
+
+The current reduced model uses a monetisation rate mA against the managed-spend base of paying
+accounts,
+X
+(70)
+RA = mA BA ,
+BA =
+CiA Aha
+i Si ,
+i
+
+where CiA ∈ {0, 1} is adoption.
+For a homogeneous segment, let adoption at price p be
+a(p) =
+
+1
+,
+1 + exp(ηA p − αA )
+
+ηA > 0,
+
+(71)
+
+and revenue R(p) = Bp a(p) for B > 0.
+Proposition 10 (Strict log-concavity of one-segment pricing). For p > 0, R(p) = Bp/(1 + eηA p−αA )
+is strictly log-concave and therefore has a unique maximizer. The interior optimizer is
+p∗ =
+
+1 + LambertW(eαA −1 )
+,
+ηA
+
+(72)
+
+where LambertW denotes the principal real branch of the Lambert function.
+Proof.
+d2
+1
+2
+log R(p) = − 2 − ηA
+a(p)(1 − a(p)) < 0.
+2
+dp
+p
+The first-order condition is ηA p(1 − a(p)) = 1. Setting y = ηA p − 1 gives yey = eαA −1 , hence
+(72).
+This result is local to a homogeneous segment. Mixtures of customer segments, discrete products,
+cross-side network effects, and dynamic learning can destroy global concavity.
+
+17
+
+6.2
+
+Coarse matched-supply functional
+
+Let fj be the fee per tonne of processor-relevant supply made commercially visible or matchable.
+Using the structural matching output,
+RS =
+
+X
+
+CjS fj Mj ,
+
+(73)
+
+j
+
+where CjS ∈ {0, 1} is processor adoption. The previous scalar coverage discount is thus interpreted
+as an approximation to the matched-flow operator Mj (µ, ν, κ), not as a primitive.
+
+6.3
+
+Structural cost and operating leverage
+
+Use the cost function
+C(H, NA , NP , nV , WD , Gact ) = F +
+
+X
+
+Fg + aH H βH + bA NA + bP NP + cV nV + cD WD + εC , (74)
+
+g∈Gact
+
+where Gact is the active geography set, F and Fg are common and geography-specific fixed costs,
+aH , bA , bP , cV , cD ≥ 0 are marginal/intensity coefficients, βH > 0 is the variable coverage exponent,
+nV is verification count, WD is data/compute workload, and εC is a zero-centered residual cost
+shock in the stochastic version. The key hypothesis is that verification is selected by posterior
+uncertainty and decision value rather than imposed as a census of all covered hectares.
+Proposition 11 (Fixed-cost dilution). If C(H) = F + aH H βH with F, aH , βH > 0, then
+d log C
+aH H βH
+= βH
+< βH .
+d log H
+F + aH H βH
+
+(75)
+
+Hence an observed decline in average cost per hectare does not identify sublinear marginal coverage
+cost.
+Let RH := RA (H) + RS (H), define the local revenue elasticity βR (H) := d log E[RH ]/d log H, and
+let βC (H) denote the corresponding local elasticity of expected recurring cost. Positive operating
+leverage requires
+βR (H) > βC (H).
+(76)
+The current three cost anchors are compatible with a large fixed component and a variable exponent
+near one; section 8 reports the fit.
+
+6.4
+
+Break-even, risk, and robustness
+
+At fixed scale, the deterministic monetisation frontier is
+mA BA +
+
+X
+
+CjS fj Mj = C.
+
+(77)
+
+j
+
+If a common reduced-order supply fee fS is imposed, define the adopted matched-tonnage base
+P
+BS := j CjS Mj . For two scalar monetisation rates (mA , fS ) and fixed bases (BA , BS ), the feasible
+break-even half-space
+{(mA , fS ) ∈ R2+ : mA BA + fS BS ≥ C}
+(78)
+is convex.
+18
+
+Let RH > 0 and CH > 0 be random recurring revenue and cost at scale H, and let τ ∈ (0, 1).
+Define the multiplicative revenue factor required for probability τ of nonnegative operating surplus
+by
+τ
+MH
+:= inf{k > 0 : P(kRH − CH ≥ 0) ≥ τ }.
+(79)
+Define the left quantile Qτ (Z) := inf{z ∈ R : P(Z ≤ z) ≥ τ }. Then
+τ
+MH
+= Qτ
+
+
+
+CH
+RH
+
+
+
+.
+
+(80)
+
+This identity follows directly from RH > 0 and the definition of the generalized quantile; no
+continuity assumption on the ratio distribution is required.
+
+7
+
+Identification and numerical approximation
+
+7.1
+
+What must be identified
+
+The structural parameter vector contains at least four blocks:
+θ = (θG , θB , θM , θC ),
+
+(81)
+
+where θG governs growth/quality dynamics, θB harvest/bucking and log-yield maps, θM processor
+acceptance, adoption, matching and bargaining, and θC service/verification cost. A useful observation
+model is
+Y = Fobs (X, u, θ) + δmodel + ε,
+(82)
+where Fobs is the structural observation map, δmodel is structural discrepancy, and ε is observation
+noise. Without discrepancy, posterior concentration can become false precision. Bayesian calibration
+with a discrepancy process is standard in computer-model calibration (Kennedy and O’Hagan, 2001);
+identifiability requires experiments that separate parameter effects from discrepancy (Wu et al.,
+2018).
+The data hierarchy is correspondingly explicit:
+1. tree/plot data identify growth, size distribution, mortality, and quality transitions;
+2. harvest/bucking records identify the map from standing trees to log distributions;
+3. contractor records identify productivity and delivered-cost kernels;
+4. processor intake records identify grade acceptance and realised price schedules;
+5. repeated bids and alternative buyers identify bargaining/outside-option structure;
+6. platform conversion and renewal identify willingness to pay and adoption elasticity.
+
+7.2
+
+Simulation architecture
+
+A structurally faithful numerical experiment is a nested stochastic program over a measure-valued
+state, not a single Monte Carlo draw over scalar parameters. For posterior particle s = 1, . . . , Nθ ,
+one numerical path consists of:
+1. draw θ(s) = (θG , θB , θM , θC ) from the current posterior and a common environmental path;
+2. propagate a particle approximation of the conditional growth law (20), using the same commonnoise realization across trees in a site class and idiosyncratic noise at tree level;
+3. estimate mortality/harvest events, then solve or sample the bucking map to obtain a random
+marked log measure with dimensions and quality;
+19
+
+e ;
+4. transform log volume to mass through (3) and construct Λ
+t
+5. build the sparse feasible hypergraph (λ, j, k) induced by processor grade sets, sourcing distance
+and operator feasibility;
+6. solve the exact linear program (38) or the entropy-regularized problem (41), retaining primal
+flows and dual potentials;
+7. generate observations under the selected sensing/contracting action and update the joint state–
+parameter posterior;
+8. evaluate dynamic risk, continuation value and any scale impulse under the candidate policy.
+The physical discretization should preserve the distributional quantities that enter processor
+acceptance. A useful hierarchy is: individual-tree particles for DBH/height/form uncertainty;
+adaptive log bins in (ds , dℓ , LL , qL , w); processor/grade nodes; and operator-capacity nodes. Binning
+only by tonnes is insufficient because price is discontinuous at specification boundaries. Near such
+boundaries, adaptive refinement or importance sampling is preferable to a uniform grid.
+The McKean–Vlasov layer may be advanced in time by Euler–Maruyama/Milstein particles or
+P
+by a learned conditional transition density. The empirical measure N −1 i δΞi approximates the
+t
+conditional law within a mark/site class; common-noise coupling must be preserved rather than
+independently resampled across trees. Size-structured harvesting models provide a complementary
+PDE/transport limit when individual diffusion is less useful (Wang and Yu, 2026), while empirical
+diameter-distribution models can be used as static or initialization diagnostics (Teimouri et al.,
+2019).
+The allocation layer is conditionally convex. Its exact LP provides a benchmark; the entropytransport approximation enables Sinkhorn-type scaling (Chizat et al., 2016). Regularization bias
+should be estimated by solving a subset of scenarios at decreasing ε and comparing both primal
+value and dual potentials. Those duals act as a sensitivity oracle: if an outer sensing or coverage
+decision changes (S, D, O) affinely, the dual variables provide supergradients of the concave matching
+value and support Benders/cutting-plane decompositions. Discrete grade, minimum-lot, harvest
+and regime choices remain outside this convex core.
+The outer control problem can then be approximated by posterior scenario trees, sequential Monte
+Carlo with rollout, stochastic model-predictive control, or fitted value functions on a low-dimensional
+belief embedding. Reduced-order coordinates should be chosen from quantities with direct decision
+meaning—for example local compatible supply Sj (R), matched-demand fractions χj , posterior
+moments of growth/quality, and selected dual potentials—rather than from raw hectares. This is a
+natural place to exploit state-space reduction without collapsing the tree/log specification structure.
+For the current coarse benchmark, sample-average approximation is used only as a prior-predictive
+diagnostic (Kleywegt et al., 2002). Correlated uncertainty is assessed with Shapley effects rather than
+an independence-dependent Sobol decomposition (Iooss and Prieur, 2017). Numerical uncertainty
+should be decomposed into at least five components: particle/discretization error in the biological law,
+posterior/filter approximation error, bucking/taper-model error, transport regularization/scenario
+error, and structural model discrepancy. Reporting a single Monte Carlo interval that mixes these
+objects would obscure where additional data or computation is valuable.
+
+8
+
+East African numerical calibration
+
+Only at this point do we impose current East African evidence. Internal analysis estimates
+approximately 338,555 planted hectares in Uganda and 588,000 hectares in Tanzania, approximately
+0.93 million hectares combined (Gatsby Africa, 2026a). A processor intelligence base identifies 37
+20
+
+Chinese-owned processors, approximately 5 million m3 /year of installed capacity, approximately
+3 million m3 /year of current use, and typical utilisation around 50–60% (Gatsby Africa, 2026b).
+These quantities initialize one numerical calibration; they are not assumptions of the general model.
+Reported processor requirements occur in both cubic metres and tonnes; the structural model
+therefore converts only through the state-dependent density/volume map in (3), never through a
+universal tonnes-per-cubic-metre constant.
+The available evidence already supports the need for the richer specification layer. Processor
+records include heterogeneous raw-material descriptions, diameter/quality preferences, catchment
+radii, current and required procurement volumes, utilisation, and sourcing constraints; the existing
+roundwood model separately represents mensuration, felling, extraction, loading and haulage
+primitives. In the internal processor-supply workbook, for example, some processors require
+high-grade consistent roundwood while others explicitly accept smaller-dimension or lower-quality
+fast-growing material, so a single regional price-per-tonne process is structurally misspecified (Gatsby
+Africa, 2026d). The public repository also contains grade/specification data structures but labels
+several records as dummy functional test data; those records are therefore excluded from empirical
+calibration (EA Forests, 2026).
+The same repository contains trial-site records indexed by age, genetic entry and site. They report
+DBH, height, stem-form score, survival and volume-proxy summaries or distributions. These variables
+can initialize a conditional growth/quality prior, but they do not identify a mature-tree transition
+kernel or a processor-grade recovery kernel. Longitudinal remeasurement and harvest/bucking
+observations are therefore required before the structural simulator can be treated as calibrated
+rather than prior-predictive (EA Forests, 2026).
+
+8.1
+
+Asset structure and current coarse projection
+
+The Uganda CFR register used in the current calibration contains approximately 94,820 recorded
+planted hectares across 3,294 positive planted portfolios. The planted-area Gini coefficient is
+approximately 0.803; the largest portfolio represents about 10.4% of recorded planted hectares and
+the top five about 29.3% (Gatsby Africa, 2026c). Thus area scale cannot be converted to account
+count without the empirical portfolio distribution.
+Empirical asset structure: counts and hectares are different measures
+Share of portfolios
+
+Share of planted hectares
+
+60
+
+Share (%)
+
+50
+40
+30
+20
+10
+0
+1-1
+
+0
+
+-50
+
+10
+
+0
+
+-15
+
+50
+
+00
+
+0-5
+
+15
+
+0
+
+,50
+
+0-1
+
+50
+
+0
+
+,00
+
+0-5
+
+0
+1,5
+
++
+
+00
+
+5,0
+
+Portfolio size (ha)
+
+Figure 1: Empirical Uganda CFR portfolio structure used in the reduced-order initialization.
+
+21
+
+The current calibration does not yet contain a region-wide joint tree-level size–quality distribution.
+e 7→ Γ∗ with a conservative effective commercially
+It therefore replaces the structural mapping µt 7→ Λ
+t
+t
+available flow prior and processor-coverage priors. These are placeholders to be replaced as tree,
+contractor, and intake data arrive.
+
+8.2
+
+Current prior-predictive calibration
+
+The reduced model uses observed grower structure, processor/catchment evidence, value-derived
+monetisation priors, and a correlated latent market state. The reported outputs are from 50,000
+joint prior-predictive draws. This count controls numerical Monte Carlo error conditional on the
+model; it does not validate the structural priors or resolve model discrepancy.
+Table 2: Current reduced-order prior-predictive scale results. USD figures are thousands/year.
+
+Revenue P20
+Revenue P50
+Revenue P80
+Base OPEX P50
+Robust OPEX P50
+Joint operating surplus P20
+Joint operating surplus P50
+Joint operating surplus P80
+P(Π > 0)
+Paying-ha penetration
+Asset fee (USD/paying ha)
+Supply fee (USD/visible t)
+
+100k ha
+
+500k ha
+
+1m ha
+
+49
+78
+115
+219
+350
+-197
+-145
+-97
+0.01
+0.25
+2.16
+0.253
+
+326
+451
+613
+424
+617
+-125
+21
+191
+0.55
+0.26
+2.17
+0.259
+
+650
+850
+1,090
+669
+875
+-66
+171
+436
+0.72
+0.262
+2.18
+0.260
+
+Prior-predictive scale economics
+
+USD thousands / year
+
+1000
+
+Recurring revenue (P50)
+Revenue P20-P80
+
+Base OPEX (P50)
+Robust OPEX (P50)
+
+800
+
+600
+
+400
+
+200
+
+0
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+1.0
+
+Covered hectares (million)
+
+Figure 2: Reduced-order recurring revenue and OPEX distributions across the three coverage regimes.
+
+The current base median cost anchors are approximately $219k, $424k, and $669k at 100k, 500k,
+and one million covered hectares. A naive pure power fit yields an apparent total-cost exponent
+
+22
+
+near 0.47. The same three points are exactly fit by
+H
+C(H) = 162.8 + 56.2
+100,000
+
+
+0.955
+
+(USD thousands/year),
+
+(83)
+
+which is consistent with large fixed cost plus nearly linear variable coverage cost.
+
+Base median OPEX (USD thousands / year)
+
+Cost identification: falling average cost does not identify marginal elasticity
+OPEX anchors
+Pure power fit: β = 0.47
+Fixed + variable fit: F = 163k, βv = 0.95
+
+600
+
+500
+
+400
+
+300
+
+200
+100k
+
+500k
+
+1m
+
+Covered hectares
+
+Figure 3: Three cost anchors do not identify strongly sublinear marginal cost; fixed-cost dilution can
+generate the same average-cost pattern.
+
+8.3
+
+Break-even and robustness
+
+Holding the other revenue side fixed at its current median, one-lever deterministic break-even
+thresholds are:
+Table 3: One-lever reduced-order break-even thresholds.
+Scale
+
+Cost mode
+
+100k
+100k
+500k
+500k
+1m
+1m
+
+Base
+Robust
+Base
+Robust
+Base
+Robust
+
+Asset monetisation
+(% managed spend)
+
+Supply fee
+(USD/t)
+
+Paying-ha penetration
+(%)
+
+2.23
+3.73
+0.56
+0.98
+0.42
+0.65
+
+2.04
+3.70
+0.21
+0.54
+0.08
+0.29
+
+90.3
+150.9
+23.5
+41.3
+17.9
+27.3
+
+The estimated 80%-probability robustness multipliers in (79) are
+0.8
+M100k
+≈ 4.68,
+
+0.8
+M500k
+≈ 1.37,
+
+23
+
+0.8
+M1m
+≈ 1.10.
+
+(84)
+
+Distance to robustness: revenue multiplier for 80% positive EBITDA
+5.0
+
+4.68x
+
+4.5
+4.0
+
+MH0.8
+
+3.5
+3.0
+2.5
+2.0
+
+1.37x
+
+1.5
+
+1.10x
+
+1.0
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+1.0
+
+Covered hectares (million)
+
+Figure 4: Reduced-order multiplier required to reach 80% probability of nonnegative recurring operating
+surplus.
+
+These results are not evidence that hectares cause profitability. They state how far the current
+reduced-order distributions lie from a risk threshold under their assumed mapping from hectares to
+commercially useful coverage. The structural model identifies the missing empirical task: replace
+that mapping with the estimated tree-growth, bucking, matching, and service-cost operators.
+
+8.4
+
+What is and is not identified
+
+The current evidence supports the physical scale of the market, heterogeneous processor demand,
+portfolio concentration, and several operating-cost primitives. It does not yet identify a region-wide
+joint distribution of tree diameter, length-recoverable volume, quality, moisture/density, harvest
+timing, and processor acceptance. Nor does it identify a stable bargaining function such as (47).
+Therefore the tree/log/matching layer should be treated as a model to be estimated, not as a source
+of invented precision.
+This is also the strongest reason to work directly with contractors, operators, and processor
+intake data. Those observations identify KB , c(λ, j; k), realised grade maps, density conversions,
+acceptance rates, and the outside-option graph. Once these objects are estimated, the model can
+value a mapped cluster of mature trees near a processor in the correct unit: expected matched
+surplus and its dual shadow value, rather than hectares alone.
+
+9
+
+Conclusion
+
+The natural state of a forestry market is measure-valued. Tree growth moves mass through sizequality space; harvest removes mass from the standing-tree measure and creates a log measure;
+processor specifications define admissible regions of log space; spatial operating costs define the
+edge weights of a supply-demand network; and market allocation is a partial transport problem on
+those measures. Because the state itself is only partially observed, the sufficient decision variable is
+a posterior distribution over both the physical state and unknown structural parameters.
+This formulation separates several questions that are otherwise easily conflated. Biological
+productivity is not commercial availability. Commercial availability is not processor compatibility.
+Processor compatibility is not delivered surplus. Delivered surplus is not negotiated seller price.
+24
+
+Physical coverage is not information value. Each arrow between these objects is an operator that
+can be estimated and stress-tested.
+The present East African numbers are therefore best viewed as a reduced-order prior predictive
+projection of the structural model. They motivate scale experiments but do not eliminate the
+need to identify the underlying operators. The analytical advantage of the richer formulation is
+precisely that new inventory, contractor, and processor data have a defined destination in the
+model: they update growth laws, bucking kernels, matching costs, grade acceptance, dual supply
+values, bargaining outside options, or service-cost functions. This makes the model progressively
+less dependent on hectare-level proxies as the information system itself becomes more informative.
+
+A
+
+Notation audit
+
+Principal symbols and domains. Distinct alphabets are used for physical states, controls, beliefs, and
+reduced-order projections to avoid collisions.
+Symbol
+
+Definition
+
+R+
+ET , EL , EP , EO
+ds , dℓ , LL , qL , w, mL
+
+Nonnegative reals [0, ∞)
+Tree, log, processor, and operator state spaces
+Small-/large-end log diameters, log length, quality vector, moisture/density state, and log mass
+Standing-tree finite measure, log-count measure, and tonne-weighted
+log measure
+Processor and operator empirical measures
+Numbers of active processors and operators
+Finite-dimensional processor specification/grade/price configuration
+Normalized full marked-tree law from the finite standing-tree measure
+Representative continuous tree state and its conditional size–quality
+law
+Value function for the conditional-law biological control subproblem
+Fixed biological marks, biological/management control, and compact
+metric action space
+Harvest and mortality hazards
+Finite standing-tree measure and recruitment-rate measure restricted
+to a fixed mark class
+Time-dependent conditional McKean–Vlasov diffusion generator on
+that class
+Recruitment-rate measure, bucking rule, and harvested-tree-to-log kernel
+Feasible bucking-pattern set, bucking objective, downstream log value,
+and bucking cost
+Processor-demand and operator-capacity measures, in tonnes per decision period
+Reference measure and entropy/marginal relaxation weights in unbalanced transport
+Optimal log–processor–operator allocation measure
+Matched tonnes and matched-demand fraction for processor j
+Number of processor grades, grade-acceptance sets, and highest-valued
+admissible grade map
+
+et
+µt , Λ t , Λ
+νt , κt
+nP , nO
+σjspec
+µ̄t
+Ξt , µ
+bG
+t
+VG (t, µ)
+ς, aG
+t , AG
+M
+λH
+t , λt
+ς
+ς
+µt , Bt
+G
+
+Lς,a
+t
+
+Bt , βtB , KB
+AB (ξ), JB , vL
+t , cB
+Dt , Ot
+Rt , εΓ , εL , εD , εO
+Γ∗t
+Mj , χj
+nG
+j , Sjr , gj
+
+continued on next page
+
+25
+
+Notation audit continued from previous page
+Symbol
+
+Definition
+
+aηjr , aηj , p̄ηj
+
+Grade-specific and total smoothed compatibility probabilities, and
+measurement-error-regularized expected posted value
+Posted grade price, grade-specific marginal procurement value, and
+cumulative grade-value function
+Least delivered cost, search-risk premium, and quantity-sensitive processor reservation net value
+Measurement-error-regularized expected grade tonnes and processor
+grade-quantity vector
+Delivered operating cost and compatible delivered surplus per tonne
+Grade-resolved local compatible supply and its vector within sourcing
+radius R
+Seller bargaining weight and negotiated forest-gate net value in the
+stylized Nash split
+Dual potentials for supply, demand, and operator capacity
+Alternative-buyer outside option and best net value with target processor j
+Latent physical state, discrete observation/coverage regime rt ∈ R, and
+finite-dimensional auxiliary state
+Structural parameter vector
+Joint posterior law of (Xt , θ) given observations
+Dynamic-programming discount factor in (0, 1]
+Experiment/instrumentation design and its admissible design space
+Sequential control and its continuous-plus-impulse action space in (54):
+sensing, experiment, matching, contract, spatial-coverage and regime
+controls
+Finite regime set, regime-conditioned state space, continuation operator,
+posterior transition/embedding, and impulse cost
+Conditional risk map, CVaR confidence level, and risk weight; ρ is
+unrelated to wood density ϱ
+Wasserstein ambiguity set and its radius in the distributionally robust
+Bellman problem
+Structural observation map, model discrepancy, and observation noise
+Data/compute workload entering the reduced structural cost function
+Reduced-order covered hectares, paying asset/processor accounts, and
+verification count
+Reduced-order asset monetisation rate and processor fee per matched
+tonne
+Adopted asset managed-spend base and adopted matched-tonnage base
+Asset revenue, supply revenue, recurring cost, and operating surplus
+Robustness probability level, left quantile of Z, and revenue multiplier
+required for probability τ of Π ≥ 0
+
+marg
+p0j (λ), πjr
+, Φjr
+
+c⋆j , ϖjsrch , v̄j
+η
+Mjr
+(Γ), Mηj (Γ)
+
+ct (λ, j, k), st (λ, j, k)
+Sjr (R), Sj (R)
+η
+βbarg , pFG
+j (λ, Sj (R), Mj )
+
+ϕ, ψ, ω
+oj (λ), vj (λ)
+Xt , rt , ζt
+θ∈Θ
+πt
+γ
+e, Eexp
+ut , U
+
+R, Xr , Cr , Rr→r+ , Kr,r+
+ρπ,u , αR , λR
+PDR , εDR
+Fobs , δmodel , ε
+WD
+H, NA , NP , nV
+mA , fj
+BA , BS
+RA , RS , C, Π
+τ
+τ, Qτ (Z), MH
+
+B
+
+Current reduced-order adoption priors
+
+The current asset-adoption prior is size-dependent. At central price/value conditions, the base
+probability schedule by planted portfolio size is approximately
+Portfolio (ha)
+
+1–10
+
+10–50
+
+50–150
+
+150–500
+
+500–1,500
+
+1,500–5,000
+
+5,000+
+
+Base adoption
+
+0.1%
+
+0.5%
+
+5%
+
+15%
+
+35%
+
+60%
+
+80%
+
+26
+
+These are priors, not measured conversion rates. Regional processor adoption is likewise conditioned
+on engagement status and useful supply coverage and should be replaced by observed conversion
+and renewal data.
+
+C
+
+Structural cost sensitivity
+
+Using (83), changing the variable exponent while holding the 100k anchor fixed illustrates the
+sensitivity of scale economics:
+Variable exponent
+
+500k OPEX
+
+1m OPEX
+
+$422k
+$444k
+$467k
+$521k
+$467k
+
+$664k
+$725k
+$793k
+$957k
+$893k
+
+0.95
+1.00
+1.05
+1.15
+1.05 + $100k geography block at 1m
+
+D
+
+Reproducibility and data provenance
+
+The numerical tables are generated from the canonical EA Forests analytical notebook and its
+scale-reference, stress-test, and frontier outputs. The empirical asset distribution is calculated
+from the Uganda CFR register. Aggregate processor and sector statistics are taken from internal
+2025–2026 Gatsby Africa intelligence sources. The EA Forests codebase contains forestry cost
+recipes, harvesting/haulage primitives, processor locations, grade/specification schemas, and price
+schedules (EA Forests, 2026). Repository records explicitly labelled test/dummy data are excluded
+from empirical calibration.
+A public preprint should either publish a de-identified calibration dataset sufficient to reproduce
+the reported numerical tables or mark the empirical case-study data as restricted. The theoretical
+sections are independent of those restricted data.
+
+References
+H. Pham and X. Wei. Dynamic programming for optimal control of stochastic McKean–Vlasov
+dynamics. arXiv:1604.04057, 2016.
+M. F. Djete, D. Possamaï, and X. Tan. McKean–Vlasov optimal control: the dynamic programming
+principle. arXiv:1907.08860, 2019.
+L. Chizat, G. Peyré, B. Schmitzer, and F.-X. Vialard. Unbalanced optimal transport: dynamic and
+Kantorovich formulation. arXiv:1508.05216, 2015.
+M. Liero, A. Mielke, and G. Savaré. Optimal entropy-transport problems and a new Hellinger–
+Kantorovich distance between positive measures. arXiv:1508.07941, 2015.
+M. Liero, A. Mielke, and G. Savaré. Fine properties of geodesics and geodesic λ-convexity for the
+Hellinger–Kantorovich distance. arXiv:2208.14299, 2022.
+T. Gallouët, R. Ghezzi, and F.-X. Vialard. Regularity theory and geometry of unbalanced optimal
+transport. arXiv:2112.11056, 2021.
+27
+
+L. Chizat, G. Peyré, B. Schmitzer, and F.-X. Vialard. Scaling algorithms for unbalanced transport
+problems. arXiv:1607.05816, 2016.
+F. Bolley and J. A. Carrillo. Nonlinear diffusion: geodesic convexity is equivalent to Wasserstein
+contraction. arXiv:1309.1932, 2013.
+M. Burzoni, V. Ignazio, A. M. Reppen, and H. M. Soner. Viscosity solutions for controlled
+McKean–Vlasov jump-diffusions. arXiv:1909.12337, 2019.
+H. M. Soner and Q. Yan. Viscosity solutions for McKean–Vlasov control on a torus. arXiv:2212.11053,
+2022.
+E. Bayraktar, H. Cheung, I. Ekren, J. Qiu, H. M. Tai, and X. Zhang. Viscosity solutions of fully
+second-order HJB equations in the Wasserstein space. arXiv:2501.01612, 2025.
+T. J. Meijer and A. Rantzer.
+arXiv:2608.20073, 2026.
+
+Dual control: on exploration-exploitation in linear systems.
+
+Z. Li, W.-H. Chen, J. Yang, and Y. Yan. Dual control of exploration and exploitation for autooptimisation control with active learning. arXiv:2301.11984, 2023.
+X. Yu and S. Shen. Risk-averse reinforcement learning via dynamic time-consistent risk measures.
+arXiv:2301.05981, 2023.
+P. Mohajerin Esfahani and D. Kuhn. Data-driven distributionally robust optimization using the
+Wasserstein metric: performance guarantees and tractable reformulations. arXiv:1505.05116,
+2015.
+A. Cherukuri and A. R. Hota. Consistency of distributionally robust risk- and chance-constrained
+optimization under Wasserstein ambiguity sets. arXiv:2012.08850, 2020.
+M. C. Kennedy and A. O’Hagan. Bayesian calibration of computer models. Journal of the Royal
+Statistical Society: Series B, 63(3):425–464, 2001.
+A. J. Kleywegt, A. Shapiro, and T. Homem-de-Mello. The sample average approximation method
+for stochastic discrete optimization. SIAM Journal on Optimization, 12(2):479–502, 2002.
+A. Foster, M. Jankowiak, E. Bingham, P. Horsfall, Y. W. Teh, T. Rainforth, and N. D. Goodman.
+Variational Bayesian optimal experimental design. Advances in Neural Information Processing
+Systems 32, 2019. arXiv:1903.05480.
+T. Rainforth, A. Foster, D. R. Ivanova, and F. Bickford Smith. Modern Bayesian experimental
+design. Statistical Science, 39(1):100–114, 2024. arXiv:2302.14545.
+P. Tsilifis, R. G. Ghanem, and P. Hajali. Efficient Bayesian experimentation using an expected
+information gain lower bound. arXiv:1506.00053, 2015.
+B. Iooss and C. Prieur. Shapley effects for sensitivity analysis with correlated inputs: comparisons
+with Sobol’ indices, numerical estimation and applications. arXiv:1707.01334, 2017.
+X. Wu, K. Shirvan, and T. Kozlowski. Demonstration of the relationship between sensitivity and
+identifiability for inverse uncertainty quantification. arXiv:1801.10309, 2018.
+
+28
+
+M. Teimouri, J. W. Doser, and A. O. Finley. ForestFit: an R package for modeling tree diameter
+distributions. arXiv:1911.11002, 2019.
+L. S. Wang and J. Yu. Optimal harvesting of size-structured populations with environmental
+feedback and fixed recruitment flux. arXiv:2607.03790, 2026.
+Misoka Ltd. Theory: Conditional McKean–Vlasov control notes. Unpublished mathematical note,
+25 May 2025.
+Gatsby Africa. Supply–Demand Analysis: Commercial Forestry in Uganda & Tanzania. Internal
+working paper, May 2026.
+Gatsby Africa. Chinese Processors in Uganda & Tanzania: Intelligence Analysis. Internal intelligence
+report, May 2026.
+Gatsby Africa. Uganda CFR Asset Register and Spatial Forestry Data. Internal dataset, 2026.
+Gatsby Africa. Processor Data Sets: Supply Requirements, Specifications, Utilisation and Sourcing.
+Internal analytical workbook, 2025–2026.
+EA Forests. EA Forests Analytical Codebase. GitHub repository, 2026. Commercial viability,
+roundwood production, and market-database modules; commit 0d9d43b8 (main-branch snapshot
+used in this analysis).
+
+29
+
+
