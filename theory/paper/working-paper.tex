@@ -1,0 +1,46 @@
+\documentclass[11pt]{article}
+\input{../preamble.tex}
+
+\title{Measure-Valued Stochastic Control and Matching in Spatial Forestry Markets}
+\author{EA Forests Research}
+\date{October 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We formulate a partially observed stochastic control problem for a spatial
+forestry market. The physical state is a finite measure over tree attributes,
+locations, log recoveries, processor specifications, and operating capacities.
+Conditional McKean--Vlasov dynamics describe growth and quality under common and
+idiosyncratic noise. Harvest and bucking induce a finite log measure. A
+capacitated partial-transport problem allocates heterogeneous logs to processors
+through spatial operators, and its dual variables measure the marginal value of
+compatible supply, demand, and capacity. The decision state is the joint
+posterior over physical state and structural parameters. We give the associated
+belief-state recursion, a Wasserstein HJB subproblem, a risk-sensitive extension,
+and a finite-dimensional commercial projection. An East African
+prior-predictive calibration illustrates the projection and records the remaining
+identification requirements.
+\end{abstract}
+
+\noindent\textbf{Keywords:} stochastic control; McKean--Vlasov dynamics;
+Wasserstein geometry; unbalanced optimal transport; Bayesian experimental
+design; forestry markets.
+
+\tableofcontents
+\clearpage
+
+\input{../chapters/01_introduction/chapter.tex}
+\input{../chapters/02_geometry_state_spaces/chapter.tex}
+\input{../chapters/03_growth_harvest_bucking/chapter.tex}
+\input{../chapters/04_matching_prices_duality/chapter.tex}
+\input{../chapters/05_partial_observation_control/chapter.tex}
+\input{../chapters/06_reduced_order_projection/chapter.tex}
+\input{../chapters/07_identification_numerics/chapter.tex}
+\input{../chapters/08_east_african_calibration/chapter.tex}
+\input{../chapters/09_conclusion_open_problems/chapter.tex}
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}

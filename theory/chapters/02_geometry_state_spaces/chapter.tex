@@ -1,0 +1,291 @@
+\section{Geometry of the forestry state}\label{geometry-of-the-forestry-state}
+
+\subsection{1. The marked tree space}\label{the-marked-tree-space}
+
+Let \texttt{(D,d\_D)} be a compact geographic metric space; diameter is denoted by \texttt{d}.
+A model instance may take \texttt{D} to be a region,
+country, estate, or bounded study landscape. A particular forest is represented
+by where the standing-tree measure has support inside \texttt{D}.
+
+Let:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{G} be a finite species/genetic-class set;
+\item
+  \texttt{Q\_T} be a compact tree-quality space;
+\item
+  \texttt{Q\_L} be a compact log-quality space;
+\item
+  \texttt{M} be a compact management-state space.
+\end{itemize}
+
+To preserve positivity of diameter and height, the paper writes size in
+log-coordinates $s=(s_d,s_h)=(\log d,\log h)$. A tree state is
+
+\[
+\xi=(\ell,a,s,g,q,m)\in
+E_T=D\times\mathbb R_+\times\mathbb R^2\times G\times Q_T\times M.
+\]
+
+Age remains an explicit coordinate. Two trees can have similar diameter and height but different age, growth
+potential, mortality risk, or management timing. If a future reduced model
+shows that age can safely be omitted, that is an empirical model reduction.
+
+\subsection{2. The log, processor, and operator spaces}\label{the-log-processor-and-operator-spaces}
+
+A harvested log is represented as
+
+\[
+\lambda=(\ell,d_s,d_l,L_L,g,q_L,w)\in E_L,
+\]
+
+where \texttt{d\_s} and \texttt{d\_l} are small- and large-end diameters, \texttt{L\_L} is length, \texttt{q\_L}
+is quality, and \texttt{w} is moisture or another density-relevant state.
+
+Log mass is
+
+\[
+m_L(\lambda)=\varrho(g,q_L,w)V_L(d_s,d_l,L_L,q_L).
+\]
+
+Density and recoverable volume depend on state, so the model uses the mass map
+above in place of a universal cubic-metre-to-tonne constant.
+
+A processor state records location, normalized desired procurement flow,
+specification parameters, utilization, and a sourcing-radius parameter. An
+operator state records location, capacity, productivity, equipment/fuel
+intensity, cost, and compliance/quality information.
+
+These state spaces are assumed Polish. That gives the measurable and topological
+structure needed for probability measures, weak convergence, selection theorems,
+and dynamic programming.
+
+\subsection{3. Why discrete biological marks are stratified}\label{why-discrete-biological-marks-are-stratified}
+
+Species and genetic class are discrete marks. If
+\texttt{g=1} and \texttt{g=2} are species labels, interpolation through \texttt{g=1.5} has no
+biological meaning.
+
+The paper therefore identifies the tree space with a finite disjoint union of
+continuous strata:
+
+\[
+E_T=\bigsqcup_{g\in G}E_T^g.
+\]
+
+A standing-tree measure can be written as a vector
+
+\[
+\mu=(\mu^g)_{g\in G}.
+\]
+
+Continuous growth occurs within a biological stratum. A species change or
+reclassification, if scientifically meaningful, must be represented by an
+explicit discrete kernel. A continuous species axis has no biological meaning.
+
+\subsection{4. Finite measure versus normalized probability law}\label{finite-measure-versus-normalized-probability-law}
+
+The persistent tree state is
+
+\[
+\mu_t\in\mathcal M_+(E_T).
+\]
+
+Its total mass \texttt{mu\_t(E\_T)} matters. Harvest and mortality remove mass;
+recruitment adds mass.
+
+When total mass is positive, define the normalized law
+
+\[
+\bar\mu_t=\frac{\mu_t}{\mu_t(E_T)}.
+\]
+
+These two objects answer different questions:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{mu\_t} says both \textbf{how much} tree mass/count is present and \textbf{how it is
+  distributed};
+\item
+  \texttt{bar\_mu\_t} says \textbf{what the composition looks like conditional on being in the
+  population}.
+\end{itemize}
+
+Normalizing too early destroys information. A plantation with 100 surviving
+trees and one with 1,000 surviving trees can have the same normalized size
+composition.
+
+\subsection{5. Wasserstein geometry}\label{wasserstein-geometry}
+
+For probability measures with finite second moment, the quadratic Wasserstein
+distance is
+
+\[
+W_2^2(\mu,\nu)=\inf_{\gamma\in\Pi(\mu,\nu)}
+\int d(x,y)^2\,\gamma(dx,dy).
+\]
+
+It asks for the least quadratic cost of transporting one probability law into
+another. This makes it natural for growth in continuous state coordinates: mass
+moves from smaller to larger sizes, or through quality space, while the total
+probability remains one.
+
+The formal tangent geometry gives the continuity equation
+
+\[
+\partial_t\mu_t+\nabla\cdot(v_t\mu_t)=0.
+\]
+
+That equation conserves total mass. The full forestry state also requires mass
+change.
+
+\subsection{6. Hellinger-Kantorovich / unbalanced transport geometry}\label{hellinger-kantorovich-unbalanced-transport-geometry}
+
+A mass-changing continuity equation has the form
+
+\[
+\partial_t\mu_t+\nabla\cdot(v_t\mu_t)
+=\alpha_t\mu_t+B_t,
+\]
+
+where \texttt{alpha\_t} is a signed reaction rate and \texttt{B\_t} is an external source
+measure. Mortality or harvest corresponds to negative reaction; planting or
+recruitment is a source.
+
+Hellinger-Kantorovich geometry is designed for exactly this combination of
+transport and reaction. It can compare finite measures with different total
+mass.
+
+The entropy-transport and dynamic formulations used here follow
+\citet{liero2018entropy} and \citet{chizat2018dynamic}. Entropic approximations
+can be computed by the scaling algorithms of \citet{chizat2016scaling}.
+
+The conceptual split is therefore:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Wasserstein:     composition of a normalized surviving population}
+\NormalTok{HK/unbalanced:   physical state when mass can appear or disappear}
+\end{Highlighting}
+\end{Shaded}
+
+Each geometry therefore serves a separate state representation.
+
+\subsection{7. A useful normalized-selection identity}\label{a-useful-normalized-selection-identity}
+
+Diffusion and selection produce different terms. Consider a simplified finite
+measure satisfying
+
+\[
+\frac{d}{dt}\langle\phi,\mu_t\rangle
+=\langle L\phi,\mu_t\rangle-\langle\lambda\phi,\mu_t\rangle,
+\]
+
+with state-dependent removal hazard \texttt{lambda}. Let \texttt{M\_t=mu\_t(E)} and
+\texttt{bar\_mu\_t=mu\_t/M\_t}. Differentiating the normalized expectation gives
+
+\[
+\frac{d}{dt}\langle\phi,\bar\mu_t\rangle
+=\langle L\phi,\bar\mu_t\rangle
+-\operatorname{Cov}_{\bar\mu_t}(\phi,\lambda).
+\]
+
+The covariance term is a selection effect: if large trees are harvested at a
+higher rate, the composition of survivors changes even without any biological
+shrinkage. Recruitment adds further composition terms.
+
+The representative-survivor law determines composition; the finite measure also
+determines population mass.
+
+\subsection{8. Linear convexity versus geodesic convexity}\label{linear-convexity-versus-geodesic-convexity}
+
+\texttt{M\_+(E)} is a convex cone under ordinary mixtures
+
+\[
+(1-\theta)\mu_0+\theta\mu_1.
+\]
+
+This is \textbf{linear convexity}. It is useful for resource measures and relaxed
+controls.
+
+Wasserstein or HK spaces may also have geodesics. A functional can be convex
+along those geodesics, which is a different statement. Geodesic convexity is
+relevant to transport and gradient-flow methods; linear convexity is relevant to
+ordinary convex programs.
+
+Hard grade thresholds, species labels, regime switches, and impulses preclude a
+global geodesic-convexity assumption.
+
+\subsection{9. Finite particle approximation and tree identity}\label{finite-particle-approximation-and-tree-identity}
+
+A finite interacting system can be written
+
+\[
+X_t^{i,N},\quad i=1,\ldots,N,
+\]
+
+with empirical law
+
+\[
+\mu_t^N=\frac1N\sum_{i=1}^N\delta_{X_t^{i,N}}.
+\]
+
+Here:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{N} is the finite approximation/population size;
+\item
+  \texttt{i} distinguishes particles in that finite representation;
+\item
+  the limiting law \texttt{mu\_t} is unlabelled.
+\end{itemize}
+
+This has an important implementation consequence. Repeated-tree field data may
+use a stable identifier such as \texttt{(plot,\ tree\_id)}, but that identifier can remain
+in a data registry. It only belongs inside the mathematical state if future
+dynamics or payoffs depend directly on identity. Observable and latent attributes
+remain the coordinates of the limiting state.
+
+\subsection{10. Control topology and relaxed controls}\label{control-topology-and-relaxed-controls}
+
+For a compact action space \texttt{A}, strict controls are progressively measurable
+\texttt{A}-valued processes. A useful metric is
+
+\[
+\Delta(\alpha,\beta)=\mathbb E\int_0^T d_A(\alpha_t,\beta_t)dt.
+\]
+
+If the strict action set is non-convex, a relaxed control replaces an action by
+a probability measure on actions, an element of \texttt{P(A)}. Because \texttt{A} is compact,
+\texttt{P(A)} is weakly compact and convex.
+
+Relaxation supplies compactness and convexity for existence arguments. Physical
+categories remain discrete whenever mixtures lack a physical interpretation.
+
+\subsection{11. Implementation interpretation}\label{implementation-interpretation}
+
+An implementation should preserve the following structure:
+
+\begin{itemize}
+\tightlist
+\item
+  keep mass separate from normalized composition;
+\item
+  keep discrete biological labels discrete;
+\item
+  preserve the variables needed for processor compatibility;
+\item
+  keep observational confidence outside physical state unless it is itself a
+  controlled physical variable;
+\item
+  maintain stable tree IDs in a data layer when repeated measurements require
+  them.
+\end{itemize}
+
+The next chapter places stochastic dynamics on these spaces and constructs the
+map from living trees to harvested logs.

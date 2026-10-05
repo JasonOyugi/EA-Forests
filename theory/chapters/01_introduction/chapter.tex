@@ -1,0 +1,222 @@
+\section{The state of a spatial forestry market}\label{the-state-of-a-spatial-forestry-market}
+
+\subsection{1. The central modelling problem}\label{the-central-modelling-problem}
+
+A forestry market couples biological growth, harvesting, processing constraints,
+transport, and information. Biological state determines feasible material.
+Harvesting maps trees into logs. Processor specifications assign value to
+regions of log space. Spatial operators determine delivered cost. Observations
+update the decision maker's information.
+
+A useful mathematical model must therefore preserve heterogeneity long enough
+for the economically important compatibility tests to be applied.
+
+Suppose two estates each contain 100 hectares and 20,000 cubic metres of standing
+volume. Their commercial values can differ sharply. Estate A could contain mostly
+logs above a target processor's small-end
+diameter threshold and lie 20 km from a mill. Estate B could contain the same
+total volume in smaller stems, more defect, and a 250 km transport route. The
+state variables that explain the difference have been averaged away by the
+scalar summary.
+
+The paper's response is to make the primary state \textbf{measure-valued}. A measure
+records how much mass or how many objects occupy each region of a state space.
+For forestry, that state space can carry location, age, log-diameter and height,
+species or genetics, quality, and management condition.
+
+The standing-tree object is written schematically as
+
+\[
+\mu_t \in \mathcal M_+(E_T),
+\]
+
+where \texttt{E\_T} is the marked tree space and \texttt{M\_+(E\_T)} is the cone of finite
+nonnegative Radon measures on that space.
+
+The total mass \texttt{mu\_t(E\_T)} represents an intensity, count, or area-weighted count,
+according to the sampling convention. Normalization would discard that quantity.
+
+\subsection{2. Why there are three nested problems}\label{why-there-are-three-nested-problems}
+
+\subsubsection{2.1 State estimation}\label{state-estimation}
+
+Plots, remote-sensing features, harvest records, processor intake, and contractor
+performance provide partial observations of the latent economic state.
+
+The model therefore includes an observation process and a posterior state. A map
+pixel supplies evidence about a latent tree distribution; a calibrated
+observation model is required to infer DBH, log grade, or harvest value.
+
+\subsubsection{2.2 Matching}\label{matching}
+
+Once harvestable material has been represented as a log distribution, economic
+usefulness is determined by compatibility. Processor \texttt{j} may accept only a
+subset \texttt{S\_j} of log space. Operator \texttt{k} may have finite capacity or equipment
+constraints. Delivered cost depends on the log, route, and operator.
+
+An average-price identity such as
+
+\[
+\text{revenue} = \text{tonnes} \times \text{average price}.
+\]
+
+omits the relevant constraints. The allocation problem acts on feasible triples
+
+\[
+(\lambda, j, k),
+\]
+
+where \texttt{lambda} is a log state, \texttt{j} a processor, and \texttt{k} an operator.
+
+\subsubsection{2.3 Sequential control}\label{sequential-control}
+
+A decision maker can change both the current physical/economic outcome and the
+quality of future information. Choosing an inventory campaign, instrumenting a
+contractor, testing a processor's grade response, or exposing a new supply
+cluster to the market can reveal parameters that affect later decisions.
+
+This makes the problem a dual-control problem: actions can have both immediate
+payoff and learning value.
+
+\subsection{3. The operator chain}\label{the-operator-chain}
+
+The paper is easier to understand when written as a sequence of operators.
+
+\subsubsection{3.1 Biological evolution}\label{biological-evolution}
+
+A stochastic evolution operator moves the standing-tree measure through size and
+quality space and changes its mass through mortality and recruitment.
+
+\subsubsection{3.2 Harvest and bucking}\label{harvest-and-bucking}
+
+A harvest rule removes mass from the standing-tree measure. A bucking kernel
+maps each harvested tree state to a finite measure of logs.
+
+Schematically,
+
+\[
+\mu_t \longrightarrow \Lambda_t,
+\]
+
+where \texttt{Lambda\_t} is a log measure.
+
+\subsubsection{3.3 Compatibility and allocation}\label{compatibility-and-allocation}
+
+Processor specifications and operating constraints define which parts of
+\texttt{Lambda\_t} are commercially useful. A partial-transport problem chooses an
+allocation measure \texttt{Gamma\_t}.
+
+\[
+\Lambda_t \longrightarrow \Gamma_t.
+\]
+
+The allocation may leave logs unmatched, demand unmet, and operator capacity
+idle. These inequalities define partial matching.
+
+\subsubsection{3.4 Observation and learning}\label{observation-and-learning}
+
+Observations update a posterior over physical state and structural parameters.
+That posterior becomes the sufficient state for sequential decisions.
+
+The full conceptual loop is therefore
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{latent tree state}
+\NormalTok{    {-}\textgreater{} growth / mortality / recruitment}
+\NormalTok{    {-}\textgreater{} harvest / bucking}
+\NormalTok{    {-}\textgreater{} log distribution}
+\NormalTok{    {-}\textgreater{} processor/operator matching}
+\NormalTok{    {-}\textgreater{} economic outcomes and observations}
+\NormalTok{    {-}\textgreater{} posterior update}
+\NormalTok{    {-}\textgreater{} next decision}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{4. Distinct economic objects}\label{distinct-economic-objects}
+
+Several distinctions are essential.
+
+\subsubsection{Biological productivity and commercial availability}\label{biological-productivity-and-commercial-availability}
+
+Fast growth can produce logs outside the target specifications.
+
+\subsubsection{Commercial availability and processor compatibility}\label{commercial-availability-and-processor-compatibility}
+
+A large harvestable log volume may be incompatible with a processor's diameter,
+length, species, moisture, or defect constraints.
+
+\subsubsection{Compatibility and delivered surplus}\label{compatibility-and-delivered-surplus}
+
+A compatible log can still be uneconomic if transport and operating costs erase
+its value.
+
+\subsubsection{Delivered surplus and negotiated forest-gate price}\label{delivered-surplus-and-negotiated-forest-gate-price}
+
+The seller's outside option and bargaining environment can affect the realized
+price even after technical matching is known.
+
+\subsubsection{Physical coverage and information value}\label{physical-coverage-and-information-value}
+
+The value of mapped hectares depends on their effect on a decision. Useful
+observations reduce uncertainty in decision-relevant regions of state space.
+
+\subsection{5. Structural model versus reduced-order model}\label{structural-model-versus-reduced-order-model}
+
+The structural model is intentionally richer than current data can fully
+identify. The paper later introduces a reduced-order commercial projection
+based on hectares, paying accounts, matched supply, and operating cost.
+
+The models are related by
+
+\[
+\text{structural state} \xrightarrow{\text{projection}} \text{reduced model},
+\]
+
+The reduced model is an operational approximation. A scalar ``visible tonnes''
+parameter can be used until data support estimated growth, bucking, and matching
+operators.
+
+\subsection{6. Sequential control}\label{sequential-control-1}
+
+The decision maker acts while estimates remain uncertain. Sensing, contracting,
+and market exposure affect current payoffs and future information.
+
+The action space can include:
+
+\begin{itemize}
+\tightlist
+\item
+  sensing or field verification;
+\item
+  designed experiments;
+\item
+  matching exposure;
+\item
+  contract or posted-price variables;
+\item
+  coverage intensity; and
+\item
+  discrete regime changes.
+\end{itemize}
+
+Thus the state must be defined with the eventual decision problem in mind.
+There is little value in estimating a variable accurately if no feasible action
+changes as a result. Conversely, a noisy variable near a processor grade
+threshold can be highly decision-relevant.
+
+\subsection{7. State, observations, and implementation}\label{state-observations-and-implementation}
+
+The model separates \textbf{state definition}, \textbf{observation}, and \textbf{implementation}.
+Individual-tree IDs support repeated measurements and remain outside the limiting
+measure. Earth-observation features enter through the observation model and
+become tree attributes only after calibration.
+
+Scalar and discrete examples are explicit projections of the structural model.
+
+\subsection{8. Mathematical scope}\label{mathematical-scope}
+
+The model preserves the distribution of economically relevant states through the
+biological, technical, and market operators. Measure-valued dynamics describe the
+physical state, unbalanced transport describes feasible allocation, and Bayesian
+control describes sequential decisions under partial observation.

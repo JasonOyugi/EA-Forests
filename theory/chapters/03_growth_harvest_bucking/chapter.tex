@@ -1,0 +1,258 @@
+\section{From living trees to commercial log supply}\label{from-living-trees-to-commercial-log-supply}
+
+\subsection{1. Conditional McKean-Vlasov growth}\label{conditional-mckean-vlasov-growth}
+
+Fix a biological mark class such as site, genetics, and management condition.
+For a representative surviving tree, let
+
+\[
+\Xi_t=(s_{d,t},s_{h,t},q_t),
+\]
+
+where \texttt{s\_d=log\ d}, \texttt{s\_h=log\ h}, and \texttt{q\_t} contains continuous quality/form
+states. Age follows
+
+\[
+da_t=dt.
+\]
+
+The paper uses the conditional McKean-Vlasov SDE
+
+\[
+d\Xi_t=b_G(\Xi_t,\hat\mu_t,a_t,\varsigma,a_t^G)dt
++\sigma_G(\cdot)dB_t
++\sigma_G^0(\cdot)dW_t^0,
+\]
+
+with conditional law
+
+\[
+\hat\mu_t=\mathcal L(\Xi_t\mid\mathcal F_t^0).
+\]
+
+Dynamic programming for controlled McKean--Vlasov systems with common noise is
+developed by \citet{pham2017dynamic} and \citet{djete2019dynamic}. The forestry
+model uses their conditional-law state formulation.
+
+\texttt{W\^{}0} is common noise and \texttt{B} is idiosyncratic noise. Conditional on the common
+noise, the population law remains random but the common environmental path is
+shared.
+
+This distinction matters in simulation. If a drought shock is intended to be a
+site-year event, independently drawing a new drought shock for every tree would
+artificially remove within-site correlation.
+
+\subsection{2. What the law dependence is doing}\label{what-the-law-dependence-is-doing}
+
+A McKean-Vlasov model allows the drift or diffusion of a focal tree to depend on
+the population distribution. A generic competition term is
+
+\[
+\mathcal C(x,\mu)=\int K_{\rm comp}(x,x')\,\mu(dx').
+\]
+
+This formulation contains several special cases.
+
+\subsubsection{Scalar density}\label{scalar-density}
+
+If \texttt{K\_comp(x,x\textquotesingle{})=c} is constant, competition depends only on total mass or
+population density. This can be useful but is biologically coarse.
+
+\subsubsection{Size-weighted mean field}\label{size-weighted-mean-field}
+
+If
+
+\[
+K_{\rm comp}(x,x')=c\,D(x')^2,
+\]
+
+then competition is proportional to a basal-area-like moment of the stand.
+
+\subsubsection{Local spatial competition}\label{local-spatial-competition}
+
+If tree location is available,
+
+\[
+K_{\rm comp}(x,x')=w(\|\ell-\ell'\|)g(D(x),D(x')),
+\]
+
+can represent distance-decaying and size-asymmetric competition.
+
+Density-only competition is a special case. The law-dependent formulation also
+supports size-weighted and local spatial kernels when data identify them.
+
+\subsection{3. Why log-size coordinates are useful}\label{why-log-size-coordinates-are-useful}
+
+Writing diameter and height in logarithmic coordinates gives positivity after
+exponentiation and allows additive Gaussian perturbations without creating
+negative physical sizes.
+
+If \texttt{Y\_t=log\ D\_t} follows
+
+\[
+dY_t=\mu_Y(Y_t,\cdots)dt+\sigma_Y(Y_t,\cdots)dW_t,
+\]
+
+then It??'s formula gives the corresponding diameter dynamics
+
+\[
+dD_t=D_t\left(\mu_Y+\frac12\sigma_Y^2\right)dt
++D_t\sigma_YdW_t.
+\]
+
+Thus even simple additive log-space noise becomes multiplicative noise in
+physical diameter.
+
+This parametrization preserves positivity. Its empirical use requires evidence
+for a Gaussian diffusion approximation.
+
+\subsection{4. Sources of uncertainty}\label{sources-of-uncertainty}
+
+The biological parametrization is left open. The market layer can be driven by a
+deterministic increment model, a learned
+transition density, a jump process, or a size-structured PDE.
+
+When diffusion is used, separate at least three uncertainty sources:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{process heterogeneity} - unobserved micro-site or biological variation;
+\item
+  \textbf{common environmental shock} - climate or disturbance shared across trees;
+\item
+  \textbf{measurement error} - error in observing DBH, height, or quality.
+\end{enumerate}
+
+Only the first two belong in the state process. Measurement error belongs in the
+observation kernel.
+
+Sparse remeasurement weakly identifies a complex state-dependent diffusion. The
+examples therefore use simple noise for illustration.
+
+\subsection{5. Well-posedness}\label{well-posedness}
+
+Under standard Lipschitz dependence on state and conditional law in \texttt{W\_2},
+linear growth bounds, and continuity in the control, the conditional
+McKean-Vlasov SDE admits a unique strong solution on a finite horizon and its
+conditional law remains in \texttt{P\_2}.
+
+The coefficients satisfy a Lipschitz bound in state and population law:
+
+\[
+\|b(x,\mu)-b(x',\mu')\|
++\|\sigma(x,\mu)-\sigma(x',\mu')\|
+\le L(\|x-x'\|+W_2(\mu,\mu')).
+\]
+
+This proposition establishes well-posedness for a specified growth law. Growth-law
+identification requires longitudinal data.
+
+\subsection{6. Finite-mass dynamics}\label{finite-mass-dynamics}
+
+The normalized conditional law records composition and omits population mass.
+Introduce harvest hazard \texttt{lambda\_t\^{}H(xi;u\_t)}, mortality hazard \texttt{lambda\_t\^{}M(xi)}, and a
+recruitment/planting-rate measure \texttt{B\_t}.
+
+For a smooth test function \texttt{phi}, the finite measure evolves weakly as
+
+\[
+d\langle\phi,\mu_t\rangle
+=\left[\langle L_t\phi,\mu_t\rangle
+-\langle(\lambda_t^H+\lambda_t^M)\phi,\mu_t\rangle
++\langle\phi,B_t\rangle\right]dt
++\text{common-noise term}.
+\]
+
+This is a transport-diffusion-reaction equation. Growth moves state; mortality
+and harvest remove mass; recruitment adds mass.
+
+\subsection{7. Harvest as a flow into log space}\label{harvest-as-a-flow-into-log-space}
+
+Let \texttt{K\_B(dlambda\ \textbar{}\ xi,beta\_t\^{}B)} be a bucking kernel. Conditional on a harvested
+Tree state \texttt{xi} and bucking rule \texttt{beta\_t\^{}B}, it returns a finite measure of logs.
+
+Over a short decision interval, the expected log-count intensity is
+
+\[
+\Lambda_t(A)=\int_{E_T}
+\lambda_t^H(\xi;u_t)K_B(A\mid\xi,\beta_t^B)\mu_t(d\xi).
+\]
+
+This formula is the core tree-to-log map.
+
+It says that log supply depends jointly on:
+
+\begin{itemize}
+\tightlist
+\item
+  which trees exist;
+\item
+  which trees are harvested;
+\item
+  how each tree is cut;
+\item
+  the uncertainty encoded in the bucking/recovery kernel.
+\end{itemize}
+
+The tonne-weighted measure is
+
+\[
+\widetilde\Lambda_t(d\lambda)=m_L(\lambda)\Lambda_t(d\lambda).
+\]
+
+Again, no universal volume-to-mass coefficient is required.
+
+\subsection{8. Bucking as a control problem}\label{bucking-as-a-control-problem}
+
+Let \texttt{A\_B(xi)} be the feasible set of cutting patterns. Given a downstream
+log-value function \texttt{v\_t\^{}L(lambda)} and bucking cost \texttt{c\_B}, define
+
+\[
+J_B(\xi,\beta;v_t^L)
+=\int v_t^L(\lambda)K_B(d\lambda\mid\xi,\beta)-c_B(\xi,\beta).
+\]
+
+An optimal pattern satisfies
+
+\[
+\beta_t^{B,*}(\xi)\in\arg\max_{\beta\in A_B(\xi)}J_B(\xi,\beta;v_t^L).
+\]
+
+This creates a feedback from the market layer into physical recovery. If long,
+high-grade logs are scarce and carry high downstream shadow value, the preferred
+cut can differ from the cut that maximizes volume alone.
+
+Under measurable-graph, compactness, measurability, and upper-semicontinuity
+assumptions, a measurable maximizing selector exists.
+
+\subsection{9. A simple competition example}\label{a-simple-competition-example}
+
+Suppose log-DBH \texttt{Y\_i} follows
+
+\[
+dY_i=\left[r(1-e^{Y_i}/D_{\max})
+-\gamma\,G(\mu_t)\right]dt+\sigma dB_i+\sigma_0dW^0,
+\]
+
+where
+
+\[
+G(\mu_t)=\int e^{2y}\,\mu_t(dy)
+\]
+
+is a basal-area-like moment.
+
+This is a mean-field model: each tree responds to a competition pressure generated
+by the whole size distribution. A stand with the
+same stem density but many large competitors produces a larger \texttt{G(mu)}.
+
+The stylized example shows how a size-weighted competition variable enters the
+structural framework.
+
+\subsection{10. Implementation}\label{implementation}
+
+The market model takes a distribution of recoverable logs, with uncertainty, as
+its input. Size classes, yield tables, and grade shares provide finite-dimensional
+approximations to that distribution.

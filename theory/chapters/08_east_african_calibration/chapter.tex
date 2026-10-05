@@ -1,0 +1,255 @@
+\section{East African prior-predictive calibration}\label{east-african-prior-predictive-calibration}
+
+\subsection{1. Calibration status}\label{calibration-status}
+
+The numerical results form a \textbf{prior-predictive calibration}.
+
+It reports the outcome distribution implied by the current assumptions and
+uncertainty distributions. The regional tree, log, and matching operators still
+require identification and posterior-predictive validation.
+
+\subsection{2. Evidence used as scale anchors}\label{evidence-used-as-scale-anchors}
+
+The working paper reports approximately:
+
+\begin{itemize}
+\tightlist
+\item
+  338,555 planted hectares in Uganda;
+\item
+  588,000 planted hectares in Tanzania;
+\item
+  about 0.93 million hectares combined;
+\item
+  37 Chinese-owned processors in the internal intelligence base;
+\item
+  about 5 million m3/year installed capacity;
+\item
+  about 3 million m3/year current use;
+\item
+  typical utilisation around 50-60\%.
+\end{itemize}
+
+These figures are 2025--2026 evidence inputs cited by the paper. They retain the
+status and reference date of their underlying sources.
+
+The paper also uses a Uganda CFR register with about 94,820 recorded planted
+hectares across 3,294 positive planted portfolios. The reported planted-area
+Gini is approximately 0.803. A single average estate size therefore gives a poor
+mapping from hectares to account count.
+
+\subsection{3. Missing structural state}\label{missing-structural-state}
+
+The current calibration lacks a region-wide joint tree-level size-quality
+distribution. Regional data therefore leave the full mapping
+
+\[
+\mu_t\to\widetilde\Lambda_t\to\Gamma_t^*
+\]
+
+unidentified. The reduced model uses priors for commercially available flow,
+processor coverage, adoption, monetisation, and correlated market state.
+
+This should be read as a placeholder architecture with explicit destinations
+for future evidence.
+
+\subsection{4. Prior-predictive scale results}\label{prior-predictive-scale-results}
+
+The paper reports 50,000 joint prior-predictive draws. The draw count controls
+Monte Carlo error conditional on the model. Prior validation and structural
+discrepancy require observed outcomes.
+
+Key reported values are:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lrrr@{}}
+\toprule\noalign{}
+Metric & 100k ha & 500k ha & 1m ha \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Revenue P20, USDk/yr & 49 & 326 & 650 \\
+Revenue P50, USDk/yr & 78 & 451 & 850 \\
+Revenue P80, USDk/yr & 115 & 613 & 1,090 \\
+Base OPEX P50, USDk/yr & 219 & 424 & 669 \\
+Robust OPEX P50, USDk/yr & 350 & 617 & 875 \\
+Joint operating surplus P20, USDk/yr & -197 & -125 & -66 \\
+Joint operating surplus P50, USDk/yr & -145 & 21 & 171 \\
+Joint operating surplus P80, USDk/yr & -97 & 191 & 436 \\
+P(operating surplus \textgreater{} 0) & 0.01 & 0.55 & 0.72 \\
+Paying-ha penetration & 0.25 & 0.26 & 0.262 \\
+Asset fee, USD/paying ha & 2.16 & 2.17 & 2.18 \\
+Supply fee, USD/visible t & 0.253 & 0.259 & 0.260 \\
+\end{longtable}
+}
+
+These outputs are conditional on the paper's mapping from coverage to commercial
+activity and carry no causal interpretation for hectares.
+
+\subsection{5. Cost identification example}\label{cost-identification-example}
+
+The three median base-cost anchors are approximately
+
+\[
+(100k,219k),\quad(500k,424k),\quad(1m,669k).
+\]
+
+A naive pure power model
+
+\[
+C(H)=aH^\beta
+\]
+
+fits these points with an apparent exponent near \texttt{0.47}.
+
+But the paper gives an exact three-point fit of the form
+
+\[
+C(H)=162.8+56.2\left(\frac{H}{100000}\right)^{0.955}
+\]
+
+in USD thousands per year.
+
+The variable exponent is then close to one. The low apparent total-cost
+elasticity comes largely from spreading the fixed USD 162.8k component.
+
+This is an important model-audit example: a scaling curve can have very
+different structural interpretations that agree at the observed anchors.
+
+\subsection{6. Break-even thresholds}\label{break-even-thresholds}
+
+Holding the other revenue side fixed at its current median, the working paper
+reports one-lever deterministic break-even thresholds.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1667}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2222}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2222}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2222}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Scale
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Cost mode
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Asset monetisation (\% managed spend)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Supply fee (USD/t)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Paying-ha penetration
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+100k & Base & 2.23 & 2.04 & 90.3\% \\
+100k & Robust & 3.73 & 3.70 & 150.9\% \\
+500k & Base & 0.56 & 0.21 & 23.5\% \\
+500k & Robust & 0.98 & 0.54 & 41.3\% \\
+1m & Base & 0.42 & 0.08 & 17.9\% \\
+1m & Robust & 0.65 & 0.29 & 27.3\% \\
+\end{longtable}
+}
+
+A penetration threshold above 100\% shows that the selected lever has no feasible
+break-even point under those assumptions.
+
+\subsection{7. Robustness multiplier}\label{robustness-multiplier}
+
+For an 80\% target probability of nonnegative recurring operating surplus, the
+paper reports revenue multipliers of approximately
+
+\[
+M_{100k}^{0.8}=4.68,\qquad
+M_{500k}^{0.8}=1.37,\qquad
+M_{1m}^{0.8}=1.10.
+\]
+
+This measures distance from the target under the current joint distributions.
+It supplies no causal effect of scale.
+
+\subsection{8. Adoption priors}\label{adoption-priors}
+
+The appendix gives size-dependent asset-adoption priors at central price/value
+conditions:
+
+{\scriptsize\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0968}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1290}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1290}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1290}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1290}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1290}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1290}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1290}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Portfolio size
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+1-10
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+10-50
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+50-150
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+150-500
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+500-1,500
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+1,500-5,000
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+5,000+
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Base adoption & 0.1\% & 0.5\% & 5\% & 15\% & 35\% & 60\% & 80\% \\
+\end{longtable}
+}
+
+These values are priors. Observed conversion and renewal data will replace them.
+
+\subsection{9. What new evidence would structurally improve the calibration?}\label{what-new-evidence-would-structurally-improve-the-calibration}
+
+The model identifies specific targets:
+
+\begin{itemize}
+\tightlist
+\item
+  repeated tree/plot measurements for growth, mortality, and quality transition;
+\item
+  harvest-linked tree-to-log records for recovery and bucking;
+\item
+  operator logs for productivity and delivered cost;
+\item
+  processor intake for grade acceptance and density conversion;
+\item
+  repeated bids/alternative buyers for outside options and bargaining;
+\item
+  observed platform conversion and renewal for willingness to pay.
+\end{itemize}
+
+Each dataset has a specified target operator and likelihood.
+
+\subsection{10. Interpretation discipline}\label{interpretation-discipline}
+
+The empirical programme follows this sequence:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prior{-}predictive scale experiment}
+\NormalTok{    {-}\textgreater{} targeted data collection}
+\NormalTok{    {-}\textgreater{} operator identification}
+\NormalTok{    {-}\textgreater{} posterior predictive validation}
+\NormalTok{    {-}\textgreater{} decision experiments}
+\NormalTok{    {-}\textgreater{} stronger operational claims}
+\end{Highlighting}
+\end{Shaded}
+
+The calibration is therefore a research instrument as much as a business-case
+output.

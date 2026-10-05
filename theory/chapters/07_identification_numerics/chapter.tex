@@ -1,0 +1,328 @@
+\section{From a structural model to an identified simulator}\label{from-a-structural-model-to-an-identified-simulator}
+
+\subsection{1. Structural parameter blocks}\label{structural-parameter-blocks}
+
+The paper partitions parameters as
+
+\[
+\theta=(\theta_G,\theta_B,\theta_M,\theta_C),
+\]
+
+where:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{theta\_G} controls growth, mortality, and quality transition;
+\item
+  \texttt{theta\_B} controls harvest, taper, bucking, and tree-to-log recovery;
+\item
+  \texttt{theta\_M} controls processor acceptance, matching, price response, and
+  bargaining;
+\item
+  \texttt{theta\_C} controls service, verification, and operating cost.
+\end{itemize}
+
+This decomposition is useful because each block requires different evidence.
+A model can be strongly identified in one block and weakly identified in
+another.
+
+\subsection{2. Observation model with discrepancy}\label{observation-model-with-discrepancy}
+
+The paper writes the generic observation equation as
+
+\[
+Y=F_{obs}(X,u,\theta)+\delta_{model}+\epsilon.
+\]
+
+Here:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{F\_obs} is the structural observation map;
+\item
+  \texttt{delta\_model} is model discrepancy;
+\item
+  \texttt{epsilon} is measurement noise.
+\end{itemize}
+
+The distinction matters. Suppose measured DBH growth differs systematically
+from model predictions at hot, dry sites. If discrepancy is omitted, a Bayesian
+fit may force growth parameters into values that compensate for a missing
+mechanism. The posterior can then become precise around the wrong structural
+story.
+
+Model discrepancy requires regularization and experimental designs that separate
+parameter effects from structural error. These restrictions preserve
+falsifiability.
+
+This treatment follows the calibration framework of \citet{kennedy2001calibration}.
+
+\subsection{3. Data-to-parameter identification map}\label{data-to-parameter-identification-map}
+
+The working paper proposes the following hierarchy.
+
+\subsubsection{Tree and plot remeasurement}\label{tree-and-plot-remeasurement}
+
+Repeated DBH, height, survival, and quality/form observations inform
+$\theta_G$. Repeated individual-tree measurements are especially useful because
+increments can be conditioned on prior state. With only two time points, process
+diffusion, measurement noise, and latent heterogeneity can be hard to separate.
+
+\subsubsection{Harvest and bucking records}\label{harvest-and-bucking-records}
+
+Tree-level pre-harvest measurements linked to recovered log dimensions and grade
+outcomes inform $\theta_B$. In their absence, the mature-tree log-recovery kernel
+remains uncertain because standing volume supplies insufficient information.
+
+\subsubsection{Contractor records}\label{contractor-records}
+
+Time, equipment, fuel, payload, distance, labour, and realized productivity
+inform the delivered-cost kernel and operator state.
+
+\subsubsection{Processor intake and grading}\label{processor-intake-and-grading}
+
+Observed log dimensions, accepted/rejected status, realized grade, moisture,
+quality, and price inform processor grade maps and measurement-error-aware
+acceptance.
+
+\subsubsection{Repeated bids and alternative buyers}\label{repeated-bids-and-alternative-buyers}
+
+These help separate technical delivered surplus from bargaining and outside
+options.
+
+\subsubsection{Product conversion and renewal}\label{product-conversion-and-renewal}
+
+Observed customer adoption, retention, and response to price inform the
+reduced-order demand model.
+
+\subsection{4. Identifiability is a property of the experiment}\label{identifiability-is-a-property-of-the-experiment}
+
+Even a mathematically identifiable parameter can be practically unidentified
+under a weak data design. If all observed stands have nearly the same density,
+for example, a competition coefficient may be confounded with site
+productivity. If all logs are far from a grade boundary, measurement-error scale
+in the grade classifier may have little support.
+
+The control framework turns this into an experimental-design problem. A useful
+experiment is one that creates variation where competing parameter explanations
+make different predictions.
+
+\subsection{5. Particle approximation of the biological law}\label{particle-approximation-of-the-biological-law}
+
+For a site/mark class, simulate particles
+
+\[
+X_t^{1,N},\ldots,X_t^{N,N}
+\]
+
+using the same common-noise path and independent idiosyncratic noise. The
+empirical law approximates the conditional distribution.
+
+A practical implementation should preserve:
+
+\begin{itemize}
+\tightlist
+\item
+  shared common shock within a site-year realization;
+\item
+  individual heterogeneity;
+\item
+  mortality and harvest as mass-changing events;
+\item
+  weights if particles represent unequal numbers of real trees.
+\end{itemize}
+
+The finite particle system is also the natural place to retain tree labels for
+synthetic trajectory diagnostics. The limiting measure remains unlabelled.
+
+\subsection{6. Discretizing log space}\label{discretizing-log-space}
+
+After harvest and bucking, the model produces a measure over end diameters,
+length, quality, moisture, biological class, and location.
+
+A uniform grid can waste resolution far from processor thresholds and be too
+coarse near them. Adaptive binning is preferable where value is discontinuous or
+steep.
+
+One useful hierarchy is:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{individual tree particles}
+\NormalTok{    {-}\textgreater{} stochastic bucking/recovery}
+\NormalTok{    {-}\textgreater{} adaptive log bins}
+\NormalTok{    {-}\textgreater{} processor{-}grade nodes}
+\NormalTok{    {-}\textgreater{} operator{-}capacity nodes}
+\end{Highlighting}
+\end{Shaded}
+
+Binning only by tonnes is insufficient if processor value changes sharply with
+log dimensions.
+
+\subsection{7. Exact LP as a matching benchmark}\label{exact-lp-as-a-matching-benchmark}
+
+The finite discretization of the allocation problem is a linear program. Solve
+this exact LP on representative scenarios to establish a reference value and
+reference dual potentials.
+
+For larger problems, entropy-regularized transport can trade accuracy for speed.
+The approximation should be diagnosed by decreasing the regularization parameter
+and comparing:
+
+\begin{itemize}
+\tightlist
+\item
+  primal objective value;
+\item
+  matched grade quantities;
+\item
+  dual potentials;
+\item
+  sensitive edges near compatibility thresholds.
+\end{itemize}
+
+The regularized solver must preserve the scarcity signals used by the outer
+control problem.
+
+\subsection{8. Dual values as a sensitivity oracle}\label{dual-values-as-a-sensitivity-oracle}
+
+Suppose an outer decision changes available supply, demand, or capacity
+approximately affinely. Because the inner matching value is concave in these
+resources, optimal dual variables act as supergradients.
+
+This enables decomposition methods. The outer problem can propose a sensing or
+coverage decision; the inner LP returns both value and marginal-value
+information; those dual values can generate cuts or local approximations for the
+outer search.
+
+\subsection{9. Posterior approximation}\label{posterior-approximation}
+
+The exact joint posterior over physical measures and parameters is intractable
+for a large system. Candidate approximations include:
+
+\begin{itemize}
+\tightlist
+\item
+  sequential Monte Carlo over parameter and state particles;
+\item
+  scenario trees;
+\item
+  stochastic model-predictive control;
+\item
+  rollout from a low-dimensional belief embedding;
+\item
+  fitted value functions on decision-relevant summaries.
+\end{itemize}
+
+The reduction should preserve variables that affect decisions. Useful candidates
+from the structural model include:
+
+\begin{itemize}
+\tightlist
+\item
+  local compatible supply by grade and radius;
+\item
+  matched-demand fractions;
+\item
+  posterior moments of size and quality;
+\item
+  high-value dual potentials;
+\item
+  uncertainty near specification boundaries.
+\end{itemize}
+
+Raw hectares remain a useful exposure variable. Grade-resolved supply, matched
+demand, and posterior uncertainty provide additional belief coordinates.
+
+\subsection{10. A nested simulation path}\label{a-nested-simulation-path}
+
+For posterior draw \texttt{s}:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  sample structural parameters and a common environmental path;
+\item
+  propagate tree particles;
+\item
+  simulate mortality and harvest;
+\item
+  optimize or sample bucking;
+\item
+  convert recovered logs to mass using state-dependent density/volume;
+\item
+  construct feasible processor/operator edges;
+\item
+  solve matching and retain primal/dual outputs;
+\item
+  simulate observations generated by the chosen action;
+\item
+  update the posterior;
+\item
+  evaluate risk and continuation value.
+\end{enumerate}
+
+This procedure defines a stochastic program over posterior and process
+distributions.
+
+Scenario-count diagnostics can use sample-average approximation bounds
+\citep{kleywegt2002saa}. Correlated input sensitivity can be summarized with
+Shapley effects \citep{iooss2019shapley}.
+
+\subsection{11. Decompose numerical uncertainty}\label{decompose-numerical-uncertainty}
+
+At least five error sources should be tracked separately.
+
+\subsubsection{Biological discretization error}\label{biological-discretization-error}
+
+Finite particle number, time step, and state approximation.
+
+\subsubsection{Filter/posterior approximation error}\label{filterposterior-approximation-error}
+
+Finite posterior particles, approximate likelihoods, or belief compression.
+
+\subsubsection{Recovery model error}\label{recovery-model-error}
+
+Taper, defect, bucking, and log-quality uncertainty.
+
+\subsubsection{Matching/scenario error}\label{matchingscenario-error}
+
+Discretization of log space, entropy regularization, and finite scenario count.
+
+\subsubsection{Structural discrepancy}\label{structural-discrepancy}
+
+Real mechanisms missing from the model family.
+
+Additional Monte Carlo samples reduce sampling error and leave structural
+discrepancy unchanged.
+
+\subsection{12. Minimum reproducibility standard}\label{minimum-reproducibility-standard}
+
+A numerical experiment should record:
+
+\begin{itemize}
+\tightlist
+\item
+  code revision;
+\item
+  parameter source and whether synthetic, empirical, or prior;
+\item
+  random seed where relevant;
+\item
+  particle count and time step;
+\item
+  discretization/bins;
+\item
+  matching solver and tolerances;
+\item
+  regularization value if used;
+\item
+  posterior approximation method;
+\item
+  output uncertainty by source where feasible.
+\end{itemize}
+
+This is the bridge from mathematical theory to a research-grade implementation.

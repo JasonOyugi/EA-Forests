@@ -1,0 +1,33 @@
+\documentclass[11pt]{article}
+\input{../preamble.tex}
+
+\title{Mathematical Theory Companion\\\large Spatial Forestry Markets}
+\author{EA Forests Research}
+\date{October 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+These notes develop the state spaces, dynamics, matching problem, observation
+model, control problem, commercial projection, and numerical programme used in
+the working paper. Each section states the mathematical object, its assumptions,
+and its role in identification or implementation.
+\end{abstract}
+
+\tableofcontents
+\clearpage
+
+\input{01_introduction/chapter.tex}
+\input{02_geometry_state_spaces/chapter.tex}
+\input{03_growth_harvest_bucking/chapter.tex}
+\input{04_matching_prices_duality/chapter.tex}
+\input{05_partial_observation_control/chapter.tex}
+\input{06_reduced_order_projection/chapter.tex}
+\input{07_identification_numerics/chapter.tex}
+\input{08_east_african_calibration/chapter.tex}
+\input{09_conclusion_open_problems/chapter.tex}
+
+\bibliographystyle{plainnat}
+\bibliography{../paper/references}
+\end{document}

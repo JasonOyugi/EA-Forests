@@ -1,0 +1,247 @@
+\section{Projection into commercial coordinates}\label{projection-into-commercial-coordinates}
+
+\subsection{1. Why a reduced model is necessary}\label{why-a-reduced-model-is-necessary}
+
+The structural state contains distributions of trees, logs, processors, and
+operators, together with a posterior over unknown parameters. Current regional
+data identify only a subset of these objects.
+
+Price, scale, cost, and break-even analysis uses a finite-dimensional
+\textbf{projection} of the structural state.
+
+The reduced model should be read as
+
+\[
+Z_t=\Pi_{\rm red}(\mu_t,\nu_t,\kappa_t,\pi_t),
+\]
+
+where \texttt{Pi\_red} keeps only the coordinates needed for today's commercial
+questions.
+
+\subsection{2. Asset-side value envelope}\label{asset-side-value-envelope}
+
+For asset account \texttt{i}, the paper defines a value envelope
+
+\[
+V_{A,i}=A_i^{ha}\left(S_i\delta_i^{op}
++V_i^{asset}\lambda_i^{loss}\right).
+\]
+
+Interpretation:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{A\_i\^{}ha} is managed area;
+\item
+  \texttt{S\_i} is annual forestry spend per hectare;
+\item
+  \texttt{delta\_i\^{}op} is an information-enabled proportional operating improvement;
+\item
+  \texttt{V\_i\^{}asset} is standing asset value per hectare;
+\item
+  \texttt{lambda\_i\^{}loss} is avoidable annual loss/risk.
+\end{itemize}
+
+Information creates value through operational efficiency and avoided loss. The
+revenue model applies a rate to managed spend and captures part of this envelope.
+
+\subsection{3. Asset monetisation and adoption}\label{asset-monetisation-and-adoption}
+
+Let \texttt{C\_i\^{}A} be an adoption indicator and define the adopted managed-spend base
+
+\[
+B_A=\sum_i C_i^A A_i^{ha}S_i.
+\]
+
+Asset revenue is
+
+\[
+R_A=m_A B_A.
+\]
+
+For one homogeneous segment, the paper uses logistic adoption
+
+\[
+a(p)=\frac{1}{1+\exp(\eta_Ap-\alpha_A)}.
+\]
+
+If the monetisable base is \texttt{B}, revenue is
+
+\[
+R(p)=Bp\,a(p).
+\]
+
+The log revenue is
+
+\[
+\log R(p)=\log B+\log p-\log(1+e^{\eta_Ap-\alpha_A}).
+\]
+
+Differentiating twice gives
+
+\[
+\frac{d^2}{dp^2}\log R(p)
+=-\frac1{p^2}-\eta_A^2a(p)(1-a(p))<0.
+\]
+
+Therefore revenue is strictly log-concave and has a unique maximizer for
+positive price.
+
+The first-order condition is
+
+\[
+\eta_Ap(1-a(p))=1.
+\]
+
+Solving yields
+
+\[
+p^*=\frac{1+W(e^{\alpha_A-1})}{\eta_A},
+\]
+
+where \texttt{W} is the principal Lambert W branch.
+
+This result is local to the simplified one-segment model. Mixtures of customer
+segments, fixed packages, network effects, or dynamic learning can destroy the
+one-dimensional global shape.
+
+\subsection{4. Processor-side monetisation}\label{processor-side-monetisation}
+
+The structural matching layer outputs matched tonnes \texttt{M\_j}. If processor \texttt{j}
+adopts the service and pays \texttt{f\_j} per matched/visible tonne,
+
+\[
+R_S=\sum_j C_j^S f_j M_j.
+\]
+
+\texttt{M\_j} is the quantity remaining after compatibility, spatial cost, and capacity
+constraints are applied to regional wood supply.
+
+Today's simpler ``commercially visible supply'' assumption is therefore an
+approximation to an operator that has a precise theoretical meaning.
+
+\subsection{5. Cost structure}\label{cost-structure}
+
+The paper uses
+
+\[
+C(H,N_A,N_P,n_V,W_D,G_{act})
+=F+\sum_{g\in G_{act}}F_g+a_HH^{\beta_H}
++b_AN_A+b_PN_P+c_Vn_V+c_DW_D+\epsilon_C.
+\]
+
+Components include:
+
+\begin{itemize}
+\tightlist
+\item
+  common fixed cost \texttt{F};
+\item
+  geography-specific fixed blocks \texttt{F\_g};
+\item
+  variable coverage cost \texttt{a\_H\ H\^{}\{beta\_H\}};
+\item
+  account-level service costs;
+\item
+  verification cost;
+\item
+  data/compute workload;
+\item
+  residual cost shock.
+\end{itemize}
+
+This form is intentionally able to separate \textbf{fixed-cost dilution} from genuine
+sublinear marginal scaling.
+
+\subsection{6. Fixed-cost dilution}\label{fixed-cost-dilution}
+
+If
+
+\[
+C(H)=F+aH^\beta,
+\]
+
+then local total-cost elasticity is
+
+\[
+\frac{d\log C}{d\log H}
+=\beta\frac{aH^\beta}{F+aH^\beta}<\beta.
+\]
+
+So even if the variable component is nearly linear (\texttt{beta} near one), total
+cost can appear strongly sublinear at small-to-medium scale because the fixed
+cost is being spread over more hectares.
+
+Three declining average-cost observations leave the variable exponent
+unidentified. Additional scale observations or stronger cost restrictions are
+required.
+
+\subsection{7. Operating leverage}\label{operating-leverage}
+
+Let total recurring revenue be \texttt{R\_H} and expected recurring cost \texttt{C\_H}. Define
+local elasticities
+
+\[
+\beta_R(H)=\frac{d\log E[R_H]}{d\log H},\qquad
+\beta_C(H)=\frac{d\log E[C_H]}{d\log H}.
+\]
+
+Positive operating leverage requires
+
+\[
+\beta_R(H)>\beta_C(H).
+\]
+
+Positive operating leverage requires revenue to grow faster than recurring cost
+over the relevant range.
+
+\subsection{8. Break-even frontier}\label{break-even-frontier}
+
+At fixed scale,
+
+\[
+m_AB_A+f_SB_S=C,
+\]
+
+where \texttt{B\_S} is the adopted matched-tonnage base.
+
+For fixed bases and nonnegative rates, the set
+
+\[
+\{(m_A,f_S):m_AB_A+f_SB_S\ge C\}
+\]
+
+is a convex half-space. This makes simple trade-off analysis possible: stronger
+asset monetisation can compensate for weaker processor monetisation and vice
+versa.
+
+The convexity disappears if the bases themselves respond nonlinearly to price,
+network effects, or participation thresholds.
+
+\subsection{9. A risk multiplier}\label{a-risk-multiplier}
+
+Let \texttt{R\_H\textgreater{}0} and \texttt{C\_H\textgreater{}0} be random recurring revenue and cost. For target
+probability \texttt{tau}, define the revenue multiplier
+
+\[
+M_H^\tau=\inf\{k>0:P(kR_H-C_H\ge0)\ge\tau\}.
+\]
+
+Because revenue is positive,
+
+\[
+M_H^\tau=Q_\tau(C_H/R_H),
+\]
+
+where \texttt{Q\_tau} is the left quantile.
+
+This gives an interpretable stress metric: by what multiplicative factor would
+the current revenue distribution need to improve to achieve a desired chance of
+nonnegative recurring surplus?
+
+\subsection{10. Scope of the projection}\label{scope-of-the-projection}
+
+The reduced model provides conditional projections under stated adoption,
+matched-supply, and cost assumptions. It supplies no causal effect of hectares on
+profitability. New observations replace coarse inputs with structural estimates.
