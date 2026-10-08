@@ -157,6 +157,7 @@ export function reconcileProviders(actors, sheets) {
       const actor = linkedActor ?? candidates[0]
       actor.providerIds.push(providerId)
       actor.offerings.push(...offerings)
+      actor.locations.push(...providerLocations.map((loc) => providerLocation(loc, country, providerModes(services))))
       for (const mode of providerModes(services)) {
         if (!actor.modes.includes(mode)) actor.modes.push(mode)
       }
@@ -204,7 +205,7 @@ function buildProviderOnlyActor(provider, { offerings, providerLocations, source
   )
 
   const bestSourceId = clean(provider.best_source_id)
-  const sourceIds = new Set([bestSourceId, ...offerings.map((o) => clean(o.fields.source_id))].filter(Boolean))
+  const sourceIds = new Set([bestSourceId, ...offerings.map((o) => clean(o.fields.source_id)), ...providerLocations.map((loc) => clean(loc.source_id))].filter(Boolean))
   const sources = [...sourceIds].map((id) => {
     const row = sourcesById.get(id)
     return row
@@ -221,19 +222,10 @@ function buildProviderOnlyActor(provider, { offerings, providerLocations, source
   })
 
   const locations = providerLocations.length
-    ? providerLocations.map((loc) => ({
-      country: clean(loc.country) ?? country,
-      region: clean(loc.region1),
-      district: clean(loc.region2) ?? clean(loc.town_site),
-      town: clean(loc.town_site),
-      address: clean(loc.address),
-      latitude: null,
-      longitude: null,
-      sourceId: clean(loc.source_id),
-      currentness: clean(loc.currentness),
-    }))
+    ? providerLocations.map((loc) => providerLocation(loc, country, modes))
     : [{
       country,
+      locationType: null,
       region: regionName,
       district: null,
       town: null,
@@ -293,5 +285,21 @@ function buildProviderOnlyActor(provider, { offerings, providerLocations, source
     providerIds: [clean(provider.provider_id)],
     images: { imageUrl: null, logoUrl: null, imageSourceUrl: null, imageAlt: null, imageStatus: "placeholder" },
     issues: [],
+  }
+}
+
+function providerLocation(loc, country, modes) {
+  return {
+    locationType: modes.includes("seedlings") ? "nursery" : modes.includes("wood") ? "factory" : "operational area",
+    country: clean(loc.country) ?? country,
+    region: clean(loc.region1),
+    district: clean(loc.region2),
+    town: clean(loc.town_site),
+    address: clean(loc.address),
+    latitude: null,
+    longitude: null,
+    sourceId: clean(loc.source_id),
+    currentness: clean(loc.currentness),
+    notes: clean(loc.notes),
   }
 }

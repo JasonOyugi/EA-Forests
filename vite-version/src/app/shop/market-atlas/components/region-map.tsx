@@ -1,4 +1,5 @@
-import { useEffect, useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
+import { Route } from "lucide-react"
 import { useMap } from "react-leaflet"
 import {
   Map as LeafletMap,
@@ -12,6 +13,8 @@ import { BasemapLayers } from "@/components/map/basemap-layers"
 import { getRegionBoundaries, type MarketCountry, type MarketRegion } from "../../data/market-map"
 import type { Actor, ActorMode } from "../types"
 import type { MarketConfig } from "../market-config"
+import { ActorMapLayer } from "./actor-map-layer"
+import { RoadAnalysisLayer } from "./road-analysis-layer"
 
 const COUNTRY_VIEW: Record<MarketCountry, { center: [number, number]; zoom: number }> = {
   Kenya: { center: [0.5, 37.9], zoom: 6 },
@@ -31,10 +34,14 @@ function regionCountByMode(actors: Actor[], regionId: string, mode: ActorMode) {
 
 function MapViewController({ target }: { target: { center: [number, number]; zoom: number } | null }) {
   const map = useMap()
+  const lat = target?.center[0]
+  const lng = target?.center[1]
+  const zoom = target?.zoom
   useEffect(() => {
-    if (!target) return
-    map.flyTo(target.center, target.zoom, { duration: 0.6 })
-  }, [map, target])
+    if (lat == null || lng == null || zoom == null) return
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    map.flyTo([lat, lng], zoom, { animate: !reducedMotion, duration: 0.6 })
+  }, [map, lat, lng, zoom])
   return null
 }
 
@@ -48,8 +55,11 @@ interface RegionMapProps {
   onRegionSelect: (regionId: string | null) => void
   selectedActorId: string | null
   onActorSelect: (actorId: string | null) => void
+  onMapActorClick: (actorIds: string[]) => void
   hoveredActorId: string | null
   onActorHover: (actorId: string | null) => void
+  view: "regional" | "actors"
+  countryActors: Actor[]
 }
 
 export function RegionMap({
@@ -62,9 +72,15 @@ export function RegionMap({
   onRegionSelect,
   selectedActorId,
   onActorSelect,
+  onMapActorClick,
   hoveredActorId,
   onActorHover,
+  view,
+  countryActors,
 }: RegionMapProps) {
+  const [roadMode, setRoadMode] = useState(false)
+  const [hasRoadPoint, setHasRoadPoint] = useState(false)
+  useEffect(() => { setRoadMode(false); setHasRoadPoint(false) }, [country, activeMode])
   const activeActors = actorsByMode[activeMode] ?? []
 
   const regionActorCounts = useMemo(() => {
@@ -89,7 +105,7 @@ export function RegionMap({
     )
   }, [activeActors, selectedRegionId])
 
-  const view = selectedRegion
+  const mapView = view === "regional" && selectedRegion
     ? { center: selectedRegion.center, zoom: 9 }
     : COUNTRY_VIEW[country] ?? DEFAULT_VIEW
 
@@ -97,12 +113,14 @@ export function RegionMap({
     // Explicit height (matching the previous 680px sector map): the Map primitive defaults to
     // `size-full`, which inside a stretched grid item resolves against the shell's own height and
     // grows with it, overflowing the region table out of the section.
-    <LeafletMap center={view.center} zoom={view.zoom} className="h-auto min-h-0 w-full" style={{ height: MAP_HEIGHT }}>
-      <MapViewController target={view} />
+    <div className="relative">
+    <LeafletMap center={mapView.center} zoom={mapView.zoom} className="h-auto min-h-0 w-full" style={{ height: MAP_HEIGHT }}>
+      <MapViewController target={mapView} />
       <BasemapLayers />
       <MapZoomControl />
+      <RoadAnalysisLayer key={country} country={country} enabled={roadMode} onActorSelect={(id) => onActorSelect(id)} onPointChange={setHasRoadPoint} />
 
-      {regions.map((region) => {
+      {view === "regional" && regions.map((region) => {
         const isSelected = region.id === selectedRegionId
         const count = regionActorCounts.get(region.id) ?? 0
         const intensity = 0.18 + 0.55 * (count / maxCount)
@@ -110,16 +128,17 @@ export function RegionMap({
 
         return (
           <MapPolygon
-            key={region.id}
+            key={`${region.id}-${roadMode}`}
             positions={boundaryToLatLngs(region)}
             pathOptions={{
               color: "var(--market-accent)",
               weight: isSelected ? 2.5 : 1,
               fillColor: "var(--market-accent)",
               fillOpacity: isSelected ? 0.12 : intensity * 0.4,
+              interactive: !roadMode,
             }}
             eventHandlers={{
-              click: () => onRegionSelect(isSelected ? null : region.id),
+              click: () => { if (!roadMode) onRegionSelect(isSelected ? null : region.id) },
             }}
           >
             <MapTooltip sticky>
@@ -136,7 +155,7 @@ export function RegionMap({
         )
       })}
 
-      {selectedRegionId && (
+      {view === "regional" && selectedRegionId && !roadMode && (
         <MapMarkerClusterGroup
           icon={(count) => (
             <div className="flex size-8 items-center justify-center rounded-full border-2 border-[var(--market-accent)] bg-[var(--market-canvas)] text-xs font-semibold text-[var(--market-accent)]">
@@ -161,7 +180,7 @@ export function RegionMap({
                   />
                 }
                 eventHandlers={{
-                  click: () => onActorSelect(actor.id),
+                  click: () => onMapActorClick([actor.id]),
                   mouseover: () => onActorHover(actor.id),
                   mouseout: () => onActorHover(null),
                 }}
@@ -170,6 +189,12 @@ export function RegionMap({
           })}
         </MapMarkerClusterGroup>
       )}
+      {view === "actors" && !roadMode && <ActorMapLayer actors={countryActors} mode={activeMode} selectedActorId={selectedActorId} hoveredActorId={hoveredActorId} onActorSelect={onMapActorClick} onActorHover={onActorHover} />}
     </LeafletMap>
+    <div className="absolute right-14 top-3 z-[1000] flex max-w-[min(17rem,calc(100%-4.5rem))] flex-col items-end gap-2">
+      <button type="button" aria-pressed={roadMode} aria-label={roadMode ? "Stop selecting road analysis points" : "Analyse road distance from a point"} title={roadMode ? "Stop selecting points" : "Analyse road distances"} onClick={() => setRoadMode((value) => !value)} className={`flex size-9 items-center justify-center rounded-md border shadow-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--market-accent)] ${roadMode ? "border-[var(--market-accent)] bg-[var(--market-accent)] text-[var(--market-canvas)]" : "bg-background text-foreground hover:bg-accent"}`}><Route className="size-4" /></button>
+      {roadMode && !hasRoadPoint && <p role="status" className="rounded-md border bg-popover p-2 text-xs text-popover-foreground shadow-sm">Click a point to find the three nearest seedling and wood markets by road.</p>}
+    </div>
+    </div>
   )
 }

@@ -273,6 +273,21 @@
 .market-atlas * {
   transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, fill 0.3s ease, stroke 0.3s ease;
 }
+.market-atlas .market-route-halo { stroke: var(--market-canvas) !important; stroke-width: 10px !important; fill: none !important; }
+.market-atlas .market-route-seedlings { stroke: var(--market-seedlings-accent) !important; stroke-width: 6px !important; stroke-linecap: round !important; stroke-linejoin: round !important; fill: none !important; }
+.market-atlas .market-route-wood { stroke: var(--market-wood-accent) !important; stroke-width: 7px !important; stroke-linecap: round !important; stroke-linejoin: round !important; fill: none !important; }
+.market-atlas .market-route-seedlings.market-route-primary { stroke-width: 7px !important; }
+.market-atlas .market-route-wood.market-route-primary { stroke-width: 8px !important; }
+.market-atlas .market-route-origin { stroke: var(--market-canvas) !important; fill: var(--market-accent) !important; }
+.market-atlas .market-route-end-seedlings { stroke: var(--market-canvas) !important; fill: var(--market-seedlings-accent) !important; }
+.market-atlas .market-route-end-wood { stroke: var(--market-canvas) !important; fill: var(--market-wood-accent) !important; }
+.market-atlas .market-actor-row-focus {
+  position: relative;
+  z-index: 1;
+  outline: 2px solid var(--market-accent);
+  outline-offset: -2px;
+  box-shadow: inset 0 0 0 2px var(--market-accent), 0 0 16px color-mix(in oklch, var(--market-accent) 70%, transparent);
+}
 @media (prefers-reduced-motion: reduce) {
   .market-atlas,
   .market-atlas * {

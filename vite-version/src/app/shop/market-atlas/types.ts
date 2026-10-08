@@ -7,6 +7,7 @@ export type WoodEndProduct = "sawn timber" | "wood fuel" | "veneer/plywood" | "m
 export type WoodInput = "logs" | "wood chips" | "poles"
 
 export interface ActorLocation {
+  locationType?: "factory" | "nursery" | "plantation" | "office" | "branch" | "timber yard" | "operational area" | "other" | null
   country: string | null
   region: string | null
   district: string | null
@@ -14,8 +15,13 @@ export interface ActorLocation {
   address?: string | null
   latitude: number | null
   longitude: number | null
+  coordinatePrecision?: string | null
+  coordinateConfidence?: "high" | "medium" | "low" | null
   sourceId: string | null
+  sourceUrl?: string | null
   currentness: string | null
+  notes?: string | null
+  groupKey?: string | null
 }
 
 export interface ActorOffering {

@@ -4,7 +4,8 @@ import type { Actor, ActorMode } from "../types"
 import { EvidenceBadge } from "./evidence-badge"
 
 function actorLocationLabel(actor: Actor) {
-  return [actor.townSite, actor.districtCounty, actor.regionState, actor.country].filter(Boolean)[0] ?? actor.country
+  const point = actor.locations.find((location) => location.latitude != null && location.longitude != null)
+  return [point?.town, actor.townSite, actor.districtCounty, actor.regionState, actor.country].filter(Boolean)[0] ?? actor.country
 }
 
 /** Compact, capitalised list ("Sawn timber, Poles"); em dash when nothing is evidenced yet. */
@@ -146,6 +147,7 @@ interface ActorTableProps {
   mode: ActorMode
   actors: Actor[]
   selectedActorId: string | null
+  focusedActorIds: string[]
   onActorSelect: (actorId: string) => void
   hoveredActorId: string | null
   onActorHover: (actorId: string | null) => void
@@ -156,6 +158,7 @@ export function ActorTable({
   mode,
   actors,
   selectedActorId,
+  focusedActorIds,
   onActorSelect,
   hoveredActorId,
   onActorHover,
@@ -189,16 +192,24 @@ export function ActorTable({
         <tbody>
           {table.getRowModel().rows.map((row) => {
             const isSelected = row.original.id === selectedActorId
+            const isMapFocused = focusedActorIds.includes(row.original.id)
             const isHovered = row.original.id === hoveredActorId
             return (
               <tr
                 key={row.id}
+                data-market-actor-id={row.original.id}
+                tabIndex={0}
+                role="button"
+                aria-current={isMapFocused ? "true" : undefined}
+                aria-label={`View details for ${row.original.name}`}
                 onClick={() => onActorSelect(row.original.id)}
+                onKeyDown={(event) => { if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); onActorSelect(row.original.id) } }}
                 onMouseEnter={() => onActorHover(row.original.id)}
                 onMouseLeave={() => onActorHover(null)}
                 className={cn(
-                  "cursor-pointer border-b last:border-0 transition-colors",
-                  isSelected && "bg-[var(--market-accent-soft)]",
+                  "cursor-pointer border-b last:border-0 transition-colors focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--market-accent)]",
+                  (isSelected || isMapFocused) && "bg-[var(--market-accent-soft)]",
+                  isMapFocused && "market-actor-row-focus",
                   !isSelected && isHovered && "bg-muted/50"
                 )}
               >

@@ -2,6 +2,7 @@ import { z } from "zod"
 import { END_PRODUCTS, INPUTS } from "./wood-products.mjs"
 
 const locationSchema = z.object({
+  locationType: z.enum(["factory", "nursery", "plantation", "office", "branch", "timber yard", "operational area", "other"]).nullable().optional(),
   country: z.string().nullable(),
   region: z.string().nullable(),
   district: z.string().nullable(),
@@ -9,8 +10,13 @@ const locationSchema = z.object({
   address: z.string().nullable().optional(),
   latitude: z.number().nullable(),
   longitude: z.number().nullable(),
+  coordinatePrecision: z.string().nullable().optional(),
+  coordinateConfidence: z.enum(["high", "medium", "low"]).nullable().optional(),
   sourceId: z.string().nullable(),
+  sourceUrl: z.string().nullable().optional(),
   currentness: z.string().nullable(),
+  notes: z.string().nullable().optional(),
+  groupKey: z.string().nullable().optional(),
 })
 
 const offeringSchema = z.object({

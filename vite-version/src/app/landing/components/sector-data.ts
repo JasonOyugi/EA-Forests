@@ -11,20 +11,23 @@ export type SectorMetric = {
   accent: string
 }
 
-/** Two topic-linked numbers for each of the five Information sections. */
-export const sectorMetrics: SectorMetric[] = informationHubOrder.flatMap((slug) => {
+/** Every metric for one Information section, each linking to its own source when it has one. */
+export function metricsForTopic(slug: (typeof informationHubOrder)[number]): SectorMetric[] {
   const topic = informationHubTopics[slug]
   const primarySource = topic.cards[0]
 
-  return topic.stats.slice(0, 2).map((stat) => ({
+  return topic.stats.map(({ href, ...stat }) => ({
     ...stat,
-    website: primarySource?.href ?? "#brief",
-    websiteLabel: primarySource?.title ?? `Open ${topic.label}`,
+    website: href ?? primarySource?.href ?? "#brief",
+    websiteLabel: href ? `Source for ${stat.label}` : primarySource?.title ?? `Open ${topic.label}`,
     informationTopic: topic.label,
     informationSlug: topic.slug,
     accent: topic.accent,
   }))
-})
+}
+
+/** Two topic-linked numbers for each of the five Information sections (used across the editorial mosaic). */
+export const sectorMetrics: SectorMetric[] = informationHubOrder.flatMap((slug) => metricsForTopic(slug).slice(0, 2))
 
 export type SectorPlayer = {
   name: string

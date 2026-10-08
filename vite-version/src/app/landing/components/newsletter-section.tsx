@@ -178,7 +178,7 @@ export function NewsletterSection() {
         </div>
 
         <div className="mt-9 grid gap-8 lg:items-end">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[.3em] text-[#3fe3bf]">1st week of September, 2026</p>
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[.3em] text-[#3fe3bf]">October, 2026</p>
           <h2 className="landing-newsletter-heading">
             EA FORESTRY THIS WEEK
           </h2>

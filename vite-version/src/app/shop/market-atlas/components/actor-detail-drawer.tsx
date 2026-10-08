@@ -86,6 +86,16 @@ export function ActorDetailDrawer({ actor, onClose }: { actor: Actor | null; onC
                 />
               </div>
 
+              {actor.locations.some((location) => location.latitude != null) && <div className="space-y-2 border-t pt-4">
+                <p className="text-xs uppercase tracking-wide text-muted-foreground">Mapped locations</p>
+                {actor.locations.filter((location) => location.latitude != null).map((location, index) => <div key={`${location.sourceId ?? "location"}-${index}`} className="rounded-md border p-2 text-sm">
+                  <p className="font-medium capitalize">{location.locationType ?? "Location"} · {[location.town, location.district, location.region, location.country].filter(Boolean).join(", ")}</p>
+                  <p className="text-xs text-muted-foreground">{location.coordinatePrecision ?? "Point accuracy unverified"} · {location.coordinateConfidence ?? "unknown"} coordinate confidence</p>
+                  {location.sourceUrl && <a href={location.sourceUrl} target="_blank" rel="noreferrer" className="text-xs text-[var(--market-accent)] underline">Location source</a>}
+                  {location.notes && <p className="mt-1 text-xs text-muted-foreground">{location.notes}</p>}
+                </div>)}
+              </div>}
+
               {(actor.website || actor.email || actor.phone || actor.contactPerson) && (
                 <div className="space-y-2 border-t pt-4">
                   <p className="text-xs uppercase tracking-wide text-muted-foreground">Contact</p>

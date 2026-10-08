@@ -20,7 +20,8 @@ import type { ResearchCard, ResearchCardKind } from "@/app/information/data"
 import { informationCardImages } from "@/app/information/card-images"
 import { assetUrl } from "@/lib/utils"
 
-import { sectorMetrics } from "./sector-data"
+import { metricsForTopic } from "./sector-data"
+import { EoTile, eoCountries } from "./latest-eo-card"
 import { MetricTile } from "./metric-tile"
 
 type InformationLiveHubProps = {
@@ -75,7 +76,9 @@ function CardKindIcon({ kind }: { kind: ResearchCardKind }) {
   return <Globe2 className="size-3.5" />
 }
 
-export function ResearchCardTile({ card, className = "" }: { card: ResearchCard; className?: string }) {
+/** `fullWidth` lets the title and summary run the whole row (Information Hub list), instead of the narrow mosaic measure. */
+export function ResearchCardTile({ card, className = "", fullWidth = false }: { card: ResearchCard; className?: string; fullWidth?: boolean }) {
+  const measure = fullWidth ? "max-w-none" : "max-w-2xl"
   if (card.kind === "timeline" && card.timeline) {
     return (
       <article className={`group relative overflow-hidden border border-emerald-900/20 bg-transparent dark:border-white/12 ${className}`}>
@@ -89,8 +92,8 @@ export function ResearchCardTile({ card, className = "" }: { card: ResearchCard;
             </div>
             <div>
               {card.signal ? <p className="mb-3 text-xs font-semibold uppercase tracking-[.18em]" style={{ color: "var(--information-accent)" }}>{card.signal}</p> : null}
-              <h3 className="max-w-3xl text-[clamp(2rem,4vw,3.75rem)] font-semibold leading-[1.02] tracking-[-.04em] text-emerald-950 dark:text-white">{card.title}</h3>
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-emerald-900/75 dark:text-emerald-50/70 sm:text-base">{card.summary}</p>
+              <h3 className={`${fullWidth ? "max-w-none" : "max-w-3xl"} text-[clamp(2rem,4vw,3.75rem)] font-semibold leading-[1.02] tracking-[-.04em] text-emerald-950 dark:text-white`}>{card.title}</h3>
+              <p className={`mt-4 ${measure} text-sm leading-7 text-emerald-900/75 dark:text-emerald-50/70 sm:text-base`}>{card.summary}</p>
               <p className="mt-4 text-[.62rem] font-medium normal-case tracking-normal text-emerald-800/60 dark:text-white/40"><PhotoCredit cardId={card.id} /></p>
             </div>
           </div>
@@ -144,10 +147,11 @@ export function ResearchCardTile({ card, className = "" }: { card: ResearchCard;
         <ArrowUpRight className="size-5 shrink-0 text-emerald-800/65 transition-all group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-emerald-950 dark:text-white/45 dark:group-hover:text-white" />
       </div>
 
-      <div className="relative mt-10">
+      {/* mt-auto keeps the title and summary anchored just above the footer, however tall the tile is. */}
+      <div className="relative mt-auto pt-10">
         {card.signal ? <p className="mb-3 text-xs font-semibold uppercase tracking-[.16em]" style={{ color: "var(--information-accent)" }}>{card.signal}</p> : null}
-        <h3 className={`font-semibold leading-[1.08] tracking-[-.025em] text-emerald-950 dark:text-white ${card.size === "feature" ? "max-w-3xl text-3xl sm:text-5xl" : "text-2xl sm:text-[1.75rem]"}`}>{card.title}</h3>
-        <p className="mt-4 max-w-2xl text-sm leading-6 text-emerald-900/75 dark:text-emerald-50/64">{card.summary}</p>
+        <h3 className={`font-semibold leading-[1.08] tracking-[-.025em] text-emerald-950 dark:text-white ${card.size === "feature" ? `${fullWidth ? "max-w-none" : "max-w-3xl"} text-3xl sm:text-5xl` : "text-2xl sm:text-[1.75rem]"}`}>{card.title}</h3>
+        <p className={`mt-4 ${measure} text-sm leading-6 text-emerald-900/75 dark:text-emerald-50/64`}>{card.summary}</p>
       </div>
 
       <div className="relative mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-emerald-900/20 pt-4 text-[.68rem] font-semibold uppercase tracking-[.13em] text-emerald-800/65 dark:border-white/10 dark:text-white/45">
@@ -165,8 +169,10 @@ export function InformationLiveHub({ activeTopic }: InformationLiveHubProps) {
     (slug) => informationHubTopics[slug].label === activeTopic
   ) ?? informationHubOrder[0]
   const topic = informationHubTopics[activeSlug]
-  const leadCard = topic.cards[0]
-  const supportingCards = topic.cards.slice(1)
+  // Only Policy keeps a research headline (the live timeline); Technology leads with the EO maps;
+  // everywhere else every card sits in the filtered list below the metrics.
+  const headlineCard = topic.slug === "policy-regulation" ? topic.cards[0] : undefined
+  const supportingCards = headlineCard ? topic.cards.slice(1) : topic.cards
   const accentStyle = {
     "--information-accent": topic.accent,
   } as CSSProperties
@@ -175,7 +181,7 @@ export function InformationLiveHub({ activeTopic }: InformationLiveHubProps) {
     setActiveSubtopic(allSignals)
   }, [activeSlug])
 
-  const topicMetrics = sectorMetrics.filter((metric) => metric.informationTopic === topic.label)
+  const topicMetrics = metricsForTopic(activeSlug)
   const cards = activeSubtopic === allSignals
     ? supportingCards
     : supportingCards.filter((card) => card.subtopics.includes(activeSubtopic))
@@ -201,8 +207,21 @@ export function InformationLiveHub({ activeTopic }: InformationLiveHubProps) {
 
       <div className="grid gap-2 p-2 md:grid-cols-2">
         {topicMetrics.map((metric) => <MetricTile key={metric.label} metric={metric} size="min-h-[18rem]" />)}
-        {leadCard ? <ResearchCardTile card={leadCard} className="md:col-span-2" /> : null}
       </div>
+
+      {headlineCard ? (
+        <div className="px-2 pb-2">
+          <ResearchCardTile card={headlineCard} fullWidth />
+        </div>
+      ) : null}
+
+      {topic.slug === "technology" ? (
+        <div className="grid gap-2 px-2 pb-2">
+          {Object.values(eoCountries).map((config) => (
+            <EoTile key={config.countryCode} config={config} size="h-[26rem] sm:h-[32rem]" />
+          ))}
+        </div>
+      ) : null}
 
       <nav aria-label={`${topic.label} research filters`} className="flex gap-2 overflow-x-auto border-b border-emerald-900/20 bg-transparent p-3 dark:border-white/10 sm:px-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {[allSignals, ...topic.subtopics].map((subtopic) => {
@@ -229,15 +248,11 @@ export function InformationLiveHub({ activeTopic }: InformationLiveHubProps) {
         })}
       </nav>
 
-      <div className="grid gap-2 p-2 md:grid-cols-2 xl:grid-cols-12 xl:auto-rows-[4px]">
-        {cards.map((card, index) => (
-          <ResearchCardTile
-            key={card.id}
-            card={card}
-            className={index % 5 < 2 ? "xl:col-span-6 xl:row-span-[48]" : "xl:col-span-4 xl:row-span-[36]"}
-          />
+      <div className="grid gap-2 p-2">
+        {cards.map((card) => (
+          <ResearchCardTile key={card.id} card={card} fullWidth />
         ))}
-        {cards.length === 0 ? <p className="p-6 text-sm text-emerald-800/70 dark:text-white/60 md:col-span-2 xl:col-span-12 xl:row-span-[8]">No additional stories in this topic yet.</p> : null}
+        {cards.length === 0 ? <p className="p-6 text-sm text-emerald-800/70 dark:text-white/60">No stories in this filter yet.</p> : null}
       </div>
     </section>
   )

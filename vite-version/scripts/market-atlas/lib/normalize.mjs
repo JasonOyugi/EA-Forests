@@ -86,6 +86,7 @@ function normalizeMasterRow(row, lookups) {
   const sourceIds = new Set([
     bestSourceId,
     ...offerings.map((o) => clean(o.fields.source_id)).filter(Boolean),
+    ...locations.map((location) => location.sourceId).filter(Boolean),
   ].filter(Boolean))
   const sources = [...sourceIds].map((id) => normalizeSource(id, lookups.sourcesById.get(id)))
 
@@ -152,7 +153,10 @@ function normalizeLocation(row, fallbackCountry) {
   const country = clean(row.country) ?? fallbackCountry
   const latitude = toNumber(row.latitude)
   const longitude = toNumber(row.longitude)
+  const rawType = clean(row.location_type)?.toLowerCase() ?? null
+  const locationType = rawType?.includes("nursery") ? "nursery" : rawType?.includes("processing site") ? "factory" : rawType?.includes("operating") || rawType?.includes("sourcing area") ? "operational area" : rawType ? "other" : null
   return {
+    locationType,
     country,
     region: clean(row.region_state),
     district: clean(row.district_county),
@@ -163,6 +167,7 @@ function normalizeLocation(row, fallbackCountry) {
     longitude: latitude != null && longitude != null ? longitude : null,
     sourceId: clean(row.source_id),
     currentness: clean(row.currentness),
+    notes: [clean(row.notes), rawType && rawType !== locationType ? `Workbook location type: ${rawType}` : null].filter(Boolean).join("; ") || null,
   }
 }
 
