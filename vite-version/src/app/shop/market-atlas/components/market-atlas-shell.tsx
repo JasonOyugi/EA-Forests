@@ -67,13 +67,21 @@ export function MarketAtlasShell({ marketId, linkMode = "route" }: MarketAtlasSh
 
   // "unassigned" is a pseudo-region: actors whose source location is too coarse to place on the map.
   const showUnassigned = regionId === UNASSIGNED_REGION
+  const [mapFocus, setMapFocus] = useState<{ ids: string[]; serial: number } | null>(null)
   const tableActors = useMemo(() => {
-    if (view === "actors") return countryActors
+    // Individual view never lists the whole country (hundreds of rows made it slow): only the
+    // actors under a clicked map icon, an explicit search, or a deep-linked actor.
+    if (view === "actors") {
+      if (mapFocus) return countryActors.filter((actor) => mapFocus.ids.includes(actor.id))
+      if (search.trim()) return countryActors
+      if (actorId) return countryActors.filter((actor) => actor.id === actorId)
+      return []
+    }
     if (search.trim()) return countryActors
     if (regionId === UNASSIGNED_REGION) return getUnassignedActors(countryActors, country)
     if (regionId) return getActorsForRegion(countryActors, regionId)
     return []
-  }, [countryActors, country, regionId, search, view])
+  }, [actorId, countryActors, country, mapFocus, regionId, search, view])
 
   const unassignedCount = useMemo(() => getUnassignedActors(countryActors, country).length, [countryActors, country])
   const mappedCount = useMemo(() => countryActors.filter((actor) => actor.locations.some((location) => location.latitude != null && location.longitude != null)).length, [countryActors])
@@ -81,7 +89,6 @@ export function MarketAtlasShell({ marketId, linkMode = "route" }: MarketAtlasSh
   const selectedActor = actorId ? getActorById(actorId) : undefined
   const visibleSelectedActor = selectedActor?.country === country && selectedActor.modes.includes(activeMode) ? selectedActor : undefined
   const [hoveredActorId, setHoveredActorId] = useState<string | null>(null)
-  const [mapFocus, setMapFocus] = useState<{ ids: string[]; serial: number } | null>(null)
 
   function updateParams(patch: Record<string, string | null>) {
     const next = new URLSearchParams(params)
@@ -95,8 +102,8 @@ export function MarketAtlasShell({ marketId, linkMode = "route" }: MarketAtlasSh
   function handleMapActorClick(ids: string[]) {
     if (!ids.length) return
     setMapFocus((previous) => ({ ids, serial: (previous?.serial ?? 0) + 1 }))
-    if (!ids.every((id) => tableActors.some((actor) => actor.id === id))) updateParams({ view: "actors", region: null, actor: null, q: null })
-    else if (actorId) updateParams({ actor: null })
+    if (view !== "actors") updateParams({ view: "actors", region: null, actor: null, q: null })
+    else updateParams({ actor: null, q: null })
   }
 
   useEffect(() => { setMapFocus(null) }, [activeMarketId, activeMode, country])
@@ -215,7 +222,12 @@ export function MarketAtlasShell({ marketId, linkMode = "route" }: MarketAtlasSh
           Select a region on the map, or search, to see actors.
         </p>
       )}
-      {(view === "actors" || regionId || search.trim()) && (
+      {view === "actors" && !tableActors.length && !search.trim() && (
+        <p className="rounded-xl border border-dashed p-6 text-center text-sm text-muted-foreground">
+          Click an actor on the map, or search, to see its details here.
+        </p>
+      )}
+      {((view === "actors" && (tableActors.length > 0 || search.trim())) || (view === "regional" && (regionId || search.trim()))) && (
         <ActorTable
           mode={activeMode}
           actors={tableActors}
