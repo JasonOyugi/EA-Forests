@@ -69,7 +69,7 @@ type EditorialEvent = {
 
 const stories: Story[] = [
   { title: "Start a forestry investment guaranteed to generate returns", category: "Investments", image: "/eucalyptus.jpg", href: "/shop/forests-land/core-forests", updatedAt: "8 Aug 2026", topic: "Tested Investments" },
-  { title: "Ready to sell your wood?", category: "Markets", image: "https://saforestryonline.co.za/wp-content/uploads/2025/07/The-John-Deere-2144G-tracked-swing-harvester-is-ideal-for-fast-growing-high-yield-plantations-scaled.jpg", href: "/landing?market=wood-markets-map#sector-map", market: "wood-markets-map", updatedAt: "11 Aug 2026" },
+  { title: "Ready to sell your wood?", category: "Markets", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/TimberHarvestSale-ShastaTrinity-PRW-017_%2852764980461%29.jpg/1920px-TimberHarvestSale-ShastaTrinity-PRW-017_%2852764980461%29.jpg", href: "/landing?market=wood-markets-map#sector-map", market: "wood-markets-map", updatedAt: "11 Aug 2026" },
   { title: "The best planting material for East Africa", category: "Markets", image: "https://dryrocktreesnursery.com/cdn/shop/files/lodgepoletray.jpg?v=1759249757&width=1946", href: "/landing?market=seedlings#sector-map", market: "seedlings", updatedAt: "10 Aug 2026" },
   { title: "The ultimate site-species analysis tool", category: "Investments", image: "/tz.jpg", href: "/models/site-species-analysis", updatedAt: "9 Aug 2026", topic: "Models" },
   // Feature 4, first 5 s. Portrait clip on black, so it is shown uncropped (`videoFit`) and blends with the card.

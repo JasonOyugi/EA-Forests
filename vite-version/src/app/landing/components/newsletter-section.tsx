@@ -52,7 +52,7 @@ const newsletterStories = [
     title: "The latest in geospatial intelligence for forestry",
     summary: "Follow the latest developments in geospatial intelligence relevant to forestry in East Africa",
     location: "East Africa",
-    image: "https://eros.usgs.gov/doi-remote-sensing-activities/sites/default/files/public/USGS/Wu_lidar.png",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/20240501-FS-RB-Ketchikan-Road-0001_%2854091445285%29.jpg/1920px-20240501-FS-RB-Ketchikan-Road-0001_%2854091445285%29.jpg",
     href: "#brief",
     infoTopic: "Technology",
     accent: "#8d92d1",
