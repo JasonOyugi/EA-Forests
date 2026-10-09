@@ -55,7 +55,7 @@ const footnotes: { id: FootnoteId; text: string }[] = [
   },
   {
     id: "productivity",
-    text: "Minimum expected figures (lower bounds); actual results depend heavily on site and variety. NPV and FCF are per hectare over a common 10-year period so the three pathways compare like for like: establishment in year 0, about USD 60/ha/yr upkeep, harvesting and haulage at each rotation, replanting straight after harvest, and NPV discounted at 10% (Core Forests), 12% (High Performance) and 14% (Drylands). Wood value is the assumed minimum price per m³ at harvest, benchmarked against 2026 East African pine and eucalyptus log prices and ITTO African mahogany (Khaya) log prices; volume is growth (MAI) multiplied by rotation length.",
+    text: "Minimum expected figures per hectare; actual results depend on site and variety. Rotation length shows the indicative investment timeline, while IRR, EBITDA margin, NPV and FCF assume harvest at year 10. NPV is discounted at 10% (Core Forests), 12% (High Performance) and 14% (Drylands).",
   },
 ]
 
@@ -255,8 +255,8 @@ const flagshipConfigs: Record<string, FlagshipConfig> = {
     heroImagePosition: "center 62%",
     mapImage: "/maps/ke-topo.webp",
     investorType: "Conservative/new forestry investors",
-    averageIrrRange: "12%+",
-    averageEbitdaMargin: "34%+",
+    averageIrrRange: "13%+",
+    averageEbitdaMargin: "90%+",
     premiumLabel: "A stress-free, profitable forestry investment",
     premiumSummary:
       "Invest, sit back and enjoy the ride. We structure everything: the land, genetics, nursery, contractors, and operating workflow for you, then run the program with conservative assumptions, regular reporting, and predictable outcomes.",
@@ -292,10 +292,10 @@ const flagshipConfigs: Record<string, FlagshipConfig> = {
       { label: "Some risks", value: "Low to moderate" },
     ],
     financialProductivity: [
-      { label: "IRR", value: "12%+" },
-      { label: "EBITDA margin", value: "34%+" },
-      { label: "Risk adjusted NPV (10 yrs)", value: "$100+ / ha" },
-      { label: "FCF (10 yrs)", value: "$800+ / ha" },
+      { label: "IRR", value: "13%+" },
+      { label: "EBITDA margin", value: "90%+" },
+      { label: "Risk adjusted NPV (10 yrs)", value: "$600+ / ha" },
+      { label: "FCF (10 yrs)", value: "$4,200+ / ha" },
       { label: "Some risks", value: "Moderate" },
     ],
     testimonials: coreForestTestimonials,
@@ -311,7 +311,7 @@ const flagshipConfigs: Record<string, FlagshipConfig> = {
     mapImage: "/maps/ug-topo.webp",
     investorType: "Optimisation-focused investors",
     averageIrrRange: "17%+",
-    averageEbitdaMargin: "41%+",
+    averageEbitdaMargin: "94%+",
     premiumLabel: "Ready for premium, optimised forestry assets?",
     premiumSummary:
       "We leverage our deep connections to build the asset premium genetics, deeper monitoring, tighter contractor control, and advanced asset modelling built for sophisticated investors.",
@@ -356,9 +356,9 @@ const flagshipConfigs: Record<string, FlagshipConfig> = {
     ],
     financialProductivity: [
       { label: "IRR", value: "17%+" },
-      { label: "EBITDA margin", value: "41%+" },
-      { label: "Risk adjusted NPV (10 yrs)", value: "$650+ / ha" },
-      { label: "FCF (10 yrs)", value: "$1,850+ / ha" },
+      { label: "EBITDA margin", value: "94%+" },
+      { label: "Risk adjusted NPV (10 yrs)", value: "$1,200+ / ha" },
+      { label: "FCF (10 yrs)", value: "$8,300+ / ha" },
       { label: "Some risks", value: "Moderate to high" },
     ],
     testimonials: highPerformanceTestimonials,
@@ -373,8 +373,8 @@ const flagshipConfigs: Record<string, FlagshipConfig> = {
     heroImagePosition: "center 55%",
     mapImage: "/maps/tz-topo.webp",
     investorType: "Impact/innovative finance",
-    averageIrrRange: "20%+",
-    averageEbitdaMargin: "45%+",
+    averageIrrRange: "19%+",
+    averageEbitdaMargin: "95%+",
     premiumLabel: "The most innovative and profitable forestry asset",
     premiumSummary:
       "We enable investors to participate in advanced forestry asset development - produce mahogany like hardwoods while participating in the fight against climate change.",
@@ -414,10 +414,10 @@ const flagshipConfigs: Record<string, FlagshipConfig> = {
       { label: "Some risks", value: "Moderate to high" },
     ],
     financialProductivity: [
-      { label: "IRR", value: "20%+" },
-      { label: "EBITDA margin", value: "45%+" },
-      { label: "Risk adjusted NPV (10 yrs)", value: "$1,400+ / ha" },
-      { label: "FCF (10 yrs)", value: "$11,000+ / ha" },
+      { label: "IRR", value: "19%+" },
+      { label: "EBITDA margin", value: "95%+" },
+      { label: "Risk adjusted NPV (10 yrs)", value: "$1,250+ / ha" },
+      { label: "FCF (10 yrs)", value: "$10,450+ / ha" },
       { label: "Some risks", value: "High" },
     ],
     testimonials: drylandFrontierTestimonials,
