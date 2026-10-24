@@ -21,7 +21,6 @@
   --ip-glow-text: color-mix(in srgb, var(--ip-accent-500) 50%, transparent);
   --ip-band-scrim-color: color-mix(in srgb, var(--foreground) 69%, transparent);
   --ip-band-fg: var(--primary-foreground);
-  --ip-nav-fade: 1.5rem;
   /* The Premium band's scrim: one even tone (no directional light), shared by navbar, band and footer. */
   --ip-band-scrim: linear-gradient(var(--ip-band-scrim-color), var(--ip-band-scrim-color));
 
@@ -199,21 +198,35 @@
   color: var(--ip-accent-300);
 }
 
+.investment-page .focused-nav a[data-pathway="basic"] {
+  --ip-link-hover: #6ee7b7;
+}
+
+.investment-page .focused-nav a[data-pathway="improved"] {
+  --ip-link-hover: #9dd6eb;
+}
+
+.investment-page .focused-nav a[data-pathway="drylands"] {
+  --ip-link-hover: #f9bca0;
+}
+
+.investment-page .focused-nav a[data-pathway]:is(:hover, :focus-visible) {
+  color: var(--ip-link-hover);
+  outline-color: var(--ip-link-hover);
+}
+
 /* The band is dark in both themes, so always use the light logo variant here. */
 .investment-page .focused-nav-logo img:first-child { display: none; }
 .investment-page .focused-nav-logo img:last-child { display: block; }
 
-/* Both layers run 1.5rem past the bar and are masked out, so the edge dissolves whether the
-   section underneath is the solid surface or the exposed map. */
+/* Keep the map and scrim uniform across the full height of the sticky bar. */
 .investment-page .focused-nav::before,
 .investment-page .focused-nav::after {
   content: "";
   position: absolute;
-  inset: 0 0 calc(-1 * var(--ip-nav-fade)) 0;
+  inset: 0;
   z-index: -1;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - var(--ip-nav-fade)), transparent);
-  mask-image: linear-gradient(to bottom, #000 calc(100% - var(--ip-nav-fade)), transparent);
 }
 
 .investment-page .focused-nav::before {

@@ -1,6 +1,6 @@
 # Market Atlas location audit
 
-Generated: 2026-10-08T05:30:48.781Z
+Generated: 2026-10-23T06:29:12.530Z
 
 | Measure | Before | After |
 |---|---:|---:|

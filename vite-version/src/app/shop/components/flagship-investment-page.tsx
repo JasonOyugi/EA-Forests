@@ -287,7 +287,6 @@ const flagshipConfigs: Record<string, FlagshipConfig> = {
       { label: "Rotation length", value: "8+ years" },
       { label: "Volume/ha at rotation", value: "180+ m³/ha" },
       { label: "Growth (MAI)", value: "23+ m³/ha/yr" },
-      { label: "Wood value", value: "$60+ / m³" },
       { label: "Survival rate", value: "82%+" },
       { label: "Some risks", value: "Low to moderate" },
     ],
@@ -350,7 +349,6 @@ const flagshipConfigs: Record<string, FlagshipConfig> = {
       { label: "Rotation length", value: "6+ years" },
       { label: "Volume/ha at rotation", value: "180+ m³/ha" },
       { label: "Growth (MAI)", value: "30+ m³/ha/yr" },
-      { label: "Wood value", value: "$80+ / m³" },
       { label: "Survival rate", value: "80%+" },
       { label: "Some risks", value: "Moderate" },
     ],
@@ -409,7 +407,6 @@ const flagshipConfigs: Record<string, FlagshipConfig> = {
       { label: "Rotation length", value: "10+ years" },
       { label: "Volume/ha at rotation", value: "120+ m³/ha" },
       { label: "Growth (MAI)", value: "12+ m³/ha/yr" },
-      { label: "Wood value", value: "$240+ / m³" },
       { label: "Survival rate", value: "68%+" },
       { label: "Some risks", value: "Moderate to high" },
     ],
@@ -702,7 +699,7 @@ export function FlagshipInvestmentPage({ item }: FlagshipInvestmentPageProps) {
 
   return (
     <div className="investment-page" data-pathway={config.pathway} style={{ "--investment-map-image": `url(${config.mapImage})` } as CSSProperties}>
-      <FocusedNav />
+      <FocusedNav investmentLinks />
 
       <main>
         {/* Hero — page surface over the map; the image takes the right half, down to the metric cards */}

@@ -1,0 +1,27 @@
+.mobile-markets-banner {
+  background: transparent;
+  border-color: transparent;
+}
+
+.mobile-market-pixel {
+  background-color: var(--market-pixel-color);
+  animation: mobile-market-pulse 3.8s ease-in-out infinite;
+  animation-delay: var(--market-pixel-delay);
+}
+
+@keyframes mobile-market-pulse {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-market-pixel { animation: none; }
+}
+
+.mobile-market-pixel-label {
+  opacity: 0.5;
+}
+
+.mobile-market-pixel-link:is(:hover, :focus-visible) .mobile-market-pixel-label {
+  opacity: 1;
+}

@@ -4,6 +4,7 @@ import { Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { routes, type RouteConfig } from '@/config/routes'
 import { LoadingSpinner } from '@/components/ui/loading-spinner'
+import { MobileRotationPrompt } from '@/components/mobile-rotation-prompt'
 
 function renderRoutes(routeConfigs: RouteConfig[]) {
   return routeConfigs.map((route, index) => (
@@ -23,8 +24,11 @@ function renderRoutes(routeConfigs: RouteConfig[]) {
 
 export function AppRouter() {
   return (
+    <>
+    <MobileRotationPrompt />
     <Routes>
       {renderRoutes(routes)}
     </Routes>
+    </>
   )
 }

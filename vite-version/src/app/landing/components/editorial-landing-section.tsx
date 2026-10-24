@@ -23,6 +23,7 @@ import { forestryResources } from "../data/forestry-resources"
 import { EoTile, eoCountries } from "./latest-eo-card"
 import type { MarketId } from "@/app/shop/market-atlas/types"
 import { comingSoonLabel, launchDates } from "@/config/launch-dates"
+import { MobileMarketsBanner } from "./mobile-markets-banner"
 
 const MarketAtlasShell = lazy(() =>
   import("@/app/shop/market-atlas/components/market-atlas-shell").then((module) => ({
@@ -405,10 +406,21 @@ function MetricPair({ metrics, size, onFocus, onSelectInformation }: { metrics: 
 }
 
 export function SectorSearchSection() {
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia("(max-width: 767px)").matches)
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 767px)")
+    const update = () => setIsMobile(media.matches)
+    media.addEventListener("change", update)
+    update()
+    return () => media.removeEventListener("change", update)
+  }, [])
+
   return (
-    <section id="sector-map" className="scroll-mt-16 bg-emerald-100 py-16 text-emerald-950 dark:bg-[#07110c] dark:text-emerald-50 sm:py-20 lg:py-24">
+    <section id="sector-map" className="scroll-mt-16 bg-transparent py-10 text-foreground md:bg-emerald-100 md:py-20 md:text-emerald-950 dark:md:bg-[#07110c] dark:md:text-emerald-50 lg:py-24">
       <div className={landingContainer}>
-        <h2 className="landing-section-heading mb-6 uppercase">Markets</h2>
+        {!isMobile && <h2 className="landing-section-heading mb-6 uppercase">Markets</h2>}
+        {isMobile ? <MobileMarketsBanner /> : (
         <ScrollReveal delay={80}>
           <Suspense
             fallback={
@@ -420,6 +432,7 @@ export function SectorSearchSection() {
             <MarketAtlasShell marketId="seedlings" linkMode="query" />
           </Suspense>
         </ScrollReveal>
+        )}
       </div>
     </section>
   )
