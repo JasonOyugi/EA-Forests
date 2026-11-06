@@ -47,6 +47,7 @@ async function main() {
     path.join(root, "src/app/shop/data/market-databases/nurseries.json"),
     path.join(root, "src/app/shop/data/market-databases/large-commercial-forests.json"),
     path.join(root, "data/market-atlas/osm-localities.json"),
+    path.join(root, "data/market-atlas/uganda-kml-locations.json"),
   ])
 
   const masterActors = normalizeActorMaster(actorSheets)
@@ -81,6 +82,10 @@ async function main() {
   const publishedIds = new Set(validated.map((actor) => actor.id))
   const publishedLocationEnrichment = {
     ...locationEnrichment,
+    ugandaKml: {
+      ...locationEnrichment.ugandaKml,
+      imported: locationEnrichment.ugandaKml.imported.filter((row) => publishedIds.has(row.actorId)),
+    },
     imported: locationEnrichment.imported.filter((row) => publishedIds.has(row.actorId)),
     localityDerived: locationEnrichment.localityDerived.filter((row) => publishedIds.has(row.actorId)),
     osmDerived: locationEnrichment.osmDerived.filter((row) => publishedIds.has(row.actorId)),
@@ -142,6 +147,9 @@ async function main() {
     `Coordinate confidence among mapped actors: high ${confidenceCounts.high}, medium ${confidenceCounts.medium}, low ${confidenceCounts.low}. These are source confidence labels, not a claim of surveyed precision.\n\n` +
     `Direct legacy matches: ${publishedLocationEnrichment.imported.length} of ${locationEnrichment.sourceRecords} eligible source records. Additional actors placed at a sourced town/locality centroid: ${publishedLocationEnrichment.localityDerived.length}. OSM locality centers for workbook-named towns: ${publishedLocationEnrichment.osmDerived.length}, from ${locationEnrichment.osmLocalityCount} curated features. Original source coordinates were restored for ${publishedLocationEnrichment.imported.filter((row) => row.offsetRestored).length} legacy display-offset markers. The commercial-forests file has ${locationEnrichment.skippedForestCount} records without usable per-record provenance, so none were promoted.\n\n` +
     `The direct matching rule requires an exact normalized name or alias, country, and relevant market role. Duplicate candidates need unique phone/domain corroboration or remain in review. Town-derived points require a named locality in the canonical workbook, a unique source feature, and matching administrative context where available. OSM feature centers are approximate and do not establish a site, yard, or gate coordinate. No region center or unsourced coordinate is substituted for a site.\n\n` +
+    `## Uganda supplied-map enrichment\n\n` +
+    `${publishedLocationEnrichment.ugandaKml.imported.length} markers across ${new Set(publishedLocationEnrichment.ugandaKml.imported.map((row) => row.actorId)).size} actors were matched from the Chinese Processors and Large Private Commercial Forests layers of ${publishedLocationEnrichment.ugandaKml.sourceFile}. Curated matches and exclusions are in [uganda-kml-locations.json](./uganda-kml-locations.json). Original KML SHA-256: \`${publishedLocationEnrichment.ugandaKml.sourceSha256}\`.\n\n` +
+    `These are low-confidence, user-supplied site markers: original observation date, current operating status, ownership and gate accuracy are unverified. Plantation markers are not factory gates. The Achwa description says allocated and not planted; no current planting claim is made. Capacity figures were not imported. ${publishedLocationEnrichment.ugandaKml.review.length} markers remain in review, including the undescribed CFID point that conflicts with the near-Kapeka workbook locality.\n\n` +
     `Actors with multiple location records: ${report.actorsWithMultipleLocations}; actors with multiple distinct mapped points: ${report.actorsWithMultiplePointLocations}. Location records can be overlapping evidence for one place and should not automatically be counted as distinct sites.\n\n` +
     `Unresolved/low-confidence web-enrichment queue (${report.enrichmentQueue.length} records), direct-match audit, and ${report.locationSourceCoverage.review.length} ambiguous legacy match(es) are in [sync-report.json](./sync-report.json). Check official actor contact pages first, then authoritative registries, then directories. Keep locality precision and source URLs on every future point.\n`)
 

@@ -1,5 +1,6 @@
 import fs from "node:fs"
 import path from "node:path"
+import { enrichUgandaKmlLocations } from "./uganda-kml-locations.mjs"
 
 const clean = (value) => value == null || String(value).trim() === "" ? null : String(value).trim()
 const nameKey = (value) => (value ?? "").toLowerCase().replace(/&/g, " and ").replace(/[^a-z0-9]+/g, " ").replace(/\b(limited|ltd|company|co)\b/g, " ").replace(/\s+/g, " ").trim()
@@ -72,6 +73,7 @@ function locationFrom(record, actor) {
 }
 
 export function enrichActorLocations(actors, root) {
+  const ugandaKml = enrichUgandaKmlLocations(actors, root)
   const { records, skippedForestCount } = legacyRecords(root)
   const osmLocalities = JSON.parse(fs.readFileSync(path.join(root, "data/market-atlas/osm-localities.json"), "utf8"))
   const review = []
@@ -180,5 +182,5 @@ export function enrichActorLocations(actors, root) {
     osmDerived.push({ actorId: actor.id, name: actor.name, country: actor.country, town: place.name, sourceId })
   }
   for (const actor of actors) actor.sourceCount = Math.max(actor.sourceCount ?? 0, actor.sources.length)
-  return { imported, localityDerived, osmDerived, review, sourceRecords: records.length, osmLocalityCount: osmLocalities.length, skippedForestCount }
+  return { imported, localityDerived, osmDerived, review, ugandaKml, sourceRecords: records.length, osmLocalityCount: osmLocalities.length, skippedForestCount }
 }

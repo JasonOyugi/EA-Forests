@@ -65,7 +65,8 @@ export function getActorsForRegion(actors: Actor[], regionId: string): Actor[] {
 }
 
 export function getUnassignedActors(actors: Actor[], country: string): Actor[] {
-  return actors.filter((actor) => actor.country === country && !actor.regionId)
+  return actors.filter((actor) => actor.country === country && !actor.regionId &&
+    !actor.locations.some((location) => location.latitude != null && location.longitude != null))
 }
 
 /** Region polygons + actor counts for the given country/mode, for the level-1 map view. */

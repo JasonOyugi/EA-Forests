@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-23T06:29:12.530Z",
-  "sourceHash": "f29776cab57c4270944719128278e9bb1bbc125de5e737b91addaa85a71b8659",
+  "generatedAt": "2026-11-06T06:44:58.798Z",
+  "sourceHash": "be89330f7c2b5945fe47007906611c1415936d34ea39f58133334899a2cee41a",
   "masterActorCount": 545,
   "publishedActorCount": 728,
   "providerOnlyCount": 189,
@@ -60,14 +60,14 @@
   "actorsWithRegionAssignment": 610,
   "actorsWithPreciseCoordinates": 0,
   "actorsWithVerifiedSiteCoordinates": 0,
-  "actorsWithPointCoordinates": 267,
-  "actorsWithApproximatePoints": 267,
-  "actorsWithMultipleLocations": 379,
-  "actorsWithMultiplePointLocations": 0,
+  "actorsWithPointCoordinates": 278,
+  "actorsWithApproximatePoints": 278,
+  "actorsWithMultipleLocations": 390,
+  "actorsWithMultiplePointLocations": 6,
   "coordinateConfidenceCounts": {
     "high": 3,
     "medium": 24,
-    "low": 240
+    "low": 254
   },
   "regionalOnlyActors": 0,
   "unresolvedActors": [
@@ -1437,13 +1437,6 @@
       "website": "https://www.greeninguganda.org/"
     },
     {
-      "id": "EAFA0313",
-      "name": "The New Forest Company",
-      "country": "Uganda",
-      "region": null,
-      "website": "https://newforests.earth/"
-    },
-    {
       "id": "EAFA0314",
       "name": "Across International Agroforestry Project",
       "country": "Uganda",
@@ -1577,36 +1570,8 @@
       "website": null
     },
     {
-      "id": "EAFA0369",
-      "name": "Acacia Wood",
-      "country": "Uganda",
-      "region": null,
-      "website": null
-    },
-    {
       "id": "EAFA0370",
       "name": "Bailihongseng",
-      "country": "Uganda",
-      "region": null,
-      "website": null
-    },
-    {
-      "id": "EAFA0371",
-      "name": "Brotherwood",
-      "country": "Uganda",
-      "region": null,
-      "website": "http://www.brotherwood.cc/"
-    },
-    {
-      "id": "EAFA0372",
-      "name": "CFID",
-      "country": "Uganda",
-      "region": null,
-      "website": "http://www.cfid-ug.com"
-    },
-    {
-      "id": "EAFA0373",
-      "name": "Golden Wolf Group",
       "country": "Uganda",
       "region": null,
       "website": null
@@ -1619,53 +1584,11 @@
       "website": null
     },
     {
-      "id": "EAFA0375",
-      "name": "Guo Hau",
-      "country": "Uganda",
-      "region": "Western Region",
-      "website": null
-    },
-    {
-      "id": "EAFA0376",
-      "name": "Modern Laminates",
-      "country": "Uganda",
-      "region": null,
-      "website": "https://modernpaper.co.ug/"
-    },
-    {
-      "id": "EAFA0377",
-      "name": "Shang Long",
-      "country": "Uganda",
-      "region": null,
-      "website": null
-    },
-    {
-      "id": "EAFA0378",
-      "name": "Tiantang Group",
-      "country": "Uganda",
-      "region": "Eastern Region",
-      "website": "http://www.tiantang-group.com/"
-    },
-    {
       "id": "EAFA0379",
       "name": "Uwood Investment",
       "country": "Uganda",
       "region": null,
       "website": null
-    },
-    {
-      "id": "EAFA0380",
-      "name": "Zhong Bang",
-      "country": "Uganda",
-      "region": null,
-      "website": null
-    },
-    {
-      "id": "EAFA0381",
-      "name": "Zhong Ding",
-      "country": "Uganda",
-      "region": null,
-      "website": "http://en.zhongdingplywood.com/"
     },
     {
       "id": "EAFA0382",
@@ -5753,7 +5676,7 @@
       "name": "The New Forest Company",
       "country": "Uganda",
       "website": "https://newforests.earth/",
-      "status": "unresolved",
+      "status": "low-confidence point",
       "nextStep": "Check official contact/location page and published map links"
     },
     {
@@ -5787,6 +5710,14 @@
       "website": null,
       "status": "low-confidence point",
       "nextStep": "Check regulator/certification registry, then credible business directory"
+    },
+    {
+      "id": "EAFA0318",
+      "name": "Busoga Forestry Company Limited",
+      "country": "Uganda",
+      "website": "https://www.greenresources.no/operations/uganda/",
+      "status": "low-confidence point",
+      "nextStep": "Check official contact/location page and published map links"
     },
     {
       "id": "EAFA0319",
@@ -5917,6 +5848,14 @@
       "nextStep": "Check regulator/certification registry, then credible business directory"
     },
     {
+      "id": "EAFA0343",
+      "name": "Nile Fibreboard Limited",
+      "country": "Uganda",
+      "website": "https://nfb.ug/",
+      "status": "low-confidence point",
+      "nextStep": "Check official contact/location page and published map links"
+    },
+    {
       "id": "EAFA0344",
       "name": "Nile Forestry Agro Inputs and Engineering Services Ltd",
       "country": "Uganda",
@@ -6029,6 +5968,14 @@
       "nextStep": "Check regulator/certification registry, then credible business directory"
     },
     {
+      "id": "EAFA0365",
+      "name": "Nile Plywoods (U) Ltd",
+      "country": "Uganda",
+      "website": "https://www.nileply.com/",
+      "status": "low-confidence point",
+      "nextStep": "Check official contact/location page and published map links"
+    },
+    {
       "id": "EAFA0368",
       "name": "Uganda Electricity Distribution Company Limited (UEDCL)",
       "country": "Uganda",
@@ -6041,7 +5988,7 @@
       "name": "Acacia Wood",
       "country": "Uganda",
       "website": null,
-      "status": "unresolved",
+      "status": "low-confidence point",
       "nextStep": "Check regulator/certification registry, then credible business directory"
     },
     {
@@ -6057,7 +6004,7 @@
       "name": "Brotherwood",
       "country": "Uganda",
       "website": "http://www.brotherwood.cc/",
-      "status": "unresolved",
+      "status": "low-confidence point",
       "nextStep": "Check official contact/location page and published map links"
     },
     {
@@ -6065,7 +6012,7 @@
       "name": "CFID",
       "country": "Uganda",
       "website": "http://www.cfid-ug.com",
-      "status": "unresolved",
+      "status": "low-confidence point",
       "nextStep": "Check official contact/location page and published map links"
     },
     {
@@ -6073,7 +6020,7 @@
       "name": "Golden Wolf Group",
       "country": "Uganda",
       "website": null,
-      "status": "unresolved",
+      "status": "low-confidence point",
       "nextStep": "Check regulator/certification registry, then credible business directory"
     },
     {
@@ -6089,7 +6036,7 @@
       "name": "Guo Hau",
       "country": "Uganda",
       "website": null,
-      "status": "regional only",
+      "status": "low-confidence point",
       "nextStep": "Check regulator/certification registry, then credible business directory"
     },
     {
@@ -6097,7 +6044,7 @@
       "name": "Modern Laminates",
       "country": "Uganda",
       "website": "https://modernpaper.co.ug/",
-      "status": "unresolved",
+      "status": "low-confidence point",
       "nextStep": "Check official contact/location page and published map links"
     },
     {
@@ -6105,7 +6052,7 @@
       "name": "Shang Long",
       "country": "Uganda",
       "website": null,
-      "status": "unresolved",
+      "status": "low-confidence point",
       "nextStep": "Check regulator/certification registry, then credible business directory"
     },
     {
@@ -6113,7 +6060,7 @@
       "name": "Tiantang Group",
       "country": "Uganda",
       "website": "http://www.tiantang-group.com/",
-      "status": "regional only",
+      "status": "low-confidence point",
       "nextStep": "Check official contact/location page and published map links"
     },
     {
@@ -6129,7 +6076,7 @@
       "name": "Zhong Bang",
       "country": "Uganda",
       "website": null,
-      "status": "unresolved",
+      "status": "low-confidence point",
       "nextStep": "Check regulator/certification registry, then credible business directory"
     },
     {
@@ -6137,7 +6084,7 @@
       "name": "Zhong Ding",
       "country": "Uganda",
       "website": "http://en.zhongdingplywood.com/",
-      "status": "unresolved",
+      "status": "low-confidence point",
       "nextStep": "Check official contact/location page and published map links"
     },
     {
@@ -10807,6 +10754,202 @@
         "reason": "Ambiguous exact/alias match"
       }
     ],
+    "ugandaKml": {
+      "sourceFile": "Ugandabmap.kml",
+      "sourceSha256": "85bf45f3aa75a4ba6df45e82fa9303a991bb8ead5151e36ff98f4933422a7268",
+      "sourcePath": "data/market-atlas/uganda-kml-locations.json",
+      "imported": [
+        {
+          "actorId": "EAFA0377",
+          "name": "Shang Long",
+          "placemark": "Shanglong Industry Company",
+          "layer": "Chinese Processors",
+          "sourceId": "uganda-kml:Chinese Processors:Shanglong Industry Company",
+          "locationType": "factory"
+        },
+        {
+          "actorId": "EAFA0373",
+          "name": "Golden Wolf Group",
+          "placemark": "Golden Homes factory",
+          "layer": "Chinese Processors",
+          "sourceId": "uganda-kml:Chinese Processors:Golden Homes factory",
+          "locationType": "factory"
+        },
+        {
+          "actorId": "EAFA0378",
+          "name": "Tiantang Group",
+          "placemark": "(Timber Paper) Sino-Uganda Mbale Industrial Park",
+          "layer": "Chinese Processors",
+          "sourceId": "uganda-kml:Chinese Processors:(Timber Paper) Sino-Uganda Mbale Industrial Park",
+          "locationType": "factory"
+        },
+        {
+          "actorId": "EAFA0371",
+          "name": "Brotherwood",
+          "placemark": "Brother wood",
+          "layer": "Chinese Processors",
+          "sourceId": "uganda-kml:Chinese Processors:Brother wood",
+          "locationType": "factory"
+        },
+        {
+          "actorId": "EAFA0378",
+          "name": "Tiantang Group",
+          "placemark": "Honghai PLY",
+          "layer": "Chinese Processors",
+          "sourceId": "uganda-kml:Chinese Processors:Honghai PLY",
+          "locationType": "factory"
+        },
+        {
+          "actorId": "EAFA0381",
+          "name": "Zhong Ding",
+          "placemark": "Zhong Ding Construction Materials",
+          "layer": "Chinese Processors",
+          "sourceId": "uganda-kml:Chinese Processors:Zhong Ding Construction Materials",
+          "locationType": "factory"
+        },
+        {
+          "actorId": "EAFA0380",
+          "name": "Zhong Bang",
+          "placemark": "Zhong Bang Wood ",
+          "layer": "Chinese Processors",
+          "sourceId": "uganda-kml:Chinese Processors:Zhong Bang Wood ",
+          "locationType": "factory"
+        },
+        {
+          "actorId": "EAFA0369",
+          "name": "Acacia Wood",
+          "placemark": "Acacia Wood factory",
+          "layer": "Chinese Processors",
+          "sourceId": "uganda-kml:Chinese Processors:Acacia Wood factory",
+          "locationType": "factory"
+        },
+        {
+          "actorId": "EAFA0372",
+          "name": "CFID",
+          "placemark": "CFID factory",
+          "layer": "Chinese Processors",
+          "sourceId": "uganda-kml:Chinese Processors:CFID factory",
+          "locationType": "factory"
+        },
+        {
+          "actorId": "EAFA0375",
+          "name": "Guo Hau",
+          "placemark": "Guo Hau factory",
+          "layer": "Chinese Processors",
+          "sourceId": "uganda-kml:Chinese Processors:Guo Hau factory",
+          "locationType": "factory"
+        },
+        {
+          "actorId": "EAFA0313",
+          "name": "The New Forest Company",
+          "placemark": "NFC Namwasa Plantation",
+          "layer": "Large Private Commercial Forests",
+          "sourceId": "uganda-kml:Large Private Commercial Forests:NFC Namwasa Plantation",
+          "locationType": "plantation"
+        },
+        {
+          "actorId": "EAFA0313",
+          "name": "The New Forest Company",
+          "placemark": "NFC Luwunga Plantation",
+          "layer": "Large Private Commercial Forests",
+          "sourceId": "uganda-kml:Large Private Commercial Forests:NFC Luwunga Plantation",
+          "locationType": "plantation"
+        },
+        {
+          "actorId": "EAFA0313",
+          "name": "The New Forest Company",
+          "placemark": "NFC Achwa Plantation",
+          "layer": "Large Private Commercial Forests",
+          "sourceId": "uganda-kml:Large Private Commercial Forests:NFC Achwa Plantation",
+          "locationType": "plantation"
+        },
+        {
+          "actorId": "EAFA0376",
+          "name": "Modern Laminates",
+          "placemark": "Modern Laminates",
+          "layer": "Large Private Commercial Forests",
+          "sourceId": "uganda-kml:Large Private Commercial Forests:Modern Laminates",
+          "locationType": "factory"
+        },
+        {
+          "actorId": "EAFA0318",
+          "name": "Busoga Forestry Company Limited",
+          "placemark": "Busoga Forestry Company (BFC)",
+          "layer": "Large Private Commercial Forests",
+          "sourceId": "uganda-kml:Large Private Commercial Forests:Busoga Forestry Company (BFC)",
+          "locationType": "operational area"
+        },
+        {
+          "actorId": "EAFA0343",
+          "name": "Nile Fibreboard Limited",
+          "placemark": "Nile Fibreboards Kikonda Plantation",
+          "layer": "Large Private Commercial Forests",
+          "sourceId": "uganda-kml:Large Private Commercial Forests:Nile Fibreboards Kikonda Plantation",
+          "locationType": "plantation"
+        },
+        {
+          "actorId": "EAFA0343",
+          "name": "Nile Fibreboard Limited",
+          "placemark": "Nile fibreboards",
+          "layer": "Large Private Commercial Forests",
+          "sourceId": "uganda-kml:Large Private Commercial Forests:Nile fibreboards",
+          "locationType": "operational area"
+        },
+        {
+          "actorId": "EAFA0357",
+          "name": "Ambiance Tree Farm Ltd",
+          "placemark": "Ambiance tree farm Gomba",
+          "layer": "Large Private Commercial Forests",
+          "sourceId": "uganda-kml:Large Private Commercial Forests:Ambiance tree farm Gomba",
+          "locationType": "plantation"
+        },
+        {
+          "actorId": "EAFA0365",
+          "name": "Nile Plywoods (U) Ltd",
+          "placemark": "Nile plywoods (U) Ltd",
+          "layer": "Large Private Commercial Forests",
+          "sourceId": "uganda-kml:Large Private Commercial Forests:Nile plywoods (U) Ltd",
+          "locationType": "operational area"
+        }
+      ],
+      "review": [
+        {
+          "layer": "Chinese Processors",
+          "placemark": "CFID",
+          "reason": "Undescribed point at longitude 34.06424658615162, latitude 0.3183292520968065 conflicts with workbook's near-Kapeka locality; use the separately described CFID factory marker only."
+        },
+        {
+          "layer": "Chinese Processors",
+          "placemark": "Evergreen wood",
+          "reason": "Actor already mapped; abbreviated name and differing existing point require review before adding another site."
+        },
+        {
+          "layer": "Large Private Commercial Forests",
+          "placemark": "Kijani Forestry",
+          "reason": "No confirmed matching Uganda wood-market actor in this pass; do not create or merge actors automatically."
+        },
+        {
+          "layer": "Large Private Commercial Forests",
+          "placemark": "Critical Mass Group (U) Ltd - Sugar Plantation",
+          "reason": "Sugar plantation is not sufficient evidence of a matching wood-market actor."
+        },
+        {
+          "layer": "Large Private Commercial Forests",
+          "placemark": "Woodland Investments",
+          "reason": "No confirmed matching Uganda wood-market actor in this pass."
+        },
+        {
+          "layer": "Large Private Commercial Forests",
+          "placemark": "Core Woods Ltd",
+          "reason": "No confirmed matching Uganda wood-market actor in this pass."
+        },
+        {
+          "layer": "Large Private Commercial Forests",
+          "placemark": null,
+          "reason": "Unnamed point cannot establish actor identity."
+        }
+      ]
+    },
     "sourceRecords": 222,
     "osmLocalityCount": 31,
     "skippedForestCount": 13

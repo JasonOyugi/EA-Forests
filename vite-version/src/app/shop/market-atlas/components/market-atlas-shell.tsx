@@ -65,7 +65,7 @@ export function MarketAtlasShell({ marketId, linkMode = "route" }: MarketAtlasSh
   )
   const countryRegions = useMemo(() => marketRegions.filter((region) => region.country === country), [country])
 
-  // "unassigned" is a pseudo-region: actors whose source location is too coarse to place on the map.
+  // "unassigned" is a pseudo-region: actors without either a region or a mapped point.
   const showUnassigned = regionId === UNASSIGNED_REGION
   const [mapFocus, setMapFocus] = useState<{ ids: string[]; serial: number } | null>(null)
   const tableActors = useMemo(() => {
@@ -187,7 +187,7 @@ export function MarketAtlasShell({ marketId, linkMode = "route" }: MarketAtlasSh
                 className="underline underline-offset-4 transition-colors hover:text-foreground"
                 aria-pressed={showUnassigned}
               >
-                {unassignedCount} without a mapped region
+                {unassignedCount} without a mapped point or region
               </button>
             </>
           ) : null}
@@ -213,7 +213,7 @@ export function MarketAtlasShell({ marketId, linkMode = "route" }: MarketAtlasSh
 
       {view === "regional" && regionId && (
         <p className="text-sm font-medium">
-          {showUnassigned ? `Actors in ${country} without a mapped region` : `Actors in ${countryRegions.find((r) => r.id === regionId)?.name ?? "selected region"}`}
+          {showUnassigned ? `Actors in ${country} without a mapped point or region` : `Actors in ${countryRegions.find((r) => r.id === regionId)?.name ?? "selected region"}`}
           <span className="ml-2 text-muted-foreground">{tableActors.length}</span>
         </p>
       )}
