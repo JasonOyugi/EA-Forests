@@ -1,0 +1,208 @@
+name: Site steward
+
+# Twice a month: crawl eaforests.com for problems, read the sector feeds in
+# automation/sources.json, and let Claude propose verified Information Hub updates.
+# Changes arrive as a draft pull request against the live-site branch; a run with
+# nothing to add opens an issue with the digest instead. Nothing is merged automatically.
+#
+# Needs one repository secret: CLAUDE_CODE_OAUTH_TOKEN (from `claude setup-token`)
+# or ANTHROPIC_API_KEY. Optional repository variables: STEWARD_MODEL (default sonnet),
+# STEWARD_MAX_BUDGET_USD (default 5), STEWARD_TARGET_BRANCH (default release/public-market).
+
+on:
+  schedule:
+    - cron: "0 5 1,15 * *" # 08:00 East Africa Time on the 1st and 15th
+  workflow_dispatch:
+    inputs:
+      target_branch:
+        description: Branch that deploys the live site
+        default: release/public-market
+      dry_run:
+        description: Only produce the reports (no pull request or issue)
+        type: boolean
+        default: false
+
+concurrency:
+  group: site-steward
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+env:
+  TARGET_BRANCH: ${{ inputs.target_branch || vars.STEWARD_TARGET_BRANCH || 'release/public-market' }}
+  SITE_URL: https://eaforests.com
+
+jobs:
+  steward:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - name: Check a Claude credential is configured
+        env:
+          HAS_OAUTH: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN != '' }}
+          HAS_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+        run: |
+          if [ "$HAS_OAUTH" != "true" ] && [ "$HAS_KEY" != "true" ]; then
+            echo "::error::Add a CLAUDE_CODE_OAUTH_TOKEN or ANTHROPIC_API_KEY repository secret."
+            exit 1
+          fi
+          echo "RUN_DATE=$(date -u +%Y-%m-%d)" >> "$GITHUB_ENV"
+
+      - name: Check out the steward
+        uses: actions/checkout@v7
+        with:
+          path: bot
+          sparse-checkout: |
+            automation
+            DESIGN.md
+          sparse-checkout-cone-mode: false
+
+      - name: Check out the live-site branch
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ env.TARGET_BRANCH }}
+          path: site
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          package_json_file: site/package.json
+          cache: true
+          cache_dependency_path: site/pnpm-lock.yaml
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: site/.nvmrc
+
+      - name: Install dependencies and the browser
+        working-directory: site
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm --dir vite-version exec playwright install --with-deps chromium
+
+      - name: Restore memory of previous runs
+        uses: actions/cache@v6
+        with:
+          path: .steward-state
+          key: steward-state-${{ github.run_id }}
+          restore-keys: steward-state-
+
+      - name: Read the sector sources
+        run: |
+          REPORT_DIR="site/automation/reports/$RUN_DATE"
+          mkdir -p "$REPORT_DIR" raw
+          node bot/automation/site-steward/fetch-sources.mjs \
+            --sources bot/automation/sources.json --site site \
+            --state .steward-state/state.json --out "$REPORT_DIR/sources.json"
+
+      - name: Check the live site
+        run: |
+          node bot/automation/site-steward/check-site.mjs \
+            --url "$SITE_URL" --playwright-from site/vite-version \
+            --out "site/automation/reports/$RUN_DATE/site-health.json" --shots raw/screenshots
+
+      - name: Make the design rules available
+        run: |
+          [ -f site/DESIGN.md ] || cp bot/DESIGN.md site/DESIGN.md
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Let Claude triage, verify and propose updates
+        working-directory: site
+        env:
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          MODEL: ${{ vars.STEWARD_MODEL || 'sonnet' }}
+          BUDGET: ${{ vars.STEWARD_MAX_BUDGET_USD || '5' }}
+        run: |
+          [ -n "$CLAUDE_CODE_OAUTH_TOKEN" ] || unset CLAUDE_CODE_OAUTH_TOKEN
+          [ -n "$ANTHROPIC_API_KEY" ] || unset ANTHROPIC_API_KEY
+          PROMPT="$(sed "s#\$REPORT_DIR#automation/reports/$RUN_DATE#g" ../bot/automation/site-steward/prompt.md)"
+          PROMPT="$PROMPT
+
+          Today is $(date -u '+%-d %b %Y')."
+          claude -p "$PROMPT" \
+            --model "$MODEL" \
+            --max-turns 120 \
+            --max-budget-usd "$BUDGET" \
+            --permission-mode dontAsk \
+            --tools "Read,Edit,Write,Glob,Grep,WebFetch,WebSearch,Bash" \
+            --allowedTools "Read,Edit,Write,Glob,Grep,WebFetch,WebSearch,Bash(pnpm --dir vite-version exec tsc *),Bash(git diff *),Bash(git status *),Bash(git checkout -- vite-version/src/app/information/*)" \
+            --output-format json > ../raw/claude-run.json || echo "::warning::Claude exited with an error; see raw/claude-run.json"
+          node -e 'const r=JSON.parse(require("fs").readFileSync("../raw/claude-run.json","utf8"));console.log(`turns=${r.num_turns} cost_usd=${r.total_cost_usd} subtype=${r.subtype}`)' || true
+
+      - name: Keep only changes the steward is allowed to make
+        working-directory: site
+        run: |
+          # Anything outside the hub data, the reports and DESIGN.md is reverted.
+          git status --porcelain --untracked-files=all | awk '{print $NF}' | while read -r path; do
+            case "$path" in
+              vite-version/src/app/information/data.ts|vite-version/src/app/information/card-images.ts|automation/reports/*|DESIGN.md) ;;
+              *) echo "::warning::Reverting out-of-scope change: $path"; git checkout -- "$path" 2>/dev/null || rm -f "$path" ;;
+            esac
+          done
+          # Raw JSON goes to the run artifact, not the repository.
+          mv automation/reports/"$RUN_DATE"/*.json ../raw/ 2>/dev/null || true
+          if git diff --quiet -- vite-version/src/app/information; then
+            echo "HUB_CHANGED=false" >> "$GITHUB_ENV"
+          else
+            echo "HUB_CHANGED=true" >> "$GITHUB_ENV"
+          fi
+          if [ ! -s "automation/reports/$RUN_DATE/digest.md" ]; then
+            printf '# Site steward digest, %s\n\nClaude did not write a digest this run. Check the run log and the raw reports artifact.\n' "$RUN_DATE" > "automation/reports/$RUN_DATE/digest.md"
+          fi
+
+      - name: Check the site still builds
+        if: env.HUB_CHANGED == 'true'
+        working-directory: site/vite-version
+        run: |
+          if pnpm exec tsc -b && pnpm exec vite build; then
+            echo "BUILD_OK=true" >> "$GITHUB_ENV"
+          else
+            echo "BUILD_OK=false" >> "$GITHUB_ENV"
+            printf '\n> **The build fails with these changes.** Fix or close this PR.\n' >> "../automation/reports/$RUN_DATE/digest.md"
+          fi
+          rm -rf dist
+
+      - name: Save the reports and screenshots
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: site-steward-${{ env.RUN_DATE }}
+          path: |
+            raw
+            site/automation/reports
+          retention-days: 90
+
+      - name: Open a draft pull request
+        if: env.HUB_CHANGED == 'true' && inputs.dry_run != true
+        uses: peter-evans/create-pull-request@v8
+        with:
+          path: site
+          base: ${{ env.TARGET_BRANCH }}
+          branch: bot/site-steward/${{ env.RUN_DATE }}
+          draft: true
+          title: "Site steward: Information Hub updates, ${{ env.RUN_DATE }}"
+          body-path: site/automation/reports/${{ env.RUN_DATE }}/digest.md
+          commit-message: "Site steward: Information Hub updates for ${{ env.RUN_DATE }}"
+          add-paths: |
+            vite-version/src/app/information/data.ts
+            vite-version/src/app/information/card-images.ts
+            automation/reports/${{ env.RUN_DATE }}/digest.md
+            DESIGN.md
+          labels: site-steward
+
+      - name: Open a digest issue when there is nothing to change
+        if: env.HUB_CHANGED != 'true' && inputs.dry_run != true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create site-steward --color 2f6b4f --description "Opened by the site steward bot" --repo "$GITHUB_REPOSITORY" 2>/dev/null || true
+          gh issue create --repo "$GITHUB_REPOSITORY" --label site-steward \
+            --title "Site steward digest, $RUN_DATE" \
+            --body-file "site/automation/reports/$RUN_DATE/digest.md"
