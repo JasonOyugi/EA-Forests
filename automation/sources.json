@@ -1,0 +1,158 @@
+{
+  "$comment": "Sector sources the site steward reads every run. Each feed was checked reachable on 11 Nov 2026. type 'rss' parses RSS/Atom; type 'page' lists new headline links on an HTML page. topics are Information Hub slugs in vite-version/src/app/information/data.ts.",
+  "lookbackDays": 21,
+  "keywords": [
+    "forest", "forestry", "plantation", "timber", "sawmill", "sawlog", "roundwood", "plywood", "veneer",
+    "pole", "eucalyptus", "pine", "teak", "seedling", "nursery", "charcoal", "afforestation", "reforestation",
+    "restoration", "carbon", "redd", "article 6", "verra", "gold standard", "concession", "kfs", "nfa", "tfs",
+    "kefri", "tree growers", "wood", "pulp", "biomass", "deforestation", "eudr"
+  ],
+  "geographies": ["kenya", "uganda", "tanzania", "rwanda", "ethiopia", "burundi", "south sudan", "east africa", "eac"],
+  "sources": [
+    {
+      "id": "gnews-ea-forestry",
+      "name": "Google News: forestry in Kenya, Uganda and Tanzania",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=forestry+(Kenya+OR+Uganda+OR+Tanzania)+when:30d&hl=en-KE&gl=KE&ceid=KE:en",
+      "aggregator": true,
+      "topics": ["policy-regulation", "finance-markets", "investments"]
+    },
+    {
+      "id": "gnews-ea-agencies",
+      "name": "Google News: KFS, NFA and TFS",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=(%22Kenya+Forest+Service%22+OR+%22National+Forestry+Authority%22+OR+%22Tanzania+Forest+Services%22)+when:30d&hl=en-KE&gl=KE&ceid=KE:en",
+      "aggregator": true,
+      "topics": ["policy-regulation"]
+    },
+    {
+      "id": "gnews-ea-timber-trade",
+      "name": "Google News: timber, plantations and tree growers in East Africa",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=(timber+OR+plantation+OR+%22tree+growers%22)+%22East+Africa%22+when:30d&hl=en-KE&gl=KE&ceid=KE:en",
+      "aggregator": true,
+      "topics": ["finance-markets"]
+    },
+    {
+      "id": "gnews-ea-wood-products",
+      "name": "Google News: pine, eucalyptus, sawmills and poles",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=(%22pine%22+OR+%22eucalyptus%22+OR+sawmill+OR+%22transmission+poles%22)+(Kenya+OR+Uganda+OR+Tanzania)+when:30d&hl=en-KE&gl=KE&ceid=KE:en",
+      "aggregator": true,
+      "topics": ["finance-markets"]
+    },
+    {
+      "id": "gnews-ea-carbon",
+      "name": "Google News: forest carbon in East Africa",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=(%22carbon+credits%22+OR+reforestation)+(Kenya+OR+Uganda+OR+Tanzania+OR+Rwanda)+when:30d&hl=en-KE&gl=KE&ceid=KE:en",
+      "aggregator": true,
+      "topics": ["investments", "policy-regulation"]
+    },
+    {
+      "id": "gnews-ea-genetics",
+      "name": "Google News: tree seed, clones and nurseries",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=(%22tree+seed%22+OR+seedlings+OR+clonal+OR+%22tree+nursery%22+OR+%22tree+breeding%22)+(Kenya+OR+Uganda+OR+Tanzania+OR+Rwanda)+when:30d&hl=en-KE&gl=KE&ceid=KE:en",
+      "aggregator": true,
+      "topics": ["genetics"]
+    },
+    {
+      "id": "gnews-ea-forest-tech",
+      "name": "Google News: forest monitoring, drones and processing technology",
+      "type": "rss",
+      "url": "https://news.google.com/rss/search?q=(%22remote+sensing%22+OR+satellite+OR+drone+OR+%22forest+monitoring%22+OR+sawmilling)+forest+(Kenya+OR+Uganda+OR+Tanzania+OR+%22East+Africa%22)+when:30d&hl=en-KE&gl=KE&ceid=KE:en",
+      "aggregator": true,
+      "topics": ["technology"]
+    },
+    {
+      "id": "kfs",
+      "name": "Kenya Forest Service",
+      "type": "rss",
+      "url": "https://www.kenyaforestservice.org/feed/",
+      "official": true,
+      "topics": ["policy-regulation"]
+    },
+    {
+      "id": "mongabay-forests",
+      "name": "Mongabay: forests",
+      "type": "rss",
+      "url": "https://news.mongabay.com/feed/?topic=forests",
+      "requireGeography": true,
+      "topics": ["policy-regulation", "investments"]
+    },
+    {
+      "id": "cifor-forests-news",
+      "name": "CIFOR-ICRAF Forests News",
+      "type": "rss",
+      "url": "https://forestsnews.cifor.org/feed",
+      "requireGeography": true,
+      "topics": ["policy-regulation", "investments"]
+    },
+    {
+      "id": "ecosystem-marketplace",
+      "name": "Ecosystem Marketplace",
+      "type": "rss",
+      "url": "https://www.ecosystemmarketplace.com/feed/",
+      "topics": ["investments", "finance-markets"]
+    },
+    {
+      "id": "verra",
+      "name": "Verra news",
+      "type": "rss",
+      "url": "https://verra.org/feed/",
+      "official": true,
+      "topics": ["investments", "policy-regulation"]
+    },
+    {
+      "id": "iucn",
+      "name": "IUCN news",
+      "type": "rss",
+      "url": "https://www.iucn.org/rss.xml",
+      "requireGeography": true,
+      "topics": ["policy-regulation"]
+    },
+    {
+      "id": "nfa-uganda",
+      "name": "National Forestry Authority (Uganda)",
+      "type": "page",
+      "url": "https://www.nfa.go.ug/",
+      "official": true,
+      "topics": ["policy-regulation", "finance-markets"]
+    },
+    {
+      "id": "tfs-tanzania",
+      "name": "Tanzania Forest Services Agency",
+      "type": "page",
+      "url": "https://www.tfs.go.tz/",
+      "official": true,
+      "topics": ["policy-regulation", "finance-markets"]
+    },
+    {
+      "id": "kefri",
+      "name": "Kenya Forestry Research Institute",
+      "type": "page",
+      "url": "https://www.kefri.org/",
+      "official": true,
+      "topics": ["policy-regulation"]
+    },
+    {
+      "id": "itto-mis",
+      "name": "ITTO Tropical Timber Market Report",
+      "type": "page",
+      "url": "https://www.itto.int/mis/",
+      "official": true,
+      "linkPattern": "/mis/|market_information",
+      "topics": ["finance-markets"]
+    },
+    {
+      "id": "fao-forestry",
+      "name": "FAO Forestry",
+      "type": "page",
+      "url": "https://www.fao.org/forestry/en/",
+      "official": true,
+      "requireGeography": false,
+      "topics": ["policy-regulation", "finance-markets"]
+    }
+  ]
+}
