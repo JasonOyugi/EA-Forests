@@ -2,6 +2,10 @@
 # Run from anywhere:  powershell -ExecutionPolicy Bypass -File automation\skill-scout\install-hermes-job.ps1
 # Re-run it after editing scout_skills.py or prompt.md. The job is replaced, not duplicated.
 
+# By default the job delivers the scout's report as is (no model needed). Pass -WithAgent once
+# Hermes has a working model provider (`hermes status`) to get a short written briefing instead.
+param([switch]$WithAgent)
+
 $ErrorActionPreference = 'Stop'
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $hermesHome = if ($env:HERMES_HOME) { $env:HERMES_HOME } else { Join-Path $env:LOCALAPPDATA 'hermes' }
@@ -27,10 +31,14 @@ for ($i = 0; $i -lt $lines.Count; $i++) {
     }
 }
 
-$prompt = Get-Content (Join-Path $here 'prompt.md') -Raw -Encoding UTF8
-# Windows PowerShell 5.1 does not escape embedded double quotes for native programs.
-if ($PSVersionTable.PSVersion.Major -lt 7) { $prompt = $prompt -replace '"', '\"' }
-$created = hermes cron create $schedule $prompt --name $jobName --script $scriptName --deliver local
+if ($WithAgent) {
+    $prompt = Get-Content (Join-Path $here 'prompt.md') -Raw -Encoding UTF8
+    # Windows PowerShell 5.1 does not escape embedded double quotes for native programs.
+    if ($PSVersionTable.PSVersion.Major -lt 7) { $prompt = $prompt -replace '"', '\"' }
+    $created = hermes cron create $schedule $prompt --name $jobName --script $scriptName --deliver local
+} else {
+    $created = hermes cron create $schedule --name $jobName --script $scriptName --no-agent --deliver local
+}
 $created
 if (-not ($created -match 'Created job:')) { throw 'Creating the job failed; the existing job was left in place.' }
 foreach ($id in $oldIds) {

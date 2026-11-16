@@ -71,7 +71,10 @@ hermes gateway install
 ```
 
 The first command copies the script into `%LOCALAPPDATA%\hermes\scripts` and creates or
-replaces the job. The second starts the Hermes scheduler at login. Without it the job never
+replaces the job. By default the job delivers the scout's report as is, with no model
+call, because it needs no provider credentials. Once `hermes status` shows a working model
+provider, re-run the installer with `-WithAgent` to get a short written briefing from
+`prompt.md` instead. The second starts the Hermes scheduler at login. Without it the job never
 fires. Run the job on demand with `hermes cron run <job id>`, then `hermes cron tick`.
 
 Known Hermes 0.20 behaviour, verified on 11 Nov 2026:
@@ -79,4 +82,5 @@ Known Hermes 0.20 behaviour, verified on 11 Nov 2026:
 - The `anthropic` and `openai` search sources hang for more than 400s, so they are left out.
 - `skills update` cannot resolve some ClawHub skills ("No exact match"), but still prints
   "Updated". The scout reports these as *not updated*.
-- The cron agent uses your Hermes default model unless the job sets `--model`.
+- With `-WithAgent`, the job uses your Hermes default model and provider. A run is blocked
+  before it starts if that provider is not logged in (for example, Nous Portal).
