@@ -1,0 +1,4 @@
+{
+  "$comment": "Skills approved for EA Forests. Adding an entry here (on main) is the approval: within the hour the skill installer on the owner's PC installs it into Hermes (the security scan still applies; nothing is forced) and, when project is true, copies it into the git-ignored .claude/skills/ folder of every local EA-Forests worktree so Claude Code can use it. Removing an entry removes the project copy; the Hermes install stays. The skill scout's report prints a ready-made entry for each recommendation.",
+  "approved": []
+}
