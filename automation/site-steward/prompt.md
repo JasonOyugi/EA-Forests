@@ -31,7 +31,8 @@ or visual standard. A person reviews everything you do before it goes live.
      licence. Do not reuse an image already in the file.
    - Update `updatedAt` on each topic you changed, using today's date in the `"11 Nov 2026"` format.
    - Do not touch components, styles, routes or any other file.
-5. **Check your edit compiles**: run `pnpm --dir vite-version exec tsc -b --noEmit`. If it fails,
+5. **Check your edit compiles**: run exactly `pnpm --dir vite-version exec tsc -b --noEmit`, on its
+   own, with no `cd`, pipes or redirects (anything else is refused). If it fails,
    fix your own edit. If you cannot, revert your changes to that file and report it in the digest.
 6. **Write the digest** to `$REPORT_DIR/digest.md` (this becomes the PR description, keep it under
    about 600 words) with these sections:
