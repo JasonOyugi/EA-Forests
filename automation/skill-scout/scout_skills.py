@@ -148,6 +148,10 @@ def main() -> int:
     ap.add_argument("--no-search", action="store_true")
     ap.add_argument("--max-inspect", type=int, default=10)
     args = ap.parse_args()
+    # Hermes runs cron scripts with the Windows console encoding (cp1252), which cannot print
+    # the box-drawing characters in `hermes skills inspect` output.
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     STATE_DIR.mkdir(parents=True, exist_ok=True)

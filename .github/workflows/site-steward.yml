@@ -134,7 +134,7 @@ jobs:
             --tools "Read,Edit,Write,Glob,Grep,WebFetch,WebSearch,Bash" \
             --allowedTools "Read,Edit,Write,Glob,Grep,WebFetch,WebSearch,Bash(pnpm --dir vite-version exec tsc *),Bash(git diff *),Bash(git status *),Bash(git checkout -- vite-version/src/app/information/*)" \
             --output-format json > ../raw/claude-run.json || echo "::warning::Claude exited with an error; see raw/claude-run.json"
-          node -e 'const r=JSON.parse(require("fs").readFileSync("../raw/claude-run.json","utf8"));console.log(`turns=${r.num_turns} cost_usd=${r.total_cost_usd} subtype=${r.subtype}`)' || true
+          node -e 'const r=JSON.parse(require("fs").readFileSync("../raw/claude-run.json","utf8"));console.log(`turns=${r.num_turns} cost_usd=${r.total_cost_usd} subtype=${r.subtype} is_error=${r.is_error}`);if(r.is_error)console.log(`::error::Claude: ${String(r.result).slice(0,500)}`)' || cat ../raw/claude-run.json | head -c 1000 || true
 
       - name: Keep only changes the steward is allowed to make
         working-directory: site
