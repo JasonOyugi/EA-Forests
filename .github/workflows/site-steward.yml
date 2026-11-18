@@ -120,6 +120,9 @@ jobs:
           MODEL: ${{ vars.STEWARD_MODEL || 'sonnet' }}
           BUDGET: ${{ vars.STEWARD_MAX_BUDGET_USD || '5' }}
         run: |
+          # Tokens never contain whitespace; a token copied from a wrapped terminal line often does.
+          export CLAUDE_CODE_OAUTH_TOKEN="$(printf '%s' "$CLAUDE_CODE_OAUTH_TOKEN" | tr -d '[:space:]')"
+          export ANTHROPIC_API_KEY="$(printf '%s' "$ANTHROPIC_API_KEY" | tr -d '[:space:]')"
           [ -n "$CLAUDE_CODE_OAUTH_TOKEN" ] || unset CLAUDE_CODE_OAUTH_TOKEN
           [ -n "$ANTHROPIC_API_KEY" ] || unset ANTHROPIC_API_KEY
           PROMPT="$(sed "s#\$REPORT_DIR#automation/reports/$RUN_DATE#g" ../bot/automation/site-steward/prompt.md)"
