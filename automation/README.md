@@ -57,8 +57,36 @@ cron agent's prompt together with `skill-scout/prompt.md`.
   version scans worse than before or as `dangerous`. Backups go to `%LOCALAPPDATA%\hermes\skill-scout\backups`.
 - **New skills:** it searches the registries for EA Forests topics (`QUERIES` in the script),
   drops anything already installed, and previews the top ten with `hermes skills inspect`.
-  **It never installs a new skill.** The briefing recommends up to three with the exact
-  `hermes skills install` command for you to run.
+  **It never installs a new skill itself.** Each recommendation comes with a ready-made line
+  to approve it.
+
+### Approving a skill (installs within the hour)
+
+Add the skill to `approved` in [`skills.json`](skills.json) on `main`, for example by editing
+the file on GitHub:
+
+```json
+{ "approved": [ { "identifier": "official/research/parallel-cli", "project": true } ] }
+```
+
+The **skill installer** (`skill-scout/install_approved.py`, a Hermes cron job that runs every
+hour) then:
+
+1. installs it into Hermes with `hermes skills install <identifier> --yes`. Hermes's security
+   scan still applies, and a blocked skill is reported, never forced;
+2. with `"project": true`, copies it into `.claude/skills/<name>/` in every local EA-Forests
+   worktree, where Claude Code loads project skills. That folder is excluded from git (through
+   `.git/info/exclude`), so third-party skills with unclear licences are never published in this
+   public repository.
+
+Removing an entry removes the project copies (the Hermes install stays; run
+`hermes skills uninstall <name>` to remove that too). The installer only touches folders it
+created, which carry a `.ea-forests-managed` marker. It prints nothing when nothing changed,
+and its reports go to `%LOCALAPPDATA%\hermes\cron\output`. To check what it would do first:
+
+```bash
+python automation/skill-scout/install_approved.py --dry-run
+```
 
 **Setup (this PC):**
 
@@ -70,12 +98,14 @@ powershell -ExecutionPolicy Bypass -File automation\skill-scout\install-hermes-j
 hermes gateway install
 ```
 
-The first command copies the script into `%LOCALAPPDATA%\hermes\scripts` and creates or
-replaces the job. By default the job delivers the scout's report as is, with no model
-call, because it needs no provider credentials. Once `hermes status` shows a working model
-provider, re-run the installer with `-WithAgent` to get a short written briefing from
-`prompt.md` instead. The second starts the Hermes scheduler at login. Without it the job never
-fires. Run the job on demand with `hermes cron run <job id>`, then `hermes cron tick`.
+The first command copies both scripts into `%LOCALAPPDATA%\hermes\scripts`, writes the
+installer's config, and creates or replaces both jobs (the scout and the hourly installer).
+By default the scout delivers its report as is, with no model call, because that needs no
+provider credentials. Once `hermes status` shows a working model provider, re-run it with
+`-WithAgent` to get a short written briefing from `prompt.md` instead. The second command
+starts the Hermes scheduler at login. Without it the jobs never fire. To run a job now, use
+`hermes cron run <job id>`, and don't put a time limit on it: that command runs the job
+itself, so stopping it early kills the job.
 
 Known Hermes 0.20 behaviour, verified on 11 Nov 2026:
 

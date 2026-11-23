@@ -224,6 +224,7 @@ def main() -> int:
         print(f"- Identifier: `{c['identifier']}`  Source: {c.get('source')}  Trust: {c.get('trust_level')}")
         print(f"- Matched: {', '.join(sorted(c['queries']))}")
         print(f"- Description: {c.get('description', '').strip()[:300]}")
+        print(f'- To approve, add to `approved` in automation/skills.json: `{{"identifier": "{c["identifier"]}", "project": true}}`')
         print("\n```\n" + preview.strip()[:2500] + "\n```\n")
     if len(candidates) > len(top):
         print("Other candidates: " + ", ".join(f"`{c['identifier']}`" for c in candidates[len(top):len(top) + 25]) + "\n")
