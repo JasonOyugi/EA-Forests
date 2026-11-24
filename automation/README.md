@@ -9,7 +9,11 @@ Two bots keep the site current and the local agent tooling healthy. Both run on 
 | When | 08:00 EAT (05:00 UTC) | 09:00 local time, while the Hermes scheduler runs |
 | Reads | `automation/sources.json` feeds, the live site | ClawHub, the Hermes official registry, skills.sh |
 | Changes | Information Hub cards, via a **draft PR** | Updates installed hub skills, with rollback |
-| Reports | The PR description, or an issue when nothing changed | Hermes cron output (`%LOCALAPPDATA%\hermes\cron\output`) |
+| You approve | By merging the PR | By merging the **"Skill recommendations" PR** it opens |
+| Reports | The PR description, or an issue when nothing changed | The PR description, plus Hermes cron output (`%LOCALAPPDATA%\hermes\cron\output`) |
+
+Everything to review shows up in the repository's **Pull requests** tab, and GitHub emails the
+owner when one opens: `site-steward` and `skill-recommendations` labels tell them apart.
 
 ## Site steward
 
@@ -57,13 +61,26 @@ cron agent's prompt together with `skill-scout/prompt.md`.
   version scans worse than before or as `dangerous`. Backups go to `%LOCALAPPDATA%\hermes\skill-scout\backups`.
 - **New skills:** it searches the registries for EA Forests topics (`QUERIES` in the script),
   drops anything already installed, and previews the top ten with `hermes skills inspect`.
-  **It never installs a new skill itself.** Each recommendation comes with a ready-made line
-  to approve it.
+  **It never installs a new skill itself.** Up to five skills whose preview loaded are proposed
+  for approval (see below). A skill Hermes could not preview is listed but never proposed.
+
+### Recommendations arrive as a pull request
+
+After each run, the scout pushes a `bot/skill-recommendations-<date>` branch that adds its
+recommendations to `automation/skills.json`, using the PC's existing git sign-in. The
+[`skill-recommendations`](../.github/workflows/skill-recommendations.yml) workflow then opens a
+pull request labelled `skill-recommendations`, with a table of the skills and their previews, and
+closes any older recommendation PR that is still open.
+
+- **Approve all:** merge it.
+- **Approve some:** in *Files changed*, edit `automation/skills.json`, delete the lines you
+  don't want, commit, then merge.
+- **Approve none:** close it.
 
 ### Approving a skill (installs within the hour)
 
-Add the skill to `approved` in [`skills.json`](skills.json) on `main`, for example by editing
-the file on GitHub:
+Merging a recommendations PR is one way. You can also add a skill to `approved` in
+[`skills.json`](skills.json) on `main` yourself, for example by editing the file on GitHub:
 
 ```json
 { "approved": [ { "identifier": "official/research/parallel-cli", "project": true } ] }
