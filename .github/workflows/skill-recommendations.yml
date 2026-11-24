@@ -1,0 +1,53 @@
+name: Skill recommendations
+
+# The skill scout on the owner's PC pushes a bot/skill-recommendations-<date> branch that adds its
+# recommended skills to automation/skills.json. This opens (or refreshes) a pull request for it,
+# so recommendations are reviewed next to the site steward's PRs. Merging the PR is the approval;
+# the hourly skill installer on the PC then installs the skills. Older recommendation PRs that are
+# still open are closed as superseded.
+
+on:
+  push:
+    branches:
+      - "bot/skill-recommendations-*"
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  open-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the branch
+        uses: actions/checkout@v7
+
+      - name: Open or refresh the pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          DATE="${BRANCH#bot/skill-recommendations-}"
+          BODY="automation/skill-recommendations/${DATE}.md"
+          [ -f "$BODY" ] || { echo "::error::$BODY is missing"; exit 1; }
+
+          gh label create skill-recommendations --color 1f6feb \
+            --description "Opened by the skill scout; merging approves the skills" 2>/dev/null || true
+
+          NUMBER="$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')"
+          if [ -n "$NUMBER" ]; then
+            gh pr edit "$NUMBER" --body-file "$BODY"
+          else
+            gh pr create --base main --head "$BRANCH" --label skill-recommendations \
+              --title "Skill recommendations, ${DATE}" --body-file "$BODY"
+            NUMBER="$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')"
+          fi
+          echo "Pull request #${NUMBER}"
+
+          # One open recommendation PR at a time.
+          gh pr list --label skill-recommendations --state open --json number,headRefName \
+            --jq ".[] | select(.headRefName != \"$BRANCH\") | .number" |
+          while read -r OLD; do
+            gh pr close "$OLD" --delete-branch --comment "Superseded by #${NUMBER}."
+          done

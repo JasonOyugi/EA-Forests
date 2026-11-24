@@ -147,6 +147,8 @@ def main() -> int:
     ap.add_argument("--no-updates", action="store_true")
     ap.add_argument("--no-search", action="store_true")
     ap.add_argument("--max-inspect", type=int, default=10)
+    ap.add_argument("--no-propose", action="store_true", help="do not push a recommendations branch")
+    ap.add_argument("--propose-dry-run", action="store_true", help="prepare the recommendations commit but do not push it")
     args = ap.parse_args()
     # Hermes runs cron scripts with the Windows console encoding (cp1252), which cannot print
     # the box-drawing characters in `hermes skills inspect` output.
@@ -163,6 +165,7 @@ def main() -> int:
     print(f"Hermes home: {HOME}\n")
 
     # 1. Updates ------------------------------------------------------------
+    update_rows: list[dict] = []
     pending, check_error = available_updates()
     print("## Updates to installed hub skills\n")
     if check_error:
@@ -177,6 +180,7 @@ def main() -> int:
         print("| Skill | Result | Detail |\n|---|---|---|")
         for name in pending:
             r = safe_update(name, backup_root)
+            update_rows.append(r)
             print(f"| {r['skill']} | {r['result']} | {r['detail']} |")
         print(f"\nBackups of the previous versions: {backup_root}\n")
 
@@ -232,7 +236,113 @@ def main() -> int:
         print(f"Searches that failed ({len(failures)}): " + "; ".join(failures[:12]) + "\n")
 
     state_file.write_text(json.dumps({"updatedAt": today, "candidates": [c["identifier"] for c in candidates]}, indent=2), encoding="utf-8")
+
+    # 4. Propose the best ones on GitHub ------------------------------------
+    # Only skills whose preview actually loaded are proposed: nobody approves a skill unseen.
+    # Hermes 0.20 answers some ClawHub lookups with "No exact match ... Did you mean", which is
+    # not a preview, and the same lookup would fail at install time.
+    def real_preview(p: str) -> bool:
+        p = p.strip()
+        return bool(p) and not p.startswith("timed out") and "No exact match" not in p and re.search(r"(?im)^\W*name:\s*\S", p) is not None
+    seen = [(c, p) for c, p in zip(top, previews) if real_preview(p)]
+    unseen = [c for c, p in zip(top, previews) if (c, p) not in seen]
+    if not args.no_propose:
+        print("## Pull request\n")
+        try:
+            print(propose(today, seen[:MAX_PROPOSED], unseen, update_rows, dry_run=args.propose_dry_run) + "\n")
+        except Exception as exc:  # a failed push must not lose the report above
+            print(f"Could not push the recommendations branch: {exc}\n")
     return 0
+
+
+MAX_PROPOSED = 5
+CONFIG = STATE_DIR / "config.json"
+GIT_ENV = {**os.environ, "GIT_TERMINAL_PROMPT": "0", "GCM_INTERACTIVE": "Never"}
+
+
+def git(*args: str, cwd: Path | None = None, timeout: int = 300) -> str:
+    exe = shutil.which("git") or "git"
+    p = subprocess.run([exe, *args], cwd=cwd, capture_output=True, text=True, encoding="utf-8",
+                       errors="replace", timeout=timeout, env=GIT_ENV, stdin=subprocess.DEVNULL)
+    if p.returncode != 0:
+        raise RuntimeError(f"git {' '.join(args[:2])} failed: {(p.stderr or p.stdout).strip()[-300:]}")
+    return p.stdout
+
+
+def github_repo() -> tuple[str, str]:
+    config = json.loads(CONFIG.read_text(encoding="utf-8")) if CONFIG.exists() else {}
+    m = re.match(r"https://raw\.githubusercontent\.com/([^/]+)/([^/]+)/", config.get("approvals_url", ""))
+    if not m:
+        raise RuntimeError(f"{CONFIG} has no approvals_url; re-run install-hermes-job.ps1")
+    return m.group(1), m.group(2)
+
+
+def cell(text: str) -> str:
+    return " ".join(str(text).split()).replace("|", "\\|")[:220]
+
+
+def proposal_body(today: str, recs: list, unseen: list, update_rows: list) -> str:
+    out = [f"# Skill recommendations, {today}", "",
+           "**Merging this pull request approves the skills below.** Within the hour, the skill installer on the "
+           "owner's PC installs each one into Hermes (its security scan still applies, and nothing is forced) and "
+           "copies it into `.claude/skills/` in every local EA-Forests worktree, where Claude Code uses it.", "",
+           "- **Approve some:** open *Files changed*, edit `automation/skills.json` (⋯ → Edit file), delete the "
+           "lines you don't want, commit, then merge.",
+           "- **Approve none:** close this pull request. A newer run replaces it anyway.", "",
+           "| Skill | Source · trust | What it does | Matched searches |", "|---|---|---|---|"]
+    for c, _ in recs:
+        out.append(f"| `{cell(c['identifier'])}` | {cell(c.get('source', ''))} · {cell(c.get('trust_level', ''))} | "
+                   f"{cell(c.get('description', ''))} | {cell(', '.join(sorted(c['queries'])))} |")
+    out += ["", "<details><summary>What each skill contains (from <code>hermes skills inspect</code>)</summary>", ""]
+    for c, preview in recs:
+        out += [f"#### {c.get('name', c['identifier'])}", "", "```", preview.strip()[:2000], "```", ""]
+    out += ["</details>", ""]
+    if unseen:
+        out += ["**Also found but not proposed** (Hermes could not load or resolve a preview, so they were not checked): "
+                + ", ".join(f"`{c['identifier']}`" for c in unseen), ""]
+    if update_rows:
+        changed = [r for r in update_rows if r["result"] in ("updated", "rolled back")]
+        out += [f"**Installed skills:** {len(update_rows)} had updates listed; "
+                f"{sum(r['result'] == 'updated' for r in update_rows)} updated, "
+                f"{sum(r['result'] == 'rolled back' for r in update_rows)} rolled back, the rest unchanged."]
+        out += [f"- {r['skill']}: {r['result']} ({cell(r['detail'])})" for r in changed]
+        out.append("")
+    out.append("_Opened by the EA Forests skill scout. Full report: Hermes cron output on the owner's PC._")
+    return "\n".join(out)[:60000]
+
+
+def propose(today: str, recs: list, unseen: list, update_rows: list, dry_run: bool = False) -> str:
+    if not recs:
+        return "Nothing to propose this run (no candidate had a loadable preview), so no pull request."
+    owner, repo = github_repo()
+    work = STATE_DIR / "proposal-clone"
+    if work.exists():
+        shutil.rmtree(work, onerror=lambda f, p, _: (os.chmod(p, 0o700), f(p)))
+    git("clone", "--depth", "1", "--filter=blob:none", "--sparse", f"https://github.com/{owner}/{repo}.git", str(work), timeout=600)
+    git("sparse-checkout", "set", "automation", cwd=work)
+    branch = f"bot/skill-recommendations-{today}"
+    git("checkout", "-b", branch, cwd=work)
+
+    skills_file = work / "automation" / "skills.json"
+    data = json.loads(skills_file.read_text(encoding="utf-8"))
+    approved = data.setdefault("approved", [])
+    present = {(e if isinstance(e, str) else e.get("identifier", "")).lower() for e in approved}
+    added = [c for c, _ in recs if c["identifier"].lower() not in present]
+    if not added:
+        return "Every recommendation is already in automation/skills.json, so no pull request."
+    approved.extend({"identifier": c["identifier"], "project": True} for c in added)
+    skills_file.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    body_file = work / "automation" / "skill-recommendations" / f"{today}.md"
+    body_file.parent.mkdir(parents=True, exist_ok=True)
+    body_file.write_text(proposal_body(today, [(c, p) for c, p in recs if c in added], unseen, update_rows) + "\n", encoding="utf-8")
+    git("add", "automation", cwd=work)
+    git("commit", "-m", f"Skill recommendations for {today}", "-m",
+        "Proposed by the EA Forests skill scout. Merging approves them.", cwd=work)
+    if dry_run:
+        return f"Dry run: prepared {branch} in {work} with {len(added)} skill(s); not pushed.\n\n" + git("show", "--stat", "--format=%s", "HEAD", cwd=work)
+    git("push", "--force", "origin", f"HEAD:refs/heads/{branch}", cwd=work, timeout=600)
+    return (f"Pushed `{branch}` with {len(added)} recommended skill(s). GitHub opens the pull request within a "
+            f"minute: https://github.com/{owner}/{repo}/pulls?q=label%3Askill-recommendations")
 
 
 if __name__ == "__main__":
