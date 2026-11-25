@@ -23,6 +23,7 @@ import os
 import shutil
 import subprocess
 import sys
+import time
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -70,7 +71,8 @@ def load_approvals(args, config: dict) -> list[dict]:
         if isinstance(e, str):
             e = {"identifier": e}
         if isinstance(e, dict) and isinstance(e.get("identifier"), str) and e["identifier"].strip():
-            clean.append({"identifier": e["identifier"].strip(), "project": bool(e.get("project", True))})
+            clean.append({"identifier": e["identifier"].strip(), "project": bool(e.get("project", True)),
+                          "allow_dangerous": e.get("allow_dangerous") is True})
     return clean
 
 
@@ -126,6 +128,8 @@ def main() -> int:
         print(f"Could not read the approved skills list: {exc}")
         return 1
 
+    notices_file = STATE_DIR / "installer-notices.json"
+    notices = json.loads(notices_file.read_text(encoding="utf-8")) if notices_file.exists() else {}
     lock = read_lock()
     to_project: dict[str, Path] = {}
     for entry in approved:
@@ -134,6 +138,10 @@ def main() -> int:
         if not found:
             if args.dry_run:
                 lines.append(f"- would install `{ident}` into Hermes")
+                continue
+            # A failed install is reported once and retried weekly, not every hour.
+            last_fail = notices.get(f"failed:{ident}")
+            if last_fail and time.time() - last_fail < 7 * 86400:
                 continue
             code, out = 0, ""
             try:
@@ -149,11 +157,29 @@ def main() -> int:
                 lines.append(f"- installed `{ident}` into Hermes (scan verdict: {verdict})")
             else:
                 reason = "blocked by the security scan" if "blocked" in out.lower() else (out.strip().splitlines() or [f"exit {code}"])[-1][:200]
-                lines.append(f"- could not install `{ident}`: {reason}")
+                lines.append(f"- could not install `{ident}`: {reason}. Not retried for a week; remove it from "
+                             f"automation/skills.json if you no longer want it.")
+                notices[f"failed:{ident}"] = time.time()
                 continue
+            notices.pop(f"failed:{ident}", None)
         if entry["project"] and found:
             name, info = found
             src = SKILLS_DIR / info.get("install_path", name)
+            verdict = info.get("scan_verdict", "unknown")
+            # Hermes lets official skills install even when its scan says "dangerous". Claude Code
+            # would follow those instructions in every worktree, so such skills stay out of the
+            # projects unless the approval says "allow_dangerous": true.
+            if verdict == "dangerous" and not entry["allow_dangerous"]:
+                findings = (info.get("scan_provenance") or {}).get("findings", [])
+                worst = next((f for f in findings if f.get("severity") == "critical"), findings[0] if findings else {})
+                notice = (f"- `{name}` is installed in Hermes but was NOT copied to the projects: its security scan "
+                          f"verdict is dangerous ({worst.get('category', '?')}: `{str(worst.get('match', ''))[:80]}` in "
+                          f"{worst.get('file', '?')}). To use it anyway, add \"allow_dangerous\": true to its entry "
+                          f"in automation/skills.json.")
+                if notices.get(name) != info.get("content_hash"):
+                    lines.append(notice)
+                    notices[name] = info.get("content_hash")
+                continue
             if (src / "SKILL.md").exists():
                 to_project[name] = src
             else:
@@ -189,6 +215,9 @@ def main() -> int:
                         shutil.rmtree(dest)
                         lines.append(f"- removed `{dest.name}` from {target_root} (no longer approved)")
 
+    if not args.dry_run:
+        notices_file.parent.mkdir(parents=True, exist_ok=True)
+        notices_file.write_text(json.dumps(notices, indent=2), encoding="utf-8")
     if lines:
         print("# Skill installer" + (" (dry run)" if args.dry_run else ""))
         print(f"{len(approved)} approved skill(s); {len(trees)} worktree(s).\n")
