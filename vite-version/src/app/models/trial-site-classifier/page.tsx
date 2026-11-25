@@ -1557,7 +1557,7 @@ export function TrialSiteClassifierAnalysis({
               </div>
             </div>
 
-            <div className="grid gap-5 xl:grid-cols-[22rem_minmax(0,1fr)]">
+            <div className="grid grid-cols-[minmax(0,1fr)] gap-5 xl:grid-cols-[22rem_minmax(0,1fr)]">
               <div className="space-y-5">
                 <RankingControls
                   artifacts={artifacts}
