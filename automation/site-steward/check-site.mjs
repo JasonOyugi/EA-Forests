@@ -164,7 +164,9 @@ async function probe(url) {
   for (const method of ["HEAD", "GET"]) {
     try {
       const res = await fetch(url, { method, headers, redirect: "follow", signal: AbortSignal.timeout(20_000) })
-      if (method === "HEAD" && [403, 405, 501].includes(res.status)) continue
+      // Some servers (UN Comtrade, utga.ug) answer HEAD with 404 but serve the page to GET,
+      // so a failed HEAD is only a hint: the GET result decides.
+      if (method === "HEAD" && !res.ok) continue
       // 401/403/429 usually mean the site blocks bots, not that the page is gone.
       const verdict = res.ok ? "ok" : [404, 410].includes(res.status) || res.status >= 500 ? "broken" : "blocked"
       return { status: res.status, verdict }
